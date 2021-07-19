@@ -1,0 +1,15 @@
+img.foto-pasien {
+  height: 15rem;
+  max-height: 15rem;
+  width: 11rem;
+  max-width: 11rem;
+  border-radius: 2px;
+}
+
+h5.font-cabin {
+  font-size: 17px;
+}
+
+p.font-cabin {
+  font-size: 15px;
+}

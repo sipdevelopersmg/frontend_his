@@ -1,0 +1,33 @@
+<form [formGroup]="formPasien" (ngSubmit)="handleSubmit(formPasien.value)">
+    <mol-input-text [label]="'email'" formControlName="email" id="email"
+        [FormControlCaption]="'Email Tidak Boleh Kosong'">
+    </mol-input-text>
+
+    <mol-input-textarea [label]="'example'" formControlName="example" id="example"
+        [FormControlCaption]="'Example Tidak Boleh Kosong'">
+    </mol-input-textarea>
+
+    <org-input-look-up #lookUpPasien [label]="'look up data'" [sourceGrid]="sourceGrid" [idKode]="'id'"
+        [idTitle]="'email'" [modal-title]="'List Example'" (onGetSelectedData)="heandleSelectedLookUp($event)"
+        [columns]="columns">
+    </org-input-look-up>
+
+    <button type="submit" class="btn btn-primary">Simpan</button>
+
+    <org-tabs>
+        <org-tabs-item>
+            <org-tabs-label>First tab</org-tabs-label>
+            <org-tabs-body>
+                IO am first content
+            </org-tabs-body>
+        </org-tabs-item>
+        <org-tabs-item>
+            <org-tabs-label>First tab</org-tabs-label>
+            <org-tabs-body>
+                Haloo Word
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+
+
+</form>

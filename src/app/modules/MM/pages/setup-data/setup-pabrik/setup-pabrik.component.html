@@ -1,0 +1,107 @@
+<org-card-layout [ButtonNav]="TabId == 'InputPabrik' && FormInputDataPabrik.valid ? ButtonNav : []"
+    (onClickButtonNav)="onClickButtonNav($event)">
+    <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
+        <!-- Data Pabrik -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'DataPabrik'">Data Pabrik</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid [grid-id]="'GridDataPabrik'" [grid-height]="300" [grid-DataSource]="GridPabrikDatasource"
+                    [grid-editSettings]="GridDataPabrikEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataPabrikToolbar" [columns]="GridPabrikConfig.GridPabrikColumns"
+                    (row-selected)="onSelectedRow($event)" (toolbar-click)="onToolbarClick($event)">
+                </mol-grid>
+
+                <!-- Panggil Modal Dialog Ketika click tombol Add di Toolbar Grid -->
+                <ng-template #modalDialogAddDataPabrik>
+                    <div class="modal-header p-2 background-biru-muda text-white">
+                        <h5 class="modal-title pull-left">Input Data Pabrik</h5>
+                        <button type="button" class="btn-close pull-right" aria-label="Close"
+                            (click)="modalRef.hide()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="font-cabin mb-0">Modal Body Goes Here</p>
+                    </div>
+                </ng-template>
+
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input Pabrik -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'InputPabrik'">Input Pabrik</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputDataPabrik" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Kode Pabrik -->
+                            <mol-input-text [label]="'Kode Pabrik'" formControlName="kode_pabrik"
+                                [IsFormControlInvalid]="kode_pabrik.invalid"
+                                [ValidatorsCaption]="'Kode Pabrik Tidak Boleh Kosong'">
+                            </mol-input-text>
+
+                            <!-- Nama Pabrik -->
+                            <mol-input-text [label]="'Nama Pabrik'" formControlName="nama_pabrik"
+                                [IsFormControlInvalid]="nama_pabrik.invalid"
+                                [ValidatorsCaption]="'Nama Pabrik Tidak Boleh Kosong'">
+                            </mol-input-text>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="font-cabin mb-0">Detail Pabrik</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <!-- Kontak -->
+                                            <mol-input-text [label]="'Kontak'" formControlName="contact_person">
+                                            </mol-input-text>
+
+                                            <!-- Alamat -->
+                                            <mol-input-text [label]="'Alamat Pabrik'" formControlName="alamat_pabrik">
+                                            </mol-input-text>
+
+                                            <!-- Kota -->
+                                            <mol-input-text [label]="'Kab / Kota'" formControlName="kota">
+                                            </mol-input-text>
+
+                                            <!-- Provinsi -->
+                                            <mol-input-text [label]="'Provinsi'" formControlName="provinsi">
+                                            </mol-input-text>
+
+                                            <!-- Negara -->
+                                            <mol-input-text [label]="'Negara'" formControlName="negara">
+                                            </mol-input-text>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <!-- Kode Pos -->
+                                            <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos">
+                                            </mol-input-text>
+
+                                            <!-- No. Telepon -->
+                                            <mol-input-text [label]="'No. Telepon'" formControlName="telepon">
+                                            </mol-input-text>
+
+                                            <!-- No. Fax -->
+                                            <mol-input-text [label]="'No. Fax'" formControlName="fax"></mol-input-text>
+
+                                            <!-- Email -->
+                                            <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
+
+                                            <!-- Status Active -->
+                                            <mol-input-checkbox [label]="'Status'" formControlName="is_active"
+                                                [CheckboxObject]="CheckboxStatus">
+                                            </mol-input-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

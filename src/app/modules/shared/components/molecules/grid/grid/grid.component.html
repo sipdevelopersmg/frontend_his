@@ -1,0 +1,16 @@
+<ejs-grid #grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="30"
+    [gridLines]="gridLines" [allowPaging]="gridPaging" [allowResizing]="true" [allowFiltering]='gridFiltering'
+    [pageSettings]="gridInitialPage" [toolbar]="toolbar" [editSettings]="gridEditingSettings"
+    [contextMenuItems]="gridContextMenuItems" [selectionSettings]="gridSelectionSettings"
+    (rowSelected)="onRowSelecting($event)" (keyPressed)="onKeyPressing($event)"
+    (recordDoubleClick)="onDoubleClick($event)" (actionBegin)="onActionBegin($event)"
+    (actionComplete)="onActionComplete($event)" (toolbarClick)="onToolbarClick($event)"
+    (commandClick)="onCommandClick($event)">
+    <e-columns>
+        <ng-template ngFor let-item [ngForOf]="columns">
+            <e-column [width]="item.width" [field]="item.field" [headerText]="item.headerText" [visible]="item.visible"
+                [type]="item.type" [allowEditing]="item.allowEditing" [allowSorting]="item.allowSorting"
+                [format]="item.format" [headerTextAlign]="item.headerTextAlign" [textAlign]="item.textAlign"></e-column>
+        </ng-template>
+    </e-columns>
+</ejs-grid>

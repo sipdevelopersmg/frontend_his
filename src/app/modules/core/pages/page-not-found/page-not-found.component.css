@@ -1,0 +1,10 @@
+section#page-not-found {
+  padding-top: 25vh;
+}
+
+img.image-not-found {
+  width: 20em;
+  max-width: 20em;
+  height: 15em;
+  max-height: 15em;
+}

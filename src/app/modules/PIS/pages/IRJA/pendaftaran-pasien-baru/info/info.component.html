@@ -1,0 +1,31 @@
+<form class="p-3">
+    <div class="row">
+        <div class="col-sm-6">
+            <h5 class="">Info</h5>
+            <org-input-look-up [label]="'Jenis ID Card'"></org-input-look-up>
+            <mol-input-text [label]="'No ID Card'"></mol-input-text>
+            <org-input-look-up [label]="'Suku'"></org-input-look-up>
+            <org-input-look-up [label]="'Bangsa'"></org-input-look-up>
+            <mol-input-select [label]="'Bahasa Sehari - hari'"></mol-input-select>
+            <mol-input-textarea [label]="'Keluarga Yang Bisa Di Hubungi'"></mol-input-textarea>
+            <mol-input-text [label]="'No Telp'"></mol-input-text>
+            <div class="mb-2 row">
+                <div class="col-sm-4">
+                    <atm-label [LabelCaption]="'Anak Ke'"></atm-label>
+                </div>
+                <div class="col-sm-8 row">
+                    <div class="col-sm-5">
+                        <atm-input></atm-input>
+                    </div>
+                    <div class="col-sm-2">
+                        <atm-label [LabelCaption]="'dari:'"></atm-label>
+                    </div>
+                    <div class="col-sm-5">
+                        <atm-input></atm-input>
+                    </div>
+                </div>
+            </div>
+            <mol-input-text [label]="'Akte Kelahiran'"></mol-input-text>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+<div class="row" cdkDropListGroup>
+    <div id="{{ CdkDropListId }}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 px-2" cdkDropList
+        [cdkDropListConnectedTo]="ConnectedTo" [cdkDropListData]="CardBodyData" (cdkDropListDropped)="drop($event)">
+        <div class="card border-0">
+            <div class="card-header border-0" [style.background-color]="CardHeaderBackgroundColor">
+                <atm-card-header [CardHeaderIcon]="CardHeaderIcon" [CardHeaderColor]="CardHeaderBackgroundColor"
+                    [CardHeaderCaption]="CardHeaderCaption">
+                </atm-card-header>
+            </div>
+            <div class="card-body px-1 pt-2 BoardHeight" [hidden]="HideBoard">
+                <!-- Input Field Filter Pencarian -->
+                <div class="row" *ngIf="CardBodyData?.length > 0">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                        <input #FilterPencarian id="FilterPencarian" type="text" class="form-control"
+                            placeholder="Pencarian" (keyup)="onSearchFilter(FilterPencarian.value)"
+                            (change)="onChangeSearchFilter()">
+                    </div>
+                </div>
+
+                <!-- Kanban Card -->
+                <div class="row">
+                    <div id="{{ CdkDropListId }}List" cdkDrag *ngFor="let item of CardBodyData | filter: Search"
+                        class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2" style="cursor: move;">
+                        <atm-card [Id]="item.Id" [NamaPasien]="item.NamaPasien" [Waktu]="item.Waktu"
+                            [NamaDokter]="item.NamaDokter" [KodeResep]="item.KodeResep" [DetailResep]="item.DetailResep"
+                            [Status]="item.Status" (onClickedCardButton)="onClickCard($event)"
+                            (onMarkedResepAsComplete)="onMarkResepAsComplete($event, CardBodyData)">
+                        </atm-card>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="CardBodyData?.length < 1">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-2">
+                        <p class="font-cabin mb-0 text-hitam-muda">No Record To Display</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

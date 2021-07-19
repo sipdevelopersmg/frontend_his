@@ -1,0 +1,96 @@
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { CommandClickEventArgs, ContextMenuItem, GridComponent } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, ToolbarItems } from '@syncfusion/ej2-grids';
+import { Columns } from './grid.model';
+
+export interface Data {
+    OrderID: string;
+    CustomerID: string;
+    Freight: number;
+    OrderDate: Date;
+}
+
+@Component({
+    selector: 'mol-grid',
+    templateUrl: './grid.component.html',
+    styleUrls: ['./grid.component.css']
+})
+export class MolGridComponent implements OnInit, AfterViewInit {
+
+    @ViewChild('Grid') public Grid: GridComponent;
+
+    @Input('grid-id') gridId: string;
+    @Input('grid-width') gridWidth: any;
+    @Input('grid-height') gridHeight: any;
+    @Input('grid-lines') gridLines: string;
+    @Input('grid-paging') gridPaging: any;
+    @Input('grid-filtering') gridFiltering: boolean = false;
+    @Input('grid-initial-page') gridInitialPage: any;
+    @Input('grid-toolbar') toolbar: ToolbarItems[];
+    @Input('grid-editTemplate') gridEditTemplate: Object;
+    @Input('grid-editSettings') gridEditingSettings: EditSettingsModel = {};
+    @Input('grid-DataSource') gridDataSource: any = [];
+    @Input('grid-ContextMenuItems') gridContextMenuItems: ContextMenuItem[];
+    @Input('grid-selectionSettings') gridSelectionSettings: any = { type: 'Single', mode: 'Row' };
+
+    @Input('columns') columns: Columns[];
+    @Input('urlGetColumns') urlGetColumns: string;
+
+    @Output('row-selected') onRowSelected = new EventEmitter<any>();
+    @Output('enter-pressed') onKeyPressed = new EventEmitter<any>();
+    @Output('double-click') onDoubleClicked = new EventEmitter<any>();
+    @Output('action-begin') onActionBegined = new EventEmitter<any>();
+    @Output('action-complete') onActionCompleted = new EventEmitter<any>();
+    @Output('toolbar-click') onToolbarClicked = new EventEmitter<any>();
+    @Output('command-click') onCommandClicked = new EventEmitter<any>();
+    @Output('initialized') initialized: EventEmitter<MolGridComponent> = new EventEmitter<MolGridComponent>();
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+        // this.columns = [
+        //     { headerText: 'NO ANTRIAN', width: 300, field: 'NoAntrian', visible: false },
+        //     { headerText: 'NO ANTRIAN', width: 200, field: 'JamAdmisi', visible: false },
+        //     { headerText: 'TGL ADMISI', width: 200, field: 'TglAdmisi', visible: false },
+        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
+        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
+        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
+        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
+        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
+        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
+        // ];
+    }
+
+    ngAfterViewInit(): void {
+        this.initialized.emit(this);
+    }
+
+    onRowSelecting(args: any): void {
+        this.onRowSelected.emit(args);
+    }
+
+    onKeyPressing(args: any): void {
+        this.onKeyPressed.emit(args);
+    }
+
+    onDoubleClick(args: any): void {
+        this.onDoubleClicked.emit(args.rowData);
+    }
+
+    onActionBegin(args: any): void {
+        this.onActionBegined.emit(args);
+    }
+
+    onActionComplete(args: any): void {
+        this.onActionCompleted.emit(args);
+    }
+
+    onToolbarClick(args: any): void {
+        this.onToolbarClicked.emit(args);
+    }
+
+    onCommandClick(args: CommandClickEventArgs): void {
+        this.onCommandClicked.emit(args);
+    }
+}

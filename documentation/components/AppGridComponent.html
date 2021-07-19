@@ -1,0 +1,1629 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dashboard-template documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">dashboard-template documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>AppGridComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/molecules/grid/grid/grid.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-grid</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./grid.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./grid.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#Grid">Grid</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onActionBegin">onActionBegin</a>
+                            </li>
+                            <li>
+                                <a href="#onActionComplete">onActionComplete</a>
+                            </li>
+                            <li>
+                                <a href="#onCommandClick">onCommandClick</a>
+                            </li>
+                            <li>
+                                <a href="#onDoubleClick">onDoubleClick</a>
+                            </li>
+                            <li>
+                                <a href="#onKeyPressing">onKeyPressing</a>
+                            </li>
+                            <li>
+                                <a href="#onRowSelecting">onRowSelecting</a>
+                            </li>
+                            <li>
+                                <a href="#onToolbarClick">onToolbarClick</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#columns">columns</a>
+                            </li>
+                            <li>
+                                <a href="#grid-ContextMenuItems">grid-ContextMenuItems</a>
+                            </li>
+                            <li>
+                                <a href="#grid-DataSource">grid-DataSource</a>
+                            </li>
+                            <li>
+                                <a href="#grid-editSettings">grid-editSettings</a>
+                            </li>
+                            <li>
+                                <a href="#grid-editTemplate">grid-editTemplate</a>
+                            </li>
+                            <li>
+                                <a href="#grid-height">grid-height</a>
+                            </li>
+                            <li>
+                                <a href="#grid-id">grid-id</a>
+                            </li>
+                            <li>
+                                <a href="#grid-initial-page">grid-initial-page</a>
+                            </li>
+                            <li>
+                                <a href="#grid-lines">grid-lines</a>
+                            </li>
+                            <li>
+                                <a href="#grid-paging">grid-paging</a>
+                            </li>
+                            <li>
+                                <a href="#grid-selectionSettings">grid-selectionSettings</a>
+                            </li>
+                            <li>
+                                <a href="#grid-toolbar">grid-toolbar</a>
+                            </li>
+                            <li>
+                                <a href="#grid-width">grid-width</a>
+                            </li>
+                            <li>
+                                <a href="#urlGetColumns">urlGetColumns</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#action-begin">action-begin</a>
+                            </li>
+                            <li>
+                                <a href="#action-complete">action-complete</a>
+                            </li>
+                            <li>
+                                <a href="#command-click">command-click</a>
+                            </li>
+                            <li>
+                                <a href="#double-click">double-click</a>
+                            </li>
+                            <li>
+                                <a href="#enter-pressed">enter-pressed</a>
+                            </li>
+                            <li>
+                                <a href="#initialized">initialized</a>
+                            </li>
+                            <li>
+                                <a href="#row-selected">row-selected</a>
+                            </li>
+                            <li>
+                                <a href="#toolbar-click">toolbar-click</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="columns"></a>
+                        <b>columns</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Columns.html" target="_self" >Columns[]</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-ContextMenuItems"></a>
+                        <b>grid-ContextMenuItems</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ContextMenuItem[]</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-DataSource"></a>
+                        <b>grid-DataSource</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:31</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-editSettings"></a>
+                        <b>grid-editSettings</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EditSettingsModel</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:30</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-editTemplate"></a>
+                        <b>grid-editTemplate</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" >Object</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:29</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-height"></a>
+                        <b>grid-height</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:24</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-id"></a>
+                        <b>grid-id</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:22</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-initial-page"></a>
+                        <b>grid-initial-page</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:27</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-lines"></a>
+                        <b>grid-lines</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:25</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-paging"></a>
+                        <b>grid-paging</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:26</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-selectionSettings"></a>
+                        <b>grid-selectionSettings</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ type: &quot;Single&quot;, mode: &quot;Row&quot; }</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-toolbar"></a>
+                        <b>grid-toolbar</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ToolbarItems[]</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:28</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="grid-width"></a>
+                        <b>grid-width</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:23</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="urlGetColumns"></a>
+                        <b>urlGetColumns</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="action-begin"></a>
+                        <b>action-begin</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:41</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="action-complete"></a>
+                        <b>action-complete</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:42</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="command-click"></a>
+                        <b>command-click</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:44</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="double-click"></a>
+                        <b>double-click</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:40</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="enter-pressed"></a>
+                        <b>enter-pressed</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="initialized"></a>
+                        <b>initialized</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/AppGridComponent.html" target="_self" >EventEmitter&lt;AppGridComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:45</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="row-selected"></a>
+                        <b>row-selected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolbar-click"></a>
+                        <b>toolbar-click</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:43</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            ngAfterViewInit
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:64</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:50</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onActionBegin"></a>
+                    <span class="name">
+                        <b>
+                            onActionBegin
+                        </b>
+                        <a href="#onActionBegin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onActionBegin(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onActionComplete"></a>
+                    <span class="name">
+                        <b>
+                            onActionComplete
+                        </b>
+                        <a href="#onActionComplete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onActionComplete(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:85</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCommandClick"></a>
+                    <span class="name">
+                        <b>
+                            onCommandClick
+                        </b>
+                        <a href="#onCommandClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCommandClick(args: CommandClickEventArgs)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:93</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                            <code>CommandClickEventArgs</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDoubleClick"></a>
+                    <span class="name">
+                        <b>
+                            onDoubleClick
+                        </b>
+                        <a href="#onDoubleClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDoubleClick(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:77</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onKeyPressing"></a>
+                    <span class="name">
+                        <b>
+                            onKeyPressing
+                        </b>
+                        <a href="#onKeyPressing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onKeyPressing(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRowSelecting"></a>
+                    <span class="name">
+                        <b>
+                            onRowSelecting
+                        </b>
+                        <a href="#onRowSelecting"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRowSelecting(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onToolbarClick"></a>
+                    <span class="name">
+                        <b>
+                            onToolbarClick
+                        </b>
+                        <a href="#onToolbarClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onToolbarClick(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="89"
+                            class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:89</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="Grid"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            Grid</b>
+                            <a href="#Grid"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>GridComponent</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;Grid&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/molecules/grid/grid/grid.component.ts:20</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from &#x27;@angular/core&#x27;;
+import { CommandClickEventArgs, ContextMenuItem, GridComponent } from &#x27;@syncfusion/ej2-angular-grids&#x27;;
+import { EditSettingsModel, SelectionSettingsModel, ToolbarItems } from &#x27;@syncfusion/ej2-grids&#x27;;
+import { Columns } from &#x27;./grid.model&#x27;;
+
+export interface Data {
+    OrderID: string;
+    CustomerID: string;
+    Freight: number;
+    OrderDate: Date;
+}
+
+@Component({
+    selector: &#x27;app-grid&#x27;,
+    templateUrl: &#x27;./grid.component.html&#x27;,
+    styleUrls: [&#x27;./grid.component.css&#x27;]
+})
+export class AppGridComponent implements OnInit, AfterViewInit {
+
+    @ViewChild(&quot;Grid&quot;) public Grid: GridComponent;
+
+    @Input(&#x27;grid-id&#x27;) gridId: string;
+    @Input(&#x27;grid-width&#x27;) gridWidth: any;
+    @Input(&#x27;grid-height&#x27;) gridHeight: any;
+    @Input(&#x27;grid-lines&#x27;) gridLines: string;
+    @Input(&#x27;grid-paging&#x27;) gridPaging: any;
+    @Input(&#x27;grid-initial-page&#x27;) gridInitialPage: any;
+    @Input(&#x27;grid-toolbar&#x27;) toolbar: ToolbarItems[];
+    @Input(&#x27;grid-editTemplate&#x27;) gridEditTemplate: Object;
+    @Input(&#x27;grid-editSettings&#x27;) gridEditingSettings: EditSettingsModel &#x3D; {};
+    @Input(&#x27;grid-DataSource&#x27;) gridDataSource: any &#x3D; [];
+    @Input(&#x27;grid-ContextMenuItems&#x27;) gridContextMenuItems: ContextMenuItem[];
+    @Input(&#x27;grid-selectionSettings&#x27;) gridSelectionSettings: any &#x3D; { type: &quot;Single&quot;, mode: &quot;Row&quot; };
+
+    @Input(&#x27;columns&#x27;) columns: Columns[];
+    @Input(&#x27;urlGetColumns&#x27;) urlGetColumns: string;
+
+    @Output(&#x27;row-selected&#x27;) onRowSelected &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;enter-pressed&#x27;) onKeyPressed &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;double-click&#x27;) onDoubleClicked &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;action-begin&#x27;) onActionBegined &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;action-complete&#x27;) onActionCompleted &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;toolbar-click&#x27;) onToolbarClicked &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;command-click&#x27;) onCommandClicked &#x3D; new EventEmitter&lt;any&gt;();
+    @Output(&#x27;initialized&#x27;) initialized: EventEmitter&lt;AppGridComponent&gt; &#x3D; new EventEmitter&lt;AppGridComponent&gt;();
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+        // this.columns &#x3D; [
+        //     { headerText: &quot;NO ANTRIAN&quot;, width: 300, field: &quot;NoAntrian&quot;, visible: false },
+        //     { headerText: &quot;NO ANTRIAN&quot;, width: 200, field: &quot;JamAdmisi&quot;, visible: false },
+        //     { headerText: &quot;TGL ADMISI&quot;, width: 200, field: &quot;TglAdmisi&quot;, visible: false },
+        //     { headerText: &quot;JAM MASUK&quot;, width: 200, field: &quot;JamMasukRawat&quot;, visible: false },
+        //     { headerText: &quot;JAM MASUK&quot;, width: 200, field: &quot;JamMasukRawat&quot;, visible: false },
+        //     { headerText: &quot;JAM MASUK&quot;, width: 200, field: &quot;JamMasukRawat&quot;, visible: false },
+        //     { headerText: &quot;JAM MASUK&quot;, width: 200, field: &quot;JamMasukRawat&quot;, visible: false },
+        //     { headerText: &quot;JAM MASUK&quot;, width: 200, field: &quot;JamMasukRawat&quot;, visible: false },
+        //     { headerText: &quot;JAM MASUK&quot;, width: 200, field: &quot;JamMasukRawat&quot;, visible: false },
+        // ];
+    }
+
+    ngAfterViewInit(): void {
+        this.initialized.emit(this);
+        console.log(this.gridDataSource)
+    }
+
+    onRowSelecting(args: any) {
+        this.onRowSelected.emit(args);
+    }
+
+    onKeyPressing(args: any) {
+        this.onKeyPressed.emit(args);
+    }
+
+    onDoubleClick(args: any) {
+        this.onDoubleClicked.emit(args.rowData);
+    }
+
+    onActionBegin(args: any) {
+        this.onActionBegined.emit(args);
+    }
+
+    onActionComplete(args: any) {
+        this.onActionCompleted.emit(args);
+    }
+
+    onToolbarClick(args: any) {
+        this.onToolbarClicked.emit(args);
+    }
+
+    onCommandClick(args: CommandClickEventArgs) {
+        this.onCommandClicked.emit(args);
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ejs-grid #grid [id]&#x3D;&quot;gridId&quot; [width]&#x3D;&quot;gridWidth&quot; [height]&#x3D;&quot;gridHeight&quot; [dataSource]&#x3D;&quot;gridDataSource&quot; [rowHeight]&#x3D;&quot;27&quot;
+    [gridLines]&#x3D;&quot;gridLines&quot; [allowPaging]&#x3D;&quot;gridPaging&quot; [allowResizing]&#x3D;&quot;true&quot; [pageSettings]&#x3D;&quot;gridInitialPage&quot;
+    [toolbar]&#x3D;&quot;toolbar&quot; [editSettings]&#x3D;&quot;gridEditingSettings&quot; [contextMenuItems]&#x3D;&quot;gridContextMenuItems&quot;
+    [selectionSettings]&#x3D;&quot;gridSelectionSettings&quot; (rowSelected)&#x3D;&quot;onRowSelecting($event)&quot;
+    (keyPressed)&#x3D;&quot;onKeyPressing($event)&quot; (recordDoubleClick)&#x3D;&quot;onDoubleClick($event)&quot;
+    (actionBegin)&#x3D;&quot;onActionBegin($event)&quot; (actionComplete)&#x3D;&quot;onActionComplete($event)&quot;
+    (toolbarClick)&#x3D;&quot;onToolbarClick($event)&quot; (commandClick)&#x3D;&quot;onCommandClick($event)&quot;&gt;
+    &lt;e-columns&gt;
+        &lt;ng-template ngFor let-item [ngForOf]&#x3D;&quot;columns&quot;&gt;
+            &lt;e-column [width]&#x3D;&quot;item.width&quot; [field]&#x3D;&quot;item.field&quot; [headerText]&#x3D;&quot;item.headerText&quot; [visible]&#x3D;&quot;item.visible&quot;
+                [type]&#x3D;&quot;item.type&quot; [allowEditing]&#x3D;&quot;item.allowEditing&quot; [allowSorting]&#x3D;&quot;item.allowSorting&quot;
+                [format]&#x3D;&quot;item.format&quot; [headerTextAlign]&#x3D;&quot;item.headerTextAlign&quot; [textAlign]&#x3D;&quot;item.textAlign&quot;&gt;
+            &lt;/e-column&gt;
+        &lt;/ng-template&gt;
+    &lt;/e-columns&gt;
+&lt;/ejs-grid&gt;
+
+&lt;!-- ngFor let-item [ngForOf]&#x3D;&quot;columns&quot; --&gt;
+
+&lt;!-- *ngFor&#x3D;&quot;let item of columns&quot; --&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./grid.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">#grid {
+  border-radius: 0.5rem;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ejs-grid #grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="27"    [gridLines]="gridLines" [allowPaging]="gridPaging" [allowResizing]="true" [pageSettings]="gridInitialPage"    [toolbar]="toolbar" [editSettings]="gridEditingSettings" [contextMenuItems]="gridContextMenuItems"    [selectionSettings]="gridSelectionSettings" (rowSelected)="onRowSelecting($event)"    (keyPressed)="onKeyPressing($event)" (recordDoubleClick)="onDoubleClick($event)"    (actionBegin)="onActionBegin($event)" (actionComplete)="onActionComplete($event)"    (toolbarClick)="onToolbarClick($event)" (commandClick)="onCommandClick($event)">    <e-columns>        <ng-template ngFor let-item [ngForOf]="columns">            <e-column [width]="item.width" [field]="item.field" [headerText]="item.headerText" [visible]="item.visible"                [type]="item.type" [allowEditing]="item.allowEditing" [allowSorting]="item.allowSorting"                [format]="item.format" [headerTextAlign]="item.headerTextAlign" [textAlign]="item.textAlign">            </e-column>        </ng-template>    </e-columns></ejs-grid><!-- ngFor let-item [ngForOf]="columns" --><!-- *ngFor="let item of columns" --></div>'
+    var COMPONENTS = [{'name': 'AboutComponent', 'selector': 'app-about'},{'name': 'AppButtonSearchComponent', 'selector': 'app-button-search'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppGridComponent', 'selector': 'app-grid'},{'name': 'AppInputComponent', 'selector': 'app-input'},{'name': 'AppInputGroupComponent', 'selector': 'app-input-group'},{'name': 'AppInputGroupComponentAtom', 'selector': 'app-input-group-atom'},{'name': 'AppInputGroupKodeComponent', 'selector': 'app-input-group-kode'},{'name': 'AppInputLookUpComponent', 'selector': 'app-input-look-up'},{'name': 'AppInputTextareaComponent', 'selector': 'app-input-textarea'},{'name': 'AppInputTextComponent', 'selector': 'app-input-text'},{'name': 'AppLabelComponent', 'selector': 'app-label'},{'name': 'AppLockUpFiltersComponent', 'selector': 'app-lock-up-filters'},{'name': 'AppTextareaComponent', 'selector': 'app-textarea'},{'name': 'AuthenticationComponent', 'selector': 'app-authentication'},{'name': 'BerandaComponent', 'selector': 'app-beranda'},{'name': 'ButtonDangerComponent', 'selector': 'app-button-danger'},{'name': 'ButtonPrimaryComponent', 'selector': 'app-button-primary'},{'name': 'ButtonWarningComponent', 'selector': 'app-button-warning'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'ExmpleMasterComponent', 'selector': 'app-exmple-master'},{'name': 'HeaderRibbonComponent', 'selector': 'app-header-ribbon'},{'name': 'LabelComponent', 'selector': 'app-label'},{'name': 'MainMenuComponent', 'selector': 'mol-main-menu'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PopupMenuComponent', 'selector': 'app-popup-menu'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SingleMenuComponent', 'selector': 'atm-single-menu'},{'name': 'TopMenuComponent', 'selector': 'mol-top-menu'},{'name': 'TreeviewMenuComponent', 'selector': 'app-treeview-menu'},{'name': 'ValidatorsComponent', 'selector': 'app-validators'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AppGridComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AppGridComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

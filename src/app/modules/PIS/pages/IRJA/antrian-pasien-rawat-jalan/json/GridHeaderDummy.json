@@ -1,0 +1,101 @@
+{
+    "GridHeader": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "No",
+                "format": "N2",
+                "headerText": "NO",
+                "type": "string",
+                "visible": true,
+                "textAlign": "Center",
+                "headerTextAlign": "Center",
+                "width": 30
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "NoTransaksi",
+                "headerText": "NO. RESEP",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaObat",
+                "headerText": "NAMA OBAT",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Satuan",
+                "headerText": "SATUAN",
+                "type": "string",
+                "visible": true,
+                "width": 50
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Qty",
+                "headerText": "QTY",
+                "type": "number",
+                "visible": true,
+                "textAlign": "Right",
+                "headerTextAlign": "Right",
+                "width": 50
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "JumlahPemakaian",
+                "headerText": "JUMLAH PAKAI",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "AturanPakai",
+                "headerText": "ATURAN PAKAI",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "WaktuPakai",
+                "headerText": "WAKTU PAKAI",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Catatan",
+                "headerText": "CATATAN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ]
+    }
+}

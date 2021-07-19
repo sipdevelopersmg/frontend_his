@@ -1,0 +1,99 @@
+<form action="" class="p-3">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <h5>Ayah</h5>
+
+            <!-- No MR Ayah -->
+            <org-input-look-up [label]="'No MR'"></org-input-look-up>
+
+            <!-- Nama -->
+            <mol-input-text [label]="'Nama'"></mol-input-text>
+
+            <!-- Tgl Lahir -->
+            <div class="row mb-2">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <atm-label [LabelCaption]="'Tgl Lahir'"></atm-label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <div class="row">
+                        <!-- Datepicker Tgl Lahir Ayah -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <atm-datepicker></atm-datepicker>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                            <mol-input-text [label]="'Thn'"></mol-input-text>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                            <mol-input-text [label]="'Bln'"></mol-input-text>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                            <mol-input-text [label]="'Hari'"></mol-input-text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alamat -->
+            <mol-input-text [label]="'Alamat'"></mol-input-text>
+
+            <!-- Kecamatan -->
+            <org-input-look-up [label]="'Kecamatan'"></org-input-look-up>
+
+            <!-- Kab / Kota -->
+            <mol-input-text [label]="'Kota'"></mol-input-text>
+
+            <!-- Pekerjaan -->
+            <org-input-look-up [label]="'Pekerjaan'"></org-input-look-up>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <h5>Ibu</h5>
+
+            <!-- No MR Ayah -->
+            <org-input-look-up [label]="'No MR'"></org-input-look-up>
+
+            <!-- Nama -->
+            <mol-input-text [label]="'Nama'"></mol-input-text>
+
+            <!-- Tgl Lahir -->
+            <div class="row mb-2">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <atm-label [LabelCaption]="'Tgl Lahir'"></atm-label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <div class="row">
+                        <!-- Datepicker Tgl Lahir Ibu -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <atm-datepicker></atm-datepicker>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                            <mol-input-text [label]="'Thn'"></mol-input-text>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                            <mol-input-text [label]="'Bln'"></mol-input-text>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                            <mol-input-text [label]="'Hari'"></mol-input-text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alamat -->
+            <mol-input-text [label]="'Alamat'"></mol-input-text>
+
+            <!-- Kecamatan -->
+            <org-input-look-up [label]="'Kecamatan'"></org-input-look-up>
+
+            <!-- Kab / Kota -->
+            <mol-input-text [label]="'Kota'"></mol-input-text>
+
+            <!-- Pekerjaan -->
+            <org-input-look-up [label]="'Pekerjaan'"></org-input-look-up>
+        </div>
+    </div>
+</form>

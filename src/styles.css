@@ -1,0 +1,136 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@syncfusion/ej2-base/styles/fabric.css";
+@import "~@syncfusion/ej2-buttons/styles/fabric.css";
+@import "~@syncfusion/ej2-dropdowns/styles/fabric.css";
+@import "~@syncfusion/ej2-inputs/styles/fabric.css";
+@import "~@syncfusion/ej2-navigations/styles/fabric.css";
+@import "~@syncfusion/ej2-popups/styles/fabric.css";
+@import "~@syncfusion/ej2-splitbuttons/styles/fabric.css";
+@import "~@syncfusion/ej2-angular-grids/styles/material.css";
+@import "~@syncfusion/ej2-calendars/styles/fabric.css";
+@import "~@syncfusion/ej2-angular-calendars/styles/fabric.css";
+@import "~@syncfusion/ej2-angular-dropdowns/styles/fabric.css";
+@import "~@syncfusion/ej2-lists/styles/fabric.css";
+
+body {
+  font-family: "Cabin", sans-serif;
+  background-color: #f6f4f7 !important;
+}
+
+:root {
+  --biru-muda: #00afff;
+  --biru-tua: #000087;
+  --hitam: #051e34;
+  --hitam-muda: #637280;
+  --abu-muda: #cbd1d6;
+  --abu-tua: #9f9f9f;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.font-cabin {
+  font-family: "Cabin", sans-serif;
+}
+
+/* ======= Style Biru Muda */
+.text-biru-muda {
+  color: var(--biru-muda) !important;
+}
+
+.background-biru-muda {
+  background-color: var(--biru-muda) !important;
+}
+
+.border-top-biru-muda {
+  border-top: 0.25em solid var(--biru-muda) !important;
+}
+
+.border-left-biru-muda {
+  border-left: 0.25em solid var(--biru-muda) !important;
+}
+
+/* ======= Style Biru Tua */
+.text-biru-tua {
+  color: var(--biru-tua) !important;
+}
+
+.background-biru-tua {
+  background-color: var(--biru-tua) !important;
+}
+
+.border-top-biru-tua {
+  border-top: 0.25em solid var(--biru-tua) !important;
+}
+
+.border-left-biru-tua {
+  border-left: 0.25em solid var(--biru-tua) !important;
+}
+
+/* ====== Style Hitam */
+.text-hitam {
+  color: var(--hitam) !important;
+}
+
+.text-hitam-muda {
+  color: var(--hitam-muda) !important;
+}
+
+/* ====== Style Abu Muda */
+.text-abu-muda {
+  color: var(--abu-muda) !important;
+}
+
+.background-abu-muda {
+  background-color: var(--abu-muda) !important;
+}
+
+.border-top-abu-muda {
+  border-top: 0.25em solid var(--biru-muda) !important;
+}
+
+/* ====== Style Abu Muda */
+.text-abu-tua {
+  color: var(--abu-tua) !important;
+}
+
+.background-abu-tua {
+  background-color: var(--abu-tua) !important;
+}
+
+.border-top-abu-tua {
+  border-top: 0.25em solid var(--abu-tua) !important;
+}
+
+/* ===== Style Ungu Tua */
+.text-ungu-tua {
+  color: #432158 !important;
+}
+
+.background-ungu-tua {
+  background-color: #432158 !important;
+}
+
+.border-left-ungu-tua {
+  border-left: 0.25em solid #432158 !important;
+}
+
+.border-top-ungu-tua {
+  border-top: 0.25em solid #432158 !important;
+}
+
+.e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
+  min-height: 14px !important;
+}
+
+.modal-footer {
+  min-height: 75px !important;
+}
+
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

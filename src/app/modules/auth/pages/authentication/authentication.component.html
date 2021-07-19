@@ -1,0 +1,87 @@
+<section id="section-authentication">
+    <div class="row p-0 m-0">
+        <!-- Image Auth -->
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 bg-image-auth">
+            <div class="row div-text-image">
+                <!-- Nama Instansi Terkait -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                    <img src="../../../../../assets/image/authentication/image-logo.png" class="image-logo"
+                        alt="grahcis">
+                </div>
+
+                <!-- Nama Product -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="font-cabin mb-0 text-abu-muda">
+                        Gracia Health Care Information System
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Field -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 div-input-auth">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <form [formGroup]="formAuthentication">
+                                <!-- Logo -->
+                                <div class="mb-3 pb-1 text-center border-bottom">
+                                    <h5 class="font-cabin mb-0">Sign In Account</h5>
+                                </div>
+
+                                <!-- Username -->
+                                <div class="mb-3">
+                                    <!-- Label -->
+                                    <atm-label [LabelCaption]="'Username'" [LabelFor]="'Username'"></atm-label>
+
+                                    <!-- Input Field -->
+                                    <input type="text" class="form-control" id="Username" formControlName="Username"
+                                        autocomplete="off" required>
+
+                                    <!-- Validators -->
+                                    <atm-validators [IsFormControlTouched]="Username.touched"
+                                        [IsFormControlInvalid]="Username.invalid"
+                                        [ValidatorsCaption]="'Username Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <!-- Label -->
+                                    <atm-label [LabelCaption]="'Password'" [LabelFor]="'Password'"></atm-label>
+
+                                    <!-- Input Field -->
+                                    <input type="password" class="form-control" id="Password" formControlName="Password"
+                                        autocomplete="off"
+                                        (keydown.enter)="formAuthentication.valid ? onClickButtonSignIn(formAuthentication.value) : ''">
+
+                                    <!-- Validators -->
+                                    <atm-validators [IsFormControlTouched]="Password.touched"
+                                        [IsFormControlInvalid]="Password.invalid"
+                                        [ValidatorsCaption]="'Password Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+
+                                <!-- Button Sign In -->
+                                <atm-button-primary [IsButtonBlock]="true"
+                                    [IsButtonDisabled]="!formAuthentication.valid" [ButtonPrimaryCaption]="' Sign In'"
+                                    [ButtonPrimaryIcon]="'fa-sign-in-alt'"
+                                    (onClickButtonPrimary)="onClickButtonSignIn(formAuthentication.value)">
+                                </atm-button-primary>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>

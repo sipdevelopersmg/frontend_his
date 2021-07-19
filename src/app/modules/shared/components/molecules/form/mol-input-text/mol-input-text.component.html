@@ -1,0 +1,12 @@
+<div class="mb-2 row">
+    <div class="col-sm-4">
+        <atm-label [LabelCaption]="label"></atm-label>
+    </div>
+    <div class="col-sm-8">
+        <atm-input [value]="value" (change)="doChange($event)" (click)="doTouched($event)"></atm-input>
+
+        <atm-validators [IsFormControlTouched]="touched" [IsFormControlInvalid]="IsFormControlInvalid"
+            [ValidatorsCaption]="ValidatorsCaption">
+        </atm-validators>
+    </div>
+</div>

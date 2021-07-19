@@ -1,0 +1,89 @@
+{
+    "GridHeader": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "NoTransaksi",
+                "format": "N2",
+                "headerText": "NO TRANSAKSI",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "NoAntrian",
+                "headerText": "NO ANTRIAN",
+                "type": "number",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "MrNo",
+                "headerText": "NO MR",
+                "type": "string",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaPasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Specialist",
+                "headerText": "POLI",
+                "type": "string",
+                "visible": false,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaDokter",
+                "headerText": "DOKTER",
+                "type": "string",
+                "visible": false,
+                "width": 300
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "WaktuDaftar",
+                "headerText": "WAKTU DAFTAR",
+                "type": "dateTime",
+                "format": "HH:mm:ss",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "WaktuDaftarUlang",
+                "headerText": "WAKTU DAFTAR ULANG",
+                "type": "dateTime",
+                "format": "HH:mm:ss",
+                "visible": true,
+                "width": 120
+            }
+        ]
+    }
+}

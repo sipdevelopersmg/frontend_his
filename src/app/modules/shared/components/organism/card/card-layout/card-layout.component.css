@@ -1,0 +1,9 @@
+.extra-padding-right {
+  padding-right: 5rem;
+}
+
+.atmNotification {
+  position: absolute;
+  margin-left: -7rem;
+  z-index: 2;
+}

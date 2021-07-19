@@ -1,0 +1,25 @@
+<mol-grid
+    [grid-toolbar]="gridToolbar"
+    [grid-filtering]="true"
+    (row-selected)="onRowSelecting($event)"
+    (toolbar-click)="onToolbarClick($event,template)"></mol-grid>
+
+
+<ng-template #template>
+    <div class="modal-content" id="modalGroup">
+        <div class="modal-header">
+            <h5 class="modal-title">Tarif</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
+        </div>
+        <div class="modal-body p-3">
+            <org-input-look-up [label]="'kode Tarif'"></org-input-look-up>
+            <org-input-look-up-kode [label]="'Kategori'"></org-input-look-up-kode>
+            <org-input-look-up [label]="'GL Acc'"></org-input-look-up>
+            <org-input-look-up [label]="'GL Acc IRD'"></org-input-look-up>
+            <mol-input-text [label]="'Keterangan'"></mol-input-text>                
+        </div>
+        <div class="modal-footer">
+            <atm-button-save-close (clickButton)="handleClickSaveGroup()"></atm-button-save-close>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,78 @@
+<org-card-layout [ButtonNav]="ButtonNav">
+    <div class="content">
+        <div class="form">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <mol-grid [grid-id]="'GridDokter'" [grid-width]="'100%'" [grid-lines]="'Both'"
+                        [grid-editSettings]="GridDokterEditSettings" [grid-toolbar]="GridDokterToolbar"
+                        [columns]="GridDokterColumns" (toolbar-click)="onToolbarClick($event)">
+                    </mol-grid>
+
+                    <!-- Dialog Add Grid Dokter has been here -->
+                    <ng-template #GridDokterAddDialog>
+                        <div class="modal-content border-0">
+                            <div class="modal-header p-2 background-ungu-tua">
+                                <h5 class="font-cabin text-white mb-0">
+                                    Dokter
+                                </h5>
+                                <button class="btn btn-light btn-sm" aria-label="Close"
+                                    (click)="onCloseGridDokterAddDialog()">
+                                    <i class="fas fa-window-close"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-body p-3">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <!-- Kode Dokter -->
+                                    <mol-input-text [label]="'Kode Dokter'"></mol-input-text>
+
+                                    <!-- Nama Dokter -->
+                                    <mol-input-text [label]="'Nama Dokter'"></mol-input-text>
+
+                                    <!-- Title -->
+                                    <mol-input-text [label]="'Title'"></mol-input-text>
+
+                                    <!-- Jenis Kelamin -->
+                                    <mol-input-select [label]="'Jenis Kelamin'"
+                                        [options]="[{ 'pria': 'Pria'}, {'wanita': 'Wanita'} ]">
+                                    </mol-input-select>
+
+                                    <!-- Tgl Lahir -->
+                                    <mol-input-datepicker [label]="'Tgl Lahir'"></mol-input-datepicker>
+
+                                    <!-- Spesialisasi -->
+                                    <org-input-look-up [label]="'Spesialisasi'"></org-input-look-up>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <!-- Alamat -->
+                                    <mol-input-textarea [label]="'Alamat'"></mol-input-textarea>
+
+                                    <!-- Telpon -->
+                                    <mol-input-text [label]="'Telepon'"></mol-input-text>
+
+                                    <!-- Handphone -->
+                                    <mol-input-text [label]="'Handphone'"></mol-input-text>
+
+                                    <!-- Poli Tugas -->
+                                    <org-input-look-up [label]="'Poli Tugas'"></org-input-look-up>
+
+                                    <!-- Status -->
+                                    <mol-input-select [label]="'Status'"
+                                        [options]="[{ 'active': 'Active' }, { 'nonActive': 'Non Active' }]">
+                                    </mol-input-select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer bg-light py-1">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                (click)="onCloseGridDokterAddDialog()">Tutup</button>
+                            <button type="button" class="btn btn-primary btn-sm">Simpan</button>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

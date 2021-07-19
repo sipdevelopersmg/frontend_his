@@ -1,0 +1,108 @@
+{
+    "GridHeader": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "NoBed",
+                "format": "N2",
+                "headerText": "NO BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Kamar",
+                "headerText": "KAMAR",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Ruang",
+                "headerText": "RUANG",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "MrNo",
+                "headerText": "NO RM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "TglMasuk",
+                "headerText": "TGL MASUK",
+                "type": "DateTime",
+                "format": "dd/mm/yyyy HH:mm:ss",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaPasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 300
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Umur",
+                "headerText": "UMUR (Thn)",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "KelasRawat",
+                "headerText": "KELAS RAWAT",
+                "type": "string",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Dokter",
+                "headerText": "Dokter",
+                "type": "string",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "PPJP",
+                "headerText": "PPJP",
+                "type": "string",
+                "visible": true,
+                "width": 120
+            }
+        ]
+    }
+}

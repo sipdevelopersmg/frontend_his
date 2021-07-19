@@ -1,0 +1,77 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form action="" class="p-2">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- No Register -->
+                <org-input-look-up [label]="'No Register'"></org-input-look-up>
+
+                <!-- No MR -->
+                <org-input-look-up [label]="'No MR'"></org-input-look-up>
+
+                <!-- Nama Pasien  -->
+                <mol-input-text [label]="'Nama Pasien'"></mol-input-text>
+
+                <!-- Debitur -->
+                <org-input-look-up-kode [label]="'Debitur'"></org-input-look-up-kode>
+
+                <!-- Ruang -->
+                <org-input-look-up-kode [label]="'Ruang'"></org-input-look-up-kode>
+
+                <!-- No Bed -->
+                <org-input-look-up-kode [label]="'No Bed'"></org-input-look-up-kode>
+
+                <!-- Kelas Pelayanan -->
+                <org-input-look-up-kode [label]="'Kelas Pelayanan'"></org-input-look-up-kode>
+
+                <!-- Hak Kelas -->
+                <org-input-look-up-kode [label]="'Hak Kelas'"></org-input-look-up-kode>
+
+                <!-- Nama Dokter -->
+                <org-input-look-up-kode [label]="'Nama Dokter'"></org-input-look-up-kode>
+
+                <!-- Jenis Pelayanan -->
+                <org-input-look-up-kode [label]="'Jenis Pelayanan'"></org-input-look-up-kode>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- Asal Rujukan -->
+                <org-input-look-up-kode [label]="'Asal Rujukan'"></org-input-look-up-kode>
+
+            <!-- Debitur -->
+            <org-input-look-up-kode [label]="'Debitur'"></org-input-look-up-kode>
+                <!-- Di Rujuk Oleh -->
+                <mol-input-text [label]="'Di Rujuk Oleh'"></mol-input-text>
+
+            <!-- Ruang -->
+            <org-input-look-up-kode [label]="'Ruang'"></org-input-look-up-kode>
+                <!-- No Surat Rujukan -->
+                <mol-input-text [label]="'No Surat Rujukan'"></mol-input-text>
+
+            <!-- No Bed -->
+            <org-input-look-up-kode [label]="'No Bed'"></org-input-look-up-kode>
+                <!-- Masuk Dari -->
+                <mol-input-select [label]="'Masuk Dari'" [options]="[{ 'IRDA': 'IRDA' }, { 'IRJA': 'IRJA' }]">
+                </mol-input-select>
+
+            <!-- Kelas Pelayanan -->
+            <org-input-look-up-kode [label]="'Kelas Pelayanan'"></org-input-look-up-kode>
+                <!-- Diagnosa Kerja -->
+                <org-input-look-up-kode [label]="'Diagnosa Kerja'"></org-input-look-up-kode>
+
+            <!-- Hak Kelas -->
+            <org-input-look-up-kode [label]="'Hak Kelas'"></org-input-look-up-kode>
+                <!-- Indikasi Rawat -->
+                <mol-input-textarea [label]="'Indikasi Rawat'"></mol-input-textarea>
+
+                <div class="row my-3">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <atm-checkbox [CheckboxLabel]="'Bayi Lahir'"></atm-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</org-card-layout>

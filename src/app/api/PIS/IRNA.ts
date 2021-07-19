@@ -1,0 +1,1 @@
+export const POST_ADMISI_RAWAT_INAP = 'postAdmisiRawatInap'

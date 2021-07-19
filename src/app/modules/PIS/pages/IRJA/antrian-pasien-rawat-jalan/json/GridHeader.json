@@ -1,0 +1,375 @@
+{
+    "GridHeader": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Nomor",
+                "format": "N2",
+                "headerText": "NOMOR",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "NoAntrian",
+                "headerText": "NO ANTRIAN",
+                "type": "number",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "JamAdmisi",
+                "headerText": "JAM ADMISI",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "TglAdmisi",
+                "headerText": "TGL ADMISI",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "JamMasukRawat",
+                "headerText": "JAM MASUK",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "TglMasukRawat",
+                "headerText": "TGL MASUK RAWAT",
+                "type": "string",
+                "visible": false,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "MrNo",
+                "headerText": "NO MR",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NoRegister",
+                "headerText": "NO REGISTER",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaPasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Sex",
+                "headerText": "SEX",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "TanggalLahir",
+                "headerText": "Tanggal Lahir",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Umur",
+                "format": "N",
+                "headerText": "UMUR",
+                "type": "number",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Kasus",
+                "headerText": "STATUS RM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "PolyCode",
+                "headerText": "POLY CODE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "PolyName",
+                "headerText": "POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "FromPolyCode",
+                "headerText": "FROM POLY CODE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "PolyKonsulPlan",
+                "headerText": "POLY KONSUL PLAN",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "EntryDate",
+                "headerText": "ENTRY DATE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "PartyId",
+                "format": "N2",
+                "headerText": "PARTY Id",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "PartyDebitur",
+                "format": "N2",
+                "headerText": "PARTY DEBITUR",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "DebiturCode",
+                "headerText": "DEBITUR CODE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "DebiturName",
+                "headerText": "DEBITUR",
+                "type": "string",
+                "visible": true,
+                "width": 250
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "JamPeriksa",
+                "headerText": "JAM PERIKSA",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "KelasPelayanan",
+                "headerText": "KELAS PELAYANAN",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "KodeDokter",
+                "headerText": "KODE DOKTER",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaDokter",
+                "headerText": "DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 300
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Rank",
+                "format": "N2",
+                "headerText": "RANK",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "IsKonsul",
+                "headerText": "IS KONSUL",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "OrderMrId",
+                "format": "N2",
+                "headerText": "ORDER MR ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Remark",
+                "headerText": "CATATAN",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "TglPeriksa",
+                "headerText": "TGL PERIKSA",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "IdRawatPeriksa",
+                "format": "N2",
+                "headerText": "ID RAWAT PERIKSA",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            }
+        ]
+    },
+    "GridHeaderKonsul": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "PolyCode",
+            "headerText": "KODE POLI",
+            "type": "string",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "PolyName",
+            "headerText": "NAMA POLI",
+            "type": "string",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "KodeDokterTujuan",
+            "headerText": "KODE DOKTER",
+            "type": "string",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "DokterTujuan",
+            "headerText": "NAMA DOKTER",
+            "type": "string",
+            "visible": true,
+            "width": 250
+        }
+    ]
+}

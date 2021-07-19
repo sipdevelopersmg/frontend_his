@@ -1,0 +1,120 @@
+<org-card-layout>
+    <form [formGroup]="FormDaftarUlangPasien">
+        <!-- Barcode -->
+        <div class="row" [class]="NoAntrianField.value == '' ? 'mb-0' : 'mb-3'">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <label for="" class="font-cabin mb-0 pt-2">
+                    Input No. Transaksi Anda
+                </label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <input #NoAntrianField type="text" id="NoAntrian" class="form-control" formControlName="NoTransaksi"
+                    (input)="onGetDataPasienByNoAntrian(NoAntrianField.value)">
+            </div>
+        </div>
+
+        <div class="row" *ngIf="NoAntrianField.value != ''">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                <div class="card p-3 border-0">
+                    <div class="row mb-2">
+                        <!-- Foto Pasien -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="card border-top shadow-sm">
+                                <div class="card-header text-center background-ungu-tua">
+                                    <h5 class="font-cabin mb-0 text-white">Foto Pasien</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <img [src]="MrNo.value ? '../../../../../../assets/image/pendaftaran-ulang-pasien/11.jpg' : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
+                                        class="foto-pasien" alt="foto-pasien rounded shadow-sm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <!-- No MR -->
+                            <div class="row mb-3">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">No. MR</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" readonly formControlName="MrNo">
+                                </div>
+                            </div>
+
+                            <!-- Nama Pasien -->
+                            <div class="row mb-3">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">Nama Pasien</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" readonly formControlName="NamaPasien">
+                                </div>
+                            </div>
+
+                            <!-- Alamat -->
+                            <div class="row mb-3">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">Alamat</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <textarea type="text" class="form-control" readonly formControlName="Alamat"
+                                        rows="4" style="height: 7.5rem;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <!-- Nama Dokter -->
+                            <div class="row mb-3">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">Nama Dokter</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" readonly formControlName="NamaDokter">
+                                </div>
+                            </div>
+
+                            <!-- Spesialisasi Dokter -->
+                            <div class="row mb-3">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">Spesialisasi Dokter</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" readonly formControlName="Specialist">
+                                </div>
+                            </div>
+
+                            <!-- No Antrian -->
+                            <div class="row mb-3">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">No Antrian</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" readonly formControlName="NoAntrian">
+                                </div>
+                            </div>
+
+                            <!-- Waktu Daftar -->
+                            <div class="row mb-2">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                                    <h5 class="font-cabin text-ungu-tua mb-1">Waktu Pendaftaran</h5>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="form-control" readonly formControlName="WaktuDaftar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                            <button class="btn btn-primary" type="button"
+                                (click)="onKonfirmasiDaftarUlang(FormDaftarUlangPasien.value)">
+                                <i class="fas fa-user-check"></i>&nbsp; Konfirmasi Daftar Ulang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</org-card-layout>
