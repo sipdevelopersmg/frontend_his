@@ -1,21 +1,27 @@
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-    selector: 'atm-input',
-    templateUrl: './atm-input.component.html',
-    styleUrls: ['./atm-input.component.css'],
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => AtmInputComponent),
-        multi: true,
-    }]
+    selector: 'atm-radio-button',
+    templateUrl: './atm-radio-button.component.html',
+    styleUrls: ['./atm-radio-button.component.css'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => AtmRadioButtonComponent),
+            multi: true
+        }
+    ]
 })
-export class AtmInputComponent implements ControlValueAccessor {
+export class AtmRadioButtonComponent implements OnInit, ControlValueAccessor {
 
-    constructor() { }
+    @Input('RadioButtonId') RadioButtonId: string;
 
-    // !! Gunakan State untuk mengatur state detail, normal, ataupun edit
+    @Input('RadioButtonLabel') RadioButtonLabel: string;
+
+    @Input('RadioButtonChecked') RadioButtonChecked: boolean = false;
+
     @Input('inputFieldState') inputFieldState = 'normal';
 
     @HostBinding('attr.id') externalId = '';
@@ -25,25 +31,21 @@ export class AtmInputComponent implements ControlValueAccessor {
         this.externalId = null;
     }
 
-    get id() { return this._ID; }
+    @Input('value') _value = true;
 
     private _ID = '';
-
-    @Input('value') _value = '';
 
     onChange: any = () => { };
     onTouched: any = () => { };
 
     touched = false;
-
     disabled = false;
 
-    get value() { return this._value; }
+    checked = false;
 
-    set value(val) {
-        this._value = val;
-        this.onChange(val);
-        this.onTouched();
+    constructor() { }
+
+    ngOnInit(): void {
     }
 
     registerOnChange(fn: any): void {
@@ -51,15 +53,11 @@ export class AtmInputComponent implements ControlValueAccessor {
     }
 
     registerOnTouched(fn: any): void {
-        console.log('touched');
-
         this.onTouched = fn;
     }
 
     markAsTouched(): void {
         if (!this.touched) {
-            console.log('touched');
-
             this.onTouched();
             this.touched = true;
         }
@@ -84,7 +82,13 @@ export class AtmInputComponent implements ControlValueAccessor {
         this.touched = true;
     }
 
-    // switch() {
-    //   this.value = !this.value;
-    // }
+    get id() { return this._ID; }
+
+    get value() { return this._value; }
+
+    set value(val) {
+        this._value = val;
+        this.onChange(val);
+        this.onTouched();
+    }
 }

@@ -1,20 +1,19 @@
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { Component, forwardRef, HostBinding, Input, OnInit } from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-    // tslint:disable-next-line: component-selector
-    selector: 'mol-input-text',
-    templateUrl: './mol-input-text.component.html',
-    styleUrls: ['./mol-input-text.component.css'],
+    selector: 'mol-input-text-split',
+    templateUrl: './mol-input-text-split.component.html',
+    styleUrls: ['./mol-input-text-split.component.css'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => MolInputTextComponent),
-            multi: true,
+            useExisting: forwardRef(() => MolInputTextSplitComponent),
+            multi: true
         },
     ],
 })
-export class MolInputTextComponent implements ControlValueAccessor {
+export class MolInputTextSplitComponent implements OnInit {
 
     @Input('FormControlNamed') FormControlNamed: FormControl;
 
@@ -45,7 +44,7 @@ export class MolInputTextComponent implements ControlValueAccessor {
 
     constructor() { }
 
-    OnInit(): void {
+    ngOnInit(): void {
         if (this.templateForm === 'LEFTRIGHT') {
             this.condition = true;
         } else {

@@ -6,6 +6,7 @@ import { DaftarPasienComponent } from "./pages/IRJA/daftar-pasien/daftar-pasien.
 import { DaftarUlangPasienComponent } from "./pages/IRJA/daftar-ulang-pasien/daftar-ulang-pasien.component";
 import { PendaftaranPasienBaruComponent } from "./pages/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.component";
 import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component";
+import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component";
 import { DataDokterComponent } from "./pages/setup-data/setup-dokter/data-dokter/data-dokter.component";
 import { SetupKodeTarifComponent } from "./pages/setup-data/setup-tarif/setup-kode-tarif/setup-kode-tarif.component";
 
@@ -29,7 +30,7 @@ const pisRoutes: Routes = [
         ]
     },
     {
-        path: "IRJA", component: null, data: { title: "Pendaftaran Pasien Baru" },
+        path: "IRJA", component: null, data: { title: "IRJA" },
         children: [
             { path: "pendaftaran-pasien-baru", component: PendaftaranPasienBaruComponent, data: { title: "Pendaftaran Pasien Baru" }, },
             { path: "antrian-pasien-rawat-jalan", component: AntrianPasienRawatJalanComponent, data: { title: "Antrian Pasien Rawat Jalan" }, },
@@ -41,7 +42,8 @@ const pisRoutes: Routes = [
     {
         path: "IRNA", component: null, data: { title: "IRNA" },
         children: [
-            { path: "pelayanan-pasien-irna", component: PelayananPasienIrnaComponent, data: { title: "Pelayanan Pasien Rawat Inap" } }
+            { path: "pelayanan-pasien-irna", component: PelayananPasienIrnaComponent, data: { title: "Pelayanan Pasien Rawat Inap" } },
+            { path: "pendaftaran-pasien-baru", component: PendaftaranPasienBaruIrnaComponent, data: { title: "Pendaftaran Pasien Baru" } }
         ]
     }
 ]

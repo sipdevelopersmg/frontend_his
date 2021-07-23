@@ -23,10 +23,8 @@
                 <mol-input-text formControlName="NamaPasien" [label]="'Nama Pasien'"></mol-input-text>
 
                 <!-- Tanggal Masuk -->
-                <!-- <mol-input-datepicker formControlName="TglMasukRawat" [label]="'Tanggal Masuk'">
-                </mol-input-datepicker> -->
                 <mol-datepicker-syncfusion [label]="'Tanggal Masuk'" [format]="'dd MMMM yyyy'"
-                    formControlName="TglMasukRawat">
+                    formControlName="TglMasukRawat" [min]="TglMasukMin">
                 </mol-datepicker-syncfusion>
 
                 <!-- Unit -->

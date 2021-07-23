@@ -31,6 +31,7 @@ import { AtmCardComponent } from './components/atoms/card/atm-card/atm-card.comp
 import { AtmCardHeaderComponent } from './components/atoms/card/atm-card-header/atm-card-header.component';
 import { AtmCardButtonComponent } from './components/atoms/card/atm-card-button/atm-card-button.component';
 import { AtmBoardComponent } from './components/atoms/board/atm-board/atm-board.component';
+import { AtmRadioButtonComponent } from './components/atoms/form/atm-radio-button/atm-radio-button.component';
 
 import { MolLockUpFiltersComponent } from './components/molecules/filter/mol-lock-up-filters/mol-lock-up-filters.component';
 import { MolInputGroupKodeComponent } from './components/molecules/form/mol-input-group-kode/mol-input-group-kode.component';
@@ -42,9 +43,11 @@ import { MolInputDatepickerComponent } from './components/molecules/form/mol-inp
 import { MolInputSelectComponent } from './components/molecules/form/mol-input-select/mol-input-select.component';
 import { MolButtonMasterComponent } from './components/molecules/button/mol-button-master/mol-button-master.component';
 import { MolButtonNavComponent } from './components/molecules/button/mol-button-nav/mol-button-nav.component';
-// tslint:disable-next-line: max-line-length
 import { MolDatepickerSyncfusionComponent } from './components/molecules/form/mol-datepicker-syncfusion/mol-datepicker-syncfusion.component';
 import { MolKanbanV1Component } from './components/molecules/kanban-v1/mol-kanban-v1/mol-kanban-v1.component';
+import { MolInputCheckboxComponent } from './components/molecules/form/mol-input-checkbox/mol-input-checkbox.component';
+import { MolRadioButtonComponent } from './components/molecules/form/mol-radio-button/mol-radio-button.component';
+import { MolInputTextSplitComponent } from './components/molecules/form/mol-input-text-split/mol-input-text-split.component';
 
 import { OrgInputLookUpKodeComponent } from './components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from './components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -53,8 +56,6 @@ import { OrgTabsItemComponentComponent } from './components/organism/tabs/org-ta
 import { OrgTabsLabelComponentComponent } from './components/organism/tabs/org-tabs-label-component/org-tabs-label-component.component';
 import { OrgTabsBodyComponentComponent } from './components/organism/tabs/org-tabs-body-component/org-tabs-body-component.component';
 import { OrgCardLayoutComponent } from './components/organism/card/card-layout/card-layout.component';
-import { MolInputCheckboxComponent } from './components/molecules/form/mol-input-checkbox/mol-input-checkbox.component';
-
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { MolInputCheckboxComponent } from './components/molecules/form/mol-input
         AtmCardHeaderComponent,
         AtmCardButtonComponent,
         AtmBoardComponent,
+        AtmRadioButtonComponent,
         MolInputTextareaComponent,
         MolGridComponent,
         MolInputTextComponent,
@@ -92,6 +94,8 @@ import { MolInputCheckboxComponent } from './components/molecules/form/mol-input
         MolDatepickerSyncfusionComponent,
         MolKanbanV1Component,
         MolInputCheckboxComponent,
+        MolRadioButtonComponent,
+        MolInputTextSplitComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,
@@ -133,6 +137,7 @@ import { MolInputCheckboxComponent } from './components/molecules/form/mol-input
         AtmCardHeaderComponent,
         AtmCardButtonComponent,
         AtmBoardComponent,
+        AtmRadioButtonComponent,
         MolInputTextareaComponent,
         MolGridComponent,
         MolInputTextComponent,
@@ -146,6 +151,8 @@ import { MolInputCheckboxComponent } from './components/molecules/form/mol-input
         MolDatepickerSyncfusionComponent,
         MolKanbanV1Component,
         MolInputCheckboxComponent,
+        MolRadioButtonComponent,
+        MolInputTextSplitComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,

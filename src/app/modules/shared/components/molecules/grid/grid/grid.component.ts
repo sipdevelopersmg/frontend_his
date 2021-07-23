@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { CommandClickEventArgs, ContextMenuItem, GridComponent } from '@syncfusion/ej2-angular-grids';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild } from '@angular/core';
+import { CommandClickEventArgs, ContextMenuItem, GridComponent, RecordDoubleClickEventArgs, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel, ToolbarItems } from '@syncfusion/ej2-grids';
 import { Columns } from './grid.model';
 
@@ -44,6 +45,7 @@ export class MolGridComponent implements OnInit, AfterViewInit {
     @Output('toolbar-click') onToolbarClicked = new EventEmitter<any>();
     @Output('command-click') onCommandClicked = new EventEmitter<any>();
     @Output('initialized') initialized: EventEmitter<MolGridComponent> = new EventEmitter<MolGridComponent>();
+    @Output('load-grid') onLoadedGrid = new EventEmitter<any>();
 
     constructor() {
     }
@@ -66,7 +68,7 @@ export class MolGridComponent implements OnInit, AfterViewInit {
         this.initialized.emit(this);
     }
 
-    onRowSelecting(args: any): void {
+    onRowSelecting(args: RowSelectEventArgs): void {
         this.onRowSelected.emit(args);
     }
 
@@ -74,7 +76,7 @@ export class MolGridComponent implements OnInit, AfterViewInit {
         this.onKeyPressed.emit(args);
     }
 
-    onDoubleClick(args: any): void {
+    onDoubleClick(args: RecordDoubleClickEventArgs): void {
         this.onDoubleClicked.emit(args.rowData);
     }
 
@@ -86,11 +88,15 @@ export class MolGridComponent implements OnInit, AfterViewInit {
         this.onActionCompleted.emit(args);
     }
 
-    onToolbarClick(args: any): void {
+    onToolbarClick(args: ClickEventArgs): void {
         this.onToolbarClicked.emit(args);
     }
 
     onCommandClick(args: CommandClickEventArgs): void {
         this.onCommandClicked.emit(args);
+    }
+
+    onLoadGrid(args: any): void {
+        this.onLoadedGrid.emit(args);
     }
 }

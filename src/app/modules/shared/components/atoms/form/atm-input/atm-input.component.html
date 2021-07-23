@@ -1,2 +1,2 @@
-<input type="text" [value]="value" class="form-control form-select-sm" (change)="doChange($event)"
-    (click)="doTouched($event)">
+<input type="text" [value]="value" class="form-control form-select-sm" [class.see-detail]="inputFieldState === 'detail'"
+    [readonly]="inputFieldState === 'detail'" (change)="doChange($event)" (click)="doTouched($event)">

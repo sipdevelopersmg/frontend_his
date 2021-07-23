@@ -11,9 +11,11 @@
 @import "~@syncfusion/ej2-angular-calendars/styles/fabric.css";
 @import "~@syncfusion/ej2-angular-dropdowns/styles/fabric.css";
 @import "~@syncfusion/ej2-lists/styles/fabric.css";
+@import "~ng-wizard/themes/ng_wizard.min.css";
+@import "~ng-wizard/themes/ng_wizard_theme_dots.min.css";
 
 body {
-  font-family: "Cabin", sans-serif;
+  font-family: "Cabin", sans-serif !important;
   background-color: #f6f4f7 !important;
 }
 
@@ -24,6 +26,82 @@ body {
   --hitam-muda: #637280;
   --abu-muda: #cbd1d6;
   --abu-tua: #9f9f9f;
+}
+
+.icon {
+  --size: 40px;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  transition: 0.12s;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: #0083bf;
+}
+
+.icon-pis {
+  -webkit-mask-image: url("./assets/image/main-menu/patient-information-system.svg");
+  mask-image: url("./assets/image/main-menu/patient-information-system.svg");
+}
+
+.icon-erm {
+  -webkit-mask-image: url("./assets/image/main-menu/electronic-medical-record.svg");
+  mask-image: url("./assets/image/main-menu/electronic-medical-record.svg");
+}
+
+.icon-pharmacy {
+  -webkit-mask-image: url("./assets/image/main-menu/pharmacy-information-system.svg");
+  mask-image: url("./assets/image/main-menu/pharmacy-information-system.svg");
+  margin-top: 10px;
+}
+
+.icon-material-management {
+  -webkit-mask-image: url("./assets/image/main-menu/material-management.svg");
+  mask-image: url("./assets/image/main-menu/material-management.svg");
+}
+
+.icon-order-management {
+  -webkit-mask-image: url("./assets/image/main-menu/order-management.svg");
+  mask-image: url("./assets/image/main-menu/order-management.svg");
+  margin-top: 10px;
+}
+
+.icon-asset-management {
+  -webkit-mask-image: url("./assets/image/main-menu/asset-management.svg");
+  mask-image: url("./assets/image/main-menu/patient-information-system.svg");
+}
+
+.icon-nutrition {
+  -webkit-mask-image: url("./assets/image/main-menu/nutrition-information-system.svg");
+  mask-image: url("./assets/image/main-menu/nutrition-information-system.svg");
+}
+
+.icon-laundry {
+  -webkit-mask-image: url("./assets/image/main-menu/laundry-information-system.svg");
+  mask-image: url("./assets/image/main-menu/laundry-information-system.svg");
+}
+
+.icon-human-resource {
+  -webkit-mask-image: url("./assets/image/main-menu/human-resource-information-system.svg");
+  mask-image: url("./assets/image/main-menu/human-resource-information-system.svg");
+  margin-top: 10px;
+}
+
+.icon-finance {
+  -webkit-mask-image: url("./assets/image/main-menu/finance-information-system.svg");
+  mask-image: url("./assets/image/main-menu/finance-information-system.svg");
+  margin-top: 10px;
+}
+
+.icon-executive-reporting {
+  -webkit-mask-image: url("./assets/image/main-menu/executive-summary-reporting.svg");
+  mask-image: url("./assets/image/main-menu/executive-summary-reporting.svg");
+  margin-top: 10px;
+}
+
+.icon-e-office {
+  -webkit-mask-image: url("./assets/image/main-menu/e-office-information-system.svg");
+  mask-image: url("./assets/image/main-menu/e-office-information-system.svg");
 }
 
 .cursor-pointer {
@@ -132,5 +210,11 @@ body {
   min-height: 75px !important;
 }
 
-/* html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+.ng-wizard-theme-dots > ul.step-anchor {
+  justify-content: center !important;
+}
+
+.ng-wizard-theme-dots > ul.step-anchor > li {
+  width: 12rem;
+  max-width: 12rem;
+}

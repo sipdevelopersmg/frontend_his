@@ -1,11 +1,11 @@
-<ejs-grid #grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="30"
+<ejs-grid #Grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="30"
     [gridLines]="gridLines" [allowPaging]="gridPaging" [allowResizing]="true" [allowFiltering]='gridFiltering'
     [pageSettings]="gridInitialPage" [toolbar]="toolbar" [editSettings]="gridEditingSettings"
     [contextMenuItems]="gridContextMenuItems" [selectionSettings]="gridSelectionSettings"
     (rowSelected)="onRowSelecting($event)" (keyPressed)="onKeyPressing($event)"
     (recordDoubleClick)="onDoubleClick($event)" (actionBegin)="onActionBegin($event)"
     (actionComplete)="onActionComplete($event)" (toolbarClick)="onToolbarClick($event)"
-    (commandClick)="onCommandClick($event)">
+    (commandClick)="onCommandClick($event)" (load)="onLoadGrid($event)">
     <e-columns>
         <ng-template ngFor let-item [ngForOf]="columns">
             <e-column [width]="item.width" [field]="item.field" [headerText]="item.headerText" [visible]="item.visible"

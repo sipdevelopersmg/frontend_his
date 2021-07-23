@@ -1,8 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { KeyboardEventArgs } from '@syncfusion/ej2-base';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { Columns } from 'src/app/modules/shared/components/molecules/grid/grid/grid.model';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
@@ -18,8 +20,10 @@ import * as Config from './json/setup-pabrik.config.json';
 })
 export class SetupPabrikComponent implements OnInit {
 
+    // ** Variable untuk menyimpan Button Navigasi Halaman
     ButtonNav: ButtonNavModel[];
 
+    // ** Variable untuk mengatur Form Input Data Pabrik
     FormInputDataPabrik: FormGroup;
 
     // tslint:disable-next-line: no-inferrable-types
@@ -28,20 +32,24 @@ export class SetupPabrikComponent implements OnInit {
 
     GridPabrikDatasource: any[];
     GridPabrikColumns: Columns[];
-
-    public GridPabrikConfig = Config;
-
+    GridDataPabrikPagingSettings = { pageSizes: true, pageSize: 10 };
+    private GridDataPabrik: MolGridComponent = null;
     GridDataPabrikEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
     GridDataPabrikToolbar: any[];
+
+    public GridPabrikConfig = Config;
 
     modalRef: BsModalRef;
     @ViewChild('modalDialogAddDataPabrik') modalDialogAddDataPabrik: TemplateRef<any>;
 
-
-    CheckboxStatus: object[] = [
-        { id: 'active', value: true, label: 'Active' },
-        { id: 'active', value: false, label: 'Non Active' },
+    RadioButtonStatus: object[] = [
+        { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'normal' },
+        { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'normal' },
     ];
+
+    inputFieldState = 'normal';
+
+    SelectedDataPabrik: ISetupPabrikModel;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -76,10 +84,11 @@ export class SetupPabrikComponent implements OnInit {
         this.GridDataPabrikToolbar = [
             { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
             { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+            { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
             'Search'
         ];
 
-        this.onGetAllSetupPabrik();
+        // this.onGetAllSetupPabrik();
     }
 
     onSetFormSetupPabrikAttributes(): void {
@@ -109,16 +118,35 @@ export class SetupPabrikComponent implements OnInit {
         this.TabId = TabId;
     }
 
+    onInitalizedGrid(component: MolGridComponent) {
+        this.GridDataPabrik = component;
+    }
+
     onSelectedRow(args: any): void {
-        console.log(args);
+        this.SelectedDataPabrik = args.data;
     }
 
     onToolbarClick(args: any): void {
         const item = args.item.id;
 
         switch (item) {
-            case 'add': this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputPabrik'); break;
-            default: break;
+            case 'add':
+                this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputPabrik');
+                this.inputFieldState = 'normal';
+                this.FormInputDataPabrik.reset();
+                break;
+            case 'edit':
+                this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputPabrik');
+                this.inputFieldState = 'edit';
+                this.onEditDataPabrik(this.SelectedDataPabrik);
+                break;
+            case 'detail':
+                this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputPabrik');
+                this.inputFieldState = 'detail';
+                this.onSeeDetailDataPabrik(this.SelectedDataPabrik);
+                break;
+            default:
+                break;
         }
     }
 
@@ -130,6 +158,53 @@ export class SetupPabrikComponent implements OnInit {
         //     Object.assign({}, { class: 'modal-lg' })
         // );
 
+    }
+
+    onEditDataPabrik(DataPabrik: ISetupPabrikModel): void {
+        this.FormInputDataPabrik.reset();
+        this.FormInputDataPabrik.setValue(DataPabrik);
+
+        this.RadioButtonStatus = [
+            { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'normal' },
+            { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'normal' },
+        ];
+
+        this.FormInputDataPabrik.setValue(DataPabrik);
+
+        if (DataPabrik.is_active) {
+            this.RadioButtonStatus = [
+                { id: 'active', value: true, label: 'Active', checked: true, inputFieldState: 'edit' },
+                { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'edit' },
+            ];
+        } else {
+            this.RadioButtonStatus = [
+                { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'edit' },
+                { id: 'nonActive', value: false, label: 'Non Active', checked: true, inputFieldState: 'edit' },
+            ];
+        };
+    }
+
+    onSeeDetailDataPabrik(DataPabrik: ISetupPabrikModel): void {
+        this.FormInputDataPabrik.reset();
+
+        this.RadioButtonStatus = [
+            { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'normal' },
+            { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'normal' },
+        ];
+
+        this.FormInputDataPabrik.setValue(DataPabrik);
+
+        if (DataPabrik.is_active) {
+            this.RadioButtonStatus = [
+                { id: 'active', value: true, label: 'Active', checked: true, inputFieldState: 'detail' },
+                { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'detail' },
+            ];
+        } else {
+            this.RadioButtonStatus = [
+                { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'detail' },
+                { id: 'nonActive', value: false, label: 'Non Active', checked: true, inputFieldState: 'detail' },
+            ];
+        };
     }
 
     onClickButtonNav(ButtonId: string): void {
@@ -168,8 +243,6 @@ export class SetupPabrikComponent implements OnInit {
         this.FormInputDataPabrik.reset();
 
         this.onSetFormSetupPabrikAttributes();
-
-        console.log(this.FormInputDataPabrik.value);
     }
 
     onCancel(): void {
@@ -196,6 +269,26 @@ export class SetupPabrikComponent implements OnInit {
             .subscribe((result) => {
                 console.log(result);
             });
+    }
+
+    onLoadGridPabrik(args: any): void {
+        document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.onKeyDownHandler.bind(this));
+    }
+
+    onKeyDownHandler(event: KeyboardEvent) {
+        if (event.keyCode === 13) {
+            alert('Enter Has Been Pressed');
+        };
+
+        if (event.keyCode === 46) {
+            alert('Delete Key Has Been Pressed');
+        };
+
+        if (event.keyCode === 40) {
+            // let currentElement = this.GridDataPabrik.Grid.page
+
+            console.log(this.GridDataPabrik.Grid.columns.length);
+        }
     }
 
     get id_pabrik(): AbstractControl { return this.FormInputDataPabrik.get('id_pabrik'); }

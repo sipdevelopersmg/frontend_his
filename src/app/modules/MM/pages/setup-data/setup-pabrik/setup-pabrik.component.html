@@ -5,10 +5,13 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'DataPabrik'">Data Pabrik</org-tabs-label>
             <org-tabs-body>
-                <mol-grid [grid-id]="'GridDataPabrik'" [grid-height]="300" [grid-DataSource]="GridPabrikDatasource"
+                <mol-grid #GridDataPabrik [grid-id]="'GridDataPabrik'" [grid-height]="300"
+                    [grid-DataSource]="GridPabrikConfig.GridPabrikDataSource" [grid-paging]="true"
                     [grid-editSettings]="GridDataPabrikEditSettings" [grid-lines]="'Both'"
-                    [grid-toolbar]="GridDataPabrikToolbar" [columns]="GridPabrikConfig.GridPabrikColumns"
-                    (row-selected)="onSelectedRow($event)" (toolbar-click)="onToolbarClick($event)">
+                    [grid-initial-page]="GridDataPabrikPagingSettings" [grid-toolbar]="GridDataPabrikToolbar"
+                    [columns]="GridPabrikConfig.GridPabrikColumns" (row-selected)="onSelectedRow($event)"
+                    (toolbar-click)="onToolbarClick($event)" (load-grid)="onLoadGridPabrik($event)"
+                    (initialized)="onInitalizedGrid($event)">
                 </mol-grid>
 
                 <!-- Panggil Modal Dialog Ketika click tombol Add di Toolbar Grid -->
@@ -36,13 +39,15 @@
                             <!-- Kode Pabrik -->
                             <mol-input-text [label]="'Kode Pabrik'" formControlName="kode_pabrik"
                                 [IsFormControlInvalid]="kode_pabrik.invalid"
-                                [ValidatorsCaption]="'Kode Pabrik Tidak Boleh Kosong'">
+                                [ValidatorsCaption]="'Kode Pabrik Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
                             </mol-input-text>
 
                             <!-- Nama Pabrik -->
                             <mol-input-text [label]="'Nama Pabrik'" formControlName="nama_pabrik"
                                 [IsFormControlInvalid]="nama_pabrik.invalid"
-                                [ValidatorsCaption]="'Nama Pabrik Tidak Boleh Kosong'">
+                                [ValidatorsCaption]="'Nama Pabrik Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
                             </mol-input-text>
                         </div>
                     </div>
@@ -56,44 +61,56 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                             <!-- Kontak -->
-                                            <mol-input-text [label]="'Kontak'" formControlName="contact_person">
+                                            <mol-input-text [label]="'Kontak'" formControlName="contact_person"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
 
                                             <!-- Alamat -->
-                                            <mol-input-text [label]="'Alamat Pabrik'" formControlName="alamat_pabrik">
+                                            <mol-input-text [label]="'Alamat Pabrik'" formControlName="alamat_pabrik"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
 
                                             <!-- Kota -->
-                                            <mol-input-text [label]="'Kab / Kota'" formControlName="kota">
+                                            <mol-input-text [label]="'Kab / Kota'" formControlName="kota"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
 
                                             <!-- Provinsi -->
-                                            <mol-input-text [label]="'Provinsi'" formControlName="provinsi">
+                                            <mol-input-text [label]="'Provinsi'" formControlName="provinsi"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
 
                                             <!-- Negara -->
-                                            <mol-input-text [label]="'Negara'" formControlName="negara">
+                                            <mol-input-text [label]="'Negara'" formControlName="negara"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                             <!-- Kode Pos -->
-                                            <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos">
+                                            <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
 
                                             <!-- No. Telepon -->
-                                            <mol-input-text [label]="'No. Telepon'" formControlName="telepon">
+                                            <mol-input-text [label]="'No. Telepon'" formControlName="telepon"
+                                                [inputFieldState]="inputFieldState">
                                             </mol-input-text>
 
                                             <!-- No. Fax -->
-                                            <mol-input-text [label]="'No. Fax'" formControlName="fax"></mol-input-text>
+                                            <mol-input-text [label]="'No. Fax'" formControlName="fax"
+                                                [inputFieldState]="inputFieldState"></mol-input-text>
 
                                             <!-- Email -->
-                                            <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
+                                            <mol-input-text [label]="'Email'" formControlName="email"
+                                                [inputFieldState]="inputFieldState"></mol-input-text>
 
                                             <!-- Status Active -->
-                                            <mol-input-checkbox [label]="'Status'" formControlName="is_active"
+                                            <!-- <mol-input-checkbox [label]="'Status'" formControlName="is_active"
                                                 [CheckboxObject]="CheckboxStatus">
-                                            </mol-input-checkbox>
+                                            </mol-input-checkbox> -->
+                                            <mol-radio-button [id]="'is_active'" [label]="'Status'"
+                                                formControlName="is_active" [RadioButtonObject]="RadioButtonStatus">
+                                            </mol-radio-button>
                                         </div>
                                     </div>
                                 </div>

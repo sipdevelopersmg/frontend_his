@@ -3,9 +3,12 @@ div.card-hover:hover {
   transition: all 0.25s;
 }
 
-div.card-hover:hover > .card-body > .row > .col-10 > h5,
-div.card-hover:hover > .card-body > .row > .col-2 > h5 > svg {
+div.card-hover:hover > .card-body > .row > .col-10 > h5 {
   color: white !important;
+}
+
+div.card-hover:hover > .card-body > .row > .col-2 > .icon {
+  background-color: white !important;
 }
 
 .card-round {
@@ -24,4 +27,9 @@ div.card-hover:hover > .card-body > .row > .col-2 > h5 > svg {
 
 h5.font-cabin.mb-0 {
   font-size: 17px;
+}
+
+img.image-main-menu {
+  height: 2rem;
+  max-height: 2rem;
 }
