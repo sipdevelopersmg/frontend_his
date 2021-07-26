@@ -20,7 +20,7 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
 export class AntrianPasienRawatJalanComponent implements OnInit {
 
     GridAntrianIrjaEditSettings: EditSettingsModel = { allowAdding: true };
-    GridAntrianIrjaToolbar: object[];
+    GridAntrianIrjaToolbar: any;
     GridAntrianColums: [];
     GridAntrianIrjaDataSource: any[];
     GridAntrianIrjaContextMenuItems: MenuItemModel[] = [
@@ -53,36 +53,38 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
         private antrianPasienRawatJalanService: AntrianPasienRawatJalanService) { }
 
     ngOnInit(): void {
-        // this.GridAntrianIrjaToolbar = [
-        //     { text: 'Refresh', tooltipText: 'Refresh', prefixIcon: 'fas fa-sync', id: 'refresh' },
-        //     'Search'
-        // ];
+        this.GridAntrianIrjaToolbar = [
+            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+            { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+            { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash fa-sm', id: 'delete' },
+            'Search'
+        ];
 
         this.GridAntrianIrjaDataSource = [
             {
-                Rx: 'Rx',
                 No: '1',
-                KodeObat: 'AOG0681NVL',
-                NamaObat: 'ACETYLCYSTEINE 200 MG CAP',
-                Satuan: 'CAP',
-                Qty: '15',
-                JumlahPemakaian: '3 Kali Sehari',
-                AturanPakai: 'Setelah Makan',
-                WaktuPakai: 'Pagi, Siang, Malam',
-                Catatan: 'Mohon Untuk Diminum Rutin',
+                NamaUser: 'Jennie',
+                RoleUser: 'Admisi',
+                CreatedDate: new Date(),
             },
-            // {
-            //     Rx: 'Rx',
-            //     No: '2',
-            //     KodeObat: 'AOG0681NVL',
-            //     NamaObat: 'PARACETAMOL 500 MG STRIP',
-            //     Satuan: 'STRIP',
-            //     Qty: '1.5',
-            //     JumlahPemakaian: '3 Kali Sehari',
-            //     AturanPakai: 'Setelah Makan',
-            //     WaktuPakai: 'Pagi, Siang, Malam',
-            //     Catatan: 'Mohon Untuk Diminum Rutin',
-            // },
+            {
+                No: '2',
+                NamaUser: 'Jisoo',
+                RoleUser: 'Admisi',
+                CreatedDate: new Date(),
+            },
+            {
+                No: '3',
+                NamaUser: 'Rose',
+                RoleUser: 'Farmasi',
+                CreatedDate: new Date(),
+            },
+            {
+                No: '4',
+                NamaUser: 'Lalisa',
+                RoleUser: 'Dokter',
+                CreatedDate: new Date(),
+            },
         ];
     }
 

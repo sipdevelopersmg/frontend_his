@@ -61,7 +61,7 @@ export class PendaftaranPasienBaruIrnaComponent implements OnInit {
             kelurahan: ['', []],
             id_wilayah: ['', []],
             wilayah: ['', []],
-        })
+        });
     }
 
     onClickButtonTambahAlamat(): void {

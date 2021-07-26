@@ -15,28 +15,30 @@
     <!-- Sidebar Menu Item -->
     <li [id]="item.id" class="list-group-item cursor-pointer p-0 mb-1 list-sidebar-item"
         *ngFor="let item of MenuSidebar">
-        <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.Name }}"
-            (click)="item.SidebarChildMenu?.length >= 1 ? onTogglingHideChildMenu(item.Id) : onClickSidebarItem(item.Url) ">
+        <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}"
+            (click)="item.sidebarChild?.length >= 1 ? onTogglingHideChildMenu(item.id_menu_sidebar) : onClickSidebarItem(item.url) ">
             <div class="col-1 text-center" [hidden]="SidebarCollapse">
-                <i class="fas fa-angle-right" [hidden]="item.SidebarChildMenu?.length < 1" id="{{item.Id}}Icon"> </i>
+                <i class="fas fa-angle-right" [hidden]="item.sidebarChild?.length < 1"
+                    id="{{item.id_menu_sidebar}}Icon"> </i>
             </div>
             <div class="col-2 text-center" [class]="SidebarCollapse ? 'col-12' : 'col-2'">
-                <i class="fas fa-cube"></i>
+                <i class="fas {{ item.icon }}"></i>
             </div>
             <div class="col-9" [class]="SidebarCollapse ? 'is-hidden' : 'is-show' ">
-                <span class="font-cabin mb-2">{{ item.Name }}</span>
+                <span class="font-cabin mb-2">{{ item.caption }}</span>
             </div>
         </div>
 
-        <ul class="list-group list-group-child is-hidden" id="{{ item.Id }}ChildMenu" [hidden]="SidebarCollapse">
-            <li class="list-group-item cursor-pointer p-0 mb-1" *ngFor="let childItem of item.SidebarChildMenu"
-                (click)="onClickSidebarItem(childItem.Url)">
-                <div class="items-group-child mx-0 px-0" data-bs-toggle="tooltip" title="{{ childItem.Name }}">
+        <ul class="list-group list-group-child is-hidden" id="{{ item.id_menu_sidebar }}ChildMenu"
+            [hidden]="SidebarCollapse">
+            <li class="list-group-item cursor-pointer p-0 mb-1" *ngFor="let childItem of item.sidebarChild"
+                (click)="onClickSidebarItem(childItem.url)">
+                <div class="items-group-child mx-0 px-0" data-bs-toggle="tooltip" title="{{ childItem.caption }}">
                     <div class="col-3 text-end">
-                        <i class="fas fa-cube"></i>
+                        <i class="fas {{ childItem.icon }}"></i>
                     </div>
                     <div class="col-9 ps-3">
-                        <span class="font-cabin mb-2">{{ childItem.Name }}</span>
+                        <span class="font-cabin mb-2">{{ childItem.caption }}</span>
                     </div>
                 </div>
             </li>

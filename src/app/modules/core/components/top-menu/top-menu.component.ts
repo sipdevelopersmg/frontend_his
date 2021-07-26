@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ChildMenu } from 'src/app/modules/core/models/navigation/menu.model';
+import { ChildMenu, TopMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { NavigationService } from 'src/app/modules/shared/services/navigation.se
 })
 export class MolTopMenuComponent implements OnInit {
 
-    ChildMenu: ChildMenu[];
+    ChildMenu: TopMenuModel[];
 
     @Input("ToggleVisibility") ToggleVisibility: boolean = false;
 
@@ -38,7 +38,7 @@ export class MolTopMenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.ChildMenu = JSON.parse(localStorage.getItem("ActiveChildMenu"));
+        this.ChildMenu = JSON.parse(sessionStorage.getItem("ActiveChildMenu"));
 
         this.onTogglingVisibility();
     }
@@ -50,14 +50,12 @@ export class MolTopMenuComponent implements OnInit {
                     this.onTogglingVisibility();
                 }
 
-
-                console.log(_result);
                 this.ChildMenu = _result;
             })
     }
 
     onGetSidebarMenu(ChildMenuId: number) {
-        this.navigationService.onFetchSidebarMenuFromLocalStorage(ChildMenuId);
+        this.navigationService.onFetchSidebarMenuFromSessionStorage(ChildMenuId);
     }
 
     onTogglingVisibility() {

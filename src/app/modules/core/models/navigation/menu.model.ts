@@ -1,3 +1,69 @@
+export interface MenuJsonModel {
+    mainMenu: MainMenuModel[];
+    topMenu: TopMenuModel[];
+    sidebarMenu: SidebarMenuModel[];
+}
+
+export interface MainMenuModel {
+    id_menu: number;
+    is_parent: boolean;
+    id_menu_parent: number;
+    icon: string;
+    caption: string;
+}
+
+export interface TopMenuModel {
+    id_menu: number;
+    is_parent: boolean;
+    id_menu_parent: number;
+    icon: string;
+    caption: string;
+}
+
+export interface SidebarMenuModel {
+    id_menu_sidebar: number;
+    id_menu_sidebar_parent: number;
+    id_top_menu: number;
+    is_parent: boolean;
+    icon: string;
+    caption: string;
+    url: string;
+    sidebarChild?: SidebarChildMenuModel[];
+    button?: ButtonModel[];
+    fieldgrid?: FieldGridModel[];
+}
+
+interface SidebarChildMenuModel {
+    id_menu_sidebar: number;
+    id_menu_sidebar_parent: number;
+    is_parent: boolean;
+    icon: string;
+    caption: string;
+    url: string;
+    button?: ButtonModel[];
+    fieldgrid?: FieldGridModel[];
+}
+
+interface ButtonModel {
+    id_jenis_button: number;
+    icon: string;
+    icon2: string;
+    caption: string;
+    keterangan: string;
+    stack_icon: string;
+}
+
+interface FieldGridModel {
+    format_field: string;
+    id_field_grid: number;
+    id_menu_sidebar: number;
+    keterangan: string;
+    nama_asli_field: string;
+    nama_header_text: string;
+    tipe_field: string;
+    width_field: number;
+}
+
 export interface MainMenu {
     Id: number;
     Name: string;

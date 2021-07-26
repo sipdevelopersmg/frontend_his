@@ -3,32 +3,31 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { MainMenu, ChildMenu, SidebarMenu } from 'src/app/modules/core/models/navigation/menu.model';
+import { ChildMenu, SidebarMenu, MainMenuModel, TopMenuModel, SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { HttpResponseModel } from '../models/Http-Operation/HttpResponseModel';
 import { map } from 'rxjs/operators';
+import { IAuthenticationResponseModel } from '../../auth/models/authentication.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NavigationService {
 
-    private httpHeader: HttpHeaders;
-
     private history: string[] = [];
 
     // ** Ini adalah Global State untuk menampung Main Menu yg telah kita pilih
-    public MainMenuSubject = new Subject<MainMenu>();
+    public MainMenuSubject = new Subject<MainMenuModel>();
 
     // ** Ini adalah Global State untuk menampung Child / Top Menu yg telah kita pilih
-    public ChildTopMenuSubject = new Subject<ChildMenu>();
-    public ActiveChildTopMenuSubject = new Subject<ChildMenu>();
+    public ChildTopMenuSubject = new Subject<TopMenuModel>();
+    public ActiveChildTopMenuSubject = new Subject<TopMenuModel>();
 
     // ** Ini adalah Global State untuk menampung Main Menu Title yg telah kita pilih
     public MainMenuTitleSubject = new Subject<string>();
 
-    // ** Ini adalah Global State untuk menampung Sidebar Menu yg telah kita get dari local storage
-    public SidebarMenuSubject = new Subject<SidebarMenu>();
-    public ActiveSidebarMenuSubject = new Subject<SidebarMenu>();
+    // ** Ini adalah Global State untuk menampung Sidebar Menu yg telah kita get dari session storage
+    public SidebarMenuSubject = new Subject<SidebarMenuModel>();
+    public ActiveSidebarMenuSubject = new Subject<SidebarMenuModel>();
 
     // ** Ini adalah Global State untuk menampung Toggle / Variable BackToMainMenu
     // ** Digunakan di treeview-menu.component.ts dan main-menu.component.ts
@@ -45,48 +44,20 @@ export class NavigationService {
                 this.history.push(event.urlAfterRedirects);
             }
         });
-
-        this.httpHeader = new HttpHeaders();
-        this.httpHeader = this.httpHeader.set('Content-Type', 'application/json');
     }
 
-    defaultGetRequestFromFirebase(url: string): Observable<any> {
-        return this.httpClient.get<any>(
-            `${environment.firebaseRtdbUrl}` + url,
-            {
-                headers: this.httpHeader
-            }
-        ).pipe(
-            map((result: HttpResponseModel) => {
-                return result;
-            })
-        );
-    }
+    // !! ================ Main Menu Subject ======================   
+    // ** Ini adalah Method untuk mendapatkan MainMenu dari session storage
+    onFetchMainMenuFromSessionStorage(): any {
+        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
 
-    // !! ================ Main Menu Subject ======================
-    // ** Ini adalah Method untuk mendapatkan MainMenu
-    onFetchMenuFromFirebase(): Subscription {
-        const mainMenu = localStorage.getItem('MainMenu');
+        const MainMenu = UserData.menuJson.mainMenu;
 
-        if (mainMenu) {
-            this.MainMenuSubject.next(JSON.parse(mainMenu));
-        } else {
-            return this.defaultGetRequestFromFirebase('Dashboard/Menu.json')
-                .subscribe(
-                    (result) => {
-                        localStorage.setItem('MainMenu', JSON.stringify(result));
-                    }, (error) => {
-                        console.log(error);
-                    }, () => {
-                        this.MainMenuSubject.next(this.onFetchMainMenuFromLocalStorage());
-                    }
-                );
-        }
-    }
+        sessionStorage.setItem('MainMenu', JSON.stringify(MainMenu));
 
-    // ** Ini adalah Method untuk mendapatkan MainMenu dari local storage
-    onFetchMainMenuFromLocalStorage(): any {
-        return JSON.parse(localStorage.getItem('MainMenu'));
+        this.MainMenuSubject.next(JSON.parse(sessionStorage.getItem('MainMenu')));
+
+        return MainMenu;
     }
 
     onGetMainMenuSubject(): Observable<any> {
@@ -96,35 +67,19 @@ export class NavigationService {
 
 
     // !! ================ Child Menu / Top Menu Subject ==========
-    // ** Ini adalah Method untuk mendapatkan ChildMenu
-    onFetchChildMenuFromFirebase(): Subscription {
-        const childMenu = JSON.parse(localStorage.getItem('ChildMenu'));
+    // ** Ini adalah Method untuk mendapatkan ChildMenu dari session storage
+    onFetchChildMenuFromSessionStorage(ParentId: number): any {
+        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
 
-        if (childMenu) {
-            // ** Do Nothing
-        } else {
-            return this.defaultGetRequestFromFirebase('Dashboard/ChildMenu.json')
-                .subscribe(
-                    (result) => {
-                        localStorage.setItem('ChildMenu', JSON.stringify(result));
-                    }, (error) => {
-                        console.log(error);
-                    }
-                );
-        }
-    }
+        const TopMenu = UserData.menuJson.topMenu;
 
-    // ** Ini adalah Method untuk mendapatkan ChildMenu dari local storage
-    onFetchChildMenuFromLocalStorage(ParentId: number): void {
-        const childMenu = JSON.parse(localStorage.getItem('ChildMenu'));
-
-        const childMenuById = childMenu.filter((menu: ChildMenu) => {
-            return menu.ParentId === ParentId;
+        const childMenuById = TopMenu.filter((menu: TopMenuModel) => {
+            return menu.id_menu_parent === ParentId;
         });
 
-        localStorage.setItem('ActiveChildMenu', JSON.stringify(childMenuById));
+        sessionStorage.setItem('ActiveChildMenu', JSON.stringify(childMenuById));
 
-        this.onSetActiveChildMenuSubject(JSON.parse(localStorage.getItem('ActiveChildMenu')));
+        this.onSetActiveChildMenuSubject(JSON.parse(sessionStorage.getItem('ActiveChildMenu')));
 
         return childMenuById;
     }
@@ -142,34 +97,20 @@ export class NavigationService {
 
 
     // !! ================ Sidebar Menu Subject ===================
-    // ** Ini adalah Method untuk mendapatkan SidebarMenu
-    onFetchSidebarMenuFromFirebase(): Subscription {
-        const sidebarMenu = JSON.parse(localStorage.getItem('SidebarMenu'));
+    // ** Ini adalah Method untuk mendapatkan ChildMenu dari session storage
+    onFetchSidebarMenuFromSessionStorage(ChildMenuId: number): any {
 
-        if (sidebarMenu) {
-            // ** Do Nothing!
-        } else {
-            return this.defaultGetRequestFromFirebase('Dashboard/SidebarMenu.json')
-                .subscribe(
-                    (result) => {
-                        localStorage.setItem('SidebarMenu', JSON.stringify(result));
-                    }, (error) => {
-                        console.log(error);
-                    });
-        }
-    }
+        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
 
-    // ** Ini adalah Method untuk mendapatkan ChildMenu dari local storage
-    onFetchSidebarMenuFromLocalStorage(ChildMenuId: number): void {
-        const sidebarMenu = JSON.parse(localStorage.getItem('SidebarMenu'));
+        const sidebarMenu = UserData.menuJson.sidebarMenu;
 
-        const sidebarMenuById = sidebarMenu.filter((item: SidebarMenu) => {
-            return item.ChildMenuId === ChildMenuId;
+        const sidebarMenuById = sidebarMenu.filter((item: SidebarMenuModel) => {
+            return item.id_top_menu == ChildMenuId;
         });
 
-        localStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenuById));
+        sessionStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenuById));
 
-        this.onSetActiveSidebarMenuSubject(JSON.parse(localStorage.getItem('ActiveSidebarMenu')));
+        this.onSetActiveSidebarMenuSubject(JSON.parse(sessionStorage.getItem('ActiveSidebarMenu')));
 
         return sidebarMenuById;
     }
@@ -190,9 +131,10 @@ export class NavigationService {
     // !! ================ Main Menu Title Subject ================
     // ** Buat Method (Observable) untuk menset Global State SidebarMenu menjadi Observable agar nanti di Component Parent bisa subscribe
     onSetMainMenuTitle(value: string): any {
-        localStorage.setItem('ActiveMainMenuTitle', value);
+        sessionStorage.setItem('ActiveMainMenuTitle', value);
 
-        const ActiveMainMenuTitle = localStorage.getItem('ActiveMainMenuTitle');
+        const ActiveMainMenuTitle = sessionStorage.getItem('ActiveMainMenuTitle');
+
         if (ActiveMainMenuTitle) {
             this.MainMenuTitleSubject.next(ActiveMainMenuTitle);
         }

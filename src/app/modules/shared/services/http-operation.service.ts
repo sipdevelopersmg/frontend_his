@@ -21,11 +21,12 @@ export class HttpOperationService {
         this.httpHeader = this.httpHeader.set('Content-Type', 'application/json');
     }
 
-    defaultGetRequest(url: string): Observable<any> {
+    defaultGetRequest(url: string, params?: any): Observable<any> {
         return this.httpClient.get<any>(
-            `${environment.webApiDo}` + url,
+            url,
             {
-                headers: this.httpHeader
+                headers: this.httpHeader,
+                params: params
             }
         ).pipe(
             catchError(this.handlingError),
@@ -43,7 +44,7 @@ export class HttpOperationService {
 
     defaultPostRequest(url: string, req: any): Observable<any> {
         return this.httpClient.post<any>(
-            `${environment.webApiDo}` + url, req,
+            url, req,
             {
                 headers: this.httpHeader
             }
@@ -54,14 +55,18 @@ export class HttpOperationService {
             }),
             delay(2100),
             map((result: HttpResponseModel) => {
-                return result;
+                if (result.responseResult === false && (Object.keys(result.data).length === 0 || result.data === '')) {
+                    this.handlingErrorWithStatusCode200(result);
+                } else {
+                    return result;
+                }
             })
         );
     }
 
     defaultPostRequestWithoutLoading(url: string, req: any): Observable<any> {
         return this.httpClient.post<any>(
-            `${environment.api}` + url, req,
+            url, req,
             {
                 headers: this.httpHeader
             }

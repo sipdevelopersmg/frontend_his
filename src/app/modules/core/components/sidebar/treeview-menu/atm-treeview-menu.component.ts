@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SidebarMenu } from 'src/app/modules/core/models/navigation/menu.model';
+import { SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { NavigationService } from 'src/app/modules/shared/services/navigation.se
 export class AtmTreeviewMenuComponent implements OnInit {
 
     // ** Variable Menu
-    MenuSidebar: SidebarMenu[];
+    MenuSidebar: SidebarMenuModel[];
     MenuSidebarSubscription: Subscription;
 
     // ** Sidebar Attribute and Properties
@@ -36,11 +36,11 @@ export class AtmTreeviewMenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.SidebarMenuTitle = localStorage.getItem("ActiveMainMenuTitle");
+        this.SidebarMenuTitle = sessionStorage.getItem("ActiveMainMenuTitle");
 
-        let SidebarMenu = JSON.parse(localStorage.getItem("ActiveSidebarMenu"));
+        let SidebarMenu = JSON.parse(sessionStorage.getItem("ActiveSidebarMenu"));
 
-        this.MenuSidebar = SidebarMenu && SidebarMenu.length >= 1 ? SidebarMenu[0]["SidebarMenu"] : [];
+        this.MenuSidebar = SidebarMenu && SidebarMenu.length >= 1 ? SidebarMenu : [];
     }
 
     // ** Untuk mendapatkan Main Menu Title
@@ -57,7 +57,7 @@ export class AtmTreeviewMenuComponent implements OnInit {
             .pipe(
                 map((_result) => {
                     if (_result.length >= 1)
-                        return _result[0].SidebarMenu;
+                        return _result;
                     else
                         return [];
                 })

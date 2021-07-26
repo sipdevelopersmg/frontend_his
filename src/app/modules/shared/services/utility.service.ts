@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -16,6 +16,17 @@ export class UtilityService {
             text: message,
             showCloseButton: false,
             showConfirmButton: true
+        });
+    }
+
+    onShowCustomAlertWithTimer(icon: any, title: string, message: string, timer?: number): Promise<any> {
+        return Swal.fire({
+            icon,
+            title,
+            text: message,
+            timer,
+            showCloseButton: false,
+            showConfirmButton: false
         });
     }
 

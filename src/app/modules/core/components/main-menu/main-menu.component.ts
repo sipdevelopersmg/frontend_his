@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ChildMenu, MainMenu } from 'src/app/modules/core/models/navigation/menu.model';
+import { Component, OnInit } from '@angular/core';
+import { MainMenuModel, TopMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
-import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'mol-main-menu',
@@ -11,13 +10,13 @@ import {Subscription} from 'rxjs';
 export class MolMainMenuComponent implements OnInit {
 
     // ** Variable untuk menampung MainMenu
-    MainMenu: MainMenu[] = [];
+    MainMenu: MainMenuModel[] = [];
 
     // ** Variable untuk Kondisi menampilkan MainMenu atau tidak
     ShowMainMenu: boolean = true;
 
     // ** Variable untuk menampung SidebarMenu
-    ChildMenu: ChildMenu[];
+    ChildMenu: TopMenuModel[];
 
     constructor(private navigationService: NavigationService) {
         this.onGetMainMenuSubject();
@@ -25,9 +24,7 @@ export class MolMainMenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.navigationService.onFetchMenuFromFirebase();
-        this.navigationService.onFetchChildMenuFromFirebase();
-        this.navigationService.onFetchSidebarMenuFromFirebase();
+        this.navigationService.onFetchMainMenuFromSessionStorage();
     }
 
     onGetMainMenuSubject(): void {
@@ -50,12 +47,12 @@ export class MolMainMenuComponent implements OnInit {
     }
 
     onClickMenu(MenuId: number, MenuTitle: string): void {
-        this.navigationService.onFetchChildMenuFromLocalStorage(MenuId);
+        this.navigationService.onFetchChildMenuFromSessionStorage(MenuId);
         this.navigationService.onSetMainMenuTitle(MenuTitle);
     }
 
     onClickChildMenu(ChildMenuId: number): void {
-        this.navigationService.onFetchSidebarMenuFromLocalStorage(ChildMenuId);
+        this.navigationService.onFetchSidebarMenuFromSessionStorage(ChildMenuId);
 
         // this.navigationService.onSetActiveSidebarMenu(ChildMenuId);
     }

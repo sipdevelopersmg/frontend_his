@@ -18,18 +18,18 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "numericEdit",
-                "field": "NoTransaksi",
-                "headerText": "NO. RESEP",
+                "field": "NamaUser",
+                "headerText": "Nama User",
                 "type": "string",
-                "visible": false,
+                "visible": true,
                 "width": 150
             },
             {
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "NamaObat",
-                "headerText": "NAMA OBAT",
+                "field": "RoleUser",
+                "headerText": "Role User",
                 "type": "string",
                 "visible": true,
                 "width": 200
@@ -38,63 +38,22 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "Satuan",
-                "headerText": "SATUAN",
-                "type": "string",
+                "field": "CreatedDate",
+                "headerText": "Waktu Entry",
+                "type": "DateTime",
+                "format": "dd/MM/yyyy HH:mm:ss",
                 "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "IsActive",
+                "headerText": "Status Active",
+                "type": "string",
+                "visible": false,
                 "width": 50
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Qty",
-                "headerText": "QTY",
-                "type": "number",
-                "visible": true,
-                "textAlign": "Right",
-                "headerTextAlign": "Right",
-                "width": 50
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "JumlahPemakaian",
-                "headerText": "JUMLAH PAKAI",
-                "type": "string",
-                "visible": true,
-                "width": 80
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "AturanPakai",
-                "headerText": "ATURAN PAKAI",
-                "type": "string",
-                "visible": true,
-                "width": 80
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "WaktuPakai",
-                "headerText": "WAKTU PAKAI",
-                "type": "string",
-                "visible": true,
-                "width": 100
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Catatan",
-                "headerText": "CATATAN",
-                "type": "string",
-                "visible": true,
-                "width": 150
             }
         ]
     }

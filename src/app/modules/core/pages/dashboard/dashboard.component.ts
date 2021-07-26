@@ -113,12 +113,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        localStorage.removeItem('MainMenu');
-        localStorage.removeItem('ChildMenu');
-        localStorage.removeItem('SidebarMenu');
-        localStorage.removeItem('ActiveMainMenuTitle');
-        localStorage.removeItem('ActiveChildMenu');
-        localStorage.removeItem('ActiveSidebarMenu');
-        localStorage.removeItem('UserData');
+        // localStorage.removeItem('MainMenu');
+        // localStorage.removeItem('ChildMenu');
+        // localStorage.removeItem('SidebarMenu');
+        // localStorage.removeItem('ActiveMainMenuTitle');
+        // localStorage.removeItem('ActiveChildMenu');
+        // localStorage.removeItem('ActiveSidebarMenu');
+        // localStorage.removeItem('UserData');
+
+        // sessionStorage.clear();
     }
 }

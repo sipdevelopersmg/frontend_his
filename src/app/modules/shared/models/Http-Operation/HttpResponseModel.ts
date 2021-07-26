@@ -1,5 +1,5 @@
 export interface HttpResponseModel {
     responseResult: boolean;
-    data: object[];
+    data: any;
     message: string;
 }

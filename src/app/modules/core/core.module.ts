@@ -4,7 +4,6 @@ import { SharedModule } from "../shared/shared.module";
 import { CoreRoutingModule } from "./core-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { AboutComponent } from "./pages/about/about.component";
 import { BerandaComponent } from "./pages/beranda/beranda.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
@@ -22,7 +21,6 @@ import { MolMainMenuComponent } from "./components/main-menu/main-menu.component
     declarations: [
         DashboardComponent,
         BerandaComponent,
-        AboutComponent,
         PageNotFoundComponent,
         ExmpleMasterComponent,
         AtmNavbarComponent,
@@ -37,7 +35,7 @@ import { MolMainMenuComponent } from "./components/main-menu/main-menu.component
         CoreRoutingModule,
         SharedModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

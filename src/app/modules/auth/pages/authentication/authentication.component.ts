@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-authentication',
@@ -13,9 +13,9 @@ export class AuthenticationComponent implements OnInit {
     formAuthentication: FormGroup;
 
     constructor(
-        private router: Router,
         private formBuilder: FormBuilder,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private authenticationService: AuthenticationService
     ) { }
 
     ngOnInit(): void {
@@ -34,22 +34,7 @@ export class AuthenticationComponent implements OnInit {
         const password = formAuthentication.Password;
 
         if (username !== '' && password !== '') {
-            this.utilityService.onShowingCustomAlert(
-                'success',
-                'Success',
-                'Sign In Successfully'
-            ).then(() => {
-                this.formAuthentication.reset();
-
-                this.router.navigateByUrl('dashboard/beranda');
-            });
-
-            const userData = {
-                Nama: 'Fatur Gautama S',
-                RolesId: 1
-            };
-
-            localStorage.setItem('UserData', JSON.stringify(userData));
+            this.authenticationService.onLogin(username, password);
         }
 
         if (username === '' && password === '') {

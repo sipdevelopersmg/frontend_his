@@ -32,8 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.titleService.setTitle(data.title);
             })
         });
-
-        sessionStorage.setItem('tes', '123');
     }
 
     getChild(activatedRoute: ActivatedRoute): any {
