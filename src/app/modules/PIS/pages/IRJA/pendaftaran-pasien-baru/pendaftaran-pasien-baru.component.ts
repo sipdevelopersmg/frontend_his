@@ -15,7 +15,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     // ** Button Navigation Properties
     ButtonNav: ButtonNavModel[] = [
-        { Id: "Reset", Captions: "Reset", Icons1: "fa-redo-alt" },
+        { Id: "save_end_new", Captions: "Save And New", Icons1: "fa-redo-alt" },
         { Id: "Save", Captions: "Save", Icons1: "fa-save" },
     ];
 
@@ -63,7 +63,8 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     onGetDropdownOptions() {
         this.pendafatranPasienBaruService.onGetAllJenisKelamin()
             .subscribe((_result) => {
-                this.SelectOptionsJenisKelamin = _result;
+                // this.SelectOptionsJenisKelamin = _result;
+                this.SelectOptionsJenisKelamin = [];
             });
 
         this.pendafatranPasienBaruService.onGetGolonganDarah()
@@ -124,7 +125,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                 "FromDate": ["1900-01-01", []],
                 "ThruDate": [null, []],
             }),
-            PasienAddress: this.formBuilder.group({
+            PasienAddress: this.formBuilder.array([{
                 "IdAlamat": [null, []],
                 "Alamat": ["", Validators.required],
                 "Rt": ["", Validators.required],
@@ -134,7 +135,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                 "Kecamatan": ["", Validators.required],
                 "Kelurahan": ["", Validators.required],
                 "KodePos": ["", Validators.required],
-            }),
+            }]),
             Keluarga: this.formBuilder.group({
                 "NamaSuamiIstri": ["", Validators.required],
                 "TelpKeluarga": ["", Validators.required],
