@@ -27,9 +27,9 @@
                                 </div>
                             </div>
                             <div class="col-1">
-                                <span class="badge bg-warning">
-                                    <i class="fas fa-trash-alt"></i>
-                                </span>
+                                <input class="form-check-input form-select-lg" type="checkbox" value="true"
+                                    id="{{ item.id_menu }}Checkbox"
+                                    (change)="onChangeChecboxActiveMainMenu($event, item)">
                             </div>
                         </div>
 
@@ -45,9 +45,9 @@
                                         </span>
                                     </div>
                                     <div class="col-1">
-                                        <span class="badge bg-warning">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </span>
+                                        <input class="form-check-input form-select-lg" type="checkbox" value="true"
+                                            id="{{ childItem.id_menu }}Checkbox"
+                                            (change)="onChangeChecboxActiveMainMenu($event, item)">
                                     </div>
                                 </div>
                             </li>
