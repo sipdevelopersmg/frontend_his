@@ -29,7 +29,7 @@ export class SetupPabrikService {
         return this.httpOperationService.defaultPostRequest(API_SETUP_PABRIK.POST_SAVE_SETUP_PABRIK, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                    this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
@@ -38,7 +38,7 @@ export class SetupPabrikService {
         return this.httpOperationService.onTestingError()
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                    this.notificationService.onShowToast(error.statusText, error.message, {}, true);
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }

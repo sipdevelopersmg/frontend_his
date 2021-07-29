@@ -48,6 +48,8 @@ import { MolKanbanV1Component } from './components/molecules/kanban-v1/mol-kanba
 import { MolInputCheckboxComponent } from './components/molecules/form/mol-input-checkbox/mol-input-checkbox.component';
 import { MolRadioButtonComponent } from './components/molecules/form/mol-radio-button/mol-radio-button.component';
 import { MolInputTextSplitComponent } from './components/molecules/form/mol-input-text-split/mol-input-text-split.component';
+import { MolDropdownSyncfusionComponent } from './components/molecules/form/mol-dropdown-syncfusion/mol-dropdown-syncfusion.component';
+import { MolTreeGridComponent } from './components/molecules/grid/tree-grid/tree-grid.component';
 
 import { OrgInputLookUpKodeComponent } from './components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from './components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -96,6 +98,8 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
         MolInputCheckboxComponent,
         MolRadioButtonComponent,
         MolInputTextSplitComponent,
+        MolDropdownSyncfusionComponent,
+        MolTreeGridComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,
@@ -114,7 +118,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
         DatePickerModule,
         DropDownListModule,
         DragDropModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
     ],
     exports: [
         AtmLabelComponent,
@@ -153,6 +157,8 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
         MolInputCheckboxComponent,
         MolRadioButtonComponent,
         MolInputTextSplitComponent,
+        MolDropdownSyncfusionComponent,
+        MolTreeGridComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,

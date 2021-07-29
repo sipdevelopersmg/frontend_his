@@ -9,7 +9,9 @@ export interface MainMenuModel {
     is_parent: boolean;
     id_menu_parent: number;
     icon: string;
+    icon_menu_parent?: string;
     caption: string;
+    caption_menu_parent?: string;
 }
 
 export interface TopMenuModel {
@@ -28,7 +30,7 @@ export interface SidebarMenuModel {
     icon: string;
     caption: string;
     url: string;
-    sidebarChild?: SidebarChildMenuModel[];
+    childSidebarMenu?: SidebarChildMenuModel[];
     button?: ButtonModel[];
     fieldgrid?: FieldGridModel[];
 }

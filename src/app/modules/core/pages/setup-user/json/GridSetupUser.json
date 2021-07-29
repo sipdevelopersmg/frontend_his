@@ -1,0 +1,56 @@
+{
+    "GridHeader": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "user_name",
+                "headerText": "Username",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "role_name",
+                "headerText": "Role User",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "created_date",
+                "headerText": "Created Date",
+                "type": "DateTime",
+                "format": "dd/MM/yyyy HH:mm:ss",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_lengkap",
+                "headerText": "Nama Lengkap",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "status_active",
+                "headerText": "Status Active",
+                "type": "string",
+                "visible": false,
+                "width": 50
+            }
+        ]
+    }
+}

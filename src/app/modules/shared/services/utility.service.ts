@@ -62,6 +62,23 @@ export class UtilityService {
         });
     }
 
+    onShowingConfirmationAlert(icon: any, title: string, message: string, actionYes: () => any, actionNo: () => any): Promise<any> {
+        return Swal.fire({
+            icon,
+            title,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                actionYes();
+            } else if (result.isDenied) {
+                actionNo();
+            }
+        });
+    }
+
     // ** Generate Custom Hex Color for Border
     onGenerateCustomColor(): any {
         const numberHex = (Math.random() * 0xfffff * 1000000).toString(16);

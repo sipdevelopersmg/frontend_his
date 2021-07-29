@@ -16,11 +16,18 @@ import { AtmSingleMenuComponent } from "./components/main-menu/single-menu/singl
 import { MolTopMenuComponent } from "./components/top-menu/top-menu.component";
 import { MolSidebarComponent } from "./components/sidebar/sidebar.component";
 import { MolMainMenuComponent } from "./components/main-menu/main-menu.component";
+import { SetupUserComponent } from './pages/setup-user/setup-user.component';
+import { SetupRoleComponent } from './pages/setup-role/setup-role.component';
+import { ContextMenuModule } from "@syncfusion/ej2-angular-navigations";
+import { SetupRoleMenuComponent } from './pages/setup-role-menu/setup-role-menu.component';
+import { DataRoleComponent } from './pages/setup-role-menu/data-role/data-role.component';
+import { InputRoleComponent } from './pages/setup-role-menu/input-role/input-role.component';
 
 @NgModule({
     declarations: [
         DashboardComponent,
         BerandaComponent,
+        SetupUserComponent,
         PageNotFoundComponent,
         ExmpleMasterComponent,
         AtmNavbarComponent,
@@ -28,7 +35,11 @@ import { MolMainMenuComponent } from "./components/main-menu/main-menu.component
         AtmSingleMenuComponent,
         MolSidebarComponent,
         MolTopMenuComponent,
-        MolMainMenuComponent
+        MolMainMenuComponent,
+        SetupRoleComponent,
+        SetupRoleMenuComponent,
+        DataRoleComponent,
+        InputRoleComponent,
     ],
     imports: [
         CommonModule,
@@ -36,6 +47,7 @@ import { MolMainMenuComponent } from "./components/main-menu/main-menu.component
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
+        ContextMenuModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

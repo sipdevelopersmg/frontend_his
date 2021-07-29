@@ -1,0 +1,108 @@
+<org-card-layout>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
+            <!-- Grid Setup User -->
+            <mol-grid #gridSetupUser [grid-id]="'GridSetupUser'" [grid-height]="400" [grid-lines]="'Both'"
+                [grid-editSettings]="GridSetupUserEditSettings" [grid-toolbar]="GridSetupUserToolbar"
+                [columns]="GridAntrianColums.GridHeader.columns" [grid-DataSource]="GridSetupUserDataSource"
+                (toolbar-click)="onToolbarClick($event)">
+            </mol-grid>
+
+            <!-- Modal Dialog Add / Edit Grid Setup User -->
+            <ng-template #modalDialogSetupUser>
+                <form [formGroup]="FormSetupUser">
+                    <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                        <h5 class="modal-title pull-left">{{ ModalDialogSetupUserTitle }}</h5>
+                        <button type="button" class="btn pull-right text-white" aria-label="Close"
+                            (click)="modalRef.hide()">
+                            <i class="fas fa-window-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Username -->
+                        <mol-input-text [label]="'Username'" formControlName="user_name"
+                            [IsFormControlInvalid]="user_name.invalid"
+                            [ValidatorsCaption]="'Username Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
+                        </mol-input-text>
+
+                        <!-- Nama Lengkap -->
+                        <mol-input-text [label]="'Nama Lengkap'" formControlName="nama_lengkap"
+                            [IsFormControlInvalid]="nama_lengkap.invalid"
+                            [ValidatorsCaption]="'Nama Lengkap Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
+                        </mol-input-text>
+
+                        <!-- Password -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Password'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <div class="input-group mb-0">
+                                    <input type="password" class="form-control form-select-sm" id="password"
+                                        aria-label="password" aria-describedby="see-password"
+                                        formControlName="password">
+                                    <span class="input-group-text cursor-pointer" id="see-password"
+                                        (click)="onTogglingSeePassword('password')">
+                                        <i id='passwordIcon' class="fas fa-eye fa-sm"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password Confirmation -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Konfirmasi Password'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <div class="input-group mb-0">
+                                    <input type="password" class="form-control form-select-sm"
+                                        id="confirmation_password" aria-label="confirmation_password"
+                                        aria-describedby="see-password" formControlName="confirmation_password">
+                                    <span class="input-group-text cursor-pointer" id="see-password"
+                                        (click)="onTogglingSeePassword('confirmation_password')">
+                                        <i id='confirmation_passwordIcon' class="fas fa-eye fa-sm"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Role -->
+                        <org-input-look-up [label]="'Role'"></org-input-look-up>
+
+                        <!-- Timeout -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Session Timer'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <div class="input-group mb-0">
+                                    <input type="number" class="form-control form-select-sm" id="timeout"
+                                        aria-label="timeout" formControlName="timeout">
+                                    <span class="input-group-text">
+                                        <p class="text-abu mb-0" style="font-size: 13px;">Menit</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Active -->
+                        <mol-radio-button [id]="'status_active'" [label]="'Status'" formControlName="status_active"
+                            [RadioButtonObject]="RadioButtonStatus">
+                        </mol-radio-button>
+                    </div>
+                    <div class="modal-footer p-2 background-abu-muda">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="onSubmitFormSetupUser(FormSetupUser.value)">
+                                    Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+    </div>
+</org-card-layout>

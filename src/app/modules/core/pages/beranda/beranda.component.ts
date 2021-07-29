@@ -12,12 +12,7 @@ export class BerandaComponent implements OnInit {
     constructor(private httpOperationService: HttpOperationService) { }
 
     ngOnInit(): void {
-        this.httpOperationService.defaultGetRequest(
-            `${environment.webApiPis}` + 'User/menuGetNotExistingByIdRole/',
-            { id_role: 2 }
-        ).subscribe((result) => {
-            // console.log(result);
-        });
+
     }
 
 }

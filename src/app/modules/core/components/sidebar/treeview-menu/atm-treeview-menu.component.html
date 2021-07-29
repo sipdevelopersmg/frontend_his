@@ -32,7 +32,7 @@
         <ul class="list-group list-group-child is-hidden" id="{{ item.id_menu_sidebar }}ChildMenu"
             [hidden]="SidebarCollapse">
             <li class="list-group-item cursor-pointer p-0 mb-1" *ngFor="let childItem of item.sidebarChild"
-                (click)="onClickSidebarItem(childItem.url)">
+                (click)="onClickSidebarItem(childItem.id_menu_sidebar)">
                 <div class="items-group-child mx-0 px-0" data-bs-toggle="tooltip" title="{{ childItem.caption }}">
                     <div class="col-3 text-end">
                         <i class="fas {{ childItem.icon }}"></i>

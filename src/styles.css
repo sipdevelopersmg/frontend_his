@@ -207,7 +207,7 @@ body {
 }
 
 .modal-footer {
-  min-height: 75px !important;
+  min-height: 55px;
 }
 
 .ng-wizard-theme-dots > ul.step-anchor {

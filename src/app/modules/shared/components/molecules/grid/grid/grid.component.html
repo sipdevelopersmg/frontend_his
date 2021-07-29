@@ -1,4 +1,4 @@
-<ejs-grid #Grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="30"
+<ejs-grid #Grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="27"
     [gridLines]="gridLines" [allowPaging]="gridPaging" [allowResizing]="true" [allowFiltering]='gridFiltering'
     [pageSettings]="gridInitialPage" [toolbar]="toolbar" [editSettings]="gridEditingSettings"
     [contextMenuItems]="gridContextMenuItems" [selectionSettings]="gridSelectionSettings"
@@ -10,7 +10,9 @@
         <ng-template ngFor let-item [ngForOf]="columns">
             <e-column [width]="item.width" [field]="item.field" [headerText]="item.headerText" [visible]="item.visible"
                 [type]="item.type" [allowEditing]="item.allowEditing" [allowSorting]="item.allowSorting"
-                [format]="item.format" [headerTextAlign]="item.headerTextAlign" [textAlign]="item.textAlign"></e-column>
+                [format]="item.format" [headerTextAlign]="item.headerTextAlign" [textAlign]="item.textAlign"
+                [displayAsCheckBox]="item.displayAsCheckBox" [editType]="item.editType">
+            </e-column>
         </ng-template>
     </e-columns>
 </ejs-grid>
