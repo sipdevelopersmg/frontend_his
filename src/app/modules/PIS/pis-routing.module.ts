@@ -7,14 +7,16 @@ import { DaftarUlangPasienComponent } from "./pages/IRJA/daftar-ulang-pasien/daf
 import { PendaftaranPasienBaruComponent } from "./pages/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.component";
 import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component";
 import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component";
+import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { DataDokterComponent } from "./pages/setup-data/setup-dokter/data-dokter/data-dokter.component";
 import { SetupKodeTarifComponent } from "./pages/setup-data/setup-tarif/setup-kode-tarif/setup-kode-tarif.component";
 
 const pisRoutes: Routes = [
     { path: "", component: PendaftaranPasienBaruComponent, data: { title: "Pendaftaran Pasien Baru" }, },
     {
-        path: "setup-data", component: null, data: { title: "Setup Data" },
+        path: "setup-data", component: SetupBahasaComponent, data: { title: "Setup Data" },
         children: [
+            {path: "setup-bahasa", component: null, data: { title: "Setup Bahasa" }},
             {
                 path: "setup-tarif", component: null, data: { title: "Setup Tarif" },
                 children: [

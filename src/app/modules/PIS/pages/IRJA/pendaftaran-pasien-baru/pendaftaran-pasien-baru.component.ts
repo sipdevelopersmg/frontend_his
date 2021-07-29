@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import LookUpPendaftaranPasienBaru from './json/LookupPendaftaranPasienBaru.json';
 import * as CONFIG from "../../../../../api/index";
 import { PendaftaranPasienBaruService } from '../../../services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
+import { NgWizardConfig, NgWizardService, StepChangedArgs, STEP_STATE, THEME } from 'ng-wizard';
 
 @Component({
     selector: 'app-pendaftaran-pasien-baru',
@@ -15,8 +16,8 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     // ** Button Navigation Properties
     ButtonNav: ButtonNavModel[] = [
-        { Id: "Reset", Captions: "Reset", Icons1: "fa-redo-alt" },
-        { Id: "Save", Captions: "Save", Icons1: "fa-save" },
+        // { Id: "save_end_new", Captions: "Save And New", Icons1: "fa-redo-alt" },
+        // { Id: "Save", Captions: "Save", Icons1: "fa-save" },
     ];
 
     // ** Form Pendaftaran Pasien Baru Attribute
@@ -26,6 +27,13 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     // ** Lookup Pendaftaran Pasien Baru
     public LookupPendaftaranPasienBaru = LookUpPendaftaranPasienBaru;
+
+     // ** Variable untuk menampung Array of Alamat
+    FormAlamats: FormArray;
+    FormIdentitas: FormGroup;
+    FormDetail: FormGroup;
+
+    url : any = '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png';
 
     // ** Lookup Pendaftaran Pasien Baru URL
     public LookupPendaftaranPasienBaruUrl = CONFIG.API;
@@ -51,19 +59,61 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     // ** Select Options Bahasa Sehari Hari
     SelectOptionsBahasa: any[] = [];
 
+    // ** Step States digunakan untuk mengatur state di Wizard
+     stepStates = {
+        normal: STEP_STATE.normal,
+        disabled: STEP_STATE.disabled,
+        error: STEP_STATE.error,
+        hidden: STEP_STATE.hidden
+    };
+
+    // ** config untuk mengatur Wizard
+    config: NgWizardConfig = {
+        selected: 0,
+        theme: THEME.dots,
+        toolbarSettings: {}
+    };
+
+
     constructor(private formBuilder: FormBuilder,
-        private pendafatranPasienBaruService: PendaftaranPasienBaruService) { }
+        private pendafatranPasienBaruService: PendaftaranPasienBaruService,
+        private ngWizardService: NgWizardService,) { }
 
     ngOnInit(): void {
         this.onSetFormPendaftaranPasienBaruIrjaAttribute();
+        // this.onGetDropdownOptions();
+    }
 
-        this.onGetDropdownOptions();
+    // ** Function untuk melihat ketika Step di Wizard berganti
+    stepChanged(args: StepChangedArgs): void {
+        // console.log(args);
+    }
+
+    // !! Function untuk Menampilkan Tombol Previous Wizard (Wajib di deklrasikan)
+    showPreviousStep(event?: Event) {
+        this.ngWizardService.previous();
+    }
+
+    // !! Function untuk Menampilkan Tombol Next Wizard (Wajib di deklrasikan)
+    showNextStep(event?: Event) {
+        this.ngWizardService.next();
+    }
+
+    // !! Function untuk Mereset Wizard (Wajib di deklrasikan)
+    resetWizard(event?: Event) {
+        this.ngWizardService.reset();
+    }
+
+    // !! Function untuk Mengatur Tema Wizard (Wajib di deklrasikan)
+    setTheme(theme: THEME) {
+        this.ngWizardService.theme(theme);
     }
 
     onGetDropdownOptions() {
         this.pendafatranPasienBaruService.onGetAllJenisKelamin()
             .subscribe((_result) => {
-                this.SelectOptionsJenisKelamin = _result;
+                // this.SelectOptionsJenisKelamin = _result;
+                this.SelectOptionsJenisKelamin = [];
             });
 
         this.pendafatranPasienBaruService.onGetGolonganDarah()
@@ -84,117 +134,120 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     onSetFormPendaftaranPasienBaruIrjaAttribute() {
         this.FormPendaftaranPasienBaruIrja = this.formBuilder.group({
-            "PartyId": [0, []],
-            "FirstName": ["", Validators.required],
-            "MiddleName": ["", []],
-            "LastName": ["", []],
-            "FrontTitle": ["", []],
-            "EndTitle": ["", []],
-            "Sex": [0, Validators.required],
-            "Agama": [0, Validators.required],
-            "TemplatLahir": ["", Validators.required],
-            "TanggalLahir": ["", Validators.required],
-            "Height": [0, []],
-            "Weight": [0, []],
-            "MaritalStatus": [0, Validators.required],
-            "GolDarah": [0, Validators.required],
-            "Telp": ["", Validators.required],
-            "Hp": ["", Validators.required],
-            "EthnicCode": ["", Validators.required],
-            "NatCode": ["", Validators.required],
-            "IdBahasa": [0, Validators.required],
-            "Bahasa": ["", Validators.required],
+            "identitas":this.formBuilder.group({
+                "id_jenis_identitas": [0, []],
+                "no_identitas": ["aSADSDA", Validators.required],
+                "path_foto": ['', []],
+            }),
+            "detail":this.formBuilder.group({
+                "no_kartu_keluarga": ["", []],
+                "nama_depan": ["", []],
+                "nama_belakang": ["", []],
+                "nama_panggilan": ["", []],
+                "gelar_depan": [0, Validators.required],
+                "gelar_belakang": [0, Validators.required],
+                "gender": ["", Validators.required],
+                "gol_darah": ["", Validators.required],
+                "tempat_lahir": [0, []],
+                "tanggal_lahir": [0, []],
+                "tinggi_badan_cm": [0, Validators.required],
+                "berat_badan_kg": [0, Validators.required],
+                "id_marital_status": ["", Validators.required],
+                "id_agama": ["", Validators.required],
+                "id_kebangsaan": ["", Validators.required],
+                "id_etnis": ["", Validators.required],
+                "id_bahasa": [0, Validators.required],
+                "id_last_education": ["", Validators.required],
+                "id_job_type": ["", Validators.required],
+            }),
+            "alamat":this.formBuilder.array([
+                
+            ]),
+            "kontak":this.formBuilder.array([
+                
+            ]),
+            "debitur":this.formBuilder.array([
+                
+            ]),
+        });
 
-            Pasien: this.formBuilder.group({
-                "MrNo": ['0', []],
-                "DebiturMemberNo": ["", []],
-                "ExpDebiturMember": [null, []],
-                "Visits": [0, []],
-                "LastVisitDate": [null, []],
-                "HistoryVisitDate": [null, []],
-                "IsBridge": [false, []],
-                "PhysicalLimitation": [0, []],
-                "IrnaSirusVisits": [0, []],
-                "LastNote": ["", []],
-            }),
-            KartuIdentitas: this.formBuilder.group({
-                "PartyId": [0, []],
-                "KodeJenisKartu": ["", Validators.required],
-                "NomorKartu": ["", Validators.required],
-                "FromDate": ["1900-01-01", []],
-                "ThruDate": [null, []],
-            }),
-            PasienAddress: this.formBuilder.group({
-                "IdAlamat": [null, []],
-                "Alamat": ["", Validators.required],
-                "Rt": ["", Validators.required],
-                "Rw": ["", Validators.required],
-                "Provinsi": ["", Validators.required],
-                "Kota": ["", Validators.required],
-                "Kecamatan": ["", Validators.required],
-                "Kelurahan": ["", Validators.required],
-                "KodePos": ["", Validators.required],
-            }),
-            Keluarga: this.formBuilder.group({
-                "NamaSuamiIstri": ["", Validators.required],
-                "TelpKeluarga": ["", Validators.required],
-                "AnakKe": ["", Validators.required],
-                "Dari": ["", Validators.required],
-                "AkteLahir": ["", Validators.required],
-            }),
-            Ayah: this.formBuilder.group({
-                "ParentIdOrtuAyah": [null, Validators.required],
-                "NamaOrtuAyah": ["", Validators.required],
-                "TglLahirOrtuAyah": ["", Validators.required],
-                "AlamatOrtuAyah": ["", Validators.required],
-                "KotaOrtuAyah": ["", Validators.required],
-                "KecamatanOrtuAyah": ["", Validators.required],
-                "KodePekerjaanOrtuAyah": ["", Validators.required],
-            }),
-            Ibu: this.formBuilder.group({
-                "ParentIdOrtuIbu": [null, Validators.required],
-                "NamaOrtuIbu": ["", Validators.required],
-                "TglLahirOrtuIbu": ["", Validators.required],
-                "AlamatOrtuIbu": ["", Validators.required],
-                "KotaOrtuIbu": ["", Validators.required],
-                "KecamatanOrtuIbu": ["", Validators.required],
-                "KodePekerjaanOrtuIbu": ["", Validators.required],
-            }),
-            Pendidikan: this.formBuilder.group({
-                "PartyId": [0, []],
-                "KodePendidikan": [0, Validators.required],
-            }),
-            Pekerjaan: this.formBuilder.group({
-                "PartyId": [0, []],
-                "KodePekerjaan": [0, Validators.required],
-            }),
-            Keterbatasan: this.formBuilder.group({
-                "PartyId": [0, []],
-                "IdKeterbatasanFisik": [0, Validators.required],
-            }),
+        this.FormIdentitas = this.FormPendaftaranPasienBaruIrja.get('identitas') as FormGroup
+
+        this.FormDetail = this.FormPendaftaranPasienBaruIrja.get('detail') as FormGroup
+
+        this.FormAlamats = this.FormPendaftaranPasienBaruIrja.get('alamat') as FormArray;
+        this.FormAlamats.push(this.NewAlamat());
+        
+        this.FormAlamats = this.FormPendaftaranPasienBaruIrja.get('kontak') as FormArray;
+        this.FormAlamats.push(this.NewKontak());
+
+        this.FormAlamats = this.FormPendaftaranPasienBaruIrja.get('debitur') as FormArray;
+        this.FormAlamats.push(this.NewDebitur());
+    }
+
+    onSelectFile(event) {
+        if (event.target.files && event.target.files[0]) {
+          var reader = new FileReader();
+    
+          reader.readAsDataURL(event.target.files[0]); // read file as data url
+    
+          reader.onload = (event) => { // called once readAsDataURL is completed
+            this.url = event.target.result;
+          }
+        }
+    }
+
+    NewAlamat() :FormGroup{
+        return this.formBuilder.group({
+            "alamat_lengkap" : ["", []],
+            "kode_pos" : ["", []],
+            "rt": ["", []],
+            "rw": ["", []],
+            "kelurahan": ["", []],
+            "id_wilayah": ["", []],
+            "wilayah": ["", []],
+        });
+    }
+
+    NewKontak() :FormGroup{
+        return this.formBuilder.group({
+            "hand_phone" : ["", []],
+            "home_phone" : ["", []],
+            "office_phone": ["", []],
+            "email": ["", []],
+            "keterangan": ["", []],
+        });
+    }
+
+    NewDebitur() :FormGroup{
+        return this.formBuilder.group({
+            "no_member" : ["", []],
+            "id_debitur" : ["", []],
+            "keterangan": ["", []],
+            "is_active": [true, []],
         });
     }
 
     handleSelectedAgama(args: any) {
         console.log(args);
 
-        this.Agama.setValue(args.Id);
+        // this.Agama.setValue(args.Id);
     }
 
     handleSelectedMaritalStatus(args: any) {
-        this.MaritalStatus.setValue(args.Id);
+        // this.MaritalStatus.setValue(args.Id);
     }
 
     handleSelectedPendidikan(args: any) {
-        this.KodePendidikan.setValue(args.KodePendidikan);
+        // this.KodePendidikan.setValue(args.KodePendidikan);
     }
 
     handleSelectedPekerjaan(args: any) {
-        this.KodePekerjaan.setValue(args.KodePekerjaan);
+        // this.KodePekerjaan.setValue(args.KodePekerjaan);
     }
 
     handleSelectedProvinsi(args: any) {
-        this.Provinsi.setValue(args.Id);
+        // this.Provinsi.setValue(args.Id);
 
         this.StaticFilterLookupKota = [
             {
@@ -207,7 +260,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     }
 
     handleSelectedKota(args: any) {
-        this.Kota.setValue(args.Id);
+        // this.Kota.setValue(args.Id);
 
         this.StaticFilterLookupKecamatan = [
             {
@@ -220,7 +273,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     }
 
     handleSelectedKecamatan(args: any) {
-        this.Kecamatan.setValue(args.Id);
+        // this.Kecamatan.setValue(args.Id);
 
         this.StaticFilterLookupKelurahan = [
             {
@@ -233,123 +286,104 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     }
 
     handleSelectedKelurahan(args: any) {
-        this.Kelurahan.setValue(args.Id);
+        // this.Kelurahan.setValue(args.Id);
     }
 
     handleSelectedJenisKartu(args: any) {
-        this.KodeJenisKartu.setValue(args.KodeJenisKartu);
+        // this.KodeJenisKartu.setValue(args.KodeJenisKartu);
     }
 
     handleSelectedSuku(args: any) {
-        this.EthnicCode.setValue(args.NatCode);
+        // this.EthnicCode.setValue(args.NatCode);
     }
 
     handleSelectedKebangsaan(args: any) {
-        this.NatCode.setValue(args.EthCode);
+        // this.NatCode.setValue(args.EthCode);
     }
 
     handleSelectedKecamatanAyah(args: any) {
-        this.KecamatanOrtuAyah.setValue(args.Id);
+        // this.KecamatanOrtuAyah.setValue(args.Id);
     }
 
     handleSelectedKotaAyah(args: any) {
-        this.KotaOrtuAyah.setValue(args.Id);
+        // this.KotaOrtuAyah.setValue(args.Id);
     }
 
     handleSelectedPekerjaanAyah(args: any) {
-        this.KodePekerjaanOrtuAyah.setValue(args.KodePekerjaan);
+        // this.KodePekerjaanOrtuAyah.setValue(args.KodePekerjaan);
     }
 
     handleSelectedKecamatanIbu(args: any) {
-        this.KecamatanOrtuAyah.setValue(args.Id);
+        // this.KecamatanOrtuAyah.setValue(args.Id);
     }
 
     handleSelectedKotaIbu(args: any) {
-        this.KotaOrtuAyah.setValue(args.Id);
+        // this.KotaOrtuAyah.setValue(args.Id);
     }
 
     handleSelectedPekerjaanIbu(args: any) {
-        this.KodePekerjaanOrtuAyah.setValue(args.KodePekerjaan);
+        // this.KodePekerjaanOrtuAyah.setValue(args.KodePekerjaan);
     }
 
     onClickButtonNav(ButtonId: any) {
         switch (ButtonId) {
             case "Reset":
-                this.onResetFormPendaftaranPasienBaruIrja();
+                // this.onResetFormPendaftaranPasienBaruIrja();
                 break;
             case "Save":
-                this.onSubmitFormPendaftaranPasienBaruIrja(this.FormPendaftaranPasienBaruIrja);
+                // this.onSubmitFormPendaftaranPasienBaruIrja(this.FormPendaftaranPasienBaruIrja);
                 break;
             default:
                 break;
         }
     }
 
-    onSubmitFormPendaftaranPasienBaruIrja(FormPendaftaranBaruPasienIrja: FormGroup) {
-        FormPendaftaranBaruPasienIrja.value.Sex = +FormPendaftaranBaruPasienIrja.value.Sex;
-        FormPendaftaranBaruPasienIrja.value.GolDarah = +FormPendaftaranBaruPasienIrja.value.GolDarah;
-        FormPendaftaranBaruPasienIrja.value.IdBahasa = +FormPendaftaranBaruPasienIrja.value.IdBahasa;
+    // onSubmitFormPendaftaranPasienBaruIrja(FormPendaftaranBaruPasienIrja: FormGroup) {
+    //     FormPendaftaranBaruPasienIrja.value.Sex = +FormPendaftaranBaruPasienIrja.value.Sex;
+    //     FormPendaftaranBaruPasienIrja.value.GolDarah = +FormPendaftaranBaruPasienIrja.value.GolDarah;
+    //     FormPendaftaranBaruPasienIrja.value.IdBahasa = +FormPendaftaranBaruPasienIrja.value.IdBahasa;
 
-        console.log(FormPendaftaranBaruPasienIrja.value);
+    //     console.log(FormPendaftaranBaruPasienIrja.value);
+    // }
+
+    // onResetFormPendaftaranPasienBaruIrja() {
+    //     this.FormPendaftaranPasienBaruIrja.reset();
+
+    //     this.LookupAgama.resetValue();
+    // }
+
+    get id_jenis_identitas() { return this.FormPendaftaranPasienBaruIrja.get("identitas.id_jenis_identitas") }
+    get no_identitas() { return this.FormPendaftaranPasienBaruIrja.get("identitas.no_identitas") }
+    get no_kartu_keluarga() { return this.FormPendaftaranPasienBaruIrja.get("no_kartu_keluarga") }
+    get nama_depan() { return this.FormPendaftaranPasienBaruIrja.get("nama_depan") }
+    get nama_belakang() { return this.FormPendaftaranPasienBaruIrja.get("nama_belakang") }
+    get nama_panggilan() { return this.FormPendaftaranPasienBaruIrja.get("nama_panggilan") }
+    get gelar_depan() { return this.FormPendaftaranPasienBaruIrja.get("gelar_depan") }
+    get gelar_belakang() { return this.FormPendaftaranPasienBaruIrja.get("gelar_belakang") }
+
+    get gender() { return this.FormPendaftaranPasienBaruIrja.get("gender") }
+    get gol_darah() { return this.FormPendaftaranPasienBaruIrja.get("gol_darah") }
+    get tempat_lahir() { return this.FormPendaftaranPasienBaruIrja.get("tempat_lahir") }
+    get tanggal_lahir() { return this.FormPendaftaranPasienBaruIrja.get("tanggal_lahir") }
+    get tinggi_badan_cm() { return this.FormPendaftaranPasienBaruIrja.get("tinggi_badan_cm") }
+    get berat_badan_kg() { return this.FormPendaftaranPasienBaruIrja.get("berat_badan_kg") }
+    get id_marital_status() { return this.FormPendaftaranPasienBaruIrja.get("id_marital_status") }
+    get id_agama() { return this.FormPendaftaranPasienBaruIrja.get("id_agama") }
+    get id_kebangsaan() { return this.FormPendaftaranPasienBaruIrja.get("id_kebangsaan") }
+    get id_etnis() { return this.FormPendaftaranPasienBaruIrja.get("id_etnis") }
+    get id_bahasa() { return this.FormPendaftaranPasienBaruIrja.get("id_bahasa") }
+    get id_last_education() { return this.FormPendaftaranPasienBaruIrja.get("id_last_education") }
+    get id_job_type() { return this.FormPendaftaranPasienBaruIrja.get("id_job_type") }
+
+    get alamat() : FormArray {
+        return this.FormPendaftaranPasienBaruIrja.get("alamat") as FormArray
     }
 
-    onResetFormPendaftaranPasienBaruIrja() {
-        this.FormPendaftaranPasienBaruIrja.reset();
-
-        this.LookupAgama.resetValue();
+    get kontak() : FormArray {
+        return this.FormPendaftaranPasienBaruIrja.get("kontak") as FormArray
     }
 
-    get Pasien() { return this.FormPendaftaranPasienBaruIrja.get("Pasien") }
-    get KartuIdentitas() { return this.FormPendaftaranPasienBaruIrja.get("KartuIdentitas") }
-    get Keluarga() { return this.FormPendaftaranPasienBaruIrja.get("Keluarga") }
-    get Ayah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah") }
-    get Ibu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu") }
-    get Pendidikan() { return this.FormPendaftaranPasienBaruIrja.get("Pendidikan") }
-    get Pekerjaan() { return this.FormPendaftaranPasienBaruIrja.get("Pekerjaan") }
-    get Keterbatasan() { return this.FormPendaftaranPasienBaruIrja.get("Keterbatasan") }
-
-    get MrNo() { return this.FormPendaftaranPasienBaruIrja.get("Pasien.MrNo") }
-    get FirstName() { return this.FormPendaftaranPasienBaruIrja.get("FirstName") }
-    get Sex() { return this.FormPendaftaranPasienBaruIrja.get("Sex") }
-    get Agama() { return this.FormPendaftaranPasienBaruIrja.get("Agama") }
-    get TemplatLahir() { return this.FormPendaftaranPasienBaruIrja.get("TemplatLahir") }
-    get TanggalLahir() { return this.FormPendaftaranPasienBaruIrja.get("TanggalLahir") }
-    get MaritalStatus() { return this.FormPendaftaranPasienBaruIrja.get("MaritalStatus") }
-    get KodePendidikan() { return this.FormPendaftaranPasienBaruIrja.get("Pendidikan.KodePendidikan") }
-    get KodePekerjaan() { return this.FormPendaftaranPasienBaruIrja.get("Pekerjaan.KodePekerjaan") }
-    get GolDarah() { return this.FormPendaftaranPasienBaruIrja.get("GolDarah") }
-    get IdKeterbatasanFisik() { return this.FormPendaftaranPasienBaruIrja.get("Keterbatasan.IdKeterbatasanFisik") }
-    get Alamat() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Alamat") }
-    get Rt() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Rt") }
-    get Rw() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Rw") }
-    get Provinsi() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Provinsi") }
-    get Kota() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Kota") }
-    get Kecamatan() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Kecamatan") }
-    get Kelurahan() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.Kelurahan") }
-    get KodePos() { return this.FormPendaftaranPasienBaruIrja.get("PasienAddress.KodePos") }
-    get Telp() { return this.FormPendaftaranPasienBaruIrja.get("Telp") }
-    get Hp() { return this.FormPendaftaranPasienBaruIrja.get("Hp") }
-    get KodeJenisKartu() { return this.FormPendaftaranPasienBaruIrja.get("KartuIdentitas.KodeJenisKartu") }
-    get NomorKartu() { return this.FormPendaftaranPasienBaruIrja.get("KartuIdentitas.NomorKartu") }
-    get EthnicCode() { return this.FormPendaftaranPasienBaruIrja.get("EthnicCode") }
-    get NatCode() { return this.FormPendaftaranPasienBaruIrja.get("NatCode") }
-    get IdBahasa() { return this.FormPendaftaranPasienBaruIrja.get("IdBahasa") }
-    get Bahasa() { return this.FormPendaftaranPasienBaruIrja.get("Bahasa") }
-    get NamaSuamiIstri() { return this.FormPendaftaranPasienBaruIrja.get("Keluarga.NamaSuamiIstri") }
-    get TelpKeluarga() { return this.FormPendaftaranPasienBaruIrja.get("Keluarga.TelpKeluarga") }
-    get AnakKe() { return this.FormPendaftaranPasienBaruIrja.get("Keluarga.AnakKe") }
-    get Dari() { return this.FormPendaftaranPasienBaruIrja.get("Keluarga.Dari") }
-    get AkteLahir() { return this.FormPendaftaranPasienBaruIrja.get("Keluarga.AkteLahir") }
-    get NamaOrtuAyah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah.NamaOrtuAyah") }
-    get TglLahirOrtuAyah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah.TglLahirOrtuAyah") }
-    get AlamatOrtuAyah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah.AlamatOrtuAyah") }
-    get KotaOrtuAyah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah.KotaOrtuAyah") }
-    get KecamatanOrtuAyah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah.KecamatanOrtuAyah") }
-    get KodePekerjaanOrtuAyah() { return this.FormPendaftaranPasienBaruIrja.get("Ayah.KodePekerjaanOrtuAyah") }
-    get NamaOrtuIbu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu.NamaOrtuIbu") }
-    get TglLahirOrtuIbu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu.TglLahirOrtuIbu") }
-    get AlamatOrtuIbu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu.AlamatOrtuIbu") }
-    get KotaOrtuIbu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu.KotaOrtuIbu") }
-    get KecamatanOrtuIbu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu.KecamatanOrtuIbu") }
-    get KodePekerjaanOrtuIbu() { return this.FormPendaftaranPasienBaruIrja.get("Ibu.KodePekerjaanOrtuIbu") }
+    get debitur() : FormArray {
+        return this.FormPendaftaranPasienBaruIrja.get("debitur") as FormArray
+    }
 }

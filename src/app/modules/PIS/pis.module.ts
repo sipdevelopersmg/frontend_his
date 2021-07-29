@@ -21,6 +21,9 @@ import { PelayananPasienIrnaComponent } from './pages/IRNA/pelayanan-pasien-irna
 import { AntrianPasienRawatJalanComponent } from './pages/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.component';
 import { DaftarUlangPasienComponent } from './pages/IRJA/daftar-ulang-pasien/daftar-ulang-pasien.component';
 import { PendaftaranPasienBaruIrnaComponent } from './pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component';
+import { SetupBahasaComponent } from './pages/setup-data/setup-bahasa/setup-bahasa.component';
+import { SetupKebangsaanComponent } from './pages/setup-data/setup-kebangsaan/setup-kebangsaan.component';
+import { SetupEtnisComponent } from './pages/setup-data/setup-etnis/setup-etnis.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -43,7 +46,10 @@ const ngWizardConfig: NgWizardConfig = {
         PelayananPasienIrnaComponent,
         AntrianPasienRawatJalanComponent,
         DaftarUlangPasienComponent,
-        PendaftaranPasienBaruIrnaComponent
+        PendaftaranPasienBaruIrnaComponent,
+        SetupBahasaComponent,
+        SetupKebangsaanComponent,
+        SetupEtnisComponent,
     ],
     imports: [
         CommonModule,
