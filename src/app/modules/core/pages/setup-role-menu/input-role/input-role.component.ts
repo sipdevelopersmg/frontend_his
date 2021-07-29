@@ -25,13 +25,13 @@ export class InputRoleComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.MainMenuNonAktif = [
             {
-                caption: "Material Management"
-            caption_menu_parent: ""
-            icon: "icon-material-management"
-            icon_menu_parent: ""
-            id_menu: 3
-            id_menu_parent: 0
-            is_parent: "True"
+                caption: "Material Management",
+                caption_menu_parent: "",
+                icon: "icon-material-management",
+                icon_menu_parent: "",
+                id_menu: 3,
+                id_menu_parent: 0,
+                is_parent: true,
             }
         ];
     }
