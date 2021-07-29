@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { ISetupPabrikModel } from '../../../models/setup-data/setup-pabrik/SetupPabrikModel';
+import { ISetupPabrikModel,SetupPabrikModel } from '../../../models/setup-data/setup-pabrik/SetupPabrikModel';
 
 import * as API_SETUP_PABRIK from './../../../../../api/MM/SETUP_PABRIK';
 
@@ -17,7 +17,7 @@ export class SetupPabrikService {
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService) { }
 
-    onGetAllPabrik(): Observable<any> {
+    onGetAllPabrik(): Observable<SetupPabrikModel> {
         return this.httpOperationService.defaultGetRequest(API_SETUP_PABRIK.GET_ALL_SETUP_PABRIK);
     }
 

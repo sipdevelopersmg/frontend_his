@@ -1,0 +1,595 @@
+{
+    "LookupAgama": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Id",
+                "format": "N",
+                "headerText": "ID",
+                "type": "number",
+                "visible": true,
+                "width": 50
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Agama",
+                "headerText": "AGAMA",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            }
+        ],
+        "filter": [
+            {
+                "field": "id",
+                "filter": "equal",
+                "title": "ID"
+            },
+            {
+                "field": "agama",
+                "filter": "like",
+                "title": "AGAMA"
+            }
+        ]
+    },
+    "LookupKartuIdentitas": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "KodeJenisKartu",
+                "headerText": "KODE",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaJenisKartu",
+                "headerText": "JENIS KARTU",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "KodeJenisKartu",
+                "filter": "equal",
+                "title": "KODE"
+            },
+            {
+                "field": "NamaJenisKartu",
+                "filter": "like",
+                "title": "NAMA"
+            }
+        ]
+    },
+    "LookupKebangsaan": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NatCode",
+                "headerText": "NAT CODE",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NatName",
+                "headerText": "NAT NAME",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "NatCode",
+                "filter": "equal",
+                "title": "NAT CODE"
+            },
+            {
+                "field": "NatName",
+                "filter": "like",
+                "title": "NAT NAME"
+            }
+        ]
+    },
+    "LookupKecamatan": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Id",
+                "headerText": "KODE",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Nama",
+                "headerText": "NAMA KECAMATAN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "nama",
+                "filter": "like",
+                "title": "KECAMATAN"
+            }
+        ]
+    },
+    "LookupKelurahan": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Id",
+                "headerText": "ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Nama",
+                "headerText": "NAMA KELURAHAN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "nama",
+                "filter": "like",
+                "title": "KELURAHAN"
+            }
+        ]
+    },
+    "LookupKota": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Id",
+                "headerText": "KODE KOTA",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Nama",
+                "headerText": "NAMA KOTA",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "nama",
+                "filter": "like",
+                "title": "KOTA"
+            }
+        ]
+    },
+    "LookupMaritalStatus": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Id",
+                "format": "N",
+                "headerText": "ID",
+                "type": "number",
+                "visible": true,
+                "width": 50
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "MaritalStatus",
+                "headerText": "MARITAL STATUS",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            }
+        ],
+        "filter": [
+            {
+                "field": "id",
+                "filter": "equal",
+                "title": "ID"
+            },
+            {
+                "field": "maritalStatus",
+                "filter": "like",
+                "title": "MARITAL STATUS"
+            }
+        ]
+    },
+    "LookupPasien": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "PartyId",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "FirstName",
+                "headerText": "NAMA",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "MiddleName",
+                "headerText": "MIDDLE NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "LastName",
+                "headerText": "LAST NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "FrontTitle",
+                "headerText": "FRONT TITLE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "EndTitle",
+                "headerText": "END TITLE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Sex",
+                "format": "N2",
+                "headerText": "JENIS KELAMIN",
+                "type": "number",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "GolDarah",
+                "format": "N2",
+                "headerText": "GOL DARAH",
+                "type": "number",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "TemplatLahir",
+                "headerText": "TEMPLAT LAHIR",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "dateTimePickerEdit",
+                "field": "TanggalLahir",
+                "format": "dd MMMM yyyy",
+                "headerText": "TANGGAL LAHIR",
+                "type": "date",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Height",
+                "format": "N2",
+                "headerText": "HEIGHT",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Weight",
+                "format": "N2",
+                "headerText": "WEIGHT",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "MaritalStatus",
+                "format": "N2",
+                "headerText": "MARITAL STATUS",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Agama",
+                "format": "N2",
+                "headerText": "AGAMA",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NatCode",
+                "headerText": "NAT CODE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "EthnicCode",
+                "headerText": "ETHNIC CODE",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "IdBahasa",
+                "format": "N2",
+                "headerText": "ID BAHASA",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Bahasa",
+                "headerText": "BAHASA",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Telp",
+                "headerText": "TELP",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Hp",
+                "headerText": "HP",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "MiddleName",
+                "title": "MIDDLE NAME"
+            }
+        ]
+    },
+    "LookupPekerjaan": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "KodePekerjaan",
+                "headerText": "KODE PEKERJAAN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaPekerjaan",
+                "headerText": "NAMA PEKERJAAN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "kodePekerjaan",
+                "filter": "like",
+                "title": "KODE PEKERJAAN"
+            },
+            {
+                "field": "namaPekerjaan",
+                "filter": "like",
+                "title": "NAMA PEKERJAAN"
+            }
+        ]
+    },
+    "LookupPendidikan": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "KodePendidikan",
+                "format": "N2",
+                "headerText": "KODE PENDIDIKAN",
+                "type": "number",
+                "visible": false,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "NamaPendidikan",
+                "headerText": "NAMA PENDIDIKAN",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            }
+        ],
+        "filter": [
+            {
+                "field": "namaPendidikan",
+                "filter": "like",
+                "title": "PENDIDIKAN"
+            }
+        ]
+    },
+    "LookupProvinsi": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "Id",
+                "headerText": "KODE PROVINSI",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Nama",
+                "headerText": "NAMA PROVINSI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "Nama",
+                "filter": "like",
+                "title": "PROVINSI"
+            }
+        ]
+    },
+    "LookupSuku": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "EthCode",
+                "headerText": "ETH CODE",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "EthName",
+                "headerText": "ETH NAME",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "EthCode",
+                "filter": "equal",
+                "title": "ETH CODE"
+            },
+            {
+                "field": "EthName",
+                "filter": "like",
+                "title": "ETH NAME"
+            }
+        ]
+    }
+}

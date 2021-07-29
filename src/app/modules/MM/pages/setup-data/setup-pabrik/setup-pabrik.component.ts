@@ -109,7 +109,7 @@ export class SetupPabrikComponent implements OnInit {
 
     onGetAllSetupPabrik(): void {
         this.setupPabrikService.onGetAllPabrik()
-            .subscribe((result: SetupPabrikModel) => {
+            .subscribe((result) => {
                 this.GridPabrikDatasource = result.data;
             });
     }

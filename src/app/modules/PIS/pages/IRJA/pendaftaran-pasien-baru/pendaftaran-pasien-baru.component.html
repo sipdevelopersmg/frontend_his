@@ -1,128 +1,148 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
-    <form [formGroup]="FormPendaftaranPasienBaruIrja">
-        <h5 class="">Identitas</h5>
-        <div class="row">
-            <div class="col-sm-6">
-                <mol-input-select [label]="'Jenis Identitas'" [options]="SelectOptionsJenisKelamin" formControlName="id_jenis_identitas"></mol-input-select>
-                <mol-input-text [label]="'No Identitas'" formControlName="no_identitas"></mol-input-text>
-            </div>
-        </div>
-        <hr/>
-        <h5 class="">Detail Person</h5>
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <mol-input-text [label]="'No KK'" formControlName="no_kartu_keluarga"></mol-input-text>
-                <mol-input-text [label]="'Nama Depan'" formControlName="nama_depan"></mol-input-text>
-                <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"></mol-input-text>
-                <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"></mol-input-text>
-                <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"></mol-input-text>
-                <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"></mol-input-text>
-                <mol-input-select [label]="'Gender'" [options]="SelectOptionsJenisKelamin" formControlName="gender"></mol-input-select>
-                <mol-input-text [label]="'Gol darah'" formControlName="gol_darah"></mol-input-text>
-                <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"></mol-input-text>
-                <mol-datepicker-syncfusion [label]="'Tanggal Lahir'" formControlName="tanggal_lahir"></mol-datepicker-syncfusion>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"></mol-input-text>
-                <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"></mol-input-text> 
-                <mol-input-select [label]="'Marital'" [options]="SelectOptionsJenisKelamin" formControlName="id_marital_status"></mol-input-select>
-                
-                <org-input-look-up #LookupAgama [label]="'Agama'" [disabled]="true"
-                    [modal-title]="'Data Agama'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Agama'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
+        <form [formGroup]="FormPendaftaranPasienBaruIrja">
+    <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
 
-                <org-input-look-up #LookupKebangsaan [label]="'Kebangsaan'" [disabled]="true"
-                    [modal-title]="'Data Kebangsaan'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Kebangsaan'"
-                    (onGetSelectedData)="handleSelectedKebangsaan($event)">
-                </org-input-look-up>
-
-                <org-input-look-up #LookupEtnis [label]="'Etnis'" [disabled]="true"
-                    [modal-title]="'Data Etnis'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Etnis'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
-
-                <org-input-look-up #LookupBahasa [label]="'Bahasa'" [disabled]="true"
-                    [modal-title]="'Data Bahasa'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Bahasa'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
-
-                <org-input-look-up #LookupEducation [label]="'Last Education'" [disabled]="true"
-                    [modal-title]="'Data Education'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Education'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
-
-                <org-input-look-up #LookupJob [label]="'Job Type'" [disabled]="true"
-                    [modal-title]="'Data Job'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
-                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-sm-6">
-                <h5 class="">Alamat</h5>
-                <mol-input-textarea [label]="'Alamat Lengkap'" formControlName="alamat"></mol-input-textarea>
-                <mol-input-text [label]="'Kode Pos'" formControlName="kodepos"></mol-input-text>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'RT/RW'"></atm-label>
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                        <div class="row" formGroupName="PasienAddress">
-                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                <atm-input formControlName="Rt"></atm-input>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">/</div>
-                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                <atm-input formControlName="Rw"></atm-input>
-                            </div>
-                        </div>
+            <ng-wizard-step [title]="'No. Identitas'" >
+                <h5 class="">Identitas</h5>
+                <div class="row" >
+                    <div class="col-sm-6" formGroupName="identitas">
+                        <mol-input-select [label]="'Jenis Identitas'" [options]="SelectOptionsJenisKelamin" formControlName="id_jenis_identitas"></mol-input-select>
+                        <mol-input-text [label]="'No Identitas'" formControlName="no_identitas"></mol-input-text>
+                        <img [src]="url" class="img-thumbnail" width="150" style="margin-bottom: 10px;"> <br/>
+                        <input type='file' formControlName="path_foto" (change)="onSelectFile($event)">
                     </div>
                 </div>
-                <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"></mol-input-text>
-                <org-input-look-up #LookupJob [label]="'Wilayah'" [disabled]="true"
-                    [modal-title]="'Data Job'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
-            </div>
-            <div class="col-sm-6">
-                <h5 class="">Contact Person</h5>
-                <mol-input-text [label]="'Hand Phone'" formControlName="hand_phone"></mol-input-text>
-                <mol-input-text [label]="'Home Phone'" formControlName="home_phone"></mol-input-text>
-                <mol-input-text [label]="'Office Phone'" formControlName="office_phone"></mol-input-text>
-                <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
-                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <h5 class="">Debitur</h5>
-            <div class="col-sm-6">
-                <mol-input-text [label]="'No Member'" formControlName="member"></mol-input-text>
-                <org-input-look-up #LookupJob [label]="'Debitur'" [disabled]="true"
-                    [modal-title]="'Data Job'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                    [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                    [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
-                    (onGetSelectedData)="handleSelectedAgama($event)">
-                </org-input-look-up>
-                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
-            </div>
-        </div>
-    </form>
+               <!-- <hr/>-->
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'Detail Person'">
+                <h5 class="">Detail Person</h5>
+                <div class="row" formGroupName="detail">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <mol-input-text [label]="'No KK'" formControlName="no_kartu_keluarga"></mol-input-text>
+                        <mol-input-text [label]="'Nama Depan'" formControlName="nama_depan"></mol-input-text>
+                        <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"></mol-input-text>
+                        <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"></mol-input-text>
+                        <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"></mol-input-text>
+                        <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"></mol-input-text>
+                        <mol-input-select [label]="'Gender'" [options]="SelectOptionsJenisKelamin" formControlName="gender"></mol-input-select>
+                        <mol-input-text [label]="'Gol darah'" formControlName="gol_darah"></mol-input-text>
+                        <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"></mol-input-text>
+                        <!-- <mol-datepicker-syncfusion [label]="'Tanggal Lahir'" formControlName="tanggal_lahir"></mol-datepicker-syncfusion> -->
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"></mol-input-text>
+                        <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"></mol-input-text> 
+                        <mol-input-select [label]="'Marital'" [options]="SelectOptionsJenisKelamin" formControlName="id_marital_status"></mol-input-select>
+                        
+                        <org-input-look-up #LookupAgama [label]="'Agama'" [disabled]="true"
+                            [modal-title]="'Data Agama'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Agama'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+
+                        <org-input-look-up #LookupKebangsaan [label]="'Kebangsaan'" [disabled]="true"
+                            [modal-title]="'Data Kebangsaan'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Kebangsaan'"
+                            (onGetSelectedData)="handleSelectedKebangsaan($event)">
+                        </org-input-look-up>
+
+                        <org-input-look-up #LookupEtnis [label]="'Etnis'" [disabled]="true"
+                            [modal-title]="'Data Etnis'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Etnis'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+
+                        <org-input-look-up #LookupBahasa [label]="'Bahasa'" [disabled]="true"
+                            [modal-title]="'Data Bahasa'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Bahasa'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+
+                        <org-input-look-up #LookupEducation [label]="'Last Education'" [disabled]="true"
+                            [modal-title]="'Data Education'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Education'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+
+                        <org-input-look-up #LookupJob [label]="'Job Type'" [disabled]="true"
+                            [modal-title]="'Data Job'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+                        <!-- <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea> -->
+                    </div>
+                </div>
+               <!-- <hr/>-->
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'Alamat'">
+                <div class="row" formArrayName="alamat">
+                    <div class="col-sm-6" *ngFor="let item of FormPendaftaranPasienBaruIrja.get('alamat')['controls']; let i = index"
+                    [formGroupName]="i">
+                        <h5 class="">Alamat</h5>
+                        <mol-input-textarea [label]="'Alamat Lengkap'" formControlName="alamat_lengkap"></mol-input-textarea>
+                        <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos"></mol-input-text>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'RT/RW'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <atm-input formControlName="rt"></atm-input>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">/</div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <atm-input formControlName="rw"></atm-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"></mol-input-text>
+                        <org-input-look-up #LookupJob [label]="'Wilayah'" [disabled]="true"
+                            [modal-title]="'Data Job'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+                    </div>
+                </div>
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'Contact'" >
+                <div class="row" formArrayName="kontak">
+                    <div class="col-sm-6" *ngFor="let item of FormPendaftaranPasienBaruIrja.get('kontak')['controls']; let i = index"
+                    [formGroupName]="i">
+                        <h5 class="">Contact Person</h5>
+                        <mol-input-text [label]="'Hand Phone'" formControlName="hand_phone"></mol-input-text>
+                        <mol-input-text [label]="'Home Phone'" formControlName="home_phone"></mol-input-text>
+                        <mol-input-text [label]="'Office Phone'" formControlName="office_phone"></mol-input-text>
+                        <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
+                        <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+                    </div>
+                </div>
+               <!-- <hr/>-->
+            </ng-wizard-step>
+            <ng-wizard-step [title]="'Debitur'" >
+                <div class="row" formArrayName="debitur">
+                    <div class="col-sm-6" *ngFor="let item of FormPendaftaranPasienBaruIrja.get('debitur')['controls']; let i = index"
+                    [formGroupName]="i">
+                        <h5 class="">Debitur</h5>
+                        <mol-input-text [label]="'No Member'" formControlName="no_member"></mol-input-text>
+                        <org-input-look-up #LookupJob [label]="'Debitur'" [disabled]="true"
+                            [modal-title]="'Data Job'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
+                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            (onGetSelectedData)="handleSelectedAgama($event)">
+                        </org-input-look-up>
+                        <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+                    </div>
+                </div>
+            </ng-wizard-step>
+    </ng-wizard>
+        </form>
 </org-card-layout>
