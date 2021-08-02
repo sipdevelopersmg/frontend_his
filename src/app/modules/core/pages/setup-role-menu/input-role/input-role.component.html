@@ -7,51 +7,34 @@
             </div>
             <div class="card-body p-1 cardBodySetupMenu">
                 <ul class="list-group">
-
                     <li [id]="item.id_menu" class="list-group-item cursor-pointer p-0 mb-1 list-sidebar-item"
-                        *ngFor="let item of MainMenuNonAktif">
-
-                        <!-- List Main Menu Aktif -->
-                        <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}">
-                            <div class="col-11 me-1"
-                                (click)="item.childMenu?.length >= 1 ? onTogglingHideChildMenu(item.id_menu) : null">
-                                <div class="row align-items-center">
-                                    <div class="col-1 px-0 text-end">
-                                        <i class="fas fa-angle-right" [hidden]="item.childMenu?.length < 1"
-                                            id="{{item.id_menu}}Icon">
-                                        </i>
+                        *ngFor="let item of MainMenuNonAktif; let i = index">
+                        <div class="items-group mx-0 px-2 align-items-center" data-bs-toggle="tooltip"
+                            title="{{ item.caption }}">
+                            <div class="col-11 px-1 me-1">
+                                <!-- MainMenu -->
+                                <row class="align-items-center">
+                                    <div class="col-12">
+                                        <span class="font-cabin mb-2 text-biru-tua">
+                                            {{ item.caption_menu_parent }}
+                                        </span>
                                     </div>
-                                    <div class="col-11">
-                                        <span class="font-cabin mb-2">{{ item.caption }}</span>
+                                </row>
+
+                                <!-- Top Menu -->
+                                <div class="row align-items-center">
+                                    <div class="col-12">
+                                        <span class="font-cabin mb-2 text-hitam-muda">
+                                            {{ item.caption }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-1">
                                 <input class="form-check-input form-select-lg" type="checkbox" value="true"
-                                    id="{{ item.id_menu }}Checkbox"
-                                    (change)="onChangeChecboxActiveMainMenu($event, item)">
+                                    id="{{ item.id_menu }}Checkbox" (change)="onCheckSelectedMenuNonAktif(item, i)">
                             </div>
                         </div>
-
-                        <!-- List Top Menu Aktif -->
-                        <ul class="list-group list-group-child is-hidden" id="{{ item.id_menu }}ChildMenu">
-                            <li class="list-group-item cursor-pointer p-0 mb-1"
-                                *ngFor="let childItem of item.childMenu">
-                                <div class="items-group-child mx-0 px-2" data-bs-toggle="tooltip"
-                                    title="{{ childItem.caption }}">
-                                    <div class="col-11 ps-4 me-1">
-                                        <span class="font-cabin mb-2" style="font-size: 16px;">
-                                            {{ childItem.caption }}
-                                        </span>
-                                    </div>
-                                    <div class="col-1">
-                                        <input class="form-check-input form-select-lg" type="checkbox" value="true"
-                                            id="{{ childItem.id_menu }}Checkbox"
-                                            (change)="onChangeChecboxActiveMainMenu($event, item)">
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -59,25 +42,17 @@
     </div>
 
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-1 text-center">
-        <div class="row align-self-center align-items-center" style="padding-top: 8rem">
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3">
-                <button class="btn btn-primary btn-sm" style="width: 3rem;">
-                    <i class="fas fa-angle-double-right"></i>
-                </button>
-            </div>
+        <div class="row align-self-center align-items-center" style="padding-top: 10rem">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-5">
-                <button class="btn btn-primary btn-sm" style="width: 3rem;">
+                <button class="btn btn-primary btn-sm" style="width: 3rem;" type="button"
+                    (click)="onClickAddToMenuAktif()">
                     <i class="fas fa-angle-right"></i>
                 </button>
             </div>
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3">
-                <button class="btn btn-primary btn-sm" style="width: 3rem;">
+                <button class="btn btn-primary btn-sm" style="width: 3rem;" type="button"
+                    (click)="onClickRemoveFromMenuAktif()">
                     <i class="fas fa-angle-left"></i>
-                </button>
-            </div>
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <button class="btn btn-primary btn-sm" style="width: 3rem;">
-                    <i class="fas fa-angle-double-left"></i>
                 </button>
             </div>
         </div>
@@ -93,7 +68,7 @@
                 <ul class="list-group">
 
                     <li [id]="item.id_menu" class="list-group-item cursor-pointer p-0 mb-1 list-sidebar-item"
-                        *ngFor="let item of MainMenuAktif">
+                        *ngFor="let item of MainMenuAktif; let i = index">
 
                         <!-- List Main Menu Aktif -->
                         <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}">
@@ -113,8 +88,7 @@
                             <div class="col-1">
                                 <div class="form-check">
                                     <input class="form-check-input form-select-lg" type="checkbox" value="true"
-                                        id="{{ item.id_menu }}Checkbox"
-                                        (change)="onChangeChecboxActiveMainMenu($event, item)">
+                                        id="{{ item.id_menu }}Checkbox" (change)="onCheckSelectedMenuAktif(item, i)">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +96,7 @@
                         <!-- List Top Menu Aktif -->
                         <ul class="list-group list-group-child is-hidden" id="{{ item.id_menu }}ChildMenu">
                             <li class="list-group-item cursor-pointer p-0 mb-1"
-                                *ngFor="let childItem of item.childMenu">
+                                *ngFor="let childItem of item.childMenu; let j = index">
                                 <div class="items-group-child mx-0 px-2" data-bs-toggle="tooltip"
                                     title="{{ childItem.caption }}">
                                     <div class="col-11 ps-4 me-2">
@@ -134,7 +108,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input form-select-lg" type="checkbox" value="true"
                                                 id="{{ childItem.id_menu }}Checkbox"
-                                                (change)="onChangeChecboxActiveMainMenu($event, item)">
+                                                (change)="onCheckSelectedMenuAktif(childItem, j)">
                                         </div>
                                     </div>
                                 </div>

@@ -1,10 +1,18 @@
-import { Component, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
     selector: 'mol-dropdown-syncfusion',
     templateUrl: './mol-dropdown-syncfusion.component.html',
-    styleUrls: ['./mol-dropdown-syncfusion.component.css']
+    styleUrls: ['./mol-dropdown-syncfusion.component.css'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => MolDropdownSyncfusionComponent),
+            multi: true
+        }
+    ]
 })
 export class MolDropdownSyncfusionComponent implements OnInit {
 
@@ -28,7 +36,7 @@ export class MolDropdownSyncfusionComponent implements OnInit {
         return this._ID;
     }
 
-    @Input('value') _value: any;
+    @Input('value') _value: any = { "text": '', "value": 0 };
 
     onChange: any = () => { };
 
@@ -46,6 +54,8 @@ export class MolDropdownSyncfusionComponent implements OnInit {
         this._value = val;
         this.onChange(val);
         this.onTouched();
+
+        console.log(val);
 
         if (val != undefined)
             this.MolDropdown.value = val;

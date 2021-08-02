@@ -9,9 +9,9 @@
                     [grid-DataSource]="GridPabrikConfig.GridPabrikDataSource" [grid-paging]="true"
                     [grid-editSettings]="GridDataPabrikEditSettings" [grid-lines]="'Both'"
                     [grid-initial-page]="GridDataPabrikPagingSettings" [grid-toolbar]="GridDataPabrikToolbar"
-                    [columns]="GridPabrikConfig.GridPabrikColumns" (row-selected)="onSelectedRow($event)"
+                    [columns]="GridPabrikColumns" (row-selected)="onSelectedRow($event)"
                     (toolbar-click)="onToolbarClick($event)" (load-grid)="onLoadGridPabrik($event)"
-                    (initialized)="onInitalizedGrid($event)">
+                    (initialized)="onInitalizedGrid($event)" (command-click)="onClickCommandGridPabrik($event)">
                 </mol-grid>
 
                 <!-- Panggil Modal Dialog Ketika click tombol Add di Toolbar Grid -->

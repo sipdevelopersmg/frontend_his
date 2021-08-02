@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './modules/core/pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
     {
@@ -10,9 +9,7 @@ const routes: Routes = [
     {
         path: "dashboard",
         loadChildren: () => import("./modules/core/core.module").then(m => m.CoreModule),
-    },
-    { path: "**", component: PageNotFoundComponent, data: { title: 'Page Not Found' } },
-
+    }
 ];
 
 @NgModule({

@@ -26,8 +26,8 @@
                         </mol-input-text>
 
                         <!-- Nama Lengkap -->
-                        <mol-input-text [label]="'Nama Lengkap'" formControlName="nama_lengkap"
-                            [IsFormControlInvalid]="nama_lengkap.invalid"
+                        <mol-input-text [label]="'Nama Lengkap'" formControlName="full_name"
+                            [IsFormControlInvalid]="full_name.invalid"
                             [ValidatorsCaption]="'Nama Lengkap Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
                         </mol-input-text>
 
@@ -58,7 +58,7 @@
                                 <div class="input-group mb-0">
                                     <input type="password" class="form-control form-select-sm"
                                         id="confirmation_password" aria-label="confirmation_password"
-                                        aria-describedby="see-password" formControlName="confirmation_password">
+                                        aria-describedby="see-password">
                                     <span class="input-group-text cursor-pointer" id="see-password"
                                         (click)="onTogglingSeePassword('confirmation_password')">
                                         <i id='confirmation_passwordIcon' class="fas fa-eye fa-sm"></i>
@@ -68,28 +68,17 @@
                         </div>
 
                         <!-- Role -->
-                        <org-input-look-up [label]="'Role'"></org-input-look-up>
-
-                        <!-- Timeout -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Session Timer'"></atm-label>
+                                <atm-label [LabelCaption]="'Role'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <div class="input-group mb-0">
-                                    <input type="number" class="form-control form-select-sm" id="timeout"
-                                        aria-label="timeout" formControlName="timeout">
-                                    <span class="input-group-text">
-                                        <p class="text-abu mb-0" style="font-size: 13px;">Menit</p>
-                                    </span>
-                                </div>
+                                <ejs-dropdownlist [dataSource]="DropdownRoleDatasource" [fields]="DropdownRoleFields"
+                                    [allowFiltering]="true" formControlName="id_role">
+                                </ejs-dropdownlist>
                             </div>
                         </div>
 
-                        <!-- Status Active -->
-                        <mol-radio-button [id]="'status_active'" [label]="'Status'" formControlName="status_active"
-                            [RadioButtonObject]="RadioButtonStatus">
-                        </mol-radio-button>
                     </div>
                     <div class="modal-footer p-2 background-abu-muda">
                         <div class="row">

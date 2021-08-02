@@ -12,6 +12,7 @@ export interface IAuthenticationResponseModel {
     id_user: number;
     isAuth: boolean;
     user_name: string;
+    full_name: string;
     nama_role: string;
     menuJson: MenuJsonModel;
     timeOut: number;

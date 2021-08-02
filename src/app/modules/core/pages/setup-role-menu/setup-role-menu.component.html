@@ -1,10 +1,10 @@
 <org-card-layout>
-    <org-tabs>
+    <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
         <!-- Data Role Menu -->
         <org-tabs-item>
             <org-tabs-label [Id]="'DataRoleActive'">Data Role Menu</org-tabs-label>
             <org-tabs-body>
-                <app-data-role [RolesData]="RolesData"></app-data-role>
+                <app-data-role [RolesData]="RolesData" [MainMenu]="MainMenu"></app-data-role>
             </org-tabs-body>
         </org-tabs-item>
 

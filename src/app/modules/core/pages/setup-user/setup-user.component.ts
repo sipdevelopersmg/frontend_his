@@ -2,7 +2,11 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { SetupRoleService } from '../../services/setup-role/setup-role.service';
+import { SetupUserService } from '../../services/setup-user/setup-user.service';
 
 import GridSetupUser from './json/GridSetupUser.json';
 
@@ -29,6 +33,10 @@ export class SetupUserComponent implements OnInit {
     // ** Form Add / Edit Setup User
     FormSetupUser: FormGroup;
 
+    // ** Dropdown Role Properties
+    DropdownRoleDatasource: any;
+    DropdownRoleFields: object = { text: 'nama_role', value: 'id_role' };
+
     // ** Input Field State
     inputFieldState = 'normal';
 
@@ -44,27 +52,37 @@ export class SetupUserComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private modalService: BsModalService) { }
+        private modalService: BsModalService,
+        private utilityService: UtilityService,
+        private setupRoleService: SetupRoleService,
+        private setupUserService: SetupUserService,
+    ) { }
 
     ngOnInit(): void {
         this.GridSetupUserToolbar = [
             { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-            { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
             { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash fa-sm', id: 'delete' },
             'Search'
         ];
 
         this.FormSetupUser = this.formBuilder.group({
-            user_name: ['', []],
-            nama_lengkap: ['', []],
-            password: ['', []],
-            confirmation_password: ['', []],
             id_role: [0, []],
-            role_name: ['Admisi', []],
-            timeout: [0, []],
-            status_active: [true, []],
-            created_date: ['', []]
+            user_name: ['', []],
+            password: ['', []],
+            full_name: ['', []],
+            user_created: [0, []]
         });
+
+        this.onGetAllActiveUser();
+
+        this.onGetRoleActive();
+    }
+
+    onGetAllActiveUser() {
+        this.setupUserService.onGetAllActiveUser()
+            .subscribe((result) => {
+                this.GridSetupUserDataSource = result.data;
+            });
     }
 
     onToolbarClick(args: any): void {
@@ -101,26 +119,49 @@ export class SetupUserComponent implements OnInit {
         }
     }
 
-    onSubmitFormSetupUser(FormSetupUser: any) {
-
-        FormSetupUser.created_date = new Date();
-
-        this.GridSetupUserDataSource.push(...FormSetupUser);
-
-        this.gridSetupUser.Grid.refresh();
-
-        setTimeout(() => {
-            this.FormSetupUser.reset();
-
-            this.modalRef.hide();
-        }, 250);
+    onGetRoleActive() {
+        this.setupRoleService.onGetAllRoleActive()
+            .subscribe((result) => {
+                this.DropdownRoleDatasource = result.data;
+            });
     }
 
-    get user_name() { return this.FormSetupUser.get('user_name'); }
-    get nama_lengkap() { return this.FormSetupUser.get('nama_lengkap'); }
-    get password() { return this.FormSetupUser.get('password'); }
-    get confirmation_password() { return this.FormSetupUser.get('confirmation_password'); }
+    onSubmitFormSetupUser(FormSetupUser: any) {
+
+        // ** Get User Data from Session Storage
+        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+
+        FormSetupUser.user_created = UserData.id_user;
+
+        // ** Eksekusi Function di Setup User Service
+        this.setupUserService.onInsertUser(FormSetupUser)
+            .subscribe((result) => {
+
+                if (result.responseResult) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan')
+                        .then(() => {
+                            this.onClearFormSetupUser();
+
+                            this.modalRef.hide();
+                        });
+                };
+
+            }, (error) => {
+                console.log(error);
+            });
+    }
+
+    onClearFormSetupUser() {
+        this.id_role.setValue(0);
+        this.user_name.setValue('');
+        this.password.setValue('');
+        this.full_name.setValue('');
+        (<HTMLInputElement>document.getElementById('confirmation_password')).value = '';
+    }
+
     get id_role() { return this.FormSetupUser.get('id_role'); }
-    get timeout() { return this.FormSetupUser.get('timeout'); }
-    get status_active() { return this.FormSetupUser.get('status_active'); }
+    get user_name() { return this.FormSetupUser.get('user_name'); }
+    get password() { return this.FormSetupUser.get('password'); }
+    get full_name() { return this.FormSetupUser.get('full_name'); }
+    get user_created() { return this.FormSetupUser.get('user_created'); }
 }

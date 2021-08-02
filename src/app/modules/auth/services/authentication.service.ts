@@ -39,14 +39,15 @@ export class AuthenticationService {
             API_CONFIG.API.POST_AUTHENTICATION,
             {
                 user_name: Username,
-                password: Password
+                password: Password,
+                app_tipe: 'w'
             }
         ).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         ).subscribe((result: AuthenticationResponseModel) => {
-            if (result !== undefined) {
+            if (result) {
                 this.handlingAuth(result.data);
 
                 this.utilityService.onShowingCustomAlert('success', 'Success', 'Sign In Berhasil')
@@ -58,32 +59,48 @@ export class AuthenticationService {
     }
 
     onLogout(): void {
-        this.utilityService.onShowingCustomAlert(
-            'success',
-            'Success',
-            'Sign Out Successfully'
-        ).then(() => {
-            this.router.navigateByUrl('');
+        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
 
-            if (this.sessionExpirationTime) {
-                clearTimeout(this.sessionExpirationTime);
+        this.httpOperationService.defaultPutRequestWithoutParams(
+            API_CONFIG.API.POST_LOGOUT + UserData.id_user
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        ).subscribe((result) => {
+            if (result.responseResult) {
+                this.utilityService.onShowingCustomAlert(
+                    'success',
+                    'Success',
+                    'Sign Out Successfully'
+                ).then(() => {
+                    this.router.navigateByUrl('');
+
+                    if (this.sessionExpirationTime) {
+                        clearTimeout(this.sessionExpirationTime);
+                    }
+
+                    this.sessionExpirationTime = null;
+
+                    sessionStorage.clear();
+                });
             }
-
-            this.sessionExpirationTime = null;
         });
     }
 
     autoLogout(sessionExpirationTimer: number): void {
         this.sessionExpirationTime = setTimeout(() => {
-            confirm('Session Anda Telah Habis, Login Ulang?');
-            this.onLogout();
+            this.utilityService.onShowingCustomAlert('error', 'Session Anda Telah Habis', 'Silahkan Sign In Ulang')
+                .then(() => {
+                    this.onLogout();
+                });
         }, sessionExpirationTimer);
     }
 
     private handlingAuth(UserData: IAuthenticationResponseModel): void {
         let expiresIn: number;
 
-        if (UserData) { expiresIn = 600000; }
+        if (UserData.timeOut) { expiresIn = UserData.timeOut * 60 * 1000; }
 
         this.autoLogout(expiresIn);
 

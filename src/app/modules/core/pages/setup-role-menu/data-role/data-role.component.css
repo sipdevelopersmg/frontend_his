@@ -14,7 +14,7 @@ div.items-group {
 }
 
 li.list-group-item > div.items-group > .col-10:hover,
-li.list-group-item > div.items-group > .col-11:hover,
+li.list-group-item > div.items-group > .col-12:hover,
 .is-active {
   background-color: var(--biru-muda) !important;
   color: white !important;
@@ -23,7 +23,7 @@ li.list-group-item > div.items-group > .col-11:hover,
 }
 
 li.list-group-item > div.items-group > .col-10::after,
-li.list-group-item > div.items-group > .col-11::after {
+li.list-group-item > div.items-group > .col-12::after {
   background-color: var(--biru-muda) !important;
   color: white !important;
   transition: all 0.25s;
@@ -43,7 +43,7 @@ div.items-group-child {
   font-size: 16px;
 }
 
-li.list-group-item > div.items-group-child > .col-11:hover {
+li.list-group-item > div.items-group-child > .col-12:hover {
   background-color: var(--biru-muda) !important;
   color: #f6f4f7 !important;
   transition: all 0.25s;
@@ -99,4 +99,5 @@ ul.list-group-child.is-hidden {
 .cardBodySetupMenu {
   height: calc(100vh - 260px);
   max-height: calc(100vh - 260px);
+  overflow-y: auto;
 }

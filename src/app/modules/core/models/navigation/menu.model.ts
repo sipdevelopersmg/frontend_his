@@ -12,6 +12,7 @@ export interface MainMenuModel {
     icon_menu_parent?: string;
     caption: string;
     caption_menu_parent?: string;
+    childMenu?: any[];
 }
 
 export interface TopMenuModel {

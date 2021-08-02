@@ -112,15 +112,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
         args === true ? sidebarSection.classList.add('hidding-top-menu') : sidebarSection.classList.remove('hidding-top-menu');
     }
 
-    ngOnDestroy(): void {
-        // localStorage.removeItem('MainMenu');
-        // localStorage.removeItem('ChildMenu');
-        // localStorage.removeItem('SidebarMenu');
-        // localStorage.removeItem('ActiveMainMenuTitle');
-        // localStorage.removeItem('ActiveChildMenu');
-        // localStorage.removeItem('ActiveSidebarMenu');
-        // localStorage.removeItem('UserData');
-
-        // sessionStorage.clear();
-    }
+    ngOnDestroy(): void { }
 }

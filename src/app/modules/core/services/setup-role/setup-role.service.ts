@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import * as API_CONFIG from '../../../../api/index';
+import { GetAllRoleActiveModel } from '../../models/setup-role/setup-role.model';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,10 @@ export class SetupRoleService {
 
     onGetAllRole(): Observable<any> {
         return this.httpOperationService.defaultGetRequest(API_CONFIG.API.GET_ALL_ROLE);
+    }
+
+    onGetAllRoleActive(): Observable<GetAllRoleActiveModel> {
+        return this.httpOperationService.defaultGetRequest(API_CONFIG.API.GET_ALL_ROLE_ACTIVE);
     }
 
     onSetCurrentDataRole(DataRole: any): void {

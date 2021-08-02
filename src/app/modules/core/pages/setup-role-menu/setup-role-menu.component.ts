@@ -5,6 +5,7 @@ import { SetupRoleMenuService } from '../../services/setup-role-menu/setup-role-
 import { SetupRoleService } from '../../services/setup-role/setup-role.service';
 import { RolesModel } from '../../models/setup-role-menu/setup-role-menu.model';
 import { MainMenuModel } from '../../models/navigation/menu.model';
+import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 
 @Component({
     selector: 'app-setup-role-menu',
@@ -17,6 +18,11 @@ export class SetupRoleMenuComponent implements OnInit {
     UserData: IAuthenticationResponseModel;
     RolesData: RolesModel;
 
+    MainMenu: MainMenuModel[];
+
+    TabId: string = 'DataRoleActive';
+    @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
+
     constructor(
         private setupRoleService: SetupRoleService,
         private setupRoleMenuService: SetupRoleMenuService
@@ -26,12 +32,29 @@ export class SetupRoleMenuComponent implements OnInit {
         this.onGetCurrentDataRole();
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.onGetMainMenuAktif(this.RolesData);
+    }
 
     onGetCurrentDataRole(): void {
         this.setupRoleService.onGetCurrentDataRole()
             .subscribe((result: RolesModel) => {
                 this.RolesData = result;
             });
+    }
+
+    onGetMainMenuAktif(RoleData: RolesModel) {
+        this.setupRoleMenuService.onGetAllMainMenuByRoleId(RoleData.id_role)
+            .subscribe((result) => {
+                this.MainMenu = result.data;
+            });
+    }
+
+    onGetSelectedTabId(TabId: string): void {
+        this.TabId = TabId;
+
+        if (this.TabId == "DataRoleActive") {
+            this.onGetMainMenuAktif(this.RolesData);
+        }
     }
 }

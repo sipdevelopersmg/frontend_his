@@ -1,11 +1,16 @@
 declare var sum: any;
 
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import exampleMasterModel from 'src/app/modules/core/models/example/exampleMaster.model';
 import { Columns } from 'src/app/modules/shared/components/molecules/grid/grid/grid.model';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { ExampleMasterService } from 'src/app/modules/core/services/example/example-master.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+
+import GridDaftarBarangColumns from './json/GridDaftarBarang.json';
 
 @Component({
     selector: 'app-exmple-master',
@@ -23,8 +28,19 @@ export class ExmpleMasterComponent implements OnInit, AfterViewInit {
     @ViewChild('lookUpPasien')
     lookUpPasien: OrgInputLookUpKodeComponent;
 
+    modalRef: BsModalRef;
+    @ViewChild('modalDialogBatch') modalDialogBatch: TemplateRef<any>;
+
+    // ** Grid Setup Role Button Properties
+    private gridDaftarBarang: MolGridComponent = null;
+    GridDaftarBarangEditSettings: EditSettingsModel = { allowAdding: true, allowEditing: true };
+    GridDaftarBarangColums = GridDaftarBarangColumns;
+    GridDaftarBarangToolbar = ["Add"];
+    GridDaftarBarangDataSource: any;
+
     constructor(
         private fb: FormBuilder,
+        private modalService: BsModalService,
         private exampleHttp: ExampleMasterService
     ) {
 
@@ -65,9 +81,7 @@ export class ExmpleMasterComponent implements OnInit, AfterViewInit {
         this.sourceGrid = this.exampleHttp.getExample();
     }
 
-    ngOnInit(): void {
-
-    }
+    ngOnInit(): void { }
 
     ngAfterViewInit() { }
 
@@ -90,6 +104,30 @@ export class ExmpleMasterComponent implements OnInit, AfterViewInit {
 
     heandleSelectedLookUp(arg: any) {
         this.lookup.setValue(arg.email);
+    }
+
+    onClickButton() {
+        // ** Set Modal Size
+        this.modalRef = this.modalService.show(this.modalDialogBatch);
+    }
+
+    onSelectedRow(args: any): void {
+
+    }
+
+    onToolbarClick(args: any): void {
+        const item = args.item.id;
+
+        switch (item) {
+            case 'add':
+                break;
+            default:
+                break;
+        }
+    }
+
+    onInitalizedGrid(component: MolGridComponent) {
+        this.gridDaftarBarang = component;
     }
 
     get email() { return this.formPasien.get('email') }

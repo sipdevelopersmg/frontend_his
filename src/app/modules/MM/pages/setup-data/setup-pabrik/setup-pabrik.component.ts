@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { CommandModel, content, EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
@@ -35,6 +35,14 @@ export class SetupPabrikComponent implements OnInit {
     private GridDataPabrik: MolGridComponent = null;
     GridDataPabrikEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
     GridDataPabrikToolbar: any[];
+    GridDataPabrikCommands: CommandModel[] = [
+        {
+            buttonOption: {
+                content: "<i class='fas fa-search'></i>",
+                cssClass: "btn btn-warning"
+            }
+        }
+    ];
 
     public GridPabrikConfig = Config;
 
@@ -87,7 +95,135 @@ export class SetupPabrikComponent implements OnInit {
             'Search'
         ];
 
-        // this.onGetAllSetupPabrik();
+        this.GridPabrikColumns = [
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "id_pabrik",
+                "format": "N",
+                "headerText": "ID",
+                "type": "number",
+                "visible": false,
+                "width": 50
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_pabrik",
+                "headerText": "KODE PABRIK",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "field": "nama_pabrik",
+                "editType": "defaultEdit",
+                "headerText": "NAMA PABRIK",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "field": "alamat_pabrik",
+                "editType": "defaultEdit",
+                "headerText": "ALAMAT PABRIK",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kota",
+                "headerText": "KOTA",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "provinsi",
+                "headerText": "PROVINSI",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "negara",
+                "headerText": "NEGARA",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "telepon",
+                "headerText": "TELEPON",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "fax",
+                "headerText": "FAX",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_pos",
+                "headerText": "KODE POS",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "email",
+                "headerText": "EMAIL",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "contact_person",
+                "headerText": "CONTACT PERSON",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "booleanedit",
+                "field": "is_active",
+                "headerText": "STATUS",
+                "visible": false,
+                "width": 70,
+                "type": "boolean",
+                "displayAsCheckbox": true
+            },
+            {
+                "headerText": "STATUS",
+                "editType": "defaultEdit",
+                "width": 70,
+                "commands": this.GridDataPabrikCommands
+            }
+        ]
     }
 
     onSetFormSetupPabrikAttributes(): void {
@@ -147,6 +283,10 @@ export class SetupPabrikComponent implements OnInit {
             default:
                 break;
         }
+    }
+
+    onClickCommandGridPabrik(args: any): void {
+        console.log(args);
     }
 
     onAddDataPabrik(): void {

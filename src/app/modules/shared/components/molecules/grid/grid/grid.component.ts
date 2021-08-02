@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild } from '@angular/core';
-import { CommandClickEventArgs, ContextMenuItem, GridComponent, RecordDoubleClickEventArgs, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { CommandClickEventArgs, CommandColumnService, CommandModel, ContextMenuItem, GridComponent, RecordDoubleClickEventArgs, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel, ToolbarItems } from '@syncfusion/ej2-grids';
 import { Columns } from './grid.model';
@@ -14,7 +14,8 @@ export interface Data {
 @Component({
     selector: 'mol-grid',
     templateUrl: './grid.component.html',
-    styleUrls: ['./grid.component.css']
+    styleUrls: ['./grid.component.css'],
+    providers: [CommandColumnService]
 })
 export class MolGridComponent implements OnInit, AfterViewInit {
 
@@ -36,6 +37,7 @@ export class MolGridComponent implements OnInit, AfterViewInit {
 
     @Input('columns') columns: Columns[];
     @Input('urlGetColumns') urlGetColumns: string;
+    @Input('command-columns') commandColumns: CommandModel[];
 
     @Output('row-selected') onRowSelected = new EventEmitter<any>();
     @Output('enter-pressed') onKeyPressed = new EventEmitter<any>();

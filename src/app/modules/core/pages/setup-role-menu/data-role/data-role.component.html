@@ -7,14 +7,12 @@
             </div>
             <div class="card-body p-1 cardBodySetupMenu">
                 <ul class="list-group">
-
                     <li [id]="item.id_menu" class="list-group-item cursor-pointer p-0 mb-1 list-sidebar-item"
                         *ngFor="let item of MainMenu">
-
                         <!-- List Main Menu -->
-                        <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}">
-                            <div class="col-11 me-1"
-                                (click)="item.childMenu?.length >= 1 ? onTogglingHideChildMenu(item.id_menu) : onGetMenuSidebar(item.caption, item.id_menu) ">
+                        <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}"
+                            (click)="item.childMenu?.length >= 1 ? onTogglingHideChildMenu(item.id_menu) : onGetMenuSidebar(item.caption, item.id_menu) ">
+                            <div class="col-12 me-1">
                                 <div class="row align-items-center">
                                     <div class="col-1 px-0 text-end">
                                         <i class="fas fa-angle-right" [hidden]="item.childMenu?.length < 1"
@@ -26,30 +24,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-1">
-                                <span class="badge bg-warning">
-                                    <i class="fas fa-trash-alt"></i>
+                            <!-- <div class="col-1" [hidden]="item.childMenu?.length < 1">
+                                <span class="badge bg-primary">
+                                    <i class="fas fa-info-circle"></i>&nbsp; Lihat Detail
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
-
                         <!-- List Top Menu -->
                         <ul class="list-group list-group-child is-hidden" id="{{ item.id_menu }}ChildMenu">
                             <li class="list-group-item cursor-pointer p-0 mb-1"
                                 *ngFor="let childItem of item.childMenu">
                                 <div class="items-group-child mx-0 px-2" data-bs-toggle="tooltip"
-                                    title="{{ childItem.caption }}">
-                                    <div class="col-11 ps-4 me-1"
-                                        (click)="onGetMenuSidebar(childItem.caption, childItem.id_menu)">
+                                    title="{{ childItem.caption }}"
+                                    (click)="onGetMenuSidebar(childItem.caption, childItem.id_menu)">
+                                    <div class="col-12 ps-4 me-1">
                                         <span class="font-cabin mb-2" style="font-size: 16px;">
                                             {{ childItem.caption }}
                                         </span>
                                     </div>
-                                    <div class="col-1">
-                                        <span class="badge bg-warning">
-                                            <i class="fas fa-trash-alt"></i>
+                                    <!-- <div class="col-1">
+                                        <span class="badge bg-primary">
+                                            <i class="fas fa-info-circle"></i>&nbsp; Lihat Detail
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </li>
                         </ul>

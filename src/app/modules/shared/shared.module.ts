@@ -166,6 +166,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
         OrgTabsLabelComponentComponent,
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
+        DropDownListModule,
     ],
     providers: [
         EditService,

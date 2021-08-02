@@ -7,6 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
+import { CommandColumnService, EditService } from '@syncfusion/ej2-angular-grids';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,8 @@ import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
+        EditService,
+        CommandColumnService,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]

@@ -1,10 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subscription, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpResponseModel } from '../models/Http-Operation/HttpResponseModel';
-import { NotificationService } from './notification.service';
 import { UtilityService } from './utility.service';
 
 @Injectable({
@@ -31,7 +30,7 @@ export class HttpOperationService {
         ).pipe(
             catchError(this.handlingError),
             map((result: HttpResponseModel) => {
-                if (result.responseResult === false && Object.keys(result.data).length === 0) {
+                if (result.responseResult) {
                     // Menampilkan SweetAlert Error
                     this.handlingErrorWithStatusCode200(result);
                     return result;
@@ -55,7 +54,52 @@ export class HttpOperationService {
             }),
             delay(2100),
             map((result: HttpResponseModel) => {
-                if (result.responseResult === false && (Object.keys(result.data).length === 0 || result.data === '')) {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            })
+        );
+    }
+
+    defaultPutRequest(url: string, req: any): Observable<any> {
+        return this.httpClient.put<any>(
+            url, req,
+            {
+                headers: this.httpHeader
+            }
+        ).pipe(
+            catchError(this.handlingError),
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            })
+        );
+    }
+
+    defaultPutRequestWithoutParams(url: string): Observable<any> {
+        return this.httpClient.put<any>(
+            url, null,
+            {
+                headers: this.httpHeader
+            }
+        ).pipe(
+            catchError(this.handlingError),
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult === false) {
+                    console.log('Goes Here!');
                     this.handlingErrorWithStatusCode200(result);
                 } else {
                     return result;
@@ -72,8 +116,12 @@ export class HttpOperationService {
             }
         ).pipe(
             catchError(this.handlingError),
-            map((result) => {
-                return result;
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
             })
         );
     }
@@ -121,12 +169,12 @@ export class HttpOperationService {
     private handlingErrorWithStatusCode200(response: HttpResponseModel): any {
 
         // ** Jika response.data type nya []
-        if (response.responseResult === false) {
+        if (!response.responseResult) {
             return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
         }
 
         // ** Jika response.data type nya {}
-        if (response.responseResult !== true && Object.keys(response.data).length === 0) {
+        if (!response.responseResult && Object.keys(response.data).length == 0) {
             return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
         }
     }

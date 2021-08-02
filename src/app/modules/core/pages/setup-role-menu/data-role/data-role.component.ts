@@ -8,6 +8,7 @@ import { SetupRoleMenuService } from '../../../services/setup-role-menu/setup-ro
 import { SetupRoleService } from '../../../services/setup-role/setup-role.service';
 import Swal from 'sweetalert2';
 import GridRoleColumns from '../json/GridSetupRoleMenu.json';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
     selector: 'app-data-role',
@@ -22,6 +23,8 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
     @Input('MainMenu') MainMenu: MainMenuModel[];
     TopMenu: TopMenuModel[];
     MenuSidebar: SidebarMenuModel[];
+
+    SelectedTopMenuId: number;
 
     // ** Card Sidebar Menu Properties
     CardSidebarMenuTitle: string = "Daftar Menu Sidebar";
@@ -45,6 +48,7 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
 
     constructor(
         private modalService: BsModalService,
+        private utilityService: UtilityService,
         private setupRoleService: SetupRoleService,
         private setupRoleMenuService: SetupRoleMenuService
     ) { }
@@ -73,6 +77,8 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
     }
 
     onGetMenuSidebar(TopMenuCaption: string, TopMenuId: number) {
+        this.SelectedTopMenuId = TopMenuId;
+
         this.CardSidebarMenuTitle = "Daftar Menu Sidebar pada Menu " + TopMenuCaption;
 
         this.setupRoleMenuService.onGetSidebarMenuByMenuIdAndRoleId(TopMenuId, this.RolesData.id_role)
@@ -201,57 +207,43 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
         // ** Antisipasi dulu biar tidak ter-check
         elem.checked = !elem.checked;
 
-        if (SidebarMenu.childSidebarMenu) {
-            // ** Munculkan alert confirmation 
-            Swal.fire({
-                icon: 'question',
-                title: 'Apakah Anda Yakin',
-                text: 'Mengubah Status ' + SidebarMenu.caption + ' ?',
-                showDenyButton: true,
-                showCancelButton: false,
-                confirmButtonText: `Yes`,
-                denyButtonText: `Tidak, Kembali`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    elem.checked = !elem.checked;
-                    elem.value = elem.checked ? (true).toString() : (false).toString();
+        Swal.fire({
+            icon: 'question',
+            title: 'Apakah Anda Yakin',
+            text: 'Mengubah Status ' + SidebarMenu.caption + ' ?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+        }).then((result) => {
+            if (result.isConfirmed) {
 
-                    for (let i = 0; i < SidebarMenu.childSidebarMenu.length; i++) {
-                        let checks = (<HTMLInputElement>document.getElementById(SidebarMenu.childSidebarMenu[i].id_menu_sidebar + "Checkbox"));
-
-                        if (!elem.checked) {
-                            checks.checked = false;
-                        } else {
-                            // ** Do Nothing
-                        }
-
-                        checks.value = (false).toString();
-                    };
-
-                    console.log(SidebarMenu);
-
+                if (elem.checked) {
+                    this.setupRoleMenuService.onRemoveSidebarMenuFromRole(this.RolesData.id_role, SidebarMenu.id_menu_sidebar)
+                        .subscribe((result) => {
+                            this.setupRoleMenuService.onGetSidebarMenuByMenuIdAndRoleId(this.SelectedTopMenuId, this.RolesData.id_role)
+                                .subscribe((result) => { this.MenuSidebar = result.data; });
+                        }, (error) => {
+                            console.log(error)
+                        }, () => {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan');
+                        });
                 } else {
-                    elem.checked = elem.checked;
-                }
-            });
-        } else {
-            Swal.fire({
-                icon: 'question',
-                title: 'Apakah Anda Yakin',
-                text: 'Mengubah Status ' + SidebarMenu.caption + ' ?',
-                showDenyButton: true,
-                showCancelButton: false,
-                confirmButtonText: `Yes`,
-                denyButtonText: `Tidak, Kembali`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    elem.checked = !elem.checked;
-                    elem.value = elem.checked ? (true).toString() : (false).toString();
-                } else {
-                    elem.checked = elem.checked;
-                }
-            });
-        }
+                    this.setupRoleMenuService.onInsertSidebarMenuToRole(this.RolesData.id_role, SidebarMenu.id_menu_sidebar)
+                        .subscribe((result) => {
+                            this.setupRoleMenuService.onGetSidebarMenuByMenuIdAndRoleId(this.SelectedTopMenuId, this.RolesData.id_role)
+                                .subscribe((result) => { this.MenuSidebar = result.data; });
+                        }, (error) => {
+                            console.log(error)
+                        }, () => {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan');
+                        });
+                };
+
+            } else {
+                elem.checked = elem.checked;
+            }
+        });
     }
 
     onSeeDetailButtonAndFieldGrid(SidebarMenu: SidebarMenuModel): void {

@@ -1,7 +1,7 @@
 {
     "GridPabrikColumns": [
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
             "editType": "numericEdit",
             "field": "id_pabrik",
@@ -12,100 +12,113 @@
             "width": 50
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "kode_pabrik",
             "headerText": "KODE PABRIK",
             "visible": true,
             "width": 120
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
             "field": "nama_pabrik",
+            "editType": "defaultEdit",
             "headerText": "NAMA PABRIK",
             "visible": true,
             "width": 150
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
             "field": "alamat_pabrik",
+            "editType": "defaultEdit",
             "headerText": "ALAMAT PABRIK",
             "visible": true,
             "width": 150
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "kota",
             "headerText": "KOTA",
             "visible": true,
             "width": 100
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "provinsi",
             "headerText": "PROVINSI",
             "visible": true,
             "width": 120
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "negara",
             "headerText": "NEGARA",
             "visible": true,
             "width": 120
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "telepon",
             "headerText": "TELEPON",
             "visible": true,
             "width": 120
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "fax",
             "headerText": "FAX",
             "visible": true,
             "width": 120
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "kode_pos",
             "headerText": "KODE POS",
             "visible": true,
             "width": 90
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "email",
             "headerText": "EMAIL",
             "visible": true,
             "width": 150
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "contact_person",
             "headerText": "CONTACT PERSON",
             "visible": true,
             "width": 150
         },
         {
-            "allowEditing": true,
+            "allowEditing": false,
             "allowSorting": true,
+            "editType": "booleanedit",
             "field": "is_active",
             "headerText": "STATUS",
             "visible": false,
             "width": 70,
+            "type": "boolean",
             "displayAsCheckbox": true
         }
     ],
