@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpOperationService } from '../../shared/services/http-operation.service';
 import { UtilityService } from '../../shared/services/utility.service';
-import { AuthenticationResponseModel, IAuthenticationResponseModel } from '../models/authentication.model';
+import { AuthenticationResponseModel, IAuthenticationResponseModel, PostChangePassword } from '../models/authentication.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -95,6 +95,19 @@ export class AuthenticationService {
                     this.onLogout();
                 });
         }, sessionExpirationTimer);
+    }
+
+    onChangePassword(ChangePasswordData: PostChangePassword): Observable<any> {
+        return this.httpOperationService.defaultPutRequest(API_CONFIG.API.PUT_CHANGE_PASSWORD, ChangePasswordData)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onResetPassword(UserId: number): Observable<any> {
+        return this.httpOperationService.defaultPutRequestWithoutParams(API_CONFIG.API.PUT_RESET_PASSWORD + UserId);
     }
 
     private handlingAuth(UserData: IAuthenticationResponseModel): void {

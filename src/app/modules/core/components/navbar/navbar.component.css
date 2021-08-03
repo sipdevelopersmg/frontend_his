@@ -19,3 +19,24 @@ img.img-logout {
   background-color: white;
   border-radius: 4px;
 }
+
+ul.dropdown-menu.py-1.hover-dropdown-user {
+  background-color: #00afff !important;
+  transition: all 0.25s;
+}
+
+ul.dropdown-menu.py-1.hover-dropdown-user > li.dropdown-items-user:hover {
+  background-color: var(--biru-muda) !important;
+}
+
+ul.dropdown-menu.py-1.hover-dropdown-user > li.dropdown-items-user:active {
+  background-color: var(--biru-muda) !important;
+}
+
+ul.dropdown-menu.py-1.hover-dropdown-user > li.dropdown-items-user > a {
+  color: white !important;
+}
+
+ul.dropdown-menu.py-1.hover-dropdown-user > li.dropdown-items-user > a:hover {
+  color: var(--biru-muda) !important;
+}

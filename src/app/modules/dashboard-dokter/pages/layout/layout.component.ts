@@ -1,16 +1,15 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { MolTopMenuComponent } from '../../components/top-menu/top-menu.component';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css']
+    selector: 'layout-dashboard-dokter',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class LayoutComponent implements OnInit {
 
     // ** Header Ribbon
     HeaderRibbon: string;
@@ -21,21 +20,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     SidebarMenuTitle: string;
     SidebarMenuDatasource: any[] = [];
 
-    @ViewChild('TopMenuComponent') TopMenuComponent: MolTopMenuComponent;
-    ToggleTopMenu: boolean = false;
-    DashboardDokterState: boolean = false;
+    ToggleInformasiPasien: boolean = false;
 
     constructor(
         private router: Router,
-        // private socket: Socket,
         private activatedRoute: ActivatedRoute,
         private navigationService: NavigationService,
-        private notificationService: NotificationService,
-    ) {
-        this.onCheckIsSidebarEmpty();
-    }
+        private notificationService: NotificationService
+    ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.SidebarMenuDatasource = [
+
+        ]
+    }
 
     onClickNavbarBrand(args: any): void {
         const type = args.type;
@@ -61,14 +59,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.HideHeaderRibbon = false;
                 }
             });
-
-            routeData.parent.data.subscribe((parent: any) => {
-                if (parent.title === "Dashboard Dokter") {
-                    this.DashboardDokterState = true;
-                } else {
-                    this.DashboardDokterState = false;
-                }
-            })
         })
     }
 
@@ -83,21 +73,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     onCollapseSidebar(): void {
         this.SidebarCollapse = true;
-        this.ToggleTopMenu = true;
-    }
-
-    onGetNotification(): void {
-        // return this.socket.fromEvent('notification')
-        //     .pipe(
-        //         map((notify: any) => {
-        //             return notify.data;
-        //         })
-        //     ).subscribe((_result) => {
-        //         let header = 'Pemberitahuan Baru';
-        //         let body = _result.Message;
-
-        //         this.notificationService.onShowToast(header, body, { className: 'bg-primary text-light', delay: 10000 });
-        //     });
+        // this.ToggleTopMenu = true;
     }
 
     onCheckIsSidebarEmpty(): void {
@@ -113,11 +89,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.log(args);
     }
 
-    onTogglingTopMenu(args: any): void {
+    onTogglingInformasiPasien(args: any): void {
         const sidebarSection = document.getElementById('sidebar-section');
 
         args === true ? sidebarSection.classList.add('hidding-top-menu') : sidebarSection.classList.remove('hidding-top-menu');
     }
 
-    ngOnDestroy(): void { }
 }

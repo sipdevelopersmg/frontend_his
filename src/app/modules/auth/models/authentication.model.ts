@@ -19,3 +19,8 @@ export interface IAuthenticationResponseModel {
     token: string;
 }
 
+export interface PostChangePassword {
+    id_user: number;
+    password_lama: string;
+    password_baru: string;
+}

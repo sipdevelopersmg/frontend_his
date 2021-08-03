@@ -31,7 +31,7 @@ export class SetupRoleComponent implements OnInit {
             text: 'Roles Setting',
             iconCss: 'fas fa-user-cog'
         }
-    ];;
+    ];
     GridSetupRoleColums = GridHeader;
     GridSetupRoleDataSource: any[];
 

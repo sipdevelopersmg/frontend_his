@@ -1,0 +1,35 @@
+<div class="card shadow-sm border-0 bg-white py-0"
+    [class]="ToggleVisibility ? 'card-header-hidding-dd' : 'card-header-dd'">
+    <div class="card-body px-1 py-0">
+        <div class="row px-0 mx-0">
+            <!-- Informasi Pasien -->
+            <div class="col-11 pe-0 py-2" [class]="ToggleVisibility ? '' : 'height-6rem'">
+                <div class="row" [hidden]="ToggleVisibility">
+                    <!-- Foto Pasien -->
+                    <div class="col-lg-1 col-md-3 col-sm-3 col-xs-3 px-2 text-end">
+                        <img src="../../../../../assets/image/dokter/soetomo.jpg" alt="" style="height: 5rem;">
+                    </div>
+
+                    <!-- Nama, Umur dan Tgl Lahir -->
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="mb-2">
+                            <h5 class="text-biru-muda">Soetomo</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+                </div>
+            </div>
+
+            <div class="col-1" [class]="ToggleVisibility ? 'py-0' : 'py-1'">
+                <div class="row text-end align-items-end" style="height: 100%;">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 cursor-pointer"
+                        (click)="onTogglingVisibility()">
+                        <i class="fas fa-chevron-circle-up fa-lg text-biru-muda" id="ArrowVisibilty"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

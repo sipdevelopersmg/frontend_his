@@ -1,4 +1,4 @@
-<section id="dashboard-section">
+<section id="dashboard-dokter-section">
     <div class="wrapper">
         <!-- Navbar -->
         <div class="row px-0 mx-0">
@@ -7,17 +7,12 @@
             </section>
         </div>
 
+        <!-- Informasi Pasien -->
         <div class="row px-0 mx-0">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
-                <section id="top-menu" class="bg-white" [hidden]="DashboardDokterState">
-                    <mol-top-menu #TopMenuComponent [ToggleVisibility]="ToggleTopMenu"
-                        (onToggledVisibility)="onTogglingTopMenu($event)">
-                    </mol-top-menu>
-                </section>
-
-                <section id="top-menu" class="bg-white" [hidden]="!DashboardDokterState">
-                    <dd-informasi-pasien [ToggleVisibility]="ToggleTopMenu"
-                        (onToggledVisibility)="onTogglingTopMenu($event)">
+                <section id="top-menu" class="bg-white">
+                    <dd-informasi-pasien [ToggleVisibility]="ToggleInformasiPasien"
+                        (onToggledVisibility)="onTogglingInformasiPasien($event)">
                     </dd-informasi-pasien>
                 </section>
             </div>

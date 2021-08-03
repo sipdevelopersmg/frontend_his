@@ -60,9 +60,16 @@
                                     <atm-label [LabelCaption]="'Password'" [LabelFor]="'Password'"></atm-label>
 
                                     <!-- Input Field -->
-                                    <input type="password" class="form-control" id="Password" formControlName="Password"
-                                        autocomplete="off"
-                                        (keydown.enter)="formAuthentication.valid ? onClickButtonSignIn(formAuthentication.value) : ''">
+                                    <div class="input-group mb-0">
+                                        <input type="password" class="form-control" id="Password" aria-label="Password"
+                                            aria-describedby="see-password" autocomplete="off"
+                                            formControlName="Password"
+                                            (keydown.enter)="formAuthentication.valid ? onClickButtonSignIn(formAuthentication.value) : ''">
+                                        <span class="input-group-text cursor-pointer" id="see-password"
+                                            (click)="onTogglingSeePassword('Password')">
+                                            <i id='PasswordIcon' class="fas fa-eye fa-sm"></i>
+                                        </span>
+                                    </div>
 
                                     <!-- Validators -->
                                     <atm-validators [IsFormControlTouched]="Password.touched"

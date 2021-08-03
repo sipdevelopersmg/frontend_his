@@ -29,6 +29,22 @@ export class AuthenticationComponent implements OnInit {
         });
     }
 
+    onTogglingSeePassword(ElementId: string): void {
+        const elem = (document.getElementById(ElementId) as HTMLInputElement);
+
+        const elemIcon = (document.getElementById(ElementId + 'Icon') as HTMLElement);
+
+        if (elem.type === 'password') {
+            elem.type = 'text';
+            elemIcon.classList.remove('fa-eye');
+            elemIcon.classList.add('fa-eye-slash');
+        } else {
+            elem.type = 'password';
+            elemIcon.classList.remove('fa-eye-slash');
+            elemIcon.classList.add('fa-eye');
+        }
+    }
+
     onClickButtonSignIn(formAuthentication: any): void {
         const username = formAuthentication.Username;
         const password = formAuthentication.Password;

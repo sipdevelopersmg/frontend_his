@@ -25,11 +25,17 @@
             <!-- Navbar Right -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <!-- Nama User -->
-                <li class="nav-item cursor-pointer">
-                    <a class="nav-link font-cabin text-white">
+                <li class="nav-item dropdown cursor-pointer">
+                    <a class="nav-link font-cabin text-white dropdown-toggle" id="dropdownUser" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="../../../../assets/image/navbar/user.png" alt="button-user" class="img-logout">
                         {{ UserData.full_name }}
                     </a>
+                    <ul class="dropdown-menu py-1 hover-dropdown-user" aria-labelledby="dropdownUser">
+                        <li class="dropdown-items-user">
+                            <a class="dropdown-item" (click)="onNavigateToChangePassword()">Ganti Password</a>
+                        </li>
+                    </ul>
                 </li>
 
                 <!-- Logout Button -->

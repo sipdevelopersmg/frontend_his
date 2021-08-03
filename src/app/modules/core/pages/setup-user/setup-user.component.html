@@ -1,11 +1,17 @@
 <org-card-layout>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
+            <!-- Grid Setup Role -->
+            <ejs-contextmenu target="#GridSetupUser" [items]="GridSetupUserContextMenuItems"
+                (select)="onSelectGridContextMenu($event)">
+            </ejs-contextmenu>
+
             <!-- Grid Setup User -->
             <mol-grid #gridSetupUser [grid-id]="'GridSetupUser'" [grid-height]="400" [grid-lines]="'Both'"
                 [grid-editSettings]="GridSetupUserEditSettings" [grid-toolbar]="GridSetupUserToolbar"
                 [columns]="GridAntrianColums.GridHeader.columns" [grid-DataSource]="GridSetupUserDataSource"
-                (toolbar-click)="onToolbarClick($event)">
+                [grid-ContextMenuItems]="GridSetupUserContextMenuItems" (toolbar-click)="onToolbarClick($event)"
+                (row-selected)="onRowSelected($event)">
             </mol-grid>
 
             <!-- Modal Dialog Add / Edit Grid Setup User -->

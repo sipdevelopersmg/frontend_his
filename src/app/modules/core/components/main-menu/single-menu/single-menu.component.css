@@ -11,6 +11,10 @@ div.card-hover:hover > .card-body > .row > .col-2 > .icon {
   background-color: white !important;
 }
 
+div.card-hover:hover > .card-body > .row > .col-2 > svg {
+  color: white !important;
+}
+
 .card-round {
   border-radius: 50%;
 }

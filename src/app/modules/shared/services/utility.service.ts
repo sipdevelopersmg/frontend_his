@@ -15,7 +15,7 @@ export class UtilityService {
             title,
             text: message,
             showCloseButton: false,
-            showConfirmButton: true
+            showConfirmButton: true,
         });
     }
 

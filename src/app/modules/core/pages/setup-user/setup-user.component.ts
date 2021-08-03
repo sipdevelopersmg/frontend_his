@@ -1,10 +1,14 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
+import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import Swal from 'sweetalert2';
+import { GetSetupUserModel } from '../../models/setup-user/setup-user.model';
 import { SetupRoleService } from '../../services/setup-role/setup-role.service';
 import { SetupUserService } from '../../services/setup-user/setup-user.service';
 
@@ -24,6 +28,15 @@ export class SetupUserComponent implements OnInit {
     GridAntrianColums = GridSetupUser;
     GridSetupUserDataSource: any[];
     GridAntrianIrjaPaging = { pageSizes: true, pageSize: 12 };
+    GridSetupUserContextMenuItems: MenuItemModel[] = [
+        {
+            id: 'reset',
+            text: 'Reset Password',
+            iconCss: 'fas fa-redo-alt'
+        }
+    ];
+
+    SelectedUserData: GetSetupUserModel;
 
     // ** Modal Dialog Add / Edit Setup User Properties
     modalRef: BsModalRef;
@@ -56,6 +69,7 @@ export class SetupUserComponent implements OnInit {
         private utilityService: UtilityService,
         private setupRoleService: SetupRoleService,
         private setupUserService: SetupUserService,
+        private authenticationService: AuthenticationService,
     ) { }
 
     ngOnInit(): void {
@@ -100,7 +114,35 @@ export class SetupUserComponent implements OnInit {
     }
 
     onSelectGridContextMenu(args: any): void {
-        console.log(args);
+        if (args.item.id == "reset") {
+            Swal.fire({
+                icon: 'question',
+                title: 'Apakah Anda Yakin',
+                text: `Mengubah Password User ${this.SelectedUserData.full_name} ?`,
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: `Yes`,
+                denyButtonText: `Tidak, Kembali`,
+                focusDeny: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.authenticationService.onResetPassword(this.SelectedUserData.id_user)
+                        .subscribe((result) => {
+                            let message = `Password Baru User ${this.SelectedUserData.full_name} : ${result.data}`
+
+                            this.utilityService.onShowingCustomAlert('success', 'Success', message);
+                        });
+                } else if (result.isDenied) {
+                    // ** Do Nothing
+                }
+            });
+        }
+    }
+
+    onRowSelected(args: any): void {
+        const Data: GetSetupUserModel = args.data;
+
+        this.SelectedUserData = Data;
     }
 
     onTogglingSeePassword(ElementId: string): void {

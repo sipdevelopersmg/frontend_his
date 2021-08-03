@@ -24,6 +24,7 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
     TopMenu: TopMenuModel[];
     MenuSidebar: SidebarMenuModel[];
 
+    SelectedSidebarMenuId: number;
     SelectedTopMenuId: number;
 
     // ** Card Sidebar Menu Properties
@@ -248,6 +249,8 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
 
     onSeeDetailButtonAndFieldGrid(SidebarMenu: SidebarMenuModel): void {
 
+        this.SelectedSidebarMenuId = SidebarMenu.id_menu_sidebar;
+
         // ** Kosongkan Grid Datasource terlebih dahulu
         this.GridSetupFieldGridDataSource = [];
         this.GridSetupRoleButtonDataSource = [];
@@ -277,44 +280,6 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
             });
     }
 
-    onInitalizedGridButton(component: MolGridComponent) {
-        this.gridSetupRoleButton = component;
-    }
-
-    onSelectedRowGridButton(args: any): void {
-        // console.log(args);
-    }
-
-    onActionCompleteGridButton(args: any): void {
-        const requestType = args.requestType;
-        const data = args.data;
-        const previousData = args.previousData;
-
-        if (requestType === "save") {
-            if (data !== previousData) {
-
-                // ** Munculkan alert confirmation 
-                Swal.fire({
-                    icon: 'question',
-                    title: 'Apakah Anda Yakin',
-                    text: 'Mengubah Status Tombol ' + data.caption + ' ?',
-                    showDenyButton: true,
-                    showCancelButton: false,
-                    confirmButtonText: `Yes`,
-                    denyButtonText: `Tidak, Kembali`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.GridSetupRoleButtonDataSource[args.rowIndex] = data;
-                    } else {
-                        this.GridSetupRoleButtonDataSource[args.rowIndex] = previousData;
-                    }
-                }).then(() => {
-                    this.gridSetupRoleButton.Grid.refresh();
-                });
-            }
-        }
-    }
-
     onInitalizedGridField(component: MolGridComponent) {
         this.gridSetupRoleFieldGrid = component;
     }
@@ -326,7 +291,6 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
 
         if (requestType === "save") {
             if (data !== previousData) {
-
                 // ** Munculkan alert confirmation 
                 Swal.fire({
                     icon: 'question',
@@ -337,13 +301,28 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
                     confirmButtonText: `Yes`,
                     denyButtonText: `Tidak, Kembali`,
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.GridSetupFieldGridDataSource[args.rowIndex] = data;
+                    // ** Jika status_akses == true
+                    if (result.isConfirmed && data.status_akses) {
+                        this.setupRoleMenuService.onInsertFieldGridToRole(this.RolesData.id_role, data.id_menu_sidebar, data.id_field_grid)
+                            .subscribe((result) => {
+                                this.utilityService.onShowingCustomAlert('success', 'Success', result.message)
+                                    .then(() => {
+                                        this.onGetButtonAndFieldGridDatasource(data.id_menu_sidebar);
+                                    });
+                            });
+                    }
+                    // ** Jika status akses == false
+                    else if (result.isConfirmed && !data.status_akses) {
+                        this.setupRoleMenuService.onRemoveFieldGridFromRole(this.RolesData.id_role, data.id_menu_sidebar, data.id_field_grid)
+                            .subscribe((result) => {
+                                this.utilityService.onShowingCustomAlert('success', 'Success', result.message)
+                                    .then(() => {
+                                        this.onGetButtonAndFieldGridDatasource(data.id_menu_sidebar);
+                                    });
+                            });
                     } else {
                         this.GridSetupFieldGridDataSource[args.rowIndex] = previousData;
                     }
-                }).then(() => {
-                    this.gridSetupRoleFieldGrid.Grid.refresh();
                 });
             }
         }
@@ -351,5 +330,57 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
 
     onSelectedRowGridFieldGrid(args: any): void {
         // console.log(args);
+    }
+
+    onInitalizedGridButton(component: MolGridComponent) {
+        this.gridSetupRoleButton = component;
+    }
+
+    onSelectedRowGridButton(args: any): void {
+        args.data.id_menu_sidebar = this.SelectedSidebarMenuId;
+    }
+
+    onActionCompleteGridButton(args: any): void {
+        const requestType = args.requestType;
+        const data = args.data;
+        const previousData = args.previousData;
+
+        if (requestType === "save") {
+            if (data !== previousData) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Apakah Anda Yakin',
+                    text: 'Mengubah Status Tombol ' + data.caption + ' ?',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: `Yes`,
+                    denyButtonText: `Tidak, Kembali`,
+                }).then((result) => {
+                    // ** Jika status akses == true
+                    if (result.isConfirmed && data.status_akses) {
+                        this.setupRoleMenuService.onInsertButtonToRole(this.RolesData.id_role, data.id_menu_sidebar, data.id_button)
+                            .subscribe((result) => {
+                                this.utilityService.onShowingCustomAlert('success', 'Success', result.message)
+                                    .then(() => {
+                                        this.onGetButtonAndFieldGridDatasource(data.id_menu_sidebar);
+                                    });
+                            });
+                    }
+                    // ** Jika status_akses == false
+                    else if (result.isConfirmed && !data.status_akses) {
+                        this.setupRoleMenuService.onRemoveButtonFromRole(this.RolesData.id_role, data.id_menu_sidebar, data.id_button)
+                            .subscribe((result) => {
+                                this.utilityService.onShowingCustomAlert('success', 'Success', result.message)
+                                    .then(() => {
+                                        this.onGetButtonAndFieldGridDatasource(data.id_menu_sidebar);
+                                    });
+                            });
+                    }
+                    else {
+                        this.GridSetupRoleButtonDataSource[args.rowIndex] = previousData;
+                    }
+                });
+            }
+        }
     }
 }

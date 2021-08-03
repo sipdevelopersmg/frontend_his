@@ -148,27 +148,6 @@
             </button>
         </div>
         <div class="modal-body">
-            <!-- Grid Button -->
-            <div class="row mb-2">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <p class="card-title mb-0">Daftar Button</p>
-                        </div>
-                        <div class="card-body p-0">
-                            <mol-grid #gridSetupRoleButton [grid-id]="'GridSetupRoleButton'" [grid-height]="150"
-                                [grid-lines]="'Both'" [grid-editSettings]="GridSetupRoleButtonEditSettings"
-                                [columns]="GridSetupRoleButtonColums.GridRoleButton.columns"
-                                [grid-DataSource]="GridSetupRoleButtonDataSource"
-                                (row-selected)="onSelectedRowGridButton($event)"
-                                (action-complete)="onActionCompleteGridButton($event)"
-                                (initialized)="onInitalizedGridButton($event)">
-                            </mol-grid>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Grid Field Grid -->
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -184,6 +163,27 @@
                                 (row-selected)="onSelectedRowGridFieldGrid($event)"
                                 (action-complete)="onActionCompleteGridField($event)"
                                 (initialized)="onInitalizedGridField($event)">
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Button -->
+            <div class="row mb-2">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-title mb-0">Daftar Button</p>
+                        </div>
+                        <div class="card-body p-0">
+                            <mol-grid #gridSetupRoleButton [grid-id]="'GridSetupRoleButton'" [grid-height]="150"
+                                [grid-lines]="'Both'" [grid-editSettings]="GridSetupRoleButtonEditSettings"
+                                [columns]="GridSetupRoleButtonColums.GridRoleButton.columns"
+                                [grid-DataSource]="GridSetupRoleButtonDataSource"
+                                (row-selected)="onSelectedRowGridButton($event)"
+                                (action-complete)="onActionCompleteGridButton($event)"
+                                (initialized)="onInitalizedGridButton($event)">
                             </mol-grid>
                         </div>
                     </div>

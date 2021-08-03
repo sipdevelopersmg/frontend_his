@@ -22,6 +22,8 @@ import { ContextMenuModule } from "@syncfusion/ej2-angular-navigations";
 import { SetupRoleMenuComponent } from './pages/setup-role-menu/setup-role-menu.component';
 import { DataRoleComponent } from './pages/setup-role-menu/data-role/data-role.component';
 import { InputRoleComponent } from './pages/setup-role-menu/input-role/input-role.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { DashboardDokterModule } from "../dashboard-dokter/dashboard-dokter.module";
 
 @NgModule({
     declarations: [
@@ -40,14 +42,16 @@ import { InputRoleComponent } from './pages/setup-role-menu/input-role/input-rol
         SetupRoleMenuComponent,
         DataRoleComponent,
         InputRoleComponent,
+        ChangePasswordComponent,
     ],
     imports: [
         CommonModule,
         CoreRoutingModule,
+        DashboardDokterModule,
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
-        ContextMenuModule
+        ContextMenuModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

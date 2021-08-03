@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { BerandaComponent } from "./pages/beranda/beranda.component";
+import { ChangePasswordComponent } from "./pages/change-password/change-password.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { ExmpleMasterComponent } from "./pages/exmple-master/exmple-master.component";
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
@@ -16,6 +17,7 @@ const coreRoutes: Routes = [
             { path: "setup-user", component: SetupUserComponent, data: { title: "Setup User" } },
             { path: "setup-role", component: SetupRoleComponent, data: { title: "Setup Role" } },
             { path: "setup-role-menu", component: SetupRoleMenuComponent, data: { title: "Setup Roles Menu" } },
+            { path: "ganti-password", component: ChangePasswordComponent, data: { title: "Ganti Password" } },
             {
                 path: "PIS",
                 loadChildren: () => import("../PIS/pis.module").then(m => m.PisModule),
@@ -27,6 +29,11 @@ const coreRoutes: Routes = [
             {
                 path: "Pharmacy",
                 loadChildren: () => import("../Pharmacy/pharmacy.module").then(m => m.PharmacyModule),
+            },
+            {
+                path: "Dokter",
+                loadChildren: () => import("../dashboard-dokter/dashboard-dokter.module").then(m => m.DashboardDokterModule),
+                data: { title: "Dashboard Dokter" }
             }
         ]
     },

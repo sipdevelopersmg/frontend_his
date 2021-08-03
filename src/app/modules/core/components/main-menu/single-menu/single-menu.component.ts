@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-export interface MainMenu {
-    Id: number,
-    Name: string
-}
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
+import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
 
 @Component({
     selector: 'atm-single-menu',
@@ -16,9 +13,12 @@ export class AtmSingleMenuComponent implements OnInit {
     @Input('IconMenu') IconMenu: string;
     @Input('NamaMenu') NamaMenu: string;
 
-    constructor() { }
+    UserData: IAuthenticationResponseModel;
+
+    constructor(private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
+        this.UserData = this.authenticationService.currentUserValue;
     }
 
 }

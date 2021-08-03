@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
-import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
 
 @Component({
     selector: 'app-beranda',
@@ -9,10 +8,13 @@ import { environment } from 'src/environments/environment';
 })
 export class BerandaComponent implements OnInit {
 
-    constructor(private httpOperationService: HttpOperationService) { }
+    // ** User Properites
+    UserFullName: string;
+
+    constructor(private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
-
+        this.UserFullName = this.authenticationService.currentUserValue.full_name;
     }
 
 }
