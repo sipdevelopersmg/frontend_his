@@ -12,9 +12,9 @@ import * as GridConfig from './json/grid.config.json';
 export class InputKontrakPengadaanComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
-      { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
-      { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
-    ];
+    { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
+    { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
+  ];
   // import * as GridConfig from './json/grid.config.json';
   public GridConfig = GridConfig;
   GridDetailToolbar = [
