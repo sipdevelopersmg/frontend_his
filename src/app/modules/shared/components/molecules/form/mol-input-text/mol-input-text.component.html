@@ -1,10 +1,10 @@
 <div class="mb-2 row">
     <div class="col-sm-4">
-        <atm-label [LabelCaption]="label"></atm-label>
+        <atm-label [LabelCaption]="label" [isFooter]="isFooter"></atm-label>
     </div>
     <div class="col-sm-8">
         <atm-input [value]="value" [inputFieldState]="inputFieldState" (change)="doChange($event)"
-            (click)="doTouched($event)"></atm-input>
+            (click)="doTouched($event)" [isFooter]="isFooter"></atm-input>
 
         <atm-validators [IsFormControlTouched]="touched" [IsFormControlInvalid]="IsFormControlInvalid"
             [ValidatorsCaption]="ValidatorsCaption">

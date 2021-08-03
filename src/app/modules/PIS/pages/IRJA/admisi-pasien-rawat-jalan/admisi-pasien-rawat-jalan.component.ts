@@ -98,6 +98,7 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
 
     // ... Set Form Admisi Pasien Attribute
     onSetAttributeFormAdmisiPasien(): void {
+
         this.formAdmisiPasien = this.formBuilder.group({
             PartyId: [0, []],
             MrNo: ['', [Validators.required]],

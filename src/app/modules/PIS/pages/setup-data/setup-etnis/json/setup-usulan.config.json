@@ -1,0 +1,108 @@
+{
+    "GridColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "barcode",
+            "headerText": "BARCODE",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode",
+            "headerText": "KODE OBAT",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "barang",
+            "headerText": "NAMA OBAT",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "no_bach",
+            "headerText": "NO BACH",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_besar",
+            "headerText": "QTY BESAR",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "satuan_besar",
+            "headerText": "SATUAN BESAR",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "isi",
+            "headerText": "ISI",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kemasan",
+            "headerText": "KEMASAN",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_kecil",
+            "headerText": "QTY",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "satuan_kecil",
+            "headerText": "SATUAN KECIL",
+            "visible": true
+        }
+    ],
+    "GridDataSource": [
+        {
+            "barcode": "001918711090",
+            "kode": "AB0001",
+            "barang": "Vitamin C",
+            "qty_besar": "5",
+            "satuan_besar": "DUS",
+            "isi": "10",
+            "kemasan": "10",
+            "qty_kecil": "50",
+            "satuan_kecil": "TABLET"
+        },
+        {
+            "barcode": "0019187188008",
+            "kode": "AB0002",
+            "barang": "Vitamin D",
+            "qty_besar": "10",
+            "satuan_besar": "DUS",
+            "isi": "10",
+            "kemasan": "10",
+            "qty_kecil": "100",
+            "satuan_kecil": "TABLET"
+        }
+    ]
+}

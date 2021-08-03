@@ -18,6 +18,9 @@ export class AtmInputComponent implements ControlValueAccessor {
     // !! Gunakan State untuk mengatur state detail, normal, ataupun edit
     @Input('inputFieldState') inputFieldState = 'normal';
 
+    @Input('isFooter') isFooter;
+
+
     @HostBinding('attr.id') externalId = '';
 
     @Input() set id(value: string) {

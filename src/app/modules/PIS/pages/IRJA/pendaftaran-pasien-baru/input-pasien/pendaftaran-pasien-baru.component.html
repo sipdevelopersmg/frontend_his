@@ -1,7 +1,6 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
         <form [formGroup]="FormPendaftaranPasienBaruIrja">
     <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
-
             <ng-wizard-step [title]="'No. Identitas'" >
                 <h5 class="">Identitas</h5>
                 <div class="row" >
