@@ -41,3 +41,7 @@ p.font-cabin.mb-0 {
 .card-child {
   height: 4rem;
 }
+
+p.informasi-pasien-text {
+  font-size: 15px;
+}

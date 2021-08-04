@@ -7,18 +7,116 @@
                 <div class="row" [hidden]="ToggleVisibility">
                     <!-- Foto Pasien -->
                     <div class="col-lg-1 col-md-3 col-sm-3 col-xs-3 px-2 text-end">
-                        <img src="../../../../../assets/image/dokter/soetomo.jpg" alt="" style="height: 5rem;">
+                        <img src="../../../../../assets/image/dokter/soetomo.jpg" alt=""
+                            style="height: 5.4rem; max-height: 5.4rem;">
                     </div>
 
                     <!-- Nama, Umur dan Tgl Lahir -->
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <!-- Nama Pasien -->
                         <div class="mb-2">
-                            <h5 class="text-biru-muda">Soetomo</h5>
+                            <h5 class="text-biru-muda mb-0">
+                                {{ Pasien.full_name }}
+                            </h5>
+                        </div>
+
+                        <!-- Umur dan Jenis Kelamin -->
+                        <div class="mb-2">
+                            <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                {{ Pasien.umur }} / {{ Pasien.jenis_kelamin }}
+                            </p>
+                        </div>
+
+                        <!-- Tgl Lahir -->
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">Tgl. Lahir</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.tanggal_lahir | date:"dd/MM/yyyy" }}
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+                    <!-- No.RM, No.Reg dan Tgl Masuk -->
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <!-- No. RM -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">No. RM</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.no_rm }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- No. Reg -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">No. Reg</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.no_reg }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Tgl. Masuk -->
+                        <div class="row mb-1">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">Tgl. Masuk</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.tanggal_masuk | date: 'dd/MM/yyyy HH:mm:ss' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DPJP, PPJP dan Debitur -->
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <!-- DPJP -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">DPJP</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.dpjp }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- PPJP -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">PPJP</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.ppjp }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Debitur -->
+                        <div class="row mb-1">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-abu-tua mb-0 informasi-pasien-text">Debitur</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <p class="text-hitam-muda mb-0 informasi-pasien-text">
+                                    : &nbsp; {{ Pasien.debitur }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

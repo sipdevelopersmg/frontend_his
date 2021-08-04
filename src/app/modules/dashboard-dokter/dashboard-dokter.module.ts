@@ -4,15 +4,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
 import { DashboarDokterRoutingModule } from "./dashboard-dokter-routing.module";
 
-import { LayoutComponent } from './pages/layout/layout.component';
 import { InformasiPasienComponent } from './components/informasi-pasien/informasi-pasien.component';
 import { DiagnosaComponent } from './pages/diagnosa/diagnosa.component';
+import { RadiologiComponent } from './pages/radiologi/radiologi.component';
 
 @NgModule({
     declarations: [
-        LayoutComponent,
         InformasiPasienComponent,
-        DiagnosaComponent
+        DiagnosaComponent,
+        RadiologiComponent
     ],
     imports: [
         FormsModule,

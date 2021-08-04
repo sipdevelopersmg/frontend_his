@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
+import { PasienModel } from '../../models/informasi-pasien.model';
 
 @Component({
     selector: 'dd-informasi-pasien',
@@ -7,13 +9,31 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class InformasiPasienComponent implements OnInit {
 
-    @Input("ToggleVisibility") ToggleVisibility: boolean = false;
+    Pasien: PasienModel;
 
+    // ** Toggling Properties
+    @Input("ToggleVisibility") ToggleVisibility: boolean = false;
     @Output("onToggledVisibility") onToggledVisibility = new EventEmitter<any>();
 
-    constructor() { }
+    constructor(private navigationService: NavigationService) {
+
+    }
 
     ngOnInit(): void {
+        this.onTogglingVisibility();
+
+        this.Pasien = {
+            full_name: "Soetomo",
+            jenis_kelamin: "Pria",
+            umur: "23 Tahun, 11 Bulan, 29 Hari",
+            tanggal_lahir: new Date("04/08/1997"),
+            no_rm: "C00005946",
+            no_reg: "A12.2016.05506",
+            tanggal_masuk: new Date(),
+            dpjp: "dr. Anastasia Nadia",
+            ppjp: "",
+            debitur: "Tanggungan Pribadi"
+        };
     }
 
     onTogglingVisibility() {
@@ -30,5 +50,28 @@ export class InformasiPasienComponent implements OnInit {
         }
 
         this.onToggledVisibility.emit(this.ToggleVisibility);
+    }
+
+    onGetHideTopMenuSubject() {
+        this.navigationService.onGetHideTopMenuSubject()
+            .subscribe(
+                (_result) => {
+                    if (_result === true) {
+                        this.ToggleVisibility = _result;
+
+                        let elem = document.getElementById("ArrowVisibilty");
+
+                        if (this.ToggleVisibility == true) {
+                            elem.classList.remove("fa-chevron-circle-up");
+                            elem.classList.add("fa-chevron-circle-down");
+                        }
+
+                        this.onToggledVisibility.emit(_result);
+                    }
+                }, (error) => {
+                    console.log(error);
+                }, () => {
+
+                })
     }
 }

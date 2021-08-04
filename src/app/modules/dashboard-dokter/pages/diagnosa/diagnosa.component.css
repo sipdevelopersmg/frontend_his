@@ -1,0 +1,19 @@
+h5.text-diagnosa {
+  border-bottom: 3px solid var(--biru-muda);
+  width: 11rem;
+  padding-bottom: 0.25rem;
+}
+
+ul.list-group.border-0.shadow-sm {
+  width: 13rem;
+  max-width: 13rem;
+}
+
+li.list-group-item.border-0 {
+  font-size: 14px;
+}
+
+li.list-group-item.border-0:hover {
+  background-color: var(--biru-muda);
+  color: white;
+}

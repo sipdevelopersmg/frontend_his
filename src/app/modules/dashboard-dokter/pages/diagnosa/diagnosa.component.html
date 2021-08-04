@@ -1,3 +1,137 @@
 <org-card-layout>
+    <div class="row pt-2">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <!-- Title -->
+            <div class="row mb-2">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="text-hitam-muda text-diagnosa">
+                        Riwayat Kunjungan
+                    </h5>
+                </div>
+            </div>
 
+            <!-- Riwayat Kunjungan Pasien -->
+            <div class="row">
+                <!-- Dropdown -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                    <p class="text-black mb-0" style="font-size: 15px">
+                        Riwayat Kunjungan Pasien &nbsp; <i class="fas fa-chevron-down fa-xs"></i>
+                    </p>
+                </div>
+
+                <!-- List Kunjungan Pasien -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                    <ul class="list-group border-0 shadow-sm" *ngFor="let item of DiagnosaPasien">
+                        <li class="list-group-item border-0" (click)="onClickItemListDiagnosa(item)">
+                            {{ item.waktu_entry | date: "dd MMMM yyyy"}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <!-- Title -->
+            <div class="row mb-2">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="text-hitam-muda text-diagnosa">
+                        Diagnosa Pasien
+                    </h5>
+                </div>
+            </div>
+
+            <!-- Diagnosa Pasien -->
+            <div class="row mb-2">
+                <!-- Button Diagnosa Baru -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <atm-button-primary [IsButtonBlock]="false" [ButtonPrimaryCaption]="'Input Diagnosa Baru'"
+                        [ButtonPrimaryIcon]="'fa-plus-circle fa-sm'"
+                        (onClickButtonPrimary)="onClickButtonAddDiagnosa()">
+                    </atm-button-primary>
+                </div>
+
+                <!-- Modal Dialog Add Diagnosa Baru -->
+                <ng-template #modalDialogAddDiagnosa>
+                    <form [formGroup]="FormAddDiagnosa">
+                        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                            <h5 class="modal-title pull-left">Input Diagnosa Baru</h5>
+                            <button type="button" class="btn pull-right text-white" aria-label="Close"
+                                (click)="modalRef.hide()">
+                                <i class="fas fa-window-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Subjective -->
+                            <mol-input-text [label]="'Subjective'" formControlName="subjective"></mol-input-text>
+
+                            <!-- Objective -->
+                            <mol-input-text [label]="'Objective'" formControlName="objective"></mol-input-text>
+
+                            <!-- Assesment -->
+                            <org-input-look-up-kode [label]="'Assesment'" [modal-title]="'Pilih Diagnosa'">
+                            </org-input-look-up-kode>
+
+                            <!-- Catatan -->
+                            <mol-input-text [label]="'Assesment (Catatan)'"></mol-input-text>
+
+                            <!-- Plan -->
+                            <mol-input-textarea [label]="'Plan'" formControlName="plan"></mol-input-textarea>
+                        </div>
+                        <div class="modal-footer p-2 background-abu-muda">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                                    <button class="btn btn-primary btn-sm" type="button"
+                                        (click)="onSubmitFormAddDiagnosa(FormAddDiagnosa.value)">
+                                        Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+
+                <!-- Data Diagnosa -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let item of DetailDiagnosaPasien">
+                    <!-- Kode dan Nama Diagnosa -->
+                    <div class="mb-2">
+                        <p class="text-hitam-muda mb-0" style="font-size: 17px;">
+                            {{ item.kode_diagnosa }} - {{ item.nama_diagnosa }}
+                        </p>
+                    </div>
+
+                    <!-- Textarea Keterangan Diagnosa -->
+                    <div class="row mb-2">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                            <textarea id="{{ item.keterangan }}Textarea" rows="2" class="form-control" readonly
+                                [value]="item.keterangan"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Komentar Oleh -->
+                    <div class="row mb-1">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <p class="text-abu-tua mb-0">Komentar Oleh</p>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <p class="text-abu-tua mb-0">
+                                : &nbsp; {{ item.user_entry }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Waktu Entry -->
+                    <div class="row mb-1">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <p class="text-abu-tua mb-0">Waktu Entry</p>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <p class="text-abu-tua mb-0">
+                                : &nbsp; {{ item.waktu_entry | date: "dd/MM/yyyy HH:mm:ss" }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </org-card-layout>
