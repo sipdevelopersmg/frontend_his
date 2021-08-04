@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ).subscribe(() => {
             const routeData = this.getChild(this.activatedRoute);
 
+            // ** Header Ribbon Hide ketika di halaman Beranda
             routeData.data.subscribe((data: any) => {
                 this.HeaderRibbon = data.title;
 
@@ -62,13 +63,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 }
             });
 
+            // ** Hide Top Menu ketika di module Dashboard Dokter
             routeData.parent.data.subscribe((parent: any) => {
-                if (parent.title === "Dashboard Dokter") {
+                if (parent.title === "Dashboard Dokter" || parent.title === "Pemeriksaan Radiologi Pasien") {
                     this.DashboardDokterState = true;
                 } else {
                     this.DashboardDokterState = false;
                 }
-            })
+            });
         })
     }
 

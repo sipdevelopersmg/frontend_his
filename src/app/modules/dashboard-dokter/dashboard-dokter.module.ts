@@ -7,12 +7,16 @@ import { DashboarDokterRoutingModule } from "./dashboard-dokter-routing.module";
 import { InformasiPasienComponent } from './components/informasi-pasien/informasi-pasien.component';
 import { DiagnosaComponent } from './pages/diagnosa/diagnosa.component';
 import { RadiologiComponent } from './pages/radiologi/radiologi.component';
+import { RiwayatPemeriksaanComponent } from './pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component';
+import { InputOrderBaruComponent } from './pages/radiologi/input-order-baru/input-order-baru.component';
 
 @NgModule({
     declarations: [
         InformasiPasienComponent,
         DiagnosaComponent,
-        RadiologiComponent
+        RadiologiComponent,
+        RiwayatPemeriksaanComponent,
+        InputOrderBaruComponent
     ],
     imports: [
         FormsModule,
