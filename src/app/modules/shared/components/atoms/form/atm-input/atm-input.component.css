@@ -10,3 +10,8 @@
 .see-detail:active {
   box-shadow: none !important;
 }
+
+.is-footer{
+    font-weight: bold;
+    font-size: medium;
+}

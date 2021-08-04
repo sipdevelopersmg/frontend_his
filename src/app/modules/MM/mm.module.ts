@@ -5,11 +5,13 @@ import { SharedModule } from "../shared/shared.module";
 import { MaterialManagementRoutingModule } from "./mm-routing.module";
 import { SetupGrupItemComponent } from './pages/setup-data/setup-grup-item/setup-grup-item.component';
 import { SetupPabrikComponent } from './pages/setup-data/setup-pabrik/setup-pabrik.component';
+import { InputKontrakPengadaanComponent } from './pages/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component';
 
 @NgModule({
     declarations: [
         SetupGrupItemComponent,
-        SetupPabrikComponent
+        SetupPabrikComponent,
+        InputKontrakPengadaanComponent
     ],
     imports: [
         FormsModule,

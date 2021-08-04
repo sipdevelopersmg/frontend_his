@@ -43,6 +43,8 @@ export class MolInputTextComponent implements ControlValueAccessor {
 
     @Input('inputFieldState') inputFieldState = 'normal';
 
+    @Input('isFooter') isFooter = false;
+
     constructor() { }
 
     OnInit(): void {

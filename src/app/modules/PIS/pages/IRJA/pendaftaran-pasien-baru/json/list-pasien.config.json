@@ -1,0 +1,98 @@
+{
+    "GridColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "rm",
+            "headerText": "No RM",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama",
+            "headerText": "Nama Pasien",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tgl_lahir",
+            "headerText": "Tgl Lahir",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "sex",
+            "headerText": "Sex",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "umur",
+            "headerText": "Umur",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "alamat",
+            "headerText": "Alamat",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kec",
+            "headerText": "Kecamatan",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kab",
+            "headerText": "Kab/Kota",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tgl_daftar",
+            "headerText": "Tgl Daftar",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "catatan",
+            "headerText": "Catatan Terakhir",
+            "visible": true
+        }
+    ],
+    "GridDataSource": [
+        {
+            "rm": "C019734",
+            "nama": "Soetomo",
+            "tgl_lahir": "04 agus 1997",
+            "sex": "L",
+            "umur": "45",
+            "alamat": "Perum Polri Duranan Indah",
+            "kec": "Tembalang",
+            "kab": "Semarang",
+            "tgl_daftar": "20 jul 2021",
+            "catatan": "Baru"
+        }
+    ]
+}

@@ -1,1 +1,53 @@
-<p>setup-etnis works!</p>
+<org-card-layout>
+    <div class="row mb-2">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+            <mol-input-text [label]="'Nomor Penerimaan'"></mol-input-text>
+            <mol-datepicker-syncfusion [label]="'Tanggal Penerimaan'"></mol-datepicker-syncfusion>
+            <org-input-look-up-kode [label]="'Jenis Penerimaan'"></org-input-look-up-kode>
+            <org-input-look-up-kode [label]="'Stockroom'"></org-input-look-up-kode>
+            <org-input-look-up-kode [label]="'Sipplier'"></org-input-look-up-kode>
+            <org-input-look-up-kode [label]="'No PO'"></org-input-look-up-kode>
+            <mol-input-text [label]="'No Surat Jalan'"></mol-input-text>
+        </div>
+        <div class="col-sm-6">
+            
+            <mol-datepicker-syncfusion [label]="'Tanggal Surat Jalan'"></mol-datepicker-syncfusion>
+            <mol-input-text [label]="'sppb'"></mol-input-text>
+            <org-input-look-up-kode [label]="'Shipping Method'"></org-input-look-up-kode>
+            <org-input-look-up-kode [label]="'Payment'"></org-input-look-up-kode>
+            <mol-datepicker-syncfusion [label]="'Tanggal Jatuh Tempo'"></mol-datepicker-syncfusion>
+           <mol-input-textarea [label]="'Keterangan'"></mol-input-textarea>
+        </div>
+    </div>
+
+    <mol-grid #GridDataUsulan [grid-id]="'GridDataUsulan'" [grid-height]="300"
+        [grid-DataSource]="GridUsulanConfig.GridDataSource" [grid-paging]="true"
+        [grid-lines]="'Both'"
+        [grid-toolbar]="GridDataToolbar"
+        [columns]="GridUsulanConfig.GridColumns"
+        (row-selected)="onClickButton()">
+    </mol-grid>
+    
+    <!-- Modal Dialog Penerimaan Batch -->
+    <ng-template #modalDialogBatch>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Input No. Batch</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close"
+                (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-0">
+            <mol-grid #gridDaftarBarang [grid-id]="'GridDaftarBarang'" [grid-height]="300" [grid-lines]="'Both'"
+                [grid-editSettings]="GridDaftarBarangEditSettings"
+                [columns]="GridDaftarBarangColums.GridDaftarBarang.columns"
+                [grid-DataSource]="GridDaftarBarangDataSource" [grid-toolbar]="GridDaftarBarangToolbar"
+>
+            </mol-grid>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Simpan</button>
+        </div>
+    </ng-template>
+    
+</org-card-layout>

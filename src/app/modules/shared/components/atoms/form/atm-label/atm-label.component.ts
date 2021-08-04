@@ -13,6 +13,8 @@ export class AtmLabelComponent implements OnInit {
 
     @Input('LabelFor') labelFor: string;
 
+    @Input('isFooter') isFooter;
+
     ngOnInit(): void {
     }
 
