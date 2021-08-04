@@ -37,7 +37,7 @@ const pisRoutes: Routes = [
     {
         path: "IRJA", component: null, data: { title: "IRJA" },
         children: [
-            { path: "pendaftaran-pasien-baru", component: ListPasienComponent, data: { title: "Pendaftaran Pasien Baru" }, },
+            { path: "pendaftaran-pasien-baru", component: PendaftaranPasienBaruComponent, data: { title: "Pendaftaran Pasien Baru" }, },
             { path: "antrian-pasien-rawat-jalan", component: AntrianPasienRawatJalanComponent, data: { title: "Antrian Pasien Rawat Jalan" }, },
             { path: "pendaftaran-ulang-pasien", component: DaftarUlangPasienComponent, data: { title: "Pendaftaran Ulang Pasien" }, },
             { path: "daftar-pasien", component: DaftarPasienComponent, data: { title: "Pendaftaran Pasien Baru" }, },

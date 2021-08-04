@@ -1,0 +1,66 @@
+
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formPO">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+                <mol-datepicker-syncfusion [label]="'Tgl Pemesanan'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_pemesanan">
+                </mol-datepicker-syncfusion>
+
+                <mol-datepicker-syncfusion [label]="'Tgl Expired PO'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_expired_pemesanan">
+                </mol-datepicker-syncfusion>
+
+                <org-input-look-up-kode #LookupKodeStockroom [lookup-url]="url" [idKode]="'id_stockroom'" [modal-title]="'Data Stockroom'"
+                    [idTitle]="'stockroom'" (onGetSelectedData)="heandleSelectedStockroom($event)"
+                    [columns]="GridConfig.Lookup.columns" [filter-lookup]="GridConfig.Lookup.filter"
+                    [label]="'Stock Room'">
+                </org-input-look-up-kode>
+ 
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="url" [idKode]="'id_supplier'" [modal-title]="'Data Supplier'"
+                    [idTitle]="'supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
+                    [columns]="GridConfig.Lookup.columns" [filter-lookup]="GridConfig.Lookup.filter"
+                    [label]="'Supplier'">
+                </org-input-look-up-kode>
+
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+            </div>
+        </div>
+        <mol-grid #GridDetail [grid-id]="'GridDetail'" [grid-height]="300"
+                [grid-DataSource]="GridConfig.GridDataSource" [grid-paging]="true"
+                [grid-lines]="'Both'"
+                [grid-toolbar]="GridDetailToolbar"
+                (toolbar-click)="onToolbarClick($event)"
+                [columns]="GridConfig.GridColumns">
+        </mol-grid>
+
+        <div class="row">
+            <div class="col-sm-8">
+
+            </div>
+            <div class="col-sm-4">
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true" formControlName="total_transaksi_pesan" [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true" formControlName="jumlah_item_pesan" [inputFieldState]="'detail'"></mol-input-text>
+            </div>
+        </div>
+    </form>
+<!-- Modal Dialog  -->
+    <ng-template #modalDialog>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Input No. Batch</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close"
+                (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-0">
+
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Simpan</button>
+        </div>
+    </ng-template>
+</org-card-layout>
