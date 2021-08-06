@@ -20,10 +20,19 @@ export class SetupSatuanService {
     private notificationService: NotificationService,
     private httpOperationService: HttpOperationService) { }
   
+  /**
+   * Service Untuk Menampilkan Semua data
+   * @onGetAll Observable<SetupPabrikModel>
+  */
   onGetAll(): Observable<SetupPabrikModel> {
     return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
   }
   
+  /**
+   * Service Untuk Manyimpan data baru
+   * @onPostSave Observable<any>
+   * @param ISetupPabrikModel
+  */
   onPostSave(Data: ISetupPabrikModel): Observable<any> {
     return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
     .pipe(
@@ -33,6 +42,11 @@ export class SetupSatuanService {
     );
   }
   
+  /**
+   * Service Untuk Manyimpan data baru
+   * @onPutEdit Observable<any>
+   * @param ISetupPabrikModel
+  */
   onPutEdit(Data: ISetupPabrikModel): Observable<any> {
     return this.httpOperationService.defaultPutRequest(this.API.UPDATE, Data)
       .pipe(
@@ -42,6 +56,11 @@ export class SetupSatuanService {
     );
   }
   
+  /**
+   * Service menubah data menjadi active
+   * @onPutToActive Observable<any>
+   * @param ISetupPabrikModel
+  */
   onPutToActive(Data: ISetupPabrikModel): Observable<any> {
     return this.httpOperationService.defaultPutRequest(this.API.UPDATETOACTIVE, Data)
       .pipe(
@@ -51,6 +70,11 @@ export class SetupSatuanService {
     );
   }
   
+  /**
+   * Service Untuk mwngubah data menjadi tidak aktif
+   * @onPutToDeActive Observable<any>
+   * @param ISetupPabrikModel
+  */
   onPutToDeActive(Data: ISetupPabrikModel): Observable<any> {
     return this.httpOperationService.defaultPutRequest(this.API.UPDATETODEACTIVE, Data)
       .pipe(

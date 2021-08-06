@@ -16,6 +16,7 @@ import * as Config from './json/grid.config.json'
   styleUrls: ['./setup-satuan.component.css']
 })
 export class SetupSatuanComponent implements OnInit {
+
   /**
    * Variable untuk Menympan Navigasi halaman
    * @ButtonNavModel StatusFormNew
