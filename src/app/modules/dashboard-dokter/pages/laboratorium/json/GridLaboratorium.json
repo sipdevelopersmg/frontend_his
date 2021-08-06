@@ -1,0 +1,110 @@
+{
+    "GridDaftarOrder": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "numericEdit",
+                "field": "no_urut",
+                "headerText": "No",
+                "type": "string",
+                "visible": true,
+                "width": 50
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "tanggal_order",
+                "headerText": "Tgl Order",
+                "type": "Date",
+                "format": "dd MMMM yyyy",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "tanggal_hasil",
+                "headerText": "Tgl Hasil",
+                "type": "Date",
+                "format": "dd MMMM yyyy",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "poly_name",
+                "headerText": "Poli / Ruang",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "dokter_pemeriksa",
+                "headerText": "Dokter Pemeriksa",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "diagnosa",
+                "headerText": "Diagnosa",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "catatan_sample",
+                "headerText": "Catatan Sample",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ]
+    },
+    "GridDetailOrder": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "kode_pemeriksaan",
+                "headerText": "Kode",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "numericEdit",
+                "field": "nama_pemeriksaan",
+                "headerText": "Nama Pemeriksaan",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "status",
+                "headerText": "Status",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            }
+        ]
+    }
+}

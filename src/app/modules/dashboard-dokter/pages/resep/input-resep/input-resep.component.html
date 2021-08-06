@@ -1,0 +1,144 @@
+<!-- Field Pencarian -->
+<form [formGroup]="FormAddObat">
+    <div class="row pt-2 mb-2">
+        <!-- Nama Obat -->
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <div class="row mb-2">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="DropdownObat" class="form-label">Nama Obat</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
+                            <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
+                                [dataSource]="NamaObatDatasource" [fields]="DropdownFields"
+                                (change)="onChangeNamaObat($event)" formControlName="nama_obat">
+                            </ejs-dropdownlist>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
+                            <span class="input-group-text bg-primary text-white" id="basic-addon1">
+                                {{ SatuanObat }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Qty Obat dan Aturan Pakai -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="row mb-2">
+                <!-- Qty Obat -->
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-2">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Qty</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ejs-numerictextbox [format]="'N0'" id="NumericQty" [showSpinButton]="false"
+                                [showClearButton]="false" formControlName="qty_obat">
+                            </ejs-numerictextbox>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aturan Pakai -->
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ps-2">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Aturan Pakai</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-1">
+                            <ejs-dropdownlist id="DropdownAturanPakai" [allowFiltering]="true"
+                                [dataSource]="AturanPakaiDatasource" [fields]="DropdownFields"
+                                formControlName="aturan_pakai">
+                            </ejs-dropdownlist>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-1">
+                            <ejs-dropdownlist id="DropdownKeteranganPakai" [allowFiltering]="true"
+                                [dataSource]="KeteranganPakaiDatasource" formControlName="keterangan_pakai">
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waktu Pakai, Catatan dan Tombol -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="row">
+                <!-- Waktu Pakai -->
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 pe-0">
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                            <label for="NumericQty" class="form-label">Waktu Pakai</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                            <div class="form-check form-check-inline" style="margin-right: 0.5rem;">
+                                <input class="form-check-input" type="checkbox" id="waktuPakaiPagi" value="Pagi"
+                                    (change)="onChangeWaktuPakai('Pagi')">
+                                <label class="form-check-label" for="waktuPakaiPagi"
+                                    style="font-size: 14px;">Pagi</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-right: 0.5rem;">
+                                <input class="form-check-input" type="checkbox" id="waktuPakaiSiang" value="Siang"
+                                    (change)="onChangeWaktuPakai('Siang')">
+                                <label class="form-check-label" for="waktuPakaiSiang"
+                                    style="font-size: 14px;">Siang</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-right: 0.5rem;">
+                                <input class="form-check-input" type="checkbox" id="waktuPakaiMalam" value="Malam"
+                                    (change)="onChangeWaktuPakai('Malam')">
+                                <label class="form-check-label" for="waktuPakaiMalam"
+                                    style="font-size: 14px;">Malam</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catatan -->
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 px-0">
+                    <div class="mb-2">
+                        <label for="Catatan" class="form-label">Catatan</label>
+                        <input type="text" class="form-control form-select-sm" id="Catatan" formControlName="catatan">
+                    </div>
+                </div>
+
+                <!-- Tombol -->
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+                    <div class="row align-content-center h-100 mb-2 pt-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                            <button class="btn btn-primary btn-sm" type="button"
+                                (click)="FormAddObatState == 'input' ? onSubmitDataObat(FormAddObat.value) : onUpdateDataObat(FormAddObat.value) ">
+                                <i class="fas {{FormAddObatState == 'input' ? 'fa-plus-circle' : 'fa-edit'}} fa-sm"></i>
+                                &nbsp;Obat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Grid Daftar Obat -->
+<div class="row pt-2 mb-2">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <div class="card">
+            <div class="card-header px-2">
+                <p class="mb-0 text-biru-muda">
+                    Daftar Obat
+                </p>
+            </div>
+            <div class="card-body p-0">
+                <mol-grid #gridDaftarObat [grid-id]="'GridDaftarObat'"
+                    [grid-height]="width >= 1400 ? 'calc(100vh - 28rem)' : 'calc(100vh - 28rem)'" [grid-lines]="'Both'"
+                    [grid-editSettings]="GridDaftarObatEditSettings" [grid-toolbar]="GridDaftarObatToolbar"
+                    [columns]="GridDaftarObatColumns.GridInputResep.columns"
+                    [grid-DataSource]="GridDaftarObatDataSource" (toolbar-click)="onToolbarClick($event)"
+                    (row-selected)="onRowSelected($event)" (initialized)="onInitalizedGrid($event)">
+                </mol-grid>
+            </div>
+        </div>
+    </div>
+</div>

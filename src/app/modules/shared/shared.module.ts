@@ -58,6 +58,7 @@ import { OrgTabsItemComponentComponent } from './components/organism/tabs/org-ta
 import { OrgTabsLabelComponentComponent } from './components/organism/tabs/org-tabs-label-component/org-tabs-label-component.component';
 import { OrgTabsBodyComponentComponent } from './components/organism/tabs/org-tabs-body-component/org-tabs-body-component.component';
 import { OrgCardLayoutComponent } from './components/organism/card/card-layout/card-layout.component';
+import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 
 @NgModule({
     declarations: [
@@ -119,6 +120,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
         DropDownListModule,
         DragDropModule,
         Ng2SearchPipeModule,
+        NumericTextBoxModule
     ],
     exports: [
         AtmLabelComponent,
@@ -167,6 +169,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
         DropDownListModule,
+        NumericTextBoxModule
     ],
     providers: [
         EditService,

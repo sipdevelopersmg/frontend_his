@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
-import * as GridConfig from '../json/GridRadiologi.json';
+import * as GridConfig from '../json/GridLaboratorium.json'
 
 @Component({
-    selector: 'app-riwayat-pemeriksaan-rad',
+    selector: 'app-riwayat-pemeriksaan-lab',
     templateUrl: './riwayat-pemeriksaan.component.html',
     styleUrls: ['./riwayat-pemeriksaan.component.css']
 })
-export class RiwayatPemeriksaanRadComponent implements OnInit {
+export class RiwayatPemeriksaanLabComponent implements OnInit {
 
     // ** Grid Daftar Order Properties
     GridDaftarOrderEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };

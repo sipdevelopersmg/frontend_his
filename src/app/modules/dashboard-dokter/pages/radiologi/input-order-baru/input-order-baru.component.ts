@@ -11,7 +11,7 @@ import * as TabsConfig from '../json/InputOrderBaru.json';
     templateUrl: './input-order-baru.component.html',
     styleUrls: ['./input-order-baru.component.css']
 })
-export class InputOrderBaruComponent implements OnInit {
+export class InputOrderBaruRadComponent implements OnInit {
 
     // ** Tabs Order Radiologi Dummy Datasource
     TabsOrderRadiologi = TabsConfig;
@@ -104,19 +104,21 @@ export class InputOrderBaruComponent implements OnInit {
             elem.value = "false";
             this.onRemoveItemFromGridDaftarOrder(Parameter);
 
-            let elemLeft = document.getElementById(Parameter.parameter_id + "Left") as HTMLInputElement;
-            elemLeft.checked = false;
-            elemLeft.value = "false";
+            if (Parameter.parameter_hasil) {
+                let elemLeft = document.getElementById(Parameter.parameter_id + "Left") as HTMLInputElement;
+                elemLeft.checked = false;
+                elemLeft.value = "false";
 
-            let elemRight = document.getElementById(Parameter.parameter_id + "Right") as HTMLInputElement;
-            elemRight.checked = false;
-            elemRight.value = "false";
+                let elemRight = document.getElementById(Parameter.parameter_id + "Right") as HTMLInputElement;
+                elemRight.checked = false;
+                elemRight.value = "false";
 
-            let elemPolos = document.getElementById(Parameter.parameter_id + "Polos") as HTMLInputElement;
-            elemPolos.checked = false;
+                let elemPolos = document.getElementById(Parameter.parameter_id + "Polos") as HTMLInputElement;
+                elemPolos.checked = false;
 
-            let elemKontras = document.getElementById(Parameter.parameter_id + "Kontras") as HTMLInputElement;
-            elemKontras.checked = false;
+                let elemKontras = document.getElementById(Parameter.parameter_id + "Kontras") as HTMLInputElement;
+                elemKontras.checked = false;
+            }
         };
     }
 
@@ -260,13 +262,7 @@ export class InputOrderBaruComponent implements OnInit {
 
         this.GridDaftarOrderDatasource[index].parameter_checked = false;
         this.GridDaftarOrderDatasource[index].hasil = "";
-
-        if (this.SelectedCheckbox[index].parameter_hasil) {
-            this.SelectedCheckbox[index].parameter_hasil.parameter_left = false;
-            this.SelectedCheckbox[index].parameter_hasil.parameter_right = false;
-            this.SelectedCheckbox[index].parameter_hasil.parameter_polos = false;
-            this.SelectedCheckbox[index].parameter_hasil.parameter_kontras = false;
-        };
+        this.GridDaftarOrderDatasource[index].polos_or_kontras = "";
 
         this.GridDaftarOrderDatasource.splice(index, 1);
 

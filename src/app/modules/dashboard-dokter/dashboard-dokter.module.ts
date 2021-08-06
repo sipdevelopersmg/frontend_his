@@ -7,16 +7,28 @@ import { DashboarDokterRoutingModule } from "./dashboard-dokter-routing.module";
 import { InformasiPasienComponent } from './components/informasi-pasien/informasi-pasien.component';
 import { DiagnosaComponent } from './pages/diagnosa/diagnosa.component';
 import { RadiologiComponent } from './pages/radiologi/radiologi.component';
-import { RiwayatPemeriksaanComponent } from './pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component';
-import { InputOrderBaruComponent } from './pages/radiologi/input-order-baru/input-order-baru.component';
+import { RiwayatPemeriksaanRadComponent } from './pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component';
+import { InputOrderBaruRadComponent } from './pages/radiologi/input-order-baru/input-order-baru.component';
+import { LaboratoriumComponent } from './pages/laboratorium/laboratorium.component';
+import { RiwayatPemeriksaanLabComponent } from "./pages/laboratorium/riwayat-pemeriksaan/riwayat-pemeriksaan.component";
+import { InputOrderBaruLabComponent } from "./pages/laboratorium/input-order-baru/input-order-baru.component";
+import { ResepComponent } from './pages/resep/resep.component';
+import { InputResepComponent } from './pages/resep/input-resep/input-resep.component';
+import { HistoryResepComponent } from './pages/resep/history-resep/history-resep.component';
 
 @NgModule({
     declarations: [
         InformasiPasienComponent,
         DiagnosaComponent,
         RadiologiComponent,
-        RiwayatPemeriksaanComponent,
-        InputOrderBaruComponent
+        RiwayatPemeriksaanRadComponent,
+        InputOrderBaruRadComponent,
+        LaboratoriumComponent,
+        RiwayatPemeriksaanLabComponent,
+        InputOrderBaruLabComponent,
+        ResepComponent,
+        InputResepComponent,
+        HistoryResepComponent
     ],
     imports: [
         FormsModule,

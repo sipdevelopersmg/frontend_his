@@ -1,0 +1,270 @@
+{
+    "Tabs": [
+        {
+            "tab_id": "BiologiKlinik",
+            "tab_caption": "Biologi Klinik",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "1",
+                    "tab_button_caption": "Biologi Klinik 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "11",
+                            "parameter_caption": "Biologi Klinik Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "12",
+                            "parameter_caption": "Biologi Klinik Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "2",
+                    "tab_button_caption": "Biologi Klinik 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "21",
+                            "parameter_caption": "Biologi Klinik Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "22",
+                            "parameter_caption": "Biologi Klinik Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab_id": "Hematologi",
+            "tab_caption": "Hematologi",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "3",
+                    "tab_button_caption": "Hematologi 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "31",
+                            "parameter_caption": "Hematologi Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "32",
+                            "parameter_caption": "Hematologi Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "4",
+                    "tab_button_caption": "Hematologi 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "41",
+                            "parameter_caption": "Hematologi Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "42",
+                            "parameter_caption": "Hematologi Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab_id": "Imunologi",
+            "tab_caption": "Imunologi",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "5",
+                    "tab_button_caption": "Imunologi 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "51",
+                            "parameter_caption": "Imunologi Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "52",
+                            "parameter_caption": "Imunologi Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "6",
+                    "tab_button_caption": "Imunologi 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "61",
+                            "parameter_caption": "Imunologi Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "62",
+                            "parameter_caption": "Imunologi Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab_id": "KimiaKlinik",
+            "tab_caption": "Kimia Klinik",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "7",
+                    "tab_button_caption": "Kimia Klinik 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "71",
+                            "parameter_caption": "Kimia Klinik Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "72",
+                            "parameter_caption": "Kimia Klinik Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "8",
+                    "tab_button_caption": "Kimia Klinik 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "81",
+                            "parameter_caption": "Kimia Klinik Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "82",
+                            "parameter_caption": "Kimia Klinik Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab_id": "Mikrobiologi",
+            "tab_caption": "Mikrobiologi",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "9",
+                    "tab_button_caption": "Mikrobiologi 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "91",
+                            "parameter_caption": "Mikrobiologi Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "92",
+                            "parameter_caption": "Mikrobiologi Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "10",
+                    "tab_button_caption": "Mikrobiologi 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "101",
+                            "parameter_caption": "Mikrobiologi Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "102",
+                            "parameter_caption": "Mikrobiologi Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab_id": "PatologiAnatomi",
+            "tab_caption": "Patologi Anatomi",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "11",
+                    "tab_button_caption": "Patologi Anatomi 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "111",
+                            "parameter_caption": "Patologi Anatomi Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "112",
+                            "parameter_caption": "Patologi Anatomi Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "12",
+                    "tab_button_caption": "Patologi Anatomi 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "121",
+                            "parameter_caption": "Patologi Anatomi Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "122",
+                            "parameter_caption": "Patologi Anatomi Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab_id": "SekresiEksresi",
+            "tab_caption": "Sekresi & Eksresi",
+            "tab_buttons": [
+                {
+                    "tab_button_id": "13",
+                    "tab_button_caption": "Sekresi & Eksresi 1",
+                    "parameter": [
+                        {
+                            "parameter_id": "131",
+                            "parameter_caption": "Sekresi & Eksresi Parameter 1.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "132",
+                            "parameter_caption": "Sekresi & Eksresi Parameter 1.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                },
+                {
+                    "tab_button_id": "14",
+                    "tab_button_caption": "Sekresi & Eksresi 2",
+                    "parameter": [
+                        {
+                            "parameter_id": "141",
+                            "parameter_caption": "Sekresi & Eksresi Parameter 2.1",
+                            "parameter_checked": false
+                        },
+                        {
+                            "parameter_id": "142",
+                            "parameter_caption": "Sekresi & Eksresi Parameter 2.2",
+                            "parameter_checked": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
+        <!-- Input Resep Tabs -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'InputResep'">Input Resep</org-tabs-label>
+            <org-tabs-body>
+                <app-input-resep></app-input-resep>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input Resep Tabs -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'HistoryResep'">History Resep</org-tabs-label>
+            <org-tabs-body>
+                <app-history-resep></app-history-resep>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

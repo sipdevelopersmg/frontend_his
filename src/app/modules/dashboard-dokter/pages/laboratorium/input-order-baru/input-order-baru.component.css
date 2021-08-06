@@ -1,4 +1,8 @@
-.cardButtonRadiologi {
+.tab-heading {
+  font-size: 14px !important;
+}
+
+.cardButtonLaboratorium {
   height: calc(100vh - 14rem);
   max-height: calc(100vh - 14rem);
   overflow-y: auto;

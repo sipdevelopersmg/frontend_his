@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
             // ** Hide Top Menu ketika di module Dashboard Dokter
             routeData.parent.data.subscribe((parent: any) => {
-                if (parent.title === "Dashboard Dokter" || parent.title === "Pemeriksaan Radiologi Pasien") {
+                if (parent.title === "Dashboard Dokter" || parent.title === "Pemeriksaan Radiologi Pasien" || parent.title === "Pemeriksaan Laboratorium Pasien") {
                     this.DashboardDokterState = true;
                 } else {
                     this.DashboardDokterState = false;
