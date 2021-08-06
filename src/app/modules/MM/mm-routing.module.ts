@@ -5,6 +5,8 @@ import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-pen
 import { InputPOComponent } from "./pages/pemasukan/PO/input-po/input-po.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
 import { SetupPabrikComponent } from "./pages/setup-data/setup-pabrik/setup-pabrik.component";
+import { SetupSatuanComponent } from "./pages/setup-data/setup-satuan/setup-satuan.component";
+import { SetupSupplierComponent } from "./pages/setup-data/setup-supplier/setup-supplier.component";
 
 const mmRoutes: Routes = [
     {
@@ -12,6 +14,7 @@ const mmRoutes: Routes = [
         children: [
             { path: "setup-grup-item", component: SetupGrupItemComponent, data: { title: "Setup Grup Item" } },
             { path: "setup-pabrik", component: SetupPabrikComponent, data: { title: "Setup Pabrik" } },
+            { path: "setup-satuan", component: SetupSatuanComponent, data: { title: "Setup Pabrik" } },
         ],
     },
     {

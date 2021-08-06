@@ -6,7 +6,7 @@ import { HttpOperationService } from 'src/app/modules/shared/services/http-opera
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { ISetupPabrikModel,SetupPabrikModel } from '../../../models/setup-data/setup-pabrik/SetupPabrikModel';
 
-import * as API_SETUP_PABRIK from './../../../../../api/MM/SETUP_PABRIK';
+import * as API_SETUP_PABRIK from 'src/app/api/MM/SETUP_DATA/SETUP_PABRIK';
 
 @Injectable({
     providedIn: 'root'

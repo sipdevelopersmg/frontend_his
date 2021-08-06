@@ -1,0 +1,28 @@
+{
+  "GridColumns": [
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "kode_satuan",
+          "headerText": "Kode Satuan",
+          "visible": true
+      },
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "nama_satuan",
+          "headerText": "Nama Satuan",
+          "visible": true
+      },
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "is_active",
+          "headerText": "Is active",
+          "visible": true
+      }
+  ]
+}

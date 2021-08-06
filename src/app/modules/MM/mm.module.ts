@@ -9,6 +9,8 @@ import { InputKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengad
 import { InputPOComponent } from './pages/pemasukan/PO/input-po/input-po.component';
 import { InputPenerimaanComponent } from './pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component';
 import { InputReturComponent } from './pages/retur/input-retur/input-retur.component';
+import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-supplier.component';
+import { SetupSatuanComponent } from './pages/setup-data/setup-satuan/setup-satuan.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import { InputReturComponent } from './pages/retur/input-retur/input-retur.compo
         InputKontrakPengadaanComponent,
         InputPOComponent,
         InputPenerimaanComponent,
-        InputReturComponent
+        InputReturComponent,
+        SetupSupplierComponent,
+        SetupSatuanComponent
     ],
     imports: [
         FormsModule,
