@@ -14,18 +14,6 @@
                     (initialized)="onInitalizedGrid($event)" (command-click)="onClickCommandGridPabrik($event)">
                 </mol-grid>
 
-                <!-- Panggil Modal Dialog Ketika click tombol Add di Toolbar Grid -->
-                <ng-template #modalDialogAddDataPabrik>
-                    <div class="modal-header p-2 background-biru-muda text-white">
-                        <h5 class="modal-title pull-left">Input Data Pabrik</h5>
-                        <button type="button" class="btn-close pull-right" aria-label="Close"
-                            (click)="modalRef.hide()"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="font-cabin mb-0">Modal Body Goes Here</p>
-                    </div>
-                </ng-template>
-
             </org-tabs-body>
         </org-tabs-item>
 

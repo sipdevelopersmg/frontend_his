@@ -1,0 +1,53 @@
+<org-card-layout
+    [ButtonNav]="TabId == 'InputSatuan' ? ButtonNav : []"
+    (onClickButtonNav)="onClickButtonNav($event)">
+    <org-tabs
+        #OrgTabsRef
+        (onGetSelectedTabId)="onGetSelectedTabId($event)">
+
+        <!-- Data Satuan -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'DataSatuan'">Data Satuan</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridDataSatuan
+                    [grid-id]="'GridDataSatuan'"
+                    [grid-height]="300"
+                    [grid-DataSource]="GridSatuanDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataSatuanEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataSatuanToolbar"
+                    [columns]="GridSatuanColumns"
+                    (row-selected)="onSelectedRow($event)"
+                    (toolbar-click)="onToolbarClick($event)"
+                    (load-grid)="onLoadGridSatuan($event)"
+                    (initialized)="onInitalizedGrid($event)"
+                    (command-click)="onClickCommandGridSatuan($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input Satuan -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'InputSatuan'">Input Satuan</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputDataSatuan" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2"> 
+                            <mol-input-text [label]="'Kode Satuan'" formControlName="kode_satuan"
+                                [IsFormControlInvalid]="kode_satuan.invalid"
+                                [ValidatorsCaption]="'Kode Satuan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>   
+                            <mol-input-text [label]="'Nama Satuan'" formControlName="nama_satuan"
+                                [IsFormControlInvalid]="nama_satuan.invalid"
+                                [ValidatorsCaption]="'Nama Satuan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>   
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>
