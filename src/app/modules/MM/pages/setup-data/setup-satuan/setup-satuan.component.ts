@@ -224,7 +224,7 @@ export class SetupSatuanComponent implements OnInit {
     /** Method menyimpan | menubah data */
     SaveAndNew(): void {
         const Data = this.FormInputData.value;
-        if (this.StatusFormNew) {
+        if (this.inputFieldState=='normal') {
             this.setupSatuanService.onPostSave(Data)
                 .subscribe((result: SetupSatuanModel) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
