@@ -4,7 +4,8 @@
     </div>
     <div class="col-sm-8">
         <atm-input [value]="value" [inputFieldState]="inputFieldState" (change)="doChange($event)"
-            (click)="doTouched($event)" [isFooter]="isFooter"></atm-input>
+            (click)="doTouched($event)" [isFooter]="isFooter">
+        </atm-input>
 
         <atm-validators [IsFormControlTouched]="touched" [IsFormControlInvalid]="IsFormControlInvalid"
             [ValidatorsCaption]="ValidatorsCaption">
