@@ -24,7 +24,9 @@
                             <mol-input-text [label]="'Kode Satuan'" formControlName="kode_satuan"
                                 [IsFormControlInvalid]="kode_satuan.invalid"
                                 [ValidatorsCaption]="'Kode Satuan Tidak Boleh Kosong'"
-                                [inputFieldState]="inputFieldState">
+                                [inputFieldState]="inputFieldState"
+                                [disabled]="inputFieldState==='edit'"
+                                >
                             </mol-input-text>
                             <mol-input-text [label]="'Nama Satuan'" formControlName="nama_satuan"
                                 [IsFormControlInvalid]="nama_satuan.invalid"
