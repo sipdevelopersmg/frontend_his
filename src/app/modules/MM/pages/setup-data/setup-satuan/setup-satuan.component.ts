@@ -78,11 +78,6 @@ export class SetupSatuanComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.ButtonNav = [
-            { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
-            { Id: 'Clear', Captions: 'Clear', Icons1: 'fa-redo-alt' },
-            { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
-        ];
 
         this.GridDataToolbar = [
             { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
@@ -171,6 +166,11 @@ export class SetupSatuanComponent implements OnInit {
         this.inputFieldState = 'normal';
         this.FormInputData.reset();
         this.StatusFormNew = true;
+        this.ButtonNav = [
+            { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
+            { Id: 'Clear', Captions: 'Clear', Icons1: 'fa-redo-alt' },
+            { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
+        ];
     };
 
     /** method setting edit data */
@@ -179,6 +179,10 @@ export class SetupSatuanComponent implements OnInit {
         this.SetFrom(this.SelectedData);
         this.StatusFormNew = false;
         this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
+        this.ButtonNav = [
+            { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
+            { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
+        ];
 
     };
 
@@ -187,6 +191,9 @@ export class SetupSatuanComponent implements OnInit {
         this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
         this.inputFieldState = 'detail';
         this.SetFrom(this.SelectedData);
+        this.ButtonNav = [
+            { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
+        ];
     }
 
     /** Method untuk mengkosongkan data yang ada di form*/
@@ -217,7 +224,7 @@ export class SetupSatuanComponent implements OnInit {
     /** Method menyimpan | menubah data */
     SaveAndNew(): void {
         const Data = this.FormInputData.value;
-        if (this.StatusFormNew) {
+        if (this.inputFieldState=='normal') {
             this.setupSatuanService.onPostSave(Data)
                 .subscribe((result: SetupSatuanModel) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
