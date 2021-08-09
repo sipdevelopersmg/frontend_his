@@ -17,20 +17,19 @@ export class LaboratoriumComponent implements OnInit, AfterViewInit {
     constructor(private router: Router) { }
 
     ngOnInit(): void {
+        this.onClickButtonNav("RiwayatPemeriksaan");
     }
 
     ngAfterViewInit(): void {
-        this.onClickButtonNav("InputOrderBaru");
     }
-
 
     onClickButtonNav(args: any): void {
         switch (args) {
             case "RiwayatPemeriksaan":
-                this.router.navigateByUrl('/dashboard/Dokter/laboratorium/riwayat-pemeriksaan');
+                this.router.navigate(['/dashboard/Dokter/laboratorium/riwayat-pemeriksaan']);
                 break;
             case "InputOrderBaru":
-                this.router.navigateByUrl('/dashboard/Dokter/laboratorium/input-order-pemeriksaan');
+                this.router.navigate(['/dashboard/Dokter/laboratorium/input-order-pemeriksaan']);
                 break;
             default:
                 break;

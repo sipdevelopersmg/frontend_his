@@ -1,1 +1,115 @@
-<p>history-resep works!</p>
+<div class="row pt-2">
+    <!-- Daftar History Resep -->
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8">
+                        <p class="text-biru-tua mb-0">Daftar History Resep</p>
+                    </div>
+
+                    <!-- Trigger Offcanvas Filter -->
+                    <div class="col-4 text-end px-2 cursor-pointer" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasFilter" aria-controls="offcanvasFilter">
+                        <span class="badge bg-primary">
+                            <i class="fas fa-filter"></i>&nbsp; Filter (F1)
+                        </span>
+                    </div>
+
+                    <!-- Ini Offcanvas Filter nya, saya letakkan disini agar dekat dengan triggernya  -->
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter"
+                        aria-labelledby="offcanvasFilterLabel" style="width: 30rem;">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasFilterLabel">Filter Pencarian History Resep</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <!-- No Resep  -->
+                            <div class="mb-3">
+                                <label for="no_resep" class="form-label">No. Resep</label>
+                                <input type="text" class="form-control form-select-sm" id="no_resep">
+                            </div>
+
+                            <!-- Dokter Entry Resep  -->
+                            <div class="mb-3">
+                                <label for="no_resep" class="form-label">Dokter Entry Resep</label>
+                                <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
+                                    [dataSource]="DokterEntryDatasource" [fields]="DropdownFields">
+                                </ejs-dropdownlist>
+                            </div>
+
+                            <!-- Waktu Entry -->
+                            <div class="row mb-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label for="no_resep" class="form-label">Waktu Entry</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-datepicker id="WaktuEntryStart" [format]="'dd MMMM yyyy'"></ejs-datepicker>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-datepicker id="WaktuEntryEnd" [format]="'dd MMMM yyyy'"></ejs-datepicker>
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="row mb-2">
+                                <atm-button-primary [ButtonPrimaryCaption]="'Cari'" [IsButtonBlock]="true"
+                                    [ButtonPrimaryIcon]="'fas fa-search fa-sm'"
+                                    (onClickButtonPrimary)="onSearchHistoryResep()">
+                                </atm-button-primary>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-1 cardBodyHistoryResep p-1">
+                <div class="card shadow-sm border-1 mb-2" *ngFor="let item of DaftarHistoryResep">
+                    <div class="card-body p-2">
+                        <!-- No. Resep -->
+                        <div class="row mb-1">
+                            <div class="col-8">
+                                <p class="text-black mb-0" style="font-size: 17px; font-weight: 600;">
+                                    No. Resep {{ item.kode_resep }}
+                                </p>
+                            </div>
+                            <div class="col-4 text-end ps-0 cursor-pointer" (click)="onLihatDaftarObat(item)">
+                                <span class="badge bg-primary">Lihat Daftar Obat</span>
+                            </div>
+                        </div>
+
+                        <!-- User Entry -->
+                        <div class="mb-1">
+                            <p class="text-hitam-muda mb-0" style="font-size: 15px">
+                                Diinput Oleh <span class="text-biru-muda">{{ item.user_entry }}</span>
+                            </p>
+                        </div>
+
+                        <!-- Waktu Entry -->
+                        <div class="mb-0">
+                            <p class="text-abu-tua mb-0" style="font-size: 14px">
+                                {{ item.waktu_entry | date: "dd MMMM yyyy, HH:mm:ss" }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Detail Resep -->
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="card ">
+            <div class="card-header">
+                <p class="text-biru-tua mb-0">Daftar Obat</p>
+            </div>
+            <div class="card-body cardBodyHistoryResep p-0">
+                <mol-grid #gridDetailResep [grid-id]="'GridDetailResep'" [grid-height]="'calc(100vh - 19rem)'"
+                    [grid-lines]="'Both'" [grid-editSettings]="GridDetailResepEditSettings"
+                    [grid-toolbar]="GridDetailResepToolbar" [columns]="GridDetailResepColumns.DaftarObat.columns"
+                    [grid-DataSource]="GridDetailResepDataSource">
+                </mol-grid>
+            </div>
+        </div>
+    </div>
+</div>

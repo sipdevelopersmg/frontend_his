@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 
@@ -29,6 +29,7 @@ export class AtmTreeviewMenuComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private navigationService: NavigationService
     ) {
         this.onGetMainMenuTitle();
@@ -124,9 +125,7 @@ export class AtmTreeviewMenuComponent implements OnInit {
     }
 
     onClickSidebarItem(url: string) {
-        // this.router.navigateByUrl("dashboard/" + url);
-
-        this.router.navigateByUrl("dashboard/Dokter/diagnosa");
+        this.router.navigateByUrl("dashboard/" + url);
 
         setTimeout(() => {
             let NavbarBrand = document.getElementById("NavbarBrand");
@@ -142,5 +141,14 @@ export class AtmTreeviewMenuComponent implements OnInit {
 
     onGetActiveSidebarMenu() {
 
+    }
+
+    getChild(activatedRoute: ActivatedRoute): any {
+        if (activatedRoute.firstChild) {
+            return this.getChild(activatedRoute.firstChild);
+        }
+        else {
+            return activatedRoute;
+        }
     }
 }

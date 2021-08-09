@@ -8,6 +8,10 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 })
 export class ResepComponent implements OnInit {
 
+    /**
+    * Variable Button Nav
+    * @ButtonNav: ButtonNavModel[]
+    */
     ButtonNav: ButtonNavModel[] = [
         { Id: "Reset", Icons1: "fas fa-undo fa-sm", Captions: "Reset" },
         { Id: "Simpan", Icons1: "fas fa-save fa-sm", Captions: "Simpan" },
@@ -15,8 +19,7 @@ export class ResepComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void { }
 
     onClickButtonNav(args: any): void {
         switch (args) {

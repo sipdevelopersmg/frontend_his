@@ -4,6 +4,7 @@ import { EditSettingsModel } from '@syncfusion/ej2-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { Columns } from 'src/app/modules/shared/components/molecules/grid/grid/grid.model';
+import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
 import * as TabsConfig from '../json/InputOrderBaru.json';
 
 @Component({
@@ -35,6 +36,7 @@ export class InputOrderBaruRadComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private modalService: BsModalService,
+        private dashboardDokterService: DashboardDokterService
     ) { }
 
     ngOnInit(): void {
@@ -80,6 +82,8 @@ export class InputOrderBaruRadComponent implements OnInit {
             catatan_assesment: ['', []],
             plan: ['', []]
         });
+
+        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     onGetSelectedTabId(args: any): void {
