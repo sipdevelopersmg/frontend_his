@@ -1,6 +1,10 @@
 .tabs-header {
   display: flex;
 }
+
+.hideHeader{
+  display: none!important;
+}
 .active {
   color: var(--hitam) !important;
   border-bottom: 3px solid var(--biru-muda);

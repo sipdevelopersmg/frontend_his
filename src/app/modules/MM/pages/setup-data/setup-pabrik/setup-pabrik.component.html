@@ -24,14 +24,13 @@
                 <form [formGroup]="FormInputDataPabrik" class="p-2">
                     <div class="row mb-2">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                            <!-- Kode Pabrik -->
+
                             <mol-input-text [label]="'Kode Pabrik'" formControlName="kode_pabrik"
                                 [IsFormControlInvalid]="kode_pabrik.invalid"
                                 [ValidatorsCaption]="'Kode Pabrik Tidak Boleh Kosong'"
                                 [inputFieldState]="inputFieldState">
                             </mol-input-text>
 
-                            <!-- Nama Pabrik -->
                             <mol-input-text [label]="'Nama Pabrik'" formControlName="nama_pabrik"
                                 [IsFormControlInvalid]="nama_pabrik.invalid"
                                 [ValidatorsCaption]="'Nama Pabrik Tidak Boleh Kosong'"

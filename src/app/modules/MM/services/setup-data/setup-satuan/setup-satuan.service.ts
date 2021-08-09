@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { API } from 'src/app/api';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { ISetupPabrikModel, SetupPabrikModel } from '../../../models/setup-data/setup-pabrik/SetupPabrikModel';
+import { ISetupSatuanModel, SetupSatuanModel, SetActiveModel } from 'src/app/modules/MM/models/setup-data/setup-satuan/SetupSatuanModel';
 import { API_MM } from 'src/app/api/MM';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class SetupSatuanService {
    * Service Untuk Menampilkan Semua data
    * @onGetAll Observable<SetupPabrikModel>
   */
-  onGetAll(): Observable<SetupPabrikModel> {
+  onGetAll(): Observable<SetupSatuanModel> {
     return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
   }
   
@@ -33,7 +33,7 @@ export class SetupSatuanService {
    * @onPostSave Observable<any>
    * @param ISetupPabrikModel
   */
-  onPostSave(Data: ISetupPabrikModel): Observable<any> {
+  onPostSave(Data: ISetupSatuanModel): Observable<any> {
     return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
     .pipe(
       catchError((error: HttpErrorResponse): any => {
@@ -47,7 +47,7 @@ export class SetupSatuanService {
    * @onPutEdit Observable<any>
    * @param ISetupPabrikModel
   */
-  onPutEdit(Data: ISetupPabrikModel): Observable<any> {
+  onPutEdit(Data: ISetupSatuanModel): Observable<any> {
     return this.httpOperationService.defaultPutRequest(this.API.UPDATE, Data)
       .pipe(
         catchError((error: HttpErrorResponse): any => {
@@ -61,7 +61,7 @@ export class SetupSatuanService {
    * @onPutToActive Observable<any>
    * @param ISetupPabrikModel
   */
-  onPutToActive(Data: ISetupPabrikModel): Observable<any> {
+  onPutToActive(Data: SetActiveModel): Observable<any> {
     return this.httpOperationService.defaultPutRequest(this.API.UPDATETOACTIVE, Data)
       .pipe(
         catchError((error: HttpErrorResponse): any => {
@@ -75,7 +75,7 @@ export class SetupSatuanService {
    * @onPutToDeActive Observable<any>
    * @param ISetupPabrikModel
   */
-  onPutToDeActive(Data: ISetupPabrikModel): Observable<any> {
+  onPutToDeActive(Data: SetActiveModel): Observable<any> {
     return this.httpOperationService.defaultPutRequest(this.API.UPDATETODEACTIVE, Data)
       .pipe(
         catchError((error: HttpErrorResponse): any => {

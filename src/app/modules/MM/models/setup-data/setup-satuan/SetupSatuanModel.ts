@@ -12,3 +12,7 @@ export interface ISetupSatuanModel {
     nama_satuan: number;
     is_active: number;
 }
+
+export interface SetActiveModel {
+    kode_satuan : string;
+}

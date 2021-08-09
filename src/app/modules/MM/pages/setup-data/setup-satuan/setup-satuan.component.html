@@ -1,37 +1,39 @@
 <org-card-layout
-    [ButtonNav]="TabId == 'InputSatuan' ? ButtonNav : []"
-    (onClickButtonNav)="onClickButtonNav($event)">
+    [ButtonNav]="TabId == 'Input' ? ButtonNav : []"
+    (onClickButtonNav)="handleClickButtonNav($event)">
     <org-tabs
         #OrgTabsRef
-        (onGetSelectedTabId)="onGetSelectedTabId($event)">
+        [showHeader]="false"
+        (onGetSelectedTabId)="handleSelectedTabId($event)">
 
-        <!-- Data Satuan -->
+        <!-- Data -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'DataSatuan'">Data Satuan</org-tabs-label>
+            <org-tabs-label [Id]="'Data'">Data Satuan</org-tabs-label>
             <org-tabs-body>
                 <mol-grid
-                    #GridDataSatuan
-                    [grid-id]="'GridDataSatuan'"
+                    #GridData
                     [grid-height]="300"
-                    [grid-DataSource]="GridSatuanDatasource"
+                    [grid-DataSource]="GridDatasource"
                     [grid-paging]="false"
-                    [grid-editSettings]="GridDataSatuanEditSettings"
+                    [grid-editSettings]="GridDataEditSettings"
                     [grid-lines]="'Both'"
-                    [grid-toolbar]="GridDataSatuanToolbar"
-                    [columns]="GridSatuanColumns"
-                    (row-selected)="onSelectedRow($event)"
-                    (toolbar-click)="onToolbarClick($event)"
-                    (load-grid)="onLoadGridSatuan($event)"
-                    (initialized)="onInitalizedGrid($event)"
-                    (command-click)="onClickCommandGridSatuan($event)"></mol-grid>
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)"
+                    ></mol-grid>
             </org-tabs-body>
         </org-tabs-item>
 
-        <!-- Input Satuan -->
+        <!-- Input -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'InputSatuan'">Input Satuan</org-tabs-label>
+            <org-tabs-label [Id]="'Input'">Input Satuan</org-tabs-label>
             <org-tabs-body>
-                <form [formGroup]="FormInputDataSatuan" class="p-2">
+                <form [formGroup]="FormInputData" class="p-2">
                     <div class="row mb-2">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2"> 
                             <mol-input-text [label]="'Kode Satuan'" formControlName="kode_satuan"
