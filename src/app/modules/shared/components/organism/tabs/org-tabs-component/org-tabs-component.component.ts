@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, Component, ContentChildren, EventEmitter, OnInit, Output, QueryList } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList } from '@angular/core';
 import { Observable } from 'rxjs';
 import { startWith, map, delay } from 'rxjs/operators';
 import { OrgTabsItemComponentComponent } from '../org-tabs-item-component/org-tabs-item-component.component';
@@ -18,7 +18,7 @@ export class OrgTabsComponentComponent implements OnInit, AfterContentInit, Afte
     activeTab: OrgTabsItemComponentComponent;
 
     @Output("onGetSelectedTabId") onGetSelectedTabId = new EventEmitter();
-
+    @Input("showHeader") showHeader : boolean = true; 
     constructor() { }
 
     ngOnInit(): void {

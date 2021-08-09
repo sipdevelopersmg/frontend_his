@@ -1,10 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommandModel, EditSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { Columns } from 'src/app/modules/shared/components/molecules/grid/grid/grid.model';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { SetupSatuanModel } from '../../../models/setup-data/setup-satuan/SetupSatuanModel';
@@ -19,205 +17,264 @@ export class SetupSatuanComponent implements OnInit {
 
   /**
    * Variable untuk Menympan Navigasi halaman
-   * @ButtonNavModel StatusFormNew
+   * @ButtonNavModel Array
   */
   ButtonNav: ButtonNavModel[];
 
   /**
-   * Variable untuk mengatur Form Input Data Satuan
-   * @Boolean StatusFormNew
+   * Form Group untuk mengatur Form Data
+   * @FormGroup 
   */
-  FormInputDataSatuan: FormGroup;
+  FormInputData: FormGroup;
 
   /**
    * Variable untuk menentukan apakah form dalam posisi input data atau edit data
-   * @Boolean StatusFormNew
+   * @Boolean 
   */
   StatusFormNew : Boolean;
 
-    /**
+  /**
    * Variable untuk menyimpan Configurasi Grid
-   * @Boolean StatusFormNew
+   * @Json Config
   */
-  GridSatuanConfig = Config;
-  
-  TabId: string = 'DataSatuan';
+  GridConfig = Config;
+
+  /**
+   * Variable untuk menentukan component input 
+   * @val normal,edit,detail
+  */
+  inputFieldState = 'normal';
+
+  /**
+   * Variable untuk menentukan tap berada di posisi mana 
+   * @valur data | input
+  */
+  TabId: string = 'Data';
+
   @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
   
-  GridSatuanDatasource: any[];
-  GridSatuanColumns: Columns[];
-  GridDataSatuanPagingSettings = { pageSizes: true, pageSize: 10 };
-  private GridDataSatuan: MolGridComponent = null;
-  GridDataSatuanEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-  GridDataSatuanToolbar: any[];
-  GridDataSatuanCommands: CommandModel[] = [
-    {
-      buttonOption: {
-        content: "<i class='fas fa-search'></i>",
-        cssClass: "btn btn-warning"
-      }
-    }
-  ];
-  
-  modalRef: BsModalRef;
-  @ViewChild('modalDialogAddDataSatuan') modalDialogAddDataSatuan: TemplateRef<any>;
-  
-  RadioButtonStatus: object[] = [
-    { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'normal' },
-    { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'normal' },
-  ];
-  
-  inputFieldState = 'normal';
-  
-  SelectedDataSatuan:Object;
+  GridDatasource: any[];
+  // GridSatuanColumns: Columns[];
+  private GridData: MolGridComponent = null;
+  GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
+  GridDataToolbar: any[];
+
+  /**
+   * Berisi Data Yang selected di dalam grid
+   * @Object Single Object
+  */
+  SelectedData:Object;
   
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,   
     private utilityService: UtilityService,
     private setupSatuanService: SetupSatuanService
   ) {
-    this.FormInputDataSatuan = this.formBuilder.group({
-      kode_satuan: ['', []],
-      nama_satuan: ['', []],
+    this.FormInputData = this.formBuilder.group({
+      kode_satuan: ['',[Validators.required]],
+      nama_satuan: ['', [Validators.required]],
+      is_active:[false,[]]
     }); 
   }
   
   ngOnInit(): void {
     this.ButtonNav = [
-      { Id: 'SaveAndNew', Captions: 'Save & New', StackIcon: true, Icons1: 'fa-save', Icons2: 'fa-plus-circle' },
+      { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
       { Id: 'Clear', Captions: 'Clear', Icons1: 'fa-redo-alt' },
-      { Id: 'Cancel', Captions: 'Cancel', Icons1: 'fa-window-close' },
+      { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
     ];
     
-    this.GridDataSatuanToolbar = [
+    this.GridDataToolbar = [
       { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
       { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
       { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
       'Search'
     ];
 
-    this.onGetAllSetupSatuan();
+    this.GetAllData();
 
   }
   
-  onSetFormSetupSatuanAttributes(): void {
-    this.kode_satuan.setValue('');
-    this.nama_satuan.setValue('');
-  }
   
-  onGetAllSetupSatuan(): void {
-    this.setupSatuanService.onGetAll()
-      .subscribe((result) => {
-      this.GridSatuanDatasource = result.data;
-      });
-  }
-  
-  onGetSelectedTabId(TabId: string): void {
+  handleSelectedTabId(TabId: string): void {
     this.TabId = TabId;
+    if(TabId=='Input'){
+      this.setNewForm;
+    }else{
+      this.GetAllData
+    }
   }
   
-  onInitalizedGrid(component: MolGridComponent) {
-    this.GridDataSatuan = component;
+  InitalizedGrid(component: MolGridComponent) {
+    this.GridData = component;
   }
   
-  onSelectedRow(args: any): void {
-    this.SelectedDataSatuan = args.data;
+  handleSelectedRow(args: any): void {
+    this.SelectedData = args.data;
+  }
+
+  handleActionComplete($event: any): void{
+    console.log($event);
+    if($event.requestType=="save"){
+      if($event.data.is_active != $event.rowData.is_active){
+        this.SetActive($event.data.is_active,$event.data.kode_satuan)
+      }
+    }
   }
   
-  onToolbarClick(args: any): void {
+  handleToolbarClick(args: any): void {
     const item = args.item.id;
     
     switch (item) {
       case 'add':
-        this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputSatuan');
-        this.inputFieldState = 'normal';
-        this.FormInputDataSatuan.reset();
-        this.StatusFormNew
+          this.setNewForm();
         break;
       case 'edit':
-        this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputSatuan');
-        this.inputFieldState = 'edit';
-        this.onEditDataSatuan(this.SelectedDataSatuan);
+          this.setEditForm();
         break;
       case 'detail':
-        this.OrgTabsRef.onNavigateTabUsingTabId(1, 'InputSatuan');
-        this.inputFieldState = 'detail';
-        this.onSeeDetailDataSatuan(this.SelectedDataSatuan);
+        this.setViewForm();
         break;
       default:
         break;
     }
   }
   
-  onClickCommandGridSatuan(args: any): void {
+  handleClickCommandGrid(args: any): void {
     console.log(args);
   }
   
-  onAddDataSatuan(): void {
-    console.log('Add');
-  }
-  
-  onEditDataSatuan(DataSatuan): void {
-      this.FormInputDataSatuan.reset();
-      this.FormInputDataSatuan.setValue(DataSatuan);
-  }
-  
-  onSeeDetailDataSatuan(DataSatuan): void {
-    this.FormInputDataSatuan.reset();
-  
-    this.RadioButtonStatus = [
-      { id: 'active', value: true, label: 'Active', checked: false, inputFieldState: 'normal' },
-      { id: 'nonActive', value: false, label: 'Non Active', checked: false, inputFieldState: 'normal' },
-    ];
-  
-    this.FormInputDataSatuan.setValue(DataSatuan);
-  }
-  
-  onClickButtonNav(ButtonId: string): void {
+  handleClickButtonNav(ButtonId: string): void {
     switch (ButtonId) {
       case 'SaveAndNew':
-        this.onSaveAndNew();
+        this.SaveAndNew();
         break;
       case 'Clear':
-        this.onClear();
+        this.Clear();
         break;
       case 'Cancel':
-        this.onCancel();
+        this.Cancel();
         break;
       default:
         break;
     }
   }
-  
-  onSaveAndNew(): void {
-    const Data = this.FormInputDataSatuan.value;
-    this.setupSatuanService.onPostSave(Data)
-      .subscribe((result: SetupSatuanModel) => {
-        this.utilityService.onShowingCustomAlert('success', 'Success', result.message)
-          .then(() => {
-            this.FormInputDataSatuan.reset();
-            
-            this.onSetFormSetupSatuanAttributes();
-          });
+
+  /** untuk identifikasi keyboard down pada grid */
+  handleLoadGrid(args: any): void {
+    document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
+  }
+
+  /** method setting input new data */
+  setNewForm(): void{
+    this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
+    this.inputFieldState = 'normal';
+    this.FormInputData.reset();
+    this.StatusFormNew = true;
+  };
+
+  /** method setting edit data */
+  setEditForm(): void{
+    this.inputFieldState = 'edit';
+    this.SetFrom(this.SelectedData);
+    this.StatusFormNew = false;
+    this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
+
+  };
+
+  /** method setting lihat data detail */
+  setViewForm(): void{
+    this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
+    this.inputFieldState = 'detail';
+    this.SetFrom(this.SelectedData);
+  }
+
+  /** Method untuk mengkosongkan data yang ada di form*/
+  ResetFrom(): void {
+    this.FormInputData.reset();
+    this.kode_satuan.setValue('');
+    this.nama_satuan.setValue('');
+  }
+
+  /** Method Untuk Mereload Data Grid */
+  GetAllData(): void {
+    this.setupSatuanService.onGetAll()
+      .subscribe((result) => {
+      this.GridDatasource = result.data;
       });
   }
-  
-  onClear(): void {
-    this.FormInputDataSatuan.reset();
-    this.onSetFormSetupSatuanAttributes();
+
+  AddDataSatuan(): void {
+    console.log('Add');
   }
-  
-  onCancel(): void {
-    this.FormInputDataSatuan.reset();
-    this.onSetFormSetupSatuanAttributes();
-    this.OrgTabsRef.onNavigateTabUsingTabId(0, 'DataSatuan');
+
+  /** Method Untuk Mengisikan data yang ada di form */
+  SetFrom(Data): void {
+      this.FormInputData.reset();
+      this.FormInputData.setValue(Data);
   }
-  
-  onLoadGridSatuan(args: any): void {
-    document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.onKeyDownHandler.bind(this));
+
+  /** Method menyimpan | menubah data */
+  SaveAndNew(): void {
+    const Data = this.FormInputData.value;
+    if(this.StatusFormNew){
+      this.setupSatuanService.onPostSave(Data)
+      .subscribe((result: SetupSatuanModel) => {
+        this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+          .then(() => {
+            this.ResetFrom();
+          });
+      });
+    }else{
+      this.setupSatuanService.onPutEdit(Data)
+      .subscribe((result: SetupSatuanModel) => {
+        this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
+          .then(() => {
+
+          });
+      });
+    }
   }
-  
-  onKeyDownHandler(event: KeyboardEvent) {
+
+  /** Method untuk mengubah status aktif | Non Active 
+   * @param is_active,kode_satuan
+  */
+  SetActive(is_active:boolean,kode_satuan:string): void {
+    let data = {
+      kode_satuan:kode_satuan
+    }
+    console.log('data',data)
+    console.log('is_active',is_active)
+    if(is_active){
+      this.setupSatuanService.onPutToActive(data)
+      .subscribe((result)=>{
+        this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Aktifkan', result.message)
+        .then(() => {
+
+        });
+      })
+    }else{
+      this.setupSatuanService.onPutToDeActive(data)
+      .subscribe((result)=>{
+        this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Non Aktifkan', result.message)
+        .then(() => {
+
+        });
+      })
+    }
+  }
+
+  Clear(): void {
+    this.ResetFrom();
+  }
+
+  Cancel(): void {
+    this.ResetFrom();
+    this.OrgTabsRef.onNavigateTabUsingTabId(0, 'Data');
+    this.GetAllData();
+  }
+
+  KeyDownHandler(event: KeyboardEvent) {
     if (event.keyCode === 13) {
       console.log('Enter Has Been Pressed');
     };
@@ -229,7 +286,7 @@ export class SetupSatuanComponent implements OnInit {
     }
   }
   
-  get kode_satuan(): AbstractControl { return this.FormInputDataSatuan.get('kode_satuan'); }
-  get nama_satuan(): AbstractControl { return this.FormInputDataSatuan.get('nama_satuan'); }
+  get kode_satuan(): AbstractControl { return this.FormInputData.get('kode_satuan'); }
+  get nama_satuan(): AbstractControl { return this.FormInputData.get('nama_satuan'); }
 
 }

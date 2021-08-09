@@ -1,4 +1,4 @@
-<div class="tabs-header">
+<div class="tabs-header" [class.hideHeader]="!showHeader">
     <div class="tab-label" (click)="selectTab(item, item.labelComponent.Id)" [class.active]="activeTab === item"
         *ngFor="let item of tabItems$ | async">
         <ng-container *ngIf="item.labelComponent">
