@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
 import * as GridConfig from '../json/GridLaboratorium.json'
 
 @Component({
@@ -25,9 +26,10 @@ export class RiwayatPemeriksaanLabComponent implements OnInit {
         return window.innerWidth;
     };
 
-    constructor() { }
+    constructor(private dashboardDokterService: DashboardDokterService) { }
 
     ngOnInit(): void {
+        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     onToolbarClick(args: any): void {

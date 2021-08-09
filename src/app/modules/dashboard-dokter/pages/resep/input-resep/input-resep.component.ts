@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { InsertGridResepModel } from '../../../models/resep.model';
+import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
 import * as GridConfig from '../json/GridResep.json';
 
 @Component({
@@ -44,6 +45,7 @@ export class InputResepComponent implements OnInit {
     GridDaftarObatToolbar: any[];
     GridDaftarObatDataSource: any[] = [];
     GridDaftarObatColumns = GridConfig;
+    GridDaftarObatHeight: string;
     private gridDaftarObat: MolGridComponent = null;
 
     // ** Selected Data Obat
@@ -51,18 +53,25 @@ export class InputResepComponent implements OnInit {
 
     public get width(): any { return window.innerWidth; };
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private dashboardDokterService: DashboardDokterService
+    ) {
+
+    }
 
     ngOnInit(): void {
         this.FormAddObat = this.formBuilder.group({
+            rx: ['', []],
+            no_urut: [0, []],
             kode_resep: ['', []],
-            nama_obat: ['', []],
+            nama_obat: ['', [Validators.required]],
             satuan: ['', []],
-            qty_obat: [0, []],
-            aturan_pakai: ['', []],
-            keterangan_pakai: ['', []],
-            waktu_pakai: ['', []],
-            catatan: ['', []]
+            qty_obat: [0, [Validators.required]],
+            aturan_pakai: ['', [Validators.required]],
+            keterangan_pakai: ['', [Validators.required]],
+            waktu_pakai: ['', [Validators.required]],
+            catatan: ['', [Validators.required]]
         });
 
         this.GridDaftarObatToolbar = [
@@ -70,6 +79,8 @@ export class InputResepComponent implements OnInit {
             { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash-alt fa-sm', id: 'delete' },
             'Search'
         ];
+
+        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     // ** Dropdown Nama Obat onchange method
@@ -114,7 +125,15 @@ export class InputResepComponent implements OnInit {
 
     // ** Update Data Obat method
     onUpdateDataObat(FormAddObat: any): void {
+        const index = this.GridDaftarObatDataSource.map(e => e.kode_resep).indexOf(FormAddObat.kode_resep);
 
+        this.GridDaftarObatDataSource[index] = FormAddObat;
+
+        this.onResetFormDataObat();
+
+        this.gridDaftarObat.Grid.refresh();
+
+        this.FormAddObatState = "input";
     }
 
     // ** Reset Form Add Obat 
@@ -138,6 +157,7 @@ export class InputResepComponent implements OnInit {
         switch (args.item.id) {
             case "edit":
                 this.onFillInputDataObatField(this.SelectedDataObat, index);
+                this.FormAddObatState = "edit";
                 break;
             case "delete":
                 this.GridDaftarObatDataSource.splice(index, 1);
@@ -155,7 +175,13 @@ export class InputResepComponent implements OnInit {
 
     // ** Mengisikan Data Obat ke Form Data Obat
     onFillInputDataObatField(DataObat: InsertGridResepModel, Index: number) {
+
         this.FormAddObat.setValue(DataObat);
+        this.SatuanObat = DataObat.satuan;
+
+        (<HTMLInputElement>document.getElementById("waktuPakaiPagi")).checked = DataObat.waktu_pakai.indexOf('Pagi') > -1 ? true : false;
+        (<HTMLInputElement>document.getElementById("waktuPakaiSiang")).checked = DataObat.waktu_pakai.indexOf('Siang') > -1 ? true : false;
+        (<HTMLInputElement>document.getElementById("waktuPakaiMalam")).checked = DataObat.waktu_pakai.indexOf('Malam') > -1 ? true : false;
     }
 
     get nama_obat(): AbstractControl { return this.FormAddObat.get('nama_obat'); };

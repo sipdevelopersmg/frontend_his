@@ -1,5 +1,59 @@
 {
-    "GridInputResep": {
+    "HistoryResep": [
+        {
+            "id_resep": "1",
+            "kode_resep": "PCR001",
+            "user_entry": "dr. Anastasia Nadia",
+            "waktu_entry": "2011-10-05T14:48:00.000Z",
+            "detail_resep": [
+                {
+                    "rx": "rx",
+                    "no_urut": 1,
+                    "kode_resep": "KR001",
+                    "nama_obat": "Acetylcysteine 200 mg",
+                    "satuan": "TAB",
+                    "qty_obat": 10,
+                    "aturan_pakai": "3 Kali Sehari",
+                    "keterangan_pakai": "Sebelum Makan",
+                    "waktu_pakai": "Pagi,Siang,Malam",
+                    "catatan": "Mohon diminum rutin dan dihabiskan"
+                }
+            ]
+        },
+        {
+            "id_resep": "2",
+            "kode_resep": "PCR002",
+            "user_entry": "dr. Anastasia Nadia",
+            "waktu_entry": "2011-10-05T14:48:00.000Z",
+            "detail_resep": [
+                {
+                    "rx": "rx",
+                    "no_urut": 1,
+                    "kode_resep": "KR001",
+                    "nama_obat": "Ambroxol 15 mg",
+                    "satuan": "TAB",
+                    "qty_obat": 10,
+                    "aturan_pakai": "3 Kali Sehari",
+                    "keterangan_pakai": "Sebelum Makan",
+                    "waktu_pakai": "Pagi,Siang,Malam",
+                    "catatan": "Mohon diminum rutin dan dihabiskan"
+                },
+                {
+                    "rx": "rx",
+                    "no_urut": 2,
+                    "kode_resep": "KR001",
+                    "nama_obat": "Amoxillin 500 mg",
+                    "satuan": "TAB",
+                    "qty_obat": 10,
+                    "aturan_pakai": "3 Kali Sehari",
+                    "keterangan_pakai": "Sebelum Makan",
+                    "waktu_pakai": "Pagi,Siang,Malam",
+                    "catatan": "Mohon diminum rutin dan dihabiskan"
+                }
+            ]
+        }
+    ],
+    "DaftarObat": {
         "columns": [
             {
                 "allowEditing": false,
@@ -9,7 +63,7 @@
                 "headerText": "Rx",
                 "type": "string",
                 "visible": true,
-                "width": 30
+                "width": 40
             },
             {
                 "allowEditing": false,
@@ -18,7 +72,7 @@
                 "field": "no_urut",
                 "headerText": "No",
                 "visible": true,
-                "width": 30
+                "width": 40
             },
             {
                 "allowEditing": false,
@@ -36,7 +90,7 @@
                 "field": "nama_obat",
                 "headerText": "Nama Obat",
                 "visible": true,
-                "width": 150
+                "width": 200
             },
             {
                 "allowEditing": false,
@@ -66,7 +120,7 @@
                 "headerText": "Jumlah Pakai",
                 "type": "string",
                 "visible": true,
-                "width": 120
+                "width": 100
             },
             {
                 "allowEditing": false,
@@ -76,7 +130,7 @@
                 "headerText": "Aturan Pakai",
                 "type": "string",
                 "visible": true,
-                "width": 120
+                "width": 150
             },
             {
                 "allowEditing": false,
@@ -86,7 +140,7 @@
                 "headerText": "Waktu Pakai",
                 "type": "string",
                 "visible": true,
-                "width": 120
+                "width": 150
             },
             {
                 "allowEditing": false,
@@ -96,12 +150,8 @@
                 "headerText": "Catatan",
                 "type": "string",
                 "visible": true,
-                "width": 100
+                "width": 300
             }
         ]
-    },
-    "GridHistoryResep": {
-        "columns": [],
-        "dataSource": []
     }
 }

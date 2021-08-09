@@ -64,7 +64,8 @@ export class MolInputTextComponent implements ControlValueAccessor {
 
     touched = false;
 
-    disabled = false;
+    // disabled = false;
+    @Input('disabled') disabled = false;
 
     get value() { return this._value; }
 

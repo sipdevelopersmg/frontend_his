@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DiagnosaPasienModel } from '../../models/diagnosa-pasien.model';
+import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 
 @Component({
     selector: 'app-diagnosa',
@@ -25,7 +26,8 @@ export class DiagnosaComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private dashboardDokterService: DashboardDokterService
     ) { }
 
     ngOnInit(): void {
@@ -64,7 +66,9 @@ export class DiagnosaComponent implements OnInit {
             assesment: ['', []],
             catatan_assesment: ['', []],
             plan: ['', []]
-        })
+        });
+
+        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     onClickItemListDiagnosa(item: DiagnosaPasienModel) {

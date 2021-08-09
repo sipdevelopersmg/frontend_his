@@ -17,10 +17,10 @@ export class RadiologiComponent implements OnInit, AfterViewInit {
     constructor(private router: Router) { }
 
     ngOnInit(): void {
+        this.onClickButtonNav("RiwayatPemeriksaan");
     }
 
     ngAfterViewInit(): void {
-        this.onClickButtonNav("RiwayatPemeriksaan");
     }
 
     onClickButtonNav(args: any): void {

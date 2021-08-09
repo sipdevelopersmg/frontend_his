@@ -169,7 +169,8 @@ import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
         DropDownListModule,
-        NumericTextBoxModule
+        NumericTextBoxModule,
+        DatePickerModule
     ],
     providers: [
         EditService,

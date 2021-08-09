@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { MolTopMenuComponent } from '../../components/top-menu/top-menu.component';
@@ -64,13 +64,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
 
             // ** Hide Top Menu ketika di module Dashboard Dokter
-            routeData.parent.data.subscribe((parent: any) => {
-                if (parent.title === "Dashboard Dokter" || parent.title === "Pemeriksaan Radiologi Pasien" || parent.title === "Pemeriksaan Laboratorium Pasien") {
-                    this.DashboardDokterState = true;
-                } else {
-                    this.DashboardDokterState = false;
-                }
-            });
+            routeData.parent.data
+                .pipe(take(1))
+                .subscribe((parent: any) => {
+                    const dashboardDokter = ["Dashboard Dokter", "Pemeriksaan Radiologi Pasien", "Pemeriksaan Laboratorium Pasien"];
+
+                    if (dashboardDokter.includes(parent.title)) {
+                        this.DashboardDokterState = true;
+                    } else {
+                        this.DashboardDokterState = false;
+                    }
+                });
         })
     }
 
@@ -105,9 +109,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     onCheckIsSidebarEmpty(): void {
         this.navigationService.onGetActiveSidebarMenuSubject()
             .subscribe((result: any) => {
-                setTimeout(() => {
-                    this.SidebarCollapse = false;
-                }, 250);
+                if (!this.DashboardDokterState) {
+                    setTimeout(() => {
+                        this.SidebarCollapse = false;
+                    }, 250);
+                }
             });
     }
 
