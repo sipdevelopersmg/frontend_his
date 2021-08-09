@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Query } from '@syncfusion/ej2-data';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { InsertGridResepModel } from '../../../models/resep.model';
@@ -22,10 +23,11 @@ export class InputResepComponent implements OnInit {
 
     // ** Dropdown Properties
     DropdownFields: object = { text: "text", value: "text" };
+    DropdownObatFields: object = { text: 'nama_generik', value: 'nama_generik' };
     NamaObatDatasource: any[] = [
-        { id: 1, text: "Acetylcysteine 200 mg", satuan: "TAB" },
-        { id: 2, text: "Ambroxol 15 mg", satuan: "TAB" },
-        { id: 3, text: "Amoxillin 500 mg", satuan: "TAB" },
+        { id: 1, nama_generik: "Acetylcysteine", satuan: "TAB", terapi: "Analgesik", restriksi: "Tidak Untuk Pasien Diabetes", peresepan: '20 Tab / Minggu' },
+        { id: 2, nama_generik: "Ambroxol", satuan: "KAP", terapi: "Analgesik", restriksi: "Tidak Untuk Pasien Diabetes", peresepan: '3 Kap / Hari' },
+        { id: 3, nama_generik: "Amoxillin", satuan: "TAB", terapi: "Analgesik", restriksi: "Tidak Untuk Pasien Diabetes", peresepan: '10 Tab / Minggu' },
     ];
     AturanPakaiDatasource: any[] = [
         { id: 1, text: "1 Kali Sehari" },

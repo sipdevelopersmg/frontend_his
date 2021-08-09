@@ -18,7 +18,7 @@ const pisRoutes: Routes = [
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
-            { path: "setup-etnis", component: SetupEtnisComponent, data: { title: "Penerimaan" } },
+            { path: "setup-etnis", component: SetupEtnisComponent, data: { title: "Setup Etnis" } },
             { path: "setup-bahasa", component: SetupBahasaComponent, data: { title: "Setup Bahasa" } },
             {
                 path: "setup-tarif", component: null, data: { title: "Setup Tarif" },

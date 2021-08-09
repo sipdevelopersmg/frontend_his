@@ -1,53 +1,29 @@
-<org-card-layout [ButtonNav]="TabId == 'InputBahasa' && FormInputDataBahasa.valid ? ButtonNav : []"
-    (onClickButtonNav)="onClickButtonNav($event)">
-    <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
-        <!-- Data Bahasa -->
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'DataBahasa'">Data Bahasa</org-tabs-label>
+            <org-tabs-label [Id]="'Data'">Data Bahasa</org-tabs-label>
             <org-tabs-body>
-                <mol-grid #GridDataBahasa [grid-id]="'GridDataBahasa'" [grid-height]="300"
-                    [grid-DataSource]="[]" [grid-paging]="true"
-                    [grid-editSettings]="GridDataBahasaEditSettings" [grid-lines]="'Both'"
-                    [grid-initial-page]="GridDataBahasaPagingSettings" [grid-toolbar]="GridDataBahasaToolbar"
-                    [columns]="GridBahasaConfig.GridBahasaColumns" (row-selected)="onSelectedRow($event)"
-                    (toolbar-click)="onToolbarClick($event)" (load-grid)="onLoadGridBahasa($event)"
-                    (initialized)="onInitalizedGrid($event)">
+                <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridBahasaColumns"
+                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)" (action-complete)="handleActionComplete($event)">
                 </mol-grid>
-
-                <!-- Panggil Modal Dialog Ketika click tombol Add di Toolbar Grid -->
-                <ng-template #modalDialogAddDataBahasa>
-                    <div class="modal-header p-2 background-biru-muda text-white">
-                        <h5 class="modal-title pull-left">Input Data Bahasa</h5>
-                        <button type="button" class="btn-close pull-right" aria-label="Close"
-                            (click)="modalRef.hide()"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="font-cabin mb-0">Modal Body Goes Here</p>
-                    </div>
-                </ng-template>
-
             </org-tabs-body>
         </org-tabs-item>
 
-        <!-- Input Bahasa -->
+        <!-- Input -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'InputBahasa'">Input Bahasa</org-tabs-label>
+            <org-tabs-label [Id]="'Input'">Input Bahasa</org-tabs-label>
             <org-tabs-body>
-                <form [formGroup]="FormInputDataBahasa" class="p-2">
+                <form [formGroup]="FormInputData" class="p-2">
                     <div class="row mb-2">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                            <!-- Kode Bahasa -->
-                            <mol-input-text [label]="'Kode Bahasa'" formControlName="kode_bahasa"
-                                [IsFormControlInvalid]="kode_bahasa.invalid"
-                                [ValidatorsCaption]="'Kode Bahasa Tidak Boleh Kosong'"
-                                [inputFieldState]="inputFieldState">
-                            </mol-input-text>
-
-                            <!-- Nama Bahasa -->
-                            <mol-input-text [label]="'Nama Bahasa'" formControlName="nama_bahasa"
-                                [IsFormControlInvalid]="kode_bahasa.invalid"
-                                [ValidatorsCaption]="'Nama Bahasa Tidak Boleh Kosong'"
-                                [inputFieldState]="inputFieldState">
+                            <mol-input-text [label]="'Bahasa'" formControlName="bahasa"
+                                [IsFormControlInvalid]="bahasa.invalid"
+                                [ValidatorsCaption]="'Bahasa Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
                             </mol-input-text>
                         </div>
                     </div>

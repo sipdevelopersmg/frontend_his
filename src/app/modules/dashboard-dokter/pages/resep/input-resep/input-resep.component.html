@@ -11,8 +11,44 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
                             <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
-                                [dataSource]="NamaObatDatasource" [fields]="DropdownFields"
-                                (change)="onChangeNamaObat($event)" formControlName="nama_obat">
+                                [dataSource]="NamaObatDatasource" [fields]="DropdownObatFields"
+                                (change)="onChangeNamaObat($event)" formControlName="nama_obat"
+                                [headerTemplate]="headerTemplate" [itemTemplate]="itemTemplate" popupWidth='55rem'>
+
+                                <ng-template #itemTemplate let-data>
+                                    <div class="row item">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pe-0 border-end">
+                                            <span class="nama_generik">{{ data.nama_generik }}</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0 border-end">
+                                            <span class="terapi">{{ data.terapi }}</span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0 border-end">
+                                            <span class="terapi">{{ data.restriksi }}</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ps-0">
+                                            <span class="terapi">{{ data.peresepan }}</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template #headerTemplate let-data>
+                                    <div class="row head">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pe-0">
+                                            <span class="nama_generik">Nama Generik</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
+                                            <span class="terapi">Terapi</span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0">
+                                            <span class="terapi">Restriksi</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ps-0">
+                                            <span class="terapi">Peresepan</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
                             </ejs-dropdownlist>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">

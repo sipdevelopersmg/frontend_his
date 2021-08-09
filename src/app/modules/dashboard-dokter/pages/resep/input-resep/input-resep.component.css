@@ -16,3 +16,8 @@
   text-align: right;
   padding-right: 5px;
 }
+
+div.head {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}

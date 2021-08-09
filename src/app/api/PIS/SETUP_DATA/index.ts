@@ -1,0 +1,13 @@
+import * as SETUP_BAHASA from './SETUP_BAHASA';
+import * as SETUP_ETNIS from './SETUP_ETNIS';
+import * as SETUP_JOB_TYPE from './SETUP_JOB_TYPE';
+import * as SETUP_KEBANGSAAN from './SETUP_KEBANGSAAN';
+import * as SETUP_EDUCATION from './SETUP_EDUCATION';
+
+export const API = Object.assign({}, {
+    "SETUP_BAHASA": SETUP_BAHASA,
+    "SETUP_ETNIS": SETUP_ETNIS,
+    "SETUP_JOB_TYPE": SETUP_JOB_TYPE,
+    "SETUP_KEBANGSAAN": SETUP_KEBANGSAAN,
+    "SETUP_EDUCATION": SETUP_EDUCATION,
+})

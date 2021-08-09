@@ -1,10 +1,10 @@
 {
-    "GridBahasaColumns": [
+    "GridSetupEtnisColumns": [
         {
             "allowEditing": true,
             "allowSorting": true,
             "editType": "numericEdit",
-            "field": "id_bahasa",
+            "field": "id_etnis",
             "format": "N",
             "headerText": "ID",
             "type": "number",
@@ -15,8 +15,8 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "bahasa",
-            "headerText": "BAHASA",
+            "field": "etnis",
+            "headerText": "ETNIS",
             "visible": true,
             "width": 120
         }

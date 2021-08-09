@@ -126,6 +126,26 @@ export class HttpOperationService {
         );
     }
 
+    defaultDeleteRequest(url: string): Observable<any> {
+        return this.httpClient.delete<any>(
+            url,
+            {
+                headers: this.httpHeader
+            }
+        ).pipe(
+            catchError(this.handlingError),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    // Menampilkan SweetAlert Error
+                    this.handlingErrorWithStatusCode200(result);
+                    return result;
+                } else {
+                    return result;
+                }
+            })
+        )
+    }
+
     onFetchFierBase(url: string): Observable<any> {
         return this.httpClient
             .get<any>(`${environment.firebaseRtdbUrl}` + url, {
