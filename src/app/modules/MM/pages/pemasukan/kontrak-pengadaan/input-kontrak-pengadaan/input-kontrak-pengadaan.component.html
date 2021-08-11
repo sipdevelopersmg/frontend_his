@@ -3,12 +3,16 @@
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
 
-                <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'id_supplier'"
-                    [idTitle]="'supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
-                    [columns]="GridConfig.Lookup.columns" [filter-lookup]="GridConfig.Lookup.filter"
+                <org-input-look-up-kode
+                    #LookupKodeSupplier
+                    [lookup-url]="urlSupplier"
+                    [idKode]="'id_supplier'"
+                    [idTitle]="'supplier'"
+                    (onGetSelectedData)="heandleSelectedSupplier($event)"
+                    [columns]="GridLookUpSupplier.columns"
+                    [filter-lookup]="GridLookUpSupplier.filter"
                     [label]="'Supplier'"
-                    [modal-title]="'Data Supplier'">
-                </org-input-look-up-kode>
+                    [modal-title]="'Data Supplier'"></org-input-look-up-kode>
                 
                 <mol-input-text [label]="'No SPBBJ'" formControlName="nomor_spbbj"></mol-input-text>
                 
@@ -39,17 +43,19 @@
         </div>
 
 
-    <mol-grid #GridDetail [grid-id]="'GridDetail'" [grid-height]="300"
-        [grid-DataSource]="GridConfig.GridDataSource" [grid-paging]="true"
-        [grid-lines]="'Both'"
-        [grid-toolbar]="GridDetailToolbar"
-        (toolbar-click)="onToolbarClick($event)"
-        [columns]="GridConfig.GridColumns">
-    </mol-grid>
+        <mol-grid
+            #GridDetail
+            [grid-id]="'GridDetail'"
+            [grid-height]="300"
+            [grid-DataSource]="TrKontrakSpjbDetailItemInsert"
+            [grid-paging]="true"
+            [grid-lines]="'Both'"
+            [grid-toolbar]="GridDetailToolbar"
+            (toolbar-click)="onToolbarClick($event)"
+            [columns]="GridDetailItem.TrKontrakSpjbDetailItemInsert"></mol-grid>
 
     <div class="row">
         <div class="col-sm-8">
-
         </div>
         <div class="col-sm-4">
             <mol-input-text [label]="'Total Transaksi'" [isFooter]="true" formControlName="total_transaksi_kontrak" [inputFieldState]="'detail'"></mol-input-text>
@@ -57,6 +63,7 @@
         </div>
     </div>
 </form>
+
 <!-- Modal Dialog  -->
     <ng-template #modalDialog>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">

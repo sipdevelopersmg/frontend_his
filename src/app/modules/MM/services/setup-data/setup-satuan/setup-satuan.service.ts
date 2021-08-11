@@ -6,7 +6,7 @@ import { API } from 'src/app/api';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { ISetupSatuanModel, SetupSatuanModel, SetActiveModel } from 'src/app/modules/MM/models/setup-data/setup-satuan/SetupSatuanModel';
-import { API_MM } from 'src/app/api/MM';
+import { MM } from 'src/app/api/MM';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ import { API_MM } from 'src/app/api/MM';
 
 export class SetupSatuanService {
 
-    API = API_MM.SETUP_DATA.SETUP_SATUAN
+    API = MM.SETUP_DATA.SETUP_SATUAN
 
     constructor(
         private notificationService: NotificationService,

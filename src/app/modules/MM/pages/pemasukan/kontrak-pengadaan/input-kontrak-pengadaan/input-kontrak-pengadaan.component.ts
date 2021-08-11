@@ -3,7 +3,10 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
-import * as GridConfig from './json/grid.config.json';
+import * as GridLoockUpSupplier from "./json/lookupsupplier.json";
+import * as GridDetailItem from "./json/detailItem.json";
+import { TrKontrakSpjbDetailItemInsert } from 'src/app/modules/MM/models/penerimaan/kontrak-pengadaan/KontrakPengadaanModel';
+
 @Component({
   selector: 'app-input-kontrak-pengadaan',
   templateUrl: './input-kontrak-pengadaan.component.html',
@@ -11,15 +14,23 @@ import * as GridConfig from './json/grid.config.json';
 })
 export class InputKontrakPengadaanComponent implements OnInit {
 
+  GridLookUpSupplier = GridLoockUpSupplier;
+  GridDetailItem = GridDetailItem;
+
+
+  TrKontrakSpjbDetailItemInsert : TrKontrakSpjbDetailItemInsert;
+  
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
     { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
   ];
-  // import * as GridConfig from './json/grid.config.json';
-  public GridConfig = GridConfig;
+
+  DetailItems: any;
+  
   GridDetailToolbar = [
     { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
   ];
+
   modalRef: BsModalRef;
 
   urlSupplier = '';
@@ -48,31 +59,25 @@ export class InputKontrakPengadaanComponent implements OnInit {
   }
 
     onClickButtonNav(ButtonId: string): void {
-        switch (ButtonId) {
-            case 'Save':
-                break;
-            case 'Reset':
-                break;
-            default:
-                break;
-        }
+      switch (ButtonId) {
+        case 'Save':
+          break;
+        case 'Reset':
+          break;
+        default:
+          break;
+      }
     }       
 
     onToolbarClick(args: any): void {
-        const item = args.item.id;
-        switch (item) {
-            case 'add':
-               
-                break;
-            case 'edit':
-               
-                break;
-            case 'detail':
-         
-                break;
-            default:
-                break;
-        }
+      const item = args.item.id;
+      switch (item) {
+        case 'add':
+
+          break;
+        default:
+          break;
+      }
     }
 
     heandleSelectedSupplier($event){

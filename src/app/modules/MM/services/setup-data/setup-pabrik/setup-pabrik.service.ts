@@ -18,15 +18,15 @@ export class SetupPabrikService {
         private httpOperationService: HttpOperationService) { }
 
     onGetAllPabrik(): Observable<SetupPabrikModel> {
-        return this.httpOperationService.defaultGetRequest(API_SETUP_PABRIK.GET_ALL_SETUP_PABRIK);
+        return this.httpOperationService.defaultGetRequest(API_SETUP_PABRIK.GET_ALL);
     }
 
     onGetPabrikById(PabrikId: number): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(API_SETUP_PABRIK.GET_SETUP_PABRIK_BY_ID + PabrikId);
+        return this.httpOperationService.defaultGetRequest(API_SETUP_PABRIK.GET_BY_ID + PabrikId);
     }
 
     onPostSaveSetupPabrik(Data: ISetupPabrikModel): Observable<any> {
-        return this.httpOperationService.defaultPostRequest(API_SETUP_PABRIK.POST_SAVE_SETUP_PABRIK, Data)
+        return this.httpOperationService.defaultPostRequest(API_SETUP_PABRIK.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

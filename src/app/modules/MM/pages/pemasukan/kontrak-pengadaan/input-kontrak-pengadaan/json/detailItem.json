@@ -1,0 +1,140 @@
+{
+    "TrKontrakSpjbDetailItemInsert":
+    [
+        {
+            "field":"kontrak_id",
+            "headerText":"Kontrak Id",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        },
+        {
+            "field":"no_urut",
+            "headerText":"No Urut",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        },
+        {
+            "field":"id_item",
+            "headerText":"Id Item",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"tanggal_maksimal_expired_date",
+            "headerText":"Max Expired",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"qty_kontrak_satuan_besar",
+            "headerText":"Qty",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"kode_satuan_besar",
+            "headerText":"Kode Satuan Besar",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        },
+        {
+            "field":"satuan",
+            "headerText":"Satuan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"isi",
+            "headerText":"Isi",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"right",
+            "visible": true
+        },
+        {
+            "field":"qty_kontrak",
+            "headerText":"Qty",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"qty_pesan",
+            "headerText":"Qty Pesan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        },
+        {
+            "field":"qty_terima",
+            "headerText":"Qty Terima",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        },
+        {
+            "field":"harga_satuan",
+            "headerText":"Harga Satuan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"sub_total_kontrak",
+            "headerText":"Sub Total Kontrak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "field":"sub_total_pesan",
+            "headerText":"Sub Total Pesan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        },
+        {
+            "field":"sub_total_terima",
+            "headerText":"Sub Total Terima",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": false
+        }
+    ]
+}

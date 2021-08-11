@@ -1,0 +1,40 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_grup_coa",
+        "headerText": "Id",
+        "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "grup_coa",
+        "headerText": "Group COA",
+        "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "deskripsi",
+      "headerText": "Description",
+      "visible": true
+    },
+    {
+        "allowEditing": true,
+        "allowSorting": false,
+        "allowFiltering": false,
+        "editType": "booleanedit",
+        "field": "is_active",
+        "headerText": "Status Active",
+        "type": "boolean",
+        "displayAsCheckBox": true,
+        "visible": true,
+        "width": 100
+    }
+  ]
+}
