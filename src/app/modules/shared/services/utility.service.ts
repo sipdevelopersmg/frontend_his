@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { NavigationService } from './navigation.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UtilityService {
 
-    constructor() { }
+    constructor(private navigationService: NavigationService) { }
 
     // ** Showing Alert with Timer
     onShowingCustomAlert(icon: any, title: string, message: string): Promise<any> {

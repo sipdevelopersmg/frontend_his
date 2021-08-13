@@ -24,8 +24,6 @@ export class AtmNavbarComponent implements OnInit {
 
     ngOnInit(): void {
         this.UserData = this.authenticationService.currentUserValue;
-
-        console.log(this.tree);
     }
 
     onClickedNavbarBrand(args: any): void {

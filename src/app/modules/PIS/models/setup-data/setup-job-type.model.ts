@@ -2,7 +2,7 @@ import { HttpResponseModel } from "src/app/modules/shared/models/Http-Operation/
 
 /**
  * @JobTypeModel base model job type
- * @Key : { id_etnis: number, etnis: string }
+ * @Key : { id_job_type: number, job_type: string }
 */
 export interface JobTypeModel {
     id_job_type?: number;

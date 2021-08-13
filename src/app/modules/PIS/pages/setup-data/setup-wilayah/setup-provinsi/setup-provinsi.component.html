@@ -1,0 +1,42 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Provinsi</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridSetupWilayahColumns"
+                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)" (action-complete)="handleActionComplete($event)">
+                </mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Provinsi</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+                            <mol-input-text [label]="'Kode Provinsi'" formControlName="kode_wilayah"
+                                [IsFormControlInvalid]="kode_wilayah.invalid"
+                                [ValidatorsCaption]="'Kode Provinsi Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState" [disabled]="inputFieldState==='edit'">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Nama Provinsi'" formControlName="nama_wilayah"
+                                [IsFormControlInvalid]="nama_wilayah.invalid"
+                                [ValidatorsCaption]="'Nama Provinsi Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

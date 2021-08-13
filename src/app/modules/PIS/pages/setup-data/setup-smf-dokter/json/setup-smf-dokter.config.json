@@ -1,0 +1,33 @@
+{
+    "GridSetupSmfColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_smf",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_smf",
+            "headerText": "KODE SMF",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_smf",
+            "headerText": "NAMA SMF",
+            "visible": true,
+            "width": 120
+        }
+    ]
+}

@@ -92,7 +92,7 @@ export class SetupEtnisComponent implements OnInit {
     handleSelectedTabId(TabId: string): void {
         this.TabId = TabId;
         if (TabId == 'Input') {
-            this.setNewForm;
+            this.setNewForm();
         } else {
             this.GetAllData();
         }

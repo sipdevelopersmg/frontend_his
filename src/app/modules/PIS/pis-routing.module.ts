@@ -10,8 +10,17 @@ import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna
 import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component";
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { DataDokterComponent } from "./pages/setup-data/setup-dokter/data-dokter/data-dokter.component";
+import { SetupEducationComponent } from "./pages/setup-data/setup-education/setup-education.component";
 import { SetupEtnisComponent } from "./pages/setup-data/setup-etnis/setup-etnis.component";
+import { SetupJobTypeComponent } from "./pages/setup-data/setup-job-type/setup-job-type.component";
+import { SetupKebangsaanComponent } from "./pages/setup-data/setup-kebangsaan/setup-kebangsaan.component";
+import { SetupSmfDokterComponent } from "./pages/setup-data/setup-smf-dokter/setup-smf-dokter.component";
+import { SetupSpesialiasiDokterComponent } from "./pages/setup-data/setup-spesialiasi-dokter/setup-spesialiasi-dokter.component";
+import { SetupStatusDokterComponent } from "./pages/setup-data/setup-status-dokter/setup-status-dokter.component";
 import { SetupKodeTarifComponent } from "./pages/setup-data/setup-tarif/setup-kode-tarif/setup-kode-tarif.component";
+import { SetupKecamatanComponent } from "./pages/setup-data/setup-wilayah/setup-kecamatan/setup-kecamatan.component";
+import { SetupKotaComponent } from "./pages/setup-data/setup-wilayah/setup-kota/setup-kota.component";
+import { SetupProvinsiComponent } from "./pages/setup-data/setup-wilayah/setup-provinsi/setup-provinsi.component";
 
 const pisRoutes: Routes = [
     { path: "", component: PendaftaranPasienBaruComponent, data: { title: "Pendaftaran Pasien Baru" }, },
@@ -20,6 +29,12 @@ const pisRoutes: Routes = [
         children: [
             { path: "setup-etnis", component: SetupEtnisComponent, data: { title: "Setup Etnis" } },
             { path: "setup-bahasa", component: SetupBahasaComponent, data: { title: "Setup Bahasa" } },
+            { path: "setup-job-type", component: SetupJobTypeComponent, data: { title: "Setup Job Type" } },
+            { path: "setup-kebangsaan", component: SetupKebangsaanComponent, data: { title: "Setup Kebangsaan" } },
+            { path: "setup-education", component: SetupEducationComponent, data: { title: "Setup Education" } },
+            { path: "setup-smf-dokter", component: SetupSmfDokterComponent, data: { title: "Setup SMF Dokter" } },
+            { path: "setup-spesialisasi-dokter", component: SetupSpesialiasiDokterComponent, data: { title: "Setup Spesialisasi Dokter" } },
+            { path: "setup-status-dokter", component: SetupStatusDokterComponent, data: { title: "Setup Status Dokter" } },
             {
                 path: "setup-tarif", component: null, data: { title: "Setup Tarif" },
                 children: [
@@ -31,7 +46,10 @@ const pisRoutes: Routes = [
                 children: [
                     { path: "data-dokter", component: DataDokterComponent, data: { title: "Data Dokter" } }
                 ]
-            }
+            },
+            { path: "setup-provinsi", component: SetupProvinsiComponent, data: { title: "Setup Provinsi" } },
+            { path: "setup-kota", component: SetupKotaComponent, data: { title: "Setup Kota" } },
+            { path: "setup-kecamatan", component: SetupKecamatanComponent, data: { title: "Setup Kecamatan" } },
         ]
     },
     {

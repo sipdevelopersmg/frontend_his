@@ -62,7 +62,7 @@ export class SetupEtnisService {
 
     /**
      * Service Untuk Manyimpan data baru
-     * @onPutEdit Observable<DeleteEtnisModel>
+     * @onDelete Observable<DeleteEtnisModel>
      * @param EtnisId
     */
     onDelete(EtnisId: number): Observable<DeleteEtnisModel> {

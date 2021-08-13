@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationEnd, Router } from '@angular/router';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { ChildMenu, SidebarMenu, MainMenuModel, TopMenuModel, SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { HttpResponseModel } from '../models/Http-Operation/HttpResponseModel';
 import { map } from 'rxjs/operators';
@@ -34,6 +34,8 @@ export class NavigationService {
     public IsBackToMainMenu = new Subject<boolean>();
 
     public HideTopMenu = new Subject<boolean>();
+
+    public FieldGridSubject = new BehaviorSubject([]);
 
     constructor(
         private router: Router,
@@ -171,5 +173,42 @@ export class NavigationService {
         this.history.pop();
 
         this.router.navigateByUrl('dashboard/beranda');
+    }
+
+    /** Method Untuk Men set Field Grid Subject value dari component Atm Treeview Menu */
+    onSetFieldGridBySidebarMenuId(fieldGrid: any): void {
+        fieldGrid.forEach((item: any) => {
+            item['visible'] = true;
+            item['editType'] = 'defaultEdit';
+            item['allowEditing'] = false;
+            item['allowSorting'] = true;
+
+            delete Object.assign(item, { ['field']: item['nama_asli_field'] })['nama_asli_field'];
+
+            delete Object.assign(item, { ['headerText']: item['nama_header_text'] })['nama_header_text'];
+
+            delete Object.assign(item, { ['type']: item['tipe_field'] })['tipe_field'];
+
+            delete Object.assign(item, { ['width']: item['width_field'] })['width_field'];
+        });
+
+        this.FieldGridSubject.next(fieldGrid);
+
+        const CheckSessionStorage = JSON.parse(sessionStorage.getItem('ActiveFieldGrid'));
+
+        if (!CheckSessionStorage) {
+            sessionStorage.setItem('ActiveFieldGrid', JSON.stringify(this.FieldGridSubject.getValue()));
+        }
+    }
+
+    /** Method Untuk Men set Field Grid Subject value dari component Atm Treeview Menu */
+    onGetFieldBySidebarMenuId(): Observable<any> {
+        const CheckSessionStorage = JSON.parse(sessionStorage.getItem('ActiveFieldGrid'));
+
+        if (CheckSessionStorage) {
+            this.FieldGridSubject.next(CheckSessionStorage);
+        }
+
+        return this.FieldGridSubject.asObservable();
     }
 }

@@ -1,0 +1,33 @@
+{
+    "GridSetupSpesialisasiColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_spesialisasi_dokter",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_spesialisasi_dokter",
+            "headerText": "KODE SPESIALISASI DOKTER",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "spesialisasi_dokter",
+            "headerText": "SPESIALISASI DOKTER",
+            "visible": true,
+            "width": 120
+        }
+    ]
+}

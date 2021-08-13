@@ -124,8 +124,10 @@ export class AtmTreeviewMenuComponent implements OnInit {
         };
     }
 
-    onClickSidebarItem(url: string) {
-        this.router.navigateByUrl("dashboard/" + url);
+    onClickSidebarItem(item: any) {
+        this.navigationService.onSetFieldGridBySidebarMenuId(item.fieldgrid);
+
+        this.router.navigateByUrl("dashboard/" + item.url);
 
         setTimeout(() => {
             let NavbarBrand = document.getElementById("NavbarBrand");

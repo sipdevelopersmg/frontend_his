@@ -52,11 +52,11 @@ export class AntrianFarmasiComponent implements OnInit {
                 HeaderText: "Antrian",
                 HeaderBackgroundColor: "#ea9713",
                 ColumnIcon: "fa-calendar-check",
-                ConnectedTo: ["Data", "ProsesBilling"],
+                ConnectedTo: ["ProsesBilling"],
                 KeyField: "SiapDiracik",
                 Data: [
                     {
-                        Id: "DETS-3", Status: "SiapDiracik", KodeResep: "PCR004", NamaPasien: "Triastarya M", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:02:00"),
+                        Id: "DETS-3", Status: "SiapDiracik", KodeResep: "PCR004", NamaPasien: "Triastartya M", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:02:00"),
                         DetailResep: [
                             { Id: "PCR004-DET1", KodeResep: "PCR004", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 }
                         ]
@@ -69,7 +69,7 @@ export class AntrianFarmasiComponent implements OnInit {
                 HeaderBackgroundColor: "#8e4399",
                 ColumnIcon: "fa-file-invoice",
                 KeyField: "ProsesBilling",
-                ConnectedTo: ["SiapDiracik", "SedangDiracik"],
+                ConnectedTo: ["SedangDiracik"],
                 Data: [
                     {
                         Id: "DETS-4", Status: "ProsesBilling", KodeResep: "PCR006", NamaPasien: "Wawan Chahyo", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:03:00"),
@@ -81,11 +81,11 @@ export class AntrianFarmasiComponent implements OnInit {
             },
             {
                 Id: 4,
-                HeaderText: "Sedang Diracik",
+                HeaderText: "Siap Diserahkan",
                 HeaderBackgroundColor: "#63ba3c",
                 ColumnIcon: "fa-spinner",
                 KeyField: "SedangDiracik",
-                ConnectedTo: ["ProsesBilling"],
+                ConnectedTo: [],
                 Data: [
                     {
                         Id: "DETS-5", Status: "SedangDiracik", KodeResep: "PCR005", NamaPasien: "Andre Kurniawan", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:04:00"),

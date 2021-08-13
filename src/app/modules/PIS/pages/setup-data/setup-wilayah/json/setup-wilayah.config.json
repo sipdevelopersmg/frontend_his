@@ -1,0 +1,40 @@
+{
+    "GridSetupWilayahColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_wilayah",
+            "headerText": "KODE WILAYAH",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_wilayah_parent",
+            "headerText": "KODE WILAYAH PARENT",
+            "visible": false,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_tipe_wilayah",
+            "headerText": "TIPE WILAYAH",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_wilayah",
+            "headerText": "NAMA WILAYAH",
+            "visible": true,
+            "width": 120
+        }
+    ]
+}

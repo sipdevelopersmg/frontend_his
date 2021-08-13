@@ -23,6 +23,14 @@ import { SetupKebangsaanComponent } from './pages/setup-data/setup-kebangsaan/se
 import { SetupEtnisComponent } from './pages/setup-data/setup-etnis/setup-etnis.component';
 import { ListPasienComponent } from './pages/IRJA/pendaftaran-pasien-baru/list-pasien/list-pasien.component';
 import { EditPasienComponent } from './pages/IRJA/pendaftaran-pasien-baru/edit-pasien/edit-pasien.component';
+import { SetupJobTypeComponent } from './pages/setup-data/setup-job-type/setup-job-type.component';
+import { SetupEducationComponent } from './pages/setup-data/setup-education/setup-education.component';
+import { SetupSmfDokterComponent } from './pages/setup-data/setup-smf-dokter/setup-smf-dokter.component';
+import { SetupStatusDokterComponent } from './pages/setup-data/setup-status-dokter/setup-status-dokter.component';
+import { SetupSpesialiasiDokterComponent } from './pages/setup-data/setup-spesialiasi-dokter/setup-spesialiasi-dokter.component';
+import { SetupKotaComponent } from './pages/setup-data/setup-wilayah/setup-kota/setup-kota.component';
+import { SetupKecamatanComponent } from './pages/setup-data/setup-wilayah/setup-kecamatan/setup-kecamatan.component';
+import { SetupProvinsiComponent } from "./pages/setup-data/setup-wilayah/setup-provinsi/setup-provinsi.component";
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -48,6 +56,14 @@ const ngWizardConfig: NgWizardConfig = {
         SetupEtnisComponent,
         ListPasienComponent,
         EditPasienComponent,
+        SetupJobTypeComponent,
+        SetupEducationComponent,
+        SetupSmfDokterComponent,
+        SetupStatusDokterComponent,
+        SetupSpesialiasiDokterComponent,
+        SetupProvinsiComponent,
+        SetupKotaComponent,
+        SetupKecamatanComponent,
     ],
     imports: [
         CommonModule,
@@ -56,7 +72,7 @@ const ngWizardConfig: NgWizardConfig = {
         PisRoutingModule,
         SharedModule,
         ContextMenuModule,
-        NgWizardModule.forRoot(ngWizardConfig),
+        NgWizardModule.forRoot(ngWizardConfig)
     ],
     providers: [DatePipe],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

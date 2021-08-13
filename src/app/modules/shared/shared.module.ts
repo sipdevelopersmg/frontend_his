@@ -5,7 +5,7 @@ import { TreeViewModule } from '@syncfusion/ej2-angular-navigations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
-import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { ComboBoxModule, DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -120,7 +120,8 @@ import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
         DropDownListModule,
         DragDropModule,
         Ng2SearchPipeModule,
-        NumericTextBoxModule
+        NumericTextBoxModule,
+        ComboBoxModule,
     ],
     exports: [
         AtmLabelComponent,
@@ -170,7 +171,8 @@ import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
         OrgCardLayoutComponent,
         DropDownListModule,
         NumericTextBoxModule,
-        DatePickerModule
+        DatePickerModule,
+        ComboBoxModule
     ],
     providers: [
         EditService,
