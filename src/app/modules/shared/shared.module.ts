@@ -59,6 +59,7 @@ import { OrgTabsLabelComponentComponent } from './components/organism/tabs/org-t
 import { OrgTabsBodyComponentComponent } from './components/organism/tabs/org-tabs-body-component/org-tabs-body-component.component';
 import { OrgCardLayoutComponent } from './components/organism/card/card-layout/card-layout.component';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
 
 @NgModule({
     declarations: [
@@ -108,6 +109,7 @@ import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
         OrgTabsLabelComponentComponent,
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
+        OrgLookUpComponent,
     ],
     imports: [
         CommonModule,
@@ -170,7 +172,8 @@ import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
         OrgCardLayoutComponent,
         DropDownListModule,
         NumericTextBoxModule,
-        DatePickerModule
+        DatePickerModule,
+        OrgLookUpComponent
     ],
     providers: [
         EditService,

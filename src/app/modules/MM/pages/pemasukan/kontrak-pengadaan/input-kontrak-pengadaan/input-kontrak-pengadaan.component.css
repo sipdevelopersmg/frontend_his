@@ -1,0 +1,4 @@
+.modal > .modal-dialog{
+    animation-name: example;
+    animation-duration: 0.1s;
+}

@@ -20,15 +20,6 @@
                     (command-click)="handleClickCommandGrid($event)"
                     (action-complete)="handleActionComplete($event)"></mol-grid>
 
-                    <ul>
-                        <ng-template ngFor let-item [ngForOf]="Dataku" let-i="index">
-                            <li>{{ item.nu + item.obat + item.jumlah }}</li>
-                        </ng-template>
-                    </ul>
-                    <button (click)="coba()">sort</button>
-                    
-                    {{ Total }}
-
             </org-tabs-body>
         </org-tabs-item>
         <!-- Input -->

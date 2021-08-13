@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { Columns } from '../../../molecules/grid/grid/grid.model';
@@ -54,18 +54,17 @@ export class OrgInputLookUpKodeComponent implements OnInit {
     @Output('onOpenModal') openModal = new EventEmitter<any>();
 
     @Input("SelectedInputId") SelectedInputId: string;
+    @ViewChild('template') template:TemplateRef<any>;
 
     ngOnInit(): void {
         this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
     }
 
-    onOpenModal(template: TemplateRef<any>, id: any) {
+    onOpenModal() {
         this.modalRef = this.modalService.show(
-            template,
+            this.template,
             Object.assign({}, { class: 'modal-lg' })
         );
-
-        this.openModal.emit(id);
     }
 
     onCloseModal() {
@@ -79,7 +78,7 @@ export class OrgInputLookUpKodeComponent implements OnInit {
     onFetchDataSource(params: any) {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
             .subscribe((_result) => {
-                this.gridDataSource = _result;
+                this.gridDataSource = _result.data;
             }, (pesanError) => {
                 console.log(pesanError);
             })

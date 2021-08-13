@@ -19,14 +19,6 @@ import "src/app/prototype/ArrPrototype";
 
 export class SetupGroupCoaComponent implements OnInit {
 
-  Dataku : Object[] = [
-    { id :1 ,nu:2 , obat: 'komik', jumlah: 700},
-    { id :2 ,nu:3 , obat: 'panadol', jumlah: 400},
-    { id :3 ,nu:1 , obat: 'oskadon', jumlah: 200},
-    { id :3 ,nu:1 , obat: 'amoxan', jumlah: 300}
-  ]
-
-  Total : Number = 0;
     /**
      * Variable untuk Menympan Navigasi halaman
      * @ButtonNavModel Array
@@ -99,13 +91,6 @@ export class SetupGroupCoaComponent implements OnInit {
       ];
   
       this.GetAllData();
-      this.Total = this.Dataku.sum('jumlah');
-    }
-  
-    coba(){
-      // this.Dataku.insertToIndex(2,{id :7 ,nu:5 , obat: 'XXXX', jumlah: 300});
-      this.Dataku.orderBy('nu');
-      console.log(this.Dataku);
     }
   
     handleSelectedTabId(TabId: string): void {

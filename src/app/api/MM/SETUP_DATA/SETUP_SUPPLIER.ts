@@ -1,5 +1,6 @@
 import { environment } from "src/environments/environment";
 
+export const GET_ALL_BY_PARMS = `${environment.webApiMM}` +'SetupSupplier/GetAllByParams';   
 export const GET_ALL = `${environment.webApiMM}` +'SetupSupplier/GetAll';
 export const GET_BY_ID = `${environment.webApiMM}` +'SetupSupplier/GetMMSetupSupplierById';
 export const INSERT = `${environment.webApiMM}` +'SetupSupplier/Insert';

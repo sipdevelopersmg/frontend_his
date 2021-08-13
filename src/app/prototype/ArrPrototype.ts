@@ -2,12 +2,12 @@ export { } // to make it a module
 
 declare global { // to access the global type String
     interface Array<T> {
-        sum(prop: T): Number;
+        sum(prop: any): Number;
         insertToIndex(index:Number,item:any): void;
         orderBy(prop: T): void;
     }
 }
-
+11
 /** Menjumlahkan */
 Array.prototype.sum = function(prop){
     
