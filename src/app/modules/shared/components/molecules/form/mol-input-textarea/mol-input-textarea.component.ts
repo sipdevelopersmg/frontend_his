@@ -19,6 +19,12 @@ export class MolInputTextareaComponent implements ControlValueAccessor {
 
     @Input("FormControlCaption") FormControlCaption: string;
 
+    @Input('IsFormControlInvalid') IsFormControlInvalid: boolean;
+
+    @Input('ValidatorsCaption') ValidatorsCaption: string;
+
+    @Input('inputFieldState') inputFieldState = 'normal';
+
     constructor() { }
     @HostBinding('attr.id')
     externalId = '';
@@ -84,4 +90,7 @@ export class MolInputTextareaComponent implements ControlValueAccessor {
         this.value = $event.target.value;
     }
 
+    doTouched($event: any): void {
+        this.touched = true;
+    }
 }

@@ -1,0 +1,33 @@
+{
+    "GridDebiturColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_debitur",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_debitur",
+            "headerText": "KODE DEBITUR",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_debitur",
+            "headerText": "NAMA DEBITUR",
+            "visible": true,
+            "width": 100
+        }
+    ]
+}

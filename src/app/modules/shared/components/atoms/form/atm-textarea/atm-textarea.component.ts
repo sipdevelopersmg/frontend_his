@@ -15,6 +15,8 @@ export class AtmTextareaComponent implements ControlValueAccessor {
 
     constructor() { }
 
+    @Input('inputFieldState') inputFieldState = 'normal';
+
     @HostBinding('attr.id')
     externalId = '';
 

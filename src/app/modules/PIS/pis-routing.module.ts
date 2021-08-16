@@ -9,6 +9,7 @@ import { ListPasienComponent } from "./pages/IRJA/pendaftaran-pasien-baru/list-p
 import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component";
 import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component";
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
+import { SetupDebiturComponent } from "./pages/setup-data/setup-debitur/setup-debitur.component";
 import { DataDokterComponent } from "./pages/setup-data/setup-dokter/data-dokter/data-dokter.component";
 import { SetupEducationComponent } from "./pages/setup-data/setup-education/setup-education.component";
 import { SetupEtnisComponent } from "./pages/setup-data/setup-etnis/setup-etnis.component";
@@ -50,6 +51,7 @@ const pisRoutes: Routes = [
             { path: "setup-provinsi", component: SetupProvinsiComponent, data: { title: "Setup Provinsi" } },
             { path: "setup-kota", component: SetupKotaComponent, data: { title: "Setup Kota" } },
             { path: "setup-kecamatan", component: SetupKecamatanComponent, data: { title: "Setup Kecamatan" } },
+            { path: "setup-debitur", component: SetupDebiturComponent, data: { title: "Setup Debitur" } },
         ]
     },
     {

@@ -46,7 +46,7 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     public GridHeader = GridHeaderDummy;
     public LookupPoliAttribute = LookupPoli;
 
-    LookupPoliUrl: string = CONFIG.API.GET_POLI_ANTRIAN_RAWAT_JALAN;
+    LookupPoliUrl: string = CONFIG.API.IRJA.GET_POLI_ANTRIAN_RAWAT_JALAN;
 
     constructor(
         private utilityService: UtilityService,

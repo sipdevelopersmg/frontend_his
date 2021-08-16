@@ -20,10 +20,10 @@ export class AntrianPasienRawatJalanService {
             }
         ];
 
-        return this.httpOperationService.defaultPostRequest(CONFIG.API.GET_ALL_ANTRIAN_RAWAT_JALAN, SearchParameter);
+        return this.httpOperationService.defaultPostRequest(CONFIG.API.IRJA.GET_ALL_ANTRIAN_RAWAT_JALAN, SearchParameter);
     }
 
     onGetAllDataAntrianRawatJalan() {
-        return this.httpOperationService.defaultPostRequest(CONFIG.API.GET_ALL_ANTRIAN_FROM_PENDAFTARAN_ULANG, []);
+        return this.httpOperationService.defaultPostRequest(CONFIG.API.IRJA.GET_ALL_ANTRIAN_FROM_PENDAFTARAN_ULANG, []);
     }
 }

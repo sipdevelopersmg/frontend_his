@@ -11,6 +11,8 @@ import * as MARITAL_STATUS from './MARITAL_STATUS';
 import * as SETUP_PROVINSI from './SETUP_PROVINSI';
 import * as SETUP_KOTA from './SETUP_KOTA';
 import * as SETUP_KECAMATAN from './SETUP_KECAMATAN';
+import * as SETUP_DEBITUR from './SETUP_DEBITUR';
+import * as AGAMA from './AGAMA';
 
 export const API = Object.assign({}, {
     "SETUP_BAHASA": SETUP_BAHASA,
@@ -26,4 +28,6 @@ export const API = Object.assign({}, {
     "SETUP_PROVINSI": SETUP_PROVINSI,
     "SETUP_KOTA": SETUP_KOTA,
     "SETUP_KECAMATAN": SETUP_KECAMATAN,
+    "SETUP_DEBITUR": SETUP_DEBITUR,
+    "AGAMA": AGAMA,
 })

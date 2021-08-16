@@ -12,16 +12,18 @@ import { NotificationService } from 'src/app/modules/shared/services/notificatio
 })
 export class SetupUserService {
 
+    API = API_CONFIG.API.CORE;
+
     constructor(
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService) { }
 
     onGetAllActiveUser(): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(API_CONFIG.API.GET_ALL_USER_ACTIVE);
+        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_USER_ACTIVE);
     }
 
     onInsertUser(DataUser: PostSetupUserModel): Observable<any> {
-        return this.httpOperationService.defaultPostRequest(API_CONFIG.API.POST_INSERT_USER, DataUser)
+        return this.httpOperationService.defaultPostRequest(this.API.POST_INSERT_USER, DataUser)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

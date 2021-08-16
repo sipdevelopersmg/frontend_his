@@ -1,0 +1,83 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Debitur</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid #GridData [grid-height]="'calc(100vh - 20rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="true" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridDebiturColumns"
+                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)" (action-complete)="handleActionComplete($event)">
+                </mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Debitur</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Kode Debitur -->
+                            <mol-input-text [label]="'Kode Debitur'" formControlName="kode_debitur"
+                                [IsFormControlInvalid]="kode_debitur.invalid"
+                                [ValidatorsCaption]="'Kode Debitur Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Nama Debitur -->
+                            <mol-input-text [label]="'Nama Debitur'" formControlName="nama_debitur"
+                                [IsFormControlInvalid]="nama_debitur.invalid"
+                                [ValidatorsCaption]="'Nama Debitur Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Nama Debitur -->
+                            <mol-input-textarea [label]="'Alamat Debitur'" formControlName="alamat_debitur"
+                                [IsFormControlInvalid]="alamat_debitur.invalid"
+                                [ValidatorsCaption]="'Alamat Debitur Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-textarea>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Telepon Debitur -->
+                            <mol-input-text [label]="'No. Telepon'" formControlName="telepon"
+                                [IsFormControlInvalid]="telepon.invalid"
+                                [ValidatorsCaption]="'No. Telepon Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Email Debitur -->
+                            <mol-input-text [label]="'Email'" formControlName="email"
+                                [IsFormControlInvalid]="email.invalid" [ValidatorsCaption]="'Email Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Email Debitur -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tanggal Expired'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-datepicker [format]="'dd/MM/yyyy'" formControlName="tgl_expired"
+                                        [readonly]="inputFieldState == 'detail'">
+                                    </ejs-datepicker>
+
+                                    <atm-validators [IsFormControlTouched]="tgl_expired.touched"
+                                        [IsFormControlInvalid]="tgl_expired.invalid"
+                                        [ValidatorsCaption]="'Tgl Expired Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

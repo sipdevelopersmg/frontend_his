@@ -3,14 +3,14 @@ import { HttpOperationService } from 'src/app/modules/shared/services/http-opera
 import { API } from 'src/app/api';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AdmisiPasienRawatJalanService {
 
-  constructor(private httpOperationService: HttpOperationService) { }
+    constructor(private httpOperationService: HttpOperationService) { }
 
-  postAdmisiPasienRawatJalan(requset:Object){
-    return this.httpOperationService.defaultPostRequest(API.POST_ADMISI_RAWAT_JALAN,requset)
-  }
+    postAdmisiPasienRawatJalan(requset: Object) {
+        return this.httpOperationService.defaultPostRequest(API.IRJA.POST_ADMISI_RAWAT_JALAN, requset)
+    }
 
 }

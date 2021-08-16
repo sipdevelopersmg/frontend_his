@@ -1,17 +1,20 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
     <form [formGroup]="FormPendaftaranPasienBaruIrja">
         <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
-
-            <ng-wizard-step [title]="'No. Identitas'">
-                <h5 class="">Identitas</h5>
+            <ng-wizard-step [title]="'No. Identitas'" [canExit]="PersonFound">
                 <div class="row">
-                    <div class="col-sm-6" formGroupName="identitas">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="mb-0 text-hitam-muda">Cek No. Identitas</h5>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" formGroupName="person">
                         <!-- Kewarganegaraan -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <atm-label [LabelCaption]="'Kewarganegaraan'"></atm-label>
                             </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
                                 <div class="form-check form-check-inline">
                                     <input #RadioButtonWni class="form-check-input form-select-sm" type="radio"
                                         name="radioKewarganegaraan" id="radioKewarganegaraanIndo" value="Indonesia"
@@ -33,14 +36,16 @@
                                 <atm-label [LabelCaption]="'Jenis Identitas'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-dropdownlist *ngIf="RadioButtonWni.checked" id="id_jenis_identitas_wni"
-                                    [dataSource]="JenisIdentitasDropdownWniDatasource"
+                                <ejs-dropdownlist #DropdownWni *ngIf="RadioButtonWni.checked"
+                                    id="id_jenis_identitas_wni"
+                                    [dataSource]="JenisIdentitasDropdownWniDatasource | async"
                                     [fields]="JenisIdentitasDropdownField" [allowFiltering]="true"
                                     (change)="handleDropdownJenisIdentitasChange($event)">
                                 </ejs-dropdownlist>
 
-                                <ejs-dropdownlist *ngIf="RadioButtonWna.checked" id="id_jenis_identitas_wna"
-                                    [dataSource]="JenisIdentitasDropdownWnaDatasource"
+                                <ejs-dropdownlist #DropdownWna *ngIf="RadioButtonWna.checked"
+                                    id="id_jenis_identitas_wna"
+                                    [dataSource]="JenisIdentitasDropdownWnaDatasource | async"
                                     [fields]="JenisIdentitasDropdownField" [allowFiltering]="true"
                                     (change)="handleDropdownJenisIdentitasChange($event)">
                                 </ejs-dropdownlist>
@@ -48,166 +53,413 @@
                         </div>
 
                         <!-- No. Identitas -->
-                        <mol-input-text [label]="'No Identitas'" formControlName="no_identitas"></mol-input-text>
-
-                        <!-- Foto Pasien -->
-                        <img [src]="url" class="img-thumbnail" width="150" style="margin-bottom: 10px;"> <br />
-                        <input type='file' formControlName="path_foto" (change)="onSelectFile($event)">
+                        <mol-input-text [label]="'No Identitas'" formControlName="no_identitas"
+                            (keyup.enter)="handleCheckPersonByNoIdentitas(no_identitas.value)">
+                        </mol-input-text>
                     </div>
                 </div>
-                <!-- <hr/>-->
             </ng-wizard-step>
 
             <ng-wizard-step [title]="'Detail Person'">
-                <h5 class="">Detail Person</h5>
-                <div class="row" formGroupName="detail">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <mol-input-text [label]="'No KK'" formControlName="no_kartu_keluarga"></mol-input-text>
-                        <mol-input-text [label]="'Nama Depan'" formControlName="nama_depan"></mol-input-text>
-                        <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"></mol-input-text>
-                        <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"></mol-input-text>
-                        <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"></mol-input-text>
-                        <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"></mol-input-text>
-                        <mol-input-select [label]="'Gender'" [options]="SelectOptionsJenisKelamin"
-                            formControlName="gender">
-                        </mol-input-select>
-                        <mol-input-text [label]="'Gol darah'" formControlName="gol_darah"></mol-input-text>
-                        <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"></mol-input-text>
-                        <!-- <mol-datepicker-syncfusion [label]="'Tanggal Lahir'" formControlName="tanggal_lahir"></mol-datepicker-syncfusion> -->
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="mb-0 text-hitam-muda">Detail Person</h5>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"></mol-input-text>
-                        <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"></mol-input-text>
+                </div>
 
+                <div class="row pt-2" formGroupName="person">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <!-- No Kartu Keluarga -->
+                        <mol-input-text [label]="'No. Kartu Keluarga'" formControlName="no_kartu_keluarga">
+                        </mol-input-text>
+
+                        <!-- Nama Depan -->
+                        <mol-input-text [label]="'Nama Depan'" formControlName="nama_depan"></mol-input-text>
+
+                        <!-- Nama Belakang -->
+                        <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"></mol-input-text>
+
+                        <!-- Nama Panggilan -->
+                        <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"></mol-input-text>
+
+                        <!-- Gelar Depan -->
+                        <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"></mol-input-text>
+
+                        <!-- Gelar Belakang -->
+                        <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"></mol-input-text>
+
+                        <!-- Gender -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Marital'"></atm-label>
+                                <atm-label [LabelCaption]="'Gender'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-dropdownlist id="marital" [dataSource]="MaritalStatusDropdownDatasource"
+                                <ejs-dropdownlist #GenderDropdown id="gender" [dataSource]="GenderDropdownDatasource"
+                                    [fields]="GenderDropdownField" [allowFiltering]="true" formControlName="gender">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Golongan Darah -->
+                        <mol-input-text [label]="'Gol darah'" formControlName="gol_darah"></mol-input-text>
+
+                        <!-- Tempat Lahir -->
+                        <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"></mol-input-text>
+
+                        <!-- Tanggal Lahir -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tanggal Lahir'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-datepicker [format]="'dd/MM/yyyy'" formControlName="tanggal_lahir">
+                                </ejs-datepicker>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <!-- Tinggi Badan -->
+                        <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"></mol-input-text>
+
+                        <!-- Berat Badan -->
+                        <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"></mol-input-text>
+
+                        <!-- Marital Status -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Status Pernikahan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #MaritalStatusDropdown id="marital"
+                                    [dataSource]="MaritalStatusDropdownDatasource | async"
                                     [fields]="MaritalStatusDropdownField" [allowFiltering]="true"
                                     formControlName="id_marital_status">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
 
-                        <org-input-look-up #LookupAgama [label]="'Agama'" [disabled]="true" [modal-title]="'Data Agama'"
-                            [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Agama'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
+                        <!-- Agama -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Agama'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #AgamaDropdown id="agama"
+                                    [dataSource]="AgamaDropdownDatasource | async" [fields]="AgamaDropdownField"
+                                    [allowFiltering]="true" formControlName="id_agama">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
 
-                        <org-input-look-up #LookupKebangsaan [label]="'Kebangsaan'" [disabled]="true"
-                            [modal-title]="'Data Kebangsaan'"
-                            [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Kebangsaan'"
-                            (onGetSelectedData)="handleSelectedKebangsaan($event)">
-                        </org-input-look-up>
+                        <!-- Kebangsaan -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Kebangsaan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #KebangsaanDropdown id="kebangsaan"
+                                    [dataSource]="KebangsaanDropdownDatasource | async"
+                                    [fields]="KebangsaanDropdownField" [allowFiltering]="true"
+                                    formControlName="id_kebangsaan">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
 
-                        <org-input-look-up #LookupEtnis [label]="'Etnis'" [disabled]="true" [modal-title]="'Data Etnis'"
-                            [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Etnis'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
+                        <!-- Etnis -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Etnis'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #EtnisDropdown id="id_etnis"
+                                    [dataSource]="EtnisDropdownDatasource | async" [fields]="EtnisDropdownField"
+                                    [allowFiltering]="true" formControlName="id_etnis">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
 
-                        <org-input-look-up #LookupBahasa [label]="'Bahasa'" [disabled]="true"
-                            [modal-title]="'Data Bahasa'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Bahasa'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
+                        <!-- Bahasa -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Bahasa'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #BahasaDropdown id="id_bahasa"
+                                    [dataSource]="BahasaDropdownDatasource | async" [fields]="BahasaDropdownField"
+                                    [allowFiltering]="true" formControlName="id_bahasa">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
 
-                        <org-input-look-up #LookupEducation [label]="'Last Education'" [disabled]="true"
-                            [modal-title]="'Data Education'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Education'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
+                        <!-- Education -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Pendidikan Terakhir'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #EducationDropdown id="id_last_education"
+                                    [dataSource]="EducationDropdownDatasource | async" [fields]="EducationDropdownField"
+                                    [allowFiltering]="true" formControlName="id_last_education">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
 
-                        <org-input-look-up #LookupJob [label]="'Job Type'" [disabled]="true" [modal-title]="'Data Job'"
-                            [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
-                        <!-- <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea> -->
+                        <!-- Job Type -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tipe Pekerjaan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #JobTypeDropdown id="id_job_type"
+                                    [dataSource]="JobTypeDropdownDatasource | async" [fields]="JobTypeDropdownField"
+                                    [allowFiltering]="true" formControlName="id_job_type">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- <hr/>-->
             </ng-wizard-step>
 
             <ng-wizard-step [title]="'Alamat'">
-                <div class="row" formArrayName="alamat">
-                    <div class="col-sm-6"
-                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('alamat')['controls']; let i = index"
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h5 class="mb-0 text-hitam-muda">Detail Alamat</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="handleClickTambahFormArray('Alamat')">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Alamat
+                                </button>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
+                                <button class="btn btn-warning btn-sm" type="button"
+                                    [disabled]="this.FormAlamats.length == 1"
+                                    (click)="handleClickHapusFormArray('Alamat')">
+                                    <i class="fas fa-trash-alt fa-sm"></i> Hapus Alamat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Alamat -->
+                <div class="row pt-2" formArrayName="alamat_person">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3"
+                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('alamat_person')['controls']; let i = index"
                         [formGroupName]="i">
-                        <h5 class="">Alamat</h5>
+
+                        <!-- Alamat Lengkap -->
                         <mol-input-textarea [label]="'Alamat Lengkap'" formControlName="alamat_lengkap">
                         </mol-input-textarea>
-                        <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos"></mol-input-text>
-                        <div class="mb-2 row">
+
+                        <!-- Provinsi -->
+                        <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'RT/RW'"></atm-label>
+                                <atm-label [LabelCaption]="'Provinsi'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #ProvinsiDropdown id="provinsi"
+                                    [dataSource]="ProvinsiDropdownDataSource | async"
+                                    [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                    (change)="handleDropdownProvinsiChange(ProvinsiDropdown.value)">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Kota -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Kota'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #KotaDropdown id="kota" [dataSource]="KotaDropdownDataSource | async"
+                                    [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                    (change)="handleDropdownKotaChange(KotaDropdown.value)">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Kecamatan -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Kecamatan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #KecamatanDropdown id="kecamatan"
+                                    [dataSource]="KecamatanDropdownDataSource | async"
+                                    [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                    formControlName="kode_wilayah">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Kelurahan -->
+                        <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"></mol-input-text>
+
+                        <!-- Kode Pos -->
+                        <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos"></mol-input-text>
+
+                        <!-- RT / RW -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'RT / RW'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <div class="row">
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                        <atm-input formControlName="rt"></atm-input>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <input type="text" class="form-control" name="RT" formControlName="rt">
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">/</div>
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                        <atm-input formControlName="rw"></atm-input>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <input type="text" class="form-control" name="RW" formControlName="rw">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"></mol-input-text>
-                        <org-input-look-up #LookupJob [label]="'Wilayah'" [disabled]="true" [modal-title]="'Data Job'"
-                            [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
                     </div>
                 </div>
             </ng-wizard-step>
 
-            <ng-wizard-step [title]="'Contact'">
-                <div class="row" formArrayName="kontak">
-                    <div class="col-sm-6"
-                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('kontak')['controls']; let i = index"
+            <ng-wizard-step [title]="'Kontak Person'">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h5 class="mb-0 text-hitam-muda">Detail Kontak Person</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="handleClickTambahFormArray('Kontak')">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Kontak
+                                </button>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
+                                <button class="btn btn-warning btn-sm" type="button"
+                                    [disabled]="this.FormKontaks.length == 1"
+                                    (click)="handleClickHapusFormArray('Kontak')">
+                                    <i class="fas fa-trash-alt fa-sm"></i> Hapus Kontak
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Kontak Person -->
+                <div class="row pt-2" formArrayName="kontak_person">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3"
+                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('kontak_person')['controls']; let i = index"
                         [formGroupName]="i">
-                        <h5 class="">Contact Person</h5>
-                        <mol-input-text [label]="'Hand Phone'" formControlName="hand_phone"></mol-input-text>
-                        <mol-input-text [label]="'Home Phone'" formControlName="home_phone"></mol-input-text>
-                        <mol-input-text [label]="'Office Phone'" formControlName="office_phone"></mol-input-text>
+
+                        <!-- No. Handphone -->
+                        <mol-input-text [label]="'No. Handphone'" formControlName="hand_phone"></mol-input-text>
+
+                        <!-- No. Telepon Rumah -->
+                        <mol-input-text [label]="'No. Telepon Rumah'" formControlName="home_phone"></mol-input-text>
+
+                        <!-- No. Telepon Kantor -->
+                        <mol-input-text [label]="'No. Telepon Kantor'" formControlName="office_phone"></mol-input-text>
+
+                        <!-- Email -->
                         <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
+
+                        <!-- Keterangan -->
                         <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
                     </div>
                 </div>
-                <!-- <hr/>-->
             </ng-wizard-step>
 
             <ng-wizard-step [title]="'Debitur'">
-                <div class="row" formArrayName="debitur">
-                    <div class="col-sm-6"
-                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('debitur')['controls']; let i = index"
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h5 class="mb-0 text-hitam-muda">Detail Debitur</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="handleClickTambahFormArray('Debitur')">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Debitur
+                                </button>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
+                                <button class="btn btn-warning btn-sm" type="button"
+                                    [disabled]="this.FormDebiturs.length == 1"
+                                    (click)="handleClickHapusFormArray('Debitur')">
+                                    <i class="fas fa-trash-alt fa-sm"></i> Hapus Debitur
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2" formArrayName="debitur_pasien">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3"
+                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('debitur_pasien')['controls']; let i = index"
                         [formGroupName]="i">
-                        <h5 class="">Debitur</h5>
+
+                        <!-- Debitur -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Debitur'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #DebiturDropdown id="debitur"
+                                    [dataSource]="DebiturDropdownDataSource | async" [fields]="DebiturDropdownField"
+                                    [allowFiltering]="true" formControlName="id_debitur">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- No. Member -->
                         <mol-input-text [label]="'No Member'" formControlName="no_member"></mol-input-text>
-                        <org-input-look-up #LookupJob [label]="'Debitur'" [disabled]="true" [modal-title]="'Data Job'"
-                            [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
-                            [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
-                            (onGetSelectedData)="handleSelectedAgama($event)">
-                        </org-input-look-up>
+
+                        <!-- Tgl Aktif Member -->
+                        <div class="row mb-2">
+                            <div class="col-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tgl Aktif Member'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-datepicker formControlName="tgl_aktif_member" [format]="'dd/MM/yyyy'">
+                                </ejs-datepicker>
+                            </div>
+                        </div>
+
+                        <!-- Tgl Expired Member -->
+                        <div class="row mb-2">
+                            <div class="col-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tgl Expired Member'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-datepicker formControlName="tgl_expired_member" [format]="'dd/MM/yyyy'">
+                                </ejs-datepicker>
+                            </div>
+                        </div>
+
+                        <!-- Keterangan -->
                         <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
                     </div>
                 </div>
             </ng-wizard-step>
+
+            <!-- <ng-wizard-step [title]="'Upload Foto Pasien'" [state]="stepStates.hidden">
+                <div class="row pt-3">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="mb-0 text-hitam-muda">Upload Foto</h5>
+                    </div>
+                </div>
+
+                <div class="row pt-2" formGroupName="person">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <img [src]="url" class="img-thumbnail" width="150px"
+                            style="margin-bottom: 20px; max-width: 150px;">
+                        <br />
+                        <input type='file' formControlName="path_foto" class="form-control"
+                            (change)="onSelectFile($event)">
+                    </div>
+                </div>
+            </ng-wizard-step> -->
         </ng-wizard>
     </form>
 </org-card-layout>

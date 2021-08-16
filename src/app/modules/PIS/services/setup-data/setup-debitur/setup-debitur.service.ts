@@ -5,14 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
-import { DeleteKecamatanModel, GetAllKecamatanModel, KecamatanModel, PostSaveKecamatanModel, PutUpdateKecamatanModel } from '../../../models/setup-data/setup-kecamatan.model';
+import { DebiturModel, DeleteDebiturModel, GetAllDebiturModel, PostSaveDebiturModel, PutUpdateDebiturModel } from '../../../models/setup-data/setup-debitur.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SetupKecamatanService {
+export class SetupDebiturService {
 
-    API = API_CONFIG.API.SETUP_KECAMATAN;
+    API = API_CONFIG.API.SETUP_DEBITUR;
 
     constructor(
         private notificationService: NotificationService,
@@ -20,20 +20,19 @@ export class SetupKecamatanService {
 
     /**
      * Service Untuk Menampilkan Semua data
-     * @onGetAll Observable<GetAllKecamatanModel>
-     * @param KodeWilayahKota string
+     * @onGetAll Observable<GetAllDebiturModel>
     */
-    onGetAll(KodeWilayahKota: string): Observable<GetAllKecamatanModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_KECAMATAN_BY_KOTA_ID + KodeWilayahKota);
+    onGetAll(): Observable<GetAllDebiturModel> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_DEBITUR);
     }
 
     /**
      * Service Untuk Manyimpan data baru
-     * @onPostSave Observable<PostSaveKecamatanModel>
-     * @param KecamatanModel
+     * @onPostSave Observable<PostSaveDebiturModel>
+     * @param DebiturModel
     */
-    onPostSave(Data: KecamatanModel): Observable<PostSaveKecamatanModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_KECAMATAN, Data)
+    onPostSave(Data: DebiturModel): Observable<PostSaveDebiturModel> {
+        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_DEBITUR, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -43,11 +42,11 @@ export class SetupKecamatanService {
 
     /**
      * Service Untuk Mengedit Data
-     * @onPutEdit Observable<PutUpdateKecamatanModel>
-     * @param KecamatanModel
+     * @onPutEdit Observable<PutUpdateDebiturModel>
+     * @param DebiturModel
     */
-    onPutEdit(Data: KecamatanModel): Observable<PutUpdateKecamatanModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_KECAMATAN, Data)
+    onPutEdit(Data: DebiturModel): Observable<PutUpdateDebiturModel> {
+        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_DEBITUR, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -56,16 +55,17 @@ export class SetupKecamatanService {
     }
 
     /**
-    * Service Untuk Menghapus Data
-    * @onDelete Observable<DeleteKecamatanModel>
-    * @param KodeWilayahKecamatan
-   */
-    onDelete(KodeWilayahKecamatan: string): Observable<DeleteKecamatanModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_KECAMATAN + KodeWilayahKecamatan)
+     * Service Untuk Menghapus Data
+     * @onDelete Observable<DeleteDebiturModel>
+     * @param DebiturId
+    */
+    onDelete(DebiturId: number): Observable<DeleteDebiturModel> {
+        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_DEBITUR + DebiturId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
                 })
             );
     }
+
 }

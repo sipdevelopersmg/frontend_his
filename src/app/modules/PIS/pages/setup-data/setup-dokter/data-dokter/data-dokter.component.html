@@ -39,7 +39,7 @@
                         <org-input-look-up #LookupAgama [label]="'Agama'" [disabled]="true" [modal-title]="'Data Agama'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Agama'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Agama'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
 
@@ -47,35 +47,35 @@
                             [modal-title]="'Data Kebangsaan'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Kebangsaan'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Kebangsaan'"
                             (onGetSelectedData)="handleSelectedKebangsaan($event)">
                         </org-input-look-up>
 
                         <org-input-look-up #LookupEtnis [label]="'Etnis'" [disabled]="true" [modal-title]="'Data Etnis'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Etnis'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Etnis'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
 
                         <org-input-look-up #LookupBahasa [label]="'Bahasa'" [disabled]="true"
                             [modal-title]="'Data Bahasa'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Bahasa'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Bahasa'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
 
                         <org-input-look-up #LookupEducation [label]="'Last Education'" [disabled]="true"
                             [modal-title]="'Data Education'" [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Education'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Education'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
 
                         <org-input-look-up #LookupJob [label]="'Job Type'" [disabled]="true" [modal-title]="'Data Job'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Job'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
                         <!-- <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea> -->
@@ -141,7 +141,7 @@
                             [modal-title]="'Data Spesialis Dokter'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Job'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
                         <mol-input-text [label]="'No Surat Ijin Praktek'" formControlName="no_surat_ijin_praktek">
@@ -153,14 +153,14 @@
                             [modal-title]="'Data Staf Medis Fungsional'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Job'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
                         <org-input-look-up #LookupJob [label]="'Status Dokter'" [disabled]="true"
                             [modal-title]="'Data Status Dokter'"
                             [columns]="LookupPendaftaranPasienBaru.LookupAgama.columns"
                             [filter-lookup]="LookupPendaftaranPasienBaru.LookupAgama.filter"
-                            [lookup-url]="LookupPendaftaranPasienBaruUrl.GET_ALL_AGAMA" [idTitle]="'Job'"
+                            [lookup-url]="LookupPendaftaranPasienBaruUrl.IRJA.GET_ALL_AGAMA" [idTitle]="'Job'"
                             (onGetSelectedData)="handleSelectedAgama($event)">
                         </org-input-look-up>
                     </div>

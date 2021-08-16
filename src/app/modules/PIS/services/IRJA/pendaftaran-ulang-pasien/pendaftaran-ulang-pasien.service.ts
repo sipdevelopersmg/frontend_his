@@ -23,7 +23,7 @@ export class PendaftaranUlangPasienService {
     constructor(private httpOperationService: HttpOperationService) { }
 
     onGetDataPasienByNoAntrian(NoAntrian: string) {
-        return this.httpOperationService.defaultPostRequestWithoutLoading(CONFIG.API.GET_DATA_PASIEN_BY_NO_ANTRIAN, JSON.stringify(NoAntrian))
+        return this.httpOperationService.defaultPostRequestWithoutLoading(CONFIG.API.IRJA.GET_DATA_PASIEN_BY_NO_ANTRIAN, JSON.stringify(NoAntrian))
             .pipe(
                 map((_result) => {
                     return _result.data[0];
@@ -32,7 +32,7 @@ export class PendaftaranUlangPasienService {
     }
 
     onKonfirmasiPendaftaranUlang(MrNo: string) {
-        return this.httpOperationService.defaultPostRequest(CONFIG.API.POST_KONFIRMASI_PENDAFTARAN_ULANG, JSON.stringify(MrNo));
+        return this.httpOperationService.defaultPostRequest(CONFIG.API.IRJA.POST_KONFIRMASI_PENDAFTARAN_ULANG, JSON.stringify(MrNo));
 
     }
 }

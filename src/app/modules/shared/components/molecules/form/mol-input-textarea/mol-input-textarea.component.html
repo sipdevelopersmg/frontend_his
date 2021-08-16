@@ -3,6 +3,11 @@
         <atm-label [LabelCaption]="label"></atm-label>
     </div>
     <div class="col-sm-8">
-        <atm-textarea [value]="value" (change)="doChange($event)"></atm-textarea>        
+        <atm-textarea [value]="value" [inputFieldState]="inputFieldState" (change)="doChange($event)"
+            (click)="doTouched($event)"></atm-textarea>
+
+        <atm-validators [IsFormControlTouched]="touched" [IsFormControlInvalid]="IsFormControlInvalid"
+            [ValidatorsCaption]="ValidatorsCaption">
+        </atm-validators>
     </div>
 </div>
