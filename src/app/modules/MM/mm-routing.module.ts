@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { InputKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component";
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
 import { InputPOComponent } from "./pages/pemasukan/PO/input-po/input-po.component";
+import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
 import { SetupPabrikComponent } from "./pages/setup-data/setup-pabrik/setup-pabrik.component";
 import { SetupSatuanComponent } from "./pages/setup-data/setup-satuan/setup-satuan.component";
@@ -15,6 +16,7 @@ const mmRoutes: Routes = [
             { path: "setup-grup-item", component: SetupGrupItemComponent, data: { title: "Setup Grup Item" } },
             { path: "setup-pabrik", component: SetupPabrikComponent, data: { title: "Setup Pabrik" } },
             { path: "setup-satuan", component: SetupSatuanComponent, data: { title: "Setup Pabrik" } },
+            { path: "setup-group-coa", component: SetupGroupCoaComponent, data: { title: "Setup Group COA" } },
         ],
     },
     {

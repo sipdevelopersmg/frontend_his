@@ -77,7 +77,7 @@ export class OrgInputLookUpComponent implements OnInit {
     onFetchDataSource(params: any) {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
             .subscribe((_result) => {
-                this.gridDataSource = _result;
+                this.gridDataSource = _result.data;
             }, (pesanError) => {
                 console.log(pesanError);
             })

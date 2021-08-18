@@ -1,6 +1,8 @@
-// ** SETUP PABRIK
-export const GET_ALL_SETUP_PABRIK = 'MM/SetupPabrik/GetSetupMMPabrik';
-export const GET_SETUP_PABRIK_BY_ID = 'MM/SetupPabrik/GetSetupMMPabrikById/';
-export const POST_SAVE_SETUP_PABRIK = 'MM/SetupPabrik/SaveSetupMMPabrik';
-export const PUT_UPDATE_SETUP_PABRIK = 'MM/SetupPabrik/UpdateSetupMMPabrik';
-export const PUT_UPDATE_STATUS_ACTIVE_SETUP_PABRIK = 'MM/SetupPabrik/UpdateSetupMMPabrikActiveStatus';
+import { environment } from "src/environments/environment";
+
+export const GET_ALL = `${environment.webApiMM}` +'SetupPabrik/GetAll';
+export const GET_BY_ID = `${environment.webApiMM}` +'SetupPabrik/GetMMSetupPabrikById';
+export const INSERT = `${environment.webApiMM}` +'SetupPabrik/Insert';
+export const UPDATE = `${environment.webApiMM}` +'SetupPabrik/Update';
+export const UPDATETOACTIVE = `${environment.webApiMM}` +'SetupPabrik/UpdateToActive';
+export const UPDATETODEACTIVE = `${environment.webApiMM}` +'SetupPabrik/UpdateToDeActive';

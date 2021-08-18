@@ -1,10 +1,5 @@
-<mol-input-group-kode [label]="label" (pressEnter)="handlePressEnter($event)"
-    (clickButton)="onOpenModal()" [kodeValue]="kodeValue" [titleValue]="titleValue"
-    [disableTitle]="true">
-</mol-input-group-kode>
-
 <ng-template #template>
-    <div class="modal-content border-0">
+    <div class="modal-content border-0" id="{{ modalId }}">
         <div class="modal-header py-1 bg-light text-ungu-tua">
             <h5 class="modal-title">{{ modalTitle }}</h5>
             <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
@@ -29,11 +24,13 @@
 
             <div class="row mx-0 my-2">
                 <div class="col-lg-12 col-md-12 col-sm 12">
-                    <mol-grid [grid-id]="gridId" [grid-width]="gridWidth" [grid-height]="gridHeight"
+                    <mol-grid #grid [grid-id]="gridId" [grid-width]="gridWidth" [grid-height]="gridHeight"
                         [grid-DataSource]="gridDataSource" [grid-lines]="gridLines" [columns]="columns"
                         [grid-paging]="gridPaging" [grid-initial-page]="gridPageSettings"
                         (row-selected)="onRowSelected($event)" (enter-pressed)="onKeyPressed($event)"
-                        (double-click)="onDoubleClicked($event)">
+                        (double-click)="onDoubleClicked($event)"
+                        (initialized)="onInitialized($event)"
+                        >
                     </mol-grid>
                 </div>
             </div>

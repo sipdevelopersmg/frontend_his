@@ -11,6 +11,7 @@ import { InputPenerimaanComponent } from './pages/pemasukan/penerimaan/input-pen
 import { InputReturComponent } from './pages/retur/input-retur/input-retur.component';
 import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-supplier.component';
 import { SetupSatuanComponent } from './pages/setup-data/setup-satuan/setup-satuan.component';
+import { SetupGroupCoaComponent } from './pages/setup-data/setup-group-coa/setup-group-coa.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { SetupSatuanComponent } from './pages/setup-data/setup-satuan/setup-satu
         InputPenerimaanComponent,
         InputReturComponent,
         SetupSupplierComponent,
-        SetupSatuanComponent
+        SetupSatuanComponent,
+        SetupGroupCoaComponent,
     ],
     imports: [
         FormsModule,

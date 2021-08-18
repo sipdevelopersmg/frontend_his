@@ -1,0 +1,15 @@
+        <!-- <mol-grid
+            #gridDetail
+            [grid-id]="'GridDetail'"
+            [grid-editSettings]="GridDataEditSettings"
+            [grid-height]="300"
+            [grid-DataSource]="inputKontrakPengadaanService.dataDetail$ | async"
+            [grid-lines]="'Both'"
+            [grid-toolbar]="GridDetailToolbar"
+            (toolbar-click)="onToolbarClick($event)"
+            [columns]="GridDetailItem.TrKontrakSpjbDetailItemInsert"
+            (action-complete)="handleActionCompleted($event)"
+            (initialized)="InitalizedGrid($event)"
+            (load-grid)="handleLoadGrid($event)"
+            (row-selected)="handleSelectdRow($event)"
+            ></mol-grid> -->

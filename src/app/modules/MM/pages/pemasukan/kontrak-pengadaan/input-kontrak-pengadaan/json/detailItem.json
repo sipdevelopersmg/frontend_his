@@ -1,0 +1,137 @@
+{
+    "TrKontrakSpjbDetailItemInsert":
+    [
+        {
+            "allowEditing": false,
+            "field":"kontrak_id",
+            "headerText":"Kontrak Id",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"no_urut",
+            "headerText":"No Urut",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"id_item",
+            "headerText":"Id Item",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"kode_item",
+            "headerText":"Kode Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"nama_item",
+            "headerText":"Nama Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_maksimal_expired_date",
+            "format": "dd MMMM yyyy",
+            "headerText": "Max Expired",
+            "type": "DateTime",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "field":"qty_kontrak_satuan_besar",
+            "headerText":"Banyak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "editParams":"satuanParams",
+            "field":"kode_satuan_besar",
+            "headerText":"Satuan",
+            "editType": "dropdownedit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"isi",
+            "headerText":"Isi",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"qty_kontrak",
+            "headerText":"Qty",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "field":"harga_satuan",
+            "headerText":"Harga Satuan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "field":"sub_total_kontrak",
+            "headerText":"Sub Total Kontrak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        }
+    ]
+}

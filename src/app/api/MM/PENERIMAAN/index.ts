@@ -1,0 +1,6 @@
+
+import * as TRANSKONTRAKSPJB from './TRANSKONTRAKSPJB'
+
+export const PENERIMAAN = Object.assign({}, 
+    {"TRANSKONTRAKSPJB":TRANSKONTRAKSPJB}
+)
