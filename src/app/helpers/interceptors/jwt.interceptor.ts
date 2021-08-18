@@ -14,7 +14,8 @@ export class JwtInterceptor implements HttpInterceptor {
 
         const WebApiUrl = httpRequest.url.startsWith(`${environment.webApiUrl}`);
 
-        const IsUserLogin: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        // const IsUserLogin: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const IsUserLogin: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         if (WebApiUrl && IsUserLogin) {
             const modifiedRequest = httpRequest.clone({

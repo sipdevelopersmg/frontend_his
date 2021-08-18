@@ -38,7 +38,7 @@ export class MolTopMenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.ChildMenu = JSON.parse(sessionStorage.getItem("ActiveChildMenu"));
+        this.ChildMenu = JSON.parse(localStorage.getItem("ActiveChildMenu"));
 
         this.onTogglingVisibility();
     }

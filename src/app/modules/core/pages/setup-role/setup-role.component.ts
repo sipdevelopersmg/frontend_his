@@ -63,6 +63,6 @@ export class SetupRoleComponent implements OnInit {
     onSelectedRow(args: any): void {
         this.SelectedDataRole = args.data;
         this.setupRoleService.onSetCurrentDataRole(this.SelectedDataRole);
-        sessionStorage.setItem('DataRole', JSON.stringify(this.SelectedDataRole));
+        localStorage.setItem('DataRole', JSON.stringify(this.SelectedDataRole));
     }
 }

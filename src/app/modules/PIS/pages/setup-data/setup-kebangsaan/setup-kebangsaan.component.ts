@@ -289,7 +289,7 @@ export class SetupKebangsaanComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        sessionStorage.removeItem('ActiveFieldGrid');
+        localStorage.removeItem('ActiveFieldGrid');
     }
 
     get id_kebangsaan(): AbstractControl { return this.FormInputData.get('id_kebangsaan'); }

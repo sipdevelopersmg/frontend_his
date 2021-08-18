@@ -26,7 +26,7 @@ export class AuthenticationService {
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService,
     ) {
-        this.currentUserSubject = new BehaviorSubject<IAuthenticationResponseModel>(JSON.parse(sessionStorage.getItem('UserData')));
+        this.currentUserSubject = new BehaviorSubject<IAuthenticationResponseModel>(JSON.parse(localStorage.getItem('UserData')));
         this.currentUser$ = this.currentUserSubject.asObservable();
     }
 
@@ -60,7 +60,7 @@ export class AuthenticationService {
     }
 
     onLogout(): void {
-        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         this.httpOperationService.defaultPutRequestWithoutParams(
             API.POST_LOGOUT + UserData.id_user
@@ -83,7 +83,7 @@ export class AuthenticationService {
 
                     this.sessionExpirationTime = null;
 
-                    sessionStorage.clear();
+                    localStorage.clear();
                 });
             }
         });
@@ -119,6 +119,7 @@ export class AuthenticationService {
         this.autoLogout(expiresIn);
 
         sessionStorage.setItem('UserData', JSON.stringify(UserData));
+        localStorage.setItem('UserData', JSON.stringify(UserData));
 
         this.currentUserSubject.next(UserData);
     }

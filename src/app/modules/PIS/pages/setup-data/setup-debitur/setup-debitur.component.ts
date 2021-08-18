@@ -237,7 +237,7 @@ export class SetupDebiturComponent implements OnInit {
 
         if (this.inputFieldState == 'normal') {
 
-            const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+            const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
             Data.user_created = UserData.id_user;
 

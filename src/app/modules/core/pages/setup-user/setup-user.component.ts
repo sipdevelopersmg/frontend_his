@@ -171,7 +171,7 @@ export class SetupUserComponent implements OnInit {
     onSubmitFormSetupUser(FormSetupUser: any) {
 
         // ** Get User Data from Session Storage
-        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         FormSetupUser.user_created = UserData.id_user;
 

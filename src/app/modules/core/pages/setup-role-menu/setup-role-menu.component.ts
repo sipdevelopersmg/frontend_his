@@ -27,7 +27,7 @@ export class SetupRoleMenuComponent implements OnInit {
         private setupRoleService: SetupRoleService,
         private setupRoleMenuService: SetupRoleMenuService
     ) {
-        this.UserData = JSON.parse(sessionStorage.getItem('UserData'));
+        this.UserData = JSON.parse(localStorage.getItem('UserData'));
 
         this.onGetCurrentDataRole();
     }

@@ -26,7 +26,7 @@ export class SetupRoleService {
     }
 
     onGetCurrentDataRole(): Observable<any> {
-        const DataRoleFromSessionStorage = JSON.parse(sessionStorage.getItem('DataRole'));
+        const DataRoleFromSessionStorage = JSON.parse(localStorage.getItem('DataRole'));
 
         if (DataRoleFromSessionStorage) {
             this.CurrentDataRole.next(DataRoleFromSessionStorage);

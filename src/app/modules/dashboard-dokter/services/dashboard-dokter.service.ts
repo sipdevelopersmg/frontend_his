@@ -61,8 +61,8 @@ export class DashboardDokterService {
             },
         ];
 
-        sessionStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenu));
+        localStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenu));
 
-        this.navigationService.onSetActiveSidebarMenuSubject(JSON.parse(sessionStorage.getItem('ActiveSidebarMenu')));
+        this.navigationService.onSetActiveSidebarMenuSubject(JSON.parse(localStorage.getItem('ActiveSidebarMenu')));
     }
 }

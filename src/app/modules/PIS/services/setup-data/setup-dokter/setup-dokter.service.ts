@@ -4,27 +4,29 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { DokterModel, PostSavePendaftaranDokterBaruModel } from '../../../models/setup-data/setup-dokter.model';
+import { AgamaService } from '../agama/agama.service';
+import { JenisIdentitasService } from '../jenis-identitas/jenis-identitas.service';
+import { MaritalStatusService } from '../marital-status/marital-status.service';
+import { SetupBahasaService } from '../setup-bahasa/setup-bahasa.service';
+import { SetupEducationService } from '../setup-education/setup-education.service';
+import { SetupEtnisService } from '../setup-etnis/setup-etnis.service';
+import { SetupJobTypeService } from '../setup-job-type/setup-job-type.service';
+import { SetupKebangsaanService } from '../setup-kebangsaan/setup-kebangsaan.service';
+import { SetupKecamatanService } from '../setup-wilayah/setup-kecamatan.service';
+import { SetupKotaService } from '../setup-wilayah/setup-kota.service';
+import { SetupProvinsiService } from '../setup-wilayah/setup-provinsi.service';
 import * as API_CONFIG from '../../../../../api/PIS/index';
-import { PersonModel, PostSavePendaftaranPasienBaruModel } from '../../../models/IRJA/pendaftaran_pasien_baru.model';
-import { AgamaService } from '../../setup-data/agama/agama.service';
-import { JenisIdentitasService } from '../../setup-data/jenis-identitas/jenis-identitas.service';
-import { MaritalStatusService } from '../../setup-data/marital-status/marital-status.service';
-import { SetupBahasaService } from '../../setup-data/setup-bahasa/setup-bahasa.service';
-import { SetupDebiturService } from '../../setup-data/setup-debitur/setup-debitur.service';
-import { SetupEducationService } from '../../setup-data/setup-education/setup-education.service';
-import { SetupEtnisService } from '../../setup-data/setup-etnis/setup-etnis.service';
-import { SetupJobTypeService } from '../../setup-data/setup-job-type/setup-job-type.service';
-import { SetupKebangsaanService } from '../../setup-data/setup-kebangsaan/setup-kebangsaan.service';
-import { SetupKecamatanService } from '../../setup-data/setup-wilayah/setup-kecamatan.service';
-import { SetupKotaService } from '../../setup-data/setup-wilayah/setup-kota.service';
-import { SetupProvinsiService } from '../../setup-data/setup-wilayah/setup-provinsi.service';
+import { SetupSpesialisasiDokterService } from '../setup-spesialisasi-dokter/setup-spesialisasi-dokter.service';
+import { SetupSmfDokterService } from '../setup-smf-dokter/setup-smf-dokter.service';
+import { SetupStatusDokterService } from '../setup-status-dokter/setup-status-dokter.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PendaftaranPasienBaruService {
+export class SetupDokterService {
 
-    API = API_CONFIG.API_PIS.IRJA.IRJA.PENDAFTARAN_PASIEN_BARU;
+    API = API_CONFIG.API_PIS.SETUP_DATA.API.SETUP_DOKTER;
 
     /**
      * @JenisIdentitasWnaSubject Digunakan untuk mengisi value pada Dropdown Jenis Identitas WNA 
@@ -99,10 +101,22 @@ export class PendaftaranPasienBaruService {
     public KecamatanSubject = new BehaviorSubject([]);
 
     /**
-     * @DebiturSubject Digunakan untuk mengisi value pada Dropdown Debitur
+     * @SpesialisasiDokterSubject Digunakan untuk mengisi value pada Dropdown Spesialisasi Dokter
      * @Observable Dapat disubscribe
     */
-    public DebiturSubject = new BehaviorSubject([]);
+    public SpesialisasiDokterSubject = new BehaviorSubject([]);
+
+    /**
+     * @SmfDokterSubject Digunakan untuk mengisi value pada Dropdown Smf Dokter
+     * @Observable Dapat disubscribe
+    */
+    public SmfDokterSubject = new BehaviorSubject([]);
+
+    /**
+     * @StatusDokterSubject Digunakan untuk mengisi value pada Dropdown Status Dokter
+     * @Observable Dapat disubscribe
+    */
+    public StatusDokterSubject = new BehaviorSubject([]);
 
     constructor(
         private notificationService: NotificationService,
@@ -112,19 +126,21 @@ export class PendaftaranPasienBaruService {
         private setupEtnisService: SetupEtnisService,
         private setupBahasaService: SetupBahasaService,
         private setupJobTypeService: SetupJobTypeService,
-        private setupDebiturService: SetupDebiturService,
         private setupProvinsiService: SetupProvinsiService,
         private maritalStatusService: MaritalStatusService,
         private setupEducationService: SetupEducationService,
         private jenisIdentitasService: JenisIdentitasService,
         private setupKecamatanService: SetupKecamatanService,
         private setupKebangsaanService: SetupKebangsaanService,
+        private setupSmfDokterService: SetupSmfDokterService,
+        private setupStatusDokterService: SetupStatusDokterService,
+        private setupSpesialisasiDokterService: SetupSpesialisasiDokterService,
     ) { }
 
     /**
-     * @onGetDropdownOptions Method untuk Get All Dropdown Options
-     * @Keterangan Valuenya di next kedalam Behavior Subject, kemudian di View tinggal diberikan pipe | async
-    */
+    * @onGetDropdownOptions Method untuk Get All Dropdown Options
+    * @Keterangan Valuenya di next kedalam Behavior Subject, kemudian di View tinggal diberikan pipe | async
+   */
     onGetDropdownOptions(): void {
         this.jenisIdentitasService.onGetAll().subscribe((result) => {
             this.JenisIdentitasWniSubject.next(result.data['wni']);
@@ -163,15 +179,23 @@ export class PendaftaranPasienBaruService {
             this.ProvinsiSubject.next(result.data);
         });
 
-        this.setupDebiturService.onGetAll().subscribe((result) => {
-            this.DebiturSubject.next(result.data);
-        })
+        this.setupSpesialisasiDokterService.onGetAll().subscribe((result) => {
+            this.SpesialisasiDokterSubject.next(result.data);
+        });
+
+        this.setupSmfDokterService.onGetAll().subscribe((result) => {
+            this.SmfDokterSubject.next(result.data);
+        });
+
+        this.setupStatusDokterService.onGetAll().subscribe((result) => {
+            this.StatusDokterSubject.next(result.data);
+        });
     }
 
     /**
-     * @onGetDropdownKotaDatasourceByProvinsiId Method untuk Get All Kota Options
-     * @Keterangan Valuenya di next kedalam Behavior Subject, kemudian di View tinggal diberikan pipe | async
-    */
+   * @onGetDropdownKotaDatasourceByProvinsiId Method untuk Get All Kota Options
+   * @Keterangan Valuenya di next kedalam Behavior Subject, kemudian di View tinggal diberikan pipe | async
+  */
     onGetDropdownKotaDatasourceByProvinsiId(ProvinsiId: string): void {
         this.setupKotaService.onGetAll(ProvinsiId)
             .subscribe(
@@ -210,11 +234,11 @@ export class PendaftaranPasienBaruService {
     }
 
     /**
-     * @onSavePendaftaranPasienBaruIrja Method Obervable untuk menyimpan Pendaftaran Pasien Baru IRJA
-     * @param Person PersonModel
+     * @onSaveSetupDokter Method Obervable untuk menyimpan Setup Dokter
+     * @param Dokter DokterModel
     */
-    onSavePendaftaranPasienBaruIrja(Person: PersonModel): Observable<PostSavePendaftaranPasienBaruModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_PENDAFTARAN_PASIEN_BARU, Person)
+    onSaveSetupDokter(Dokter: DokterModel): Observable<PostSavePendaftaranDokterBaruModel> {
+        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_DOKTER, Dokter)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

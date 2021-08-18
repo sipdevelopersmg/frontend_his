@@ -8,6 +8,7 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { ComboBoxModule, DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 
 import { CommandColumnService, EditService, GridModule, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
 
@@ -58,7 +59,6 @@ import { OrgTabsItemComponentComponent } from './components/organism/tabs/org-ta
 import { OrgTabsLabelComponentComponent } from './components/organism/tabs/org-tabs-label-component/org-tabs-label-component.component';
 import { OrgTabsBodyComponentComponent } from './components/organism/tabs/org-tabs-body-component/org-tabs-body-component.component';
 import { OrgCardLayoutComponent } from './components/organism/card/card-layout/card-layout.component';
-import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
 
 @NgModule({
@@ -124,6 +124,7 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         Ng2SearchPipeModule,
         NumericTextBoxModule,
         ComboBoxModule,
+        TreeViewModule
     ],
     exports: [
         AtmLabelComponent,
@@ -177,6 +178,7 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         ComboBoxModule,
         OrgLookUpComponent,
         GridModule,
+        TreeViewModule
     ],
     providers: [
         EditService,

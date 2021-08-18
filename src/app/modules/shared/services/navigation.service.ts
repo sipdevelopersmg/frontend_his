@@ -51,13 +51,13 @@ export class NavigationService {
     // !! ================ Main Menu Subject ======================   
     // ** Ini adalah Method untuk mendapatkan MainMenu dari session storage
     onFetchMainMenuFromSessionStorage(): any {
-        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         const MainMenu = UserData.menuJson.mainMenu;
 
-        sessionStorage.setItem('MainMenu', JSON.stringify(MainMenu));
+        localStorage.setItem('MainMenu', JSON.stringify(MainMenu));
 
-        this.MainMenuSubject.next(JSON.parse(sessionStorage.getItem('MainMenu')));
+        this.MainMenuSubject.next(JSON.parse(localStorage.getItem('MainMenu')));
 
         return MainMenu;
     }
@@ -71,7 +71,7 @@ export class NavigationService {
     // !! ================ Child Menu / Top Menu Subject ==========
     // ** Ini adalah Method untuk mendapatkan ChildMenu dari session storage
     onFetchChildMenuFromSessionStorage(ParentId: number): any {
-        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         const TopMenu = UserData.menuJson.topMenu;
 
@@ -79,9 +79,9 @@ export class NavigationService {
             return menu.id_menu_parent === ParentId;
         });
 
-        sessionStorage.setItem('ActiveChildMenu', JSON.stringify(childMenuById));
+        localStorage.setItem('ActiveChildMenu', JSON.stringify(childMenuById));
 
-        this.onSetActiveChildMenuSubject(JSON.parse(sessionStorage.getItem('ActiveChildMenu')));
+        this.onSetActiveChildMenuSubject(JSON.parse(localStorage.getItem('ActiveChildMenu')));
 
         return childMenuById;
     }
@@ -102,7 +102,7 @@ export class NavigationService {
     // ** Ini adalah Method untuk mendapatkan ChildMenu dari session storage
     onFetchSidebarMenuFromSessionStorage(ChildMenuId: number): any {
 
-        const UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         const sidebarMenu = UserData.menuJson.sidebarMenu;
 
@@ -110,9 +110,9 @@ export class NavigationService {
             return item.id_top_menu == ChildMenuId;
         });
 
-        sessionStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenuById));
+        localStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenuById));
 
-        this.onSetActiveSidebarMenuSubject(JSON.parse(sessionStorage.getItem('ActiveSidebarMenu')));
+        this.onSetActiveSidebarMenuSubject(JSON.parse(localStorage.getItem('ActiveSidebarMenu')));
 
         return sidebarMenuById;
     }
@@ -133,9 +133,9 @@ export class NavigationService {
     // !! ================ Main Menu Title Subject ================
     // ** Buat Method (Observable) untuk menset Global State SidebarMenu menjadi Observable agar nanti di Component Parent bisa subscribe
     onSetMainMenuTitle(value: string): any {
-        sessionStorage.setItem('ActiveMainMenuTitle', value);
+        localStorage.setItem('ActiveMainMenuTitle', value);
 
-        const ActiveMainMenuTitle = sessionStorage.getItem('ActiveMainMenuTitle');
+        const ActiveMainMenuTitle = localStorage.getItem('ActiveMainMenuTitle');
 
         if (ActiveMainMenuTitle) {
             this.MainMenuTitleSubject.next(ActiveMainMenuTitle);
@@ -194,16 +194,16 @@ export class NavigationService {
 
         this.FieldGridSubject.next(fieldGrid);
 
-        const CheckSessionStorage = JSON.parse(sessionStorage.getItem('ActiveFieldGrid'));
+        const CheckSessionStorage = JSON.parse(localStorage.getItem('ActiveFieldGrid'));
 
         if (!CheckSessionStorage) {
-            sessionStorage.setItem('ActiveFieldGrid', JSON.stringify(this.FieldGridSubject.getValue()));
+            localStorage.setItem('ActiveFieldGrid', JSON.stringify(this.FieldGridSubject.getValue()));
         }
     }
 
     /** Method Untuk Men set Field Grid Subject value dari component Atm Treeview Menu */
     onGetFieldBySidebarMenuId(): Observable<any> {
-        const CheckSessionStorage = JSON.parse(sessionStorage.getItem('ActiveFieldGrid'));
+        const CheckSessionStorage = JSON.parse(localStorage.getItem('ActiveFieldGrid'));
 
         if (CheckSessionStorage) {
             this.FieldGridSubject.next(CheckSessionStorage);

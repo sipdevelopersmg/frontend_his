@@ -37,9 +37,9 @@ export class AtmTreeviewMenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.SidebarMenuTitle = sessionStorage.getItem("ActiveMainMenuTitle");
+        this.SidebarMenuTitle = localStorage.getItem("ActiveMainMenuTitle");
 
-        let SidebarMenu = JSON.parse(sessionStorage.getItem("ActiveSidebarMenu"));
+        let SidebarMenu = JSON.parse(localStorage.getItem("ActiveSidebarMenu"));
 
         this.MenuSidebar = SidebarMenu && SidebarMenu.length >= 1 ? SidebarMenu : [];
     }

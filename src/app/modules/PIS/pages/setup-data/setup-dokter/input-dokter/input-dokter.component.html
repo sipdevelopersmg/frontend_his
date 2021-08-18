@@ -1,5 +1,5 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
-    <form [formGroup]="FormPendaftaranPasienBaruIrja">
+    <form [formGroup]="FormInputDokter">
         <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
             <ng-wizard-step [title]="'No. Identitas'">
                 <div class="row">
@@ -248,7 +248,7 @@
                 <!-- Input Alamat -->
                 <div class="row pt-2" formArrayName="alamat_person">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3"
-                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('alamat_person')['controls']; let i = index"
+                        *ngFor="let item of FormInputDokter.get('alamat_person')['controls']; let i = index"
                         [formGroupName]="i">
 
                         <!-- Alamat Lengkap -->
@@ -349,7 +349,7 @@
                 <!-- Input Kontak Person -->
                 <div class="row pt-2" formArrayName="kontak_person">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3"
-                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('kontak_person')['controls']; let i = index"
+                        *ngFor="let item of FormInputDokter.get('kontak_person')['controls']; let i = index"
                         [formGroupName]="i">
 
                         <!-- No. Handphone -->
@@ -370,80 +370,91 @@
                 </div>
             </ng-wizard-step>
 
-            <ng-wizard-step [title]="'Debitur'">
+            <ng-wizard-step [title]="'Detail Dokter'">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <h5 class="mb-0 text-hitam-muda">Detail Debitur</h5>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
-                        <div class="row justify-content-end">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
-                                <button class="btn btn-primary btn-sm" type="button"
-                                    (click)="handleClickTambahFormArray('Debitur')">
-                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Debitur
-                                </button>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
-                                <button class="btn btn-warning btn-sm" type="button"
-                                    [disabled]="this.FormDebiturs.length == 1"
-                                    (click)="handleClickHapusFormArray('Debitur')">
-                                    <i class="fas fa-trash-alt fa-sm"></i> Hapus Debitur
-                                </button>
-                            </div>
-                        </div>
+                        <h5 class="mb-0 text-hitam-muda">Detail Dokter</h5>
                     </div>
                 </div>
 
-                <div class="row pt-2" formArrayName="debitur_pasien">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3"
-                        *ngFor="let item of FormPendaftaranPasienBaruIrja.get('debitur_pasien')['controls']; let i = index"
-                        [formGroupName]="i">
-
-                        <!-- Debitur -->
+                <div class="row pt-2" formGroupName="dokter">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <!-- Spesialisasi Dokter -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Debitur'"></atm-label>
+                                <atm-label [LabelCaption]="'Spesialisasi Dokter'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-dropdownlist #DebiturDropdown id="debitur"
-                                    [dataSource]="DebiturDropdownDataSource | async" [fields]="DebiturDropdownField"
-                                    [allowFiltering]="true" formControlName="id_debitur">
+                                <ejs-dropdownlist #SpesialisasiDokter id="spesialisasiDokter"
+                                    [dataSource]="SpesialisasiDokterDropdownDataSource | async"
+                                    [fields]="SpesialisasiDokterDropdownField" [allowFiltering]="true"
+                                    formControlName="id_spesialisasi_dokter">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
 
-                        <!-- No. Member -->
-                        <mol-input-text [label]="'No Member'" formControlName="no_member"></mol-input-text>
+                        <!-- No Surat Ijin Praktek -->
+                        <mol-input-text [label]="'No. Surat Ijin Praktek'" formControlName="no_surat_ijin_praktek">
+                        </mol-input-text>
 
-                        <!-- Tgl Aktif Member -->
+                        <!-- Tgl Exp Surat Ijin Praktek -->
                         <div class="row mb-2">
-                            <div class="col-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tgl Aktif Member'"></atm-label>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-datepicker formControlName="tgl_aktif_member" [format]="'dd/MM/yyyy'">
+                                <ejs-datepicker id="tglExpiredSuratIjinPraktek" format="dd/MM/yyyy"
+                                    formControlName="tgl_exp_surat_ijin_praktek">
                                 </ejs-datepicker>
                             </div>
                         </div>
 
-                        <!-- Tgl Expired Member -->
+                        <!-- No Str -->
+                        <mol-input-text [label]="'No. STR'" formControlName="no_str">
+                        </mol-input-text>
+
+                        <!-- Tgl Exp STR -->
                         <div class="row mb-2">
-                            <div class="col-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tgl Expired Member'"></atm-label>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tgl Exp STR'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-datepicker formControlName="tgl_expired_member" [format]="'dd/MM/yyyy'">
+                                <ejs-datepicker id="tglExpiredSTR" format="dd/MM/yyyy" formControlName="tgl_exp_str">
                                 </ejs-datepicker>
                             </div>
                         </div>
 
-                        <!-- Keterangan -->
-                        <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+                        <!-- Smf Dokter -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Smf Dokter'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #SmfDokter id="smfDokter"
+                                    [dataSource]="SmfDokterDropdownDataSource | async" [fields]="SmfDokterDropdownField"
+                                    [allowFiltering]="true" formControlName="id_smf">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Status Dokter -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Status Dokter'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #StatusDokter id="statusDokter"
+                                    [dataSource]="StatusDokterDropdownDataSource | async"
+                                    [fields]="StatusDokterDropdownField" [allowFiltering]="true"
+                                    formControlName="id_status_dokter">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </ng-wizard-step>
 
-            <!-- <ng-wizard-step [title]="'Upload Foto Pasien'">
+            <!-- <ng-wizard-step [title]="'Upload Foto Dokter'">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Upload Foto</h5>

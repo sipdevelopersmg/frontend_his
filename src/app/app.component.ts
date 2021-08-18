@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     onAutoLogout() {
-        const UserData = JSON.parse(sessionStorage.getItem('UserData'));
+        const UserData = JSON.parse(localStorage.getItem('UserData'));
 
         if (UserData) {
             this.authenticationService.autoLogout(3000);
