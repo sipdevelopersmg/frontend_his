@@ -58,11 +58,11 @@
         },
         {
             "allowEditing": true,
-            "field":"tanggal_maksimal_expired_date",
-            "headerText":"Max Expired",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"",
+            "field": "tanggal_maksimal_expired_date",
+            "format": "dd MMMM yyyy",
+            "headerText": "Max Expired",
+            "type": "DateTime",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -79,10 +79,11 @@
             "visible": true
         },
         {
-            "allowEditing": false,
+            "allowEditing": true,
+            "editParams":"satuanParams",
             "field":"kode_satuan_besar",
             "headerText":"Satuan",
-            "editType": "defaultEdit",
+            "editType": "dropdownedit",
             "type":"",
             "format":"",
             "textAlign":"left",

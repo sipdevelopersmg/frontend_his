@@ -173,7 +173,8 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         DropDownListModule,
         NumericTextBoxModule,
         DatePickerModule,
-        OrgLookUpComponent
+        OrgLookUpComponent,
+        GridModule,
     ],
     providers: [
         EditService,

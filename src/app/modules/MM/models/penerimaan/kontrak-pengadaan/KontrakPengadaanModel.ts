@@ -69,4 +69,12 @@ export interface TrKontrakSpjbDetailItemInsert {
 
     /** @format double */
     sub_total_kontrak: number | null;
+    
+    /** @format Array of Object */
+    satuan:satuan[];
+}
+
+interface satuan{
+    kode_satuan:string;
+    isi:number;
 }

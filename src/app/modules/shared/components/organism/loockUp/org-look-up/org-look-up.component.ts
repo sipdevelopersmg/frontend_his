@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { combineLatest,Subscription } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
+import { MolGridComponent } from '../../../molecules/grid/grid/grid.component';
 import { Columns } from '../../../molecules/grid/grid/grid.model';
 
 @Component({
@@ -10,9 +12,12 @@ import { Columns } from '../../../molecules/grid/grid/grid.model';
 })
 export class OrgLookUpComponent implements OnInit {
 
-
-  constructor(private modalService: BsModalService,
-    private httpOperationService: HttpOperationService) { }
+    subscriptions: Subscription[] = []
+    constructor(
+        private modalService: BsModalService,
+        private httpOperationService: HttpOperationService,
+        private changeDetection: ChangeDetectorRef
+    ) { }
 
   @Input('label') label: string
 
@@ -55,17 +60,47 @@ export class OrgLookUpComponent implements OnInit {
 
 
   @ViewChild('template') template:TemplateRef<any>;
-
+  @ViewChild('grid') grid:MolGridComponent;
   
   ngOnInit(): void {
       this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
   }
 
+  onInitialized(component:MolGridComponent){
+    this.grid=component;
+  }
+
   onOpenModal() {
-      this.modalRef = this.modalService.show(
-          this.template,
-          Object.assign({}, { class: 'modal-lg' })
-      );
+
+    const _combine = combineLatest(
+        this.modalService.onShow,
+        this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+  
+    this.subscriptions.push(this.modalService.onShown.subscribe(() => {
+        setTimeout(() => {
+            (<HTMLInputElement>document.getElementById("searchValueId")).focus();
+          },100)
+        })
+        
+    );
+
+    this.subscriptions.push(_combine);
+
+    this.modalRef = this.modalService.show(
+        this.template,
+        Object.assign({}, { class: 'modal-lg' })
+    );
+
+    this.unsubscribe();
+
+  }
+
+  unsubscribe() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.subscriptions = [];
   }
 
   onCloseModal() {
@@ -80,6 +115,9 @@ export class OrgLookUpComponent implements OnInit {
       this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
           .subscribe((_result) => {
               this.gridDataSource = _result.data;
+              setTimeout(()=>{
+                this.grid.Grid.selectedRowIndex=0;
+              },200)
           }, (pesanError) => {
               console.log(pesanError);
           })

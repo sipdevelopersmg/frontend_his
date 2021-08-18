@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild, Renderer2 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -12,17 +12,20 @@ import { TrKontrakSpjbDetailItemInsert } from 'src/app/modules/MM/models/penerim
 import { MM } from "src/app/api/MM";
 import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
 import { InputKontrakPengadaanService } from 'src/app/modules/MM/services/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.service';
-import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { combineLatest, Subscription } from 'rxjs';
+import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
   selector: 'app-input-kontrak-pengadaan',
   templateUrl: './input-kontrak-pengadaan.component.html',
-  styleUrls: ['./input-kontrak-pengadaan.component.css']
+  styleUrls: ['./input-kontrak-pengadaan.component.css'],
+  
 })
-export class InputKontrakPengadaanComponent implements OnInit {
 
+export class InputKontrakPengadaanComponent implements OnInit {
+  
   GridDetailItem = GridDetailItem;
   GridLookUpSupplier = GridLoockUpSupplier;
   GridLookUpItem = GridLoockUpItem;
@@ -41,10 +44,13 @@ export class InputKontrakPengadaanComponent implements OnInit {
   ];
 
   DetailItems: any;
-  
-  GridDetailToolbar = [
-    { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-  ];
+
+  @ViewChild('templateToolbar') 
+  public templateToolbar: any; 
+
+  GridDetailToolbar : any;
+
+ 
 
   modalRef: BsModalRef;
 
@@ -52,7 +58,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
   GridDataEditSettings: EditSettingsModel = { allowEditing: true };
 
-  private gridDetail: MolGridComponent = null;
+  @ViewChild('gridDetail') gridDetail: GridComponent;
   private currentIndex : number;
 
   @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
@@ -64,13 +70,23 @@ export class InputKontrakPengadaanComponent implements OnInit {
   @ViewChild('modalSubtotal') modalSubtotal:TemplateRef<any>;
   @ViewChild('modalSatuan') modalSatuan:TemplateRef<any>;
 
+  public satuanParams : IEditCell;
+  public satuanElem : HTMLElement;
+  public satuanObj : DropDownList;
 
+  public datasatuan: { [key: string]: Object }[] = [];
+  satuanVal: string;
+
+  detailSelected: TrKontrakSpjbDetailItemInsert;
+  globalListenFunc: Function;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
     public inputKontrakPengadaanService : InputKontrakPengadaanService,
-    private changeDetection: ChangeDetectorRef
-    ) { }
+    private changeDetection: ChangeDetectorRef,
+    private renderer: Renderer2
+    ) { 
+    }
 
   ngOnInit(): void {
     this.formKontrak = this.formBuilder.group({
@@ -86,7 +102,41 @@ export class InputKontrakPengadaanComponent implements OnInit {
       total_transaksi_kontrak :  [0, Validators.required],
       jumlah_item_kontrak :  [0, Validators.required],
     });   
-  
+
+    this.satuanParams = {
+      create:()=>{
+          this.satuanElem = document.createElement('input');
+          return this.satuanElem;
+      },
+      read:()=>{
+          return this.satuanObj.text;
+      },
+      destroy:()=>{
+          this.satuanObj.destroy();
+      },
+      write:()=>{
+          this.satuanObj = new DropDownList({
+          value:this.detailSelected.kode_satuan_besar,
+          dataSource: this.datasatuan,
+          fields: { value: 'kode_satuan', text: 'kode_satuan' },
+          enabled: true,
+          placeholder: 'Select a Satuan',
+          floatLabelType: 'Never',
+      });
+      this.satuanObj.appendTo(this.satuanElem);
+    }}
+
+    this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
+      if(e.keyCode==112){
+        this.LookupItem.onOpenModal();  
+        e.preventDefault();
+      }
+    });
+
+    this.GridDetailToolbar = [
+      { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+      { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |',}
+    ];
   }
   
   onClickButtonNav(ButtonId: string): void {
@@ -101,70 +151,50 @@ export class InputKontrakPengadaanComponent implements OnInit {
       default:
         break;
     }
-  } 
+  }
 
   onToolbarClick(args: any): void {
     const item = args.item.id;
     switch (item) {
       case 'add':
-
-        let item : TrKontrakSpjbDetailItemInsert = {
-          no_urut       :1,
-          id_item       :1,
-          kode_item     :'002',
-          nama_item     :'parasetamol',
-          tanggal_maksimal_expired_date:'',
-          qty_kontrak_satuan_besar  :3,
-          kode_satuan_besar         :'BOX',
-          isi               :3,
-          qty_kontrak       :9,
-          harga_satuan      :3000,
-          sub_total_kontrak :18000,
-        }
-    
-        this.inputKontrakPengadaanService.addDataDetail(item);
-        this.selectLastRowdetail();
-
-        
+        this.LookupItem.onOpenModal();  
         break;
       default:
         break;
     }
-  }
+  } 
 
-  InitalizedGrid(component: MolGridComponent) {
-    this.gridDetail = component;
-  }
+
 
   heandleSelectedSupplier($event){
     this.id_supplier.setValue($event.id_supplier);
   }
 
   heandleSelectedItem($event){
-   console.log($event);
-    
+  //  console.log($event);
    let item : TrKontrakSpjbDetailItemInsert = {
-      no_urut       :0,
-      id_item       :$event.id_item,
-      kode_item     :$event.kode_item,
-      nama_item     :$event.nama_item,
+      no_urut                   :0,
+      id_item                   :$event.id_item,
+      kode_item                 :$event.kode_item,
+      nama_item                 :$event.nama_item,
       tanggal_maksimal_expired_date:'',
-      qty_kontrak   :1,
-      harga_satuan  :$event.harga_order,
-      isi           :1,
-      kode_satuan_besar         :$event.kode_satuan_beli,
+      qty_kontrak               :$event.satuans[0].isi,
+      harga_satuan              :$event.harga_beli_terakhir,
+      isi                       :$event.satuans[0].isi,
+      kode_satuan_besar         :$event.satuans[0].kode_satuan,
       qty_kontrak_satuan_besar  :1,
-      sub_total_kontrak         :$event.harga_order,
+      sub_total_kontrak         :$event.satuans[0].isi * $event.harga_beli_terakhir,
+      satuan                    :$event.satuans,
     }
-
     this.inputKontrakPengadaanService.addDataDetail(item);
+    this.selectLastRowdetail();
   }
 
   handleActionCompleted($event){
     if($event.requestType=='save'){
       console.log($event);
       this.inputKontrakPengadaanService.updateFromInline($event.rowIndex,$event.data,$event.rowData)
-      this.gridDetail.Grid.refresh();
+      this.gridDetail.refresh();
     }
   }
 
@@ -175,20 +205,22 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
   handleSelectdRow( args: any ):void {
     this.currentIndex = args.rowIndex;
+    this.datasatuan = args.data.satuan;
+    this.detailSelected = args.data
+    this.satuanVal = args.data.kode_satuan_besar;
   }
 
   handleQtyChange( args:any ){
     let banyak : number = parseInt(args);
     this.inputKontrakPengadaanService.editBanyak(this.currentIndex,banyak);
     this.modalRef.hide();
-    this.gridDetail.Grid.refresh();
-
+    this.gridDetail.refresh();
   }
 
   handleSatuanChange( args:any ){
-    // this.inputKontrakPengadaanService.
+    this.inputKontrakPengadaanService.editSatuan(this.currentIndex,args);
     this.modalRef.hide();
-    this.gridDetail.Grid.refresh();
+    this.gridDetail.refresh();
 
   }
 
@@ -196,7 +228,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
     let harga : number = parseInt(args);
     this.inputKontrakPengadaanService.editHarga(this.currentIndex,harga);
     this.modalRef.hide();
-    this.gridDetail.Grid.refresh();
+    this.gridDetail.refresh();
 
   }
 
@@ -204,8 +236,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
     let subtotal : number = parseInt(args);
     this.inputKontrakPengadaanService.editSubtotal(this.currentIndex,subtotal);
     this.modalRef.hide();
-    this.gridDetail.Grid.refresh();
-
+    this.gridDetail.refresh();
   }
 
   KeyDownHandler(event: KeyboardEvent) {
@@ -215,7 +246,13 @@ export class InputKontrakPengadaanComponent implements OnInit {
     };
 
     if (event.keyCode === 46) {
-      console.log('Delete');
+      this.inputKontrakPengadaanService.removeDataDetail(this.currentIndex);
+      this.gridDetail.refresh();
+      setTimeout(()=>{
+        if(this.currentIndex!=0){
+          this.gridDetail.selectedRowIndex=0;
+        }
+      },100)
     };
 
     if (event.keyCode === 111) {
@@ -249,7 +286,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string | any) => {
-        this.gridDetail.Grid.selectRows([this.currentIndex]);  
+        // this.gridDetail.selectRows([this.currentIndex]); 
+        this.gridDetail.selectedRowIndex = this.currentIndex;
         this.unsubscribe();
       })
     );
@@ -281,7 +319,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string | any) => {
-        this.gridDetail.Grid.selectRows([this.currentIndex]);  
+        // this.gridDetail.selectRows([this.currentIndex]);  
+        this.gridDetail.selectedRowIndex = this.currentIndex;
         this.unsubscribe();
       })
     );
@@ -312,7 +351,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string | any) => {
         console.log(reason,'subTotal hidden')
-        this.gridDetail.Grid.selectRows([this.currentIndex]);  
+        // this.gridDetail.selectRows([this.currentIndex]);  
+        this.gridDetail.selectedRowIndex = this.currentIndex;
         this.unsubscribe();
       })
     );
@@ -343,7 +383,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string | any) => {
-        this.gridDetail.Grid.selectRows([this.currentIndex]);  
+        // this.gridDetail.selectRows([this.currentIndex]);  
+        this.gridDetail.selectedRowIndex = this.currentIndex;
         this.unsubscribe();
       })
     );
@@ -365,10 +406,10 @@ export class InputKontrakPengadaanComponent implements OnInit {
   }
 
   selectLastRowdetail(){
-    setTimeout( async ()=>{
-      let last = await this.gridDetail.Grid.dataSource as Object[]; 
-      this.gridDetail.Grid.selectRows([last.length-1]);
-    },100)
+    setTimeout(()=>{
+      let last =  this.gridDetail.dataSource as any[]; 
+      this.gridDetail.selectedRowIndex = last.length-1;
+    },150)
   }
 
   get id_supplier(): AbstractControl { return this.formKontrak.get('id_supplier'); }

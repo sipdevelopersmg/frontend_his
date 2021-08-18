@@ -33,7 +33,10 @@ export class InputKontrakPengadaanService {
   }
 
   updateFromInline(index:number,data: TrKontrakSpjbDetailItemInsert,rowData: TrKontrakSpjbDetailItemInsert){
-    data.qty_kontrak = data.qty_kontrak_satuan_besar * data.isi;
+    let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar);
+    let isi = data.satuan[indexsatuan].isi;
+    data.isi = isi;
+    data.qty_kontrak = data.qty_kontrak_satuan_besar * isi;
     if(data.sub_total_kontrak!=rowData.sub_total_kontrak){
       data.harga_satuan = data.sub_total_kontrak / data.qty_kontrak;
     }else{
@@ -43,8 +46,8 @@ export class InputKontrakPengadaanService {
     this.sum();
   }
 
-  removeDataDetail(id_item: number) {
-    this.dataDetail = this.dataDetail.filter(dataDetail => dataDetail.id_item !== id_item);
+  removeDataDetail(index: number) {
+    this.dataDetail.splice(index,1);
     this.sum();
   }
 
@@ -66,6 +69,17 @@ export class InputKontrakPengadaanService {
   editSubtotal(index:number,subtotal: number){
     this.dataDetail[index].sub_total_kontrak = subtotal;
     this.dataDetail[index].harga_satuan = subtotal/this.dataDetail[index].qty_kontrak
+  }
+
+  editSatuan(index:number,satuan:string){
+    // console.log(this.dataDetail[index].satuan);
+    let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar);
+    let isi = this.dataDetail[index].satuan[indexsatuan].isi;
+    this.dataDetail[index].kode_satuan_besar = satuan;
+    this.dataDetail[index].isi = isi;
+    this.dataDetail[index].qty_kontrak = this.dataDetail[index].qty_kontrak_satuan_besar * isi;
+    this.dataDetail[index].sub_total_kontrak = this.dataDetail[index].qty_kontrak * this.dataDetail[index].harga_satuan;
+
   }
   
   sum() : void{

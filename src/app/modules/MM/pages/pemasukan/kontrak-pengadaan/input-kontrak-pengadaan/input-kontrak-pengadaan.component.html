@@ -41,33 +41,47 @@
 
             </div>
         </div>
-        <!-- <button (click)="tes()">Testing</button> -->
+            <ng-template #templateToolbar let-data> 
+                <a>halooo jhon</a> 
+            </ng-template> 
 
-        <mol-grid
-            #gridDetail
-            [grid-id]="'GridDetail'"
-            [grid-editSettings]="GridDataEditSettings"
-            [grid-height]="300"
-            [grid-DataSource]="inputKontrakPengadaanService.dataDetail$ | async"
-            [grid-lines]="'Both'"
-            [grid-toolbar]="GridDetailToolbar"
-            (toolbar-click)="onToolbarClick($event)"
-            [columns]="GridDetailItem.TrKontrakSpjbDetailItemInsert"
-            (action-complete)="handleActionCompleted($event)"
-            (initialized)="InitalizedGrid($event)"
-            (load-grid)="handleLoadGrid($event)"
-            (row-selected)="handleSelectdRow($event)"
-            ></mol-grid>
+            <ejs-grid 
+                #gridDetail
+                [id]="'GridDeail'"
+                [editSettings]='GridDataEditSettings' 
+                [dataSource]='inputKontrakPengadaanService.dataDetail$ | async'
+                [gridLines]="'Both'"
+                [toolbar]='GridDetailToolbar' 
+                (actionComplete)="handleActionCompleted($event)"
+                (toolbarClick)="onToolbarClick($event)"
+                (load)="handleLoadGrid($event)"
+                (rowSelected)="handleSelectdRow($event)"
+            >
+                <e-columns>
+                    <e-column [visible]="false" field='kontrak_id' [allowEditing]= "false" headerText='Kontrak' editType= 'defaultEdit' textAlign="left" headerTextAlign="center"></e-column>
+                    <e-column [visible]="false" field='no_urut' [allowEditing]= "false" headerText='urut' editType= 'defaultEdit' textAlign="left" headerTextAlign="center"></e-column>
+                    <e-column [visible]="false" field='id_item' [allowEditing]= "false" headerText='id_item' editType= 'defaultEdit' textAlign="left" headerTextAlign="center"></e-column>
+                    <e-column [visible]="true" field='kode_item' [allowEditing]= "false" headerText='Kode Item' editType= 'defaultEdit' textAlign="left" headerTextAlign="center"></e-column>
+                    <e-column [visible]="true" field='nama_item' [allowEditing]= "false" headerText='Nama Item' editType= 'defaultEdit' textAlign="left" headerTextAlign="center"></e-column>
+                    <e-column [visible]="true" field='tanggal_maksimal_expired_date' [allowEditing]= "true" headerText='Max Expired' editType= 'defaultEdit' textAlign="left" headerTextAlign="center" format= "dd MMMM yyyy" type="Date"></e-column>
+                    <e-column [visible]="true" field='qty_kontrak_satuan_besar' [allowEditing]= "true" headerText='Banyak' editType= 'defaultEdit' textAlign="right" headerTextAlign="center"></e-column>
+                    <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]= "true" headerText='Satuan' editType= 'dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center"></e-column>
+                    <e-column [visible]="true" field='isi' [allowEditing]= "true" headerText='Isi' editType= 'defaultEdit' textAlign="left" headerTextAlign="right"></e-column>
+                    <e-column [visible]="true" field='qty_kontrak' [allowEditing]= "false" headerText='QTY' editType= 'defaultEdit' textAlign="left" headerTextAlign="right"></e-column>
+                    <e-column [visible]="true" field='harga_satuan' [allowEditing]= "true" headerText='Harga Satuan' editType= 'defaultEdit' textAlign="right" headerTextAlign="center" format="N2"></e-column>
+                    <e-column [visible]="true" field='sub_total_kontrak' [allowEditing]= "true" headerText='Sub Total' editType= 'defaultEdit' textAlign="right" headerTextAlign="center" format="N2"></e-column>
+                </e-columns>
+            </ejs-grid>
 
-    <div class="row">
-        <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-8">
+            </div>
+            <div class="col-sm-4">
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true" [value] = "inputKontrakPengadaanService.total" formControlName="total_transaksi_kontrak" [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true" [value] = "inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak" [inputFieldState]="'detail'"></mol-input-text>
+            </div>
         </div>
-        <div class="col-sm-4">
-            <mol-input-text [label]="'Total Transaksi'" [isFooter]="true" [value] = "inputKontrakPengadaanService.total" formControlName="total_transaksi_kontrak" [inputFieldState]="'detail'"></mol-input-text>
-            <mol-input-text [label]="'Jumlah Item'" [isFooter]="true" [value] = "inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak" [inputFieldState]="'detail'"></mol-input-text>
-        </div>
-    </div>
-</form>
+    </form>
     <org-look-up
         #LookupItem
         [lookup-url]="urlItem"
@@ -77,6 +91,7 @@
         [modal-title]="'Data Item'"
     >
     </org-look-up>
+
 <!-- Modal Harga  -->
     <ng-template #modalHarga>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
@@ -155,10 +170,8 @@
     <div class="modal-body p-10">
         <div class="row mx-0 my-1">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <select #satuanValueId id="SatuanValueId" class="form-control" (keydown.enter)="handleSatuanChange(satuanValueId.value)" multiple>
-                    <option value="pack">PACK</option>
-                    <option value="box">BOX</option>
-                    <option value="dus">DUS</option>
+                <select #satuanValueId id="SatuanValueId" [value]="detailSelected.kode_satuan_besar" class="form-control" (keydown.enter)="handleSatuanChange(satuanValueId.value)" multiple>
+                    <option *ngFor="let item of datasatuan" [ngValue]="item.kode_satuan">{{item.kode_satuan}}</option>
                 </select>
             </div> 
         </div>
