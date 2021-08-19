@@ -15,8 +15,11 @@ export class SetupRoleService {
 
     constructor(private httpOperationService: HttpOperationService) { }
 
-    onGetAllRole(): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.SETUP_ROLE.GET_ALL_ROLE);
+    onGetAllRole(url?: string): Observable<any> {
+
+        const api_url = url ? this.API_CONFIG.SETUP_ROLE.GET_ALL_ROLE + url : this.API_CONFIG.SETUP_ROLE.GET_ALL_ROLE;
+
+        return this.httpOperationService.defaultGetRequest(api_url);
     }
 
     onGetAllRoleActive(): Observable<GetAllRoleActiveModel> {
