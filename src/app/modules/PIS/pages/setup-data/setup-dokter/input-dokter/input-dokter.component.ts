@@ -330,29 +330,29 @@ export class InputDokterComponent implements OnInit {
         this.FormInputDokter = this.formBuilder.group({
             "person": this.formBuilder.group({
                 "id_jenis_identitas": [0, []],
-                "no_identitas": ["", Validators.required],
+                "no_identitas": ["", [Validators.required]],
                 "no_kartu_keluarga": ["", []],
-                "nama_depan": ["", []],
+                "nama_depan": ["", [Validators.required]],
                 "nama_belakang": ["", []],
                 "nama_panggilan": ["", []],
-                "gelar_depan": ["", Validators.required],
-                "gelar_belakang": ["", Validators.required],
-                "gender": ["", Validators.required],
+                "gelar_depan": ["", []],
+                "gelar_belakang": ["", []],
+                "gender": ["", [Validators.required]],
                 "path_foto": ["", []],
                 "nama_foto": ["", []],
-                "gol_darah": ["", Validators.required],
+                "gol_darah": ["", [Validators.required]],
                 "tempat_lahir": ["", []],
-                "tanggal_lahir": [Date, []],
-                "tinggi_badan_cm": [0, Validators.required],
-                "berat_badan_kg": [0, Validators.required],
-                "id_marital_status": [0, Validators.required],
-                "id_agama": [0, Validators.required],
-                "id_kebangsaan": [0, Validators.required],
-                "id_etnis": [0, Validators.required],
-                "id_bahasa": [0, Validators.required],
-                "id_last_education": [0, Validators.required],
-                "id_job_type": [0, Validators.required],
-                "user_created": [this.UserData.id_user, Validators.required],
+                "tanggal_lahir": [Date, [Validators.required]],
+                "tinggi_badan_cm": [0, []],
+                "berat_badan_kg": [0, []],
+                "id_marital_status": [0, []],
+                "id_agama": [0, []],
+                "id_kebangsaan": [0, []],
+                "id_etnis": [0, []],
+                "id_bahasa": [0, []],
+                "id_last_education": [0, []],
+                "id_job_type": [0, []],
+                "user_created": [this.UserData.id_user, [Validators.required]],
             }),
             "alamat_person": this.formBuilder.array([
 
@@ -361,11 +361,11 @@ export class InputDokterComponent implements OnInit {
 
             ]),
             "dokter": this.formBuilder.group({
-                "id_spesialisasi_dokter": [0, []],
+                "id_spesialisasi_dokter": [0, Validators.required],
                 "no_surat_ijin_praktek": ["", []],
-                "tgl_exp_surat_ijin_praktek": [Date, []],
+                "tgl_exp_surat_ijin_praktek": [Date, Validators.required],
                 "no_str": ["", []],
-                "tgl_exp_str": [Date, []],
+                "tgl_exp_str": [Date, Validators.required],
                 "id_smf": [0, []],
                 "id_status_dokter": [0, []],
                 "user_created": [this.UserData.id_user, []],
@@ -383,21 +383,21 @@ export class InputDokterComponent implements OnInit {
 
     NewAlamat(): FormGroup {
         return this.formBuilder.group({
-            "alamat_lengkap": ["", []],
+            "alamat_lengkap": ["", Validators.required],
             "kode_pos": ["", []],
             "rt": ["", []],
             "rw": ["", []],
             "kelurahan": ["", []],
-            "kode_wilayah": ["", []],
+            "kode_wilayah": ["", Validators.required],
             "user_created": [this.UserData.id_user, []],
         });
     }
 
     NewKontak(): FormGroup {
         return this.formBuilder.group({
-            "hand_phone": ["", []],
-            "home_phone": ["", []],
-            "office_phone": ["", []],
+            "hand_phone": ["", Validators.required],
+            "home_phone": ["", Validators.required],
+            "office_phone": ["", Validators.required],
             "email": ["", []],
             "keterangan": ["", []],
             "user_created": [this.UserData.id_user, []],
@@ -441,15 +441,8 @@ export class InputDokterComponent implements OnInit {
     handleCheckPersonByNoIdentitas(NoIdentitas: string): void {
         this.setupDokterService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
-                if (Object.keys(result.data).length === 0) {
-                    this.PersonFound = true;
-                    this.IsPersonExisting = false;
 
-                    this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Dokter')
-                        .then(() => {
-                            this.ngWizardService.next();
-                        });
-                } else {
+                if (result) {
                     const kode_dokter = result.data.kode_dokter;
 
                     // ** Terdaftar sebagai Person / Pasien, tetapi belum terdaftar sebagai Dokter
@@ -470,6 +463,14 @@ export class InputDokterComponent implements OnInit {
                                 this.IsPersonExisting = true;
                             });
                     }
+                } else {
+                    this.PersonFound = true;
+                    this.IsPersonExisting = false;
+
+                    this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Dokter')
+                        .then(() => {
+                            this.ngWizardService.next();
+                        });
                 }
             })
     }
@@ -533,7 +534,7 @@ export class InputDokterComponent implements OnInit {
                 this.setupDokterService.onSaveSetupDokter(this.FormInputDokter.value)
                     .subscribe((result) => {
                         if (result) {
-                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Pasien Berhasil Disimpan')
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Dokter Berhasil Disimpan')
                                 .then(() => {
                                     this.onResetForm();
 

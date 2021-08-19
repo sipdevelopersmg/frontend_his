@@ -12,7 +12,7 @@
                         <!-- Kewarganegaraan -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Kewarganegaraan'"></atm-label>
+                                <atm-label [LabelCaption]="'Kewarganegaraan *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
                                 <div class="form-check form-check-inline">
@@ -33,7 +33,7 @@
                         <!-- Jenis Identitas -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Jenis Identitas'"></atm-label>
+                                <atm-label [LabelCaption]="'Jenis Identitas *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #DropdownWni *ngIf="RadioButtonWni.checked"
@@ -53,8 +53,10 @@
                         </div>
 
                         <!-- No. Identitas -->
-                        <mol-input-text [label]="'No Identitas'" formControlName="no_identitas"
-                            (keyup.enter)="handleCheckPersonByNoIdentitas(no_identitas.value)">
+                        <mol-input-text [label]="'No Identitas *'" formControlName="no_identitas"
+                            (keyup.enter)="handleCheckPersonByNoIdentitas(no_identitas.value)"
+                            [IsFormControlInvalid]="no_identitas.invalid"
+                            [ValidatorsCaption]="'No Identitas Tidak Boleh Kosong'">
                         </mol-input-text>
                     </div>
                 </div>
@@ -74,7 +76,10 @@
                         </mol-input-text>
 
                         <!-- Nama Depan -->
-                        <mol-input-text [label]="'Nama Depan'" formControlName="nama_depan"></mol-input-text>
+                        <mol-input-text [label]="'Nama Depan *'" formControlName="nama_depan"
+                            [IsFormControlInvalid]="nama_depan.invalid"
+                            [ValidatorsCaption]="'Nama Depan Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- Nama Belakang -->
                         <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"></mol-input-text>
@@ -91,17 +96,25 @@
                         <!-- Gender -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Gender'"></atm-label>
+                                <atm-label [LabelCaption]="'Gender *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #GenderDropdown id="gender" [dataSource]="GenderDropdownDatasource"
                                     [fields]="GenderDropdownField" [allowFiltering]="true" formControlName="gender">
                                 </ejs-dropdownlist>
+
+                                <atm-validators [IsFormControlTouched]="gender.touched"
+                                    [IsFormControlInvalid]="gender.invalid"
+                                    [ValidatorsCaption]="'Gender Tidak Boleh Kosong'">
+                                </atm-validators>
                             </div>
                         </div>
 
                         <!-- Golongan Darah -->
-                        <mol-input-text [label]="'Gol darah'" formControlName="gol_darah"></mol-input-text>
+                        <mol-input-text [label]="'Gol Darah *'" formControlName="gol_darah"
+                            [IsFormControlInvalid]="gol_darah.invalid"
+                            [ValidatorsCaption]="'Golongan Darah Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- Tempat Lahir -->
                         <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"></mol-input-text>
@@ -109,11 +122,16 @@
                         <!-- Tanggal Lahir -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tanggal Lahir'"></atm-label>
+                                <atm-label [LabelCaption]="'Tanggal Lahir *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker [format]="'dd/MM/yyyy'" formControlName="tanggal_lahir">
                                 </ejs-datepicker>
+
+                                <atm-validators [IsFormControlTouched]="tanggal_lahir.touched"
+                                    [IsFormControlInvalid]="tanggal_lahir.invalid"
+                                    [ValidatorsCaption]="'Tanggal Lahir Tidak Boleh Kosong'">
+                                </atm-validators>
                             </div>
                         </div>
 
@@ -252,7 +270,9 @@
                         [formGroupName]="i">
 
                         <!-- Alamat Lengkap -->
-                        <mol-input-textarea [label]="'Alamat Lengkap'" formControlName="alamat_lengkap">
+                        <mol-input-textarea [label]="'Alamat Lengkap *'" formControlName="alamat_lengkap"
+                            [IsFormControlInvalid]="item.get('alamat_lengkap').invalid"
+                            [ValidatorsCaption]="'Alamat Lengkap Tidak Boleh Kosong'">
                         </mol-input-textarea>
 
                         <!-- Provinsi -->
@@ -285,7 +305,7 @@
                         <!-- Kecamatan -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Kecamatan'"></atm-label>
+                                <atm-label [LabelCaption]="'Kecamatan *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #KecamatanDropdown id="kecamatan"
@@ -293,6 +313,11 @@
                                     [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
                                     formControlName="kode_wilayah">
                                 </ejs-dropdownlist>
+
+                                <atm-validators [IsFormControlTouched]="item.get('kode_wilayah').touched"
+                                    [IsFormControlInvalid]="item.get('kode_wilayah').invalid"
+                                    [ValidatorsCaption]="'Kecamatan Tidak Boleh Kosong'">
+                                </atm-validators>
                             </div>
                         </div>
 
@@ -353,13 +378,22 @@
                         [formGroupName]="i">
 
                         <!-- No. Handphone -->
-                        <mol-input-text [label]="'No. Handphone'" formControlName="hand_phone"></mol-input-text>
+                        <mol-input-text [label]="'No. Handphone *'" formControlName="hand_phone"
+                            [IsFormControlInvalid]="item.get('hand_phone').invalid"
+                            [ValidatorsCaption]="'No. Handphone Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- No. Telepon Rumah -->
-                        <mol-input-text [label]="'No. Telepon Rumah'" formControlName="home_phone"></mol-input-text>
+                        <mol-input-text [label]="'No. Telepon Rumah *'" formControlName="home_phone"
+                            [IsFormControlInvalid]="item.get('home_phone').invalid"
+                            [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- No. Telepon Kantor -->
-                        <mol-input-text [label]="'No. Telepon Kantor'" formControlName="office_phone"></mol-input-text>
+                        <mol-input-text [label]="'No. Telepon Kantor *'" formControlName="office_phone"
+                            [IsFormControlInvalid]="item.get('office_phone').invalid"
+                            [ValidatorsCaption]="'No. Telepon Kantor Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- Email -->
                         <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
@@ -382,7 +416,7 @@
                         <!-- Spesialisasi Dokter -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Spesialisasi Dokter'"></atm-label>
+                                <atm-label [LabelCaption]="'Spesialisasi Dokter *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #SpesialisasiDokter id="spesialisasiDokter"
@@ -390,6 +424,11 @@
                                     [fields]="SpesialisasiDokterDropdownField" [allowFiltering]="true"
                                     formControlName="id_spesialisasi_dokter">
                                 </ejs-dropdownlist>
+
+                                <atm-validators [IsFormControlTouched]="id_spesialisasi_dokter.touched"
+                                    [IsFormControlInvalid]="id_spesialisasi_dokter.invalid"
+                                    [ValidatorsCaption]="'Spesialisasi Dokter Tidak Boleh Kosong'">
+                                </atm-validators>
                             </div>
                         </div>
 
@@ -400,12 +439,17 @@
                         <!-- Tgl Exp Surat Ijin Praktek -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek'"></atm-label>
+                                <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker id="tglExpiredSuratIjinPraktek" format="dd/MM/yyyy"
                                     formControlName="tgl_exp_surat_ijin_praktek">
                                 </ejs-datepicker>
+
+                                <atm-validators [IsFormControlTouched]="tgl_exp_surat_ijin_praktek.touched"
+                                    [IsFormControlInvalid]="tgl_exp_surat_ijin_praktek.invalid"
+                                    [ValidatorsCaption]="'Tgl Exp Surat Ijin Praktek Tidak Boleh Kosong'">
+                                </atm-validators>
                             </div>
                         </div>
 
@@ -416,11 +460,16 @@
                         <!-- Tgl Exp STR -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tgl Exp STR'"></atm-label>
+                                <atm-label [LabelCaption]="'Tgl Exp STR *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker id="tglExpiredSTR" format="dd/MM/yyyy" formControlName="tgl_exp_str">
                                 </ejs-datepicker>
+
+                                <atm-validators [IsFormControlTouched]="tgl_exp_str.touched"
+                                    [IsFormControlInvalid]="tgl_exp_str.invalid"
+                                    [ValidatorsCaption]="'Tgl Exp STR Tidak Boleh Kosong'">
+                                </atm-validators>
                             </div>
                         </div>
 

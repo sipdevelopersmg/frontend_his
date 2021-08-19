@@ -20,7 +20,11 @@ export class NotificationService {
     }
 
     onRemoveToast(toast: any): void {
+        console.log(`Before ${this.toasts}`);
+
         this.toasts = this.toasts.filter(item => item !== toast);
+
+        console.log(`After ${this.toasts}`);
     }
 
     onPlayNotificationSound(): any {

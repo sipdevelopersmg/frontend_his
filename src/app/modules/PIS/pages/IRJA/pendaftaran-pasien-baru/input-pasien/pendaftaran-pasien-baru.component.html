@@ -12,7 +12,7 @@
                         <!-- Kewarganegaraan -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Kewarganegaraan'"></atm-label>
+                                <atm-label [LabelCaption]="'Kewarganegaraan *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
                                 <div class="form-check form-check-inline">
@@ -33,7 +33,7 @@
                         <!-- Jenis Identitas -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Jenis Identitas'"></atm-label>
+                                <atm-label [LabelCaption]="'Jenis Identitas *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #DropdownWni *ngIf="RadioButtonWni.checked"
@@ -287,11 +287,6 @@
                                     [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
                                     (change)="handleDropdownProvinsiChange(ProvinsiDropdown.value)">
                                 </ejs-dropdownlist>
-
-                                <atm-validators [IsFormControlTouched]="item.get('alamat_lengkap').touched"
-                                    [IsFormControlInvalid]="item.get('alamat_lengkap').invalid"
-                                    [ValidatorsCaption]="'Provinsi Tidak Boleh Kosong'">
-                                </atm-validators>
                             </div>
                         </div>
 
@@ -386,12 +381,14 @@
                         <!-- No. Handphone -->
                         <mol-input-text [label]="'No. Handphone *'" formControlName="hand_phone"
                             [IsFormControlInvalid]="item.get('hand_phone').invalid"
-                            [ValidatorsCaption]="'No. Handphone Tidak Boleh Kosong'"></mol-input-text>
+                            [ValidatorsCaption]="'No. Handphone Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- No. Telepon Rumah -->
                         <mol-input-text [label]="'No. Telepon Rumah *'" formControlName="home_phone"
                             [IsFormControlInvalid]="item.get('home_phone').invalid"
-                            [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'"></mol-input-text>
+                            [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'">
+                        </mol-input-text>
 
                         <!-- No. Telepon Kantor -->
                         <mol-input-text [label]="'No. Telepon Kantor *'" formControlName="office_phone"
