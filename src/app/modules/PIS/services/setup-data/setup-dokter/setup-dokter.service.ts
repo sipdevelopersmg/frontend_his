@@ -16,17 +16,17 @@ import { SetupKebangsaanService } from '../setup-kebangsaan/setup-kebangsaan.ser
 import { SetupKecamatanService } from '../setup-wilayah/setup-kecamatan.service';
 import { SetupKotaService } from '../setup-wilayah/setup-kota.service';
 import { SetupProvinsiService } from '../setup-wilayah/setup-provinsi.service';
-import * as API_CONFIG from '../../../../../api/PIS/index';
 import { SetupSpesialisasiDokterService } from '../setup-spesialisasi-dokter/setup-spesialisasi-dokter.service';
 import { SetupSmfDokterService } from '../setup-smf-dokter/setup-smf-dokter.service';
 import { SetupStatusDokterService } from '../setup-status-dokter/setup-status-dokter.service';
+import * as API_CONFIG from '../../../../../api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SetupDokterService {
 
-    API = API_CONFIG.API_PIS.SETUP_DATA.API.SETUP_DOKTER;
+    API_DOKTER = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_DOKTER;
 
     /**
      * @JenisIdentitasWnaSubject Digunakan untuk mengisi value pada Dropdown Jenis Identitas WNA 
@@ -225,7 +225,7 @@ export class SetupDokterService {
      * @param NoIdentitas string
      */
     onCheckPersonByNoIdentitas(NoIdentitas: string): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_PERSON_BY_NO_IDENTITAS + NoIdentitas)
+        return this.httpOperationService.defaultGetRequest(this.API_DOKTER.GET_PERSON_BY_NO_IDENTITAS + NoIdentitas)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -238,7 +238,7 @@ export class SetupDokterService {
      * @param Dokter DokterModel
     */
     onSaveSetupDokter(Dokter: DokterModel): Observable<PostSavePendaftaranDokterBaruModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_DOKTER, Dokter)
+        return this.httpOperationService.defaultPostRequest(this.API_DOKTER.POST_SAVE_SETUP_DOKTER, Dokter)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

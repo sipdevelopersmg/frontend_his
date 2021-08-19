@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { PostSetupUserModel } from '../../models/setup-user/setup-user.model';
-import * as API_CONFIG from '../../../../api/index';
+import * as API_CONFIG from '../../../../api';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -12,7 +12,7 @@ import { NotificationService } from 'src/app/modules/shared/services/notificatio
 })
 export class SetupUserService {
 
-    API = API_CONFIG.API.CORE;
+    API = API_CONFIG.API.API_CORE.API_CORE.SETUP_USER;
 
     constructor(
         private notificationService: NotificationService,

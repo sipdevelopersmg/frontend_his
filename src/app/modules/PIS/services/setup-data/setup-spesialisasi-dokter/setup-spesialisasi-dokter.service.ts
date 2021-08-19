@@ -5,14 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { DeleteSpesialisasiDokterModel, GetAllSpesialisasiDokterModel, PostSaveSpesialisasiDokterModel, PutUpdateSpesialisasiDokterModel, SpesialisasiDokterModel } from '../../../models/setup-data/setup-spesialiasi-dokter.model';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SetupSpesialisasiDokterService {
 
-    API = API_CONFIG.API.SETUP_SPESIALISASI_DOKTER;
+    API_SPESIALISASI_DOKTER = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_SPESIALISASI_DOKTER;
 
     constructor(
         private notificationService: NotificationService,
@@ -23,7 +23,7 @@ export class SetupSpesialisasiDokterService {
      * @onGetAll Observable<GetAllSpesialisasiDokterModel>
     */
     onGetAll(): Observable<GetAllSpesialisasiDokterModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_SPESIALISASI_DOKTER);
+        return this.httpOperationService.defaultGetRequest(this.API_SPESIALISASI_DOKTER.GET_ALL_SETUP_SPESIALISASI_DOKTER);
     }
 
     /**
@@ -32,7 +32,7 @@ export class SetupSpesialisasiDokterService {
      * @param SmfModel
     */
     onPostSave(Data: SpesialisasiDokterModel): Observable<PostSaveSpesialisasiDokterModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_SPESIALISASI_DOKTER, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_SPESIALISASI_DOKTER.POST_SAVE_SETUP_SPESIALISASI_DOKTER, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -46,7 +46,7 @@ export class SetupSpesialisasiDokterService {
      * @param SpesialisasiDokterModel
     */
     onPutEdit(Data: SpesialisasiDokterModel): Observable<PutUpdateSpesialisasiDokterModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_SPESIALISASI_DOKTER, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_SPESIALISASI_DOKTER.PUT_UPDATE_SETUP_SPESIALISASI_DOKTER, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -60,7 +60,7 @@ export class SetupSpesialisasiDokterService {
      * @param SpesialisasiDokterId
     */
     onDelete(SpesialisasiDokterId: number): Observable<DeleteSpesialisasiDokterModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_SPESIALISASI_DOKTER + SpesialisasiDokterId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_SPESIALISASI_DOKTER.DELETE_SETUP_SPESIALISASI_DOKTER + SpesialisasiDokterId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

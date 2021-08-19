@@ -82,12 +82,12 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
             const request = this.formAdmisiPasien.value;
 
             this.admisiPasienRawatJalanService.postAdmisiPasienRawatJalan(request)
-                .subscribe((response) => {
-                    this.utilityService.onShowingCustomAlert('success', 'Tersimpan', 'Pasien Berhasil Di Dafarkan');
-                    this.resetForm();
-                }, (error: HttpErrorResponse) => {
-                    this.utilityService.onShowingCustomAlert('error', 'Gagal Tersimpan', error.message);
-                });
+            // .subscribe((response) => {
+            //     this.utilityService.onShowingCustomAlert('success', 'Tersimpan', 'Pasien Berhasil Di Dafarkan');
+            //     this.resetForm();
+            // }, (error: HttpErrorResponse) => {
+            //     this.utilityService.onShowingCustomAlert('error', 'Gagal Tersimpan', error.message);
+            // });
 
             this.resetForm();
 

@@ -1,7 +1,7 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
     <form [formGroup]="FormInputDokter">
         <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
-            <ng-wizard-step [title]="'No. Identitas'">
+            <ng-wizard-step [title]="'No. Identitas'" [canExit]="PersonFound">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Cek No. Identitas</h5>

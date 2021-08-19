@@ -15,7 +15,7 @@ import * as SETUP_DEBITUR from './SETUP_DEBITUR';
 import * as AGAMA from './AGAMA';
 import * as SETUP_DOKTER from './SETUP_DOKTER';
 
-export const API = Object.assign({}, {
+export const API_SETUP_DATA = Object.assign({}, {
     "SETUP_BAHASA": SETUP_BAHASA,
     "SETUP_ETNIS": SETUP_ETNIS,
     "SETUP_JOB_TYPE": SETUP_JOB_TYPE,

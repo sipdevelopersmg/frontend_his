@@ -5,14 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { DeleteSmfModel, GetAllSmfModel, PostSaveSmfModel, PutUpdateSmfModel, SmfModel } from '../../../models/setup-data/setup-smf-dokter.model';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SetupSmfDokterService {
 
-    API = API_CONFIG.API.SETUP_SMF_DOKTER;
+    API_SMF_DOKTER = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_SMF_DOKTER;
 
     constructor(
         private notificationService: NotificationService,
@@ -23,7 +23,7 @@ export class SetupSmfDokterService {
      * @onGetAll Observable<GetAllSmfModel>
     */
     onGetAll(): Observable<GetAllSmfModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_SMF);
+        return this.httpOperationService.defaultGetRequest(this.API_SMF_DOKTER.GET_ALL_SETUP_SMF);
     }
 
     /**
@@ -32,7 +32,7 @@ export class SetupSmfDokterService {
      * @param SmfModel
     */
     onPostSave(Data: SmfModel): Observable<PostSaveSmfModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_SMF, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_SMF_DOKTER.POST_SAVE_SETUP_SMF, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -46,7 +46,7 @@ export class SetupSmfDokterService {
      * @param SmfModel
     */
     onPutEdit(Data: SmfModel): Observable<PutUpdateSmfModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_SMF, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_SMF_DOKTER.PUT_UPDATE_SETUP_SMF, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -60,7 +60,7 @@ export class SetupSmfDokterService {
      * @param SmfId
     */
     onDelete(SmfId: number): Observable<DeleteSmfModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_SMF + SmfId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_SMF_DOKTER.DELETE_SETUP_SMF + SmfId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

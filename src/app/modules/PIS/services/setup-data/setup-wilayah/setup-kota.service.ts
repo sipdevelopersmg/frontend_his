@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { DeleteKotaModel, GetAllKotaModel, KotaModel, PostSaveKotaModel, PutUpdateKotaModel } from '../../../models/setup-data/setup-kota.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { DeleteKotaModel, GetAllKotaModel, KotaModel, PostSaveKotaModel, PutUpda
 })
 export class SetupKotaService {
 
-    API = API_CONFIG.API.SETUP_KOTA;
+    API_KOTA = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_KOTA;
 
     constructor(
         private notificationService: NotificationService,
@@ -24,7 +24,7 @@ export class SetupKotaService {
      * @param KodeWilayaProvinsi string
     */
     onGetAll(KodeWilayahProvinsi: string): Observable<GetAllKotaModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_KOTA_BY_PROVINSI_ID + KodeWilayahProvinsi);
+        return this.httpOperationService.defaultGetRequest(this.API_KOTA.GET_ALL_SETUP_KOTA_BY_PROVINSI_ID + KodeWilayahProvinsi);
     }
 
     /**
@@ -33,7 +33,7 @@ export class SetupKotaService {
      * @param KotaModel
     */
     onPostSave(Data: KotaModel): Observable<PostSaveKotaModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_KOTA, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_KOTA.POST_SAVE_SETUP_KOTA, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -47,7 +47,7 @@ export class SetupKotaService {
      * @param KotaModel
     */
     onPutEdit(Data: KotaModel): Observable<PutUpdateKotaModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_KOTA, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_KOTA.PUT_UPDATE_SETUP_KOTA, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -61,7 +61,7 @@ export class SetupKotaService {
     * @param KodeWilayahKota
    */
     onDelete(KodeWilayahKota: string): Observable<DeleteKotaModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_KOTA + KodeWilayahKota)
+        return this.httpOperationService.defaultDeleteRequest(this.API_KOTA.DELETE_SETUP_KOTA + KodeWilayahKota)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

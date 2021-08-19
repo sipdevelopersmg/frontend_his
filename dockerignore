@@ -1,0 +1,6 @@
+dist
+node_modules
+catatan
+.gitignore
+.git
+.vscode

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { GetAllAgamaModel } from '../../../models/setup-data/agama.model';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { GetAllAgamaModel } from '../../../models/setup-data/agama.model';
 })
 export class AgamaService {
 
-    API = API_CONFIG.API.AGAMA;
+    API_AGAMA = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.AGAMA;
 
     constructor(
         private notificationService: NotificationService,
@@ -22,6 +22,6 @@ export class AgamaService {
      * @onGetAll Observable<GetAllAgamaModel>
     */
     onGetAll(): Observable<GetAllAgamaModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_AGAMA);
+        return this.httpOperationService.defaultGetRequest(this.API_AGAMA.GET_ALL_AGAMA);
     }
 }

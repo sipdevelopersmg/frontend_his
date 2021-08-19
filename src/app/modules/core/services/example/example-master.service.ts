@@ -16,26 +16,26 @@ export class ExampleMasterService {
         actionError: () => void
     ) {
         // spinner show
-        this.httpOperationService.defaultPostRequest(API.IRJA.POST_ADMISI_RAWAT_JALAN, req).subscribe(
-            (_result) => {
-                // spinner mesaggeexample.json
-                if (_result) {
-                    actionSukses(_result);
-                } else {
-                    actionError();
-                }
-            },
-            (err) => {
-                actionError();
-            }
-        );
+        // this.httpOperationService.defaultPostRequest(API.PIS.API_PIS.POST_ADMISI_RAWAT_JALAN, req).subscribe(
+        //     (_result) => {
+        //         // spinner mesaggeexample.json
+        //         if (_result) {
+        //             actionSukses(_result);
+        //         } else {
+        //             actionError();
+        //         }
+        //     },
+        //     (err) => {
+        //         actionError();
+        //     }
+        // );
     }
 
     postExample(req: exampleMasterModel) {
-        return this.httpOperationService.defaultPostRequest(API.IRJA.POST_ADMISI_RAWAT_JALAN, req);
+        // return this.httpOperationService.defaultPostRequest(API.IRJA.POST_ADMISI_RAWAT_JALAN, req);
     }
 
     getExample() {
-        return this.httpOperationService.defaultGetRequest(API.IRJA.GET_DATA_PASIEN_BY_NO_ANTRIAN);
+        // return this.httpOperationService.defaultGetRequest(API.IRJA.GET_DATA_PASIEN_BY_NO_ANTRIAN);
     }
 }

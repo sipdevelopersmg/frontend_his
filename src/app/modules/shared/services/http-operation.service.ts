@@ -31,11 +31,10 @@ export class HttpOperationService {
             catchError(this.handlingError),
             map((result: HttpResponseModel) => {
                 if (result.responseResult) {
-                    // Menampilkan SweetAlert Error
-                    this.handlingErrorWithStatusCode200(result);
                     return result;
                 } else {
-                    return result;
+                    // Menampilkan SweetAlert Error
+                    this.handlingErrorWithStatusCode200(result);
                 }
             })
         );
@@ -136,11 +135,10 @@ export class HttpOperationService {
             catchError(this.handlingError),
             map((result: HttpResponseModel) => {
                 if (result.responseResult) {
-                    // Menampilkan SweetAlert Error
-                    this.handlingErrorWithStatusCode200(result);
                     return result;
                 } else {
-                    return result;
+                    // Menampilkan SweetAlert Error
+                    this.handlingErrorWithStatusCode200(result);
                 }
             })
         )
@@ -187,16 +185,7 @@ export class HttpOperationService {
     }
 
     private handlingErrorWithStatusCode200(response: HttpResponseModel): any {
-
-        // ** Jika response.data type nya []
-        if (!response.responseResult) {
-            return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
-        }
-
-        // ** Jika response.data type nya {}
-        if (!response.responseResult && Object.keys(response.data).length == 0) {
-            return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
-        }
+        return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
     }
 
     private handlingError(error: HttpErrorResponse): any {

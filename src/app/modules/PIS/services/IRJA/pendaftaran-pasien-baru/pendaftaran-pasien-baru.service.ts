@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/index';
 import { PersonModel, PostSavePendaftaranPasienBaruModel } from '../../../models/IRJA/pendaftaran_pasien_baru.model';
 import { AgamaService } from '../../setup-data/agama/agama.service';
 import { JenisIdentitasService } from '../../setup-data/jenis-identitas/jenis-identitas.service';
@@ -18,13 +17,14 @@ import { SetupKebangsaanService } from '../../setup-data/setup-kebangsaan/setup-
 import { SetupKecamatanService } from '../../setup-data/setup-wilayah/setup-kecamatan.service';
 import { SetupKotaService } from '../../setup-data/setup-wilayah/setup-kota.service';
 import { SetupProvinsiService } from '../../setup-data/setup-wilayah/setup-provinsi.service';
+import * as API_CONFIG from '../../../../../api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PendaftaranPasienBaruService {
 
-    API = API_CONFIG.API_PIS.IRJA.IRJA.PENDAFTARAN_PASIEN_BARU;
+    API_PENDAFTARAN_PASIEN_BARU_IRJA = API_CONFIG.API.PIS.API_PIS.IRJA.IRJA.PENDAFTARAN_PASIEN_BARU;
 
     /**
      * @JenisIdentitasWnaSubject Digunakan untuk mengisi value pada Dropdown Jenis Identitas WNA 
@@ -201,7 +201,7 @@ export class PendaftaranPasienBaruService {
      * @param NoIdentitas string
      */
     onCheckPersonByNoIdentitas(NoIdentitas: string): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_PERSON_BY_NO_IDENTITAS + NoIdentitas)
+        return this.httpOperationService.defaultGetRequest(this.API_PENDAFTARAN_PASIEN_BARU_IRJA.GET_PERSON_BY_NO_IDENTITAS + NoIdentitas)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -214,7 +214,7 @@ export class PendaftaranPasienBaruService {
      * @param Person PersonModel
     */
     onSavePendaftaranPasienBaruIrja(Person: PersonModel): Observable<PostSavePendaftaranPasienBaruModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_PENDAFTARAN_PASIEN_BARU, Person)
+        return this.httpOperationService.defaultPostRequest(this.API_PENDAFTARAN_PASIEN_BARU_IRJA.POST_PENDAFTARAN_PASIEN_BARU, Person)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

@@ -46,7 +46,7 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     public GridHeader = GridHeaderDummy;
     public LookupPoliAttribute = LookupPoli;
 
-    LookupPoliUrl: string = CONFIG.API.IRJA.GET_POLI_ANTRIAN_RAWAT_JALAN;
+    // LookupPoliUrl: string = CONFIG.API.IRJA.GET_POLI_ANTRIAN_RAWAT_JALAN;
 
     constructor(
         private utilityService: UtilityService,
@@ -112,13 +112,13 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     }
 
     onGetAllAntrianRawatJalanByPolyCode(PolyCode: string): void {
-        this.antrianPasienRawatJalanService.onGetAllDataAntrianRawatJalan()
-            .subscribe((result) => {
-                const data = result.data;
+        // this.antrianPasienRawatJalanService.onGetAllDataAntrianRawatJalan()
+        //     .subscribe((result) => {
+        //         const data = result.data;
 
-                this.GridAntrianIrjaDataSource = data.slice(2, 3);
+        //         this.GridAntrianIrjaDataSource = data.slice(2, 3);
 
-                console.log(this.GridAntrianIrjaDataSource);
-            });
+        //         console.log(this.GridAntrianIrjaDataSource);
+        //     });
     }
 }

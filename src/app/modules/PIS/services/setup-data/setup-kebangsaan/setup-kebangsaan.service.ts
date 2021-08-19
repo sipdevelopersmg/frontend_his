@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { DeleteKebangsaanModel, GetAllKebangsaanModel, KebangsaanModel, PostSaveKebangsaanModel, PutUpdateKebangsaanModel } from '../../../models/setup-data/setup-kebangsaan.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { DeleteKebangsaanModel, GetAllKebangsaanModel, KebangsaanModel, PostSave
 })
 export class SetupKebangsaanService {
 
-    API = API_CONFIG.API.SETUP_KEBANGSAAN;
+    API_KEBANGSAAN = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_KEBANGSAAN;
 
     constructor(
         private notificationService: NotificationService,
@@ -23,7 +23,7 @@ export class SetupKebangsaanService {
      * @onGetAll Observable<PostSaveKebangsaanModel>
     */
     onGetAll(): Observable<GetAllKebangsaanModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_KEBANGSAAN);
+        return this.httpOperationService.defaultGetRequest(this.API_KEBANGSAAN.GET_ALL_SETUP_KEBANGSAAN);
     }
 
     /**
@@ -32,7 +32,7 @@ export class SetupKebangsaanService {
      * @param KebangsaanModel
     */
     onPostSave(Data: KebangsaanModel): Observable<PostSaveKebangsaanModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_KEBANGSAAN, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_KEBANGSAAN.POST_SAVE_SETUP_KEBANGSAAN, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -46,7 +46,7 @@ export class SetupKebangsaanService {
      * @param KebangsaanModel
     */
     onPutEdit(Data: KebangsaanModel): Observable<PutUpdateKebangsaanModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_KEBANGSAAN, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_KEBANGSAAN.PUT_UPDATE_SETUP_KEBANGSAAN, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -60,7 +60,7 @@ export class SetupKebangsaanService {
      * @param EducationId
     */
     onDelete(KebangsaanId: number): Observable<DeleteKebangsaanModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_KEBANGSAAN + KebangsaanId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_KEBANGSAAN.DELETE_SETUP_KEBANGSAAN + KebangsaanId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

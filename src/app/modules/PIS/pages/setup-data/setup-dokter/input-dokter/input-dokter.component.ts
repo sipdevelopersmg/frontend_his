@@ -58,6 +58,7 @@ export class InputDokterComponent implements OnInit {
 
     /** @PersonFound Berisikan true / false, setelah Check No Identitas */
     PersonFound: boolean = false;
+    IsPersonExisting: boolean = false;
 
     /**
      * @JenisIdentitasDropdownDatasource 
@@ -441,19 +442,33 @@ export class InputDokterComponent implements OnInit {
         this.setupDokterService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
                 if (Object.keys(result.data).length === 0) {
+                    this.PersonFound = true;
+                    this.IsPersonExisting = false;
+
                     this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Dokter')
                         .then(() => {
-                            this.PersonFound = true;
+                            this.ngWizardService.next();
                         });
                 } else {
-                    const id_person = result.data.id_person;
+                    const kode_dokter = result.data.kode_dokter;
 
-                    // ** Terdaftar sebagai Person / Dokter, tetapi belum terdaftar sebagai Pasien
-                    if (id_person != 0 || id_person != undefined) {
-                        this.utilityService.onShowingCustomAlert('error', 'Dokter Ditemukan', 'Data Dokter Sudah Ada')
+                    // ** Terdaftar sebagai Person / Pasien, tetapi belum terdaftar sebagai Dokter
+                    if (kode_dokter == "") {
+                        this.PersonFound = true;
+                        this.IsPersonExisting = true;
+
+                        this.utilityService.onShowingCustomAlert('info', 'Person Ditemukan', 'Anda Dapat Melanjutkan Input Dokter')
                             .then(() => {
-                                this.PersonFound = true;
+                                this.ngWizardService.next();
                             })
+                    }
+                    // ** Terdaftar sebagai Dokter
+                    else {
+                        this.utilityService.onShowingCustomAlert('error', 'Dokter Ditemukan', `Dengan Kode Dokter ${kode_dokter}`)
+                            .then(() => {
+                                this.PersonFound = false;
+                                this.IsPersonExisting = true;
+                            });
                     }
                 }
             })
@@ -510,14 +525,21 @@ export class InputDokterComponent implements OnInit {
                 this.resetWizard();
                 break;
             case "Save":
+
+                if (this.IsPersonExisting) {
+                    this.no_identitas.setValue('');
+                }
+
                 this.setupDokterService.onSaveSetupDokter(this.FormInputDokter.value)
                     .subscribe((result) => {
-                        this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Pasien Berhasil Disimpan')
-                            .then(() => {
-                                this.onResetForm();
+                        if (result) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Pasien Berhasil Disimpan')
+                                .then(() => {
+                                    this.onResetForm();
 
-                                this.resetWizard();
-                            });
+                                    this.resetWizard();
+                                });
+                        }
                     });
 
                 // Swal.fire({
@@ -548,7 +570,7 @@ export class InputDokterComponent implements OnInit {
                         this.onResetForm();
 
                         this.resetWizard();
-                    })
+                    });
                 break;
             default:
                 break;

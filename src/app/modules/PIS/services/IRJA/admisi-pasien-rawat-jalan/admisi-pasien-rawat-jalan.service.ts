@@ -10,7 +10,7 @@ export class AdmisiPasienRawatJalanService {
     constructor(private httpOperationService: HttpOperationService) { }
 
     postAdmisiPasienRawatJalan(requset: Object) {
-        return this.httpOperationService.defaultPostRequest(API.IRJA.POST_ADMISI_RAWAT_JALAN, requset)
+        // return this.httpOperationService.defaultPostRequest(API.IRJA.POST_ADMISI_RAWAT_JALAN, requset)
     }
 
 }

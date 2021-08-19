@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  frontend_app:
+    build:
+      context: .
+      dockerfile: Frontend.Dockerfile
+    image: his/frontend:${BUILD_DATE}.${BUILD_VERSION}
+    container_name: frontend_app
+    ports:
+      - "80:80"
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    external: true

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { DebiturModel, DeleteDebiturModel, GetAllDebiturModel, PostSaveDebiturModel, PutUpdateDebiturModel } from '../../../models/setup-data/setup-debitur.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { DebiturModel, DeleteDebiturModel, GetAllDebiturModel, PostSaveDebiturMo
 })
 export class SetupDebiturService {
 
-    API = API_CONFIG.API.SETUP_DEBITUR;
+    API_DEBITUR = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_DEBITUR;
 
     constructor(
         private notificationService: NotificationService,
@@ -23,7 +23,7 @@ export class SetupDebiturService {
      * @onGetAll Observable<GetAllDebiturModel>
     */
     onGetAll(): Observable<GetAllDebiturModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_DEBITUR);
+        return this.httpOperationService.defaultGetRequest(this.API_DEBITUR.GET_ALL_SETUP_DEBITUR);
     }
 
     /**
@@ -32,7 +32,7 @@ export class SetupDebiturService {
      * @param DebiturModel
     */
     onPostSave(Data: DebiturModel): Observable<PostSaveDebiturModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_DEBITUR, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_DEBITUR.POST_SAVE_SETUP_DEBITUR, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -46,7 +46,7 @@ export class SetupDebiturService {
      * @param DebiturModel
     */
     onPutEdit(Data: DebiturModel): Observable<PutUpdateDebiturModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_DEBITUR, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_DEBITUR.PUT_UPDATE_SETUP_DEBITUR, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -60,7 +60,7 @@ export class SetupDebiturService {
      * @param DebiturId
     */
     onDelete(DebiturId: number): Observable<DeleteDebiturModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_DEBITUR + DebiturId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_DEBITUR.DELETE_SETUP_DEBITUR + DebiturId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

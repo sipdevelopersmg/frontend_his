@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { DeleteProvinsiModel, GetAllProvinsiModel, PostSaveProvinsiModel, ProvinsiModel, PutUpdateProvinsiModel } from '../../../models/setup-data/setup-provinsi.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { DeleteProvinsiModel, GetAllProvinsiModel, PostSaveProvinsiModel, Provin
 })
 export class SetupProvinsiService {
 
-    API = API_CONFIG.API.SETUP_PROVINSI;
+    API_PROVINSI = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_PROVINSI;
 
     constructor(
         private notificationService: NotificationService,
@@ -23,7 +23,7 @@ export class SetupProvinsiService {
      * @onGetAll Observable<GetAllProvinsiModel>
     */
     onGetAll(): Observable<GetAllProvinsiModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_PROVINSI);
+        return this.httpOperationService.defaultGetRequest(this.API_PROVINSI.GET_ALL_SETUP_PROVINSI);
     }
 
     /**
@@ -32,7 +32,7 @@ export class SetupProvinsiService {
      * @param ProvinsiModel
     */
     onPostSave(Data: ProvinsiModel): Observable<PostSaveProvinsiModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_PROVINSI, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_PROVINSI.POST_SAVE_SETUP_PROVINSI, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -46,7 +46,7 @@ export class SetupProvinsiService {
      * @param ProvinsiModel
     */
     onPutEdit(Data: ProvinsiModel): Observable<PutUpdateProvinsiModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_PROVINSI, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_PROVINSI.PUT_UPDATE_SETUP_PROVINSI, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -60,7 +60,7 @@ export class SetupProvinsiService {
     * @param KodeWilayahProvinsi
    */
     onDelete(KodeWilayahProvinsi: string): Observable<DeleteProvinsiModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_PROVINSI + KodeWilayahProvinsi)
+        return this.httpOperationService.defaultDeleteRequest(this.API_PROVINSI.DELETE_SETUP_PROVINSI + KodeWilayahProvinsi)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

@@ -38,31 +38,31 @@ export class DaftarUlangPasienComponent implements OnInit {
     onGetDataPasienByNoAntrian(NoAntrian: string) {
         console.log(NoAntrian);
 
-        this.pendaftaranUlangPasienService.onGetDataPasienByNoAntrian(NoAntrian)
-            .subscribe((_result: DataPendaftaranUlangPasienModel) => {
-                this.MrNo.setValue(_result.MrNo);
-                this.NamaPasien.setValue(_result.NamaPasien);
-                this.Alamat.setValue(_result.Alamat);
-                this.NamaDokter.setValue(_result.NamaDokter);
-                this.Specialist.setValue(_result.Specialist);
-                this.NoAntrian.setValue(_result.NoAntrian);
-                this.WaktuDaftar.setValue(this.datePipe.transform(_result.WaktuDaftar, "dd MMMM yyyy, HH:mm:ss"));
-            })
+        // this.pendaftaranUlangPasienService.onGetDataPasienByNoAntrian(NoAntrian)
+        //     .subscribe((_result: DataPendaftaranUlangPasienModel) => {
+        //         this.MrNo.setValue(_result.MrNo);
+        //         this.NamaPasien.setValue(_result.NamaPasien);
+        //         this.Alamat.setValue(_result.Alamat);
+        //         this.NamaDokter.setValue(_result.NamaDokter);
+        //         this.Specialist.setValue(_result.Specialist);
+        //         this.NoAntrian.setValue(_result.NoAntrian);
+        //         this.WaktuDaftar.setValue(this.datePipe.transform(_result.WaktuDaftar, "dd MMMM yyyy, HH:mm:ss"));
+        //     })
     }
 
     onKonfirmasiDaftarUlang(FormDaftarUlangPasien: DataPendaftaranUlangPasienModel) {
-        this.pendaftaranUlangPasienService.onKonfirmasiPendaftaranUlang(FormDaftarUlangPasien.MrNo)
-            .subscribe(
-                (_result) => {
-                    this.utilityService.onShowingCustomAlert("success", "Success", "Pendaftaran Ulang Berhasil")
-                }, (error) => {
-                    this.utilityService.onShowingCustomAlert("error", "Oops...", "Something Went Wrong")
-                }, () => {
-                    this.FormDaftarUlangPasien.reset();
+        // this.pendaftaranUlangPasienService.onKonfirmasiPendaftaranUlang(FormDaftarUlangPasien.MrNo)
+        //     .subscribe(
+        //         (_result) => {
+        //             this.utilityService.onShowingCustomAlert("success", "Success", "Pendaftaran Ulang Berhasil")
+        //         }, (error) => {
+        //             this.utilityService.onShowingCustomAlert("error", "Oops...", "Something Went Wrong")
+        //         }, () => {
+        //             this.FormDaftarUlangPasien.reset();
 
-                    this.NoAntrianField.nativeElement.value = "";
-                }
-            )
+        //             this.NoAntrianField.nativeElement.value = "";
+        //         }
+        //     )
     }
 
     get NoTransaksi() { return this.FormDaftarUlangPasien.get("NoTransaksi") };

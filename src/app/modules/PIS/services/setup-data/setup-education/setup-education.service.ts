@@ -2,10 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SetActiveModel } from 'src/app/modules/MM/models/setup-data/setup-satuan/SetupSatuanModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { DeleteEducationModel, EducationModel, GetAllEducationModel, PostSaveEducationModel, PutUpdateEducationModel } from '../../../models/setup-data/setup-education.model';
 
 @Injectable({
@@ -13,7 +12,7 @@ import { DeleteEducationModel, EducationModel, GetAllEducationModel, PostSaveEdu
 })
 export class SetupEducationService {
 
-    API = API_CONFIG.API.SETUP_EDUCATION;
+    API_EDUCATION = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_EDUCATION;
 
     constructor(
         private notificationService: NotificationService,
@@ -24,7 +23,7 @@ export class SetupEducationService {
      * @onGetAll Observable<GetAllEducationModel>
     */
     onGetAll(): Observable<GetAllEducationModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_EDUCATION);
+        return this.httpOperationService.defaultGetRequest(this.API_EDUCATION.GET_ALL_SETUP_EDUCATION);
     }
 
     /**
@@ -33,7 +32,7 @@ export class SetupEducationService {
      * @param EducationModel
     */
     onPostSave(Data: EducationModel): Observable<PostSaveEducationModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_EDUCATION, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_EDUCATION.POST_SAVE_SETUP_EDUCATION, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -47,7 +46,7 @@ export class SetupEducationService {
      * @param EducationModel
     */
     onPutEdit(Data: EducationModel): Observable<PutUpdateEducationModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_EDUCATION, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_EDUCATION.PUT_UPDATE_SETUP_EDUCATION, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -61,7 +60,7 @@ export class SetupEducationService {
      * @param EducationId
     */
     onDelete(EducationId: number): Observable<DeleteEducationModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_EDUCATION + EducationId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_EDUCATION.DELETE_SETUP_EDUCATION + EducationId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

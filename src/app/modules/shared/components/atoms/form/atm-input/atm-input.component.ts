@@ -56,8 +56,6 @@ export class AtmInputComponent implements ControlValueAccessor {
     }
 
     registerOnTouched(fn: any): void {
-        console.log('touched');
-
         this.onTouched = fn;
     }
 

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA';
+import * as API_CONFIG from '../../../../../api';
 import { DeleteStatusDokterModel, GetAllStatusDokterModel, PostSaveStatusDokterModel, PutUpdateStatusDokterModel, StatusDokterModel } from '../../../models/setup-data/setup-status-dokter.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { DeleteStatusDokterModel, GetAllStatusDokterModel, PostSaveStatusDokterM
 })
 export class SetupStatusDokterService {
 
-    API = API_CONFIG.API.SETUP_STATUS_DOKTER;
+    API_STATUS_DOKTER = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_STATUS_DOKTER;
 
     constructor(
         private notificationService: NotificationService,
@@ -23,7 +23,7 @@ export class SetupStatusDokterService {
      * @onGetAll Observable<GetAllStatusDokterModel>
     */
     onGetAll(): Observable<GetAllStatusDokterModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_STATUS_DOKTER);
+        return this.httpOperationService.defaultGetRequest(this.API_STATUS_DOKTER.GET_ALL_SETUP_STATUS_DOKTER);
     }
 
     /**
@@ -32,7 +32,7 @@ export class SetupStatusDokterService {
      * @param StatusDokterModel
     */
     onPostSave(Data: StatusDokterModel): Observable<PostSaveStatusDokterModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_STATUS_DOKTER, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_STATUS_DOKTER.POST_SAVE_SETUP_STATUS_DOKTER, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -46,7 +46,7 @@ export class SetupStatusDokterService {
      * @param StatusDokterModel
     */
     onPutEdit(Data: StatusDokterModel): Observable<PutUpdateStatusDokterModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_STATUS_DOKTER, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_STATUS_DOKTER.PUT_UPDATE_SETUP_STATUS_DOKTER, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -60,7 +60,7 @@ export class SetupStatusDokterService {
      * @param StatusDokterId
     */
     onDelete(StatusDokterId: number): Observable<DeleteStatusDokterModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_STATUS_DOKTER + StatusDokterId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_STATUS_DOKTER.DELETE_SETUP_STATUS_DOKTER + StatusDokterId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

@@ -2,10 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SetActiveModel } from 'src/app/modules/MM/models/setup-data/setup-satuan/SetupSatuanModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA/index';
+import * as API_CONFIG from '../../../../../api';
 import { DeleteEtnisModel, EtnisModel, GetAllEtnisModel, PostSaveEtnisModel, PutUpdateEtnisModel } from '../../../models/setup-data/setup-etnis.model';
 
 @Injectable({
@@ -13,7 +12,7 @@ import { DeleteEtnisModel, EtnisModel, GetAllEtnisModel, PostSaveEtnisModel, Put
 })
 export class SetupEtnisService {
 
-    API = API_CONFIG.API.SETUP_ETNIS;
+    API_ETNIS = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_ETNIS;
 
     constructor(
         private notificationService: NotificationService,
@@ -24,7 +23,7 @@ export class SetupEtnisService {
      * @onGetAll Observable<GetAllEtnisModel>
     */
     onGetAll(): Observable<GetAllEtnisModel> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_SETUP_ETNIS)
+        return this.httpOperationService.defaultGetRequest(this.API_ETNIS.GET_ALL_SETUP_ETNIS)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -38,7 +37,7 @@ export class SetupEtnisService {
      * @param EtnisModel
     */
     onPostSave(Data: EtnisModel): Observable<PostSaveEtnisModel> {
-        return this.httpOperationService.defaultPostRequest(this.API.POST_SAVE_SETUP_ETNIS, Data)
+        return this.httpOperationService.defaultPostRequest(this.API_ETNIS.POST_SAVE_SETUP_ETNIS, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -52,7 +51,7 @@ export class SetupEtnisService {
      * @param EtnisModel
     */
     onPutEdit(Data: EtnisModel): Observable<PutUpdateEtnisModel> {
-        return this.httpOperationService.defaultPutRequest(this.API.PUT_UPDATE_SETUP_ETNIS, Data)
+        return this.httpOperationService.defaultPutRequest(this.API_ETNIS.PUT_UPDATE_SETUP_ETNIS, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -66,7 +65,7 @@ export class SetupEtnisService {
      * @param EtnisId
     */
     onDelete(EtnisId: number): Observable<DeleteEtnisModel> {
-        return this.httpOperationService.defaultDeleteRequest(this.API.DELETE_SETUP_ETNIS + EtnisId)
+        return this.httpOperationService.defaultDeleteRequest(this.API_ETNIS.DELETE_SETUP_ETNIS + EtnisId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

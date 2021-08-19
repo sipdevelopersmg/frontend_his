@@ -7,12 +7,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../shared/services/notification.service';
-import * as API from '../../../api/AUTH/AUTH';
+import * as API_CONFIG from '../../../api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
+
+    API_AUTHENTICATION = API_CONFIG.API.API_AUTH;
 
     public currentUser$: Observable<IAuthenticationResponseModel>;
 
@@ -37,7 +39,7 @@ export class AuthenticationService {
     onLogin(Username: string, Password: string): void {
 
         this.httpOperationService.defaultPostRequestWithoutLoading(
-            API.POST_AUTHENTICATION,
+            this.API_AUTHENTICATION.POST_AUTHENTICATION,
             {
                 user_name: Username,
                 password: Password,
@@ -63,7 +65,7 @@ export class AuthenticationService {
         const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         this.httpOperationService.defaultPutRequestWithoutParams(
-            API.POST_LOGOUT + UserData.id_user
+            this.API_AUTHENTICATION.POST_LOGOUT + UserData.id_user
         ).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -99,7 +101,7 @@ export class AuthenticationService {
     }
 
     onChangePassword(ChangePasswordData: PostChangePassword): Observable<any> {
-        return this.httpOperationService.defaultPutRequest(API.PUT_CHANGE_PASSWORD, ChangePasswordData)
+        return this.httpOperationService.defaultPutRequest(this.API_AUTHENTICATION.PUT_CHANGE_PASSWORD, ChangePasswordData)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -108,7 +110,7 @@ export class AuthenticationService {
     }
 
     onResetPassword(UserId: number): Observable<any> {
-        return this.httpOperationService.defaultPutRequestWithoutParams(API.PUT_RESET_PASSWORD + UserId);
+        return this.httpOperationService.defaultPutRequestWithoutParams(this.API_AUTHENTICATION.PUT_RESET_PASSWORD + UserId);
     }
 
     private handlingAuth(UserData: IAuthenticationResponseModel): void {

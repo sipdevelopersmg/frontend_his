@@ -302,29 +302,29 @@ export class PendaftaranPasienBaruComponent implements OnInit {
         this.FormPendaftaranPasienBaruIrja = this.formBuilder.group({
             "person": this.formBuilder.group({
                 "id_jenis_identitas": [0, []],
-                "no_identitas": ["", Validators.required],
+                "no_identitas": ["", [Validators.required]],
                 "no_kartu_keluarga": ["", []],
-                "nama_depan": ["", []],
+                "nama_depan": ["", [Validators.required]],
                 "nama_belakang": ["", []],
                 "nama_panggilan": ["", []],
-                "gelar_depan": ["", Validators.required],
-                "gelar_belakang": ["", Validators.required],
-                "gender": ["", Validators.required],
+                "gelar_depan": ["", []],
+                "gelar_belakang": ["", []],
+                "gender": ["", [Validators.required]],
                 "path_foto": ["", []],
                 "nama_foto": ["", []],
-                "gol_darah": ["", Validators.required],
+                "gol_darah": ["", [Validators.required]],
                 "tempat_lahir": ["", []],
-                "tanggal_lahir": [Date, []],
-                "tinggi_badan_cm": [0, Validators.required],
-                "berat_badan_kg": [0, Validators.required],
-                "id_marital_status": [0, Validators.required],
-                "id_agama": [0, Validators.required],
-                "id_kebangsaan": [0, Validators.required],
-                "id_etnis": [0, Validators.required],
-                "id_bahasa": [0, Validators.required],
-                "id_last_education": [0, Validators.required],
-                "id_job_type": [0, Validators.required],
-                "user_created": [this.UserData.id_user, Validators.required],
+                "tanggal_lahir": ["", [Validators.required]],
+                "tinggi_badan_cm": [0, []],
+                "berat_badan_kg": [0, []],
+                "id_marital_status": [0, []],
+                "id_agama": [0, []],
+                "id_kebangsaan": [0, []],
+                "id_etnis": [0, []],
+                "id_bahasa": [0, []],
+                "id_last_education": [0, []],
+                "id_job_type": [0, []],
+                "user_created": [this.UserData.id_user, [Validators.required]],
             }),
             "alamat_person": this.formBuilder.array([
 
@@ -392,21 +392,21 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     NewAlamat(): FormGroup {
         return this.formBuilder.group({
-            "alamat_lengkap": ["", []],
+            "alamat_lengkap": ["", Validators.required],
             "kode_pos": ["", []],
             "rt": ["", []],
             "rw": ["", []],
             "kelurahan": ["", []],
-            "kode_wilayah": ["", []],
+            "kode_wilayah": ["", Validators.required],
             "user_created": [this.UserData.id_user, []],
         });
     }
 
     NewKontak(): FormGroup {
         return this.formBuilder.group({
-            "hand_phone": ["", []],
-            "home_phone": ["", []],
-            "office_phone": ["", []],
+            "hand_phone": ["", Validators.required],
+            "home_phone": ["", Validators.required],
+            "office_phone": ["", Validators.required],
             "email": ["", []],
             "keterangan": ["", []],
             "user_created": [this.UserData.id_user, []],
@@ -416,10 +416,10 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     NewDebitur(): FormGroup {
         return this.formBuilder.group({
             "id_debitur": [0, []],
-            "no_member": ["", []],
-            "tgl_aktif_member": [new Date(), []],
-            "tgl_expired_member": [new Date(), []],
-            "keterangan": ["", []],
+            "no_member": ["", Validators.required],
+            "tgl_aktif_member": ["", Validators.required],
+            "tgl_expired_member": ["", Validators.required],
+            "keterangan": ["", Validators.required],
         });
     }
 
@@ -434,12 +434,8 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     handleCheckPersonByNoIdentitas(NoIdentitas: string): void {
         this.pendafatranPasienBaruService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
-                if (Object.keys(result.data).length === 0) {
-                    this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Pasien')
-                        .then(() => {
-                            this.PersonFound = true;
-                        });
-                } else {
+
+                if (result) {
                     const NoRekamMedis = result.data.no_rekam_medis;
 
                     // ** Terdaftar sebagai Person / Dokter, tetapi belum terdaftar sebagai Pasien
@@ -453,6 +449,11 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                     else {
                         this.utilityService.onShowingCustomAlert('error', 'NIK Pasien Ditemukan', `Dengan Nomor RM ${NoRekamMedis}`);
                     }
+                } else {
+                    this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Pasien')
+                        .then(() => {
+                            this.PersonFound = true;
+                        });
                 }
             })
     }
@@ -521,12 +522,14 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             case "Save":
                 this.pendafatranPasienBaruService.onSavePendaftaranPasienBaruIrja(this.FormPendaftaranPasienBaruIrja.value)
                     .subscribe((result) => {
-                        this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Pasien Berhasil Disimpan')
-                            .then(() => {
-                                this.onResetForm();
+                        if (result) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Pasien Berhasil Disimpan')
+                                .then(() => {
+                                    this.onResetForm();
 
-                                this.resetWizard();
-                            });
+                                    this.resetWizard();
+                                });
+                        }
                     });
 
                 // Swal.fire({
