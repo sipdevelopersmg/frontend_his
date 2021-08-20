@@ -1,0 +1,151 @@
+<org-card-layout>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header ">
+                    <div class="row justify-content-between">
+                        <div class="col-md-7 ">
+                            <h5 class="m-0">Terapi</h5>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-plus-circle tambah text-primary "></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div id='treeparent'>
+                        <ejs-treeview id='treeelement' [fields]='field'></ejs-treeview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header ">
+                    <div class="row justify-content-between">
+                        <div class="col-md-7 ">
+                            <h5 class="m-0">Generik</h5>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-plus-circle tambah text-primary "></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <mol-grid #gridDaftarOrder 
+                        [grid-id]="'GridDaftarOrder'"
+                        [grid-height]="'calc(100vh - 245px)'" 
+                        [grid-lines]="'Both'"
+                        [columns]="GridSetting.GridGenerik.columns"
+                        [grid-DataSource]="GridSetting.GridGenerik.DataSource" 
+                    >
+                    </mol-grid>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-sm-12 mb-3">
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="row justify-content-between">
+                                <div class="col-md-7 ">
+                                    <h5 class="m-0">Sediaan</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-plus-circle tambah text-primary "></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <mol-grid #gridDaftarOrder 
+                                [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" 
+                                [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridSediaan.columns"
+                                [grid-DataSource]="GridSetting.GridSediaan.DataSource" 
+                            >
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="row justify-content-between">
+                                <div class="col-md-7 ">
+                                    <h5 class="m-0">Keterangan</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-plus-circle tambah text-primary "></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <mol-grid #gridDaftarOrder 
+                                [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" 
+                                [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridKeterangan.columns"
+                                [grid-DataSource]="GridSetting.GridKeterangan.DataSource" 
+                            >
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-sm-12 mb-3">
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
+                                    <h5 class="m-0">Max Peresepan</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-plus-circle tambah text-primary "></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <mol-grid #gridDaftarOrder 
+                                [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" 
+                                [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridPeresepan.columns"
+                                [grid-DataSource]="GridSetting.GridPeresepan.DataSource" 
+                            >
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="row justify-content-between">
+                                <div class="col-auto ">
+                                    <h5 class="m-0">Nama Dagang</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-plus-circle tambah text-primary "></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <mol-grid #gridDaftarOrder 
+                                [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" 
+                                [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridItem.columns"
+                                [grid-DataSource]="GridSetting.GridItem.DataSource" 
+                            >
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

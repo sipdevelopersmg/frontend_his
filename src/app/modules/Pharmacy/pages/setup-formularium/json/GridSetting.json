@@ -1,0 +1,152 @@
+{
+    "GridGenerik": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no",
+                "headerText": "No",
+                "type": "string",
+                "visible": true,
+                "width":50
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "ket",
+                "headerText": "Keteranga",
+                "type": "string",
+                "visible": true
+            }
+        ],
+        "DataSource":[
+            {"no":1,"ket":"fentanil"},
+            {"no":2,"ket":"Hidromorfon"},
+            {"no":3,"ket":"Codein"},
+            {"no":4,"ket":"Morfin"},
+            {"no":5,"ket":"Oksikodon"},
+            {"no":6,"ket":"Pethidin"},
+            {"no":7,"ket":"Sufentanil"}
+        ]
+    },
+    "GridSediaan": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no",
+                "headerText": "No",
+                "visible": true,
+                "width": 40
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "numericEdit",
+                "field": "fornasi",
+                "headerText": "F/NF",
+                "type": "string",
+                "visible": true,
+                "width": 60
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "ket",
+                "headerText": "Keterangan",
+                "type": "string",
+                "visible": true
+            }
+        ],
+        "DataSource":[
+            {"no":1,"fornasi":"F","ket":"Tab 10 mg, Tab 20 mg"},
+            {"no":2,"fornasi":"NF","ket":"Caps"}
+        ]
+    },
+    "GridKeterangan": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no",
+                "headerText": "No",
+                "type": "string",
+                "visible": true,
+                "width":50
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "ket",
+                "headerText": "Keteranga",
+                "type": "string",
+                "visible": true
+            }
+        ],
+        "DataSource":[
+            {"no":1,"ket":"Hanya untuk pemakaian pada tindakan anestesi atau perawatan di Rumah Sakit"},
+            {"no":2,"ket":"untuk mengatasi nyeri kanker yang tidak respon terhadap analgetik non narkotik"},
+            {"no":3,"ket":"nyeri pada serangan jantung."}
+        ]
+    },
+    "GridPeresepan": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no",
+                "headerText": "No",
+                "type": "string",
+                "visible": true,
+                "width":50
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "ket",
+                "headerText": "Keteranga",
+                "type": "string",
+                "visible": true
+            }
+        ],
+        "DataSource":[
+            {"no":1,"ket":"Tab lepas lambat 10 mg dan 15 mg: 60 tab/bln"}
+        ]
+    },
+    "GridItem": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no",
+                "headerText": "No",
+                "type": "string",
+                "visible": true,
+                "width":50
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "ket",
+                "headerText": "Keteranga",
+                "type": "string",
+                "visible": true
+            }
+        ],
+        "DataSource":[
+            {"no":1,"ket":"Mefinal Tab 500 mg"},
+            {"no":2,"ket":"Ponstan Tab 500 mg"},
+            {"no":3,"ket":"Lapistan Caps 500 mg"}
+        ]
+    }
+}
