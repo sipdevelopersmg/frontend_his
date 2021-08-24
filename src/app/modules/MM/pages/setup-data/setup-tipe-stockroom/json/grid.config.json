@@ -1,0 +1,29 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_tipe_stockroom",
+        "headerText": "Id",
+        "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "tipe_stockroom",
+        "headerText": "Tipe Stockroom",
+        "visible": true
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": false,
+        "allowFiltering": false,
+        "editType": "defaultEdit",
+        "field": "keterangan",
+        "headerText": "Keterangan",
+        "visible": true
+    }
+  ]
+}

@@ -4,12 +4,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
 import { AntrianFarmasiComponent } from './pages/Antrian/antrian-farmasi/antrian-farmasi.component';
 import { PharmacyRoutingModule } from "./pharmacy-routing.module";
-import { ResepRacikanComponent } from './pages/resep-racikan/resep-racikan.component';
+import { SetupFormulariumComponent } from './pages/setup-formularium/setup-formularium/setup-formularium.component';
 
 @NgModule({
     declarations: [
         AntrianFarmasiComponent,
-        ResepRacikanComponent
+        SetupFormulariumComponent
     ],
     imports: [
         CommonModule,

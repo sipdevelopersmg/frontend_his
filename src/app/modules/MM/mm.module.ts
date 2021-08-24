@@ -9,9 +9,15 @@ import { InputKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengad
 import { InputPOComponent } from './pages/pemasukan/PO/input-po/input-po.component';
 import { InputPenerimaanComponent } from './pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component';
 import { InputReturComponent } from './pages/retur/input-retur/input-retur.component';
-import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-supplier.component';
 import { SetupSatuanComponent } from './pages/setup-data/setup-satuan/setup-satuan.component';
 import { SetupGroupCoaComponent } from './pages/setup-data/setup-group-coa/setup-group-coa.component';
+import { SetupCoaComponent } from './pages/setup-data/setup-coa/setup-coa.component';
+import { SetupPerencanaanKategoriComponent } from './pages/setup-data/setup-perencanaan-kategori/setup-perencanaan-kategori.component';
+import { SetupTipeSupplierComponent } from './pages/setup-data/setup-tipe-supplier/setup-tipe-supplier.component';
+import { SetupTipeStockroomComponent } from './pages/setup-data/setup-tipe-stockroom/setup-tipe-stockroom.component';
+import { SetupTipeItemComponent } from './pages/setup-data/setup-tipe-item/setup-tipe-item.component';
+import { SetupTemperaturItemComponent } from './pages/setup-data/setup-temperatur-item/setup-temperatur-item.component';
+import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-supplier.component';
 
 @NgModule({
     declarations: [
@@ -21,9 +27,15 @@ import { SetupGroupCoaComponent } from './pages/setup-data/setup-group-coa/setup
         InputPOComponent,
         InputPenerimaanComponent,
         InputReturComponent,
-        SetupSupplierComponent,
         SetupSatuanComponent,
         SetupGroupCoaComponent,
+        SetupCoaComponent,
+        SetupPerencanaanKategoriComponent,
+        SetupTipeSupplierComponent,
+        SetupTipeStockroomComponent,
+        SetupTipeItemComponent,
+        SetupTemperaturItemComponent,
+        SetupSupplierComponent,
     ],
     imports: [
         FormsModule,

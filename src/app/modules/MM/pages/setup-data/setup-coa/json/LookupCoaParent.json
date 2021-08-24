@@ -1,0 +1,44 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_coa",
+            "headerText": "Id",
+            "type": "number",
+            "visible": false
+        },
+        
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_coa",
+            "headerText": "Kode Coa",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "deskripsi",
+            "headerText": "Deskripsi",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "kode_coa",
+            "filter": "like",
+            "title": "KODE"
+        },
+        {
+            "field": "deskripsi",
+            "filter": "like",
+            "title": "NAMA"
+        }
+    ]
+}

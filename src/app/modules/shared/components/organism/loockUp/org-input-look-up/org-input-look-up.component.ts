@@ -151,7 +151,7 @@ export class OrgInputLookUpComponent implements OnInit {
         this.titleValue = ''
         this.currentData = null
     }
-
+    
     ngOnDestroy() {
         this.gridDataSource = [];
     }
