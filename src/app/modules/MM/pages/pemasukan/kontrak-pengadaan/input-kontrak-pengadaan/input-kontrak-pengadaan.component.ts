@@ -78,22 +78,6 @@ export class InputKontrakPengadaanComponent implements OnInit {
     detailSelected: TrKontrakSpjbDetailItemInsert;
     globalListenFunc: Function;
 
-    DatasourceDummy: any[] = [
-        {
-            kontrak_id: 1,
-            no_urut: 1,
-            id_item: 1,
-            kode_item: 'TESTING',
-            nama_item: 'TESTING',
-            qty_kontrak_satuan_besar: 10,
-            tanggal_maksimal_expired_date: '',
-            kode_satuan_besar: 'PCS',
-            isi: 10,
-            qty_kontrak: 10,
-            harga_satuan: 5000,
-            sub_total_kontrak: 50000
-        },
-    ];
 
     TglExpiredParams = { params: { min: new Date() } };
 
@@ -303,8 +287,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
-                // this.gridDetail.selectRows([this.currentIndex]); 
                 this.gridDetail.selectedRowIndex = this.currentIndex;
+                this.gridDetail.selectRows([this.currentIndex]); 
                 this.unsubscribe();
             })
         );
@@ -336,8 +320,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
-                // this.gridDetail.selectRows([this.currentIndex]);  
                 this.gridDetail.selectedRowIndex = this.currentIndex;
+                this.gridDetail.selectRows([this.currentIndex]); 
                 this.unsubscribe();
             })
         );
@@ -368,8 +352,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
                 console.log(reason, 'subTotal hidden')
-                // this.gridDetail.selectRows([this.currentIndex]);  
                 this.gridDetail.selectedRowIndex = this.currentIndex;
+                this.gridDetail.selectRows([this.currentIndex]); 
                 this.unsubscribe();
             })
         );
@@ -400,8 +384,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
-                // this.gridDetail.selectRows([this.currentIndex]);  
                 this.gridDetail.selectedRowIndex = this.currentIndex;
+                this.gridDetail.selectRows([this.currentIndex]); 
                 this.unsubscribe();
             })
         );

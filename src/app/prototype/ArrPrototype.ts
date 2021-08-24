@@ -7,7 +7,7 @@ declare global { // to access the global type String
         orderBy(prop: T): void;
     }
 }
-11
+
 /** Menjumlahkan */
 Array.prototype.sum = function(prop){
     

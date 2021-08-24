@@ -8,13 +8,31 @@
                             <h5 class="m-0">Terapi</h5>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-plus-circle tambah text-primary "></i>
+                            <a (click)="handleAddTerapi()">
+                            <i  class="fas fa-plus-circle tambah text-primary "></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
                     <div id='treeparent'>
-                        <ejs-treeview id='treeelement' [fields]='field'></ejs-treeview>
+                        <ejs-treeview 
+                        id='treeelement' 
+                        [fields]='field' 
+                        e-nodeclick="onClick"
+                        [allowMultiSelection]='allowMultiSelection'  
+                        (nodeSelected)='nodeSelected($event)'>
+                            <ng-template #nodeTemplate="" let-data="">
+                                <div>
+                                    <div class="ejob"> 
+                                        <a (click)="handleAddTerapi()">
+                                        <i *ngIf="data.kode.length==1"  class="fas fa-plus-circle tambah_terapi text-primary "></i>
+                                        </a>
+                                        {{data.kode}} {{data.name}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ejs-treeview>
                     </div>
                 </div>
             </div>
@@ -34,10 +52,11 @@
                 <div class="card-body p-0">
                     <mol-grid #gridDaftarOrder 
                         [grid-id]="'GridDaftarOrder'"
-                        [grid-height]="'calc(100vh - 245px)'" 
+                        [grid-height]="'calc(100vh - 250px)'" 
                         [grid-lines]="'Both'"
                         [columns]="GridSetting.GridGenerik.columns"
-                        [grid-DataSource]="GridSetting.GridGenerik.DataSource" 
+                        [grid-DataSource]="DataSourceGeneric" 
+                        (row-selected) = "handleSelectedGeneric($event)"
                     >
                     </mol-grid>
                 </div>
@@ -63,7 +82,9 @@
                                 [grid-height]="'calc((100vh - 350px)/2)'" 
                                 [grid-lines]="'Both'"
                                 [columns]="GridSetting.GridSediaan.columns"
-                                [grid-DataSource]="GridSetting.GridSediaan.DataSource" 
+                                [grid-DataSource]="DataSourceSediaan"
+                                [textWrapSettings]="wrapSettings"
+                                (row-selected) = "handleSelectedSediaan($event)"
                             >
                             </mol-grid>
                         </div>
@@ -74,7 +95,7 @@
                         <div class="card-header ">
                             <div class="row justify-content-between">
                                 <div class="col-md-7 ">
-                                    <h5 class="m-0">Keterangan</h5>
+                                    <h5 class="m-0">Restreksi</h5>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-plus-circle tambah text-primary "></i>
@@ -87,7 +108,8 @@
                                 [grid-height]="'calc((100vh - 350px)/2)'" 
                                 [grid-lines]="'Both'"
                                 [columns]="GridSetting.GridKeterangan.columns"
-                                [grid-DataSource]="GridSetting.GridKeterangan.DataSource" 
+                                [grid-DataSource]="DataSourceRestreksi" 
+                                [textWrapSettings]="wrapSettings"
                             >
                             </mol-grid>
                         </div>
@@ -115,7 +137,8 @@
                                 [grid-height]="'calc((100vh - 350px)/2)'" 
                                 [grid-lines]="'Both'"
                                 [columns]="GridSetting.GridPeresepan.columns"
-                                [grid-DataSource]="GridSetting.GridPeresepan.DataSource" 
+                                [grid-DataSource]="DataSourceMax" 
+                                [textWrapSettings]="wrapSettings"
                             >
                             </mol-grid>
                         </div>
@@ -139,7 +162,8 @@
                                 [grid-height]="'calc((100vh - 350px)/2)'" 
                                 [grid-lines]="'Both'"
                                 [columns]="GridSetting.GridItem.columns"
-                                [grid-DataSource]="GridSetting.GridItem.DataSource" 
+                                [grid-DataSource]="DataSourceDagang" 
+                                [textWrapSettings]="wrapSettings"
                             >
                             </mol-grid>
                         </div>
@@ -148,4 +172,90 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Tambah Terapi  -->
+    <ng-template #modalTambahTerapi>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Add Terapi</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row mb-2">
+                        <div class="col-sm-3">
+                            <atm-label [LabelCaption]="'Terapi'"></atm-label>
+                        </div>
+                        <div class="col-sm-6">
+                            <ejs-dropdownlist #TerapiDropdown id="terapi" [dataSource]="TerapiDropdownDatasource"
+                                [fields]="TerapiDropdownField" [allowFiltering]="true">
+                            </ejs-dropdownlist>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary" type="button" (click)="handleSetupTerapi()">Setup Terapi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Setup Terapi  -->
+    <ng-template #modalSetupTerapi>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Setup Terapi</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <mol-input-text [label] = "'Nama Terapi'"></mol-input-text>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Terapi  -->
+    <ng-template #modalTambahSubTerapi>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Add Sub Terapi</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row mb-2">
+                        <mol-input-text [label]="'Terapi'"  ></mol-input-text>
+                        <div class="col-sm-3">
+                            <atm-label [LabelCaption]="'Sub Terapi'"></atm-label>
+                        </div>
+                        <div class="col-sm-6">
+                            <ejs-dropdownlist #TerapiDropdown id="terapi" [dataSource]="TerapiDropdownDatasource"
+                                [fields]="TerapiDropdownField" [allowFiltering]="true">
+                            </ejs-dropdownlist>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary" type="submit">Setup Terapi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
 </org-card-layout>

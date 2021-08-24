@@ -1,0 +1,40 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_tipe_item",
+        "headerText": "Id",
+        "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "kode_tipe_item",
+        "headerText": "Tipe Supplier",
+        "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "tipe_item",
+      "headerText": "Tipe Supplier",
+      "visible": true
+    },
+    {
+        "allowEditing": true,
+        "allowSorting": false,
+        "allowFiltering": false,
+        "editType": "booleanedit",
+        "field": "is_active",
+        "headerText": "Status Active",
+        "type": "boolean",
+        "displayAsCheckBox": true,
+        "visible": true,
+        "width": 100
+    }
+  ]
+}

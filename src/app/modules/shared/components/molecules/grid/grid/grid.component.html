@@ -1,7 +1,8 @@
 <ejs-grid #Grid [id]="gridId" [width]="gridWidth" [height]="gridHeight" [dataSource]="gridDataSource" [rowHeight]="27"
     [gridLines]="gridLines" [allowPaging]="gridPaging" [allowResizing]="true" [allowFiltering]='gridFiltering'
     [pageSettings]="gridInitialPage" [toolbar]="toolbar" [editSettings]="gridEditingSettings"
-    [contextMenuItems]="gridContextMenuItems" [selectionSettings]="gridSelectionSettings"
+    [contextMenuItems]="gridContextMenuItems" [selectionSettings]="gridSelectionSettings" 
+    [allowTextWrap]="allowTextWrap" [textWrapSettings]="textWrapSettings"
     (rowSelected)="onRowSelecting($event)" (keyPressed)="onKeyPressing($event)"
     (recordDoubleClick)="onDoubleClick($event)" (actionBegin)="onActionBegin($event)"
     (actionComplete)="onActionComplete($event)" (toolbarClick)="onToolbarClick($event)"

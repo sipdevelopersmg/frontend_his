@@ -1,0 +1,49 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Coa</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Coa</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <org-input-look-up-kode #LookupKodeCoaParent [lookup-url]="urlCoaParent" [idKode]="'id_coa'" [modal-title]="'Data CoaParent'"
+                                [idTitle]="'deskripsi'" (onGetSelectedData)="heandleSelectedCoaParent($event)"
+                                [columns]="LookupCoaParent.columns" [filter-lookup]="LookupCoaParent.filter"
+                                [label]="'Coa Parent'">
+                            </org-input-look-up-kode>
+                            <org-input-look-up #LookupGroupCoa [lookup-url]="urlGroupCoa" [idTitle]="'id_group_coa'" [modal-title]="'Data GroupCoa'"
+                                (onGetSelectedData)="heandleSelectedGroupCoa($event)" [columns]="LookupGroupCoa.columns"
+                                [filter-lookup]="LookupGroupCoa.filter" [label]="'Group Coa'">
+                            </org-input-look-up>
+                            <mol-input-text [label]="'Kode COA'" formControlName="kode_coa" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Deskripsi'" formControlName="deskripsi" [inputFieldState]="inputFieldState"></mol-input-text> 
+                            <mol-input-text [label]="'Saldo'" formControlName="saldo" [inputFieldState]="inputFieldState"></mol-input-text>     
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

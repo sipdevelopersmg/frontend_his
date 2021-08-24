@@ -1,0 +1,44 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_grup_coa",
+            "headerText": "Id",
+            "type": "number",
+            "visible": false
+        },
+        
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "grup_coa",
+            "headerText": "Group Coa",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "deskripsi",
+            "headerText": "Deskripsi",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "id_grup_coa",
+            "filter": "like",
+            "title": "GROUP COA"
+        },
+        {
+            "field": "grup_coa",
+            "filter": "like",
+            "title": "DESKRIPSI"
+        }
+    ]
+}
