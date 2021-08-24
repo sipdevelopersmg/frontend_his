@@ -39,7 +39,7 @@
             <a>halooo jhon</a>
         </ng-template>
 
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='DatasourceDummy'
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='inputKontrakPengadaanService.dataDetail$ | async'
             [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
@@ -59,13 +59,11 @@
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-
                 <!-- editType Diubah ke datapickeredit dan setting edit parameter ke TglExpiredParams -->
                 <e-column [visible]="true" field='tanggal_maksimal_expired_date' [allowEditing]="true"
                     headerText='Max Expired' editType='datepickeredit' textAlign="left" headerTextAlign="center"
                     format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams">
                 </e-column>
-
                 <e-column [visible]="true" field='qty_kontrak_satuan_besar' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center">
                 </e-column>

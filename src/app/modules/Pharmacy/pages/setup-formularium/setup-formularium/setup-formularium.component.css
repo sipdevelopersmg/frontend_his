@@ -1,0 +1,24 @@
+#treeparent{
+    display: block;
+    max-width: 400px;
+    height: calc(100vh - 210px);
+    margin: auto;
+    overflow: auto;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+}
+
+#treeelement{
+    max-height: calc(100vh - 210px);
+    overflow: auto;
+}
+
+.tambah{
+    font-size: 23px;
+    margin-top: 1px;
+}
+
+.tambah_terapi{
+    font-size: 18px;
+    margin-top: 1px;
+}

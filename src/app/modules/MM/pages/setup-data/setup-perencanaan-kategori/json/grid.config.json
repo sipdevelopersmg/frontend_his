@@ -1,0 +1,20 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_kategori",
+        "headerText": "Id",
+        "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "kategori",
+        "headerText": "Katgegori",
+        "visible": true
+    }
+  ]
+}

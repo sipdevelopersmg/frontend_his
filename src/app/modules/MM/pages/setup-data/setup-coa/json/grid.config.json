@@ -1,0 +1,64 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_coa",
+        "headerText": "Id COA",
+        "visible": false
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_coa_parent",
+      "headerText": "Id COA Parent",
+      "visible": false
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_grup_coa",
+      "headerText": "Id Group Coa",
+      "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "kode_coa",
+        "headerText": "Group COA",
+        "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "deskripsi",
+      "headerText": "Description",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "saldo",
+      "headerText": "Saldo",
+      "visible": true
+    },
+    {
+      "allowEditing": true,
+      "allowSorting": false,
+      "allowFiltering": false,
+      "editType": "booleanedit",
+      "field": "is_active",
+      "headerText": "Status Active",
+      "type": "boolean",
+      "displayAsCheckBox": true,
+      "visible": true,
+      "width": 100
+    }
+  ]
+}

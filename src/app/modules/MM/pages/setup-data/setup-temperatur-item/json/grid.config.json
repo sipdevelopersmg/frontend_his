@@ -1,0 +1,28 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_temperatur_item",
+        "headerText": "Id",
+        "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "temperatur_item",
+        "headerText": "Temperatur Item",
+        "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "keterangan",
+      "headerText": "Keterangan",
+      "visible": true
+  }
+  ]
+}
