@@ -10,7 +10,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 
-import { CommandColumnService, EditService, GridModule, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
+import { CommandColumnService, DetailRowService, EditService, GridModule, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
 
 import { AtmLabelComponent } from './components/atoms/form/atm-label/atm-label.component';
 import { AtmValidatorsComponent } from './components/atoms/form/atm-validators/atm-validators.component';
@@ -188,7 +188,8 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         SearchService,
         PageService,
         CommandColumnService,
-        BsDropdownDirective
+        BsDropdownDirective,
+        DetailRowService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

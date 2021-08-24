@@ -1,7 +1,8 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
     <form [formGroup]="FormPendaftaranPasienBaruIrja">
         <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
-            <ng-wizard-step [title]="'No. Identitas'" [canExit]="PersonFound">
+            <!-- [canExit]="PersonFound" -->
+            <ng-wizard-step [title]="'No. Identitas'">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Cek No. Identitas</h5>
@@ -62,7 +63,8 @@
                 </div>
             </ng-wizard-step>
 
-            <ng-wizard-step [title]="'Detail Person'" [canExit]="nama_depan.valid && tanggal_lahir.valid">
+            <!-- [canExit]="nama_depan.valid && tanggal_lahir.valid" -->
+            <ng-wizard-step [title]="'Detail Person'">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Detail Person</h5>
@@ -282,10 +284,9 @@
                                 <atm-label [LabelCaption]="'Provinsi'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-dropdownlist #ProvinsiDropdown id="provinsi"
-                                    [dataSource]="ProvinsiDropdownDataSource | async"
+                                <ejs-dropdownlist #ProvinsiDropdown [dataSource]="ProvinsiDropdownDataSource | async"
                                     [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
-                                    (change)="handleDropdownProvinsiChange(ProvinsiDropdown.value)">
+                                    (change)="handleDropdownProvinsiChange($event)">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -296,9 +297,9 @@
                                 <atm-label [LabelCaption]="'Kota'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-dropdownlist #KotaDropdown id="kota" [dataSource]="KotaDropdownDataSource | async"
+                                <ejs-dropdownlist #KotaDropdown [dataSource]="KotaDropdownDataSource | async"
                                     [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
-                                    (change)="handleDropdownKotaChange(KotaDropdown.value)">
+                                    (change)="handleDropdownKotaChange($event)">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -341,6 +342,24 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <input type="text" class="form-control" name="RW" formControlName="rw">
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Is Default -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Alamat Tinggal'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                <div class="form-check form-select-sm">
+                                    <input #IsDefault class="form-check-input" type="checkbox"
+                                        [id]="'CheckboxIsDefault' + i" formControlName="is_default"
+                                        (change)="handleChangeRadioButtonIsDefault(i)">
+
+                                    <label class="form-check-label" [for]="'CheckboxIsDefault' + i">
+                                        Iya, alamat ini adalah alamat tinggal saat ini
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -401,6 +420,24 @@
 
                         <!-- Keterangan -->
                         <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+
+                        <!-- Is Default -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Kontak Person Default'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                <div class="form-check form-select-sm">
+                                    <input class="form-check-input" type="checkbox"
+                                        [id]="'CheckboxKontakPersonIsDefault' + i" formControlName="is_default"
+                                        (change)="handleChangeCheckboxKontakPersonIsDefault(i)">
+
+                                    <label class="form-check-label" [for]="'CheckboxKontakPersonIsDefault' + i">
+                                        Iya, ini adalah kontak person default
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </ng-wizard-step>
@@ -415,8 +452,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
                                 <button class="btn btn-primary btn-sm" type="button"
                                     (click)="handleClickTambahFormArray('Debitur')">
-                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Debitur
-                                </button>
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Debitur</button>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
                                 <button class="btn btn-warning btn-sm" type="button"
@@ -490,27 +526,46 @@
                             [IsFormControlInvalid]="item.get('keterangan').invalid"
                             [ValidatorsCaption]="'Keterangan Tidak Boleh Kosong'">
                         </mol-input-textarea>
+
+                        <!-- Is Default -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Debitur Default'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                <div class="form-check form-select-sm">
+                                    <input class="form-check-input" type="checkbox"
+                                        [id]="'CheckboxDebiturIsDefault' + i" formControlName="is_default"
+                                        (change)="handleChangeCheckboxDebiturIsDefault(i)">
+
+                                    <label class="form-check-label" [for]="'CheckboxDebiturIsDefault' + i">
+                                        Iya, ini adalah debitur default
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </ng-wizard-step>
 
-            <!-- <ng-wizard-step [title]="'Upload Foto Pasien'">
+            <!-- [canEnter]="SubmittedForm" -->
+            <ng-wizard-step [title]="'Upload Foto Pasien'">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Upload Foto</h5>
                     </div>
                 </div>
 
-                <div class="row pt-2" formGroupName="person">
+                <div class="row pt-2">
                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                        <img [src]="url" class="img-thumbnail" width="150px"
-                            style="margin-bottom: 20px; max-width: 150px;">
+                        <img [src]="url" class="img-thumbnail"
+                            style="margin-bottom: 20px; width: 112px ; max-width: 112px; height: 150.4px; max-height: 150.4px;">
                         <br />
-                        <input type='file' formControlName="path_foto" class="form-control"
-                            (change)="onSelectFile($event)">
+                        <input #PathFoto type='file' class="form-control"
+                            (change)="onSelectFile($event, PathFoto.value)" accept="image/*">
                     </div>
                 </div>
-            </ng-wizard-step> -->
+            </ng-wizard-step>
         </ng-wizard>
     </form>
 </org-card-layout>

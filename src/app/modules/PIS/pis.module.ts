@@ -22,7 +22,7 @@ import { SetupBahasaComponent } from './pages/setup-data/setup-bahasa/setup-baha
 import { SetupKebangsaanComponent } from './pages/setup-data/setup-kebangsaan/setup-kebangsaan.component';
 import { SetupEtnisComponent } from './pages/setup-data/setup-etnis/setup-etnis.component';
 import { ListPasienComponent } from './pages/IRJA/pendaftaran-pasien-baru/list-pasien/list-pasien.component';
-import { EditPasienComponent } from './pages/IRJA/pendaftaran-pasien-baru/edit-pasien/edit-pasien.component';
+import { EditPasienIRJAComponent } from './pages/IRJA/pendaftaran-pasien-baru/edit-pasien/edit-pasien.component';
 import { SetupJobTypeComponent } from './pages/setup-data/setup-job-type/setup-job-type.component';
 import { SetupEducationComponent } from './pages/setup-data/setup-education/setup-education.component';
 import { SetupSmfDokterComponent } from './pages/setup-data/setup-smf-dokter/setup-smf-dokter.component';
@@ -57,7 +57,7 @@ const ngWizardConfig: NgWizardConfig = {
         SetupKebangsaanComponent,
         SetupEtnisComponent,
         ListPasienComponent,
-        EditPasienComponent,
+        EditPasienIRJAComponent,
         SetupJobTypeComponent,
         SetupEducationComponent,
         SetupSmfDokterComponent,
