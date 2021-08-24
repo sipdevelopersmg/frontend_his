@@ -4,6 +4,7 @@ import { AdmisiPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawa
 import { AntrianPasienRawatJalanComponent } from "./pages/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.component";
 import { DaftarPasienComponent } from "./pages/IRJA/daftar-pasien/daftar-pasien.component";
 import { DaftarUlangPasienComponent } from "./pages/IRJA/daftar-ulang-pasien/daftar-ulang-pasien.component";
+import { EditPasienIRJAComponent } from "./pages/IRJA/pendaftaran-pasien-baru/edit-pasien/edit-pasien.component";
 import { PendaftaranPasienBaruComponent } from "./pages/IRJA/pendaftaran-pasien-baru/input-pasien/pendaftaran-pasien-baru.component";
 import { ListPasienComponent } from "./pages/IRJA/pendaftaran-pasien-baru/list-pasien/list-pasien.component";
 import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component";
@@ -63,6 +64,7 @@ const pisRoutes: Routes = [
             { path: "antrian-pasien-rawat-jalan", component: AntrianPasienRawatJalanComponent, data: { title: "Antrian Pasien Rawat Jalan" }, },
             { path: "pendaftaran-ulang-pasien", component: DaftarUlangPasienComponent, data: { title: "Pendaftaran Ulang Pasien Rawat Jalan" }, },
             { path: "daftar-pasien", component: DaftarPasienComponent, data: { title: "Daftar Pasien Rawat Jalan" }, },
+            { path: "edit-pasien", component: EditPasienIRJAComponent, data: { title: "Edit Pasien Rawat Jalan" } },
             { path: "pelayanan-pasien-irja", component: AdmisiPasienRawatJalanComponent, data: { title: "Pelayanan Pasien Rawat Jalan" }, },
         ]
     },

@@ -24,7 +24,7 @@ interface IPerson {
     id_bahasa?: number;
     id_last_education?: number;
     id_job_type?: number;
-    user_created: number
+    user_created: number;
 }
 
 interface IAlamatPerson {
@@ -34,7 +34,7 @@ interface IAlamatPerson {
     rw?: string;
     kelurahan?: string;
     kode_wilayah: string;
-    user_created: number
+    user_created: number;
 }
 
 interface IKontakPerson {
@@ -43,7 +43,7 @@ interface IKontakPerson {
     office_phone?: string;
     email?: string;
     keterangan?: string;
-    user_created: number
+    user_created: number;
 }
 
 interface IDebiturPasien {
@@ -51,7 +51,7 @@ interface IDebiturPasien {
     no_member: string;
     tgl_aktif_member?: Date;
     tgl_expired_member?: Date;
-    keterangan: string
+    keterangan: string;
 }
 
 interface IPasien {
@@ -85,7 +85,13 @@ export class GetAllPasienModel implements HttpResponseModel {
  */
 export class GetByIdPasienModel implements HttpResponseModel {
     responseResult: boolean;
-    data: PersonModel;
+    data: {
+        person: IPerson,
+        alamatPersons: IAlamatPerson[],
+        kontakPersons: IKontakPerson[],
+        debiturPasiens: IDebiturPasien[],
+        pasien: IPasien
+    };
     message: string;
 }
 
@@ -98,4 +104,15 @@ export class PostSavePendaftaranPasienBaruModel implements HttpResponseModel {
     data: number;
     message: string;
 }
+
+/**
+ * @PostUploadFotoPersonModel response model setelah request Post Upload Foto Person
+ * @Key : { responseResult: boolean; data: string; message: string }
+ */
+export class PostUploadFotoPersonModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
+
 

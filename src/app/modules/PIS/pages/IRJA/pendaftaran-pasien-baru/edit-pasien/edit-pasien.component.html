@@ -1,1 +1,36 @@
-<p>edit-pasien works!</p>
+<org-card-layout>
+    <form [formGroup]="FormEditPasien" class="p-2">
+        <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
+            <!-- Data -->
+            <org-tabs-item>
+                <org-tabs-label [Id]="'Data'">Detail Person</org-tabs-label>
+                <org-tabs-body>
+                    <div class="row mb-2" formGroupName="person">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- No Identitas -->
+                            <mol-input-text [label]="'No Identitas'" formControlName="no_identitas">
+                            </mol-input-text>
+                        </div>
+                    </div>
+                </org-tabs-body>
+            </org-tabs-item>
+
+            <!-- Alamats -->
+            <org-tabs-item>
+                <org-tabs-label [Id]="'Input'">Alamat</org-tabs-label>
+                <org-tabs-body>
+                    <div class="row mb-2" formArrayName="alamat_person">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2"
+                            *ngFor="let item of FormEditPasien.get('alamat_person')['controls']; let i = index"
+                            [formGroupName]="i">
+
+                            <!-- Alamat Person -->
+                            <mol-input-text [label]="'Alamat Lengkap'" formControlName="alamat_lengkap">
+                            </mol-input-text>
+                        </div>
+                    </div>
+                </org-tabs-body>
+            </org-tabs-item>
+        </org-tabs>
+    </form>
+</org-card-layout>

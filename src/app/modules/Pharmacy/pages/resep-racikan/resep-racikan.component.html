@@ -1,0 +1,28 @@
+<org-card-layout>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0 text-biru-muda">Resep Racikan Example</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ejs-grid #GridResepRacikan [dataSource]="GridResepRacikanDatasource" height="calc(100vh - 13rem)"
+                        gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" (load)="onLoad($event)">
+                        <e-columns>
+                            <e-column field="id_obat" headerText="Nama Obat" textAlign="Left" [visible]="false">
+                            </e-column>
+                            <e-column field="nama_obat" headerText="Nama Obat" textAlign="Left"></e-column>
+                            <e-column field="jumlah" headerText="Jumlah" textAlign="Center" format="N1"></e-column>
+                            <e-column field="satuan" headerText="Satuan" textAlign="Left"></e-column>
+                            <e-column field="harga" headerText="Harga (Rp)" textAlign="Right" format="N2"></e-column>
+                            <e-column field="diskon" headerText="Diskon (%)" textAlign="Right" format="N2"></e-column>
+                            <e-column field="subtotal" headerText="Subtotal (Rp)" textAlign="Right" format="N2">
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</org-card-layout>

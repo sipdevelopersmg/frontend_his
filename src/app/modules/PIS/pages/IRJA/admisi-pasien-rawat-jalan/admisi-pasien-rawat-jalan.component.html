@@ -1,7 +1,7 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
     <form [formGroup]="formAdmisiPasien">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <!-- No. Register -->
                 <mol-input-text [disabled]="true" formControlName="NoRegister" [label]="'No Register'"></mol-input-text>
 
@@ -57,9 +57,9 @@
                     [columns]="settingGrid.LookupKelasPelayanan.columns"
                     [filter-lookup]="settingGrid.LookupKelasPelayanan.filter" [label]="'Kelas Pelayanan'">
                 </org-input-look-up-kode>
-                
+
             </div>
-            <div class="col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <!-- No. Peserta -->
                 <mol-input-text formControlName="FromNoRegister" [label]="'No. Peserta'"></mol-input-text>
 
@@ -71,6 +71,7 @@
 
                 <!-- No. Karcis -->
                 <mol-input-text [label]="'No Karcis'"></mol-input-text>
+
                 <!-- Asal Rujukan -->
                 <!-- <org-input-look-up-kode (onGetSelectedData)="heandleSelected($event)" [columns]="settingGrid.LookupAsalRujukan.columns" [filter-lookup]="settingGrid.LookupAsalRujukan.filter" [label]="'Asal Rujukan'"></org-input-look-up-kode> -->
 

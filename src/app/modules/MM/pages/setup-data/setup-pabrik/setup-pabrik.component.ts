@@ -403,13 +403,6 @@ export class SetupPabrikComponent implements OnInit {
             });
     }
 
-    onTestError(): void {
-        this.setupPabrikService.onTestError()
-            .subscribe((result) => {
-                console.log(result);
-            });
-    }
-
     onLoadGridPabrik(args: any): void {
         document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.onKeyDownHandler.bind(this));
     }

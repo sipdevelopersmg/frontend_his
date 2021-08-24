@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { PersonModel, PostSavePendaftaranPasienBaruModel } from '../../../models/IRJA/pendaftaran_pasien_baru.model';
+import { GetByIdPasienModel, PersonModel, PostSavePendaftaranPasienBaruModel, PostUploadFotoPersonModel } from '../../../models/IRJA/pendaftaran_pasien_baru.model';
 import { AgamaService } from '../../setup-data/agama/agama.service';
 import { JenisIdentitasService } from '../../setup-data/jenis-identitas/jenis-identitas.service';
 import { MaritalStatusService } from '../../setup-data/marital-status/marital-status.service';
@@ -215,6 +215,32 @@ export class PendaftaranPasienBaruService {
     */
     onSavePendaftaranPasienBaruIrja(Person: PersonModel): Observable<PostSavePendaftaranPasienBaruModel> {
         return this.httpOperationService.defaultPostRequest(this.API_PENDAFTARAN_PASIEN_BARU_IRJA.POST_PENDAFTARAN_PASIEN_BARU, Person)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    /**
+     * @onUploadFotoPasienIRJA Method Obervable untuk mengupload Foto Pasien Baru
+     * @param id_person: number, form_file: string
+    */
+    onUploadFotoPasienIRJA(Data: FormData): Observable<PostUploadFotoPersonModel> {
+        return this.httpOperationService.defaultUploadFileRequest(this.API_PENDAFTARAN_PASIEN_BARU_IRJA.POST_UPLOAD_FOTO_PASIEN, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    /**
+     * @onGetPersonPasienDetailByPersonId Method Obervable untuk mendapatkan Person Detail
+     * @param id_person: number
+    */
+    onGetPersonPasienDetailByPersonId(PersonId: number): Observable<GetByIdPasienModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_PENDAFTARAN_PASIEN_BARU_IRJA.GET_PERSON_DETAIL_BY_PERSON_ID + PersonId)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

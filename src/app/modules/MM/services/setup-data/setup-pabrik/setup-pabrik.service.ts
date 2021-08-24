@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { ISetupPabrikModel,SetupPabrikModel } from '../../../models/setup-data/setup-pabrik/SetupPabrikModel';
+import { ISetupPabrikModel, SetupPabrikModel } from '../../../models/setup-data/setup-pabrik/SetupPabrikModel';
 
 import * as API_SETUP_PABRIK from 'src/app/api/MM/SETUP_DATA/SETUP_PABRIK';
 
@@ -27,15 +27,6 @@ export class SetupPabrikService {
 
     onPostSaveSetupPabrik(Data: ISetupPabrikModel): Observable<any> {
         return this.httpOperationService.defaultPostRequest(API_SETUP_PABRIK.INSERT, Data)
-            .pipe(
-                catchError((error: HttpErrorResponse): any => {
-                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-                })
-            );
-    }
-
-    onTestError(): Observable<any> {
-        return this.httpOperationService.onTestingError()
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
