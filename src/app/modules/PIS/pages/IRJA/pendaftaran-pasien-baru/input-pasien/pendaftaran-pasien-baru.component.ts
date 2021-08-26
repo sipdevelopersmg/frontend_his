@@ -19,8 +19,8 @@ import { KotaModel } from 'src/app/modules/PIS/models/setup-data/setup-kota.mode
 import { KecamatanModel } from 'src/app/modules/PIS/models/setup-data/setup-kecamatan.model';
 import { DebiturModel } from 'src/app/modules/PIS/models/setup-data/setup-debitur.model';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import Swal from 'sweetalert2';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-pendaftaran-pasien-baru',
@@ -415,8 +415,6 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             "rw": ["", []],
             "kelurahan": ["", []],
             "kode_wilayah": ["", Validators.required],
-            "kode_wilayah_kota": ["", []],
-            "kode_wilayah_provinsi": ["", []],
             "user_created": [this.UserData.id_user, []],
             "is_default": [false, Validators.required]
         });
@@ -456,40 +454,38 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     handleCheckPersonByNoIdentitas(NoIdentitas: string): void {
         this.pendafatranPasienBaruService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
-
                 if (result) {
                     const NoRekamMedis = result.data.no_rekam_medis;
 
                     // ** Terdaftar sebagai Person / Dokter, tetapi belum terdaftar sebagai Pasien
                     if (NoRekamMedis === "") {
-
                         this.FormState = "Edit";
-
+                        this.onResetForm(true);
                         this.onHandlingPersonSudahAda(result.data.id_person);
-
-
                     }
                     // ** Terdaftar sebagai Pasien
                     else {
                         this.utilityService.onShowingCustomAlert('error', 'NIK Pasien Ditemukan', `Dengan Nomor RM ${NoRekamMedis}`)
                             .then(() => {
                                 this.PersonFound = false;
+                                this.FormState = "Edit";
                             });
                     }
                 } else {
-
                     this.FormState = "Insert";
 
                     this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Pasien')
                         .then(() => {
                             this.PersonFound = true;
 
+                            this.onResetForm(true)
+
                             setTimeout(() => {
                                 this.ngWizardService.next();
                             }, 250);
                         });
                 }
-            })
+            });
     }
 
     onHandlingPersonSudahAda(PersonId: number): void {
@@ -500,20 +496,35 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                     .then(() => {
                         this.PersonFound = true;
 
+                        // ** Remove info - info yg tidak ada didalam form
                         const Person: any = this.utilityHelperService.onRemoveInfo(result.data.person, ['is_active', 'time_created', 'user_deactived', 'time_deactived']);
                         this.FormPerson.setValue(Person);
 
-                        result.data.alamatPersons.forEach((e, index) => {
-                            const wilayahs = this.utilityHelperService.onSplitKodeWilayahKecamatan(e.kode_wilayah, { 'kode_wilayah_provinsi': 0, 'kode_wilayah_kota': 0 });
+                        // ** Push ke Form Alamats sesuai dengan Jumlah Alamat Person
+                        for (let i = 0; i < result.data.alamat_person.length - 1; i++) {
+                            this.FormAlamats.push(this.NewAlamat());
+                        }
 
-                            e['kode_wilayah_provinsi'] = wilayahs['kode_wilayah_provinsi'];
-                            e['kode_wilayah_kota'] = wilayahs['kode_wilayah_kota'];
-
-                            this.utilityHelperService.onRemoveInfo(result.data.alamatPersons[index], ['id_alamat_person', 'id_person', 'is_active', 'time_created', 'time_deactived', 'user_deactived'])
+                        // ** Remove info - info yg tidak ada didalam form
+                        result.data.alamat_person.forEach((e, index) => {
+                            this.utilityHelperService.onRemoveInfo(result.data.alamat_person[index], ['id_alamat_person', 'id_person', 'is_active', 'time_created', 'time_deactived', 'user_deactived']);
                         });
 
-                        const Alamats: any = result.data.alamatPersons;
+                        const Alamats: any = result.data.alamat_person;
                         this.FormAlamats.setValue(Alamats);
+
+                        // ** Push ke Form Alamats sesuai dengan Jumlah Alamat Person
+                        for (let i = 0; i < result.data.kontak_person.length - 1; i++) {
+                            this.FormKontaks.push(this.NewKontak());
+                        }
+
+                        // ** Remove info - info yg tidak ada didalam form
+                        result.data.kontak_person.forEach((e, index) => {
+                            this.utilityHelperService.onRemoveInfo(result.data.kontak_person[index], ['id_kontak_person', 'id_person', 'is_active', 'time_created', 'time_deactived', 'user_deactived']);
+                        });
+
+                        const Kontaks: any = result.data.kontak_person;
+                        this.FormKontaks.setValue(Kontaks);
 
                         setTimeout(() => {
                             this.ngWizardService.next();
@@ -643,7 +654,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             case "Cancel":
                 this.PersonFound = false;
                 this.SubmittedForm = false;
-                this.onResetForm();
+                this.onResetForm(false);
                 this.resetWizard();
                 break;
             case "Save":
@@ -657,7 +668,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                 }
                 break;
             case "SavePersonSudahAda":
-                console.log(this.FormPendaftaranPasienBaruIrja.value);
+                this.onSubmitFormPersonSudahAda();
                 break;
             default:
                 break;
@@ -678,7 +689,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                         denyButtonText: `Tidak, Lakukan Lain Kali`,
                     }).then((res) => {
                         if (res.isConfirmed) {
-                            this.onResetForm();
+                            this.onResetForm(false);
 
                             this.SubmittedForm = true;
 
@@ -690,7 +701,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                         } else if (res.isDenied) {
                             this.SubmittedForm = false;
 
-                            this.onResetForm();
+                            this.onResetForm(false);
 
                             this.resetWizard();
                         }
@@ -699,15 +710,18 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             });
     }
 
-    onResetForm(): void {
-        this.FormPendaftaranPasienBaruIrja.reset();
+    onResetForm(ReinputNoIdentitas: boolean): void {
+        if (!ReinputNoIdentitas) {
+            this.FormPendaftaranPasienBaruIrja.reset();
 
-        (<HTMLInputElement>document.getElementById("radioKewarganegaraanIndo")).checked = false;
-        (<HTMLInputElement>document.getElementById("radioKewarganegaraanAsing")).checked = false;
-        this.id_jenis_identitas.setValue(0);
-        this.no_identitas.setValue("");
+            (<HTMLInputElement>document.getElementById("radioKewarganegaraanIndo")).checked = false;
+            (<HTMLInputElement>document.getElementById("radioKewarganegaraanAsing")).checked = false;
+
+            this.id_jenis_identitas.setValue(0);
+            this.no_identitas.setValue("");
+        }
+
         this.no_kartu_keluarga.setValue("");
-
         this.nama_depan.setValue("");
         this.nama_belakang.setValue("");
         this.nama_panggilan.setValue("");
@@ -752,22 +766,31 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
         this.user_created.setValue(this.UserData.id_user);
 
-        if (this.FormAlamats.length > 1) {
+        if (this.FormAlamats.length > 0) {
             for (let i = 0; i < this.FormAlamats.length; i++) {
+                this.FormAlamats.reset();
                 this.FormAlamats.removeAt(i);
             }
+
+            this.FormAlamats.length == 0 ? this.FormAlamats.push(this.NewAlamat()) : null;
         }
 
-        if (this.FormKontaks.length > 1) {
+        if (this.FormKontaks.length > 0) {
             for (let i = 0; i < this.FormKontaks.length; i++) {
+                this.FormKontaks.reset();
                 this.FormKontaks.removeAt(i);
             }
+
+            this.FormKontaks.length == 0 ? this.FormKontaks.push(this.NewKontak()) : null;
         }
 
-        if (this.FormDebiturs.length > 1) {
+        if (this.FormDebiturs.length > 0) {
             for (let i = 0; i < this.FormDebiturs.length; i++) {
+                this.FormDebiturs.reset();
                 this.FormDebiturs.removeAt(i);
             }
+
+            this.FormDebiturs.length == 0 ? this.FormDebiturs.push(this.NewDebitur()) : null;
         }
     }
 
@@ -782,7 +805,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                 if (result) {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Foto Pasien Berhasil Diupload')
                         .then(() => {
-                            this.onResetForm();
+                            this.onResetForm(false);
 
                             this.resetWizard();
 
@@ -790,6 +813,51 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                         })
                 }
             })
+    }
+
+    onSubmitFormPersonSudahAda(): void {
+        const FormPendaftaranPasienPersonSudahAda = this.FormPendaftaranPasienBaruIrja.value;
+
+        FormPendaftaranPasienPersonSudahAda.id_person = FormPendaftaranPasienPersonSudahAda.person.id_person;
+
+        this.utilityHelperService.onRemoveInfo(FormPendaftaranPasienPersonSudahAda, ['alamat_person', 'kontak_person', 'person']);
+
+        this.pendafatranPasienBaruService.onSavePendaftaranPasienIrjaPersonSudahAda(FormPendaftaranPasienPersonSudahAda)
+            .subscribe((result) => {
+                if (result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pendaftaran Pasien Berhasil',
+                        text: 'Apakah Anda Ingin Mengupload Foto Pasien?',
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: `Yes`,
+                        denyButtonText: `Tidak, Lakukan Lain Kali`,
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            this.onResetForm(false);
+
+                            this.SubmittedForm = true;
+
+                            setTimeout(() => {
+                                this.PersonIdResponseData = FormPendaftaranPasienPersonSudahAda.id_person;
+
+                                this.ngWizardService.next();
+
+                                this.FormState = "Insert";
+                            }, 250);
+                        } else if (res.isDenied) {
+                            this.SubmittedForm = false;
+
+                            this.onResetForm(false);
+
+                            this.resetWizard();
+
+                            this.FormState = "Insert";
+                        }
+                    });
+                }
+            });
     }
 
     get id_jenis_identitas() { return this.FormPendaftaranPasienBaruIrja.get("person.id_jenis_identitas") }

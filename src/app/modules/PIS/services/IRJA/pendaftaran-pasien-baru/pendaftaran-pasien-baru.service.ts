@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { GetByIdPasienModel, PersonModel, PostSavePendaftaranPasienBaruModel, PostUploadFotoPersonModel } from '../../../models/IRJA/pendaftaran_pasien_baru.model';
+import { GetByIdPasienModel, IPersonSudahAdaModel, PersonModel, PostSavePendaftaranPasienBaruModel, PostSavePendaftaranPasienPersonSudahAdaModel, PostUploadFotoPersonModel } from '../../../models/IRJA/pendaftaran_pasien_baru.model';
 import { AgamaService } from '../../setup-data/agama/agama.service';
 import { JenisIdentitasService } from '../../setup-data/jenis-identitas/jenis-identitas.service';
 import { MaritalStatusService } from '../../setup-data/marital-status/marital-status.service';
@@ -246,5 +246,19 @@ export class PendaftaranPasienBaruService {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
+    }
+
+    /**
+     * @onSavePendaftaranPasienIrjaPersonSudahAda Method Obervable untuk menyimpan Pendaftaran Pasien IRJA Person Sudah Ada
+     * @param Person IPersonSudahAdaModel
+    */
+    onSavePendaftaranPasienIrjaPersonSudahAda(Person: IPersonSudahAdaModel): Observable<PostSavePendaftaranPasienPersonSudahAdaModel> {
+        return this.httpOperationService.defaultPostRequest(
+            this.API_PENDAFTARAN_PASIEN_BARU_IRJA.POST_PENDAFTARAN_PASIEN_PERSON_SUDAH_ADA, Person
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
     }
 }

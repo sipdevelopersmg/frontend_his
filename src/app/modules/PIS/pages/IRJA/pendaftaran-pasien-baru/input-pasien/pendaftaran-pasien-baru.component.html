@@ -1,8 +1,7 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
     <form [formGroup]="FormPendaftaranPasienBaruIrja">
         <ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
-            <!-- [canExit]="PersonFound" -->
-            <ng-wizard-step [title]="'No. Identitas'">
+            <ng-wizard-step [title]="'No. Identitas'" [canExit]="PersonFound">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Cek No. Identitas</h5>
@@ -63,8 +62,7 @@
                 </div>
             </ng-wizard-step>
 
-            <!-- [canExit]="nama_depan.valid && tanggal_lahir.valid" -->
-            <ng-wizard-step [title]="'Detail Person'">
+            <ng-wizard-step [title]="'Detail Person'" [canExit]="nama_depan.valid && tanggal_lahir.valid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Detail Person</h5>
@@ -74,26 +72,36 @@
                 <div class="row pt-2" formGroupName="person">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <!-- No Kartu Keluarga -->
-                        <mol-input-text [label]="'No. Kartu Keluarga'" formControlName="no_kartu_keluarga">
+                        <mol-input-text [label]="'No. Kartu Keluarga'" formControlName="no_kartu_keluarga"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- Nama Depan -->
                         <mol-input-text [label]="'Nama Depan *'" formControlName="nama_depan"
                             [IsFormControlInvalid]="nama_depan.invalid"
-                            [ValidatorsCaption]="'Nama Depan Tidak Boleh Kosong'">
+                            [ValidatorsCaption]="'Nama Depan Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- Nama Belakang -->
-                        <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"></mol-input-text>
+                        <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Nama Panggilan -->
-                        <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"></mol-input-text>
+                        <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Gelar Depan -->
-                        <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"></mol-input-text>
+                        <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Gelar Belakang -->
-                        <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"></mol-input-text>
+                        <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Gender -->
                         <div class="row mb-2">
@@ -102,7 +110,9 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #GenderDropdown id="gender" [dataSource]="GenderDropdownDatasource"
-                                    [fields]="GenderDropdownField" [allowFiltering]="true" formControlName="gender">
+                                    [fields]="GenderDropdownField" [allowFiltering]="true" formControlName="gender"
+                                    [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
 
                                 <atm-validators [IsFormControlTouched]="gender.touched"
@@ -115,11 +125,14 @@
                         <!-- Golongan Darah -->
                         <mol-input-text [label]="'Gol Darah *'" formControlName="gol_darah"
                             [IsFormControlInvalid]="gol_darah.invalid"
-                            [ValidatorsCaption]="'Golongan Darah Tidak Boleh Kosong'">
+                            [ValidatorsCaption]="'Golongan Darah Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- Tempat Lahir -->
-                        <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"></mol-input-text>
+                        <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Tanggal Lahir -->
                         <div class="row mb-2">
@@ -128,7 +141,8 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker #TglLahirDatepicker [format]="'dd/MM/yyyy'"
-                                    formControlName="tanggal_lahir">
+                                    formControlName="tanggal_lahir" [readonly]="FormState != 'Insert'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-datepicker>
 
                                 <atm-validators [IsFormControlTouched]="tanggal_lahir.touched"
@@ -141,10 +155,14 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <!-- Tinggi Badan -->
-                        <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"></mol-input-text>
+                        <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Berat Badan -->
-                        <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"></mol-input-text>
+                        <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Marital Status -->
                         <div class="row mb-2">
@@ -155,7 +173,8 @@
                                 <ejs-dropdownlist #MaritalStatusDropdown id="marital"
                                     [dataSource]="MaritalStatusDropdownDatasource | async"
                                     [fields]="MaritalStatusDropdownField" [allowFiltering]="true"
-                                    formControlName="id_marital_status">
+                                    formControlName="id_marital_status" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -168,7 +187,8 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #AgamaDropdown id="agama"
                                     [dataSource]="AgamaDropdownDatasource | async" [fields]="AgamaDropdownField"
-                                    [allowFiltering]="true" formControlName="id_agama">
+                                    [allowFiltering]="true" formControlName="id_agama" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -182,7 +202,8 @@
                                 <ejs-dropdownlist #KebangsaanDropdown id="kebangsaan"
                                     [dataSource]="KebangsaanDropdownDatasource | async"
                                     [fields]="KebangsaanDropdownField" [allowFiltering]="true"
-                                    formControlName="id_kebangsaan">
+                                    formControlName="id_kebangsaan" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -195,7 +216,8 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #EtnisDropdown id="id_etnis"
                                     [dataSource]="EtnisDropdownDatasource | async" [fields]="EtnisDropdownField"
-                                    [allowFiltering]="true" formControlName="id_etnis">
+                                    [allowFiltering]="true" formControlName="id_etnis" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -208,7 +230,8 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #BahasaDropdown id="id_bahasa"
                                     [dataSource]="BahasaDropdownDatasource | async" [fields]="BahasaDropdownField"
-                                    [allowFiltering]="true" formControlName="id_bahasa">
+                                    [allowFiltering]="true" formControlName="id_bahasa" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -221,7 +244,9 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #EducationDropdown id="id_last_education"
                                     [dataSource]="EducationDropdownDatasource | async" [fields]="EducationDropdownField"
-                                    [allowFiltering]="true" formControlName="id_last_education">
+                                    [allowFiltering]="true" formControlName="id_last_education"
+                                    [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -234,7 +259,9 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #JobTypeDropdown id="id_job_type"
                                     [dataSource]="JobTypeDropdownDatasource | async" [fields]="JobTypeDropdownField"
-                                    [allowFiltering]="true" formControlName="id_job_type">
+                                    [allowFiltering]="true" formControlName="id_job_type"
+                                    [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
                                 </ejs-dropdownlist>
                             </div>
                         </div>
@@ -251,13 +278,13 @@
                         <div class="row justify-content-end">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
                                 <button class="btn btn-primary btn-sm" type="button"
-                                    (click)="handleClickTambahFormArray('Alamat')">
+                                    (click)="handleClickTambahFormArray('Alamat')" [disabled]="FormState == 'Edit'">
                                     <i class="fas fa-plus-circle fa-sm"></i> Tambah Alamat
                                 </button>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
                                 <button class="btn btn-warning btn-sm" type="button"
-                                    [disabled]="this.FormAlamats.length == 1"
+                                    [disabled]="this.FormAlamats.length == 1 || FormState == 'Edit'"
                                     (click)="handleClickHapusFormArray('Alamat')">
                                     <i class="fas fa-trash-alt fa-sm"></i> Hapus Alamat
                                 </button>
@@ -275,11 +302,12 @@
                         <!-- Alamat Lengkap -->
                         <mol-input-textarea [label]="'Alamat Lengkap *'" formControlName="alamat_lengkap"
                             [IsFormControlInvalid]="item.get('alamat_lengkap').invalid"
-                            [ValidatorsCaption]="'Alamat Lengkap Tidak Boleh Kosong'">
+                            [ValidatorsCaption]="'Alamat Lengkap Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-textarea>
 
                         <!-- Provinsi -->
-                        <div class="row mb-2">
+                        <div class="row mb-2" [hidden]="FormState == 'Edit'">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <atm-label [LabelCaption]="'Provinsi'"></atm-label>
                             </div>
@@ -292,7 +320,7 @@
                         </div>
 
                         <!-- Kota -->
-                        <div class="row mb-2">
+                        <div class="row mb-2" [hidden]="FormState == 'Edit'">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <atm-label [LabelCaption]="'Kota'"></atm-label>
                             </div>
@@ -305,7 +333,7 @@
                         </div>
 
                         <!-- Kecamatan -->
-                        <div class="row mb-2">
+                        <div class="row mb-2" [hidden]="FormState == 'Edit'">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <atm-label [LabelCaption]="'Kecamatan *'"></atm-label>
                             </div>
@@ -324,10 +352,14 @@
                         </div>
 
                         <!-- Kelurahan -->
-                        <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"></mol-input-text>
+                        <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Kode Pos -->
-                        <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos"></mol-input-text>
+                        <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- RT / RW -->
                         <div class="row mb-2">
@@ -337,10 +369,12 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <input type="text" class="form-control" name="RT" formControlName="rt">
+                                        <input type="text" class="form-control" name="RT" formControlName="rt"
+                                            [class]="FormState == 'Insert' ? null : 'detail-input-field'">
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <input type="text" class="form-control" name="RW" formControlName="rw">
+                                        <input type="text" class="form-control" name="RW" formControlName="rw"
+                                            [class]="FormState == 'Insert' ? null : 'detail-input-field'">
                                     </div>
                                 </div>
                             </div>
@@ -355,7 +389,8 @@
                                 <div class="form-check form-select-sm">
                                     <input #IsDefault class="form-check-input" type="checkbox"
                                         [id]="'CheckboxIsDefault' + i" formControlName="is_default"
-                                        (change)="handleChangeRadioButtonIsDefault(i)">
+                                        (change)="handleChangeRadioButtonIsDefault(i)"
+                                        [attr.disabled]="FormState == 'Edit' ? true : null">
 
                                     <label class="form-check-label" [for]="'CheckboxIsDefault' + i">
                                         Iya, alamat ini adalah alamat tinggal saat ini
@@ -376,13 +411,13 @@
                         <div class="row justify-content-end">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
                                 <button class="btn btn-primary btn-sm" type="button"
-                                    (click)="handleClickTambahFormArray('Kontak')">
+                                    (click)="handleClickTambahFormArray('Kontak')" [disabled]="FormState == 'Edit'">
                                     <i class="fas fa-plus-circle fa-sm"></i> Tambah Kontak
                                 </button>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-start">
                                 <button class="btn btn-warning btn-sm" type="button"
-                                    [disabled]="this.FormKontaks.length == 1"
+                                    [disabled]="this.FormKontaks.length == 1 || FormState == 'Edit'"
                                     (click)="handleClickHapusFormArray('Kontak')">
                                     <i class="fas fa-trash-alt fa-sm"></i> Hapus Kontak
                                 </button>
@@ -400,26 +435,33 @@
                         <!-- No. Handphone -->
                         <mol-input-text [label]="'No. Handphone *'" formControlName="hand_phone"
                             [IsFormControlInvalid]="item.get('hand_phone').invalid"
-                            [ValidatorsCaption]="'No. Handphone Tidak Boleh Kosong'">
+                            [ValidatorsCaption]="'No. Handphone Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- No. Telepon Rumah -->
                         <mol-input-text [label]="'No. Telepon Rumah *'" formControlName="home_phone"
                             [IsFormControlInvalid]="item.get('home_phone').invalid"
-                            [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'">
+                            [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- No. Telepon Kantor -->
                         <mol-input-text [label]="'No. Telepon Kantor *'" formControlName="office_phone"
                             [IsFormControlInvalid]="item.get('office_phone').invalid"
-                            [ValidatorsCaption]="'No. Telepon Kantor Tidak Boleh Kosong'">
+                            [ValidatorsCaption]="'No. Telepon Kantor Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- Email -->
-                        <mol-input-text [label]="'Email'" formControlName="email"></mol-input-text>
+                        <mol-input-text [label]="'Email'" formControlName="email"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
 
                         <!-- Keterangan -->
-                        <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+                        <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-textarea>
 
                         <!-- Is Default -->
                         <div class="row mb-2">
@@ -430,7 +472,8 @@
                                 <div class="form-check form-select-sm">
                                     <input class="form-check-input" type="checkbox"
                                         [id]="'CheckboxKontakPersonIsDefault' + i" formControlName="is_default"
-                                        (change)="handleChangeCheckboxKontakPersonIsDefault(i)">
+                                        (change)="handleChangeCheckboxKontakPersonIsDefault(i)"
+                                        [attr.disabled]="FormState == 'Edit' ? true : null">
 
                                     <label class="form-check-label" [for]="'CheckboxKontakPersonIsDefault' + i">
                                         Iya, ini adalah kontak person default
@@ -548,8 +591,7 @@
                 </div>
             </ng-wizard-step>
 
-            <!-- [canEnter]="SubmittedForm" -->
-            <ng-wizard-step [title]="'Upload Foto Pasien'">
+            <ng-wizard-step [title]="'Upload Foto Pasien'" [canEnter]="SubmittedForm">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 class="mb-0 text-hitam-muda">Upload Foto</h5>

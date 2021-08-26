@@ -1,1 +1,13 @@
-<p>daftar-pasien works!</p>
+<org-card-layout>
+    <div class="row pt-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-grid #GridData [grid-height]="'calc(100vh - 19rem)'" [grid-DataSource]="GridDatasource | async"
+                [grid-paging]="true" [grid-initial-page]="GridPageSettings" [grid-editSettings]="GridDataEditSettings"
+                [grid-lines]="'Both'" [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridDaftarPasienIrja"
+                (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
+                (command-click)="handleClickCommandGrid($event)" (action-complete)="handleActionComplete($event)">
+            </mol-grid>
+        </div>
+    </div>
+</org-card-layout>

@@ -70,28 +70,12 @@ export interface PersonModel {
 }
 
 /**
- * @GetAllPasienModel response model setelah request Get All Bahasa
- * @Key : { responseResult: boolean; data: BahasaModel[]; message: string }
- */
-export class GetAllPasienModel implements HttpResponseModel {
-    responseResult: boolean;
-    data: PersonModel[];
-    message: string;
-}
-
-/**
- * @GetByIdPasienModel response model setelah request Get By Id Bahasa
+ * @GetByIdPasienModel response model setelah request Get By Id Pasien
  * @Key : { responseResult: boolean; data: BahasaModel; message: string }
  */
 export class GetByIdPasienModel implements HttpResponseModel {
     responseResult: boolean;
-    data: {
-        person: IPerson,
-        alamatPersons: IAlamatPerson[],
-        kontakPersons: IKontakPerson[],
-        debiturPasiens: IDebiturPasien[],
-        pasien: IPasien
-    };
+    data: PersonModel;
     message: string;
 }
 
@@ -108,11 +92,30 @@ export class PostSavePendaftaranPasienBaruModel implements HttpResponseModel {
 /**
  * @PostUploadFotoPersonModel response model setelah request Post Upload Foto Person
  * @Key : { responseResult: boolean; data: string; message: string }
- */
+*/
 export class PostUploadFotoPersonModel implements HttpResponseModel {
     responseResult: boolean;
     data: string;
     message: string;
 }
 
+/**
+ * @IPersonSudahAdaModel response model untuk request Post Save Pendaftaran Pasien Person Sudah Ada
+ * @Key : { id_person: number; pasien: IPasien; debitur_pasien: IDebiturPasien[] }
+*/
+export interface IPersonSudahAdaModel {
+    id_person: number;
+    pasien: IPasien;
+    debitur_pasien: IDebiturPasien[];
+}
+
+/**
+ * @PostSavePendaftaranPasienPersonSudahAdaModel response model setelah request Post Save Pasien Person Sudah Ada
+ * @Key : { responseResult: boolean; data: string; message: string }
+ */
+export class PostSavePendaftaranPasienPersonSudahAdaModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
 

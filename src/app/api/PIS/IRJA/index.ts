@@ -1,7 +1,9 @@
 import * as PENDAFTARAN_PASIEN_BARU from './PENDAFTARAN_PASIEN_BARU';
+import * as DAFTAR_PASIEN_IRJA from './DAFTAR_PASIEN_IRJA';
 
 export const IRJA = Object.assign({},
     {
         "PENDAFTARAN_PASIEN_BARU": PENDAFTARAN_PASIEN_BARU,
+        "DAFTAR_PASIEN_IRJA": DAFTAR_PASIEN_IRJA
     }
 )

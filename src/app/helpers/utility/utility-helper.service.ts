@@ -27,12 +27,14 @@ export class UtilityHelperService {
      * @Keterangan Array 0 untuk kode_provinsi
      * @Keterangan Array 0 + Array 1 untuk kode_kota
     */
-    onSplitKodeWilayahKecamatan(kode_kecamatan: any, Into: object): object {
+    onSplitKodeWilayahKecamatan(kode_kecamatan: any): object {
         const arr = kode_kecamatan.split('.');
 
-        Into['kode_wilayah_provinsi'] = arr[0];
-        Into['kode_wilayah_kota'] = `${arr[0]}.${arr[1]}`;
+        const wilayah = {
+            kode_wilayah_provinsi: arr[0],
+            kode_wilayah_kota: `${arr[0]}.${arr[1]}`,
+        }
 
-        return Into;
+        return wilayah;
     }
 }
