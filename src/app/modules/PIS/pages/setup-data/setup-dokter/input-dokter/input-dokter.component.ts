@@ -3,11 +3,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { NgWizardConfig, NgWizardService, StepChangedArgs, STEP_STATE, THEME } from 'ng-wizard';
 import { Observable } from 'rxjs';
+import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { AgamaModel } from 'src/app/modules/PIS/models/setup-data/agama.model';
 import { JenisIdentitasModel } from 'src/app/modules/PIS/models/setup-data/jenis-identitas.model';
 import { MaritalStatusModel } from 'src/app/modules/PIS/models/setup-data/marital_status.model';
 import { BahasaModel } from 'src/app/modules/PIS/models/setup-data/setup-bahasa.model';
+import { DokterModel, IPersonDokterSudahAdaModel } from 'src/app/modules/PIS/models/setup-data/setup-dokter.model';
 import { EducationModel } from 'src/app/modules/PIS/models/setup-data/setup-education.model';
 import { EtnisModel } from 'src/app/modules/PIS/models/setup-data/setup-etnis.model';
 import { JobTypeModel } from 'src/app/modules/PIS/models/setup-data/setup-job-type.model';
@@ -20,6 +22,7 @@ import { SpesialisasiDokterModel } from 'src/app/modules/PIS/models/setup-data/s
 import { SetupDokterService } from 'src/app/modules/PIS/services/setup-data/setup-dokter/setup-dokter.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-input-dokter',
@@ -27,6 +30,8 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
     styleUrls: ['./input-dokter.component.css']
 })
 export class InputDokterComponent implements OnInit {
+
+    FormState = "Insert";
 
     /** @UserData Variable User Data Get dari Session Storage */
     UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
@@ -56,9 +61,10 @@ export class InputDokterComponent implements OnInit {
         toolbarSettings: {}
     };
 
+    url: any = '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png';
+
     /** @PersonFound Berisikan true / false, setelah Check No Identitas */
     PersonFound: boolean = false;
-    IsPersonExisting: boolean = false;
 
     /**
      * @JenisIdentitasDropdownDatasource 
@@ -313,11 +319,20 @@ export class InputDokterComponent implements OnInit {
     */
     StatusDokterDropdownField: object = { text: 'status_dokter', value: 'id_status_dokter' };
 
+    SubmittedForm = false;
+
+    SelectedCheckboxAlamatsIndex: any[] = [];
+    SelectedCheckboxKontaksIndex: any[] = [];
+
+    PersonIdResponseData: number;
+    PathFotoUrl: any;
+
     constructor(
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         private ngWizardService: NgWizardService,
-        private setupDokterService: SetupDokterService
+        private setupDokterService: SetupDokterService,
+        private utilityHelperService: UtilityHelperService
     ) { }
 
     ngOnInit(): void {
@@ -329,6 +344,7 @@ export class InputDokterComponent implements OnInit {
     onSetFormSetupDokterAttribute(): void {
         this.FormInputDokter = this.formBuilder.group({
             "person": this.formBuilder.group({
+                "id_person": [0, []],
                 "id_jenis_identitas": [0, []],
                 "no_identitas": ["", [Validators.required]],
                 "no_kartu_keluarga": ["", []],
@@ -390,6 +406,7 @@ export class InputDokterComponent implements OnInit {
             "kelurahan": ["", []],
             "kode_wilayah": ["", Validators.required],
             "user_created": [this.UserData.id_user, []],
+            "is_default": [false, Validators.required]
         });
     }
 
@@ -401,15 +418,20 @@ export class InputDokterComponent implements OnInit {
             "email": ["", []],
             "keterangan": ["", []],
             "user_created": [this.UserData.id_user, []],
+            "is_default": [false, Validators.required]
         });
     }
 
     /** @stepChanged Function untuk melihat ketika Step di Wizard berganti */
     stepChanged(args: StepChangedArgs): void {
         if (args.step.index == 4) {
-            this.ButtonNav = [
-                { Id: 'Save', Captions: 'Simpan', 'Icons1': 'fa-save' }
-            ];
+            this.FormState == "Insert" ?
+                this.ButtonNav = [
+                    { Id: 'Save', Captions: 'Simpan', 'Icons1': 'fa-save' }
+                ] :
+                this.ButtonNav = [
+                    { Id: 'SavePersonSudahAda', Captions: 'Simpan', 'Icons1': 'fa-save' }
+                ];
         } else if (args.step.index == 5) {
             this.ButtonNav = [
                 { Id: 'Upload', Captions: 'Upload', 'Icons1': 'fa-file-upload' },
@@ -441,38 +463,83 @@ export class InputDokterComponent implements OnInit {
     handleCheckPersonByNoIdentitas(NoIdentitas: string): void {
         this.setupDokterService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
-
                 if (result) {
                     const kode_dokter = result.data.kode_dokter;
 
                     // ** Terdaftar sebagai Person / Pasien, tetapi belum terdaftar sebagai Dokter
                     if (kode_dokter == "") {
-                        this.PersonFound = true;
-                        this.IsPersonExisting = true;
-
-                        this.utilityService.onShowingCustomAlert('info', 'Person Ditemukan', 'Anda Dapat Melanjutkan Input Dokter')
-                            .then(() => {
-                                this.ngWizardService.next();
-                            })
+                        this.FormState = "Edit";
+                        this.onResetForm(true);
+                        this.onHandlingPersonSudahAda(result.data.id_person);
                     }
                     // ** Terdaftar sebagai Dokter
                     else {
                         this.utilityService.onShowingCustomAlert('error', 'Dokter Ditemukan', `Dengan Kode Dokter ${kode_dokter}`)
                             .then(() => {
                                 this.PersonFound = false;
-                                this.IsPersonExisting = true;
+                                this.FormState = "Edit";
                             });
                     }
                 } else {
-                    this.PersonFound = true;
-                    this.IsPersonExisting = false;
+                    this.FormState = "Insert";
 
                     this.utilityService.onShowingCustomAlert('info', 'Person Tidak Ditemukan', 'Anda Dapat Melanjutkan Input Data Dokter')
                         .then(() => {
-                            this.ngWizardService.next();
+                            this.PersonFound = true;
+
+                            this.onResetForm(true)
+
+                            setTimeout(() => {
+                                this.ngWizardService.next();
+                            }, 250);
                         });
                 }
             })
+    }
+
+    onHandlingPersonSudahAda(PersonId: number): void {
+        this.setupDokterService.onGetPersonDokterDetailByPersonId(PersonId)
+            .subscribe((result) => {
+
+                this.utilityService.onShowingCustomAlert('info', 'Person Ditemukan', 'Anda Dapat Melanjutkan Input Data Dokter')
+                    .then(() => {
+                        this.PersonFound = true;
+
+                        // ** Remove info - info yg tidak ada didalam form
+                        const Person: any = this.utilityHelperService.onRemoveInfo(result.data.person, ['is_active', 'time_created', 'user_deactived', 'time_deactived']);
+                        this.FormPerson.setValue(Person);
+
+                        // ** Push ke Form Alamats sesuai dengan Jumlah Alamat Person
+                        for (let i = 0; i < result.data.alamat_person.length - 1; i++) {
+                            this.FormAlamats.push(this.NewAlamat());
+                        }
+
+                        // ** Remove info - info yg tidak ada didalam form
+                        result.data.alamat_person.forEach((e, index) => {
+                            this.utilityHelperService.onRemoveInfo(result.data.alamat_person[index], ['id_alamat_person', 'id_person', 'is_active', 'time_created', 'time_deactived', 'user_deactived']);
+                        });
+
+                        const Alamats: any = result.data.alamat_person;
+                        this.FormAlamats.setValue(Alamats);
+
+                        // ** Push ke Form Alamats sesuai dengan Jumlah Alamat Person
+                        for (let i = 0; i < result.data.kontak_person.length - 1; i++) {
+                            this.FormKontaks.push(this.NewKontak());
+                        }
+
+                        // ** Remove info - info yg tidak ada didalam form
+                        result.data.kontak_person.forEach((e, index) => {
+                            this.utilityHelperService.onRemoveInfo(result.data.kontak_person[index], ['id_kontak_person', 'id_person', 'is_active', 'time_created', 'time_deactived', 'user_deactived']);
+                        });
+
+                        const Kontaks: any = result.data.kontak_person;
+                        this.FormKontaks.setValue(Kontaks);
+
+                        setTimeout(() => {
+                            this.ngWizardService.next();
+                        }, 250);
+                    });
+            });
     }
 
     handleDropdownProvinsiChange(KodeProvinsi: string): void {
@@ -481,6 +548,46 @@ export class InputDokterComponent implements OnInit {
 
     handleDropdownKotaChange(KodeKota: string): void {
         this.setupDokterService.onGetDropdownKecamatanDatasourceByKotaId(KodeKota);
+    }
+
+    handleChangeRadioButtonIsDefault(CheckboxId: number): void {
+        this.SelectedCheckboxAlamatsIndex.sort();
+
+        const El = (<HTMLInputElement>document.getElementById('CheckboxIsDefault' + CheckboxId));
+
+        if (El.checked) {
+            if (this.SelectedCheckboxAlamatsIndex.indexOf(CheckboxId) < 0) {
+                this.SelectedCheckboxAlamatsIndex.push(CheckboxId);
+            }
+        } else {
+            this.SelectedCheckboxAlamatsIndex.splice(this.SelectedCheckboxAlamatsIndex.indexOf(CheckboxId), 1);
+        }
+
+        for (let i = 0; i < this.SelectedCheckboxAlamatsIndex.length; i++) {
+            (<HTMLInputElement>document.getElementById('CheckboxIsDefault' + this.SelectedCheckboxAlamatsIndex[i])).checked = this.SelectedCheckboxAlamatsIndex[i] === CheckboxId ? true : false;
+
+            this.FormAlamats.value[i].is_default = (<HTMLInputElement>document.getElementById('CheckboxIsDefault' + this.SelectedCheckboxAlamatsIndex[i])).checked;
+        }
+    }
+
+    handleChangeCheckboxKontakPersonIsDefault(CheckboxId: number): void {
+        this.SelectedCheckboxKontaksIndex.sort();
+
+        const El = (<HTMLInputElement>document.getElementById('CheckboxKontakPersonIsDefault' + CheckboxId));
+
+        if (El.checked) {
+            if (this.SelectedCheckboxKontaksIndex.indexOf(CheckboxId) < 0) {
+                this.SelectedCheckboxKontaksIndex.push(CheckboxId);
+            }
+        } else {
+            this.SelectedCheckboxKontaksIndex.splice(this.SelectedCheckboxKontaksIndex.indexOf(CheckboxId), 1);
+        }
+
+        for (let i = 0; i < this.SelectedCheckboxKontaksIndex.length; i++) {
+            (<HTMLInputElement>document.getElementById('CheckboxKontakPersonIsDefault' + this.SelectedCheckboxKontaksIndex[i])).checked = this.SelectedCheckboxKontaksIndex[i] === CheckboxId ? true : false;
+
+            this.FormKontaks.value[i].is_default = (<HTMLInputElement>document.getElementById('CheckboxKontakPersonIsDefault' + this.SelectedCheckboxKontaksIndex[i])).checked;
+        }
     }
 
     handleClickTambahFormArray(Kategori: string): void {
@@ -522,71 +629,76 @@ export class InputDokterComponent implements OnInit {
     onClickButtonNav(ButtonId: any) {
         switch (ButtonId) {
             case "Cancel":
-                this.onResetForm();
+                this.PersonFound = false;
+                this.SubmittedForm = false;
+                this.onResetForm(false);
                 this.resetWizard();
                 break;
             case "Save":
-
-                if (this.IsPersonExisting) {
-                    this.no_identitas.setValue('');
-                }
-
-                this.setupDokterService.onSaveSetupDokter(this.FormInputDokter.value)
-                    .subscribe((result) => {
-                        if (result) {
-                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pendaftaran Dokter Berhasil Disimpan')
-                                .then(() => {
-                                    this.onResetForm();
-
-                                    this.resetWizard();
-                                });
-                        }
-                    });
-
-                // Swal.fire({
-                //     icon: 'success',
-                //     title: 'Pendaftaran Pasien Berhasil',
-                //     text: 'Apakah Anda Ingin Mengupload Foto Pasien?',
-                //     showDenyButton: true,
-                //     showCancelButton: false,
-                //     confirmButtonText: `Yes`,
-                //     denyButtonText: `Tidak, Lakukan Lain Kali`,
-                // }).then((result) => {
-                //     if (result.isConfirmed) {
-                //         this.SubmittedForm = true;
-
-                //     } else if (result.isDenied) {
-                //         this.SubmittedForm = false;
-
-                //         this.onResetForm();
-
-                //         this.resetWizard();
-                //     }
-                // });
-
+                this.onSubmitForm();
                 break;
             case 'Upload':
-                this.utilityService.onShowingCustomAlert('success', 'Success', 'Foto Pasien Berhasil Diupload')
-                    .then(() => {
-                        this.onResetForm();
-
-                        this.resetWizard();
-                    });
+                if (this.PathFotoUrl != undefined) {
+                    this.onUploadPhotoDokter(this.PersonIdResponseData, this.PathFotoUrl);
+                } else {
+                    this.utilityService.onShowingCustomAlert('error', 'Oops', 'Foto Tidak Boleh Kosong');
+                }
+                break;
+            case "SavePersonSudahAda":
+                this.onSubmitFormPersonSudahAda();
                 break;
             default:
                 break;
         }
     }
 
-    onResetForm(): void {
-        this.FormInputDokter.reset();
+    onSubmitForm(): void {
+        this.setupDokterService.onSaveSetupDokter(this.FormInputDokter.value)
+            .subscribe((result) => {
+                if (result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pendaftaran Dokter Berhasil',
+                        text: 'Apakah Anda Ingin Mengupload Foto Dokter?',
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: `Yes`,
+                        denyButtonText: `Tidak, Lakukan Lain Kali`,
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            this.onResetForm(false);
 
-        (<HTMLInputElement>document.getElementById("radioKewarganegaraanIndo")).checked = false;
-        (<HTMLInputElement>document.getElementById("radioKewarganegaraanAsing")).checked = false;
-        this.id_jenis_identitas.setValue(0);
-        this.no_identitas.setValue("");
+                            this.SubmittedForm = true;
+
+                            setTimeout(() => {
+                                this.PersonIdResponseData = result.data;
+
+                                this.ngWizardService.next();
+                            }, 250);
+                        } else if (res.isDenied) {
+                            this.SubmittedForm = false;
+
+                            this.onResetForm(false);
+
+                            this.resetWizard();
+                        }
+                    });
+                }
+            });
+    }
+
+    onResetForm(ReinputNoIdentitas: boolean): void {
+        if (!ReinputNoIdentitas) {
+            this.FormInputDokter.reset();
+
+            (<HTMLInputElement>document.getElementById("radioKewarganegaraanIndo")).checked = false;
+            (<HTMLInputElement>document.getElementById("radioKewarganegaraanAsing")).checked = false;
+
+            this.id_jenis_identitas.setValue(0);
+            this.no_identitas.setValue("");
+        }
+
         this.no_kartu_keluarga.setValue("");
-
         this.nama_depan.setValue("");
         this.nama_belakang.setValue("");
         this.nama_panggilan.setValue("");
@@ -629,16 +741,22 @@ export class InputDokterComponent implements OnInit {
 
         this.user_created.setValue(this.UserData.id_user);
 
-        if (this.FormAlamats.length > 1) {
+        if (this.FormAlamats.length > 0) {
             for (let i = 0; i < this.FormAlamats.length; i++) {
+                this.FormAlamats.reset();
                 this.FormAlamats.removeAt(i);
             }
+
+            this.FormAlamats.length == 0 ? this.FormAlamats.push(this.NewAlamat()) : null;
         }
 
-        if (this.FormKontaks.length > 1) {
+        if (this.FormKontaks.length > 0) {
             for (let i = 0; i < this.FormKontaks.length; i++) {
+                this.FormKontaks.reset();
                 this.FormKontaks.removeAt(i);
             }
+
+            this.FormKontaks.length == 0 ? this.FormKontaks.push(this.NewKontak()) : null;
         }
 
         this.id_spesialisasi_dokter.setValue(0);
@@ -656,6 +774,94 @@ export class InputDokterComponent implements OnInit {
         this.StatusDokter.value = null;
 
         this.user_created_dokter.setValue(this.UserData.id_user);
+    }
+
+    onSubmitFormPersonSudahAda(): void {
+        const FormInputDokter: DokterModel = this.FormInputDokter.value;
+
+        const Params: IPersonDokterSudahAdaModel = {
+            "id_person": FormInputDokter.person.id_person,
+            "id_spesialisasi_dokter": FormInputDokter.dokter.id_spesialisasi_dokter,
+            "no_surat_ijin_praktek": FormInputDokter.dokter.no_surat_ijin_praktek,
+            "tgl_exp_surat_ijin_praktek": FormInputDokter.dokter.tgl_exp_surat_ijin_praktek,
+            "no_str": FormInputDokter.dokter.no_str,
+            "tgl_exp_str": FormInputDokter.dokter.tgl_exp_str,
+            "id_smf": FormInputDokter.dokter.id_smf ? FormInputDokter.dokter.id_smf : 0,
+            "id_status_dokter": FormInputDokter.dokter.id_status_dokter ? FormInputDokter.dokter.id_status_dokter : 0,
+            "user_created": 0
+        };
+
+        this.setupDokterService.onSavePendaftaranDokterPersonSudahAda(Params)
+            .subscribe((result) => {
+                if (result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pendaftaran Dokter Berhasil',
+                        text: 'Apakah Anda Ingin Mengupload Foto Dokter?',
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: `Yes`,
+                        denyButtonText: `Tidak, Lakukan Lain Kali`,
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            this.onResetForm(false);
+
+                            this.SubmittedForm = true;
+
+                            setTimeout(() => {
+                                this.PersonIdResponseData = Params.id_person;
+
+                                this.ngWizardService.next();
+
+                                this.FormState = "Insert";
+                            }, 250);
+                        } else if (res.isDenied) {
+                            this.SubmittedForm = false;
+
+                            this.onResetForm(false);
+
+                            this.resetWizard();
+
+                            this.FormState = "Insert";
+                        }
+                    });
+                }
+            });
+    }
+
+    onSelectFile(event: any, value: any) {
+        this.PathFotoUrl = (event.target as HTMLInputElement).files[0];
+
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+            reader.onload = (event) => { // called once readAsDataURL is completed
+                this.url = event.target.result;
+            }
+        };
+    }
+
+    onUploadPhotoDokter(PersonId: number, Path: string): void {
+        const formData: any = new FormData();
+
+        formData.append('id_person', PersonId.toString());
+        formData.append('form_file', Path);
+
+        this.setupDokterService.onUploadFotoDokter(formData)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Foto Dokter Berhasil Diupload')
+                        .then(() => {
+                            this.onResetForm(false);
+
+                            this.resetWizard();
+
+                            this.PersonFound = false;
+                        })
+                }
+            })
     }
 
     get id_jenis_identitas() { return this.FormInputDokter.get("person.id_jenis_identitas") }

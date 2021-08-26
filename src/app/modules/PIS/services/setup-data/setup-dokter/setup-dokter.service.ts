@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { DokterModel, PostSavePendaftaranDokterBaruModel } from '../../../models/setup-data/setup-dokter.model';
+import { DokterModel, GetByIdDokterModel, IPersonDokterSudahAdaModel, PostSavePendaftaranDokterBaruModel, PostSavePendaftaranDokterPersonSudahAdaModel, PostUploadFotoPersonDokterModel } from '../../../models/setup-data/setup-dokter.model';
 import { AgamaService } from '../agama/agama.service';
 import { JenisIdentitasService } from '../jenis-identitas/jenis-identitas.service';
 import { MaritalStatusService } from '../marital-status/marital-status.service';
@@ -244,5 +244,45 @@ export class SetupDokterService {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
+    }
+
+    /**
+     * @onUploadFotoDokter Method Obervable untuk mengupload Foto Dokter
+     * @param id_person: number, form_file: string
+    */
+    onUploadFotoDokter(Data: FormData): Observable<PostUploadFotoPersonDokterModel> {
+        return this.httpOperationService.defaultUploadFileRequest(this.API_DOKTER.POST_UPLOAD_FOTO_DOKTER, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    /**
+     * @onGetPersonDokterDetailByPersonId Method Obervable untuk mendapatkan Person Detail
+     * @param id_person: number
+    */
+    onGetPersonDokterDetailByPersonId(PersonId: number): Observable<GetByIdDokterModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_DOKTER.GET_PERSON_DETAIL_BY_PERSON_ID + PersonId)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    /**
+     * @onSavePendaftaranDokterPersonSudahAda Method Obervable untuk menyimpan Pendaftaran Dokter Person Sudah Ada
+     * @param Person IPersonSudahAdaModel
+    */
+    onSavePendaftaranDokterPersonSudahAda(Person: IPersonDokterSudahAdaModel): Observable<PostSavePendaftaranDokterPersonSudahAdaModel> {
+        return this.httpOperationService.defaultPostRequest(
+            this.API_DOKTER.POST_PENDAFTARAN_DOKTER_PERSON_SUDAH_ADA, Person
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
     }
 }
