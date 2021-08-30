@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { Observable } from 'rxjs';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { GetAllPasienIRJAModel, IPasienIRJAGetAllModel } from '../../../models/IRJA/daftar-pasien.model';
 import { DaftarPasienRawatJalanService } from '../../../services/IRJA/daftar-pasien/daftar-pasien-rawat-jalan.service';
 import GridConfig from './json/daftar-pasien.config.json';
@@ -18,18 +18,10 @@ export class DaftarPasienComponent implements OnInit {
 
     GridConfig = GridConfig;
 
-    /**
-     * Variable untuk menentukan tap berada di posisi mana 
-     * @value data | input
-    */
-    TabId: string = 'Data';
-
-    @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
-
     GridDatasource: Observable<GetAllPasienIRJAModel[]> = this.daftarPasienRawatJalanService.GridDaftarPasienIrja$;
     private GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-    GridDataToolbar: any[];
+    GridDataToolbar: any[] = [];
     GridPageSettings = { pageSizes: false, pageSize: 12 };
 
     /**
@@ -40,6 +32,7 @@ export class DaftarPasienComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private utilityService: UtilityService,
         private encryptionService: EncryptionService,
         private daftarPasienRawatJalanService: DaftarPasienRawatJalanService
     ) { }
@@ -48,20 +41,11 @@ export class DaftarPasienComponent implements OnInit {
         this.GridDataToolbar = [
             { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
             { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
-            { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
-            { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash-alt fa-sm', id: 'delete' },
+            { text: 'Ubah Status', tooltipText: 'Delete', prefixIcon: 'fas fa-sync-alt fa-sm', id: 'delete' },
             'Search'
         ];
 
         this.GetAllData();
-    }
-
-    handleSelectedTabId(TabId: string): void {
-        this.TabId = TabId;
-
-        if (TabId == 'Data') {
-            this.GetAllData();
-        }
     }
 
     InitalizedGrid(component: MolGridComponent) {
@@ -69,6 +53,8 @@ export class DaftarPasienComponent implements OnInit {
     }
 
     handleSelectedRow(args: any): void {
+        this.onSetToolbarGrid(args.data.is_active);
+
         this.SelectedData = args.data;
     }
 
@@ -87,11 +73,8 @@ export class DaftarPasienComponent implements OnInit {
                 const id_person = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.id_person));
                 this.router.navigate(['dashboard/PIS/IRJA/edit-pasien/', id_person, "GRAHCIS"]);
                 break;
-            case 'detail':
-                // this.setViewForm();
-                break;
             case 'delete':
-                // this.DeleteData();
+                this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);
                 break;
             default:
                 break;
@@ -119,7 +102,38 @@ export class DaftarPasienComponent implements OnInit {
         }
     }
 
+    onSetToolbarGrid(is_active: boolean): void {
+        if (is_active) {
+            this.GridDataToolbar = [
+                { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+                { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+                { text: 'Ubah Status', tooltipText: 'Delete', prefixIcon: 'fas fa-sync-alt fa-sm', id: 'delete' },
+                'Search'
+            ];
+        } else {
+            this.GridDataToolbar = [
+                { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+                { text: 'Ubah Status', tooltipText: 'Delete', prefixIcon: 'fas fa-sync-alt fa-sm', id: 'delete' },
+                'Search'
+            ];
+        }
+    }
+
     GetAllData(): void {
         this.daftarPasienRawatJalanService.onGetAllPasienIrja();
+    }
+
+    DeleteData(id_person: number, is_active: boolean): void {
+        this.daftarPasienRawatJalanService.onDeletePasienIrja(id_person, !is_active)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Pasien Berhasil Diubah')
+                        .then(() => {
+                            this.GetAllData();
+
+                            this.onSetToolbarGrid(!is_active);
+                        });
+                }
+            })
     }
 }

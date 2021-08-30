@@ -72,7 +72,7 @@ export interface PersonModel {
 /**
  * @GetByIdPasienModel response model setelah request Get By Id Pasien
  * @Key : { responseResult: boolean; data: BahasaModel; message: string }
- */
+*/
 export class GetByIdPasienModel implements HttpResponseModel {
     responseResult: boolean;
     data: PersonModel;
@@ -114,6 +114,16 @@ export interface IPersonSudahAdaModel {
  * @Key : { responseResult: boolean; data: string; message: string }
  */
 export class PostSavePendaftaranPasienPersonSudahAdaModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
+
+/**
+ * @GetLinkFotoPersonModel response model setelah request Get Link Foto Person
+ * @Key : { responseResult: boolean; data: string; message: string }
+*/
+export class GetLinkFotoPersonModel implements HttpResponseModel {
     responseResult: boolean;
     data: string;
     message: string;

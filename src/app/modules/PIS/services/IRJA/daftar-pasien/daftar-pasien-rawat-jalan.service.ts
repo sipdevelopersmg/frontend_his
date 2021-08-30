@@ -6,6 +6,7 @@ import * as API_CONFIG from '../../../../../api';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Injectable({
     providedIn: 'root'
@@ -36,5 +37,19 @@ export class DaftarPasienRawatJalanService {
                     this.GridDaftarPasienIrja.next(result.data);
                 }
             });
+    }
+
+    onDeletePasienIrja(id_person: number, is_active: boolean): Observable<any> {
+        return this.httpOperationService.defaultPutRequest(
+            this.API_DAFTAR_PASIEN_IRJA.PUT_UPDATE_STATUS_ACTIVE_PERSON,
+            {
+                id_person: id_person,
+                is_active: is_active
+            }
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
     }
 }

@@ -5,11 +5,13 @@ import { SharedModule } from "../shared/shared.module";
 import { AntrianFarmasiComponent } from './pages/Antrian/antrian-farmasi/antrian-farmasi.component';
 import { PharmacyRoutingModule } from "./pharmacy-routing.module";
 import { SetupFormulariumComponent } from './pages/setup-formularium/setup-formularium/setup-formularium.component';
+import { ResepRacikanComponent } from "./pages/resep-racikan/resep-racikan.component";
 
 @NgModule({
     declarations: [
         AntrianFarmasiComponent,
-        SetupFormulariumComponent
+        SetupFormulariumComponent,
+        ResepRacikanComponent
     ],
     imports: [
         CommonModule,

@@ -1,5 +1,5 @@
 {
-    "GridDaftarPasienIrja": [
+    "GridDaftarDokter": [
         {
             "allowEditing": true,
             "allowSorting": true,
@@ -24,8 +24,8 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "no_rekam_medis",
-            "headerText": "NO. RM",
+            "field": "kode_dokter",
+            "headerText": "KODE DOKTER",
             "visible": true,
             "width": 80
         },
@@ -34,9 +34,18 @@
             "allowSorting": true,
             "editType": "defaultEdit",
             "field": "full_name",
-            "headerText": "NAMA PASIEN",
+            "headerText": "NAMA DOKTER",
             "visible": true,
             "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "spesialisasi_dokter",
+            "headerText": "SPESIALISASI",
+            "visible": true,
+            "width": 120
         },
         {
             "allowEditing": false,
@@ -64,25 +73,6 @@
             "headerText": "NO. HANDPHONE",
             "visible": true,
             "width": 90
-        },
-        {
-            "allowEditing": false,
-            "allowSorting": true,
-            "editType": "defaultEdit",
-            "field": "keterangan",
-            "headerText": "KETERANGAN",
-            "visible": true,
-            "width": 120
-        },
-        {
-            "allowEditing": false,
-            "allowSorting": true,
-            "editType": "defaultEdit",
-            "field": "is_active",
-            "headerText": "STATUS",
-            "visible": true,
-            "width": 120,
-            "type": "string"
         }
     ]
 }

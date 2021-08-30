@@ -120,7 +120,7 @@ export class AuthenticationService {
 
         this.autoLogout(expiresIn);
 
-        sessionStorage.setItem('UserData', JSON.stringify(UserData));
+        // sessionStorage.setItem('UserData', JSON.stringify(UserData));
         localStorage.setItem('UserData', JSON.stringify(UserData));
 
         this.currentUserSubject.next(UserData);

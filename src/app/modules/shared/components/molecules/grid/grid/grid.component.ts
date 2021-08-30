@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { CommandClickEventArgs, CommandColumnService, CommandModel, ContextMenuItem, GridComponent, RecordDoubleClickEventArgs, RowSelectEventArgs, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { CommandClickEventArgs, CommandColumnService, CommandModel, ContextMenuItem, GridComponent, QueryCellInfoEventArgs, RecordDoubleClickEventArgs, RowSelectEventArgs, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel, ToolbarItems } from '@syncfusion/ej2-grids';
 import { Columns } from './grid.model';
@@ -38,7 +38,7 @@ export class MolGridComponent implements OnInit, AfterViewInit {
     @Input('columns') columns: Columns[];
     @Input('urlGetColumns') urlGetColumns: string;
     @Input('command-columns') commandColumns: CommandModel[];
-    @Input('textWrapSettings') textWrapSettings :TextWrapSettingsModel = null;
+    @Input('textWrapSettings') textWrapSettings: TextWrapSettingsModel = null;
 
     @Output('row-selected') onRowSelected = new EventEmitter<any>();
     @Output('enter-pressed') onKeyPressed = new EventEmitter<any>();
@@ -49,12 +49,14 @@ export class MolGridComponent implements OnInit, AfterViewInit {
     @Output('command-click') onCommandClicked = new EventEmitter<any>();
     @Output('initialized') initialized: EventEmitter<MolGridComponent> = new EventEmitter<MolGridComponent>();
     @Output('load-grid') onLoadedGrid = new EventEmitter<any>();
+    @Output('query-cell-info') onQueryingCellInfo = new EventEmitter<any>();
+
     allowTextWrap = false;
     constructor() {
     }
 
     ngOnInit(): void {
-        if(this.textWrapSettings){
+        if (this.textWrapSettings) {
             this.allowTextWrap = true
         }
         // this.columns = [
@@ -104,5 +106,9 @@ export class MolGridComponent implements OnInit, AfterViewInit {
 
     onLoadGrid(args: any): void {
         this.onLoadedGrid.emit(args);
+    }
+
+    onQueryCellInfo(args: QueryCellInfoEventArgs): void {
+        this.onQueryingCellInfo.emit(args);
     }
 }

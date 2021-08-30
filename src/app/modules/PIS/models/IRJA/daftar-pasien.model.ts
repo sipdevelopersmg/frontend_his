@@ -2,7 +2,7 @@ import { HttpResponseModel } from "src/app/modules/shared/models/Http-Operation/
 
 /**
  * @IPasienGetAllModel response model setelah request Get All Pasien IRJA
- * @Key : { responseResult: boolean; data: BahasaModel[]; message: string }
+ * @Key : { responseResult: boolean; data: IPasienIRJAGetAllModel[]; message: string }
 */
 export interface IPasienIRJAGetAllModel {
     id_person: number;

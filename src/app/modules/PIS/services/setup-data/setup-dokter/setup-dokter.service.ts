@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { DokterModel, GetByIdDokterModel, IPersonDokterSudahAdaModel, PostSavePendaftaranDokterBaruModel, PostSavePendaftaranDokterPersonSudahAdaModel, PostUploadFotoPersonDokterModel } from '../../../models/setup-data/setup-dokter.model';
+import { DokterModel, IGetAllDokterModel, GetAllDokterModel, GetByIdDokterModel, IPersonDokterSudahAdaModel, PostSavePendaftaranDokterBaruModel, PostSavePendaftaranDokterPersonSudahAdaModel, PostUploadFotoPersonDokterModel } from '../../../models/setup-data/setup-dokter.model';
 import { AgamaService } from '../agama/agama.service';
 import { JenisIdentitasService } from '../jenis-identitas/jenis-identitas.service';
 import { MaritalStatusService } from '../marital-status/marital-status.service';
@@ -117,6 +117,9 @@ export class SetupDokterService {
      * @Observable Dapat disubscribe
     */
     public StatusDokterSubject = new BehaviorSubject([]);
+
+    private GridDaftarDokter = new BehaviorSubject([]);
+    public GridDaftarDokter$ = this.GridDaftarDokter.asObservable();
 
     constructor(
         private notificationService: NotificationService,
@@ -279,6 +282,39 @@ export class SetupDokterService {
     onSavePendaftaranDokterPersonSudahAda(Person: IPersonDokterSudahAdaModel): Observable<PostSavePendaftaranDokterPersonSudahAdaModel> {
         return this.httpOperationService.defaultPostRequest(
             this.API_DOKTER.POST_PENDAFTARAN_DOKTER_PERSON_SUDAH_ADA, Person
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
+    /**
+     * @onGetAllDokter Method Obervable untuk Get All Dokter
+    */
+    onGetAllDokter(): void {
+        this.httpOperationService.defaultGetRequest(this.API_DOKTER.GET_ALL_DOKTER)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            ).subscribe((result: GetAllDokterModel) => {
+                if (result) {
+                    this.GridDaftarDokter.next(result.data);
+                }
+            });
+    }
+
+    /**
+     * @onDeleteDokter Method Obervable untuk Mengubah Status Active Dokter
+    */
+    onDeleteDokter(id_dokter: number, is_active: boolean): Observable<any> {
+        return this.httpOperationService.defaultPutRequest(
+            this.API_DOKTER.PUT_UPDATE_STATUS_ACTIVE_DOKTER,
+            {
+                id_dokter: id_dokter,
+                is_active: is_active
+            }
         ).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

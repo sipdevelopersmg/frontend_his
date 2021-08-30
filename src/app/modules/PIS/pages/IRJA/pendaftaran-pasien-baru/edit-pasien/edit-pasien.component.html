@@ -2,14 +2,15 @@
     <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
         <!-- Detail Pasien -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'Data'">Detail Pasien</org-tabs-label>
+            <org-tabs-label [Id]="'DetailPasien'">Detail Pasien</org-tabs-label>
             <org-tabs-body>
                 <div class="row mb-3" [hidden]="FormState == 'Detail'">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
                         <h5 class="text-biru-tua mb-0">Detail Pasien</h5>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
-                        <button class="btn btn-warning btn-sm" type="button">
+                        <button class="btn btn-warning btn-sm" type="button"
+                            (click)="onUpdateFormPerson(FormPerson.value)">
                             Update Detail Pasien
                         </button>
                     </div>
@@ -222,14 +223,23 @@
             </org-tabs-body>
         </org-tabs-item>
 
-        <!-- Alamat Person -->
+        <!-- Alamat Pasien -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'Input'">Alamat</org-tabs-label>
+            <org-tabs-label [Id]="'Alamat Person'">Alamat Pasien</org-tabs-label>
             <org-tabs-body>
                 <!-- Header Ribbon / Button -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-start">
-                        <h5 class="text-biru-tua mb-0">Daftar Alamat Pasien</h5>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h5 class="text-biru-tua mb-0">Daftar Alamat Pasien</h5>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end cursor-pointer">
+                                <span class="badge bg-primary" (click)="handleClickTambahAlamatPasien()">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Alamat Pasien
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-start">
                         <h5 class="text-biru-tua mb-0">Detail Alamat Pasien</h5>
@@ -245,18 +255,27 @@
                                     *ngFor="let item of FormAlamatDatasource; let i = index"
                                     (click)="handleSelectedFormAlamat(item)">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p class="mb-1 text-biru-tua" style="font-size: 19px">
+                                        <p class="mb-1 text-biru-tua" style="font-size: 17px">
                                             {{ item.alamat_lengkap }}
-                                            <i
-                                                class="fas fa-check-circle fa-xs {{ item.is_default ? 'text-biru-muda' : 'text-abu-muda'}}">
+                                            <i class="fas fa-check-circle fa-xs"
+                                                [class]="item.is_default ? 'text-biru-muda' : 'text-abu-muda'">
                                             </i>
                                         </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p class="mb-1 text-hitam-muda" style="font-size: 15px">
                                             Kel. {{ item.kelurahan | titlecase }} ({{ item.kode_pos }})
                                         </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <p class="mb-1 text-hitam-muda" style="font-size: 15px">
                                             RT {{ item.rt }} / RW {{ item.rw }}
                                         </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                        <span class="badge" [class]="item.is_active ? 'bg-success' : 'bg-warning'">
+                                            {{ item.is_active ? 'Alamat Aktif' : 'Alamat Tidak Aktif' }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -357,12 +376,11 @@
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
                                                     <div class="form-check form-select-sm">
-                                                        <input id="is_default_checkbox" #IsDefault
+                                                        <input id="is_default_alamat" #IsDefault
                                                             class="form-check-input" type="checkbox"
-                                                            formControlName="is_default"
-                                                            [attr.disabled]="FormState == 'Edit' ? true : null">
+                                                            formControlName="is_default">
 
-                                                        <label class="form-check-label" for="is_default_checkbox">
+                                                        <label class="form-check-label" for="is_default_alamat">
                                                             Iya, alamat ini adalah alamat tinggal saat ini
                                                         </label>
                                                     </div>
@@ -371,11 +389,27 @@
 
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
-                                                    <button class="btn btn-warning btn-sm mx-2" type="button">
+                                                    <button *ngIf="FormAlamatState == 'Edit'"
+                                                        class="btn btn-danger btn-sm" type="button"
+                                                        (click)="handleDeleteFormAlamat(FormAlamats.value)"
+                                                        [disabled]="is_default_alamat.value">
+                                                        Ubah Status Alamat Pasien
+                                                    </button>
+                                                    <button *ngIf="FormAlamatState == 'Edit'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="handleUpdateFormAlamat(FormAlamats.value)">
                                                         Update Alamat Pasien
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm" type="button">
-                                                        Hapus Alamat Pasien
+
+                                                    <button *ngIf="FormAlamatState == 'Insert'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="FormAlamatState = 'Edit'">
+                                                        Cancel
+                                                    </button>
+                                                    <button *ngIf="FormAlamatState == 'Insert'"
+                                                        class="btn btn-primary btn-sm" type="button"
+                                                        (click)="handleInsertFormAlamat(FormAlamats.value)">
+                                                        Simpan Alamat Pasien
                                                     </button>
                                                 </div>
                                             </div>
@@ -391,12 +425,21 @@
 
         <!-- Kontak Person -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'Input'">Kontak Person</org-tabs-label>
+            <org-tabs-label [Id]="'KontakPerson'">Kontak Person</org-tabs-label>
             <org-tabs-body>
                 <!-- Header Ribbon / Button -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-start">
-                        <h5 class="text-biru-tua mb-0">Daftar Kontak Person</h5>
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <h5 class="text-biru-tua mb-0">Daftar Kontak Person</h5>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-end cursor-pointer">
+                                <span class="badge bg-primary" (click)="handleClickTambahKontakPasien()">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Kontak Person
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-start">
                         <h5 class="text-biru-tua mb-0">Detail Kontak Person</h5>
@@ -410,20 +453,29 @@
                                 style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
                                 <div class="row mb-2 mx-0 px-0 py-2 shadow-sm border rounded cursor-pointer bg-white"
                                     *ngFor="let item of FormKontakDatasource; let i = index"
-                                    (click)="handleSelectedFormAlamat(item)">
+                                    (click)="handleSelectedFormKontak(item)">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p class="mb-1 text-biru-tua" style="font-size: 19px">
-                                            {{ item.alamat_lengkap }}
+                                        <p class="mb-1 text-biru-tua" style="font-size: 17px">
+                                            {{ item.hand_phone }}
                                             <i
                                                 class="fas fa-check-circle fa-xs {{ item.is_default ? 'text-biru-muda' : 'text-abu-muda'}}">
                                             </i>
                                         </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p class="mb-1 text-hitam-muda" style="font-size: 15px">
-                                            Kel. {{ item.kelurahan | titlecase }} ({{ item.kode_pos }})
+                                            Telp. Rumah {{ item.home_phone }}
                                         </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <p class="mb-1 text-hitam-muda" style="font-size: 15px">
-                                            RT {{ item.rt }} / RW {{ item.rw }}
+                                            {{ item.keterangan }}
                                         </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                        <span class="badge" [class]="item.is_active ? 'bg-success' : 'bg-warning'">
+                                            {{ item.is_active ? 'Kontak Person Aktif' : 'Kontak Person Tidak Aktif' }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -465,7 +517,7 @@
                                             </mol-input-textarea>
 
                                             <!-- Is Default -->
-                                            <div class="row mb-2">
+                                            <div class="row mb-4">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                     <atm-label [LabelCaption]="'Kontak Person Default'"></atm-label>
                                                 </div>
@@ -483,11 +535,27 @@
 
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
-                                                    <button class="btn btn-warning btn-sm mx-2" type="button">
+                                                    <button *ngIf="FormKontakState == 'Edit'"
+                                                        class="btn btn-danger btn-sm" type="button"
+                                                        (click)="handleDeleteFormKontak(FormKontaks.value)"
+                                                        [disabled]="is_default_kontak.value">
+                                                        Ubah Status Kontak Person
+                                                    </button>
+                                                    <button *ngIf="FormKontakState == 'Edit'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="handleUpdateFormKontak(FormKontaks.value)">
                                                         Update Kontak Person
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm" type="button">
-                                                        Hapus Kontak Person
+
+                                                    <button *ngIf="FormKontakState == 'Insert'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="FormKontakState = 'Edit'">
+                                                        Cancel
+                                                    </button>
+                                                    <button *ngIf="FormKontakState == 'Insert'"
+                                                        class="btn btn-primary btn-sm" type="button"
+                                                        (click)="handleInsertFormKontak(FormKontaks.value)">
+                                                        Simpan Kontak Person
                                                     </button>
                                                 </div>
                                             </div>
@@ -503,22 +571,213 @@
 
         <!-- Debitur Pasien -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'Input'">Debitur Pasien</org-tabs-label>
+            <org-tabs-label [Id]="'DebiturPasien'">Debitur Pasien</org-tabs-label>
             <org-tabs-body>
+                <!-- Header Ribbon / Button -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-start">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <h5 class="text-biru-tua mb-0">Daftar Debitur Pasien</h5>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-end cursor-pointer">
+                                <span class="badge bg-primary" (click)="handleClickTambahDebiturPasien()">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Debitur Pasien
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-start">
+                        <h5 class="text-biru-tua mb-0">Detail Debitur Pasien</h5>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-2 pb-1"
+                                style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
+                                <div class="row mb-2 mx-0 px-0 py-2 shadow-sm border rounded cursor-pointer bg-white"
+                                    *ngFor="let item of FormDebiturDatasource; let i = index"
+                                    (click)="handleSelectedFormDebitur(item)">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="mb-1 text-biru-tua" style="font-size: 15px">
+                                            {{ item.nama_debitur }}
+                                            <i
+                                                class="fas fa-check-circle fa-xs {{ item.is_default ? 'text-biru-muda' : 'text-abu-muda'}}">
+                                            </i>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="mb-1 text-hitam-muda" style="font-size: 15px">
+                                            No. Member {{ item.no_member }}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <p class="mb-1 text-hitam-muda" style="font-size: 15px">
+                                            {{ item.keterangan }}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                        <span class="badge" [class]="item.is_active ? 'bg-success' : 'bg-warning'">
+                                            {{ item.is_active ? 'Debitur Pasien Aktif' : 'Debitur Pasien Tidak Aktif' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-2 pb-2"
+                                style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
+                                <div class="row px-0 mx-0 pt-1">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form [formGroup]="FormDebiturs">
+                                            <!-- Debitur -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Debitur'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <ejs-dropdownlist #DebiturDropdown id="debitur"
+                                                        [dataSource]="DebiturDropdownDataSource | async"
+                                                        [fields]="DebiturDropdownField" [allowFiltering]="true"
+                                                        formControlName="id_debitur"
+                                                        [readonly]="FormDebiturState == 'Edit'"
+                                                        [cssClass]="FormDebiturState == 'Edit' ? 'detail-input-field' : null">
+                                                    </ejs-dropdownlist>
+                                                </div>
+                                            </div>
+
+                                            <!-- No. Member -->
+                                            <mol-input-text [label]="'No Member *'" formControlName="no_member"
+                                                [IsFormControlInvalid]="no_member.invalid"
+                                                [ValidatorsCaption]="'No Member Tidak Boleh Kosong'">
+                                            </mol-input-text>
+
+                                            <!-- Tgl Aktif Member -->
+                                            <div class="row mb-2">
+                                                <div class="col-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Tgl Aktif Member *'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <ejs-datepicker formControlName="tgl_aktif_member"
+                                                        [format]="'dd/MM/yyyy'">
+                                                    </ejs-datepicker>
+
+                                                    <atm-validators [IsFormControlTouched]="tgl_aktif_member.touched"
+                                                        [IsFormControlInvalid]="tgl_aktif_member.invalid"
+                                                        [ValidatorsCaption]="'Tgl Aktif Member Tidak Boleh Kosong'">
+                                                    </atm-validators>
+                                                </div>
+                                            </div>
+
+                                            <!-- Tgl Expired Member -->
+                                            <div class="row mb-2">
+                                                <div class="col-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Tgl Expired Member *'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <ejs-datepicker formControlName="tgl_expired_member"
+                                                        [format]="'dd/MM/yyyy'">
+                                                    </ejs-datepicker>
+
+                                                    <atm-validators [IsFormControlTouched]="tgl_expired_member.touched"
+                                                        [IsFormControlInvalid]="tgl_expired_member.invalid"
+                                                        [ValidatorsCaption]="'Tgl Expired Member Tidak Boleh Kosong'">
+                                                    </atm-validators>
+                                                </div>
+                                            </div>
+
+                                            <!-- Keterangan -->
+                                            <mol-input-textarea [label]="'Keterangan *'" formControlName="keterangan"
+                                                [IsFormControlInvalid]="keterangan_debitur.invalid"
+                                                [ValidatorsCaption]="'Keterangan Tidak Boleh Kosong'">
+                                            </mol-input-textarea>
+
+                                            <!-- Is Default -->
+                                            <div class="row mb-4">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Debitur Default'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                                    <div class="form-check form-select-sm">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            [id]="'is_default_debitur'" formControlName="is_default">
+
+                                                        <label class="form-check-label" [for]="'is_default_debitur'">
+                                                            Iya, ini adalah debitur default
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                                                    <button *ngIf="FormDebiturState == 'Edit'"
+                                                        class="btn btn-warning btn-sm" type="button"
+                                                        (click)="handleChangeStatusFormDebitur(FormDebiturs.value)"
+                                                        [disabled]="is_default_debitur.value">
+                                                        Ubah Status Debitur Pasien
+                                                    </button>
+                                                    <button *ngIf="FormDebiturState == 'Edit'"
+                                                        class="btn btn-danger btn-sm mx-2" type="button"
+                                                        (click)="handleDeleteFormDebitur(FormDebiturs.value)">
+                                                        Delete Debitur Pasien
+                                                    </button>
+                                                    <button *ngIf="FormDebiturState == 'Edit'"
+                                                        class="btn btn-success btn-sm" type="button"
+                                                        (click)="handleUpdateFormDebitur(FormDebiturs.value)">
+                                                        Update Debitur Pasien
+                                                    </button>
+
+                                                    <button *ngIf="FormDebiturState == 'Insert'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="FormDebiturState = 'Edit'">
+                                                        Cancel
+                                                    </button>
+                                                    <button *ngIf="FormDebiturState == 'Insert'"
+                                                        class="btn btn-primary btn-sm" type="button"
+                                                        (click)="handleInsertFormDebitur(FormDebiturs.value)">
+                                                        Simpan Debitur Pasien
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </org-tabs-body>
         </org-tabs-item>
 
         <!-- Photo Pasien -->
         <org-tabs-item>
-            <org-tabs-label [Id]="'Input'">Photo Person</org-tabs-label>
+            <org-tabs-label [Id]="'FotoPasien'">Foto Pasien</org-tabs-label>
             <org-tabs-body>
-                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                    <img [src]="url" class="img-thumbnail"
-                        style="margin-bottom: 20px; width: 112px ; max-width: 112px; height: 150.4px; max-height: 150.4px;">
-                    <br />
-                    <input #PathFoto type='file' class="form-control" (change)="onSelectFile($event, PathFoto.value)"
-                        accept="image/*">
+                <!-- Header Ribbon / Button -->
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
+                        <h5 class="text-biru-tua mb-0">Foto Pasien</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <button class="btn btn-warning btn-sm" type="button" (click)="onUploadPhotoPasien()">
+                            Update Foto Pasien
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div id="div-img-foto-pasien" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <img [src]="url" class="img-thumbnail-foto-pasien">
+                        <br />
+                        <input #PathFoto type='file' class="form-control" id="path_foto_pasien"
+                            (change)="onSelectFile($event, PathFoto.value)" accept="image/*">
+                    </div>
                 </div>
             </org-tabs-body>
         </org-tabs-item>

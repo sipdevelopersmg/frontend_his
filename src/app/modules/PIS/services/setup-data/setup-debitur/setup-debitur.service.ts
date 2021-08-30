@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api';
-import { DebiturModel, DeleteDebiturModel, GetAllDebiturModel, PostSaveDebiturModel, PutUpdateDebiturModel } from '../../../models/setup-data/setup-debitur.model';
+import { DebiturModel, DeleteDebiturModel, GetAllDebiturModel, GetByIdDebiturModel, PostSaveDebiturModel, PutUpdateDebiturModel } from '../../../models/setup-data/setup-debitur.model';
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +24,14 @@ export class SetupDebiturService {
     */
     onGetAll(): Observable<GetAllDebiturModel> {
         return this.httpOperationService.defaultGetRequest(this.API_DEBITUR.GET_ALL_SETUP_DEBITUR);
+    }
+
+    /**
+     * Service Untuk Menampilkan Data Debitur
+     * @onGetById Observable<GetByIdDebiturModel>
+    */
+    onGetById(DebiturId: number): Observable<GetByIdDebiturModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_DEBITUR.GET_SETUP_DEBITUR_BY_ID + DebiturId);
     }
 
     /**

@@ -16,11 +16,7 @@ export class ResepRacikanService {
     onGetResepRacikanDummy(): Observable<any> {
         const ResepRacikan: ResepRacikanModel[] = [
             {
-                id_obat: 1, kode_obat: 'TES1', nama_obat: 'OBAT A', jumlah: 5, satuan: 'pcs', harga: 5000, diskon: 0, subtotal: 5000 * 5, detail_racikan: [
-                    {
-                        id_obat: 1, kode_obat: 'TES11', nama_obat: 'PARACETAMOL 500 MG', satuan: '', satuan_terkecil: 'TABLET', dosis_obat: 0.5, dosis_yg_diinginkan: 0.5, jumlah: 5, harga: 5000, subtotal: 25000
-                    }
-                ]
+                id_obat: 1, kode_obat: 'TES1', nama_obat: 'OBAT A', jumlah: 5, satuan: 'pcs', harga: 5000, diskon: 0, subtotal: 5000 * 5, detail_racikan: []
             },
             {
                 id_obat: 2, kode_obat: 'TES2', nama_obat: 'OBAT B', jumlah: 1, satuan: '', harga: 5000, diskon: 0, subtotal: 5000, detail_racikan: [

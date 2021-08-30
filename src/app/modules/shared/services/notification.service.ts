@@ -19,8 +19,12 @@ export class NotificationService {
         }
     }
 
-    onRemoveToast(toast: any): void {
-        this.toasts = this.toasts.filter(item => item !== toast);
+    onRemoveToast(toast: any, index: number): void {
+        // this.toasts = this.toasts.filter(item => item != toast);
+
+        this.toasts.splice(index, 1);
+
+        console.log(this.toasts);
     }
 
     onPlayNotificationSound(): any {

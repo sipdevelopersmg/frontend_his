@@ -11,6 +11,7 @@ import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pas
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { SetupDebiturComponent } from "./pages/setup-data/setup-debitur/setup-debitur.component";
 import { DataDokterComponent } from "./pages/setup-data/setup-dokter/data-dokter/data-dokter.component";
+import { EditDokterComponent } from "./pages/setup-data/setup-dokter/edit-dokter/edit-dokter.component";
 import { InputDokterComponent } from "./pages/setup-data/setup-dokter/input-dokter/input-dokter.component";
 import { SetupEducationComponent } from "./pages/setup-data/setup-education/setup-education.component";
 import { SetupEtnisComponent } from "./pages/setup-data/setup-etnis/setup-etnis.component";
@@ -47,7 +48,8 @@ const pisRoutes: Routes = [
                 path: "setup-dokter", component: null, data: { title: "Setup Dokter" },
                 children: [
                     { path: "input-dokter", component: InputDokterComponent, data: { title: "Input Dokter" } },
-                    { path: "data-dokter", component: DataDokterComponent, data: { title: "Data Dokter" } }
+                    { path: "daftar-dokter", component: DataDokterComponent, data: { title: "Daftar Dokter" } },
+                    { path: "edit-dokter/:id/:key", component: EditDokterComponent, data: { title: "Edit Dokter" } },
                 ]
             },
             { path: "setup-provinsi", component: SetupProvinsiComponent, data: { title: "Setup Provinsi" } },
