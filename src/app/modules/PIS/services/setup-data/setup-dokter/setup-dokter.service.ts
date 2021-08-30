@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { DokterModel, IGetAllDokterModel, GetAllDokterModel, GetByIdDokterModel, IPersonDokterSudahAdaModel, PostSavePendaftaranDokterBaruModel, PostSavePendaftaranDokterPersonSudahAdaModel, PostUploadFotoPersonDokterModel } from '../../../models/setup-data/setup-dokter.model';
+import { DokterModel, IGetAllDokterModel, GetAllDokterModel, GetByIdDokterModel, IPersonDokterSudahAdaModel, PostSavePendaftaranDokterBaruModel, PostSavePendaftaranDokterPersonSudahAdaModel, PostUploadFotoPersonDokterModel, PutUpdateDokterModel, IPutDetailDokterModel } from '../../../models/setup-data/setup-dokter.model';
 import { AgamaService } from '../agama/agama.service';
 import { JenisIdentitasService } from '../jenis-identitas/jenis-identitas.service';
 import { MaritalStatusService } from '../marital-status/marital-status.service';
@@ -315,6 +315,19 @@ export class SetupDokterService {
                 id_dokter: id_dokter,
                 is_active: is_active
             }
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
+    /**
+     * @onUpdateDokter Method Obervable untuk Mengubah Detail Dokter
+    */
+    onUpdateDokter(DataDokter: IPutDetailDokterModel): Observable<PutUpdateDokterModel> {
+        return this.httpOperationService.defaultPutRequest(
+            this.API_DOKTER.PUT_UPDATE_DOKTER, DataDokter
         ).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

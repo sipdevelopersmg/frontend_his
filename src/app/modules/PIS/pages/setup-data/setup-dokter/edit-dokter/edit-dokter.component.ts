@@ -16,11 +16,13 @@ import { KotaModel } from 'src/app/modules/PIS/models/setup-data/setup-kota.mode
 import { ProvinsiModel } from 'src/app/modules/PIS/models/setup-data/setup-provinsi.model';
 import { SmfModel } from 'src/app/modules/PIS/models/setup-data/setup-smf-dokter.model';
 import { SpesialisasiDokterModel } from 'src/app/modules/PIS/models/setup-data/setup-spesialiasi-dokter.model';
+import { EditPasienService } from 'src/app/modules/PIS/services/IRJA/edit-pasien/edit-pasien.service';
 import { PendaftaranPasienBaruService } from 'src/app/modules/PIS/services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { SetupDokterService } from 'src/app/modules/PIS/services/setup-data/setup-dokter/setup-dokter.service';
 import { SetupSpesialisasiDokterService } from 'src/app/modules/PIS/services/setup-data/setup-spesialisasi-dokter/setup-spesialisasi-dokter.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
     selector: 'app-edit-dokter',
@@ -48,9 +50,6 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
 
     FormKontakState = "Edit";
     FormKontakDatasource: any[] = [];
-
-    FormDebiturState = "Edit";
-    FormDebiturDatasource: any[] = [];
 
     /**
     * @GenderDropdown
@@ -294,11 +293,15 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
 
     url: any = '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png';
 
+    PathFotoUrl: any;
+
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
+        private utilityService: UtilityService,
         private encryptionService: EncryptionService,
+        private editPasienService: EditPasienService,
         private setupDokterService: SetupDokterService,
         private utilityHelperService: UtilityHelperService,
         private setupSpesialisasiDokter: SetupSpesialisasiDokterService,
@@ -318,7 +321,7 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case 'Cancel':
-                this.router.navigateByUrl('dashboard/PIS/IRJA/daftar-pasien')
+                this.router.navigateByUrl('dashboard/PIS/setup-data/setup-dokter/daftar-dokter')
         }
     }
 
@@ -380,6 +383,8 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
         });
 
         this.FormDokter = this.formBuilder.group({
+            "id_dokter": [0, []],
+            "id_person": [0, []],
             "id_spesialisasi_dokter": [0, Validators.required],
             "no_surat_ijin_praktek": ["", []],
             "tgl_exp_surat_ijin_praktek": [Date, Validators.required],
@@ -387,7 +392,6 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
             "tgl_exp_str": [Date, Validators.required],
             "id_smf": [0, []],
             "id_status_dokter": [0, []],
-            "user_created": [0, []],
         });
     }
 
@@ -403,15 +407,8 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
 
                 this.FormKontakDatasource = result.data.kontak_person;
 
-                this.setupSpesialisasiDokter.onGetById(result.data.dokter.id_spesialisasi_dokter)
-                    .subscribe((spesialisasi_dokter) => {
-                        if (spesialisasi_dokter) {
-                            result.data.dokter['spesialisasi_dokter'] = spesialisasi_dokter.data.spesialisasi_dokter;
-
-                            this.FormDokter.setValue(result.data.dokter);
-                        }
-                    });
-
+                const Dokter: any = this.utilityHelperService.onRemoveInfo(result.data.dokter, ['kode_dokter', 'is_active', 'user_created', 'time_created', 'user_deactived', 'time_deactived'])
+                this.FormDokter.setValue(Dokter);
 
                 this.pendafatranPasienBaruService.onGetLinkFotoPerson(result.data.person['id_person'], false)
                     .subscribe((result) => {
@@ -421,4 +418,332 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
                     });
             });
     }
+
+    handleSelectedTabId(args: any): void {
+    }
+
+    handleSelectedFormAlamat(item: any): void {
+        this.utilityHelperService.onRemoveInfo(item, ['time_created', 'time_deactived', 'user_deactived']);
+
+        const wilayah = this.utilityHelperService.onSplitKodeWilayahKecamatan(item.kode_wilayah);
+
+        item['kode_wilayah_provinsi'] = wilayah['kode_wilayah_provinsi'];
+        this.handleDropdownProvinsiChange(item['kode_wilayah_provinsi']);
+
+        item['kode_wilayah_kota'] = wilayah['kode_wilayah_kota'];
+        this.handleDropdownKotaChange(item['kode_wilayah_kota']);
+
+        setTimeout(() => {
+            this.handleCheckDefaultAlamatDokter(item['is_default']);
+
+            this.FormAlamats.setValue(item);
+        }, 500);
+    }
+
+    handleSelectedFormKontak(item: any): void {
+        this.utilityHelperService.onRemoveInfo(item, ['time_created', 'time_deactived', 'user_deactived']);
+
+        this.handleCheckDefaultKontakDokter(item['is_default']);
+
+        this.FormKontaks.setValue(item);
+    }
+
+    handleDropdownProvinsiChange(KodeProvinsi: string): void {
+        this.setupDokterService.onGetDropdownKotaDatasourceByProvinsiId(KodeProvinsi);
+    }
+
+    handleDropdownKotaChange(KodeKota: string): void {
+        this.setupDokterService.onGetDropdownKecamatanDatasourceByKotaId(KodeKota);
+    }
+
+    onSelectFile(event: any, value: any) {
+        this.PathFotoUrl = (event.target as HTMLInputElement).files[0];
+
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+            reader.onload = (event) => { // called once readAsDataURL is completed
+                this.url = event.target.result;
+            }
+        };
+    }
+
+    onUpdateFormPerson(FormPerson: any): void {
+        this.editPasienService.onUpdateDetailPerson(FormPerson)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Update Detail Person Berhasil')
+                        .then(() => {
+                            this.onGetDetailDokterByPersonId();
+                        });
+                }
+            })
+    }
+
+    handleClickTambahAlamatDokter(): void {
+        this.FormAlamatState = 'Insert';
+        this.onResetFormAlamat();
+
+        this.handleCheckDefaultAlamatDokter();
+    }
+
+    handleCheckDefaultAlamatDokter(is_default?: boolean): void {
+        const is_default_alamat = document.getElementById('is_default_alamat') as HTMLInputElement;
+
+        let check_is_default = this.FormAlamatDatasource.findIndex(item => item.is_default === true) > -1 ? true : false;
+
+        is_default = is_default ? is_default : false;
+
+        if (check_is_default && !is_default) {
+            is_default_alamat.disabled = true;
+        } else {
+            is_default_alamat.disabled = false;
+        }
+    }
+
+    handleUpdateFormAlamat(FormAlamat: any): void {
+        this.editPasienService.onUpdateAlamatPerson(FormAlamat)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Update Alamat Dokter Berhasil')
+                        .then(() => {
+                            this.onGetDetailDokterByPersonId();
+                        });
+                }
+            });
+    }
+
+    handleDeleteFormAlamat(FormAlamat: any): void {
+        this.editPasienService.onUpdateStatusActiveAlamatPerson(FormAlamat.id_person, FormAlamat.id_alamat_person, !FormAlamat.is_active)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Alamat Berhasil Diubah')
+                        .then(() => {
+                            this.onGetDetailDokterByPersonId();
+                        });
+                }
+            })
+    }
+
+    handleInsertFormAlamat(FormAlamat: any): void {
+        let PersonId: any = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]));
+
+        if (PersonId) {
+            FormAlamat.id_person = PersonId;
+
+            this.utilityHelperService.onRemoveInfo(FormAlamat, ['id_alamat_person', 'kode_wilayah_kota', 'kode_wilayah_provinsi', 'user_created'])
+
+            this.editPasienService.onInsertAlamatPerson(FormAlamat)
+                .subscribe((result) => {
+                    if (result) {
+                        this.utilityService.onShowingCustomAlert('success', 'Success', 'Alamat Dokter Berhasil Disimpan')
+                            .then(() => {
+                                this.onResetFormAlamat();
+
+                                this.onGetDetailDokterByPersonId();
+
+                                this.FormAlamatState = 'Edit';
+                            });
+                    }
+                })
+        }
+    }
+
+    onResetFormAlamat(): void {
+        this.FormAlamats.reset();
+
+        this.alamat_lengkap.setValue('');
+        this.kode_pos.setValue('');
+        this.rt.setValue('');
+        this.rw.setValue('');
+        this.kelurahan.setValue('');
+        this.kode_wilayah.setValue('');
+        this.KecamatanDropdown.value = null;
+        this.kode_wilayah_kota.setValue('');
+        this.KotaDropdown.value = null;
+        this.kode_wilayah_provinsi.setValue('');
+        this.ProvinsiDropdown.value = null;
+        this.is_default_alamat.setValue(false);
+    }
+
+    handleClickTambahKontakDokter(): void {
+        this.FormKontakState = 'Insert';
+        this.onResetFormKontak();
+
+        this.handleCheckDefaultKontakDokter();
+    }
+
+    handleCheckDefaultKontakDokter(is_default?: boolean): void {
+        let check_is_default = this.FormKontakDatasource.findIndex(item => item.is_default === true) > -1 ? true : false;
+
+        const is_default_kontak = document.getElementById('is_default_kontak') as HTMLInputElement;
+
+        is_default = is_default ? is_default : false;
+
+        if (check_is_default && !is_default) {
+            is_default_kontak.disabled = true;
+        } else {
+            is_default_kontak.disabled = false;
+        }
+    }
+
+    handleUpdateFormKontak(FormKontak: any): void {
+        this.editPasienService.onUpdateKontakPerson(FormKontak)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Update Kontak Person Berhasil')
+                        .then(() => {
+                            this.onGetDetailDokterByPersonId();
+                        });
+                }
+            })
+    }
+
+    handleDeleteFormKontak(FormKontak: any): void {
+        this.editPasienService.onUpdateStatusActiveKontakPerson(FormKontak.id_person, FormKontak.id_kontak_person, !FormKontak.is_active)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Kontak Person Berhasil Diubah')
+                        .then(() => {
+                            this.onGetDetailDokterByPersonId();
+                        });
+                }
+            })
+    }
+
+    handleInsertFormKontak(FormKontak: any): void {
+        let PersonId: any = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]));
+
+        if (PersonId) {
+            FormKontak.id_person = PersonId;
+
+            this.utilityHelperService.onRemoveInfo(FormKontak, ['id_kontak_person', 'user_created', 'is_active', 'user_created'])
+
+            this.editPasienService.onInsertKontakPerson(FormKontak)
+                .subscribe((result) => {
+                    if (result) {
+                        this.utilityService.onShowingCustomAlert('success', 'Success', 'Kontak Person Berhasil Disimpan')
+                            .then(() => {
+                                this.onResetFormKontak();
+
+                                this.onGetDetailDokterByPersonId();
+
+                                this.FormKontakState = "Edit";
+                            });
+                    }
+                })
+        }
+    }
+
+    onResetFormKontak(): void {
+        this.FormKontaks.reset();
+
+        this.id_kontak_person.setValue('');
+        this.hand_phone.setValue('');
+        this.home_phone.setValue('');
+        this.office_phone.setValue('');
+        this.email.setValue('');
+        this.keterangan_alamat.setValue('');
+        this.is_default_kontak.setValue(false);
+    }
+
+    onUploadPhotoDokter(): void {
+        const formData: any = new FormData();
+
+        let PersonId: any = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]));
+
+        formData.append('id_person', PersonId.toString());
+        formData.append('form_file', this.PathFotoUrl);
+
+        this.setupDokterService.onUploadFotoDokter(formData)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Foto Dokter Berhasil Diupdate')
+                        .then(() => {
+                            const path = document.getElementById('path_foto_dokter') as HTMLInputElement;
+
+                            path.value = "";
+                        });
+                }
+            })
+    }
+
+    handleUpdateFormDokter(FormDokter: any): void {
+        this.setupDokterService.onUpdateDokter(FormDokter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Update Dokter Berhasil')
+                        .then(() => {
+                            this.onGetDetailDokterByPersonId();
+                        });
+                }
+            })
+    }
+
+    onResetFormDebitur(): void {
+        this.FormDokter.reset();
+
+        this.id_dokter.setValue('');
+        // this.DebiturDropdown.value = null;
+        this.id_spesialisasi_dokter.setValue('');
+        this.no_surat_ijin_praktek.setValue('');
+        this.tgl_exp_surat_ijin_praktek.setValue('');
+        this.no_str.setValue('');
+        this.tgl_exp_str.setValue('');
+        this.id_smf.setValue('');
+        this.id_status_dokter.setValue('');
+    }
+
+    get id_jenis_identitas() { return this.FormPerson.get("id_jenis_identitas") }
+    get no_identitas() { return this.FormPerson.get("no_identitas") }
+    get no_kartu_keluarga() { return this.FormPerson.get("no_kartu_keluarga") }
+    get nama_depan() { return this.FormPerson.get("nama_depan") }
+    get nama_belakang() { return this.FormPerson.get("nama_belakang") }
+    get nama_panggilan() { return this.FormPerson.get("nama_panggilan") }
+    get gelar_depan() { return this.FormPerson.get("gelar_depan") }
+    get gelar_belakang() { return this.FormPerson.get("gelar_belakang") }
+    get gender() { return this.FormPerson.get("gender") }
+    get gol_darah() { return this.FormPerson.get("gol_darah") }
+    get tempat_lahir() { return this.FormPerson.get("tempat_lahir") }
+    get tanggal_lahir() { return this.FormPerson.get("tanggal_lahir") }
+    get tinggi_badan_cm() { return this.FormPerson.get("tinggi_badan_cm") }
+    get berat_badan_kg() { return this.FormPerson.get("berat_badan_kg") }
+    get id_marital_status() { return this.FormPerson.get("id_marital_status") }
+    get id_agama() { return this.FormPerson.get("id_agama") }
+    get id_kebangsaan() { return this.FormPerson.get("id_kebangsaan") }
+    get id_etnis() { return this.FormPerson.get("id_etnis") }
+    get id_bahasa() { return this.FormPerson.get("id_bahasa") }
+    get id_last_education() { return this.FormPerson.get("id_last_education") }
+    get id_job_type() { return this.FormPerson.get("id_job_type") }
+    get user_created() { return this.FormPerson.get("user_created") }
+
+    get id_alamat_person() { return this.FormAlamats.get("id_alamat_person") }
+    get alamat_lengkap() { return this.FormAlamats.get("alamat_lengkap") }
+    get kode_pos() { return this.FormAlamats.get("kode_pos") }
+    get rt() { return this.FormAlamats.get("rt") }
+    get rw() { return this.FormAlamats.get("rw") }
+    get kelurahan() { return this.FormAlamats.get("kelurahan") }
+    get kode_wilayah() { return this.FormAlamats.get("kode_wilayah") }
+    get kode_wilayah_kota() { return this.FormAlamats.get("kode_wilayah_kota") }
+    get kode_wilayah_provinsi() { return this.FormAlamats.get("kode_wilayah_provinsi") }
+    get is_default_alamat() { return this.FormAlamats.get("is_default") }
+
+    get id_kontak_person() { return this.FormKontaks.get("id_kontak_person") }
+    get hand_phone() { return this.FormKontaks.get("hand_phone") }
+    get home_phone() { return this.FormKontaks.get("home_phone") }
+    get office_phone() { return this.FormKontaks.get("office_phone") }
+    get email() { return this.FormKontaks.get("email") }
+    get keterangan_alamat() { return this.FormKontaks.get("keterangan") }
+    get is_default_kontak() { return this.FormKontaks.get("is_default") }
+
+    get id_dokter() { return this.FormDokter.get("id_dokter") }
+    get id_spesialisasi_dokter() { return this.FormDokter.get("id_spesialisasi_dokter") }
+    get no_surat_ijin_praktek() { return this.FormDokter.get("no_surat_ijin_praktek") }
+    get tgl_exp_surat_ijin_praktek() { return this.FormDokter.get("tgl_exp_surat_ijin_praktek") }
+    get no_str() { return this.FormDokter.get("no_str") }
+    get tgl_exp_str() { return this.FormDokter.get("tgl_exp_str") }
+    get id_smf() { return this.FormDokter.get("id_smf") }
+    get id_status_dokter() { return this.FormDokter.get("id_status_dokter") }
 }
