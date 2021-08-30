@@ -1,3 +1,714 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Detail Person -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'DetailPasien'">Detail Person</org-tabs-label>
+            <org-tabs-body>
+                <div class="row mb-3" [hidden]="FormState == 'Detail'">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
+                        <h5 class="text-biru-tua mb-0">Detail Person</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <button class="btn btn-warning btn-sm" type="button"
+                            (click)="onUpdateFormPerson(FormPerson.value)">
+                            Update Detail Person
+                        </button>
+                    </div>
+                </div>
 
+                <form class="row" [formGroup]="FormPerson">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <!-- No. Identitas -->
+                        <mol-input-text [label]="'No Identitas *'" formControlName="no_identitas"
+                            [IsFormControlInvalid]="no_identitas.invalid"
+                            [ValidatorsCaption]="'No Identitas Tidak Boleh Kosong'">
+                        </mol-input-text>
+
+                        <!-- No Kartu Keluarga -->
+                        <mol-input-text [label]="'No. Kartu Keluarga'" formControlName="no_kartu_keluarga"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Nama Depan -->
+                        <mol-input-text [label]="'Nama Depan *'" formControlName="nama_depan"
+                            [IsFormControlInvalid]="nama_depan.invalid"
+                            [ValidatorsCaption]="'Nama Depan Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Nama Belakang -->
+                        <mol-input-text [label]="'Nama Belakang'" formControlName="nama_belakang"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Nama Panggilan -->
+                        <mol-input-text [label]="'Nama Panggilan'" formControlName="nama_panggilan"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Gelar Depan -->
+                        <mol-input-text [label]="'Gelar depan'" formControlName="gelar_depan"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Gelar Belakang -->
+                        <mol-input-text [label]="'Gelar belakang'" formControlName="gelar_belakang"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Gender -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Gender *'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #GenderDropdown id="gender" [dataSource]="GenderDropdownDatasource"
+                                    [fields]="GenderDropdownField" [allowFiltering]="true" formControlName="gender"
+                                    [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+
+                                <atm-validators [IsFormControlTouched]="gender.touched"
+                                    [IsFormControlInvalid]="gender.invalid"
+                                    [ValidatorsCaption]="'Gender Tidak Boleh Kosong'">
+                                </atm-validators>
+                            </div>
+                        </div>
+
+                        <!-- Tempat Lahir -->
+                        <mol-input-text [label]="'Tempat Lahir'" formControlName="tempat_lahir"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Tanggal Lahir -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tanggal Lahir *'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-datepicker #TglLahirDatepicker [format]="'dd/MM/yyyy'"
+                                    formControlName="tanggal_lahir" [readonly]="FormState != 'Insert'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-datepicker>
+
+                                <atm-validators [IsFormControlTouched]="tanggal_lahir.touched"
+                                    [IsFormControlInvalid]="tanggal_lahir.invalid"
+                                    [ValidatorsCaption]="'Tanggal Lahir Tidak Boleh Kosong'">
+                                </atm-validators>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <!-- Golongan Darah -->
+                        <mol-input-text [label]="'Gol Darah *'" formControlName="gol_darah"
+                            [IsFormControlInvalid]="gol_darah.invalid"
+                            [ValidatorsCaption]="'Golongan Darah Tidak Boleh Kosong'"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Tinggi Badan -->
+                        <mol-input-text [label]="'Tinggi Badan'" formControlName="tinggi_badan_cm"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Berat Badan -->
+                        <mol-input-text [label]="'Berat Badan'" formControlName="berat_badan_kg"
+                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
+                        </mol-input-text>
+
+                        <!-- Marital Status -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Status Pernikahan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #MaritalStatusDropdown id="marital"
+                                    [dataSource]="MaritalStatusDropdownDatasource | async"
+                                    [fields]="MaritalStatusDropdownField" [allowFiltering]="true"
+                                    formControlName="id_marital_status" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Agama -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Agama'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #AgamaDropdown id="agama"
+                                    [dataSource]="AgamaDropdownDatasource | async" [fields]="AgamaDropdownField"
+                                    [allowFiltering]="true" formControlName="id_agama" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Kebangsaan -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Kebangsaan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #KebangsaanDropdown id="kebangsaan"
+                                    [dataSource]="KebangsaanDropdownDatasource | async"
+                                    [fields]="KebangsaanDropdownField" [allowFiltering]="true"
+                                    formControlName="id_kebangsaan" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Etnis -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Etnis'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #EtnisDropdown id="id_etnis"
+                                    [dataSource]="EtnisDropdownDatasource | async" [fields]="EtnisDropdownField"
+                                    [allowFiltering]="true" formControlName="id_etnis" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Bahasa -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Bahasa'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #BahasaDropdown id="id_bahasa"
+                                    [dataSource]="BahasaDropdownDatasource | async" [fields]="BahasaDropdownField"
+                                    [allowFiltering]="true" formControlName="id_bahasa" [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Education -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Pendidikan Terakhir'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #EducationDropdown id="id_last_education"
+                                    [dataSource]="EducationDropdownDatasource | async" [fields]="EducationDropdownField"
+                                    [allowFiltering]="true" formControlName="id_last_education"
+                                    [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+
+                        <!-- Job Type -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Tipe Pekerjaan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #JobTypeDropdown id="id_job_type"
+                                    [dataSource]="JobTypeDropdownDatasource | async" [fields]="JobTypeDropdownField"
+                                    [allowFiltering]="true" formControlName="id_job_type"
+                                    [readonly]="FormState == 'Edit'"
+                                    [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Alamat Dokter -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Alamat Person'">Alamat Dokter</org-tabs-label>
+            <org-tabs-body>
+                <!-- Header Ribbon / Button -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-start">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h5 class="text-biru-tua mb-0">Daftar Alamat Dokter</h5>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end cursor-pointer">
+                                <span class="badge bg-primary" (click)="handleClickTambahAlamatDokter()">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Alamat Dokter
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-start">
+                        <h5 class="text-biru-tua mb-0">Detail Alamat Dokter</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-2 pb-1"
+                                style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
+                                <div class="row mb-2 mx-0 px-0 py-2 shadow-sm border rounded cursor-pointer bg-white"
+                                    *ngFor="let item of FormAlamatDatasource; let i = index"
+                                    (click)="handleSelectedFormAlamat(item)">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="mb-1 text-biru-tua" style="font-size: 17px">
+                                            {{ item.alamat_lengkap }}
+                                            <i class="fas fa-check-circle fa-xs"
+                                                [class]="item.is_default ? 'text-biru-muda' : 'text-abu-muda'">
+                                            </i>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="mb-1 text-hitam-muda" style="font-size: 15px">
+                                            Kel. {{ item.kelurahan | titlecase }} ({{ item.kode_pos }})
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <p class="mb-1 text-hitam-muda" style="font-size: 15px">
+                                            RT {{ item.rt }} / RW {{ item.rw }}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                        <span class="badge" [class]="item.is_active ? 'bg-success' : 'bg-warning'">
+                                            {{ item.is_active ? 'Alamat Aktif' : 'Alamat Tidak Aktif' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-2 pb-2"
+                                style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
+                                <div class="row px-0 mx-0 pt-1">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form [formGroup]="FormAlamats">
+                                            <!-- Alamat Person -->
+                                            <mol-input-text [label]="'Alamat Lengkap'" formControlName="alamat_lengkap">
+                                            </mol-input-text>
+
+                                            <!-- Provinsi -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Provinsi'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <ejs-dropdownlist #ProvinsiDropdown
+                                                        [dataSource]="ProvinsiDropdownDataSource | async"
+                                                        [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                                        (change)="handleDropdownProvinsiChange(ProvinsiDropdown.value)"
+                                                        formControlName="kode_wilayah_provinsi">
+                                                    </ejs-dropdownlist>
+                                                </div>
+                                            </div>
+
+                                            <!-- Kota -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Kota'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <ejs-dropdownlist #KotaDropdown
+                                                        [dataSource]="KotaDropdownDataSource | async"
+                                                        [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                                        (change)="handleDropdownKotaChange(KotaDropdown.value)"
+                                                        formControlName="kode_wilayah_kota">
+                                                    </ejs-dropdownlist>
+                                                </div>
+                                            </div>
+
+                                            <!-- Kecamatan -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Kecamatan *'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <ejs-dropdownlist #KecamatanDropdown id="kecamatan"
+                                                        [dataSource]="KecamatanDropdownDataSource | async"
+                                                        [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                                        formControlName="kode_wilayah">
+                                                    </ejs-dropdownlist>
+
+                                                    <atm-validators [IsFormControlTouched]="kode_wilayah.touched"
+                                                        [IsFormControlInvalid]="kode_wilayah.invalid"
+                                                        [ValidatorsCaption]="'Kecamatan Tidak Boleh Kosong'">
+                                                    </atm-validators>
+                                                </div>
+                                            </div>
+
+                                            <!-- Kelurahan -->
+                                            <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan">
+                                            </mol-input-text>
+
+                                            <!-- Kode Pos -->
+                                            <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos">
+                                            </mol-input-text>
+
+                                            <!-- RT / RW -->
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'RT / RW'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <input type="text" class="form-control form-select-sm" name="
+                                                                RT" formControlName="rt">
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <input type="text" class="form-control form-select-sm"
+                                                                name="RW" formControlName="rw">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Is Default -->
+                                            <div class="row mb-4">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Alamat Tinggal'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                                    <div class="form-check form-select-sm">
+                                                        <input id="is_default_alamat" #IsDefault
+                                                            class="form-check-input" type="checkbox"
+                                                            formControlName="is_default">
+
+                                                        <label class="form-check-label" for="is_default_alamat">
+                                                            Iya, alamat ini adalah alamat tinggal saat ini
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                                                    <button *ngIf="FormAlamatState == 'Edit'"
+                                                        class="btn btn-danger btn-sm" type="button"
+                                                        (click)="handleDeleteFormAlamat(FormAlamats.value)"
+                                                        [disabled]="is_default_alamat.value">
+                                                        Ubah Status Alamat Pasien
+                                                    </button>
+                                                    <button *ngIf="FormAlamatState == 'Edit'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="handleUpdateFormAlamat(FormAlamats.value)">
+                                                        Update Alamat Pasien
+                                                    </button>
+
+                                                    <button *ngIf="FormAlamatState == 'Insert'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="FormAlamatState = 'Edit'">
+                                                        Cancel
+                                                    </button>
+                                                    <button *ngIf="FormAlamatState == 'Insert'"
+                                                        class="btn btn-primary btn-sm" type="button"
+                                                        (click)="handleInsertFormAlamat(FormAlamats.value)">
+                                                        Simpan Alamat Pasien
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Kontak Person -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'KontakPerson'">Kontak Person</org-tabs-label>
+            <org-tabs-body>
+                <!-- Header Ribbon / Button -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-start">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <h5 class="text-biru-tua mb-0">Daftar Kontak Person</h5>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-end cursor-pointer">
+                                <span class="badge bg-primary" (click)="handleClickTambahKontakDokter()">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Kontak Person
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-start">
+                        <h5 class="text-biru-tua mb-0">Detail Kontak Person</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-2 pb-1"
+                                style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
+                                <div class="row mb-2 mx-0 px-0 py-2 shadow-sm border rounded cursor-pointer bg-white"
+                                    *ngFor="let item of FormKontakDatasource; let i = index"
+                                    (click)="handleSelectedFormKontak(item)">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="mb-1 text-biru-tua" style="font-size: 17px">
+                                            {{ item.hand_phone }}
+                                            <i
+                                                class="fas fa-check-circle fa-xs {{ item.is_default ? 'text-biru-muda' : 'text-abu-muda'}}">
+                                            </i>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="mb-1 text-hitam-muda" style="font-size: 15px">
+                                            Telp. Rumah {{ item.home_phone }}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <p class="mb-1 text-hitam-muda" style="font-size: 15px">
+                                            {{ item.keterangan }}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                        <span class="badge" [class]="item.is_active ? 'bg-success' : 'bg-warning'">
+                                            {{ item.is_active ? 'Kontak Person Aktif' : 'Kontak Person Tidak Aktif' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-2 pb-2"
+                                style="height: calc(100vh - 16rem); max-height: calc(100vh - 16rem); overflow-y: auto;">
+                                <div class="row px-0 mx-0 pt-1">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form [formGroup]="FormKontaks">
+                                            <!-- No. Handphone -->
+                                            <mol-input-text [label]="'No. Handphone *'" formControlName="hand_phone"
+                                                [IsFormControlInvalid]="hand_phone.invalid"
+                                                [ValidatorsCaption]="'No. Handphone Tidak Boleh Kosong'">
+                                            </mol-input-text>
+
+                                            <!-- No. Telepon Rumah -->
+                                            <mol-input-text [label]="'No. Telepon Rumah *'" formControlName="home_phone"
+                                                [IsFormControlInvalid]="home_phone.invalid"
+                                                [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'">
+                                            </mol-input-text>
+
+                                            <!-- No. Telepon Kantor -->
+                                            <mol-input-text [label]="'No. Telepon Kantor *'"
+                                                formControlName="office_phone"
+                                                [IsFormControlInvalid]="office_phone.invalid"
+                                                [ValidatorsCaption]="'No. Telepon Kantor Tidak Boleh Kosong'">
+                                            </mol-input-text>
+
+                                            <!-- Email -->
+                                            <mol-input-text [label]="'Email'" formControlName="email">
+                                            </mol-input-text>
+
+                                            <!-- Keterangan -->
+                                            <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan">
+                                            </mol-input-textarea>
+
+                                            <!-- Is Default -->
+                                            <div class="row mb-4">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Kontak Person Default'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                                    <div class="form-check form-select-sm">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="is_default_kontak" formControlName="is_default">
+
+                                                        <label class="form-check-label" for="is_default_kontak">
+                                                            Iya, ini adalah kontak person default
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                                                    <button *ngIf="FormKontakState == 'Edit'"
+                                                        class="btn btn-danger btn-sm" type="button"
+                                                        (click)="handleDeleteFormKontak(FormKontaks.value)"
+                                                        [disabled]="is_default_kontak.value">
+                                                        Ubah Status Kontak Person
+                                                    </button>
+                                                    <button *ngIf="FormKontakState == 'Edit'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="handleUpdateFormKontak(FormKontaks.value)">
+                                                        Update Kontak Person
+                                                    </button>
+
+                                                    <button *ngIf="FormKontakState == 'Insert'"
+                                                        class="btn btn-warning btn-sm mx-2" type="button"
+                                                        (click)="FormKontakState = 'Edit'">
+                                                        Cancel
+                                                    </button>
+                                                    <button *ngIf="FormKontakState == 'Insert'"
+                                                        class="btn btn-primary btn-sm" type="button"
+                                                        (click)="handleInsertFormKontak(FormKontaks.value)">
+                                                        Simpan Kontak Person
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Detail Dokter -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'DebiturPasien'">Detail Dokter</org-tabs-label>
+            <org-tabs-body>
+                <!-- Header Ribbon / Button -->
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h5 class="text-biru-tua mb-0">Detail Dokter</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <button class="btn btn-warning btn-sm" type="button"
+                            (click)="handleUpdateFormDokter(FormDokter.value)">
+                            Update Detail Dokter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <form [formGroup]="FormDokter">
+                            <!-- Spesialisasi Dokter -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Spesialisasi Dokter *'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #SpesialisasiDokter id="spesialisasiDokter"
+                                        [dataSource]="SpesialisasiDokterDropdownDataSource | async"
+                                        [fields]="SpesialisasiDokterDropdownField" [allowFiltering]="true"
+                                        formControlName="id_spesialisasi_dokter">
+                                    </ejs-dropdownlist>
+
+                                    <atm-validators [IsFormControlTouched]="id_spesialisasi_dokter.touched"
+                                        [IsFormControlInvalid]="id_spesialisasi_dokter.invalid"
+                                        [ValidatorsCaption]="'Spesialisasi Dokter Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- No Surat Ijin Praktek -->
+                            <mol-input-text [label]="'No. Surat Ijin Praktek'" formControlName="no_surat_ijin_praktek">
+                            </mol-input-text>
+
+                            <!-- Tgl Exp Surat Ijin Praktek -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek *'">
+                                    </atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-datepicker id="tglExpiredSuratIjinPraktek" format="dd/MM/yyyy"
+                                        formControlName="tgl_exp_surat_ijin_praktek">
+                                    </ejs-datepicker>
+
+                                    <atm-validators [IsFormControlTouched]="tgl_exp_surat_ijin_praktek.touched"
+                                        [IsFormControlInvalid]="tgl_exp_surat_ijin_praktek.invalid"
+                                        [ValidatorsCaption]="'Tgl Exp Surat Ijin Praktek Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- No Str -->
+                            <mol-input-text [label]="'No. STR'" formControlName="no_str">
+                            </mol-input-text>
+
+                            <!-- Tgl Exp STR -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tgl Exp STR *'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-datepicker id="tglExpiredSTR" format="dd/MM/yyyy"
+                                        formControlName="tgl_exp_str">
+                                    </ejs-datepicker>
+
+                                    <atm-validators [IsFormControlTouched]="tgl_exp_str.touched"
+                                        [IsFormControlInvalid]="tgl_exp_str.invalid"
+                                        [ValidatorsCaption]="'Tgl Exp STR Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Smf Dokter -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Smf Dokter'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #SmfDokter id="smfDokter"
+                                        [dataSource]="SmfDokterDropdownDataSource | async"
+                                        [fields]="SmfDokterDropdownField" [allowFiltering]="true"
+                                        formControlName="id_smf">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Status Dokter -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Status Dokter'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #StatusDokter id="statusDokter"
+                                        [dataSource]="StatusDokterDropdownDataSource | async"
+                                        [fields]="StatusDokterDropdownField" [allowFiltering]="true"
+                                        formControlName="id_status_dokter">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Photo Dokter -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'FotoPasien'">Foto Dokter</org-tabs-label>
+            <org-tabs-body>
+                <!-- Header Ribbon / Button -->
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
+                        <h5 class="text-biru-tua mb-0">Foto Dokter</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                        <button class="btn btn-warning btn-sm" type="button" (click)="onUploadPhotoDokter()">
+                            Update Foto Dokter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div id="div-img-foto-pasien" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <img [src]="url" class="img-thumbnail-foto-dokter">
+                        <br />
+                        <input #PathFoto type='file' class="form-control" id="path_foto_dokter"
+                            (change)="onSelectFile($event, PathFoto.value)" accept="image/*">
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
 </org-card-layout>

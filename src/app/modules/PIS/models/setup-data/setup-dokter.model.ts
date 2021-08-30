@@ -149,3 +149,28 @@ export class GetAllDokterModel implements HttpResponseModel {
     data: IGetAllDokterModel[];
     message: string;
 }
+
+/**
+ * @IPutDetailDokterModel request model untuk request Put Update Dokter
+*/
+export interface IPutDetailDokterModel {
+    id_person: number;
+    id_dokter: number;
+    id_spesialisasi_dokter: number;
+    no_surat_ijin_praktek: string;
+    tgl_exp_surat_ijin_praktek: Date;
+    no_str: string;
+    tgl_exp_str: Date;
+    id_smf: number;
+    id_status_dokter: number;
+}
+
+/**
+ * @PutUpdateDokterModel response model setelah request Put Update Dokter 
+ * @Key : { responseResult: boolean; data: IPutDetailDokterModel; message: string }
+*/
+export class PutUpdateDokterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
