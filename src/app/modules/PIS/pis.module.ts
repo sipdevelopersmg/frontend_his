@@ -32,6 +32,7 @@ import { SetupKecamatanComponent } from './pages/setup-data/setup-wilayah/setup-
 import { SetupProvinsiComponent } from "./pages/setup-data/setup-wilayah/setup-provinsi/setup-provinsi.component";
 import { SetupDebiturComponent } from './pages/setup-data/setup-debitur/setup-debitur.component';
 import { InputDokterComponent } from './pages/setup-data/setup-dokter/input-dokter/input-dokter.component';
+import { EditDokterComponent } from './pages/setup-data/setup-dokter/edit-dokter/edit-dokter.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -66,6 +67,7 @@ const ngWizardConfig: NgWizardConfig = {
         SetupKecamatanComponent,
         SetupDebiturComponent,
         InputDokterComponent,
+        EditDokterComponent,
     ],
     imports: [
         CommonModule,

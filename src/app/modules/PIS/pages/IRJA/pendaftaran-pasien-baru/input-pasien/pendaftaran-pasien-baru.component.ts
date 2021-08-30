@@ -454,7 +454,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     handleCheckPersonByNoIdentitas(NoIdentitas: string): void {
         this.pendafatranPasienBaruService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
-                if (result) {
+                if (result.responseResult) {
                     const NoRekamMedis = result.data.no_rekam_medis;
 
                     // ** Terdaftar sebagai Person / Dokter, tetapi belum terdaftar sebagai Pasien

@@ -32,7 +32,6 @@ export class ResepRacikanComponent implements OnInit {
         textWrapSettings: { wrapMode: 'Both' },
         toolbar: [
             { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-xs', id: 'Add' },
-            "Search"
         ],
         editSettings: { allowAdding: true },
         columns: [

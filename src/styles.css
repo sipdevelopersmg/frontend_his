@@ -227,3 +227,23 @@ body {
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+.statustemp.e-activecolor {
+  color: white !important;
+  background-color: var(--biru-muda) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.statustemp.e-inactivecolor {
+  color: white !important;
+  background-color: var(--abu-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}

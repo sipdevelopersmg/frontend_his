@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { DeleteSpesialisasiDokterModel, GetAllSpesialisasiDokterModel, PostSaveSpesialisasiDokterModel, PutUpdateSpesialisasiDokterModel, SpesialisasiDokterModel } from '../../../models/setup-data/setup-spesialiasi-dokter.model';
+import { DeleteSpesialisasiDokterModel, GetAllSpesialisasiDokterModel, GetByIdSpesialisasiDokterModel, PostSaveSpesialisasiDokterModel, PutUpdateSpesialisasiDokterModel, SpesialisasiDokterModel } from '../../../models/setup-data/setup-spesialiasi-dokter.model';
 import * as API_CONFIG from '../../../../../api';
 
 @Injectable({
@@ -24,6 +24,14 @@ export class SetupSpesialisasiDokterService {
     */
     onGetAll(): Observable<GetAllSpesialisasiDokterModel> {
         return this.httpOperationService.defaultGetRequest(this.API_SPESIALISASI_DOKTER.GET_ALL_SETUP_SPESIALISASI_DOKTER);
+    }
+
+    /**
+     * Service Untuk Menampilkan Semua data
+     * @onGetAll Observable<GetAllSpesialisasiDokterModel>
+    */
+    onGetById(SpesialisasiId: number): Observable<GetByIdSpesialisasiDokterModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_SPESIALISASI_DOKTER.GET_BY_ID_SETUP_SPESIALISASI_DOKTER + SpesialisasiId);
     }
 
     /**

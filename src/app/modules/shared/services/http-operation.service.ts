@@ -14,7 +14,7 @@ export class HttpOperationService {
         private utilityService: UtilityService,
     ) { }
 
-    defaultGetRequest(url: string, params?: any): Observable<any> {
+    defaultGetRequest(url: string, params?: any, showErrorAlert?: boolean): Observable<any> {
         return this.httpClient.get<any>(
             url,
             {
@@ -28,7 +28,11 @@ export class HttpOperationService {
                     return result;
                 } else {
                     // Menampilkan SweetAlert Error
-                    this.handlingErrorWithStatusCode200(result);
+                    if (showErrorAlert) {
+                        this.handlingErrorWithStatusCode200(result);
+                    } else {
+                        return result;
+                    }
                 }
             })
         );

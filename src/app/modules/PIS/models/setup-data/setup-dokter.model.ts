@@ -123,3 +123,29 @@ export class PostSavePendaftaranDokterPersonSudahAdaModel implements HttpRespons
     data: string;
     message: string;
 }
+
+/**
+ * @IGetAllDokterModel response model setelah request Get All Dokter
+ * @Key : { responseResult: boolean; data: IGetAllDokterModel[]; message: string }
+*/
+export interface IGetAllDokterModel {
+    id_person: number;
+    id_dokter: number;
+    no_identitas: string;
+    kode_dokter: string;
+    full_name: string;
+    gender: string;
+    alamat_lengkap: string;
+    hand_phone: string;
+    spesialisasi_dokter: string;
+}
+
+/**
+ * @GetAllDokterModel response model setelah request Get All Pasien IRJA
+ * @Key : { responseResult: boolean; data: IGetAllDokterModel[]; message: string }
+*/
+export class GetAllDokterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IGetAllDokterModel[];
+    message: string;
+}

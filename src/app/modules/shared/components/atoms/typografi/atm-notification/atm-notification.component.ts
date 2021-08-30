@@ -19,7 +19,7 @@ export class AtmNotificationComponent implements OnInit {
         this.Toasts = this.notificationService.toasts;
     }
 
-    onHideNotification(toast: any): void {
-        return this.notificationService.onRemoveToast(toast);
+    onHideNotification(toast: any, index: number): void {
+        return this.notificationService.onRemoveToast(toast, index);
     }
 }
