@@ -1,0 +1,28 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "id_tipe_outlet",
+        "headerText": "Id",
+        "visible": false
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "tipe_outlet",
+        "headerText": "Tipe Outlet",
+        "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "keterangan",
+      "headerText": "Keterangan",
+      "visible": true
+    }
+  ]
+}

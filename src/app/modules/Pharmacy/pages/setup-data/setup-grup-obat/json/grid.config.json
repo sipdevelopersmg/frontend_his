@@ -1,0 +1,40 @@
+{
+  "GridColumns": [
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_grup_obat",
+      "headerText": "Id",
+      "visible": false
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "kode_grup_obat",
+      "headerText": "Kode Grup Obat",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "nama_grup_obat",
+      "headerText": "Nama Grup Obat",
+      "visible": true
+    },
+    {
+      "allowEditing": true,
+      "allowSorting": false,
+      "allowFiltering": false,
+      "editType": "booleanedit",
+      "field": "is_active",
+      "headerText": "Status Active",
+      "type": "boolean",
+      "displayAsCheckBox": true,
+      "visible": true,
+      "width": 100
+    }
+  ]
+}

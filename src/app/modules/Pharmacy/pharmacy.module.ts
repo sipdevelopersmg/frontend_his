@@ -6,12 +6,24 @@ import { AntrianFarmasiComponent } from './pages/Antrian/antrian-farmasi/antrian
 import { PharmacyRoutingModule } from "./pharmacy-routing.module";
 import { SetupFormulariumComponent } from './pages/setup-formularium/setup-formularium/setup-formularium.component';
 import { ResepRacikanComponent } from "./pages/resep-racikan/resep-racikan.component";
+import { SetupTipeOutletComponent } from './pages/setup-data/setup-tipe-outlet/setup-tipe-outlet.component';
+import { SetupOutletComponent } from './pages/setup-data/setup-outlet/setup-outlet.component';
+import { SetupGrupObatComponent } from './pages/setup-data/setup-grup-obat/setup-grup-obat.component';
+import { SetupCaraPakaiObatComponent } from './pages/setup-data/setup-cara-pakai-obat/setup-cara-pakai-obat.component';
+import { SetupRutePemberianObatComponent } from './pages/setup-data/setup-rute-pemberian-obat/setup-rute-pemberian-obat.component';
+import { SetupLabelPemakaianObatComponent } from './pages/setup-data/setup-label-pemakaian-obat/setup-label-pemakaian-obat.component';
 
 @NgModule({
     declarations: [
         AntrianFarmasiComponent,
         SetupFormulariumComponent,
-        ResepRacikanComponent
+        ResepRacikanComponent,
+        SetupTipeOutletComponent,
+        SetupOutletComponent,
+        SetupGrupObatComponent,
+        SetupCaraPakaiObatComponent,
+        SetupRutePemberianObatComponent,
+        SetupLabelPemakaianObatComponent,
     ],
     imports: [
         CommonModule,

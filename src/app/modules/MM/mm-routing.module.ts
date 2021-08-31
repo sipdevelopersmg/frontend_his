@@ -10,6 +10,7 @@ import { SetupItemComponent } from "./pages/setup-data/setup-item/setup-item.com
 import { SetupPabrikComponent } from "./pages/setup-data/setup-pabrik/setup-pabrik.component";
 import { SetupPerencanaanKategoriComponent } from "./pages/setup-data/setup-perencanaan-kategori/setup-perencanaan-kategori.component";
 import { SetupSatuanComponent } from "./pages/setup-data/setup-satuan/setup-satuan.component";
+import { SetupStockroomComponent } from "./pages/setup-data/setup-stockroom/setup-stockroom.component";
 import { SetupSupplierComponent } from "./pages/setup-data/setup-supplier/setup-supplier.component";
 import { SetupTemperaturItemComponent } from "./pages/setup-data/setup-temperatur-item/setup-temperatur-item.component";
 import { SetupTipeItemComponent } from "./pages/setup-data/setup-tipe-item/setup-tipe-item.component";
@@ -20,6 +21,7 @@ const mmRoutes: Routes = [
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
+            { path: "setup-stockroom", component: SetupStockroomComponent, data: { title: "Setup Stockroom" } },
             { path: "setup-item", component: SetupItemComponent, data: { title: "Setup Item" } },
             { path: "setup-grup-item", component: SetupGrupItemComponent, data: { title: "Setup Grup Item" } },
             { path: "setup-data-coa", component: SetupCoaComponent, data: { title: "Setup COA" } },

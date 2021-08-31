@@ -2,23 +2,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MM } from 'src/app/api/MM';
+import { PHARMACY } from 'src/app/api/PHARMACY';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { SetupTipeStockroomModel, ISetupTipeStockroomModel } from '../../../models/setup-data/setup-tipe-stockroom/SetupTipeStockroom';
+import { SetupTipeOutletModel, ISetupTipeOutletModel } from '../../../models/setup-data/SetupTipeOutletModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SetupTipeStockroomService {
+export class SetupTipeOutletService {
 
-    API = MM.SETUP_DATA.SETUP_TIPE_STOCKROOM
+    API = PHARMACY.SETUP_DATA.SETUP_TIPE_OUTLET
     public dataSource = new BehaviorSubject([]); 
 
     constructor(
       private notificationService: NotificationService,
       private httpOperationService: HttpOperationService) { }
-      
+
     /**
      * Service Untuk Mengisi dataScource 
      * @setDataSource Void
@@ -28,12 +28,11 @@ export class SetupTipeStockroomService {
         this.dataSource.next(result.data);
       });
     }
-
     /**
      * Service Untuk Menampilkan Semua data
      * @onGetAll Observable<SetupPabrikModel>
     */
-    onGetAll(): Observable<SetupTipeStockroomModel> {
+    onGetAll(): Observable<SetupTipeOutletModel> {
       return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
     }
   
@@ -42,7 +41,7 @@ export class SetupTipeStockroomService {
      * @onPostSave Observable<any>
      * @param ISetupPabrikModel
     */
-    onPostSave(Data: ISetupTipeStockroomModel): Observable<any> {
+    onPostSave(Data: ISetupTipeOutletModel): Observable<any> {
       return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -56,7 +55,7 @@ export class SetupTipeStockroomService {
      * @onPutEdit Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutEdit(Data: ISetupTipeStockroomModel): Observable<any> {
+    onPutEdit(Data: ISetupTipeOutletModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
