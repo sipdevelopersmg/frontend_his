@@ -1,6 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { TrKontrakSpjbDetailItemInsert } from 'src/app/modules/MM/models/penerimaan/kontrak-pengadaan/KontrakPengadaanModel';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { PENERIMAAN } from 'src/app/api/MM/PENERIMAAN';
+import { TrKontrakSpjbDetailItemInsert, TrKontrakSpjbInsert } from 'src/app/modules/MM/models/penerimaan/kontrak-pengadaan/KontrakPengadaanModel';
+import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
+import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import 'src/app/prototype/ArrPrototype';
 
 @Injectable({
@@ -8,6 +13,8 @@ import 'src/app/prototype/ArrPrototype';
 })
 
 export class InputKontrakPengadaanService {
+
+    public API = PENERIMAAN.TRANSKONTRAKSPJB;
 
     private readonly _dataDetail = new BehaviorSubject<TrKontrakSpjbDetailItemInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
@@ -23,7 +30,28 @@ export class InputKontrakPengadaanService {
     public total: Number = 0;
     public jumlahItem: Number = 0;
 
-    constructor() { }
+    constructor(
+        private notificationService: NotificationService,
+        private httpOperationService: HttpOperationService
+    ) { }
+
+    /**
+     * Service Untuk Menampilkan Semua data
+     * @onGetAll Observable<SetupPabrikModel>
+    */
+    onGetAll(): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_HEADER);
+    }
+    
+    /**
+     * Service Untuk Menampilkan data detail Item
+     * @setDetail Void
+    */
+    setDetail(id): void{
+        this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id).subscribe((result) => {
+            this.dataDetail = result.data
+        });
+    }
 
     addDataDetail(detail: TrKontrakSpjbDetailItemInsert) {
         this.dataDetail = [
@@ -75,7 +103,6 @@ export class InputKontrakPengadaanService {
     }
 
     editSatuan(index: number, satuan: string) {
-        // console.log(this.dataDetail[index].satuan);
         let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar);
         let isi = this.dataDetail[index].satuan[indexsatuan].isi;
         this.dataDetail[index].kode_satuan_besar = satuan;
@@ -88,6 +115,28 @@ export class InputKontrakPengadaanService {
     sum(): void {
         this.total = this.dataDetail.sum('sub_total_kontrak');
         this.jumlahItem = this.dataDetail.sum('qty_kontrak_satuan_besar');
+    }
+
+    Insert( Data:TrKontrakSpjbInsert ): Observable<any>{
+        this.dataDetail.map((e,i)=>{
+            return e.no_urut = i+1;
+        });
+        Data.detailItem = this.dataDetail;
+        Data.jumlah_item_kontrak = this.jumlahItem;
+        Data.total_transaksi_kontrak = this.total;
+
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Reset(){
+        this.dataDetail = [] ;
+        this.total = 0 ;
+        this.jumlahItem = 0 ; 
     }
 
 }

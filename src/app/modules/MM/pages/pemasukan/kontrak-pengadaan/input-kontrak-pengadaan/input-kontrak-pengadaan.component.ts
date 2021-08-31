@@ -1,22 +1,20 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild, Renderer2 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import * as GridLoockUpSupplier from "./json/lookupsupplier.json";
 import * as GridLoockUpItem from "./json/lookupitem.json";
+import * as GridDetailItem from "./json/detailItem.json"
 
-import * as GridDetailItem from "./json/detailItem.json";
 import { TrKontrakSpjbDetailItemInsert } from 'src/app/modules/MM/models/penerimaan/kontrak-pengadaan/KontrakPengadaanModel';
 
 import { MM } from "src/app/api/MM";
 import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
 import { InputKontrakPengadaanService } from 'src/app/modules/MM/services/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.service';
 import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
-import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { combineLatest, Subscription } from 'rxjs';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
-import { DatePickerComponent } from '@syncfusion/ej2-angular-calendars';
 
 @Component({
     selector: 'app-input-kontrak-pengadaan',
@@ -80,6 +78,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
 
     TglExpiredParams = { params: { min: new Date() } };
+    utilityService: any;
 
     constructor(
         private modalService: BsModalService,
@@ -92,16 +91,17 @@ export class InputKontrakPengadaanComponent implements OnInit {
     ngOnInit(): void {
         this.formKontrak = this.formBuilder.group({
             id_supplier: ["", Validators.required],
-            nomor_spbbj: ["", Validators.required],
+            nomor_kontrak_spjb: ["", Validators.required],
             nomor_kontrak: ["", Validators.required],
             tanggal_ttd_kontrak: [null, Validators.required],
             tanggal_berlaku_kontrak: [null, Validators.required],
             tanggal_berakhir_kontrak: [null, Validators.required],
-            judul_pekerjaan: ["", Validators.required],
+            judul_kontrak: ["", Validators.required],
             tahun_anggaran: ["", Validators.required],
             keterangan: ["", Validators.required],
             total_transaksi_kontrak: [0, Validators.required],
             jumlah_item_kontrak: [0, Validators.required],
+            user_inputed: [1,[]],
         });
 
         this.satuanParams = {
@@ -144,11 +144,10 @@ export class InputKontrakPengadaanComponent implements OnInit {
     onClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
             case 'Save':
-                this.inputKontrakPengadaanService.dataDetail$.subscribe((result => {
-                    console.log(result);
-                }))
+                this.onSave();
                 break;
             case 'Reset':
+                this.ResetFrom();
                 break;
             default:
                 break;
@@ -171,7 +170,6 @@ export class InputKontrakPengadaanComponent implements OnInit {
     }
 
     heandleSelectedItem($event) {
-        //  console.log($event);
         let item: TrKontrakSpjbDetailItemInsert = {
             no_urut: 0,
             id_item: $event.id_item,
@@ -411,6 +409,26 @@ export class InputKontrakPengadaanComponent implements OnInit {
             let last = this.gridDetail.dataSource as any[];
             this.gridDetail.selectedRowIndex = last.length - 1;
         }, 150)
+    }
+
+    onSave(){
+        if (this.formKontrak.valid) {
+            this.inputKontrakPengadaanService.Insert(this.formKontrak.value)
+            .subscribe((result) => {
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                .then(() => {
+                    this.ResetFrom();
+                });
+            });
+        }else{
+            alert('isi semua data');
+        }
+    }
+
+    ResetFrom() {
+        this.inputKontrakPengadaanService.Reset();
+        this.formKontrak.reset();
+        this.LookupKodeSupplier.resetValue();
     }
 
     get id_supplier(): AbstractControl { return this.formKontrak.get('id_supplier'); }

@@ -1,0 +1,34 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_grup_item",
+            "headerText": "Kode Grup Item",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "grup_item",
+            "headerText": "Grup Item",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+          "field": "kode_grup_item",
+          "filter": "like",
+          "title": "KODE GRUP ITEM"
+        },
+        {
+          "field": "grup_item",
+          "filter": "like",
+          "title": "GRUP ITEM"
+        }
+    ]
+}

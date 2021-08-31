@@ -5,21 +5,21 @@ import { catchError } from 'rxjs/operators';
 import { MM } from 'src/app/api/MM';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { SetupTipeItemModel, ISetupTipeItemModel, ISetActiveTipeItemModel } from '../../../models/setup-data/setup-tipe-item/SetupTipeItem';
+import { SetupSupplierModel, ISetupSupplierModel, ISetActiveSupplierModel } from '../../../models/setup-data/setup-supplier/SetupSupplier';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SetupTipeItemService {
+export class SetupSupplierService {
 
-    API = MM.SETUP_DATA.SETUP_TIPE_ITEM
+    API = MM.SETUP_DATA.SETUP_SUPPLIER
 
     public dataSource = new BehaviorSubject([]); 
-
+  
     constructor(
       private notificationService: NotificationService,
       private httpOperationService: HttpOperationService) { }
-  
+
     /**
      * Service Untuk Mengisi dataScource 
      * @setDataSource Void
@@ -29,12 +29,12 @@ export class SetupTipeItemService {
         this.dataSource.next(result.data);
       });
     }
-
+  
     /**
      * Service Untuk Menampilkan Semua data
      * @onGetAll Observable<SetupPabrikModel>
     */
-    onGetAll(): Observable<SetupTipeItemModel> {
+    onGetAll(): Observable<SetupSupplierModel> {
       return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
     }
   
@@ -43,7 +43,7 @@ export class SetupTipeItemService {
      * @onPostSave Observable<any>
      * @param ISetupPabrikModel
     */
-    onPostSave(Data: ISetupTipeItemModel): Observable<any> {
+    onPostSave(Data: ISetupSupplierModel): Observable<any> {
       return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -57,7 +57,7 @@ export class SetupTipeItemService {
      * @onPutEdit Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutEdit(Data: ISetupTipeItemModel): Observable<any> {
+    onPutEdit(Data: ISetupSupplierModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -71,7 +71,7 @@ export class SetupTipeItemService {
      * @onPutToActive Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutToActive(Data: ISetActiveTipeItemModel): Observable<any> {
+    onPutToActive(Data: ISetActiveSupplierModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATETOACTIVE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -85,7 +85,7 @@ export class SetupTipeItemService {
      * @onPutToDeActive Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutToDeActive(Data: ISetActiveTipeItemModel): Observable<any> {
+    onPutToDeActive(Data: ISetActiveSupplierModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATETODEACTIVE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {

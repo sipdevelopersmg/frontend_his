@@ -1,36 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
-import * as Config  from './json/grid.config.json';
+import  * as Config  from './json/grid.config.json';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { SetupSupplierModel } from '../../../models/setup-data/setup-supplier/SetupSupplier';
-import { SetupSupplierService } from '../../../services/setup-data/setup-supplier/setup-supplier.service';
-import {API_PIS} from 'src/app/api/PIS'
-import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { SetupProvinsiService } from 'src/app/modules/PIS/services/setup-data/setup-wilayah/setup-provinsi.service';
-import { SetupKotaService } from 'src/app/modules/PIS/services/setup-data/setup-wilayah/setup-kota.service';
-import { SetupKecamatanService } from 'src/app/modules/PIS/services/setup-data/setup-wilayah/setup-kecamatan.service';
-import { SetupTipeSupplierService } from '../../../services/setup-data/setup-tipe-supplier/setup-tipe-supplier.service';
+import { SetupItemModel } from '../../../models/setup-data/setup-item/SetupItemModel';
+import { SetupItemService } from '../../../services/setup-data/setup-item/setup-item.service';
+import {MM} from 'src/app/api/MM'
+import * as LookupGridGrupItem from './json/lookupGrupItem.json'
+import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 
 @Component({
-  selector: 'app-setup-supplier',
-  templateUrl: './setup-supplier.component.html',
-  styleUrls: ['./setup-supplier.component.css']
+  selector: 'app-setup-item',
+  templateUrl: './setup-item.component.html',
+  styleUrls: ['./setup-item.component.css']
 })
-
-export class SetupSupplierComponent implements OnInit {
-  urlWilayah = API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_PROVINSI;
-  @ViewChild('MaritalTipeSupplierDropdown') MaritalTipeSupplierDropdown: DropDownListComponent;
-  MaritalTipeSupplierDropdownField: object = { text: 'tipe_supplier', value: 'id_tipe_supplier' };
-
-   /**
-   * @SetupWilayahDropdownField 
-   * @Keterangan Dropdown Setup - Setup Wilayah Mapping Field
-  */
-    SetupWilayahDropdownField: object = { text: 'nama_wilayah', value: 'kode_wilayah' };
+export class SetupItemComponent implements OnInit {
+  urlGrupItem = MM.SETUP_DATA.SETUP_GROUP_ITEM.GET_ALL_BY_PARMS;
+  LookupGridGrupItem = LookupGridGrupItem;
+  @ViewChild('LookupKodeGrupItem') LookupKodeGrupItem: OrgInputLookUpKodeComponent;
 
   /**
    * Variable untuk Menympan Navigasi halaman
@@ -84,35 +74,29 @@ export class SetupSupplierComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private utilityService: UtilityService,
-    private setupSupplierService: SetupSupplierService,
-    public setupTipeSupplierService: SetupTipeSupplierService,
-    public setupProvinsiService:SetupProvinsiService,
-    public setupKotaService:SetupKotaService,
-    public setupKecamatanService:SetupKecamatanService
+    private setupItemService: SetupItemService
   ) {
     this.FormInputData = this.formBuilder.group({
-      id_supplier: [0,],
-      id_tipe_supplier: [0,],
-      kode_supplier: ['', [Validators.required]],
-      nama_supplier: ['', [Validators.required]],
-      alamat_supplier: ['', []],
-      kode_wilayah: ['',],
-      negara: ['', []],
-      telepon: ['', []],
-      fax: ['', []],
-      kode_pos: ['', []],
-      email: ['', []],
-      contact_person: ['', []],
-      npwp: ['', []],
-      default_hari_tempo_bayar: [0, []],
-      default_hari_pengiriman: [0, []],
-      default_prosentase_diskon: [0, []],
-      default_prosentase_tax: [0, []],
-      is_tax: [false, []],
-      is_active: [false, []],
+      id_grup_item: [0, [Validators.required]],
+      id_pabrik: [0, [Validators.required]],
+      id_supplier: [0, [Validators.required]],
+      kode_item: ['', [Validators.required]],
+      barcode: ['', [Validators.required]],
+      nama_item: ['', [Validators.required]],
+      kode_satuan: ['', [Validators.required]],
+      id_temperatur_item: [0, [Validators.required]],
+      batas_maksimal_pesan: [0, []],
+      batas_maksimal_pakai: [0, []],
+      batas_maksimal_mutasi: [0, []],
+      batas_maksimal_jual: [0, []],
+      batas_stok_kritis: [0, []],
+      prosentase_stok_kritis: [0, []],
+      harga_beli_terakhir: [0, []],
+      hpp_average: [0, []],
+      prosentase_default_profit: [0, []],
+      is_ppn: [true, [Validators.required]],
+      user_created: [0, [Validators.required]]
     });
-    this.setupTipeSupplierService.setDataSource();
-    this.setupProvinsiService.setDataSource();
   }
 
   ngOnInit(): void {
@@ -125,7 +109,9 @@ export class SetupSupplierComponent implements OnInit {
     ];
 
     this.GetAllData();
+
   }
+
 
   handleSelectedTabId(TabId: string): void {
     this.TabId = TabId;
@@ -148,7 +134,7 @@ export class SetupSupplierComponent implements OnInit {
     console.log($event);
     if ($event.requestType == "save") {
       if ($event.data.is_active != $event.rowData.is_active) {
-        this.SetActive($event.data.is_active, $event.data.id_supplier)
+        this.SetActive($event.data.is_active, $event.data.id_item)
       }
     }
   }
@@ -196,16 +182,8 @@ export class SetupSupplierComponent implements OnInit {
     document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
   }
 
-  heandleSelectedWilayah(args: any): void {
-    this.kode_wilayah.setValue(args.kode_wilayah);
-  }
-
-  handleDropdownProvinsiChange(args: any): void {
-    this.setupKotaService.setDataSource(args.itemData.kode_wilayah);
-  }
-
-  handleDropdownKotaChange(args: any): void {
-    this.setupKecamatanService.setDataSource(args.itemData.kode_wilayah);
+  heandleSelectedGrupItem(args: any): void {
+    this.id_grup_item.setValue(args.id_grup_item);
   }
 
   /** method setting input new data */
@@ -247,26 +225,23 @@ export class SetupSupplierComponent implements OnInit {
   /** Method untuk mengkosongkan data yang ada di form*/
   ResetFrom(): void {
     this.FormInputData.reset();
+    this.LookupKodeGrupItem.resetValue();
   }
 
   /** Method Untuk Mereload Data Grid */
   GetAllData(): void {
-    this.setupSupplierService.onGetAll()
+    this.setupItemService.onGetAll()
       .subscribe((result) => {
         this.GridDatasource = result.data;
       });
   }
 
-  AddDataSupplier(): void {
+  AddDataItem(): void {
     console.log('Add');
   }
 
   /** Method Untuk Mengisikan data yang ada di form */
   SetFrom(Data): void {
-    delete Data.user_created;
-    delete Data.time_created;
-    delete Data.user_deactived;
-    delete Data.time_deactived;
     this.FormInputData.reset();
     this.FormInputData.setValue(Data);
   }
@@ -275,16 +250,16 @@ export class SetupSupplierComponent implements OnInit {
   SaveAndNew(): void {
     const Data = this.FormInputData.value;
     if (this.inputFieldState=='normal') {
-      this.setupSupplierService.onPostSave(Data)
-        .subscribe((result: SetupSupplierModel) => {
+      this.setupItemService.onPostSave(Data)
+        .subscribe((result: SetupItemModel) => {
           this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
             .then(() => {
               this.ResetFrom();
             });
         });
     } else {
-      this.setupSupplierService.onPutEdit(Data)
-        .subscribe((result: SetupSupplierModel) => {
+      this.setupItemService.onPutEdit(Data)
+        .subscribe((result: SetupItemModel) => {
           this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
             .then(() => {
 
@@ -294,17 +269,17 @@ export class SetupSupplierComponent implements OnInit {
   }
 
   /** Method untuk mengubah status aktif | Non Active 
-   * @param is_active,kode_supplier
+   * @param is_active,kode_item
   */
-  SetActive(is_active: boolean, id_supplier: number): void {
+  SetActive(is_active: boolean, id_item: number): void {
     let data = {
-      id_supplier: id_supplier,
-      user_deactived:1,
+      id_item: id_item,
+      user_deactived: 0
     }
     console.log('data', data)
     console.log('is_active', is_active)
     if (is_active) {
-      this.setupSupplierService.onPutToActive(data)
+      this.setupItemService.onPutToActive(data)
         .subscribe((result) => {
           this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Aktifkan', result.message)
             .then(() => {
@@ -312,7 +287,7 @@ export class SetupSupplierComponent implements OnInit {
             });
         })
     } else {
-      this.setupSupplierService.onPutToDeActive(data)
+      this.setupItemService.onPutToDeActive(data)
         .subscribe((result) => {
           this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Non Aktifkan', result.message)
             .then(() => {
@@ -344,27 +319,23 @@ export class SetupSupplierComponent implements OnInit {
     }
   }
 
-  get id_supplier(): AbstractControl { return this.FormInputData.get('id_supplier'); }
-  get kode_supplier(): AbstractControl { return this.FormInputData.get('kode_supplier'); }
-  get nama_supplier(): AbstractControl { return this.FormInputData.get('nama_supplier'); }
-  get id_tipe_supplier(): AbstractControl { return this.FormInputData.get('id_tipe_supplier'); }
-  get alamat_supplier(): AbstractControl { return this.FormInputData.get('alamat_supplier'); }
-  get kode_wilayah(): AbstractControl { return this.FormInputData.get('kode_wilayah'); }
-  get negara(): AbstractControl { return this.FormInputData.get('negara'); }
-  get telepon(): AbstractControl { return this.FormInputData.get('telepon'); }
-  get fax(): AbstractControl { return this.FormInputData.get('fax'); }
-  get kode_pos(): AbstractControl { return this.FormInputData.get('kode_pos'); }
-  get email(): AbstractControl { return this.FormInputData.get('email'); }
-  get contact_person(): AbstractControl { return this.FormInputData.get('contact_person'); }
-  get npwp(): AbstractControl { return this.FormInputData.get('npwp'); }
-  get default_hari_tempo_bayar(): AbstractControl { return this.FormInputData.get('default_hari_tempo_bayar'); }
-  get default_hari_pengiriman(): AbstractControl { return this.FormInputData.get('default_hari_pengiriman'); }
-  get default_prosentase_diskon(): AbstractControl { return this.FormInputData.get('default_prosentase_diskon'); }
-  get default_prosentase_tax(): AbstractControl { return this.FormInputData.get('default_prosentase_tax'); }
-  get is_tax(): AbstractControl { return this.FormInputData.get('is_tax'); }
-  get is_active(): AbstractControl { return this.FormInputData.get('is_tax'); }
-
-
-
-
+  get id_grup_item() { return this.FormInputData.get('id_grup_item') }
+  get id_pabrik() { return this.FormInputData.get('id_pabrik') }
+  get id_supplier() { return this.FormInputData.get('id_supplier') }
+  get kode_item() { return this.FormInputData.get('kode_item') }
+  get barcode() { return this.FormInputData.get('barcode') }
+  get nama_item() { return this.FormInputData.get('nama_item') }
+  get kode_satuan() { return this.FormInputData.get('kode_satuan') }
+  get id_temperatur_item() { return this.FormInputData.get('id_temperatur_item') }
+  get batas_maksimal_pesan() { return this.FormInputData.get('batas_maksimal_pesan') }
+  get batas_maksimal_pakai() { return this.FormInputData.get('batas_maksimal_pakai') }
+  get batas_maksimal_mutasi() { return this.FormInputData.get('batas_maksimal_mutasi') }
+  get batas_maksimal_jual() { return this.FormInputData.get('batas_maksimal_jual') }
+  get batas_stok_kritis() { return this.FormInputData.get('batas_stok_kritis') }
+  get prosentase_stok_kritis() { return this.FormInputData.get('prosentase_stok_kritis') }
+  get harga_beli_terakhir() { return this.FormInputData.get('harga_beli_terakhir') }
+  get hpp_average() { return this.FormInputData.get('hpp_average') }
+  get prosentase_default_profit() { return this.FormInputData.get('prosentase_default_profit') }
+  get is_ppn() { return this.FormInputData.get('is_ppn') }
+  get user_created() { return this.FormInputData.get('user_created') }
 }

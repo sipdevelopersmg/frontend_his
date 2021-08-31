@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -14,9 +14,21 @@ export class SetupProvinsiService {
 
     API_PROVINSI = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_PROVINSI;
 
+    public dataSource = new BehaviorSubject([]); 
+
     constructor(
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService) { }
+
+    /**
+     * Service Untuk Mengisi dataScource 
+     * @setDataSource Void
+    */
+      setDataSource():void{
+        this.onGetAll().subscribe((result) => {
+          this.dataSource.next(result.data);
+        });
+      }
 
     /**
      * Service Untuk Menampilkan Semua data

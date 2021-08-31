@@ -18,11 +18,11 @@ export interface TrKontrakSpjbInsert {
     tanggal_berakhir_kontrak?: string | null;
 
     /** @format double */
-    jumlah_item_kontrak?: number | null;
+    jumlah_item_kontrak?: Number | null;
 
 
     /** @format double */
-    total_transaksi_kontrak?: number | null;
+    total_transaksi_kontrak?: Number | null;
 
     tahun_anggaran?: string | null;
     keterangan?: string | null;

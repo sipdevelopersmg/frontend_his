@@ -45,4 +45,3 @@ Array.prototype.orderBy = function( prop ){
 
     this.sort(dynamicSort(prop));
 }
-
