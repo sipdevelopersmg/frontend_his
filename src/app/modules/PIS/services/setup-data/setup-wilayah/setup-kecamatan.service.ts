@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -14,9 +14,23 @@ export class SetupKecamatanService {
 
     API_KECAMATAN = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_KECAMATAN;
 
+    public dataSource = new BehaviorSubject([]); 
+    private result :any;
+
     constructor(
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService) { }
+
+    /**
+     * Service Untuk Mengisi dataScource 
+     * @setDataSource Void
+     * @param KodeWilayaProvinsi string
+    */
+     setDataSource(KodeWilayahProvinsi: string):void{
+        this.onGetAll(KodeWilayahProvinsi).subscribe((result) => {
+          this.dataSource.next(result.data);
+        });
+      }
 
     /**
      * Service Untuk Menampilkan Semua data
@@ -24,7 +38,9 @@ export class SetupKecamatanService {
      * @param KodeWilayahKota string
     */
     onGetAll(KodeWilayahKota: string): Observable<GetAllKecamatanModel> {
-        return this.httpOperationService.defaultGetRequest(this.API_KECAMATAN.GET_ALL_SETUP_KECAMATAN_BY_KOTA_ID + KodeWilayahKota);
+        this.result =  this.httpOperationService.defaultGetRequest(this.API_KECAMATAN.GET_ALL_SETUP_KECAMATAN_BY_KOTA_ID + KodeWilayahKota);
+        this.dataSource.next(this.result);
+        return this.result
     }
 
     /**

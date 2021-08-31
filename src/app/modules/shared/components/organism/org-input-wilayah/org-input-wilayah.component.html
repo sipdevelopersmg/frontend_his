@@ -1,0 +1,41 @@
+<span>
+    <!-- Provinsi -->
+    <div class="row mb-2">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <atm-label [LabelCaption]="'Provinsi'"></atm-label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <ejs-dropdownlist #ProvinsiDropdown [dataSource]="setupProvinsiService.dataSource| async"
+                [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                (change)="handleDropdownProvinsiChange($event)">
+            </ejs-dropdownlist>
+        </div>
+    </div>
+
+    <!-- Kota -->
+    <div class="row mb-2">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <atm-label [LabelCaption]="'Kota'"></atm-label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <ejs-dropdownlist #KotaDropdown [dataSource]="setupKotaService.dataSource| async"
+                [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                (change)="handleDropdownKotaChange($event)">
+            </ejs-dropdownlist>
+        </div>
+    </div>
+
+    <!-- Kecamatan -->
+    <div class="row mb-2">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <atm-label [LabelCaption]="'Kecamatan *'"></atm-label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <ejs-dropdownlist #KecamatanDropdown id="kecamatan"
+                [dataSource]="setupKecamatanService.dataSource| async"
+                [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                formControlName="kode_wilayah">
+            </ejs-dropdownlist>
+        </div>
+    </div>
+</span>

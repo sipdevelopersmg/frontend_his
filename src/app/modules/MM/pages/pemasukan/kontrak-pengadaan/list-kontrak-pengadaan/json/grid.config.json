@@ -1,0 +1,36 @@
+{
+  "GridColumns": [
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "kontrak_id",
+          "headerText": "Kode Obat",
+          "visible": true
+      },
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "nomor_kontrak_spjb",
+          "headerText": "Barcode",
+          "visible": true
+      },
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "nomor_kontrak",
+          "headerText": "Nama Obat",
+          "visible": true
+      },
+      {
+          "allowEditing": true,
+          "allowSorting": true,
+          "editType": "defaultEdit",
+          "field": "judul_kontrak",
+          "headerText": "Banyak",
+          "visible": true
+      }
+  ]
+}
