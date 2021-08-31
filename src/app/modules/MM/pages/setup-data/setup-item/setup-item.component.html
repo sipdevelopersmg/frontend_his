@@ -1,0 +1,69 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Item</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Item</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <org-input-look-up-kode #LookupKodeGrupItem [lookup-url]="urlGrupItem" [idKode]="'kode_grup_item'" [modal-title]="'Data GrupItem'"
+                                [idTitle]="'grup_item'" (onGetSelectedData)="heandleSelectedGrupItem($event)"
+                                [columns]="LookupGridGrupItem.columns" [filter-lookup]="LookupGridGrupItem.filter"
+                                [label]="'Grup Item'">
+                            </org-input-look-up-kode>
+                            <mol-input-text 
+                                [label]="'Kode Item'" 
+                                formControlName="kode_item"
+                                [IsFormControlInvalid]="kode_item.invalid"
+                                [ValidatorsCaption]="'Kode Item Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState"
+                                [disabled]="inputFieldState==='edit'"
+                                >
+                            </mol-input-text>
+                            <mol-input-text [label]="'Barcode'" formControlName="barcode" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text 
+                                [label]="'Nama Item'" 
+                                formControlName="nama_item"
+                                [IsFormControlInvalid]="nama_item.invalid"
+                                [ValidatorsCaption]="'Nama Item Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                            <mol-input-text [label]="'Batas Maksimal Pesan'" formControlName="batas_maksimal_pesan" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Batas Maksimal Pakai'" formControlName="batas_maksimal_pakai" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Batas Maksimal Mutasi'" formControlName="batas_maksimal_mutasi" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Batas Maksimal Jual'" formControlName="batas_maksimal_jual" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Batas Stok Kritis'" formControlName="batas_stok_kritis" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Prosentase Stok Kritis'" formControlName="prosentase_stok_kritis" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Harga Beli Terakhir'" formControlName="harga_beli_terakhir" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'HPP Average'" formControlName="hpp_average" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Prosentase Default Profit'" formControlName="prosentase_default_profit" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-checkbox-single [label]="'Is PPN '" formControlName="is_ppn" id="is_ppn" ></mol-input-checkbox-single>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

@@ -6,9 +6,12 @@ import { InputPOComponent } from "./pages/pemasukan/PO/input-po/input-po.compone
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
+import { SetupItemComponent } from "./pages/setup-data/setup-item/setup-item.component";
 import { SetupPabrikComponent } from "./pages/setup-data/setup-pabrik/setup-pabrik.component";
 import { SetupPerencanaanKategoriComponent } from "./pages/setup-data/setup-perencanaan-kategori/setup-perencanaan-kategori.component";
 import { SetupSatuanComponent } from "./pages/setup-data/setup-satuan/setup-satuan.component";
+import { SetupStockroomComponent } from "./pages/setup-data/setup-stockroom/setup-stockroom.component";
+import { SetupSupplierComponent } from "./pages/setup-data/setup-supplier/setup-supplier.component";
 import { SetupTemperaturItemComponent } from "./pages/setup-data/setup-temperatur-item/setup-temperatur-item.component";
 import { SetupTipeItemComponent } from "./pages/setup-data/setup-tipe-item/setup-tipe-item.component";
 import { SetupTipeStockroomComponent } from "./pages/setup-data/setup-tipe-stockroom/setup-tipe-stockroom.component";
@@ -18,6 +21,8 @@ const mmRoutes: Routes = [
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
+            { path: "setup-stockroom", component: SetupStockroomComponent, data: { title: "Setup Stockroom" } },
+            { path: "setup-item", component: SetupItemComponent, data: { title: "Setup Item" } },
             { path: "setup-grup-item", component: SetupGrupItemComponent, data: { title: "Setup Grup Item" } },
             { path: "setup-data-coa", component: SetupCoaComponent, data: { title: "Setup COA" } },
             { path: "setup-perencanaan-kategori", component: SetupPerencanaanKategoriComponent, data: { title: "Setup Perencanaan Kategori" } },
@@ -27,6 +32,7 @@ const mmRoutes: Routes = [
             { path: "setup-temperatur-item", component: SetupTemperaturItemComponent, data: { title: "Setup Temperatur Item" } },
             { path: "setup-pabrik", component: SetupPabrikComponent, data: { title: "Setup Pabrik" } },
             { path: "setup-satuan", component: SetupSatuanComponent, data: { title: "Setup Satuan" } },
+            { path: "setup-supplier", component: SetupSupplierComponent, data: { title: "Setup Supplier" } },
             { path: "setup-group-coa", component: SetupGroupCoaComponent, data: { title: "Setup Group COA" } },
             
         ],

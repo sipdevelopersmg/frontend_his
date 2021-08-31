@@ -1,0 +1,56 @@
+{
+  "GridColumns": [
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_outlet",
+      "headerText": "Id",
+      "visible": false
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_stockroom",
+      "headerText": "Id Stokroom",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "kode_outlet",
+      "headerText": "Kode Outlet",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "nama_outlet",
+      "headerText": "Outlet",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_tipe_outlet",
+      "headerText": "Id Tipe Outlet",
+      "visible": true
+    },
+    {
+      "allowEditing": true,
+      "allowSorting": false,
+      "allowFiltering": false,
+      "editType": "booleanedit",
+      "field": "is_active",
+      "headerText": "Status Active",
+      "type": "boolean",
+      "displayAsCheckBox": true,
+      "visible": true,
+      "width": 100
+    }
+  ]
+}

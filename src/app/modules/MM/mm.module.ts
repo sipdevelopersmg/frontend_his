@@ -18,6 +18,9 @@ import { SetupTipeStockroomComponent } from './pages/setup-data/setup-tipe-stock
 import { SetupTipeItemComponent } from './pages/setup-data/setup-tipe-item/setup-tipe-item.component';
 import { SetupTemperaturItemComponent } from './pages/setup-data/setup-temperatur-item/setup-temperatur-item.component';
 import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-supplier.component';
+import { SetupItemComponent } from './pages/setup-data/setup-item/setup-item.component';
+import { ListKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengadaan/list-kontrak-pengadaan/list-kontrak-pengadaan.component';
+import { SetupStockroomComponent } from './pages/setup-data/setup-stockroom/setup-stockroom.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +39,9 @@ import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-
         SetupTipeItemComponent,
         SetupTemperaturItemComponent,
         SetupSupplierComponent,
+        SetupItemComponent,
+        ListKontrakPengadaanComponent,
+        SetupStockroomComponent,
     ],
     imports: [
         FormsModule,

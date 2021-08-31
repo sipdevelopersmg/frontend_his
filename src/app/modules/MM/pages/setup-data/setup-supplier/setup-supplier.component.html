@@ -1,1 +1,122 @@
-<p>setup-supplier works!</p>
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Supplier</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Supplier</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text 
+                                [label]="'Kode Supplier'" 
+                                formControlName="kode_supplier"
+                                [IsFormControlInvalid]="kode_supplier.invalid"
+                                [ValidatorsCaption]="'Kode Supplier Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState"
+                                [disabled]="inputFieldState==='edit'"
+                                >
+                            </mol-input-text>
+                            <mol-input-text 
+                                [label]="'Nama Supplier'" 
+                                formControlName="nama_supplier"
+                                [IsFormControlInvalid]="nama_supplier.invalid"
+                                [ValidatorsCaption]="'Nama Supplier Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                            <!-- Dropdown Tipe Supplier -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tipe Supplier'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalTipeSupplierDropdown id="marital"
+                                        [dataSource]="setupTipeSupplierService.dataSource| async"
+                                        [fields]="MaritalTipeSupplierDropdownField" [allowFiltering]="true"
+                                        formControlName="id_tipe_supplier">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <mol-input-text [label]="'NPWP'" formControlName="npwp" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-textarea [label]="'Alamat'" formControlName="alamat_supplier"></mol-input-textarea>
+                            <!-- WILAYAH -->
+                                <!-- Provinsi -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Provinsi'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #ProvinsiDropdown [dataSource]="setupProvinsiService.dataSource| async"
+                                            [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                            (change)="handleDropdownProvinsiChange($event)">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+
+                                <!-- Kota -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Kota'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #KotaDropdown [dataSource]="setupKotaService.dataSource| async"
+                                            [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                            (change)="handleDropdownKotaChange($event)">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+
+                                <!-- Kecamatan -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Kecamatan *'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #KecamatanDropdown id="kecamatan"
+                                            [dataSource]="setupKecamatanService.dataSource| async"
+                                            [fields]="SetupWilayahDropdownField" [allowFiltering]="true"
+                                            formControlName="kode_wilayah">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                            <mol-input-text [label]="'Negara'" formControlName="negara" [inputFieldState]="inputFieldState"></mol-input-text>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text [label]="'Contact Person'" formControlName="contact_person" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Telepon'" formControlName="telepon" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Fax'" formControlName="fax" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Email'" formControlName="email" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Hari Tempo Bayar'" formControlName="default_hari_tempo_bayar" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Hari Pengiriman'" formControlName="default_hari_pengiriman" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Prosentase Diskon'" formControlName="default_prosentase_diskon" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Prosentase Tax'" formControlName="default_prosentase_tax" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-checkbox-single [label]="'Is Tax'" formControlName="is_tax" id="is_tax" ></mol-input-checkbox-single>
+                            <mol-input-checkbox-single [label]="'Is Active'" formControlName="is_active" id="is_active" ></mol-input-checkbox-single>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

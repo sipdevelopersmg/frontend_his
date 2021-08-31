@@ -1,0 +1,40 @@
+{
+  "GridColumns": [
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_cara_pakai_obat",
+      "headerText": "Id",
+      "visible": false
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "kode_cara_pakai_obat",
+      "headerText": "Kode Cara Pakai Obat",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "cara_pakai_obat",
+      "headerText": "Cara Pakai Obat",
+      "visible": true
+    },
+    {
+      "allowEditing": true,
+      "allowSorting": false,
+      "allowFiltering": false,
+      "editType": "booleanedit",
+      "field": "is_active",
+      "headerText": "Status Active",
+      "type": "boolean",
+      "displayAsCheckBox": true,
+      "visible": true,
+      "width": 100
+    }
+  ]
+}

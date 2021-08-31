@@ -1,0 +1,34 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_wilayah",
+            "headerText": "Kode Wilayah",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_wilayah",
+            "headerText": "Wilayah",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "kode_wilayah",
+            "filter": "like",
+            "title": "KODE"
+        },
+        {
+            "field": "deskripsi",
+            "filter": "nama_wilayah",
+            "title": "WILAYAH"
+        }
+    ]
+}

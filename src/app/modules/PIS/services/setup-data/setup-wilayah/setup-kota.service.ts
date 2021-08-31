@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -14,9 +14,23 @@ export class SetupKotaService {
 
     API_KOTA = API_CONFIG.API.PIS.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_KOTA;
 
+    public dataSource = new BehaviorSubject([]); 
+    private result :any;
+    
     constructor(
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService) { }
+
+    /**
+     * Service Untuk Mengisi dataScource 
+     * @setDataSource Void
+     * @param KodeWilayaProvinsi string
+    */
+     setDataSource(KodeWilayahProvinsi: string):void{
+        this.onGetAll(KodeWilayahProvinsi).subscribe((result) => {
+          this.dataSource.next(result.data);
+        });
+      }
 
     /**
      * Service Untuk Menampilkan Semua data

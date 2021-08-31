@@ -61,6 +61,9 @@ import { OrgTabsLabelComponentComponent } from './components/organism/tabs/org-t
 import { OrgTabsBodyComponentComponent } from './components/organism/tabs/org-tabs-body-component/org-tabs-body-component.component';
 import { OrgCardLayoutComponent } from './components/organism/card/card-layout/card-layout.component';
 import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
+import { MolInputCheckboxSingleComponent } from './components/molecules/form/mol-input-checkbox-single/mol-input-checkbox-single.component';
+import { FormsModule } from '@angular/forms';
+import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 
 @NgModule({
     declarations: [
@@ -112,6 +115,8 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
         OrgLookUpComponent,
+        MolInputCheckboxSingleComponent,
+        OrgInputWilayahComponent,
     ],
     imports: [
         CommonModule,
@@ -126,7 +131,8 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         Ng2SearchPipeModule,
         NumericTextBoxModule,
         ComboBoxModule,
-        TreeViewModule
+        TreeViewModule,
+        FormsModule
     ],
     exports: [
         AtmLabelComponent,
@@ -181,7 +187,9 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
         ComboBoxModule,
         OrgLookUpComponent,
         GridModule,
-        TreeViewModule
+        TreeViewModule,
+        MolInputCheckboxSingleComponent,
+        OrgInputWilayahComponent
     ],
     providers: [
         EditService,

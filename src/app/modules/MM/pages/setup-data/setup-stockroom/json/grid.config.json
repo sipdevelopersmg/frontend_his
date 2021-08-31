@@ -1,0 +1,40 @@
+{
+  "GridColumns": [
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "id_stockroom",
+      "headerText": "Id",
+      "visible": false
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "kode_stockroom",
+      "headerText": "Kode Stockroom",
+      "visible": true
+    },
+    {
+      "allowEditing": false,
+      "allowSorting": true,
+      "editType": "defaultEdit",
+      "field": "nama_stockroom",
+      "headerText": "Nama Stockroom",
+      "visible": true
+    },
+    {
+      "allowEditing": true,
+      "allowSorting": false,
+      "allowFiltering": false,
+      "editType": "booleanedit",
+      "field": "is_active",
+      "headerText": "Status Active",
+      "type": "boolean",
+      "displayAsCheckBox": true,
+      "visible": true,
+      "width": 100
+    }
+  ]
+}
