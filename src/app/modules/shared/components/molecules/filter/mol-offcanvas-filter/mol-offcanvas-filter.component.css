@@ -1,0 +1,9 @@
+button#ButtonOpenOffcanvas:active,
+button#ButtonOpenOffcanvas:focus {
+  border: 0 !important;
+}
+
+#offcanvasFilter {
+  width: 35rem;
+  max-width: 35rem;
+}

@@ -6,7 +6,7 @@ import * as API_CONFIG from '../../../../../api';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { HttpResponseModel, PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +24,7 @@ export class DaftarPasienRawatJalanService {
     ) { }
 
     /**
-     * @onGetAllPasienIrja Method untuk Get All Pasien IRJA 
+     * @onGetAllPasienIrja Method untuk Get All Pasien 
     */
     onGetAllPasienIrja(): void {
         this.httpOperationService.defaultGetRequest(this.API_DAFTAR_PASIEN_IRJA.GET_ALL_PASIEN_IRJA)
@@ -51,5 +51,21 @@ export class DaftarPasienRawatJalanService {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
+    }
+
+    /**
+     * @onGetAllPasienIrjaByDynamicFilter Method untuk Get All Pasien By Dynamic Filter
+    */
+    onGetAllPasienIrjaByDynamicFilter(req: PostRequestByDynamicFiterModel[]): void {
+        this.httpOperationService.defaultPostRequestByDynamicFilter(this.API_DAFTAR_PASIEN_IRJA.POST_GET_PASIEN_BY_DYNAMIC_FILTER, req)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            ).subscribe((result) => {
+                if (result) {
+                    this.GridDaftarPasienIrja.next(result.data);
+                }
+            });
     }
 }

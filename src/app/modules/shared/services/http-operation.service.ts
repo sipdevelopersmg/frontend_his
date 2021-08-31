@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
-import { HttpResponseModel } from '../models/Http-Operation/HttpResponseModel';
+import { HttpResponseModel, PostRequestByDynamicFiterModel } from '../models/Http-Operation/HttpResponseModel';
 import { UtilityService } from './utility.service';
 
 @Injectable({
@@ -158,6 +158,28 @@ export class HttpOperationService {
                     }
                 })
             );
+    }
+
+    defaultPostRequestByDynamicFilter(url: string, req: PostRequestByDynamicFiterModel[]): Observable<any> {
+        return this.httpClient.post<any>(
+            url, req,
+            {
+                headers: new HttpHeaders().set('Content-Type', 'application/json')
+            }
+        ).pipe(
+            catchError(this.handlingError),
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            })
+        );
     }
 
     private handlingErrorWithStatusCode200(response: HttpResponseModel): any {
