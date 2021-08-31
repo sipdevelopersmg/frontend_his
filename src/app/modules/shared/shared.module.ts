@@ -51,6 +51,7 @@ import { MolRadioButtonComponent } from './components/molecules/form/mol-radio-b
 import { MolInputTextSplitComponent } from './components/molecules/form/mol-input-text-split/mol-input-text-split.component';
 import { MolDropdownSyncfusionComponent } from './components/molecules/form/mol-dropdown-syncfusion/mol-dropdown-syncfusion.component';
 import { MolTreeGridComponent } from './components/molecules/grid/tree-grid/tree-grid.component';
+import { MolOffcanvasFilterComponent } from './components/molecules/filter/mol-offcanvas-filter/mol-offcanvas-filter.component';
 
 import { OrgInputLookUpKodeComponent } from './components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from './components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -105,6 +106,7 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         MolInputTextSplitComponent,
         MolDropdownSyncfusionComponent,
         MolTreeGridComponent,
+        MolOffcanvasFilterComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,
@@ -171,6 +173,7 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         MolInputTextSplitComponent,
         MolDropdownSyncfusionComponent,
         MolTreeGridComponent,
+        MolOffcanvasFilterComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,
