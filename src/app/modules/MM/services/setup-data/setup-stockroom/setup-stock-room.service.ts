@@ -5,20 +5,22 @@ import { catchError } from 'rxjs/operators';
 import { MM } from 'src/app/api/MM';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { SetupTipeStockroomModel, ISetupTipeStockroomModel } from '../../../models/setup-data/setup-tipe-stockroom/SetupTipeStockroom';
+import { SetupStockroomModel, ISetupStockroomModel, ISetActiveSetupStockroomModel } from '../../../models/setup-data/setup-stockroom/SetupStockroomModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SetupTipeStockroomService {
+export class SetupStockroomService {
 
-    API = MM.SETUP_DATA.SETUP_TIPE_STOCKROOM
+    API = MM.SETUP_DATA.SETUP_STOCKROOM
+
     public dataSource = new BehaviorSubject([]); 
 
     constructor(
       private notificationService: NotificationService,
       private httpOperationService: HttpOperationService) { }
-      
+  
+
     /**
      * Service Untuk Mengisi dataScource 
      * @setDataSource Void
@@ -33,7 +35,7 @@ export class SetupTipeStockroomService {
      * Service Untuk Menampilkan Semua data
      * @onGetAll Observable<SetupPabrikModel>
     */
-    onGetAll(): Observable<SetupTipeStockroomModel> {
+    onGetAll(): Observable<SetupStockroomModel> {
       return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
     }
   
@@ -42,7 +44,7 @@ export class SetupTipeStockroomService {
      * @onPostSave Observable<any>
      * @param ISetupPabrikModel
     */
-    onPostSave(Data: ISetupTipeStockroomModel): Observable<any> {
+    onPostSave(Data: ISetupStockroomModel): Observable<any> {
       return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -56,8 +58,36 @@ export class SetupTipeStockroomService {
      * @onPutEdit Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutEdit(Data: ISetupTipeStockroomModel): Observable<any> {
+    onPutEdit(Data: ISetupStockroomModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATE, Data)
+        .pipe(
+          catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        );
+    }
+  
+    /**
+     * Service menubah data menjadi active
+     * @onPutToActive Observable<any>
+     * @param ISetupPabrikModel
+    */
+    onPutToActive(Data: ISetActiveSetupStockroomModel): Observable<any> {
+      return this.httpOperationService.defaultPutRequest(this.API.UPDATETOACTIVE, Data)
+        .pipe(
+          catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        );
+    }
+  
+    /**
+     * Service Untuk mwngubah data menjadi tidak aktif
+     * @onPutToDeActive Observable<any>
+     * @param ISetupPabrikModel
+    */
+    onPutToDeActive(Data: ISetActiveSetupStockroomModel): Observable<any> {
+      return this.httpOperationService.defaultPutRequest(this.API.UPDATETODEACTIVE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
             this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

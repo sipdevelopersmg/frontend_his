@@ -1,0 +1,84 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Stockroom</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Stockroom</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            
+                            <mol-input-text 
+                                [label]="'Kode Stockroom'" 
+                                formControlName="kode_stockroom"
+                                [IsFormControlInvalid]="kode_stockroom.invalid"
+                                [ValidatorsCaption]="'Kode Stockroom Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState"
+                                [disabled]="inputFieldState==='edit'"
+                                >
+                            </mol-input-text>
+                            <mol-input-text 
+                                [label]="'Nama Stockroom'" 
+                                formControlName="nama_stockroom"
+                                [IsFormControlInvalid]="nama_stockroom.invalid"
+                                [ValidatorsCaption]="'Nama Stockroom Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                            <!-- Dropdown Tipe Stockroom -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tipe Stockroom'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalTipeStockroomDropdown id="marital"
+                                        [dataSource]="setupTipeStockroomService.dataSource| async"
+                                        [fields]="MaritalTipeStockroomDropdownField" [allowFiltering]="true"
+                                        formControlName="id_tipe_stockroom">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <mol-input-text [label]="'Store Type'" formControlName="store_type" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'GL No'" formControlName="gl_no" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'GL Dept name'" formControlName="gl_dept_name" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <!-- Dropdown Stockroom Parent -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Stockroom Parent'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
+                                        [dataSource]="setupStockroomService.dataSource| async"
+                                        [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
+                                        formControlName="id_stockroom_parent">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <mol-input-checkbox-single [label]="'Show Persediaan'" formControlName="is_show_persediaan" id="is_show_persediaan" ></mol-input-checkbox-single>   
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

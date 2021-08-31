@@ -6,7 +6,7 @@
           "editType": "defaultEdit",
           "field": "kontrak_id",
           "headerText": "Kode Obat",
-          "visible": true
+          "visible": false
       },
       {
           "allowEditing": true,
