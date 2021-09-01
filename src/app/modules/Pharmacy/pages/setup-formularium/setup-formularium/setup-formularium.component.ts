@@ -1,9 +1,13 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { NodeSelectEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { threadId } from 'worker_threads';
+import { SetupTerapiService } from '../../../services/formularium/setup-terapi/setup-terapi.service';
 import * as gridSetting from '../json/GridSetting.json'
 @Component({
   selector: 'app-setup-formularium',
@@ -15,18 +19,8 @@ export class SetupFormulariumComponent implements OnInit {
   public GridSetting = gridSetting
 
   public wrapSettings: TextWrapSettingsModel;
-
-  public localData: Object[] = [
-    { id: 1,kode:'1', name: 'ANALGESIK, ANTIPIRETIK, ANTIINFLAMASI NON STEROID, ANTIPIRAI', hasChild: true, expanded: true },
-    { id: 2,kode:'1.1', pid: 1, name: 'ANALGESIK NARKOTIK' },
-    { id: 3,kode:'1.2', pid: 1, name: 'ANALGESIK NON NARKOTIK' },
-    { id: 4,kode:'1.3', pid: 1, name: 'ANTIPIRAI' },
-    { id: 11,kode:'2', name: 'ANASTETIK', hasChild: true },
-    { id: 12,kode:'2.1', pid: 11, name: 'ANASTETIK LOKAL' },
-    { id: 13,kode:'2.2', pid: 11, name: 'ANASTETIK UMUM DAN OKSIGEN' }
-  ];
-
-  public field: Object = { dataSource: this.localData, id: 'id', parentID: 'pid', text: 'name', hasChildren: 'hasChild' };
+  
+  public field: Object 
   
   public allowMultiSelection: boolean = true;
 
@@ -47,16 +41,72 @@ export class SetupFormulariumComponent implements OnInit {
   DataSourceRestreksi = [];
   DataSourceMax = [];
   DataSourceDagang = [];
+  
+  CurrentDataTerapi : any;
+
+  //Form Input 
+  FormInputDataTerapi: FormGroup;
 
   constructor(
     private modalService: BsModalService,
+    private formBuilder: FormBuilder,
+    private utilityService: UtilityService,
+    public setupTerapiService:SetupTerapiService,
   ) { }
 
   ngOnInit(): void {
     this.wrapSettings = { wrapMode: 'Content' };
+    this.FormInputDataTerapi = this.formBuilder.group({
+      id_terapi: [0, []],
+      id_terapi_parent: [null, []],
+      parent_terapi: ['', []],
+      no_terapi: ['', [Validators.required]],
+      kode_terapi: ['', [Validators.required]],
+      nama_terapi: ['', [Validators.required]],
+      level_rekursif_terapi: [1, [Validators.required]],
+    });
+    this.getAllTerapi();
+  }
+
+  public nodeSelected(e: NodeSelectEventArgs) {
+    // alert("The selected node's id: " + this.tree.selectedNodes); // To alert the selected node's id.
+    console.log(e);
+    this.CurrentDataTerapi = e.nodeData;
+    this.DataSourceGeneric = this.GridSetting.GridGenerik.DataSource
+    // this.GridGeneric.Grid.refresh();
+  };
+
+  getAllTerapi(){
+    this.setupTerapiService.onGetAll().subscribe((result)=>{
+      this.field = { dataSource: result.data, id: 'id_terapi', parentID: 'id_terapi_parent', text: 'nama_terapi', hasChildren: 'is_active' }
+    })
+  }
+
+  handleSimpanTerapi(){
+    this.setupTerapiService.onPostSave(this.FormInputDataTerapi.value).subscribe((result)=>{
+      this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+        .then(() => {
+          this.FormInputDataTerapi.reset();
+          this.modalRef.hide();
+          this.getAllTerapi();
+        });
+    })
   }
 
   handleAddTerapi(){
+    this.id_terapi_parent.setValue(null);
+    this.parent_terapi.setValue('');
+    this.level_rekursif_terapi.setValue(1);
+    this.modalRef = this.modalService.show(
+      this.modalTambahTerapi,
+      Object.assign({}, { class: 'modal-lg' })
+    );
+  }
+
+  handleSubTerapi(){
+    this.id_terapi_parent.setValue(this.CurrentDataTerapi.id);
+    this.parent_terapi.setValue(this.CurrentDataTerapi.text);
+    this.level_rekursif_terapi.setValue(2);
     this.modalRef = this.modalService.show(
       this.modalTambahTerapi,
       Object.assign({}, { class: 'modal-lg' })
@@ -72,12 +122,7 @@ export class SetupFormulariumComponent implements OnInit {
     );
   }
 
-  public nodeSelected(e: NodeSelectEventArgs) {
-    // alert("The selected node's id: " + this.tree.selectedNodes); // To alert the selected node's id.
-    console.log(e);
-    this.DataSourceGeneric = this.GridSetting.GridGenerik.DataSource
-    // this.GridGeneric.Grid.refresh();
-  };
+  
 
   handleSelectedGeneric(args){
     console.log(args);
@@ -90,5 +135,11 @@ export class SetupFormulariumComponent implements OnInit {
     this.DataSourceMax = this.GridSetting.GridPeresepan.DataSource
     this.DataSourceDagang = this.GridSetting.GridItem.DataSource
   }  
+  get parent_terapi(): AbstractControl { return this.FormInputDataTerapi.get('parent_terapi'); }
+  get id_terapi_parent(): AbstractControl { return this.FormInputDataTerapi.get('id_terapi_parent'); }
+  get kode_terapi(): AbstractControl { return this.FormInputDataTerapi.get('kode_terapi'); }
+  get no_terapi(): AbstractControl { return this.FormInputDataTerapi.get('no_terapi'); }
+  get nama_terapi(): AbstractControl { return this.FormInputDataTerapi.get('nama_terapi'); }
+  get level_rekursif_terapi(): AbstractControl { return this.FormInputDataTerapi.get('level_rekursif_terapi'); }
 
 }

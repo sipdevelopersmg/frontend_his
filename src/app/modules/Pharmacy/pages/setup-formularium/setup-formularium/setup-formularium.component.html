@@ -1,9 +1,10 @@
 <org-card-layout>
     <div class="row">
+        <!-- TreeView Terapi -->
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-header ">
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between">   
                         <div class="col-md-7 ">
                             <h5 class="m-0">Terapi</h5>
                         </div>
@@ -24,11 +25,11 @@
                         (nodeSelected)='nodeSelected($event)'>
                             <ng-template #nodeTemplate="" let-data="">
                                 <div>
-                                    <div class="ejob"> 
-                                        <a (click)="handleAddTerapi()">
-                                        <i *ngIf="data.kode.length==1"  class="fas fa-plus-circle tambah_terapi text-primary "></i>
+                                    <div class="ejob">
+                                        <a (click)="handleSubTerapi()">
+                                        <i *ngIf="data.id_terapi_parent==null"  class="fas fa-plus-circle tambah_terapi text-primary "></i>
                                         </a>
-                                        {{data.kode}} {{data.name}}
+                                        {{data.kode_terapi}} {{data.nama_terapi}}
                                     </div>
                                 </div>
                             </ng-template>
@@ -37,6 +38,7 @@
                 </div>
             </div>
         </div>
+        <!-- Tabel Generik -->
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-header ">
@@ -62,8 +64,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-6">
             <div class="row">
+                <!-- Tabel Sediaan -->
                 <div class="col-sm-12 mb-3">
                     <div class="card">
                         <div class="card-header ">
@@ -90,60 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header ">
-                            <div class="row justify-content-between">
-                                <div class="col-md-7 ">
-                                    <h5 class="m-0">Restreksi</h5>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-plus-circle tambah text-primary "></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder 
-                                [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" 
-                                [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridKeterangan.columns"
-                                [grid-DataSource]="DataSourceRestreksi" 
-                                [textWrapSettings]="wrapSettings"
-                            >
-                            </mol-grid>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="row">
-                <div class="col-sm-12 mb-3">
-                    <div class="card">
-                        <div class="card-header ">
-                            <div class="row justify-content-between">
-                                <div class="col-auto">
-                                    <h5 class="m-0">Max Peresepan</h5>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-plus-circle tambah text-primary "></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder 
-                                [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" 
-                                [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridPeresepan.columns"
-                                [grid-DataSource]="DataSourceMax" 
-                                [textWrapSettings]="wrapSettings"
-                            >
-                            </mol-grid>
-                        </div>
-                    </div>
-                </div>
+                <!-- Tabel Item Obat -->
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header ">
@@ -173,8 +123,55 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Terapi  -->
+    <!-- Modal Tambah Terapi Level  -->
     <ng-template #modalTambahTerapi>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Tambah Terapi</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <form [formGroup]="FormInputDataTerapi" class="p-2">
+                        <div class="row mb-2">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                                <mol-input-text [inputFieldState]="'detail'" [label]="'Parent Terapi'" formControlName="parent_terapi"></mol-input-text>
+                                <mol-input-text 
+                                    [label]="'Kode Terapi'" 
+                                    formControlName="kode_terapi"
+                                    [IsFormControlInvalid]="kode_terapi.invalid"
+                                    [ValidatorsCaption]="'Kode Terapi Tidak Boleh Kosong'"
+                                    [inputFieldState]="inputFieldState"
+                                    >
+                                </mol-input-text> 
+                                <mol-input-text [label]="'No Terapi'" formControlName="no_terapi"
+                                    [IsFormControlInvalid]="no_terapi.invalid"
+                                    [ValidatorsCaption]="'No Terapi Tidak Boleh Kosong'"
+                                    [inputFieldState]="inputFieldState">
+                                </mol-input-text>
+                                <mol-input-text
+                                    [label]="'Nama Terapi'" 
+                                    formControlName="nama_terapi"
+                                    [IsFormControlInvalid]="nama_terapi.invalid"
+                                    [ValidatorsCaption]="'Nama Terapi Outlet Tidak Boleh Kosong'"
+                                    [inputFieldState]="inputFieldState"
+                                    >
+                                </mol-input-text>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" (click)="handleSimpanTerapi()" class="btn btn-primary">Simpan Terapi</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Tambah Terapi Level  -->
+    <ng-template #_modalTambahTerapi>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Add Terapi</h5>
             <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
@@ -206,7 +203,7 @@
     </ng-template>
 
     <!-- Modal Setup Terapi  -->
-    <ng-template #modalSetupTerapi>
+    <ng-template #_modalSetupTerapi>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Setup Terapi</h5>
             <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
@@ -226,7 +223,7 @@
     </ng-template>
 
     <!-- Modal Terapi  -->
-    <ng-template #modalTambahSubTerapi>
+    <ng-template #_modalTambahSubTerapi>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Add Sub Terapi</h5>
             <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
