@@ -9,24 +9,21 @@
                         </div>
                         <div class="col-auto">
                             <a (click)="handleAddTerapi()">
-                            <i  class="fas fa-plus-circle tambah text-primary "></i>
+                                <i class="fas fa-plus-circle tambah text-primary "></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
                     <div id='treeparent'>
-                        <ejs-treeview 
-                        id='treeelement' 
-                        [fields]='field' 
-                        e-nodeclick="onClick"
-                        [allowMultiSelection]='allowMultiSelection'  
-                        (nodeSelected)='nodeSelected($event)'>
+                        <ejs-treeview id='treeelement' [fields]='field' e-nodeclick="onClick"
+                            [allowMultiSelection]='allowMultiSelection' (nodeSelected)='nodeSelected($event)'>
                             <ng-template #nodeTemplate="" let-data="">
                                 <div>
-                                    <div class="ejob"> 
+                                    <div class="ejob">
                                         <a (click)="handleAddTerapi()">
-                                        <i *ngIf="data.kode.length==1"  class="fas fa-plus-circle tambah_terapi text-primary "></i>
+                                            <i *ngIf="data.kode.length==1"
+                                                class="fas fa-plus-circle tambah_terapi text-primary "></i>
                                         </a>
                                         {{data.kode}} {{data.name}}
                                     </div>
@@ -50,14 +47,9 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <mol-grid #gridDaftarOrder 
-                        [grid-id]="'GridDaftarOrder'"
-                        [grid-height]="'calc(100vh - 250px)'" 
-                        [grid-lines]="'Both'"
-                        [columns]="GridSetting.GridGenerik.columns"
-                        [grid-DataSource]="DataSourceGeneric" 
-                        (row-selected) = "handleSelectedGeneric($event)"
-                    >
+                    <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'" [grid-height]="'calc(100vh - 250px)'"
+                        [grid-lines]="'Both'" [columns]="GridSetting.GridGenerik.columns"
+                        [grid-DataSource]="DataSourceGeneric" (row-selected)="handleSelectedGeneric($event)">
                     </mol-grid>
                 </div>
             </div>
@@ -77,15 +69,10 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder 
-                                [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" 
-                                [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridSediaan.columns"
-                                [grid-DataSource]="DataSourceSediaan"
-                                [textWrapSettings]="wrapSettings"
-                                (row-selected) = "handleSelectedSediaan($event)"
-                            >
+                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridSediaan.columns" [grid-DataSource]="DataSourceSediaan"
+                                [textWrapSettings]="wrapSettings" (row-selected)="handleSelectedSediaan($event)">
                             </mol-grid>
                         </div>
                     </div>
@@ -103,14 +90,10 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder 
-                                [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" 
-                                [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridKeterangan.columns"
-                                [grid-DataSource]="DataSourceRestreksi" 
-                                [textWrapSettings]="wrapSettings"
-                            >
+                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridKeterangan.columns" [grid-DataSource]="DataSourceRestreksi"
+                                [textWrapSettings]="wrapSettings">
                             </mol-grid>
                         </div>
                     </div>
@@ -132,14 +115,10 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder 
-                                [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" 
-                                [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridPeresepan.columns"
-                                [grid-DataSource]="DataSourceMax" 
-                                [textWrapSettings]="wrapSettings"
-                            >
+                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridPeresepan.columns" [grid-DataSource]="DataSourceMax"
+                                [textWrapSettings]="wrapSettings">
                             </mol-grid>
                         </div>
                     </div>
@@ -157,14 +136,10 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder 
-                                [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" 
-                                [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridItem.columns"
-                                [grid-DataSource]="DataSourceDagang" 
-                                [textWrapSettings]="wrapSettings"
-                            >
+                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridItem.columns" [grid-DataSource]="DataSourceDagang"
+                                [textWrapSettings]="wrapSettings">
                             </mol-grid>
                         </div>
                     </div>
@@ -194,7 +169,8 @@
                             </ejs-dropdownlist>
                         </div>
                         <div class="col-sm-3">
-                            <button class="btn btn-primary" type="button" (click)="handleSetupTerapi()">Setup Terapi</button>
+                            <button class="btn btn-primary" type="button" (click)="handleSetupTerapi()">Setup
+                                Terapi</button>
                         </div>
                     </div>
                 </div>
@@ -216,7 +192,7 @@
         <div class="modal-body p-10">
             <div class="row mx-0 my-1">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <mol-input-text [label] = "'Nama Terapi'"></mol-input-text>
+                    <mol-input-text [label]="'Nama Terapi'"></mol-input-text>
                 </div>
             </div>
         </div>
@@ -237,7 +213,7 @@
             <div class="row mx-0 my-1">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="row mb-2">
-                        <mol-input-text [label]="'Terapi'"  ></mol-input-text>
+                        <mol-input-text [label]="'Terapi'"></mol-input-text>
                         <div class="col-sm-3">
                             <atm-label [LabelCaption]="'Sub Terapi'"></atm-label>
                         </div>

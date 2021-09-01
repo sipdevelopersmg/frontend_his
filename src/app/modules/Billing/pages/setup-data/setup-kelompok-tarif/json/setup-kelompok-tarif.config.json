@@ -1,0 +1,33 @@
+{
+    "GridSetupKelompokTarifColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_kelompok_tarif",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_kelompok_tarif",
+            "headerText": "KODE KELOMPOK TARIF",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_kelompok_tarif",
+            "headerText": "NAMA KELOMPOK TARIF",
+            "visible": true,
+            "width": 120
+        }
+    ]
+}

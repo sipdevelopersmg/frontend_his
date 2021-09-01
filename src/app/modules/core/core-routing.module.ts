@@ -34,6 +34,10 @@ const coreRoutes: Routes = [
                 path: "Dokter",
                 loadChildren: () => import("../dashboard-dokter/dashboard-dokter.module").then(m => m.DashboardDokterModule),
                 data: { title: "Dashboard Dokter" }
+            },
+            {
+                path: "Billing",
+                loadChildren: () => import("../Billing/billing.module").then(m => m.BillingModule)
             }
         ]
     },
