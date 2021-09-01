@@ -1,0 +1,126 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <p class="mb-0 text-biru-muda">
+                    Daftar Group Tarif
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-end cursor-pointer" (click)="handleAddGroupTarif()">
+                <span class="badge bg-primary">
+                    <i class="fas fa-plus fa-sm"></i>&nbsp; Add Group Tarif
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0 cardGroupTarif">
+        <!-- Treeview Group Tarif -->
+        <ejs-treeview [id]="'GridTreeGroupTarif'" [fields]="GroupTarifFields" e-nodeclick="onClick"
+            [allowMultiSelection]='true' [allowDragAndDrop]="false" (nodeSelected)="handleSelectedGroupTarif($event)"
+            (nodeDropped)="handleNodeDropedGroupTarif($event)">
+            <ng-template #nodeTemplate="" let-data="">
+                <div>
+                    <div class="treeviewdiv">
+                        <div class="icon-add-grup-tarif" *ngIf="data.level < 2" (click)="handleAddGroupTarif(data)">
+                            <i class="fas fa-plus-circle text-biru-muda"></i>
+                        </div>
+                        <div class="grup-tarif-text">
+                            <p class="mb-0 {{ data.level == 1 ? 'grup-parent' : 'grup-child' }}">
+                                {{ data.kode_grup_tarif }} - {{ data.nama_grup_tarif }}
+                            </p>
+                        </div>
+                        <div class="badge-grup-tarif" (click)="handleSeeDetailGroupTarif(data)">
+                            <span class="badge bg-success">
+                                <i class="fas fa-info"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ejs-treeview>
+
+        <!-- Modal Add Group Tarif  -->
+        <ng-template #modalAddGroupTarif>
+            <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                <h5 class="modal-title pull-left">
+                    {{ FormGrupTarifState == 'Insert' ? 'Add' : 'Detail' }} Group Tarif
+                </h5>
+                <button type="button" class="btn pull-right text-white" aria-label="Close"
+                    (click)="handleCloseModalGrupTarif()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormGrupTarif">
+                    <!-- Kode dan Nama Group Tarif Parent -->
+                    <div class="row mb-2"
+                        [hidden]="(FormGrupTarifState == 'Update' && level.value == 1) || level.value <= 1">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label [LabelCaption]="'Group Tarif'"></atm-label>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 pe-2">
+                            <input type="text" class="form-control form-select-sm"
+                                formControlName="kode_grup_tarif_parent" readonly>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-2">
+                            <input type="text" class="form-control form-select-sm"
+                                formControlName="nama_grup_tarif_parent" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Kode dan Nama Sub Group Tarif Parent -->
+                    <div class="row mb-2">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label
+                                [LabelCaption]="(FormGrupTarifState == 'Update' && level.value <= 1) || level.value <= 1 ? 'Group Tarif' : 'Sub Group Aktif'">
+                            </atm-label>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 pe-2">
+                            <div class="input-group">
+                                <span class="input-group-text" style="font-size: 13px;" id="kode_grup_tarif_parent"
+                                    *ngIf="FormGrupTarifState == 'Insert' && level.value > 1">
+                                    {{ kode_grup_tarif_parent.value }}
+                                </span>
+                                <input type="text" class="form-control form-select-sm" formControlName="kode_grup_tarif"
+                                    [attr.readonly]="FormGrupTarifState == 'Update' ? true : null"
+                                    aria-describedby="kode_grup_tarif_parent">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-2">
+                            <input type="text" class="form-control form-select-sm" formControlName="nama_grup_tarif">
+                        </div>
+                    </div>
+
+                    <!-- Level -->
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label [LabelCaption]="'Level'">
+                            </atm-label>
+                        </div>
+
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 pe-2">
+                            <input type="text" class="form-control form-select-sm" formControlName="level" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer background-abu-muda p-2">
+                <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalGrupTarif()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+                <button *ngIf="FormGrupTarifState == 'Insert'" type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitFormGrupTarif(FormGrupTarif.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+                <button *ngIf="FormGrupTarifState == 'Update'" type="button" class="btn btn-warning btn-sm"
+                    (click)="handleUpdateFormGrupTarif(FormGrupTarif.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Update
+                </button>
+            </div>
+        </ng-template>
+    </div>
+</div>

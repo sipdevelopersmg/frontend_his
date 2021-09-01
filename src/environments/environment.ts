@@ -10,11 +10,18 @@ export const environment = {
     webApiDo: "http://174.138.22.139:5001/api/",
     webApiMM: "http://174.138.22.139:8888/api/pharmm/",
     webApiPHARMACY: "http://174.138.22.139:8888/api/farmasi/",
+
     /** 
      * @webApiPis http://174.138.22.139:8888/api/pis/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /pis 
     */
     webApiPis: "http://174.138.22.139:8888/api/pis/",
+
+    /** 
+     * @webApiBilling http://174.138.22.139:8888/api/pis/
+     * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /pis 
+    */
+    webApiBilling: "http://174.138.22.139:8888/api/billing/",
 };
 
 /*

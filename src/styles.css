@@ -12,6 +12,7 @@
 @import "~@syncfusion/ej2-angular-dropdowns/styles/fabric.css";
 @import "~@syncfusion/ej2-lists/styles/fabric.css";
 @import "~@syncfusion/ej2-angular-inputs/styles/fabric.css";
+@import "~@syncfusion/ej2-angular-navigations/styles/fabric.css";
 @import "~ng-wizard/themes/ng_wizard.min.css";
 @import "~ng-wizard/themes/ng_wizard_theme_dots.min.css";
 
@@ -246,4 +247,8 @@ body {
   padding-top: 10px;
   text-align: center;
   border-radius: 15px;
+}
+
+.e-treeview .e-list-text {
+  width: 100%;
 }

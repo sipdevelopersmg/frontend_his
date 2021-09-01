@@ -1,0 +1,29 @@
+.cardGroupTarif {
+  height: calc(100vh - 13rem);
+  max-height: calc(100vh - 13rem);
+  overflow-y: auto;
+}
+
+.icon-add-grup-tarif {
+  float: left;
+  margin-right: 10px;
+}
+
+.grup-tarif-text {
+  float: left;
+}
+
+.badge-grup-tarif {
+  float: right;
+}
+
+.grup-parent {
+  color: var(--biru-tua);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.grup-child {
+  color: var(--hitam-muda);
+  font-size: 13px;
+}

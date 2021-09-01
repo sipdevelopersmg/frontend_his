@@ -1,0 +1,2575 @@
+{
+    "responseResult": true,
+    "data": [
+        {
+            "id_grup_tarif": 7,
+            "kode_grup_tarif": "AA",
+            "nama_grup_tarif": "TRANSAKSI PINDAHAN",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 49,
+                    "kode_grup_tarif": "AA.AAA",
+                    "nama_grup_tarif": "TRANSAKSI PINDAHAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 7,
+                    "kode_group_tarif_parent": "AA",
+                    "nama_grup_tarif_parent": "TRANSAKSI PINDAHAN",
+                    "level_parent": 1,
+                    "child": [
+                        {
+                            "id_grup_tarif": 99999,
+                            "kode_grup_tarif": "Z3.PHR",
+                            "nama_grup_tarif": "OBAT / ALKES BERDIKARI",
+                            "level": 3,
+                            "id_grup_tarif_parent": 49,
+                            "kode_group_tarif_parent": "Z3",
+                            "nama_grup_tarif_parent": "OBAT / ALKES BERDIKARI",
+                            "level_parent": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 8,
+            "kode_grup_tarif": "AK",
+            "nama_grup_tarif": "AKOMODASI DAN KONSULTASI",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 50,
+                    "kode_grup_tarif": "AK.AKO",
+                    "nama_grup_tarif": "AKOMODASI DAN KONSULTASI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 8,
+                    "kode_group_tarif_parent": "AK",
+                    "nama_grup_tarif_parent": "AKOMODASI DAN KONSULTASI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 51,
+                    "kode_grup_tarif": "AK.AKS",
+                    "nama_grup_tarif": "SEWA KAMAR OPERASI (OK)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 8,
+                    "kode_group_tarif_parent": "AK",
+                    "nama_grup_tarif_parent": "AKOMODASI DAN KONSULTASI",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 9,
+            "kode_grup_tarif": "AM",
+            "nama_grup_tarif": "PELAYANAN RAWAT DARURAT",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 52,
+                    "kode_grup_tarif": "AM.ADM",
+                    "nama_grup_tarif": "REGISTRASI/PENDF.RAWAT DARURAT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 53,
+                    "kode_grup_tarif": "AM.ALT",
+                    "nama_grup_tarif": "SEWA ALAT RAWAT DARURAT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 54,
+                    "kode_grup_tarif": "AM.AMB",
+                    "nama_grup_tarif": "PEMAKAIAN ABULANCE",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 55,
+                    "kode_grup_tarif": "AM.DE1",
+                    "nama_grup_tarif": "DIAGNOSTIK ELEKTROMEDIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 56,
+                    "kode_grup_tarif": "AM.DE2",
+                    "nama_grup_tarif": "DIAGNOSTIK  NON ELEKTROMEDIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 57,
+                    "kode_grup_tarif": "AM.KEP",
+                    "nama_grup_tarif": "TINDAKAN KEPERAWATAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 58,
+                    "kode_grup_tarif": "AM.NOP",
+                    "nama_grup_tarif": "TINDAKAN MEDIK NON OPERATIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 59,
+                    "kode_grup_tarif": "AM.NPI",
+                    "nama_grup_tarif": "TINDAKAN MEDIK NON OPERATIF INVASIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 60,
+                    "kode_grup_tarif": "AM.ORT",
+                    "nama_grup_tarif": "MEDIK OPERATIF BEDAH ORTHOPAEDI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 61,
+                    "kode_grup_tarif": "AM.PC1",
+                    "nama_grup_tarif": "PERSALINAN DAN KURETASE",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 62,
+                    "kode_grup_tarif": "AM.SYA",
+                    "nama_grup_tarif": "MEDIK OPERATIF BEDAH SARAF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 63,
+                    "kode_grup_tarif": "AM.TDK",
+                    "nama_grup_tarif": "TINDAKAN RAWAT DARURAT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 64,
+                    "kode_grup_tarif": "AM.THT",
+                    "nama_grup_tarif": "MEDIK OPERATIF BEDAH THT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 65,
+                    "kode_grup_tarif": "AM.UMM",
+                    "nama_grup_tarif": "MEDIK OPERATIF BEDAH UMUM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 66,
+                    "kode_grup_tarif": "AM.URO",
+                    "nama_grup_tarif": "MEDIK OPERATIF BEDAH UROLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 67,
+                    "kode_grup_tarif": "AM.VAS",
+                    "nama_grup_tarif": "MEDIK OPERATIF BEDAH THORAX & VASKULER",
+                    "level": 2,
+                    "id_grup_tarif_parent": 9,
+                    "kode_group_tarif_parent": "AM",
+                    "nama_grup_tarif_parent": "PELAYANAN RAWAT DARURAT",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 10,
+            "kode_grup_tarif": "AR",
+            "nama_grup_tarif": "RAWAT JALAN",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 68,
+                    "kode_grup_tarif": "AR.ADM",
+                    "nama_grup_tarif": "REGISTRASI/PENDF.RAWAT JALAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 69,
+                    "kode_grup_tarif": "AR.ANK",
+                    "nama_grup_tarif": "TINDAKAN KLINIK KESEHATAN ANAK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 70,
+                    "kode_grup_tarif": "AR.BDH",
+                    "nama_grup_tarif": "TINDAKAN KLINIK BEDAH",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 71,
+                    "kode_grup_tarif": "AR.GZI",
+                    "nama_grup_tarif": "PELAYANAN KLINIK GIZI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 72,
+                    "kode_grup_tarif": "AR.HDD",
+                    "nama_grup_tarif": "PELAYANAN HEMODIALISA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 73,
+                    "kode_grup_tarif": "AR.KLT",
+                    "nama_grup_tarif": "TINDAKAN KLINIK ESTETIKA KULIT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 74,
+                    "kode_grup_tarif": "AR.MLT",
+                    "nama_grup_tarif": "TINDAKAN KLINIK GIGI MULUT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 75,
+                    "kode_grup_tarif": "AR.MTA",
+                    "nama_grup_tarif": "TINDAKAN KLINIK MATA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 76,
+                    "kode_grup_tarif": "AR.OBG",
+                    "nama_grup_tarif": "TINDAKAN KLINIK OBSGYN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 77,
+                    "kode_grup_tarif": "AR.PSI",
+                    "nama_grup_tarif": "PELAYANAN KLINIK PSIKOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 78,
+                    "kode_grup_tarif": "AR.TEST",
+                    "nama_grup_tarif": "TESTING",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 79,
+                    "kode_grup_tarif": "AR.THT",
+                    "nama_grup_tarif": "TINDAKAN KLINIK THT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 10,
+                    "kode_group_tarif_parent": "AR",
+                    "nama_grup_tarif_parent": "RAWAT JALAN",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 11,
+            "kode_grup_tarif": "BJ",
+            "nama_grup_tarif": "BEDAH JANTUNG",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 80,
+                    "kode_grup_tarif": "BJ.BJ1",
+                    "nama_grup_tarif": "BEDAH JANTUNG",
+                    "level": 2,
+                    "id_grup_tarif_parent": 11,
+                    "kode_group_tarif_parent": "BJ",
+                    "nama_grup_tarif_parent": "BEDAH JANTUNG",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 81,
+                    "kode_grup_tarif": "BJ.BJ2",
+                    "nama_grup_tarif": "JANTUNG INVASIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 11,
+                    "kode_group_tarif_parent": "BJ",
+                    "nama_grup_tarif_parent": "BEDAH JANTUNG",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 82,
+                    "kode_grup_tarif": "BJ.BJ3",
+                    "nama_grup_tarif": "JANTUNG NON INVASIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 11,
+                    "kode_group_tarif_parent": "BJ",
+                    "nama_grup_tarif_parent": "BEDAH JANTUNG",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 12,
+            "kode_grup_tarif": "CD",
+            "nama_grup_tarif": "CENTRAL DIAGNOSTIK CLINIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 83,
+                    "kode_grup_tarif": "CD.ADM",
+                    "nama_grup_tarif": "REGISTRASI/PENDF. C D C",
+                    "level": 2,
+                    "id_grup_tarif_parent": 12,
+                    "kode_group_tarif_parent": "CD",
+                    "nama_grup_tarif_parent": "CENTRAL DIAGNOSTIK CLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 84,
+                    "kode_grup_tarif": "CD.TDK",
+                    "nama_grup_tarif": "TINDAKAN C D C",
+                    "level": 2,
+                    "id_grup_tarif_parent": 12,
+                    "kode_group_tarif_parent": "CD",
+                    "nama_grup_tarif_parent": "CENTRAL DIAGNOSTIK CLINIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 13,
+            "kode_grup_tarif": "CM",
+            "nama_grup_tarif": "PEMINJAMAN REKAM MEDIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 85,
+                    "kode_grup_tarif": "CM.CPY",
+                    "nama_grup_tarif": "FOTO COPY DATA SEKUNDER PER LB",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 86,
+                    "kode_grup_tarif": "CM.DTA",
+                    "nama_grup_tarif": "PENGAMBILAN DATA S/D 100 CM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 87,
+                    "kode_grup_tarif": "CM.KUE",
+                    "nama_grup_tarif": "KUESIONER RESPONDEN SD 30 RESP",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 88,
+                    "kode_grup_tarif": "CM.OBS",
+                    "nama_grup_tarif": "OBSERVASI KEGIATAN S/D 30 LB",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 89,
+                    "kode_grup_tarif": "CM.PRT",
+                    "nama_grup_tarif": "OLAH & PRINT DATA PER LEMBAR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 90,
+                    "kode_grup_tarif": "CM.STD",
+                    "nama_grup_tarif": "STUDY KASUS S/D 10 LEMBAR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 91,
+                    "kode_grup_tarif": "CM.SUB",
+                    "nama_grup_tarif": "PERLAKUAN SUB PENEL.S/D 10 SUB",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 92,
+                    "kode_grup_tarif": "CM.WWC",
+                    "nama_grup_tarif": "WAWANCARA RESPONDEN S/D 15 RSP",
+                    "level": 2,
+                    "id_grup_tarif_parent": 13,
+                    "kode_group_tarif_parent": "CM",
+                    "nama_grup_tarif_parent": "PEMINJAMAN REKAM MEDIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 14,
+            "kode_grup_tarif": "DE",
+            "nama_grup_tarif": "DIAGNOSTIK ELEKTROMEDIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 93,
+                    "kode_grup_tarif": "DE.D05",
+                    "nama_grup_tarif": "DIAGNOSTIK ELEKTROMEDIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 14,
+                    "kode_group_tarif_parent": "DE",
+                    "nama_grup_tarif_parent": "DIAGNOSTIK ELEKTROMEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 94,
+                    "kode_grup_tarif": "DE.D06",
+                    "nama_grup_tarif": "DIAGNOSTIK NON ELEKTROMED",
+                    "level": 2,
+                    "id_grup_tarif_parent": 14,
+                    "kode_group_tarif_parent": "DE",
+                    "nama_grup_tarif_parent": "DIAGNOSTIK ELEKTROMEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 95,
+                    "kode_grup_tarif": "DE.D07",
+                    "nama_grup_tarif": "MRI RUJUKAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 14,
+                    "kode_group_tarif_parent": "DE",
+                    "nama_grup_tarif_parent": "DIAGNOSTIK ELEKTROMEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 96,
+                    "kode_grup_tarif": "DE.RD",
+                    "nama_grup_tarif": "MRA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 14,
+                    "kode_group_tarif_parent": "DE",
+                    "nama_grup_tarif_parent": "DIAGNOSTIK ELEKTROMEDIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 15,
+            "kode_grup_tarif": "DI",
+            "nama_grup_tarif": "SELISIH KELAS",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 97,
+                    "kode_grup_tarif": "DI.DIF",
+                    "nama_grup_tarif": "SELISIH KELAS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 15,
+                    "kode_group_tarif_parent": "DI",
+                    "nama_grup_tarif_parent": "SELISIH KELAS",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 16,
+            "kode_grup_tarif": "DK",
+            "nama_grup_tarif": "TINDAKAN MEDIK LAIN",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 98,
+                    "kode_grup_tarif": "DK.TM1",
+                    "nama_grup_tarif": "TINDAKAN MEDIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 16,
+                    "kode_group_tarif_parent": "DK",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 99,
+                    "kode_grup_tarif": "DK.TM2",
+                    "nama_grup_tarif": "TINDAKAN MEDIK DENGAN TIM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 16,
+                    "kode_group_tarif_parent": "DK",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 100,
+                    "kode_grup_tarif": "DK.TM3",
+                    "nama_grup_tarif": "DIAGNOSTIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 16,
+                    "kode_group_tarif_parent": "DK",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK LAIN",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 17,
+            "kode_grup_tarif": "DS",
+            "nama_grup_tarif": "DAY SURGERY",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 101,
+                    "kode_grup_tarif": "DS.AKO",
+                    "nama_grup_tarif": "AKOMODASI DAY SURGERY",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 102,
+                    "kode_grup_tarif": "DS.ANK",
+                    "nama_grup_tarif": "BEDAH ANAK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 103,
+                    "kode_grup_tarif": "DS.DER",
+                    "nama_grup_tarif": "DEMABRASI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 104,
+                    "kode_grup_tarif": "DS.DIG",
+                    "nama_grup_tarif": "BEDAH DIGESTIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 105,
+                    "kode_grup_tarif": "DS.KLT",
+                    "nama_grup_tarif": "ESTETIKA KULIT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 106,
+                    "kode_grup_tarif": "DS.MLT",
+                    "nama_grup_tarif": "BEDAH MULUT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 107,
+                    "kode_grup_tarif": "DS.MTA",
+                    "nama_grup_tarif": "DESERJERI MATA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 108,
+                    "kode_grup_tarif": "DS.OBG",
+                    "nama_grup_tarif": "OBSTETRI & GYNECOLOGY",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 109,
+                    "kode_grup_tarif": "DS.ONK",
+                    "nama_grup_tarif": "BEDAH ONCOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 110,
+                    "kode_grup_tarif": "DS.ORT",
+                    "nama_grup_tarif": "BEDAH ORTOPEDY",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 111,
+                    "kode_grup_tarif": "DS.PLA",
+                    "nama_grup_tarif": "BEDAH PLASTIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 112,
+                    "kode_grup_tarif": "DS.SOK",
+                    "nama_grup_tarif": "SEWA OK (DAY SURGERY)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 113,
+                    "kode_grup_tarif": "DS.SYA",
+                    "nama_grup_tarif": "BEDAH SYARAF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 114,
+                    "kode_grup_tarif": "DS.THT",
+                    "nama_grup_tarif": "BEDAH THT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 115,
+                    "kode_grup_tarif": "DS.URO",
+                    "nama_grup_tarif": "BEDAH UROLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 116,
+                    "kode_grup_tarif": "DS.VAS",
+                    "nama_grup_tarif": "BEDAH VASKULER",
+                    "level": 2,
+                    "id_grup_tarif_parent": 17,
+                    "kode_group_tarif_parent": "DS",
+                    "nama_grup_tarif_parent": "DAY SURGERY",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 18,
+            "kode_grup_tarif": "EK",
+            "nama_grup_tarif": "ESTETIKA  KULIT",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 117,
+                    "kode_grup_tarif": "EK.KLT",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 18,
+                    "kode_group_tarif_parent": "EK",
+                    "nama_grup_tarif_parent": "ESTETIKA  KULIT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 118,
+                    "kode_grup_tarif": "EK.TIN",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 18,
+                    "kode_group_tarif_parent": "EK",
+                    "nama_grup_tarif_parent": "ESTETIKA  KULIT",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 19,
+            "kode_grup_tarif": "FJ",
+            "nama_grup_tarif": "FERIKSA JANTUNG",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 119,
+                    "kode_grup_tarif": "FJ.FJ.LKP",
+                    "nama_grup_tarif": "FERIKSA JANTUNG LENGKAP",
+                    "level": 2,
+                    "id_grup_tarif_parent": 19,
+                    "kode_group_tarif_parent": "FJ",
+                    "nama_grup_tarif_parent": "FERIKSA JANTUNG",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 20,
+            "kode_grup_tarif": "GE",
+            "nama_grup_tarif": "PELAYANAN GERIATRI",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 120,
+                    "kode_grup_tarif": "GE.TIN",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 20,
+                    "kode_group_tarif_parent": "GE",
+                    "nama_grup_tarif_parent": "PELAYANAN GERIATRI",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 21,
+            "kode_grup_tarif": "GM",
+            "nama_grup_tarif": "PENYAKIT GIGI DAN MULUT",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 121,
+                    "kode_grup_tarif": "GM.BMT",
+                    "nama_grup_tarif": "BEDAH MULUT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 21,
+                    "kode_group_tarif_parent": "GM",
+                    "nama_grup_tarif_parent": "PENYAKIT GIGI DAN MULUT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 122,
+                    "kode_grup_tarif": "GM.KON",
+                    "nama_grup_tarif": "KONSERVASI UMUM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 21,
+                    "kode_group_tarif_parent": "GM",
+                    "nama_grup_tarif_parent": "PENYAKIT GIGI DAN MULUT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 123,
+                    "kode_grup_tarif": "GM.ORT",
+                    "nama_grup_tarif": "ORTHODONTIA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 21,
+                    "kode_group_tarif_parent": "GM",
+                    "nama_grup_tarif_parent": "PENYAKIT GIGI DAN MULUT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 124,
+                    "kode_grup_tarif": "GM.PRO",
+                    "nama_grup_tarif": "PROSTHODONTI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 21,
+                    "kode_group_tarif_parent": "GM",
+                    "nama_grup_tarif_parent": "PENYAKIT GIGI DAN MULUT",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 125,
+                    "kode_grup_tarif": "GM.SBM",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 21,
+                    "kode_group_tarif_parent": "GM",
+                    "nama_grup_tarif_parent": "PENYAKIT GIGI DAN MULUT",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 22,
+            "kode_grup_tarif": "HD",
+            "nama_grup_tarif": "HEMODIALISA",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 126,
+                    "kode_grup_tarif": "HD.HD1",
+                    "nama_grup_tarif": "HEMODIALISA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 22,
+                    "kode_group_tarif_parent": "HD",
+                    "nama_grup_tarif_parent": "HEMODIALISA",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 23,
+            "kode_grup_tarif": "IC",
+            "nama_grup_tarif": "PELAYANAN IRIN",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 127,
+                    "kode_grup_tarif": "IC.ICU",
+                    "nama_grup_tarif": "PELAYANAN ICU/CCU",
+                    "level": 2,
+                    "id_grup_tarif_parent": 23,
+                    "kode_group_tarif_parent": "IC",
+                    "nama_grup_tarif_parent": "PELAYANAN IRIN",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 24,
+            "kode_grup_tarif": "JM",
+            "nama_grup_tarif": "JAMKESMAS",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 128,
+                    "kode_grup_tarif": "JM.KES",
+                    "nama_grup_tarif": "JAMKESMAS MANLAK 2008",
+                    "level": 2,
+                    "id_grup_tarif_parent": 24,
+                    "kode_group_tarif_parent": "JM",
+                    "nama_grup_tarif_parent": "JAMKESMAS",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 25,
+            "kode_grup_tarif": "JT",
+            "nama_grup_tarif": "PELAYANAN JANTUNG",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 129,
+                    "kode_grup_tarif": "JT.INV",
+                    "nama_grup_tarif": "PELAYANAN JANTUNG INVATIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 25,
+                    "kode_group_tarif_parent": "JT",
+                    "nama_grup_tarif_parent": "PELAYANAN JANTUNG",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 130,
+                    "kode_grup_tarif": "JT.NIV",
+                    "nama_grup_tarif": "PELAYANAN JANTUNG NON INVASIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 25,
+                    "kode_group_tarif_parent": "JT",
+                    "nama_grup_tarif_parent": "PELAYANAN JANTUNG",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 26,
+            "kode_grup_tarif": "KN",
+            "nama_grup_tarif": "KEDOKTERAN NUKLIR",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 131,
+                    "kode_grup_tarif": "KN.KN1",
+                    "nama_grup_tarif": "DIAGNOSTIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 26,
+                    "kode_group_tarif_parent": "KN",
+                    "nama_grup_tarif_parent": "KEDOKTERAN NUKLIR",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 132,
+                    "kode_grup_tarif": "KN.KN2",
+                    "nama_grup_tarif": "TERAPI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 26,
+                    "kode_group_tarif_parent": "KN",
+                    "nama_grup_tarif_parent": "KEDOKTERAN NUKLIR",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 27,
+            "kode_grup_tarif": "LB",
+            "nama_grup_tarif": "LAB.PATOLOGI KLINIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 133,
+                    "kode_grup_tarif": "LB.BIO",
+                    "nama_grup_tarif": "BIOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 134,
+                    "kode_grup_tarif": "LB.BMP",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 135,
+                    "kode_grup_tarif": "LB.FEC",
+                    "nama_grup_tarif": "FESES",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 136,
+                    "kode_grup_tarif": "LB.GRD",
+                    "nama_grup_tarif": "LABORAT GARUDA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 137,
+                    "kode_grup_tarif": "LB.HEM",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 138,
+                    "kode_grup_tarif": "LB.IMU",
+                    "nama_grup_tarif": "LABORATORIUM IMUNOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 139,
+                    "kode_grup_tarif": "LB.KIM",
+                    "nama_grup_tarif": "KIMIA KLINIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 140,
+                    "kode_grup_tarif": "LB.KNS",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 141,
+                    "kode_grup_tarif": "LB.KOA",
+                    "nama_grup_tarif": "KOAGULASI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 142,
+                    "kode_grup_tarif": "LB.LAB",
+                    "nama_grup_tarif": "KLINIK HEMATOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 143,
+                    "kode_grup_tarif": "LB.LAK",
+                    "nama_grup_tarif": "KIMIA KLINIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 144,
+                    "kode_grup_tarif": "LB.LAN",
+                    "nama_grup_tarif": "LAIN-LAIN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 145,
+                    "kode_grup_tarif": "LB.LCS",
+                    "nama_grup_tarif": "LIQUOR CEREBRO SPINALIS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 146,
+                    "kode_grup_tarif": "LB.LUA",
+                    "nama_grup_tarif": "URIN ANALISA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 147,
+                    "kode_grup_tarif": "LB.LUR",
+                    "nama_grup_tarif": "URIN RUTIN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 148,
+                    "kode_grup_tarif": "LB.NAR",
+                    "nama_grup_tarif": "NARKOBA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 149,
+                    "kode_grup_tarif": "LB.TRE",
+                    "nama_grup_tarif": "TRANSUNDAT EKSUNDAT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 150,
+                    "kode_grup_tarif": "LB.UTD",
+                    "nama_grup_tarif": "BANK DARAH",
+                    "level": 2,
+                    "id_grup_tarif_parent": 27,
+                    "kode_group_tarif_parent": "LB",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI KLINIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 28,
+            "kode_grup_tarif": "LM",
+            "nama_grup_tarif": "LAB.MIKROBIOLOGI KLINIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 151,
+                    "kode_grup_tarif": "LM.BAK",
+                    "nama_grup_tarif": "BAKTERIOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 28,
+                    "kode_group_tarif_parent": "LM",
+                    "nama_grup_tarif_parent": "LAB.MIKROBIOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 152,
+                    "kode_grup_tarif": "LM.MOL",
+                    "nama_grup_tarif": "MOLEKULER",
+                    "level": 2,
+                    "id_grup_tarif_parent": 28,
+                    "kode_group_tarif_parent": "LM",
+                    "nama_grup_tarif_parent": "LAB.MIKROBIOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 153,
+                    "kode_grup_tarif": "LM.PEM",
+                    "nama_grup_tarif": "KUALITAS AIR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 28,
+                    "kode_group_tarif_parent": "LM",
+                    "nama_grup_tarif_parent": "LAB.MIKROBIOLOGI KLINIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 154,
+                    "kode_grup_tarif": "LM.SER",
+                    "nama_grup_tarif": "SEROLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 28,
+                    "kode_group_tarif_parent": "LM",
+                    "nama_grup_tarif_parent": "LAB.MIKROBIOLOGI KLINIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 29,
+            "kode_grup_tarif": "LP",
+            "nama_grup_tarif": "LAB.PATOLOGI ANATOMI",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 155,
+                    "kode_grup_tarif": "LP.LPA",
+                    "nama_grup_tarif": "PATOLOGI ANATOMI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 29,
+                    "kode_group_tarif_parent": "LP",
+                    "nama_grup_tarif_parent": "LAB.PATOLOGI ANATOMI",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 30,
+            "kode_grup_tarif": "MC",
+            "nama_grup_tarif": "GENERAL CHECK UP",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 156,
+                    "kode_grup_tarif": "MC.GC1",
+                    "nama_grup_tarif": "GENERAL CHECK UP WANITA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 30,
+                    "kode_group_tarif_parent": "MC",
+                    "nama_grup_tarif_parent": "GENERAL CHECK UP",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 157,
+                    "kode_grup_tarif": "MC.GC2",
+                    "nama_grup_tarif": "GENERAL CHECK UP PRIA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 30,
+                    "kode_group_tarif_parent": "MC",
+                    "nama_grup_tarif_parent": "GENERAL CHECK UP",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 158,
+                    "kode_grup_tarif": "MC.GC3",
+                    "nama_grup_tarif": "GENERAL CHECK UP PPDS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 30,
+                    "kode_group_tarif_parent": "MC",
+                    "nama_grup_tarif_parent": "GENERAL CHECK UP",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 159,
+                    "kode_grup_tarif": "MC.GC4",
+                    "nama_grup_tarif": "CECK UP KARDIOVASKULAR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 30,
+                    "kode_group_tarif_parent": "MC",
+                    "nama_grup_tarif_parent": "GENERAL CHECK UP",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 31,
+            "kode_grup_tarif": "MT",
+            "nama_grup_tarif": "TINDAKAN MEDIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 160,
+                    "kode_grup_tarif": "MT.ANA",
+                    "nama_grup_tarif": "TIND. BEDAH ANAK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 161,
+                    "kode_grup_tarif": "MT.DIG",
+                    "nama_grup_tarif": "TIND. BEDAH DIGESTIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 162,
+                    "kode_grup_tarif": "MT.KLT",
+                    "nama_grup_tarif": "ESTETIKA KULIT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 163,
+                    "kode_grup_tarif": "MT.MLT",
+                    "nama_grup_tarif": "GIGI DAN MULUT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 164,
+                    "kode_grup_tarif": "MT.MTA",
+                    "nama_grup_tarif": "TIND. MATA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 165,
+                    "kode_grup_tarif": "MT.NOP",
+                    "nama_grup_tarif": "TIND. MEDIK NON OPERATIF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 166,
+                    "kode_grup_tarif": "MT.OBG",
+                    "nama_grup_tarif": "TIND. BEDAH OBSGYN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 167,
+                    "kode_grup_tarif": "MT.ONK",
+                    "nama_grup_tarif": "TIND. BEDAH ONKOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 168,
+                    "kode_grup_tarif": "MT.ORT",
+                    "nama_grup_tarif": "TIND. BEDAH ORTHOPEDI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 169,
+                    "kode_grup_tarif": "MT.PER",
+                    "nama_grup_tarif": "KEPERAWATAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 170,
+                    "kode_grup_tarif": "MT.PLA",
+                    "nama_grup_tarif": "TIND. BEDAH PLASTIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 171,
+                    "kode_grup_tarif": "MT.PRI",
+                    "nama_grup_tarif": "TIND. IRJA PRIVATE",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 172,
+                    "kode_grup_tarif": "MT.SYA",
+                    "nama_grup_tarif": "TIND. BEDAH SYARAF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 173,
+                    "kode_grup_tarif": "MT.SYF",
+                    "nama_grup_tarif": "TIND. FUNGS. BEDAH SYARAF",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 174,
+                    "kode_grup_tarif": "MT.THT",
+                    "nama_grup_tarif": "TIND. THT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 175,
+                    "kode_grup_tarif": "MT.UMM",
+                    "nama_grup_tarif": "TIND. BEDAH LAIN  LAIN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 176,
+                    "kode_grup_tarif": "MT.URO",
+                    "nama_grup_tarif": "TIND. BEDAH UROLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 177,
+                    "kode_grup_tarif": "MT.VAS",
+                    "nama_grup_tarif": "TIND. BEDAH VASKULER",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 178,
+                    "kode_grup_tarif": "MT.XX1",
+                    "nama_grup_tarif": "PERAWATAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 31,
+                    "kode_group_tarif_parent": "MT",
+                    "nama_grup_tarif_parent": "TINDAKAN MEDIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 32,
+            "kode_grup_tarif": "PC",
+            "nama_grup_tarif": "PERSALINAN DAN KURETASE",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 179,
+                    "kode_grup_tarif": "PC.PC1",
+                    "nama_grup_tarif": "PERSALINAN DAN KURETASE",
+                    "level": 2,
+                    "id_grup_tarif_parent": 32,
+                    "kode_group_tarif_parent": "PC",
+                    "nama_grup_tarif_parent": "PERSALINAN DAN KURETASE",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 33,
+            "kode_grup_tarif": "PJ",
+            "nama_grup_tarif": "PEMULASARAAN JENAZAH",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 180,
+                    "kode_grup_tarif": "PJ.PJ1",
+                    "nama_grup_tarif": "PEMULASARAAN JENASAH",
+                    "level": 2,
+                    "id_grup_tarif_parent": 33,
+                    "kode_group_tarif_parent": "PJ",
+                    "nama_grup_tarif_parent": "PEMULASARAAN JENAZAH",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 181,
+                    "kode_grup_tarif": "PJ.PJ2",
+                    "nama_grup_tarif": "VISUM ET REPERTUM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 33,
+                    "kode_group_tarif_parent": "PJ",
+                    "nama_grup_tarif_parent": "PEMULASARAAN JENAZAH",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 34,
+            "kode_grup_tarif": "RD",
+            "nama_grup_tarif": "RADIO DIAGNOSTIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 182,
+                    "kode_grup_tarif": "RD.ABD",
+                    "nama_grup_tarif": "ABD",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 183,
+                    "kode_grup_tarif": "RD.CLV",
+                    "nama_grup_tarif": "CERVICAL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 184,
+                    "kode_grup_tarif": "RD.CON",
+                    "nama_grup_tarif": "RADIOGRAFI KONTRAS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 185,
+                    "kode_grup_tarif": "RD.CTK",
+                    "nama_grup_tarif": "CT SCAN DENGAN KONTRAS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 186,
+                    "kode_grup_tarif": "RD.CTT",
+                    "nama_grup_tarif": "CT SCAN TANPA KONTRAS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 187,
+                    "kode_grup_tarif": "RD.ITF",
+                    "nama_grup_tarif": "TIND R DIAGNOSTIK DG INTERVENS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 188,
+                    "kode_grup_tarif": "RD.KHS",
+                    "nama_grup_tarif": "KHUSUS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 189,
+                    "kode_grup_tarif": "RD.MAM",
+                    "nama_grup_tarif": "MAMOGRAFI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 190,
+                    "kode_grup_tarif": "RD.MRI",
+                    "nama_grup_tarif": "MRI TANPA KONTRAS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 191,
+                    "kode_grup_tarif": "RD.MRK",
+                    "nama_grup_tarif": "MRI DENGAN KONTRAS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 192,
+                    "kode_grup_tarif": "RD.MSC",
+                    "nama_grup_tarif": "MULTI SLICE COMPUTED TOMOGRAPHY (MSCT)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 193,
+                    "kode_grup_tarif": "RD.PAN",
+                    "nama_grup_tarif": "PANORAMIC",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 194,
+                    "kode_grup_tarif": "RD.PLV",
+                    "nama_grup_tarif": "PELVIS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 195,
+                    "kode_grup_tarif": "RD.TRK",
+                    "nama_grup_tarif": "TORAKS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 196,
+                    "kode_grup_tarif": "RD.UMM",
+                    "nama_grup_tarif": "PELAYANAN RADIOLOGI UMUM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 197,
+                    "kode_grup_tarif": "RD.USG",
+                    "nama_grup_tarif": "TINDAKAN USG",
+                    "level": 2,
+                    "id_grup_tarif_parent": 34,
+                    "kode_group_tarif_parent": "RD",
+                    "nama_grup_tarif_parent": "RADIO DIAGNOSTIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 35,
+            "kode_grup_tarif": "RM",
+            "nama_grup_tarif": "REHABILITASI MEDIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 198,
+                    "kode_grup_tarif": "RM.RM1",
+                    "nama_grup_tarif": "FISIOTERAPI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 199,
+                    "kode_grup_tarif": "RM.RM2",
+                    "nama_grup_tarif": "OKUPASI TERAPI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 200,
+                    "kode_grup_tarif": "RM.RM3",
+                    "nama_grup_tarif": "BINA WICARA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 201,
+                    "kode_grup_tarif": "RM.RM4",
+                    "nama_grup_tarif": "PSIKOLOGI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 202,
+                    "kode_grup_tarif": "RM.RM5",
+                    "nama_grup_tarif": "SOSIAL MEDIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 203,
+                    "kode_grup_tarif": "RM.RM6",
+                    "nama_grup_tarif": "ORTOTIK PROSTETIK BESAR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 204,
+                    "kode_grup_tarif": "RM.RM7",
+                    "nama_grup_tarif": "ORTOTIK PROSTETIK KECIL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 205,
+                    "kode_grup_tarif": "RM.RM8",
+                    "nama_grup_tarif": "REPARASI ORTOTIK PROSTETIK KCL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 206,
+                    "kode_grup_tarif": "RM.RM9",
+                    "nama_grup_tarif": "REPARASI ORTOTIK PROSTETIK BSR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 35,
+                    "kode_group_tarif_parent": "RM",
+                    "nama_grup_tarif_parent": "REHABILITASI MEDIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 36,
+            "kode_grup_tarif": "RT",
+            "nama_grup_tarif": "RADIOTERAPI",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 207,
+                    "kode_grup_tarif": "RT.RT1",
+                    "nama_grup_tarif": "RADIOTERAPI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 36,
+                    "kode_group_tarif_parent": "RT",
+                    "nama_grup_tarif_parent": "RADIOTERAPI",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 37,
+            "kode_grup_tarif": "SA",
+            "nama_grup_tarif": "PEMAKAIAN ALAT MEDIK",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 208,
+                    "kode_grup_tarif": "SA.ALT",
+                    "nama_grup_tarif": "PEMAKAIAN ALAT MEDIK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 37,
+                    "kode_group_tarif_parent": "SA",
+                    "nama_grup_tarif_parent": "PEMAKAIAN ALAT MEDIK",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 38,
+            "kode_grup_tarif": "TT",
+            "nama_grup_tarif": "TARIP AMBULANCE",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 209,
+                    "kode_grup_tarif": "TT.T01",
+                    "nama_grup_tarif": "AMBULAN SAMPAI DG 20 KM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 38,
+                    "kode_group_tarif_parent": "TT",
+                    "nama_grup_tarif_parent": "TARIP AMBULANCE",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 210,
+                    "kode_grup_tarif": "TT.T02",
+                    "nama_grup_tarif": "LEBIH DR 20 KM S/D 200 KM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 38,
+                    "kode_group_tarif_parent": "TT",
+                    "nama_grup_tarif_parent": "TARIP AMBULANCE",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 211,
+                    "kode_grup_tarif": "TT.T03",
+                    "nama_grup_tarif": "LEBIH DARI 200 KM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 38,
+                    "kode_group_tarif_parent": "TT",
+                    "nama_grup_tarif_parent": "TARIP AMBULANCE",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 212,
+                    "kode_grup_tarif": "TT.T04",
+                    "nama_grup_tarif": "AMBULANCE GAWAT DARURAT",
+                    "level": 2,
+                    "id_grup_tarif_parent": 38,
+                    "kode_group_tarif_parent": "TT",
+                    "nama_grup_tarif_parent": "TARIP AMBULANCE",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 213,
+                    "kode_grup_tarif": "TT.T05",
+                    "nama_grup_tarif": "MOBIL JENASAH",
+                    "level": 2,
+                    "id_grup_tarif_parent": 38,
+                    "kode_group_tarif_parent": "TT",
+                    "nama_grup_tarif_parent": "TARIP AMBULANCE",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 39,
+            "kode_grup_tarif": "UU",
+            "nama_grup_tarif": "DIKLIT INSTIT. NON NEGERI",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 214,
+                    "kode_grup_tarif": "UU.U01",
+                    "nama_grup_tarif": "PRAKTEK KERJA &PENELITIAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 215,
+                    "kode_grup_tarif": "UU.U02",
+                    "nama_grup_tarif": "PRAKTEK LAPANGAN/ORANG",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 216,
+                    "kode_grup_tarif": "UU.U03",
+                    "nama_grup_tarif": "UJIAN PRAKTEK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 217,
+                    "kode_grup_tarif": "UU.U04",
+                    "nama_grup_tarif": "JOB TRAINING",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 218,
+                    "kode_grup_tarif": "UU.U05",
+                    "nama_grup_tarif": "PELATIHAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 219,
+                    "kode_grup_tarif": "UU.U06",
+                    "nama_grup_tarif": "INSTITUTIONAL FEE",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 220,
+                    "kode_grup_tarif": "UU.U07",
+                    "nama_grup_tarif": "PRAKTEK PELATIHAN (LUAR)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 221,
+                    "kode_grup_tarif": "UU.U08",
+                    "nama_grup_tarif": "PPDS",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 222,
+                    "kode_grup_tarif": "UU.U09",
+                    "nama_grup_tarif": "STUDY BANDING",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 223,
+                    "kode_grup_tarif": "UU.U10",
+                    "nama_grup_tarif": "KUNJUNGAN/ORG/HR",
+                    "level": 2,
+                    "id_grup_tarif_parent": 39,
+                    "kode_group_tarif_parent": "UU",
+                    "nama_grup_tarif_parent": "DIKLIT INSTIT. NON NEGERI",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 40,
+            "kode_grup_tarif": "WW",
+            "nama_grup_tarif": "TARIF STERIL & BINANTU",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 224,
+                    "kode_grup_tarif": "WW.W01",
+                    "nama_grup_tarif": "STERILISASAI & BINATU",
+                    "level": 2,
+                    "id_grup_tarif_parent": 40,
+                    "kode_group_tarif_parent": "WW",
+                    "nama_grup_tarif_parent": "TARIF STERIL & BINANTU",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 41,
+            "kode_grup_tarif": "XX",
+            "nama_grup_tarif": "TARIP LAIN LAIN",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 225,
+                    "kode_grup_tarif": "XX.LUA",
+                    "nama_grup_tarif": "RUJUKAN KE RS LAIN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 226,
+                    "kode_grup_tarif": "XX.PHR",
+                    "nama_grup_tarif": "PAKET OBAT & ALKES",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 227,
+                    "kode_grup_tarif": "XX.PNJ",
+                    "nama_grup_tarif": "PEMERIKSAAN PENUNJANG",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 228,
+                    "kode_grup_tarif": "XX.X01",
+                    "nama_grup_tarif": "DIKLIT PRAKTEK & PENELITI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 229,
+                    "kode_grup_tarif": "XX.X02",
+                    "nama_grup_tarif": "DIKLIT LAPANGAN PER ORANG",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 230,
+                    "kode_grup_tarif": "XX.X03",
+                    "nama_grup_tarif": "DIKLIT UJIAN PRAKTEK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 231,
+                    "kode_grup_tarif": "XX.X10",
+                    "nama_grup_tarif": "BIMBINGAN PRAKTEK KERJA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 232,
+                    "kode_grup_tarif": "XX.X11",
+                    "nama_grup_tarif": "PRAKTEK LAPANGAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 233,
+                    "kode_grup_tarif": "XX.X12",
+                    "nama_grup_tarif": "UJIAN PRAKTEK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 234,
+                    "kode_grup_tarif": "XX.X13",
+                    "nama_grup_tarif": "JOB TRAINING",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 235,
+                    "kode_grup_tarif": "XX.X14",
+                    "nama_grup_tarif": "PELATIHAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 236,
+                    "kode_grup_tarif": "XX.X15",
+                    "nama_grup_tarif": "INSTITUTIONAL FEE",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 237,
+                    "kode_grup_tarif": "XX.XX1",
+                    "nama_grup_tarif": "PEMAKAIAN TELEPON",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 238,
+                    "kode_grup_tarif": "XX.XXX",
+                    "nama_grup_tarif": "LAIN-LAIN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 41,
+                    "kode_group_tarif_parent": "XX",
+                    "nama_grup_tarif_parent": "TARIP LAIN LAIN",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 42,
+            "kode_grup_tarif": "Z2",
+            "nama_grup_tarif": "PELAYANAN OBAT/ALKES",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 239,
+                    "kode_grup_tarif": "Z2.O2A",
+                    "nama_grup_tarif": "OKSIGEN NASAL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 240,
+                    "kode_grup_tarif": "Z2.O2B",
+                    "nama_grup_tarif": "OKSIGEN VENTILATOR DEWASA",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 241,
+                    "kode_grup_tarif": "Z2.O2C",
+                    "nama_grup_tarif": "OKSIGEN VENTILATOR ANAK",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 242,
+                    "kode_grup_tarif": "Z2.O2D",
+                    "nama_grup_tarif": "OKSIGEN CAIR  (BANGSAL)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 243,
+                    "kode_grup_tarif": "Z2.O2E",
+                    "nama_grup_tarif": "OKSIGEN GAS   (BANGSAL)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 244,
+                    "kode_grup_tarif": "Z2.O2F",
+                    "nama_grup_tarif": "N20 CAIR      (BANGSAL)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 245,
+                    "kode_grup_tarif": "Z2.O2G",
+                    "nama_grup_tarif": "N20 GAS       (BANGSAL)",
+                    "level": 2,
+                    "id_grup_tarif_parent": 42,
+                    "kode_group_tarif_parent": "Z2",
+                    "nama_grup_tarif_parent": "PELAYANAN OBAT/ALKES",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 43,
+            "kode_grup_tarif": "Z3",
+            "nama_grup_tarif": "OBAT / ALKES BERDIKARI",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 246,
+                    "kode_grup_tarif": "Z3.PHR",
+                    "nama_grup_tarif": "OBAT / ALKES BERDIKARI",
+                    "level": 2,
+                    "id_grup_tarif_parent": 43,
+                    "kode_group_tarif_parent": "Z3",
+                    "nama_grup_tarif_parent": "OBAT / ALKES BERDIKARI",
+                    "level_parent": 1,
+                    "child": [
+                        {
+                            "id_grup_tarif": 246,
+                            "kode_grup_tarif": "Z3.PHR",
+                            "nama_grup_tarif": "OBAT / ALKES BERDIKARI",
+                            "level": 2,
+                            "id_grup_tarif_parent": 43,
+                            "kode_group_tarif_parent": "Z3",
+                            "nama_grup_tarif_parent": "OBAT / ALKES BERDIKARI",
+                            "level_parent": 1,
+                            "child": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 44,
+            "kode_grup_tarif": "Z4",
+            "nama_grup_tarif": "PEMERIKSAAN LABORATORIUM",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 247,
+                    "kode_grup_tarif": "Z4.LAB",
+                    "nama_grup_tarif": "PEMERIKSAAN LABORATORIUM",
+                    "level": 2,
+                    "id_grup_tarif_parent": 44,
+                    "kode_group_tarif_parent": "Z4",
+                    "nama_grup_tarif_parent": "PEMERIKSAAN LABORATORIUM",
+                    "level_parent": 1
+                },
+                {
+                    "id_grup_tarif": 248,
+                    "kode_grup_tarif": "Z4.RAD",
+                    "nama_grup_tarif": "NULL",
+                    "level": 2,
+                    "id_grup_tarif_parent": 44,
+                    "kode_group_tarif_parent": "Z4",
+                    "nama_grup_tarif_parent": "PEMERIKSAAN LABORATORIUM",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 45,
+            "kode_grup_tarif": "Z5",
+            "nama_grup_tarif": "PEMBEBASAN DOKTER",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 253,
+                    "kode_grup_tarif": "Z5.PDC",
+                    "nama_grup_tarif": "PEMBEBASAN DOKTER",
+                    "level": 2,
+                    "id_grup_tarif_parent": 45,
+                    "kode_group_tarif_parent": "Z5",
+                    "nama_grup_tarif_parent": "PEMBEBASAN DOKTER",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 46,
+            "kode_grup_tarif": "Z6",
+            "nama_grup_tarif": "SUBSIDI PESERTA ASKES",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 254,
+                    "kode_grup_tarif": "Z6.ASK",
+                    "nama_grup_tarif": "SUBSIDI PESERTA ASKES",
+                    "level": 2,
+                    "id_grup_tarif_parent": 46,
+                    "kode_group_tarif_parent": "Z6",
+                    "nama_grup_tarif_parent": "SUBSIDI PESERTA ASKES",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 47,
+            "kode_grup_tarif": "ZX",
+            "nama_grup_tarif": "JUMLAH PENJAMINAN",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 255,
+                    "kode_grup_tarif": "ZX.XXX",
+                    "nama_grup_tarif": "JUMLAH PENJAMINAN",
+                    "level": 2,
+                    "id_grup_tarif_parent": 47,
+                    "kode_group_tarif_parent": "ZX",
+                    "nama_grup_tarif_parent": "JUMLAH PENJAMINAN",
+                    "level_parent": 1
+                }
+            ]
+        },
+        {
+            "id_grup_tarif": 48,
+            "kode_grup_tarif": "ZZ",
+            "nama_grup_tarif": "TARIF PAKET PENANGGUNG",
+            "level": 1,
+            "id_grup_tarif_parent": 0,
+            "kode_group_tarif_parent": "",
+            "nama_grup_tarif_parent": "",
+            "level_parent": 0,
+            "child": [
+                {
+                    "id_grup_tarif": 257,
+                    "kode_grup_tarif": "ZZ.ASK",
+                    "nama_grup_tarif": "PAKET PELAYANAN ASKES",
+                    "level": 2,
+                    "id_grup_tarif_parent": 48,
+                    "kode_group_tarif_parent": "ZZ",
+                    "nama_grup_tarif_parent": "TARIF PAKET PENANGGUNG",
+                    "level_parent": 1
+                }
+            ]
+        }
+    ],
+    "message": ""
+}
