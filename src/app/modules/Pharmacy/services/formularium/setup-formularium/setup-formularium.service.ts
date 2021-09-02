@@ -5,14 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { PHARMACY } from 'src/app/api/PHARMACY';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { SetupPeresepanMaksimalModel, ISetupPeresepanMaksimalModel, ISetActiveSetupPeresepanMaksimalModel } from '../../../models/formularium/SetupPeresepanMaksimal';
+import { SetupFormulariumModel, ISetupFormulariumModel, ISetActiveSetupFormulariumModel } from '../../../models/formularium/SetupFormularium';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SetupPeresepanMaksimalService {
+export class SetupFormulariumService {
 
-    API = PHARMACY.FORMULARIUM.SETUP_PERESEPAN_MAKSIMAL
+    API = PHARMACY.FORMULARIUM.SETUP_FORMULARIUM
     public dataSource = new BehaviorSubject([]);
   
     constructor(
@@ -23,8 +23,8 @@ export class SetupPeresepanMaksimalService {
     * Service Untuk Mengisi dataScource
     * @setDataSource Void
     */
-    setDataSource():void{
-      this.onGetAll().subscribe((result) => {
+    setDataSource(id_generik):void{
+      this.onGetAll(id_generik).subscribe((result) => {
         this.dataSource.next(result.data);
       });
     }
@@ -32,8 +32,8 @@ export class SetupPeresepanMaksimalService {
      * Service Untuk Menampilkan Semua data
      * @onGetAll Observable<SetupPabrikModel>
     */
-    onGetAll(): Observable<SetupPeresepanMaksimalModel> {
-      return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
+    onGetAll(id_generik): Observable<SetupFormulariumModel> {
+      return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID_GENERIK+'/'+id_generik);
     }
   
     /**
@@ -41,7 +41,7 @@ export class SetupPeresepanMaksimalService {
      * @onPostSave Observable<any>
      * @param ISetupPabrikModel
     */
-    onPostSave(Data: ISetupPeresepanMaksimalModel): Observable<any> {
+    onPostSave(Data: ISetupFormulariumModel): Observable<any> {
       return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -55,7 +55,7 @@ export class SetupPeresepanMaksimalService {
      * @onPutEdit Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutEdit(Data: ISetupPeresepanMaksimalModel): Observable<any> {
+    onPutEdit(Data: ISetupFormulariumModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -69,7 +69,7 @@ export class SetupPeresepanMaksimalService {
      * @onPutToActive Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutToActive(Data: ISetActiveSetupPeresepanMaksimalModel): Observable<any> {
+    onPutToActive(Data: ISetActiveSetupFormulariumModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATETOACTIVE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {
@@ -83,7 +83,7 @@ export class SetupPeresepanMaksimalService {
      * @onPutToDeActive Observable<any>
      * @param ISetupPabrikModel
     */
-    onPutToDeActive(Data: ISetActiveSetupPeresepanMaksimalModel): Observable<any> {
+    onPutToDeActive(Data: ISetActiveSetupFormulariumModel): Observable<any> {
       return this.httpOperationService.defaultPutRequest(this.API.UPDATETODEACTIVE, Data)
         .pipe(
           catchError((error: HttpErrorResponse): any => {

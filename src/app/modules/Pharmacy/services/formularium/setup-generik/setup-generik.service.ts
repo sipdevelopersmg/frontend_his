@@ -12,7 +12,7 @@ import { SetupGenerikModel, ISetupGenerikModel, ISetActiveSetupGenerikModel } fr
 })
 export class SetupGenerikService {
 
-    API = PHARMACY.SETUP_DATA.SETUP_GENERIK
+    API = PHARMACY.FORMULARIUM.SETUP_GENERIK
     public dataSource = new BehaviorSubject([]);
   
     constructor(

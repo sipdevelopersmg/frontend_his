@@ -12,7 +12,7 @@ import { SetupRestriksiObatModel, ISetupRestriksiObatModel, ISetActiveSetupRestr
 })
 export class SetupRestriksiObatService {
 
-    API = PHARMACY.SETUP_DATA.SETUP_RESTRIKSI_OBAT;
+    API = PHARMACY.FORMULARIUM.SETUP_RESTRIKSI_OBAT;
     public dataSource = new BehaviorSubject([]);
   
     constructor(

@@ -12,7 +12,7 @@ import { SetupJenisFormulariumModel, ISetupJenisFormulariumModel, ISetActiveSetu
 })
 export class SetupJenisFormulariumService {
 
-    API = PHARMACY.SETUP_DATA.SETUP_JENIS_FORMULARIUM
+    API = PHARMACY.FORMULARIUM.SETUP_JENIS_FORMULARIUM
     public dataSource = new BehaviorSubject([]);
   
     constructor(

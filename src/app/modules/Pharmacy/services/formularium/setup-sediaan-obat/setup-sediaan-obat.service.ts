@@ -12,7 +12,7 @@ import { SetupSediaanObatModel, ISetupSediaanObatModel, ISetActiveSetupSediaanOb
 })
 export class SetupSediaanObatService {
 
-    API = PHARMACY.SETUP_DATA.SETUP_SEDIAAN_OBAT
+    API = PHARMACY.FORMULARIUM.SETUP_SEDIAAN_OBAT
     public dataSource = new BehaviorSubject([]);
   
     constructor(
