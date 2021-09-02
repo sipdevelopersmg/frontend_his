@@ -1,9 +1,10 @@
 <org-card-layout>
     <div class="row">
+        <!-- TreeView Terapi -->
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-header ">
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between">   
                         <div class="col-md-7 ">
                             <h5 class="m-0">Terapi</h5>
                         </div>
@@ -21,11 +22,10 @@
                             <ng-template #nodeTemplate="" let-data="">
                                 <div>
                                     <div class="ejob">
-                                        <a (click)="handleAddTerapi()">
-                                            <i *ngIf="data.kode.length==1"
-                                                class="fas fa-plus-circle tambah_terapi text-primary "></i>
+                                        <a (click)="handleSubTerapi()">
+                                        <i *ngIf="data.id_terapi_parent==null"  class="fas fa-plus-circle tambah_terapi text-primary "></i>
                                         </a>
-                                        {{data.kode}} {{data.name}}
+                                        {{data.kode_terapi}} {{data.nama_terapi}}
                                     </div>
                                 </div>
                             </ng-template>
@@ -34,6 +34,7 @@
                 </div>
             </div>
         </div>
+        <!-- Tabel Generik -->
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-header ">
@@ -42,87 +43,53 @@
                             <h5 class="m-0">Generik</h5>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-plus-circle tambah text-primary "></i>
+                            <a (click)="handleTambahTerapiGenerik()"><i class="fas fa-plus-circle tambah text-primary "></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'" [grid-height]="'calc(100vh - 250px)'"
-                        [grid-lines]="'Both'" [columns]="GridSetting.GridGenerik.columns"
-                        [grid-DataSource]="DataSourceGeneric" (row-selected)="handleSelectedGeneric($event)">
+                    <mol-grid #gridDaftarOrder 
+                        [grid-id]="'GridDaftarOrder'"
+                        [grid-height]="'calc(100vh - 250px)'" 
+                        [grid-lines]="'Both'"
+                        [columns]="GridSetting.GridGenerik.columns"
+                        [grid-DataSource]="setupTerapiGenerikService.dataSource | async" 
+                        (row-selected) = "handleSelectedGeneric($event)"
+                    >
                     </mol-grid>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-6">
             <div class="row">
+                <!-- Tabel Formularium -->
                 <div class="col-sm-12 mb-3">
                     <div class="card">
                         <div class="card-header ">
                             <div class="row justify-content-between">
                                 <div class="col-md-7 ">
-                                    <h5 class="m-0">Sediaan</h5>
+                                    <h5 class="m-0">Formularium</h5>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-plus-circle tambah text-primary "></i>
+                                    <a (click)="handleTambahFormularium()"><i class="fas fa-plus-circle tambah text-primary "></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridSediaan.columns" [grid-DataSource]="DataSourceSediaan"
-                                [textWrapSettings]="wrapSettings" (row-selected)="handleSelectedSediaan($event)">
+                            <mol-grid #gridDaftarOrder 
+                                [grid-id]="'GridDaftarOrder'"
+                                [grid-height]="'calc((100vh - 350px)/2)'" 
+                                [grid-lines]="'Both'"
+                                [columns]="GridSetting.GridSediaan.columns"
+                                [grid-DataSource]="setupFormulariumService.dataSource | async"
+                                [textWrapSettings]="wrapSettings"
+                                (row-selected) = "handleSelectedSediaan($event)"
+                            >
                             </mol-grid>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header ">
-                            <div class="row justify-content-between">
-                                <div class="col-md-7 ">
-                                    <h5 class="m-0">Restreksi</h5>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-plus-circle tambah text-primary "></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridKeterangan.columns" [grid-DataSource]="DataSourceRestreksi"
-                                [textWrapSettings]="wrapSettings">
-                            </mol-grid>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="row">
-                <div class="col-sm-12 mb-3">
-                    <div class="card">
-                        <div class="card-header ">
-                            <div class="row justify-content-between">
-                                <div class="col-auto">
-                                    <h5 class="m-0">Max Peresepan</h5>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-plus-circle tambah text-primary "></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
-                                [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridPeresepan.columns" [grid-DataSource]="DataSourceMax"
-                                [textWrapSettings]="wrapSettings">
-                            </mol-grid>
-                        </div>
-                    </div>
-                </div>
+                <!-- Tabel Item Obat -->
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header ">
@@ -148,10 +115,10 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Terapi  -->
+    <!-- Modal Tambah Terapi Level  -->
     <ng-template #modalTambahTerapi>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
-            <h5 class="modal-title pull-left">Add Terapi</h5>
+            <h5 class="modal-title pull-left">Tambah Terapi</h5>
             <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
                 <i class="fas fa-window-close"></i>
             </button>
@@ -159,32 +126,46 @@
         <div class="modal-body p-10">
             <div class="row mx-0 my-1">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="row mb-2">
-                        <div class="col-sm-3">
-                            <atm-label [LabelCaption]="'Terapi'"></atm-label>
+                    <form [formGroup]="FormInputDataTerapi" class="p-2">
+                        <div class="row mb-2">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                                <mol-input-text [inputFieldState]="'detail'" [label]="'Parent Terapi'" formControlName="parent_terapi"></mol-input-text>
+                                <mol-input-text 
+                                    [label]="'Kode Terapi'" 
+                                    formControlName="kode_terapi"
+                                    [IsFormControlInvalid]="kode_terapi.invalid"
+                                    [ValidatorsCaption]="'Kode Terapi Tidak Boleh Kosong'"
+                                    [inputFieldState]="inputFieldState"
+                                    >
+                                </mol-input-text> 
+                                <mol-input-text [label]="'No Terapi'" formControlName="no_terapi"
+                                    [IsFormControlInvalid]="no_terapi.invalid"
+                                    [ValidatorsCaption]="'No Terapi Tidak Boleh Kosong'"
+                                    [inputFieldState]="inputFieldState">
+                                </mol-input-text>
+                                <mol-input-text
+                                    [label]="'Nama Terapi'" 
+                                    formControlName="nama_terapi"
+                                    [IsFormControlInvalid]="nama_terapi.invalid"
+                                    [ValidatorsCaption]="'Nama Terapi Outlet Tidak Boleh Kosong'"
+                                    [inputFieldState]="inputFieldState"
+                                    >
+                                </mol-input-text>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <ejs-dropdownlist #TerapiDropdown id="terapi" [dataSource]="TerapiDropdownDatasource"
-                                [fields]="TerapiDropdownField" [allowFiltering]="true">
-                            </ejs-dropdownlist>
-                        </div>
-                        <div class="col-sm-3">
-                            <button class="btn btn-primary" type="button" (click)="handleSetupTerapi()">Setup
-                                Terapi</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="modal-footer background-abu-muda">
-            <button type="button" class="btn btn-primary">Oke</button>
+            <button type="button" (click)="handleSimpanTerapi()" class="btn btn-primary">Simpan Terapi</button>
         </div>
     </ng-template>
 
-    <!-- Modal Setup Terapi  -->
-    <ng-template #modalSetupTerapi>
+    <!-- Modal Tambah Terapi Generik  -->
+    <ng-template #modalTambahTerapiGenerik>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
-            <h5 class="modal-title pull-left">Setup Terapi</h5>
+            <h5 class="modal-title pull-left">Tambah Terapi Generik</h5>
             <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
                 <i class="fas fa-window-close"></i>
             </button>
@@ -192,19 +173,37 @@
         <div class="modal-body p-10">
             <div class="row mx-0 my-1">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <mol-input-text [label]="'Nama Terapi'"></mol-input-text>
+                    <form [formGroup]="FormInputDataTerapiGenerik" class="p-2">
+                        <div class="row mb-2">
+                            <mol-input-text [label]="'No'" formControlName="no_terapi_generik" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <!-- Dropdown Nama Generik -->
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Nama Generik'"></atm-label>
+                                </div>
+                                <div class="col-lg-6 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalGenerikDropdown id="marital"
+                                        [dataSource]="setupGenerikService.dataSource| async"
+                                        [fields]="MaritalGenerikDropdownField" [allowFiltering]="true"
+                                        formControlName="id_generik">
+                                    </ejs-dropdownlist>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary" type="button" (click)="handleSetupGenerik()">Setup</button>
+                                </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="modal-footer background-abu-muda">
-            <button type="button" class="btn btn-primary">Oke</button>
+            <button type="button" (click)="handleSimpanTerapiGenerik()" class="btn btn-primary">Simpan Terapi Generik</button>
         </div>
     </ng-template>
 
-    <!-- Modal Terapi  -->
-    <ng-template #modalTambahSubTerapi>
+    <!-- Modal Tambah Formularium  -->
+    <ng-template #modalTambahFormularium>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
-            <h5 class="modal-title pull-left">Add Sub Terapi</h5>
+            <h5 class="modal-title pull-left">Tambah formularium</h5>
             <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
                 <i class="fas fa-window-close"></i>
             </button>
@@ -212,25 +211,211 @@
         <div class="modal-body p-10">
             <div class="row mx-0 my-1">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="row mb-2">
-                        <mol-input-text [label]="'Terapi'"></mol-input-text>
-                        <div class="col-sm-3">
-                            <atm-label [LabelCaption]="'Sub Terapi'"></atm-label>
+                    <form [formGroup]="FormInputDataFormularium" class="p-2">
+                        <div class="row mb-2">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <!-- Dropdown Jenis -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Jenis'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalJenisFormulariumDropdown id="marital"
+                                            [dataSource]="setupJenisFormulariumService.dataSource| async"
+                                            [fields]="MaritalJenisFormulariumDropdownField" [allowFiltering]="true"
+                                            formControlName="id_jenis_formularium">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                                <!-- Dropdown Sediaan -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Sediaan'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <ejs-dropdownlist #MaritalSediaanObatDropdown id="marital"
+                                            [dataSource]="setupSediaanObatService.dataSource| async"
+                                            [fields]="MaritalSediaanObatDropdownField" [allowFiltering]="true"
+                                            formControlName="id_sediaan_obat">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" type="button" (click)="handleSetupSediaan()">Setup</button>
+                                    </div>
+                                </div>
+                                <!-- Dropdown Restriksi -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Restriksi'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <ejs-dropdownlist #MaritalRestriksiObatDropdown id="marital"
+                                            [dataSource]="setupRestriksiObatService.dataSource| async"
+                                            [fields]="MaritalRestriksiObatDropdownField" [allowFiltering]="true"
+                                            formControlName="id_restriksi_obat">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" type="button" (click)="handleSetupRestriksi()">Setup</button>
+                                    </div>
+                                </div>
+                                <!-- Dropdown Peresepan Max -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Peresepan Max'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <ejs-dropdownlist #MaritalPeresepanMaksimalDropdown id="marital"
+                                            [dataSource]="setupPeresepanMaksimalService.dataSource| async"
+                                            [fields]="MaritalPeresepanMaksimalDropdownField" [allowFiltering]="true"
+                                            formControlName="id_peresepan_maksimal">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" type="button" (click)="handleSetupPeresepanMaksimal()">Setup</button>
+                                    </div>
+                                </div>
+                                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+
+                                <mol-datepicker-syncfusion [label]="'Tgl Berlaku'" [format]="'dd MMMM yyyy'"
+                                    formControlName="tgl_berlaku">
+                                </mol-datepicker-syncfusion>
+                                
+                                <mol-datepicker-syncfusion [label]="'Tgl Berakhir'" [format]="'dd MMMM yyyy'"
+                                    formControlName="tgl_berakhir">
+                                </mol-datepicker-syncfusion>
+                                
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <ejs-dropdownlist #TerapiDropdown id="terapi" [dataSource]="TerapiDropdownDatasource"
-                                [fields]="TerapiDropdownField" [allowFiltering]="true">
-                            </ejs-dropdownlist>
-                        </div>
-                        <div class="col-sm-3">
-                            <button class="btn btn-primary" type="submit">Setup Terapi</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="modal-footer background-abu-muda">
-            <button type="button" class="btn btn-primary">Oke</button>
+            <button type="button" (click)="handleSimpanFormularium()" class="btn btn-primary">Simpan Formularium</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Setup Generik  -->
+    <ng-template #modalSetupGenerik>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Setup Generik</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();handleTambahTerapiGenerik()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <form [formGroup]="FormInputDataGenerik" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                        <mol-input-text 
+                            [label]="'No Generik'" 
+                            formControlName="no_generik"
+                            [IsFormControlInvalid]="no_generik.invalid"
+                            [ValidatorsCaption]="'No Generik Tidak Boleh Kosong'"
+                            [inputFieldState]="inputFieldState"
+                            [disabled]="inputFieldState==='edit'"
+                            >
+                        </mol-input-text>
+                        <mol-input-text 
+                            [label]="'Nama Generik'" 
+                            formControlName="nama_generik"
+                            [IsFormControlInvalid]="nama_generik.invalid"
+                            [ValidatorsCaption]="'Nama Generik Tidak Boleh Kosong'"
+                            [inputFieldState]="inputFieldState">
+                        </mol-input-text>
+                        <mol-input-text [label]="'Alias'" formControlName="alias_generik" [inputFieldState]="inputFieldState"></mol-input-text>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" (click)="handleSimpanGenerik()" class="btn btn-primary" >Simpan Generk</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Setup Sediaan  -->
+    <ng-template #modalSetupSediaan>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Setup Sediaan</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <form [formGroup]="FormInputDataSediaan" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                        <mol-input-textarea [label]="'sediaan_obat'" formControlName="sediaan_obat"></mol-input-textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" (click)="handleSimpanSediaan()" class="btn btn-primary" >Simpan Sediaan</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Setup Restriksi  -->
+    <ng-template #modalSetupRestriksi>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Setup Restriksi</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <form [formGroup]="FormInputDataRestriksi" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                        <mol-input-textarea [label]="'restriksi_obat'" formControlName="nama_restriksi"></mol-input-textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" (click)="handleSimpanRestriksi()" class="btn btn-primary" >Simpan Restrisi</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal Setup Peresepan Maksimal  -->
+    <ng-template #modalSetupPeresepanMaksimal>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Setup Peresepan Maksimal</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <form [formGroup]="FormInputDataPeresepanMaksimal" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                        <mol-input-text [label]="'Peresepan Maksimal'" formControlName="peresepan_maksimal"
+                            [IsFormControlInvalid]="peresepan_maksimal.invalid"
+                            [ValidatorsCaption]="'Peresepan Maksimal Tidak Boleh Kosong'"
+                            [inputFieldState]="inputFieldState">
+                        </mol-input-text>
+                        <mol-input-text [label]="'Nilai'" formControlName="nilai" [inputFieldState]="inputFieldState"></mol-input-text>
+                        <!-- Dropdown Parameter -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Parameter'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #MaritalParameterMaksimalDropdown id="marital"
+                                    [dataSource]="setupParameterMaksimalService.dataSource| async"
+                                    [fields]="MaritalParameterMaksimalDropdownField" [allowFiltering]="true"
+                                    formControlName="id_parameter_maksimal">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+                         
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" (click)="handleSimpanPeresepanMaksimal()" class="btn btn-primary" >Simpan Peresepan Maksimal</button>
         </div>
     </ng-template>
 

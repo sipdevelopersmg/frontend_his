@@ -5,30 +5,21 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no",
+                "field": "no_terapi_generik",
                 "headerText": "No",
                 "type": "string",
                 "visible": true,
-                "width":50
+                "width":100
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "ket",
-                "headerText": "Keteranga",
+                "field": "nama_generik",
+                "headerText": "Nama Generik",
                 "type": "string",
                 "visible": true
             }
-        ],
-        "DataSource":[
-            {"no":1,"ket":"fentanil"},
-            {"no":2,"ket":"Hidromorfon"},
-            {"no":3,"ket":"Codein"},
-            {"no":4,"ket":"Morfin"},
-            {"no":5,"ket":"Oksikodon"},
-            {"no":6,"ket":"Pethidin"},
-            {"no":7,"ket":"Sufentanil"}
         ]
     },
     "GridSediaan": {
@@ -37,30 +28,36 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no",
-                "headerText": "No",
-                "visible": true,
-                "width": 40
+                "field": "jenis_formularium",
+                "headerText": "F/NF",
+                "visible": true
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "numericEdit",
-                "field": "fornasi",
-                "headerText": "F/NF",
+                "field": "sediaan_obat",
+                "headerText": "Sediaan",
                 "type": "string",
-                "visible": true,
-                "width": 60
+                "visible": true
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "ket",
-                "headerText": "Keterangan",
+                "field": "nama_restriksi",
+                "headerText": "Restriksi",
                 "type": "string",
-                "visible": true,
-                "width": 100
+                "visible": true
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "peresepan_maksimal",
+                "headerText": "peresepan_maksimal",
+                "type": "string",
+                "visible": true
             }
         ],
         "DataSource":[
