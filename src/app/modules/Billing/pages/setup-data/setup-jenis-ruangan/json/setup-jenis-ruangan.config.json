@@ -1,0 +1,24 @@
+{
+    "GridSetupJenisRuanganColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_jenis_ruangan",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "jenis_ruangan",
+            "headerText": "JENIS RUANGAN",
+            "visible": true,
+            "width": 120
+        }
+    ]
+}

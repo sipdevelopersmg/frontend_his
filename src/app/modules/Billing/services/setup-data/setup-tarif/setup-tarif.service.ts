@@ -1,21 +1,23 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/BILLING';
 import { GetAllTarifModel, GetByIdTarifModel, PostInsertTarifModel, PutUpdateStatusTarifModel, PutUpdateTarifModel, TarifModel } from '../../../models/setup-data/setup-tarif.model';
+import { SetupKelompokTarifService } from '../setup-kelompok-tarif/setup-kelompok-tarif.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SetupTarifService {
+
     API_TARIF = API_CONFIG.API_BILLING.SETUP_DATA.SETUP_TARIF;
 
     constructor(
         private notificationService: NotificationService,
-        private httpOperationService: HttpOperationService
+        private httpOperationService: HttpOperationService,
     ) { }
 
     /**
@@ -71,11 +73,25 @@ export class SetupTarifService {
     onPutStatusActive(id_setup_tarif: number, is_active: boolean): Observable<PutUpdateStatusTarifModel> {
         return this.httpOperationService.defaultPutRequest(this.API_TARIF.PUT_UPDATE_STATUS_TARIF, {
             id_setup_tarif: id_setup_tarif,
-            is_active: !is_active
+            is_active: is_active
         }).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
             })
         );
+    }
+
+    /**
+     * Service Untuk Mendapatkan Tarif Berlaku Per Kelas
+     * @onGetAllNotInTarifBerlakuByKelas Observable<GetAllTarifModel>
+     * @param TarifModel
+    */
+    onGetAllNotInTarifBerlakuByKelas(Data: any): Observable<GetAllTarifModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TARIF.POST_TARIF_GET_ALL_TARIF_BERLAKU_BY_KELAS, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }

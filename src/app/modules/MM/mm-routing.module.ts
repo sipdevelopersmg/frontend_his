@@ -34,30 +34,30 @@ const mmRoutes: Routes = [
             { path: "setup-satuan", component: SetupSatuanComponent, data: { title: "Setup Satuan" } },
             { path: "setup-supplier", component: SetupSupplierComponent, data: { title: "Setup Supplier" } },
             { path: "setup-group-coa", component: SetupGroupCoaComponent, data: { title: "Setup Group COA" } },
-            
+
         ],
     },
     {
-        path: "kontrak-pengadaan", component: null, data: {title:"Input Kontrak Pengadaan"},
-        children:[
+        path: "kontrak-pengadaan", component: null, data: { title: "Input Kontrak Pengadaan" },
+        children: [
             { path: "input-kontrak-pengadaan", component: InputKontrakPengadaanComponent, data: { title: "Input Kontrak Pengadaan" } },
         ],
     },
     {
-        path: "PO", component: null, data: {title:"Input PO"},
-        children:[
+        path: "PO", component: null, data: { title: "Input PO" },
+        children: [
             { path: "input-PO", component: InputPOComponent, data: { title: "Input Pesanan PO" } },
         ],
     },
     {
-        path: "pemasukan", component: null, data: {title:"Input PO"},
-        children:[
+        path: "pemasukan", component: null, data: { title: "Input PO" },
+        children: [
             { path: "input-pemasukan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
         ],
     },
     {
-        path: "retur", component: null, data: {title:"Input PO"},
-        children:[
+        path: "retur", component: null, data: { title: "Input PO" },
+        children: [
             { path: "input-pemasukan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
         ],
     }

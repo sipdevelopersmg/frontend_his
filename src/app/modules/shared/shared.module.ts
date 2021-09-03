@@ -9,6 +9,7 @@ import { ComboBoxModule, DropDownListModule } from '@syncfusion/ej2-angular-drop
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { FormsModule } from '@angular/forms';
 
 import { CommandColumnService, DetailRowService, EditService, GridModule, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
 
@@ -52,6 +53,7 @@ import { MolInputTextSplitComponent } from './components/molecules/form/mol-inpu
 import { MolDropdownSyncfusionComponent } from './components/molecules/form/mol-dropdown-syncfusion/mol-dropdown-syncfusion.component';
 import { MolTreeGridComponent } from './components/molecules/grid/tree-grid/tree-grid.component';
 import { MolOffcanvasFilterComponent } from './components/molecules/filter/mol-offcanvas-filter/mol-offcanvas-filter.component';
+import { MolInputCheckboxSingleComponent } from './components/molecules/form/mol-input-checkbox-single/mol-input-checkbox-single.component';
 
 import { OrgInputLookUpKodeComponent } from './components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from './components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -61,9 +63,8 @@ import { OrgTabsLabelComponentComponent } from './components/organism/tabs/org-t
 import { OrgTabsBodyComponentComponent } from './components/organism/tabs/org-tabs-body-component/org-tabs-body-component.component';
 import { OrgCardLayoutComponent } from './components/organism/card/card-layout/card-layout.component';
 import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
-import { MolInputCheckboxSingleComponent } from './components/molecules/form/mol-input-checkbox-single/mol-input-checkbox-single.component';
-import { FormsModule } from '@angular/forms';
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
+import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
 
 @NgModule({
     declarations: [
@@ -107,6 +108,7 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         MolDropdownSyncfusionComponent,
         MolTreeGridComponent,
         MolOffcanvasFilterComponent,
+        MolInputCheckboxSingleComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,
@@ -115,8 +117,8 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
         OrgLookUpComponent,
-        MolInputCheckboxSingleComponent,
         OrgInputWilayahComponent,
+        OrgLookUpChecklistComponent,
     ],
     imports: [
         CommonModule,
@@ -174,6 +176,7 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         MolDropdownSyncfusionComponent,
         MolTreeGridComponent,
         MolOffcanvasFilterComponent,
+        MolInputCheckboxSingleComponent,
         OrgInputLookUpKodeComponent,
         OrgInputLookUpComponent,
         OrgTabsComponentComponent,
@@ -181,6 +184,7 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         OrgTabsLabelComponentComponent,
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
+        OrgInputWilayahComponent,
         DropDownListModule,
         NumericTextBoxModule,
         DatePickerModule,
@@ -188,8 +192,6 @@ import { OrgInputWilayahComponent } from './components/organism/org-input-wilaya
         OrgLookUpComponent,
         GridModule,
         TreeViewModule,
-        MolInputCheckboxSingleComponent,
-        OrgInputWilayahComponent
     ],
     providers: [
         EditService,

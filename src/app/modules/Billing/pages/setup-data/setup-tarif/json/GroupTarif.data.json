@@ -10,30 +10,7 @@
             "kode_group_tarif_parent": "",
             "nama_grup_tarif_parent": "",
             "level_parent": 0,
-            "child": [
-                {
-                    "id_grup_tarif": 49,
-                    "kode_grup_tarif": "AA.AAA",
-                    "nama_grup_tarif": "TRANSAKSI PINDAHAN",
-                    "level": 2,
-                    "id_grup_tarif_parent": 7,
-                    "kode_group_tarif_parent": "AA",
-                    "nama_grup_tarif_parent": "TRANSAKSI PINDAHAN",
-                    "level_parent": 1,
-                    "child": [
-                        {
-                            "id_grup_tarif": 99999,
-                            "kode_grup_tarif": "Z3.PHR",
-                            "nama_grup_tarif": "OBAT / ALKES BERDIKARI",
-                            "level": 3,
-                            "id_grup_tarif_parent": 49,
-                            "kode_group_tarif_parent": "Z3",
-                            "nama_grup_tarif_parent": "OBAT / ALKES BERDIKARI",
-                            "level_parent": 2
-                        }
-                    ]
-                }
-            ]
+            "child": []
         },
         {
             "id_grup_tarif": 8,

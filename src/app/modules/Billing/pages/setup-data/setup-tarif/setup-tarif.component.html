@@ -1,7 +1,173 @@
 <org-card-layout>
     <div class="row">
+        <!-- Listing Grup Tarif -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <app-setup-grup-tarif></app-setup-grup-tarif>
+            <app-setup-grup-tarif (select-node)="handleSelectedGrupTarif($event)"></app-setup-grup-tarif>
+        </div>
+
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="card">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-muda">Daftar Tarif</p>
+                </div>
+                <div class="card-body p-0 cardDaftarTarif">
+                    <ejs-grid #GridData [id]="'GridKelasPerawatan'" [height]="'calc(100vh - 21rem)'"
+                        [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                        [pageSettings]="GridPageSettings" [toolbar]="GridDataToolbar" [allowResizing]="true"
+                        [allowFiltering]='true' [editSettings]="GridDataEditSettings"
+                        (rowSelected)="handleSelectedRow($event)" (actionComplete)="handleActionComplete($event)"
+                        (toolbarClick)="handleToolbarClick($event)">
+                        <e-columns>
+                            <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'" [visible]="false"
+                                [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="70" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="50" [field]="'is_irja'" [headerText]="'IRJA'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
+                                [headerTextAlign]="'Center'" [displayAsCheckBox]="true">
+                            </e-column>
+                            <e-column [width]="50" [field]="'is_irna'" [headerText]="'IRNA'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
+                                [headerTextAlign]="'Center'" [displayAsCheckBox]="true">
+                            </e-column>
+                            <e-column [width]="50" [field]="'is_irda'" [headerText]="'IRDA'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
+                                [headerTextAlign]="'Center'" [displayAsCheckBox]="true">
+                            </e-column>
+                            <e-column field='is_active' [headerText]="'STATUS'" [width]='70' [textAlign]="'Center'">
+                                <ng-template #template let-data>
+                                    <div *ngIf="data.is_active === true; else inactive"
+                                        class="statustemp e-activecolor">
+                                        <span class="statustxt e-activecolor">
+                                            {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                        </span>
+                                    </div>
+                                    <ng-template #inactive>
+                                        <div class="statustemp e-inactivecolor">
+                                            <span class="statustxt e-inactivecolor">
+                                                {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+
+                    <!-- Modal Add Tarif  -->
+                    <ng-template #modalAddSetupTarif>
+                        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                            <h5 class="modal-title pull-left">
+                                {{ FormTarifState == 'Insert' ? 'Add' : 'Detail' }} Tarif
+                            </h5>
+                            <button type="button" class="btn pull-right text-white" aria-label="Close"
+                                (click)="handleCloseModalTarif()">
+                                <i class="fas fa-window-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="FormTarif">
+                                <!-- Grup Tarif -->
+                                <mol-input-text [label]="'Grup Tarif'" formControlName="nama_grup_tarif"
+                                    [disabled]="true">
+                                </mol-input-text>
+
+                                <!-- Kelompok Tarif -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Kelompok Tarif'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #DropdownKelompokTarif id="id_kelompok_tarif"
+                                            [dataSource]="KelompokTarifDatasource | async"
+                                            [fields]="KelompokTarifDropdownField" [allowFiltering]="true"
+                                            formControlName="id_kelompok_tarif">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+
+                                <!-- Nama Setup Tarif -->
+                                <mol-input-text [label]="'Nama Setup Tarif'" formControlName="nama_setup_tarif"
+                                    [IsFormControlInvalid]="nama_setup_tarif.invalid"
+                                    [ValidatorsCaption]="'Nama Setup Tarif Tidak Boleh Kosong'">
+                                </mol-input-text>
+
+                                <!-- Jenis Rawat -->
+                                <div class="row mb-2 align-items-center">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Jenis Rawat'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                        <div class="form-check form-check-inline">
+                                            <input #IsIRJA class="form-check-input" type="checkbox" id="is_irja"
+                                                value="true" (change)="IsIRJA.value == 'true' ? 'false' : 'true'"
+                                                formControlName="is_irja">
+                                            <label class="form-check-label" for="is_irja">
+                                                Rawat Jalan
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input #IsIRNA class="form-check-input" type="checkbox" id="is_irna"
+                                                value="true" (change)="IsIRNA.value == 'true' ? 'false' : 'true'"
+                                                formControlName="is_irna">
+                                            <label class="form-check-label" for="is_irna">
+                                                Rawat Inap
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input #IsIRDA class="form-check-input" type="checkbox" id="is_irda"
+                                                value="true" (change)="IsIRDA.value == 'true' ? 'false' : 'true'"
+                                                formControlName="is_irda">
+                                            <label class="form-check-label" for="is_irda">
+                                                Rawat Darurat (IGD)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Apakah Paket -->
+                                <div class="row mb-2 align-items-center">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Apakah Tarif Paket ?'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="is_paket"
+                                                id="IsPaketTrue" value="true" formControlName="is_paket">
+                                            <label class="form-check-label" for="IsPaketTrue">Iya</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="is_paket"
+                                                id="IsPaketFalse" value="false" formControlName="is_paket">
+                                            <label class="form-check-label" for="IsPaketFalse">Tidak</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer background-abu-muda p-2">
+                            <button type="button" class="btn btn-secondary btn-sm mx-2"
+                                (click)="handleCloseModalTarif()">
+                                <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                            </button>
+                            <button *ngIf="FormTarifState == 'Insert'" type="button" class="btn btn-primary btn-sm"
+                                (click)="handleSubmitFormTarif(FormTarif.value)">
+                                <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                            </button>
+                            <button *ngIf="FormTarifState == 'Update'" type="button" class="btn btn-warning btn-sm"
+                                (click)="handleUpdateFormTarif(FormTarif.value)">
+                                <i class="fas fa-save fa-sm"></i>&nbsp; Update
+                            </button>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
         </div>
     </div>
 </org-card-layout>

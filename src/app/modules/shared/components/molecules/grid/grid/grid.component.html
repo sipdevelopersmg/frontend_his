@@ -12,7 +12,8 @@
             <e-column [width]="item.width" [field]="item.field" [headerText]="item.headerText" [visible]="item.visible"
                 [type]="item.type" [allowEditing]="item.allowEditing" [allowSorting]="item.allowSorting"
                 [format]="item.format" [headerTextAlign]="item.headerTextAlign" [textAlign]="item.textAlign"
-                [displayAsCheckBox]="item.displayAsCheckBox" [editType]="item.editType" [edit]="item.editParams">
+                [displayAsCheckBox]="item.displayAsCheckBox" [editType]="item.editType ? item.editType : null"
+                [edit]="item.editParams">
             </e-column>
         </ng-template>
     </e-columns>

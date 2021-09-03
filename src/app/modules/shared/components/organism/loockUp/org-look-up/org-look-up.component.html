@@ -28,9 +28,7 @@
                         [grid-DataSource]="gridDataSource" [grid-lines]="gridLines" [columns]="columns"
                         [grid-paging]="gridPaging" [grid-initial-page]="gridPageSettings"
                         (row-selected)="onRowSelected($event)" (enter-pressed)="onKeyPressed($event)"
-                        (double-click)="onDoubleClicked($event)"
-                        (initialized)="onInitialized($event)"
-                        >
+                        (double-click)="onDoubleClicked($event)" (initialized)="onInitialized($event)">
                     </mol-grid>
                 </div>
             </div>

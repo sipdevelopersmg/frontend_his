@@ -1,0 +1,313 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row align-items-center mb-3">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <atm-label [LabelCaption]="'Tgl Berlaku Tarif'"></atm-label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <ejs-datepicker #TglBerlakuDatepicker [format]="'dd MMMM yyyy'"></ejs-datepicker>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <button id="btnOpenFilter" class="btn btn-outline-primary btn-sm me-4" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilterTarif" aria-controls="offcanvasFilterTarif">
+                <i class="fas fa-search fa-sm"></i> Cari Tarif Per Kelas
+            </button>
+
+            <span *ngIf="KelasPerawatanSelected" class="badge bg-primary fw-light mx-2" style="font-size: 14px"
+                (click)="handleClickOpenOffcanvas()">
+                <p class="mb-0">
+                    Kelas {{ KelasPerawatanSelected }} &nbsp;
+                    <i class="fas fa-edit text-white" style="padding-bottom: 1px;"></i>
+                </p>
+            </span>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilterTarif"
+                aria-labelledby="offcanvasFilterTarifLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasFilterTarifLabel">Pilih Kelas</h5>
+                    <button id="btnCloseFilter" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close">
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="row">
+                        <!-- Kelas Perawatan -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 mb-3">
+                            <atm-label [LabelCaption]="'Kelas Perawatan'"></atm-label>
+                            <ejs-dropdownlist #KelasPerawatanDropdown [dataSource]="KelasPerawatanDatasource"
+                                [fields]="KelasPerawatanFields" [allowFiltering]="true">
+                            </ejs-dropdownlist>
+                        </div>
+
+                        <!-- Button Search -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                            <button class="btn btn-secondary btn-sm mx-2" type="button" data-bs-dismiss="offcanvas">
+                                Cancel
+                            </button>
+                            <button class="btn btn-primary btn-sm" type="button"
+                                (click)="handlePencarianTarifBerlaku(KelasPerawatanDropdown.value, KelasPerawatanDropdown.text)">
+                                Cari
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-tua fw-bold">
+                        {{ KelasPerawatanSelected ? 'Daftar Tarif Kelas ' + KelasPerawatanSelected : 'Daftar Tarif' }}
+                        &nbsp;
+                        <span class="badge bg-primary fw-light mx-2 cursor-pointer"
+                            *ngIf="KelasPerawatanSelected && GridDatasource?.length > 1" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasUpdateTarifKeseluruhan"
+                            aria-controls="offcanvasUpdateTarifKeseluruhan"
+                            (click)="onResepFormKenaikanPersentaseTarif()">
+                            <p class="mb-0">Update Tarif Keseluruhan</p>
+                        </span>
+                    </p>
+
+                </div>
+                <div class="card-body p-0">
+                    <ejs-grid #GridData [height]="'calc(100vh - 24.5rem)'" [dataSource]="GridDatasource"
+                        [allowPaging]="true" [editSettings]="GridDataEditSettings" [gridLines]="'Both'"
+                        [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
+                        (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+                        <e-columns>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'id_setup_tarif'"
+                                [headerText]="'Id Setup Tarif'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
+                                [visible]="false" [editType]="'defaultEdit'">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'id_kelas'"
+                                [headerText]="'Id Kelas'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
+                                [visible]="false" [editType]="'defaultEdit'">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'kode_setup_tarif'"
+                                [headerText]="'Kode Tarif'" [textAlign]="'Left'" [visible]="true"
+                                [editType]="'defaultEdit'" [width]="100">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'nama_setup_tarif'"
+                                [headerText]="'Nama Tarif'" [textAlign]="'Left'" [visible]="true"
+                                [editType]="'defaultEdit'" [width]="200">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'tgl_berlaku'"
+                                [headerText]="'Tgl Berlaku'" [textAlign]="'Left'" [visible]="true"
+                                [editType]="'datepickeredit'" [type]="'Date'" [format]="'dd/MM/yyyy'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'tgl_berakhir'"
+                                [headerText]="'Tgl Berakhir'" [textAlign]="'Left'" [visible]="false"
+                                [editType]="'defaultEdit'" [type]="'Date'" [format]="'dd/MM/yyyy'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'doct_fee'"
+                                [headerText]="'J. Dokter'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                [edit]="JasaDokterParams">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'medical_fee'"
+                                [headerText]="'J. Sarana'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                [edit]="JasaSaranaParams">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'hos_fee'"
+                                [headerText]="'J. RS'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                [edit]="JasaRumahSakitParams">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'com_fee'"
+                                [headerText]="'J. Kompensasi'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="false" [editType]="'defaultEdit'" [format]="'N2'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'add_fee'"
+                                [headerText]="'J. BHAP'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                [edit]="JasaBhapParams">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'anas_fee'"
+                                [headerText]="'J. Anastesi'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                [edit]="JasaAnastesiParams">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'support_fee'"
+                                [headerText]="'J. Support'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="false" [editType]="'defaultEdit'" [format]="'N2'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'nominal_tarif'"
+                                [headerText]="'Nominal Tarif'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                [visible]="true" [format]="'N2'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'is_active'"
+                                [headerText]="'Is Active'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
+                                [visible]="false" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'user_created'"
+                                [headerText]="'User Created'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
+                                [visible]="false" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'time_created'"
+                                [headerText]="'Time Created'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
+                                [visible]="false" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'user_deactived'"
+                                [headerText]="'User Deactived'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
+                                [visible]="false" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'time_deactived'"
+                                [headerText]="'Time Deactived'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
+                                [visible]="false" [width]="80">
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUpdateTarifKeseluruhan"
+                aria-labelledby="ooffcanvasUpdateTarifKeseluruhanLabel">
+                <div class="offcanvas-header">
+                    <h5 id="ooffcanvasUpdateTarifKeseluruhanLabel">
+                        Update Keseluruhan Tarif Kelas {{ KelasPerawatanSelected }}
+                    </h5>
+                    <button id="btnCloseOffcanvasTarif" type="button" class="btn-close text-reset"
+                        data-bs-dismiss="offcanvas" aria-label="Close">
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    <form [formGroup]="FormKenaikanPersentaseTarif">
+                        <!-- Jenis Ubah Tarif -->
+                        <div class="row mb-3">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <atm-label [LabelCaption]="'Kenaikan / Pengurangan Tarif (%)'"></atm-label>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <ejs-dropdownlist #JenisUbahTarif [dataSource]="JenisUbahTarifDatasource"
+                                    [fields]="JenisUbahTarifFields" formControlName="is_up_for_percent">
+                                </ejs-dropdownlist>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 px-0">
+                                        <ejs-numerictextbox [format]="'N2'"
+                                            formControlName="perubahan_tarif_dalam_percent" [showSpinButton]="false"
+                                            [max]="100">
+                                        </ejs-numerictextbox>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0 text-center">
+                                        <p class="mb-0 text-hitam-muda">%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kenaikan / Pengurangan Nominal Tarif -->
+                        <div class="row mb-3">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <atm-label [LabelCaption]="'Kenaikan / Pengurangan Nominal Tarif'"></atm-label>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <ejs-dropdownlist #JenisUbahNominal [dataSource]="JenisUbahNominalTarifDatasource"
+                                    [fields]="JenisUbahNominalTarifFields" formControlName="is_plus_for_jumlah">
+                                </ejs-dropdownlist>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0 text-center">
+                                        <p class="mb-0 text-hitam-muda">Rp</p>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ps-0">
+                                        <ejs-numerictextbox [format]="'N2'" formControlName="sejumlah"
+                                            [showSpinButton]="false">
+                                        </ejs-numerictextbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                                <button class="btn btn-warning btn-sm" type="button"
+                                    (click)="handleSubmitUpdateKenaikanTarifKeseluruhan(FormKenaikanPersentaseTarif.value)">
+                                    <i class="fas fa-save fa-sm"></i>&nbsp; Update Keseluruhan Tarif
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Lookup Tarif  -->
+            <ng-template #modalAddLookupTarif>
+                <div class="modal-header px-2 py-1">
+                    <h5 class="modal-title pull-left">
+                        Data Tarif
+                    </h5>
+                    <button type="button" class="btn pull-right" aria-label="Close"
+                        (click)="handleCloseModalLookupTarif()">
+                        <i class="fas fa-window-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-2">
+                    <div class="row mx-0 my-1 align-items-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5 class="card-title mb-1">Cari :</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 my-1 align-items-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioFilterLookupTarif"
+                                    id="filter_kode_tarif" value="kode_tarif"
+                                    (click)="handleChangeFilterLookupTarif('st.kode_setup_tarif')">
+                                <label class="form-check-label" for="filter_kode_tarif">
+                                    Kode Tarif
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioFilterLookupTarif"
+                                    id="filter_nama_tarif" value="nama_tarif"
+                                    (click)="handleChangeFilterLookupTarif('st.nama_setup_tarif')">
+                                <label class="form-check-label" for="filter_nama_tarif">
+                                    Nama Tarif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 my-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <input type="text" #searchValueId class="form-control" id="searchValueId"
+                                (keydown.enter)="onSearchLookup(searchValueId.value)" />
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 my-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mol-grid #GridLookupTarif [grid-height]="280" [grid-DataSource]="GridLookupTarifDatasource"
+                                [grid-paging]="true" [gridInitialPage]="GridLookupTarifPageSettings"
+                                [grid-lines]="'Both'" [columns]="GridConfig.LookupTarif.columns"
+                                (row-selected)="handleSelectedRowLookupTarif($event)"
+                                (initialized)="InitalizedGridLookupTarif($event)"
+                                (action-complete)="handleActionCompleteLookupTarif($event)">
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer background-abu-muda p-2">
+                    <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalLookupTarif()">
+                        <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="handleSubmitLookupTarif()">
+                        <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</org-card-layout>
