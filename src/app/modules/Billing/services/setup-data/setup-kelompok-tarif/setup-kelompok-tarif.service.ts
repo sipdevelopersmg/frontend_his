@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -14,10 +14,19 @@ export class SetupKelompokTarifService {
 
     API_KELOMPOK_TARIF = API_CONFIG.API_BILLING.SETUP_DATA.SETUP_KELOMPOK_TARIF;
 
+    public KelompokTarifSubject = new BehaviorSubject([]);
+
     constructor(
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService
     ) { }
+
+    onSetKelompokTarifSubject(): void {
+        this.onGetAll()
+            .subscribe((result) => {
+                this.KelompokTarifSubject.next(result.data);
+            });
+    }
 
     /**
      * Service Untuk Menampilkan Semua Data Kelompok Tarif

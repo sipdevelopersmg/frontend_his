@@ -1,4 +1,3 @@
-import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
@@ -6,7 +5,6 @@ import { Observable } from 'rxjs';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { GetAllPasienIRJAModel, IPasienIRJAGetAllModel } from '../../../models/IRJA/daftar-pasien.model';

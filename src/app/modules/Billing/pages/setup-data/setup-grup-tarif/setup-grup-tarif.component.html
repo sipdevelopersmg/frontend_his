@@ -16,8 +16,7 @@
     <div class="card-body p-0 cardGroupTarif">
         <!-- Treeview Group Tarif -->
         <ejs-treeview [id]="'GridTreeGroupTarif'" [fields]="GroupTarifFields" e-nodeclick="onClick"
-            [allowMultiSelection]='true' [allowDragAndDrop]="false" (nodeSelected)="handleSelectedGroupTarif($event)"
-            (nodeDropped)="handleNodeDropedGroupTarif($event)">
+            [allowMultiSelection]='false' [allowDragAndDrop]="false" (nodeSelected)="handleSelectedGroupTarif($event)">
             <ng-template #nodeTemplate="" let-data="">
                 <div>
                     <div class="treeviewdiv">
@@ -96,7 +95,7 @@
                     </div>
 
                     <!-- Level -->
-                    <div class="row">
+                    <div class="row" hidden>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <atm-label [LabelCaption]="'Level'">
                             </atm-label>
@@ -115,6 +114,10 @@
                 <button *ngIf="FormGrupTarifState == 'Insert'" type="button" class="btn btn-primary btn-sm"
                     (click)="handleSubmitFormGrupTarif(FormGrupTarif.value)">
                     <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+                <button *ngIf="FormGrupTarifState == 'Update'" type="button" class="btn btn-danger btn-sm"
+                    (click)="handleDeleteFormGrupTarif(FormGrupTarif.value)">
+                    <i class="fas fa-trash-alt fa-sm"></i>&nbsp; Delete
                 </button>
                 <button *ngIf="FormGrupTarifState == 'Update'" type="button" class="btn btn-warning btn-sm"
                     (click)="handleUpdateFormGrupTarif(FormGrupTarif.value)">

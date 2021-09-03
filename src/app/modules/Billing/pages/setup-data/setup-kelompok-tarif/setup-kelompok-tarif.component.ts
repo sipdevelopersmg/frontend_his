@@ -92,10 +92,10 @@ export class SetupKelompokTarifComponent implements OnInit {
 
     handleSelectedTabId(TabId: string): void {
         this.TabId = TabId;
-        if (TabId == 'Input') {
-            this.setNewForm();
-        } else {
+        if (TabId == 'Data') {
             this.GetAllData();
+        } else {
+            // this.setNewForm();
         }
     }
 

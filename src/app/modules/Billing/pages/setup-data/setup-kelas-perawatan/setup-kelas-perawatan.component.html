@@ -1,0 +1,73 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Kelas Perawatan</org-tabs-label>
+            <org-tabs-body>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <ejs-grid #GridData [id]="'GridKelasPerawatan'" [height]="'calc(100vh - 20rem)'"
+                            [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                            [toolbar]="GridDataToolbar" [allowResizing]="true" [allowFiltering]='true'
+                            [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+                            (actionComplete)="handleActionComplete($event)" (toolbarClick)="handleToolbarClick($event)">
+                            <e-columns>
+                                <e-column [width]="50" [field]="'id_kelas'" [headerText]="'ID'" [visible]="false"
+                                    [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                    [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="100" [field]="'kode_kelas'" [headerText]="'KODE KELAS'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'NAMA KELAS'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column field='is_active' headerText='STATUS' width='70' textAlign='Center'>
+                                    <ng-template #template let-data>
+                                        <div *ngIf="data.is_active === true;else inactive"
+                                            class="statustemp e-activecolor">
+                                            <span class="statustxt e-activecolor">
+                                                {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                            </span>
+                                        </div>
+                                        <ng-template #inactive>
+                                            <div class="statustemp e-inactivecolor">
+                                                <span class="statustxt e-inactivecolor">
+                                                    {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                    </ng-template>
+                                </e-column>
+                            </e-columns>
+                        </ejs-grid>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Kelas Perawatan</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text [label]="'Kode Kelas Perawatan'" formControlName="kode_kelas"
+                                [IsFormControlInvalid]="kode_kelas.invalid"
+                                [ValidatorsCaption]="'Kode Kelas Perawatan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Nama Kelas Perawatan'" formControlName="nama_kelas"
+                                [IsFormControlInvalid]="nama_kelas.invalid"
+                                [ValidatorsCaption]="'Nama Kelas Perawatan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

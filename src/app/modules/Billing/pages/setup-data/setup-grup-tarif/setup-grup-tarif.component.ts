@@ -1,10 +1,11 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { GrupTarifModel, GrupTarifRecursiveModel } from '../../../models/setup-data/setup-grup-tarif.model';
 import { SetupGrupTarifService } from '../../../services/setup-data/setup-grup-tarif/setup-grup-tarif.service';
+import * as Dummy from '../setup-tarif/json/GroupTarif.data.json';
 
 @Component({
     selector: 'app-setup-grup-tarif',
@@ -12,6 +13,8 @@ import { SetupGrupTarifService } from '../../../services/setup-data/setup-grup-t
     styleUrls: ['./setup-grup-tarif.component.css']
 })
 export class SetupGrupTarifComponent implements OnInit {
+
+    dummy = Dummy;
 
     /**
      * @GrupTarifData Data source Tree View Grup Tarif
@@ -21,7 +24,7 @@ export class SetupGrupTarifComponent implements OnInit {
     /**
      * @GroupTarifFields Field Tree View Grup Tarif
     */
-    GroupTarifFields: object;
+    GroupTarifFields: object = {};
 
     modalRef: BsModalRef;
 
@@ -30,6 +33,8 @@ export class SetupGrupTarifComponent implements OnInit {
     FormGrupTarif: FormGroup;
 
     FormGrupTarifState = 'Insert';
+
+    @Output('select-node') SelectedNode = new EventEmitter<any>();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -60,23 +65,19 @@ export class SetupGrupTarifComponent implements OnInit {
     onGetAllGrupTarif(): void {
         this.setupGrupTarifService.onGetAll()
             .subscribe((result) => {
-                if (result) {
-                    this.GrupTarifData = result.data;
+                this.GrupTarifData = result.data;
 
-                    this.GroupTarifFields = {
-                        dataSource: this.GrupTarifData,
-                        id: 'id_grup_tarif',
-                        parentID: 'id_grup_tarif_parent',
-                        text: 'nama_grup_tarif_parent',
-                        hasChild: 'child.length > 0',
-                        level: 'level'
-                    };
-                }
+                this.GroupTarifFields = {
+                    dataSource: result.data,
+                    id: 'id_grup_tarif',
+                    text: 'nama_grup_tarif_parent',
+                    child: 'child',
+                };
             });
     }
 
     handleSelectedGroupTarif(args: any): void {
-        // console.log(args);
+        this.SelectedNode.emit(args.nodeData);
     }
 
     handleNodeDropedGroupTarif(args: any): void {
@@ -203,6 +204,20 @@ export class SetupGrupTarifComponent implements OnInit {
                 }
             })
 
+    }
+
+    handleDeleteFormGrupTarif(FormGrupTarif: any): void {
+        this.setupGrupTarifService.onDelete(FormGrupTarif.id_grup_tarif)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Grup Tarif Berhasil Dihapus')
+                        .then(() => {
+                            this.handleCloseModalGrupTarif();
+
+                            this.onGetAllGrupTarif();
+                        })
+                }
+            })
     }
 
     handleCloseModalGrupTarif(): void {

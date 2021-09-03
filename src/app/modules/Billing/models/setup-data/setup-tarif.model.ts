@@ -15,6 +15,9 @@ export interface TarifModel {
     kode_setup_tarif?: string | null;
     nama_setup_tarif?: string | null;
     jenis_rawat?: string | null;
+    is_irja?: boolean;
+    is_irna?: boolean;
+    is_irda?: boolean;
     is_paket?: boolean;
     is_active?: boolean;
 

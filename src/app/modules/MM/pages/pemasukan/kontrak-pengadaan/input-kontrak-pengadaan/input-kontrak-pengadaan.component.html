@@ -39,8 +39,9 @@
             <a>halooo jhon</a>
         </ng-template>
 
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='inputKontrakPengadaanService.dataDetail$ | async'
-            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
+            [dataSource]='inputKontrakPengadaanService.dataDetail$ | async' [gridLines]="'Both'"
+            [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>
