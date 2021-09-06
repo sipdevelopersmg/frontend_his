@@ -43,7 +43,7 @@
                             <h5 class="m-0">Generik</h5>
                         </div>
                         <div class="col-auto">
-                            <a (click)="handleTambahTerapiGenerik()"><i class="fas fa-plus-circle tambah text-primary "></i></a>
+                            <a (click)="handleTambahTerapiGenerik(true)"><i class="fas fa-plus-circle tambah text-primary "></i></a>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                     <h5 class="m-0">Formularium</h5>
                                 </div>
                                 <div class="col-auto">
-                                    <a (click)="handleTambahFormularium()"><i class="fas fa-plus-circle tambah text-primary "></i></a>
+                                    <a (click)="handleTambahFormularium(true)"><i class="fas fa-plus-circle tambah text-primary "></i></a>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                     <form [formGroup]="FormInputDataTerapi" class="p-2">
                         <div class="row mb-2">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                                <mol-input-text [inputFieldState]="'detail'" [label]="'Parent Terapi'" formControlName="parent_terapi"></mol-input-text>
+                                <mol-input-text *ngIf="!hideParentTarif" [inputFieldState]="'detail'" [label]="'Parent Terapi'" formControlName="parent_terapi"></mol-input-text>
                                 <mol-input-text 
                                     [label]="'Kode Terapi'" 
                                     formControlName="kode_terapi"
@@ -300,7 +300,7 @@
     <ng-template #modalSetupGenerik>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Setup Generik</h5>
-            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();handleTambahTerapiGenerik()">
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();handleTambahTerapiGenerik(false)">
                 <i class="fas fa-window-close"></i>
             </button>
         </div>
@@ -338,7 +338,7 @@
     <ng-template #modalSetupSediaan>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Setup Sediaan</h5>
-            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();">
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();handleTambahFormularium(false)">
                 <i class="fas fa-window-close"></i>
             </button>
         </div>
@@ -360,7 +360,7 @@
     <ng-template #modalSetupRestriksi>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Setup Restriksi</h5>
-            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();">
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();handleTambahFormularium(false)">
                 <i class="fas fa-window-close"></i>
             </button>
         </div>
@@ -382,7 +382,7 @@
     <ng-template #modalSetupPeresepanMaksimal>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
             <h5 class="modal-title pull-left">Setup Peresepan Maksimal</h5>
-            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();">
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide();handleTambahFormularium(false)">
                 <i class="fas fa-window-close"></i>
             </button>
         </div>

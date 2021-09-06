@@ -69,7 +69,7 @@ export class MolGridComponent implements OnInit, AfterViewInit {
         //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
         //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
         //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        // ];
+        // ]; 
     }
 
     ngAfterViewInit(): void {

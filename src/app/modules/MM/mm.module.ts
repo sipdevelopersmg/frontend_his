@@ -6,7 +6,6 @@ import { MaterialManagementRoutingModule } from "./mm-routing.module";
 import { SetupGrupItemComponent } from './pages/setup-data/setup-grup-item/setup-grup-item.component';
 import { SetupPabrikComponent } from './pages/setup-data/setup-pabrik/setup-pabrik.component';
 import { InputKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component';
-import { InputPOComponent } from './pages/pemasukan/PO/input-po/input-po.component';
 import { InputPenerimaanComponent } from './pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component';
 import { InputReturComponent } from './pages/retur/input-retur/input-retur.component';
 import { SetupSatuanComponent } from './pages/setup-data/setup-satuan/setup-satuan.component';
@@ -21,13 +20,15 @@ import { SetupSupplierComponent } from './pages/setup-data/setup-supplier/setup-
 import { SetupItemComponent } from './pages/setup-data/setup-item/setup-item.component';
 import { ListKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengadaan/list-kontrak-pengadaan/list-kontrak-pengadaan.component';
 import { SetupStockroomComponent } from './pages/setup-data/setup-stockroom/setup-stockroom.component';
+import { ViewKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengadaan/view-kontrak-pengadaan/view-kontrak-pengadaan.component';
+import { InputPemesananComponent } from './pages/pemasukan/pemesanan/input-pemesanan/input-pemesanan.component';
+import { DaftarPemesananComponent } from './pages/pemasukan/pemesanan/daftar-pemesanan/daftar-pemesanan.component';
 
 @NgModule({
     declarations: [
         SetupGrupItemComponent,
         SetupPabrikComponent,
         InputKontrakPengadaanComponent,
-        InputPOComponent,
         InputPenerimaanComponent,
         InputReturComponent,
         SetupSatuanComponent,
@@ -42,6 +43,9 @@ import { SetupStockroomComponent } from './pages/setup-data/setup-stockroom/setu
         SetupItemComponent,
         ListKontrakPengadaanComponent,
         SetupStockroomComponent,
+        ViewKontrakPengadaanComponent,
+        InputPemesananComponent,
+        DaftarPemesananComponent,
     ],
     imports: [
         FormsModule,

@@ -31,7 +31,7 @@ export class SetupFormulariumComponent implements OnInit {
   MaritalPeresepanMaksimalDropdownField: object = { text: 'peresepan_maksimal', value: 'id_peresepan_maksimal' };
   MaritalParameterMaksimalDropdownField: object = { text: 'parameter_maksimal', value: 'id_parameter_maksimal' };
 
-    public GridSetting = gridSetting
+  public GridSetting = gridSetting
 
   public wrapSettings: TextWrapSettingsModel;
   
@@ -39,7 +39,7 @@ export class SetupFormulariumComponent implements OnInit {
   
   public allowMultiSelection: boolean = true;
 
-    public allowMultiSelection: boolean = true;
+  public hideParentTarif: boolean = true;
 
   @ViewChild('modalTambahTerapi') modalTambahTerapi: TemplateRef<any>;
   @ViewChild('modalTambahTerapiGenerik') modalTambahTerapiGenerik: TemplateRef<any>;
@@ -50,9 +50,7 @@ export class SetupFormulariumComponent implements OnInit {
   @ViewChild('modalSetupRestriksi') modalSetupRestriksi: TemplateRef<any>;
   @ViewChild('modalSetupPeresepanMaksimal') modalSetupPeresepanMaksimal: TemplateRef<any>;
 
-    @ViewChild('modalTambahTerapi') modalTambahTerapi: TemplateRef<any>;
-    @ViewChild('modalSetupTerapi') modalSetupTerapi: TemplateRef<any>;
-
+  modalRef:BsModalRef;
 
   DataSourceGeneric = [];
   DataSourceSediaan = [];
@@ -71,6 +69,7 @@ export class SetupFormulariumComponent implements OnInit {
   FormInputDataRestriksi:FormGroup;
   FormInputDataPeresepanMaksimal:FormGroup;
 
+  
 
   constructor(
     private modalService: BsModalService,
@@ -84,7 +83,6 @@ export class SetupFormulariumComponent implements OnInit {
     public setupSediaanObatService: SetupSediaanObatService,
     public setupRestriksiObatService: SetupRestriksiObatService,
     public setupPeresepanMaksimalService: SetupPeresepanMaksimalService,
-    public SetupParameterMaksimalService: SetupParameterMaksimalService,
     public setupParameterMaksimalService: SetupParameterMaksimalService,
 
   ) { }
@@ -163,7 +161,7 @@ export class SetupFormulariumComponent implements OnInit {
 
     getAllTerapi(){
       this.setupTerapiService.onGetAll().subscribe((result)=>{
-        this.field = { dataSource: result.data, id: 'id_terapi', parentID: 'id_terapi_parent', text: 'nama_terapi', hasChildren: 'is_active' }
+        this.field = { dataSource: result.data, id: 'id_terapi', parentID: 'id_terapi_parent', text: 'nama_terapi', hasChildren: 'is_parent' }
       })
     }
 
@@ -182,6 +180,7 @@ export class SetupFormulariumComponent implements OnInit {
       this.id_terapi_parent.setValue(null);
       this.parent_terapi.setValue('');
       this.level_rekursif_terapi.setValue(1);
+      this.hideParentTarif = true;
       this.modalRef = this.modalService.show(
         this.modalTambahTerapi,
         Object.assign({}, { class: 'modal-lg' })
@@ -192,6 +191,7 @@ export class SetupFormulariumComponent implements OnInit {
       this.id_terapi_parent.setValue(this.CurrentDataTerapi.id);
       this.parent_terapi.setValue(this.CurrentDataTerapi.text);
       this.level_rekursif_terapi.setValue(2);
+      this.hideParentTarif = false;
       this.modalRef = this.modalService.show(
         this.modalTambahTerapi,
         Object.assign({}, { class: 'modal-lg' })
@@ -210,8 +210,11 @@ export class SetupFormulariumComponent implements OnInit {
   /* =========== */
 
   /* ==== Method Generik ====== */
-    handleTambahTerapiGenerik(){
+    handleTambahTerapiGenerik(reset:boolean){
       this.id_terapi_g.setValue(this.CurrentDataTerapi.id);
+      if(reset){
+        this.FormInputDataTerapiGenerik.reset();
+      }
       this.modalRef = this.modalService.show(
         this.modalTambahTerapiGenerik,
         Object.assign({}, { class: 'modal-lg' })
@@ -235,9 +238,12 @@ export class SetupFormulariumComponent implements OnInit {
       this.setupFormulariumService.setDataSource(this.CurrentDataTerapiGenerik.id_generik);
     }
   // ==== Method Formularium =======
-    handleTambahFormularium(){
+    handleTambahFormularium(reset:boolean){
       this.id_terapi_f.setValue(this.CurrentDataTerapi.id);
       this.id_generik_f.setValue(this.CurrentDataTerapiGenerik.id_generik);
+      if(reset){
+        this.FormInputDataFormularium.reset();
+      }
       this.modalRef = this.modalService.show(
         this.modalTambahFormularium,
         Object.assign({}, { class: 'modal-lg' })
@@ -367,7 +373,6 @@ export class SetupFormulariumComponent implements OnInit {
     this.DataSourceMax = this.GridSetting.GridPeresepan.DataSource
     this.DataSourceDagang = this.GridSetting.GridItem.DataSource
   }  
-
 
   get parent_terapi(): AbstractControl { return this.FormInputDataTerapi.get('parent_terapi'); }
   get id_terapi_parent(): AbstractControl { return this.FormInputDataTerapi.get('id_terapi_parent'); }

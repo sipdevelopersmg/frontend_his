@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputPOComponent } from './input-po.component';
+import { InputPemesananComponent } from './input-pemesanan.component';
 
-describe('InputPOComponent', () => {
-  let component: InputPOComponent;
-  let fixture: ComponentFixture<InputPOComponent>;
+describe('InputPemesananComponent', () => {
+  let component: InputPemesananComponent;
+  let fixture: ComponentFixture<InputPemesananComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputPOComponent ]
+      declarations: [ InputPemesananComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputPOComponent);
+    fixture = TestBed.createComponent(InputPemesananComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

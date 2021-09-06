@@ -1,36 +1,220 @@
 {
   "GridColumns": [
-      {
-          "allowEditing": true,
-          "allowSorting": true,
-          "editType": "defaultEdit",
-          "field": "kontrak_id",
-          "headerText": "Kode Obat",
-          "visible": false
-      },
-      {
-          "allowEditing": true,
-          "allowSorting": true,
-          "editType": "defaultEdit",
-          "field": "nomor_kontrak_spjb",
-          "headerText": "Barcode",
-          "visible": true
-      },
-      {
-          "allowEditing": true,
-          "allowSorting": true,
-          "editType": "defaultEdit",
-          "field": "nomor_kontrak",
-          "headerText": "Nama Obat",
-          "visible": true
-      },
-      {
-          "allowEditing": true,
-          "allowSorting": true,
-          "editType": "defaultEdit",
-          "field": "judul_kontrak",
-          "headerText": "Banyak",
-          "visible": true
-      }
-  ]
+    {
+        "field": "kontrak_id",
+        "headerText": "Kontrak Id",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "id_supplier",
+        "headerText": "Id Supplier",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_kontrak_spjb",
+        "headerText": "Nomor Kontrak Spjb",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_kontrak",
+        "headerText": "Nomor Kontrak",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "judul_kontrak",
+        "headerText": "Judul Kontrak",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_ttd_kontrak",
+        "headerText": "Tanggal Ttd Kontrak",
+        "type": "Date",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_berlaku_kontrak",
+        "headerText": "Tanggal Berlaku Kontrak",
+        "type": "Date",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_berakhir_kontrak",
+        "headerText": "Tanggal Berakhir Kontrak",
+        "type": "Date",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "jumlah_item_kontrak",
+        "headerText": "Jumlah Item Kontrak",
+        "type": "number",
+        "format": "N2",
+        "textAlign": "Right",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "total_transaksi_kontrak",
+        "headerText": "Total Transaksi Kontrak",
+        "type": "number",
+        "format": "N2",
+        "textAlign": "Right",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tahun_anggaran",
+        "headerText": "Tahun Anggaran",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "keterangan",
+        "headerText": "Keterangan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_transaksi",
+        "headerText": "Status Transaksi",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "is_closed",
+        "headerText": "Is Closed",
+        "type": "boolean",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_inputed",
+        "headerText": "Time Inputed",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_validated",
+        "headerText": "Time Validated",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_canceled",
+        "headerText": "Time Canceled",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "reason_canceled",
+        "headerText": "Reason Canceled",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_closed",
+        "headerText": "Time Closed",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "reason_closed",
+        "headerText": "Reason Closed",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_revision",
+        "headerText": "Time Revision",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "reason_revision",
+        "headerText": "Reason Revision",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "jumlah_revisi",
+        "headerText": "Jumlah Revisi",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_kontrak_spjb_asli",
+        "headerText": "Nomor Kontrak Spjb Asli",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    }
+]
 }

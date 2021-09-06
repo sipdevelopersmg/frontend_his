@@ -1,0 +1,355 @@
+{
+  "GridColumns": [
+    {
+        "field": "pemesanan_id",
+        "headerText": "Pemesanan Id",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_pemesanan",
+        "headerText": "Nomor Pemesanan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_pemesanan",
+        "headerText": "Tanggal Pemesanan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_expired_pemesanan",
+        "headerText": "Tanggal Expired Pemesanan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "id_stockroom",
+        "headerText": "Id Stockroom",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "kode_stockroom",
+        "headerText": "Kode Stockroom",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_stockroom",
+        "headerText": "Nama Stockroom",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "id_supplier",
+        "headerText": "Id Supplier",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "kode_supplier",
+        "headerText": "Kode Supplier",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_supplier",
+        "headerText": "Nama Supplier",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "alamat_supplier",
+        "headerText": "Alamat Supplier",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "keterangan",
+        "headerText": "Keterangan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "jumlah_item_pesan",
+        "headerText": "Jumlah Item Pesan",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "jumlah_item_terima",
+        "headerText": "Jumlah Item Terima",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "sub_total_1",
+        "headerText": "Sub Total 1",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "total_disc",
+        "headerText": "Total Disc",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "sub_total_2",
+        "headerText": "Sub Total 2",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "total_tax",
+        "headerText": "Total Tax",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "total_transaksi_pesan",
+        "headerText": "Total Transaksi Pesan",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "total_transaksi_terima",
+        "headerText": "Total Transaksi Terima",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_penerimaan",
+        "headerText": "Status Penerimaan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_transaksi",
+        "headerText": "Status Transaksi",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "is_closed",
+        "headerText": "Is Closed",
+        "type": "boolean",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "user_inputed",
+        "headerText": "User Inputed",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_inputed",
+        "headerText": "Time Inputed",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "user_validated",
+        "headerText": "User Validated",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_validated",
+        "headerText": "Time Validated",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "user_canceled",
+        "headerText": "User Canceled",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_canceled",
+        "headerText": "Time Canceled",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "reason_canceled",
+        "headerText": "Reason Canceled",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "user_closed",
+        "headerText": "User Closed",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_closed",
+        "headerText": "Time Closed",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "reason_closed",
+        "headerText": "Reason Closed",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "user_revision",
+        "headerText": "User Revision",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_revision",
+        "headerText": "Time Revision",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "reason_revision",
+        "headerText": "Reason Revision",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "jumlah_revisi",
+        "headerText": "Jumlah Revisi",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "cetakan_ke",
+        "headerText": "Cetakan Ke",
+        "type": "number",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_pemesanan_asli",
+        "headerText": "Nomor Pemesanan Asli",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": false,
+        "editType": "defaultEdit"
+    }
+]
+}
