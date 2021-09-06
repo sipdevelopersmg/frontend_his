@@ -10,6 +10,7 @@ import { SetupKelasPerawatanComponent } from './pages/setup-data/setup-kelas-per
 import { SetupJenisRuanganComponent } from './pages/setup-data/setup-jenis-ruangan/setup-jenis-ruangan.component';
 import { SettingTarifBerlakuComponent } from './pages/setting-tarif/setting-tarif-berlaku/setting-tarif-berlaku.component';
 import { SetupPoliComponent } from './pages/setup-data/setup-poli/setup-poli.component';
+import { SettingTarifBerlakuPoliComponent } from './pages/setting-tarif/setting-tarif-berlaku-poli/setting-tarif-berlaku-poli.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { SetupPoliComponent } from './pages/setup-data/setup-poli/setup-poli.com
         SetupKelasPerawatanComponent,
         SetupJenisRuanganComponent,
         SettingTarifBerlakuComponent,
-        SetupPoliComponent
+        SetupPoliComponent,
+        SettingTarifBerlakuPoliComponent
     ],
     imports: [
         CommonModule,

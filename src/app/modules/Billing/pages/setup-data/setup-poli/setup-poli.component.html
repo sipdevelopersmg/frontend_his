@@ -1,3 +1,201 @@
-<org-card-layout>
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row">
+        <!-- Card Listing Ruangan -->
+        <div class="col-lg-6 col-md-6 cols-sm-6 col-xs-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <p class="mb-0 text-biru-muda">
+                            Daftar Ruangan
+                        </p>
+                    </div>
+                </div>
+                <div class="card-body p-2 cardPoliklinik">
+                    <!-- Filter Pencarian -->
+                    <div class="row mx-0 mb-2 py-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                            <input #FilterPencarian id="FilterPencarian" type="text" class="form-control"
+                                placeholder="Pencarian" (keyup)="onSearchFilter(FilterPencarian.value)">
+                        </div>
+                    </div>
 
+                    <!-- Listing Poliklinik -->
+                    <div class="row mx-0 mb-2 py-1 px-2 border shadow-sm rounded align-items-center listRuangan"
+                        *ngFor="let ruangan of JenisRuanganDatasource | filter: SearchRuangan"
+                        (click)="handleClickListingRuangan(ruangan)">
+                        <div class="col-11 px-0">
+                            <p class="mb-0" style="font-size: 13px;">
+                                {{ ruangan.jenis_ruangan }}
+                            </p>
+                        </div>
+                        <div class="col-1 px-0 text-end">
+                            <i class="fas fa-chevron-right fa-sm"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Listing Poliklinik -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <p class="mb-0 text-biru-muda">
+                                Daftar Poliklinik {{ RuanganSelected | titlecase }}
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 cursor-pointer" (click)="handleAddNewPoli()">
+                            <span class="badge bg-primary">
+                                <i class="fas fa-plus fa-sm"></i>&nbsp; Add Poliklinik Baru
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body p-0 cardPoliklinik">
+                    <!-- Treeview Group Tarif -->
+                    <ejs-treeview *ngIf="PoliklinikByRuanganId.length > 0" [id]="'GridTreeGroupTarif'"
+                        [fields]="PoliklinikTreeViewFields" e-nodeclick="onClick" [allowMultiSelection]='false'
+                        [allowDragAndDrop]="false" (nodeSelected)="handleSelectedPoli($event)">
+                        <ng-template #nodeTemplate="" let-data="">
+                            <div>
+                                <div class="treeviewdiv">
+                                    <div class="icon-add-poli" (click)="handleAddPoli(data)">
+                                        <i class="fas fa-plus-circle text-biru-muda"></i>
+                                    </div>
+                                    <div class="poli-text">
+                                        <p class="mb-0 {{ data.child?.length > 0 ? 'poli-parent' : 'poli-child' }}">
+                                            {{ data.nama_poli }}
+                                        </p>
+                                    </div>
+                                    <div class="badge-poli" (click)="handleSeeDetailPoli(data)">
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ejs-treeview>
+
+                    <p *ngIf="PoliklinikByRuanganId.length < 1" class="text-hitam-muda mb-0 p-2">
+                        No Records To Display
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Add Poliklinik  -->
+        <ng-template #modalAddPoliklinik>
+            <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                <h5 class="modal-title pull-left">
+                    {{ FormPoliklinikState == 'Insert' ? 'Add ' : 'Detail' }} Poliklinik
+                </h5>
+                <button type="button" class="btn pull-right text-white" aria-label="Close"
+                    (click)="handleCloseModalPoliklinik()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormPoliklinik">
+                    <!-- Jenis Ruangan -->
+                    <div class="row mb-2">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label [LabelCaption]="'Jenis Ruangan'"></atm-label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <input class="form-control form-select-sm" readonly type="text"
+                                formControlName="jenis_ruangan">
+                        </div>
+                    </div>
+
+                    <!-- Poli Parent -->
+                    <div class="row mb-2" [hidden]="FormPoliklinikState == 'InsertNew'">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label [LabelCaption]="'Poli'"></atm-label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <input class="form-control form-select-sm" readonly type="text"
+                                formControlName="poli_parent">
+                        </div>
+                    </div>
+
+                    <!-- Jenis Rawat -->
+                    <div class="row mb-2 align-items-center">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label [LabelCaption]="'Jenis Rawat'"></atm-label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jenis_rawat" id="jenis_rawat_irja"
+                                    value="J" formControlName="jenis_rawat">
+                                <label class="form-check-label" for="jenis_rawat_irja">IRJA</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jenis_rawat" id="jenis_rawat_irna"
+                                    value="I" formControlName="jenis_rawat">
+                                <label class="form-check-label" for="jenis_rawat_irna">IRNA</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jenis_rawat" id="jenis_rawat_irda"
+                                    value="D" formControlName="jenis_rawat">
+                                <label class="form-check-label" for="jenis_rawat_irda">IRDA</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kode Poli -->
+                    <div class="row mb-2" [hidden]="FormPoliklinikState == 'Update' && PoliklinikIsParent">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label
+                                [LabelCaption]="FormPoliklinikState == 'InsertNew' ? 'Poliklinik' : 'Sub Poliklinik'">
+                            </atm-label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <input class="form-control form-select-sm" type="text" formControlName="kode_poli"
+                                placeholder="Kode {{ FormPoliklinikState == 'InsertNew' ? 'Poliklinik' : 'Sub Poliklinik' }}">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <input class="form-control form-select-sm" type="text" formControlName="nama_poli"
+                                placeholder="Nama {{ FormPoliklinikState == 'InsertNew' ? 'Poliklinik' : 'Sub Poliklinik' }}">
+                        </div>
+                    </div>
+
+                    <div *ngIf="FormPoliklinikState == 'Update'" class="row align-items-center">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <atm-label [LabelCaption]="'Status'"></atm-label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <span class="badge fw-light" [class]="is_active.value ? 'bg-primary' : 'bg-warning'">
+                                {{ is_active.value ? 'AKTIF' : 'TIDAK AKTIF' }}
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer background-abu-muda p-2">
+                <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalPoliklinik()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+                <button *ngIf="FormPoliklinikState == 'Insert' || FormPoliklinikState == 'InsertNew'" type="button"
+                    class="btn btn-primary btn-sm" (click)="handleSubmitFormPoliklinik(FormPoliklinik.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+                <button *ngIf="FormPoliklinikState == 'Update'" type="button" class="btn btn-success btn-sm"
+                    (click)="handleUpdateStatusFormPoliklinik(FormPoliklinik.value)">
+                    <i class="fas fa-sync-alt fa-sm"></i>&nbsp; Ubah Status Poli
+                </button>
+                <button *ngIf="FormPoliklinikState == 'Update'" type="button" class="btn btn-danger btn-sm"
+                    (click)="handleDeleteFormPoliklinik(FormPoliklinik.value)">
+                    <i class="fas fa-trash-alt fa-sm"></i>&nbsp; Delete
+                </button>
+                <button *ngIf="FormPoliklinikState == 'Update'" type="button" class="btn btn-warning btn-sm"
+                    (click)="handleUpdateFormPoliklinik(FormPoliklinik.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Update
+                </button>
+            </div>
+        </ng-template>
+    </div>
 </org-card-layout>

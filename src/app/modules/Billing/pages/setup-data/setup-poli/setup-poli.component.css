@@ -1,0 +1,41 @@
+.cardPoliklinik {
+  height: calc(100vh - 13rem);
+  max-height: calc(100vh - 13rem);
+  overflow-y: auto;
+}
+
+.listRuangan:hover,
+.listRuangan:active,
+.listRuangan:focus {
+  background-color: var(--biru-muda);
+  color: white !important;
+  cursor: pointer;
+}
+
+.icon-add-poli {
+  float: left;
+  margin-right: 10px;
+}
+
+.poli-text {
+  float: left;
+}
+
+.badge-poli {
+  float: right;
+}
+
+.poli-parent {
+  color: var(--biru-tua);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.poli-child {
+  color: var(--hitam-muda);
+  font-size: 13px;
+}
+
+.e-treeview .e-ul {
+  padding-left: 0.5rem !important;
+}

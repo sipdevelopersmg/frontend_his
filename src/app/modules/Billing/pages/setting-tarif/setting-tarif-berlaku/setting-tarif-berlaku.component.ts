@@ -27,7 +27,8 @@ export class SettingTarifBerlakuComponent implements OnInit {
      * @ButtonNavModel Array
     */
     ButtonNav: ButtonNavModel[] = [
-        { Id: 'Simpan', Captions: 'Simpan', Icons1: 'fas fa-save fa-sm' }
+        { Id: 'Clear', Captions: 'Clear', Icons1: 'fas fa-redo-alt fa-sm' },
+        { Id: 'Simpan', Captions: 'Simpan', Icons1: 'fas fa-save fa-sm' },
     ];
 
     @ViewChild('KelasPerawatanDropdown') KelasPerawatanDropdown: DropDownListComponent;
@@ -38,6 +39,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
 
     @ViewChild('TglBerlakuDatepicker') TglBerlakuDatepicker: DatePickerComponent;
     TglBerlakuSelected: string;
+    TglBerlakuDatepickerDisabled = false;
 
     /**
      * Variable untuk menyimpan Configurasi Grid
@@ -92,6 +94,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
     JenisUbahNominalTarifFields = { text: 'Jenis', value: 'Nilai' };
 
     FormKenaikanPersentaseTarif: FormGroup;
+    FormKenaikanPersentaseTarifState = "UsingTglBerlaku";
 
     constructor(
         private formBuilder: FormBuilder,
@@ -115,6 +118,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
 
         this.FormKenaikanPersentaseTarif = this.formBuilder.group({
             id_kelas: [0, []],
+            tgl_berlaku: ["", []],
             is_up_for_percent: [false, []],
             perubahan_tarif_dalam_percent: [0, []],
             is_plus_for_jumlah: [false, []],
@@ -126,6 +130,9 @@ export class SettingTarifBerlakuComponent implements OnInit {
         switch (args) {
             case 'Simpan':
                 this.handleSubmitSettingTarifBerlaku();
+                break;
+            case 'Clear':
+                this.handleClearSettingTarifBerlaku();
                 break;
             default:
                 break;
@@ -279,10 +286,18 @@ export class SettingTarifBerlakuComponent implements OnInit {
         };
     }
 
+    handleChangeTglBerlakuTarif(args: any): void {
+        if (args.value) {
+            this.GridDataToolbar = [
+                { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+                'Search'
+            ];
+        }
+    }
+
     handlePencarianTarifBerlaku(KelasPerawatanId: number, KelasPerawatan: string) {
         this.KelasPerawatanIdSelected = KelasPerawatanId;
         this.KelasPerawatanSelected = KelasPerawatan;
-        // this.TglBerlakuSelected = TglBerlaku;
 
         this.onGetAllTarifByKelasPerawatan(KelasPerawatanId);
 
@@ -290,11 +305,6 @@ export class SettingTarifBerlakuComponent implements OnInit {
             this.handleClickCloseOffcanvas();
 
             this.EditedGridData = [];
-
-            this.GridDataToolbar = [
-                { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-                'Search'
-            ];
         }, 100);
     }
 
@@ -303,18 +313,6 @@ export class SettingTarifBerlakuComponent implements OnInit {
             .subscribe((result) => {
                 if (result) {
                     this.GridDatasource = result.data;
-
-                    if (this.GridDatasource.length < 1) {
-                        this.GridDataToolbar = [
-                            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-                            'Search'
-                        ];
-                    } else {
-                        this.GridDataToolbar = [
-                            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-                            'Search'
-                        ];
-                    }
                 }
             });
     }
@@ -334,8 +332,6 @@ export class SettingTarifBerlakuComponent implements OnInit {
     handleSelectedRow(args: any): void {
         this.SelectedData = args.data;
 
-        const tgl_berlaku = this.GridData.getColumnByField('tgl_berlaku');
-
         if (args.data.id_tarif_berlaku) {
             this.GridDataToolbar = [
                 { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
@@ -343,16 +339,11 @@ export class SettingTarifBerlakuComponent implements OnInit {
                 { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash-alt fa-sm', id: 'delete' },
                 'Search'
             ];
-
-            tgl_berlaku.allowEditing = true;
-
         } else {
             this.GridDataToolbar = [
                 { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
                 'Search'
             ];
-
-            tgl_berlaku.allowEditing = false;
         }
     }
 
@@ -361,7 +352,19 @@ export class SettingTarifBerlakuComponent implements OnInit {
             if (args.previousData != args.data) {
                 const index = this.EditedGridData.map((e) => { return e.id_setup_tarif }).indexOf(args.data.id_setup_tarif);
 
-                this.EditedGridData[index] = args.data;
+                let tgl_berlaku = new Date(this.TglBerlakuDatepicker.value);
+
+                tgl_berlaku = new Date(tgl_berlaku.setDate(tgl_berlaku.getDate() + 1));
+
+                if (index >= 0) {
+                    args.data.tgl_berlaku = tgl_berlaku.toISOString();
+
+                    this.EditedGridData[index] = args.data;
+                } else {
+                    args.data.tgl_berlaku = tgl_berlaku.toISOString();
+
+                    this.EditedGridData.push(args.data);
+                }
             }
         }
     }
@@ -413,7 +416,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                         "searchText2": ""
                     }
                 ],
-                "id_kelas": this.KelasPerawatanSelected ? this.KelasPerawatanSelected : 0
+                "id_kelas": this.KelasPerawatanIdSelected ? this.KelasPerawatanIdSelected : 0
             };
         } else {
             parameter = {
@@ -432,6 +435,13 @@ export class SettingTarifBerlakuComponent implements OnInit {
         this.settingTarifBerlakuService.onGetAllLookupTarifNotInKelas(parameter)
             .subscribe((result) => {
                 if (result) {
+
+                    this.GridDatasource.filter((item) => {
+                        let tarifIndex = result.data.map((tarif) => { return tarif.id_setup_tarif }).indexOf(item.id_setup_tarif);
+
+                        return result.data.splice(tarifIndex, 1);
+                    });
+
                     this.GridLookupTarifDatasource = result.data;
                 }
             });
@@ -477,6 +487,10 @@ export class SettingTarifBerlakuComponent implements OnInit {
 
     handleCloseModalLookupTarif(): void {
         this.modalRef.hide();
+
+        this.TglBerlakuDatepicker.setDisabledState(true);
+
+        this.TglBerlakuDatepickerDisabled = true;
     }
     // *** End Section Of Filter Lookup =================
 
@@ -513,13 +527,37 @@ export class SettingTarifBerlakuComponent implements OnInit {
                             this.onGetAllTarifByKelasPerawatan(this.KelasPerawatanIdSelected);
 
                             this.EditedGridData = [];
+
+                            this.TglBerlakuDatepickerDisabled = false;
+
+                            this.TglBerlakuDatepicker.setDisabledState(false);
                         })
                 }
             })
     }
 
+    handleClearSettingTarifBerlaku(): void {
+        this.onGetAllTarifByKelasPerawatan(this.KelasPerawatanIdSelected);
+
+        this.EditedGridData = [];
+
+        this.TglBerlakuDatepicker.setDisabledState(false);
+
+        this.TglBerlakuDatepickerDisabled = false;
+    }
+
+    handleOpenOffcanvasTarifKeseluruhan(State: string): void {
+        this.FormKenaikanPersentaseTarifState = State;
+
+        this.onResetFormKenaikanPersentaseTarif();
+    }
+
     handleSubmitUpdateKenaikanTarifKeseluruhan(FormKenaikanPersentaseTarif: any): void {
+        delete FormKenaikanPersentaseTarif.tgl_berlaku;
+
         FormKenaikanPersentaseTarif.id_kelas = this.KelasPerawatanIdSelected;
+
+        FormKenaikanPersentaseTarif.is_plus_for_jumlah = FormKenaikanPersentaseTarif.is_plus_for_jumlah == null ? false : FormKenaikanPersentaseTarif.is_plus_for_jumlah;
 
         this.settingTarifBerlakuService.onPutKeseluruhanTarif(FormKenaikanPersentaseTarif)
             .subscribe((result) => {
@@ -527,16 +565,45 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Update Keseluruhan Tarif Kelas ' + this.KelasPerawatanSelected + ' Berhasil')
                         .then(() => {
                             this.onGetAllTarifByKelasPerawatan(this.KelasPerawatanIdSelected);
-                            this.onResepFormKenaikanPersentaseTarif();
+
+                            this.onResetFormKenaikanPersentaseTarif();
+
                             (<HTMLElement>document.getElementById('btnCloseOffcanvasTarif')).click();
                         })
                 }
             })
     }
 
-    onResepFormKenaikanPersentaseTarif(): void {
+    handleSubmitInsertKenaikanTarifKeseluruhan(FormKenaikanPersentaseTarif: any): void {
+        FormKenaikanPersentaseTarif.id_kelas = this.KelasPerawatanIdSelected;
+
+        let tgl_berlaku = new Date(FormKenaikanPersentaseTarif.tgl_berlaku);
+
+        tgl_berlaku = new Date(tgl_berlaku.setDate(tgl_berlaku.getDate() + 1));
+
+        FormKenaikanPersentaseTarif.tgl_berlaku = tgl_berlaku.toISOString();
+
+        FormKenaikanPersentaseTarif.is_plus_for_jumlah = FormKenaikanPersentaseTarif.is_plus_for_jumlah == null ? false : FormKenaikanPersentaseTarif.is_plus_for_jumlah;
+
+        this.settingTarifBerlakuService.onPostSaveKeseluruhanTarif(FormKenaikanPersentaseTarif)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Simpan Keseluruhan Tarif Kelas ' + this.KelasPerawatanSelected + ' Berhasil')
+                        .then(() => {
+                            this.onGetAllTarifByKelasPerawatan(this.KelasPerawatanIdSelected);
+
+                            this.onResetFormKenaikanPersentaseTarif();
+
+                            (<HTMLElement>document.getElementById('btnCloseOffcanvasTarif')).click();
+                        })
+                }
+            })
+    }
+
+    onResetFormKenaikanPersentaseTarif(): void {
         this.FormKenaikanPersentaseTarif.reset();
 
+        this.tgl_berlaku.setValue(null);
         this.is_up_for_percent.setValue(false);
         this.perubahan_tarif_dalam_percent.setValue(0);
         this.is_plus_for_jumlah.setValue(false);
@@ -549,6 +616,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
     }
 
     get id_kelas(): AbstractControl { return this.FormKenaikanPersentaseTarif.get('id_kelas') }
+    get tgl_berlaku(): AbstractControl { return this.FormKenaikanPersentaseTarif.get('tgl_berlaku') }
     get is_up_for_percent(): AbstractControl { return this.FormKenaikanPersentaseTarif.get('is_up_for_percent') }
     get perubahan_tarif_dalam_percent(): AbstractControl { return this.FormKenaikanPersentaseTarif.get('perubahan_tarif_dalam_percent') }
     get is_plus_for_jumlah(): AbstractControl { return this.FormKenaikanPersentaseTarif.get('is_plus_for_jumlah') }

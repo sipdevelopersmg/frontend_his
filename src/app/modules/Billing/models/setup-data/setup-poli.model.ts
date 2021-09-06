@@ -106,6 +106,16 @@ export class PutUpdatePoliModel implements HttpResponseModel {
 }
 
 /**
+ * @PutUpdateStatusPoliModel response model setelah request Put Update Status Poli
+ * @Key : { responseResult: boolean, data: string, message: string }
+*/
+export class PutUpdateStatusPoliModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
+
+/**
  * @DeletePoliModel response model setelah request Delete Poli
  * @Key : { responseResult: boolean, data: string, message: string }
 */
