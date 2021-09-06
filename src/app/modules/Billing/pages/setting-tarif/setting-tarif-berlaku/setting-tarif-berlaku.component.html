@@ -1,12 +1,23 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
-    <div class="row align-items-center mb-3">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div class="row align-items-center">
+    <div class="row">
+        <!-- Datepicker Tgl Berlaku Tarif -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="row align-items-center mb-2">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <atm-label [LabelCaption]="'Tgl Berlaku Tarif'"></atm-label>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <ejs-datepicker #TglBerlakuDatepicker [format]="'dd MMMM yyyy'"></ejs-datepicker>
+                    <ejs-datepicker #TglBerlakuDatepicker [format]="'dd MMMM yyyy'"
+                        (change)="handleChangeTglBerlakuTarif($event)">
+                    </ejs-datepicker>
+                </div>
+            </div>
+
+            <div class="row align-items-center" *ngIf="TglBerlakuDatepickerDisabled">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <p class="mb-0 text-danger" style="font-size: 13px">
+                        Anda Tidak Dapat Mengubah Tgl Berlaku Tarif Sebelum Setting Tarif Disimpan
+                    </p>
                 </div>
             </div>
         </div>
@@ -59,25 +70,32 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="card-header">
                     <p class="mb-0 text-biru-tua fw-bold">
                         {{ KelasPerawatanSelected ? 'Daftar Tarif Kelas ' + KelasPerawatanSelected : 'Daftar Tarif' }}
                         &nbsp;
-                        <span class="badge bg-primary fw-light mx-2 cursor-pointer"
-                            *ngIf="KelasPerawatanSelected && GridDatasource?.length > 1" data-bs-toggle="offcanvas"
+                        <span class="badge bg-warning fw-light mx-2 cursor-pointer"
+                            *ngIf="KelasPerawatanSelected && GridDatasource?.length >= 1" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasUpdateTarifKeseluruhan"
                             aria-controls="offcanvasUpdateTarifKeseluruhan"
-                            (click)="onResepFormKenaikanPersentaseTarif()">
+                            (click)="handleOpenOffcanvasTarifKeseluruhan('NotUsingTglBerlaku')">
                             <p class="mb-0">Update Tarif Keseluruhan</p>
+                        </span>
+                        <span class="badge bg-primary fw-light mx-2 cursor-pointer"
+                            *ngIf="KelasPerawatanSelected && GridDatasource?.length >= 1" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasUpdateTarifKeseluruhan"
+                            aria-controls="offcanvasUpdateTarifKeseluruhan"
+                            (click)="handleOpenOffcanvasTarifKeseluruhan('UsingTglBerlaku')">
+                            <p class="mb-0">Simpan Tarif Keseluruhan</p>
                         </span>
                     </p>
 
                 </div>
                 <div class="card-body p-0">
-                    <ejs-grid #GridData [height]="'calc(100vh - 24.5rem)'" [dataSource]="GridDatasource"
+                    <ejs-grid #GridData [height]="'calc(100vh - 26rem)'" [dataSource]="GridDatasource"
                         [allowPaging]="true" [editSettings]="GridDataEditSettings" [gridLines]="'Both'"
                         [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
                         (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
@@ -100,7 +118,7 @@
                             </e-column>
                             <e-column [allowEditing]="false" [allowSorting]="false" [field]="'tgl_berlaku'"
                                 [headerText]="'Tgl Berlaku'" [textAlign]="'Left'" [visible]="true"
-                                [editType]="'datepickeredit'" [type]="'Date'" [format]="'dd/MM/yyyy'" [width]="80">
+                                [editType]="'defaultEdit'" [type]="'Date'" [format]="'dd/MM/yyyy'" [width]="80">
                             </e-column>
                             <e-column [allowEditing]="false" [allowSorting]="false" [field]="'tgl_berakhir'"
                                 [headerText]="'Tgl Berakhir'" [textAlign]="'Left'" [visible]="false"
@@ -172,7 +190,8 @@
                 aria-labelledby="ooffcanvasUpdateTarifKeseluruhanLabel">
                 <div class="offcanvas-header">
                     <h5 id="ooffcanvasUpdateTarifKeseluruhanLabel">
-                        Update Keseluruhan Tarif Kelas {{ KelasPerawatanSelected }}
+                        {{ FormKenaikanPersentaseTarifState == 'NotUsingTglBerlaku' ? 'Update' : 'Simpan' }} Keseluruhan
+                        Tarif Kelas {{ KelasPerawatanSelected }}
                     </h5>
                     <button id="btnCloseOffcanvasTarif" type="button" class="btn-close text-reset"
                         data-bs-dismiss="offcanvas" aria-label="Close">
@@ -180,6 +199,17 @@
                 </div>
                 <div class="offcanvas-body">
                     <form [formGroup]="FormKenaikanPersentaseTarif">
+                        <!-- Tgl Berlaku Tarif -->
+                        <div *ngIf="FormKenaikanPersentaseTarifState == 'UsingTglBerlaku'" class="row mb-3">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <atm-label [LabelCaption]="'Tgl Berlaku Tarif'"></atm-label>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <ejs-datepicker [format]="'dd MMMM yyyy'" formControlName="tgl_berlaku">
+                                </ejs-datepicker>
+                            </div>
+                        </div>
+
                         <!-- Jenis Ubah Tarif -->
                         <div class="row mb-3">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
@@ -206,7 +236,7 @@
                         </div>
 
                         <!-- Kenaikan / Pengurangan Nominal Tarif -->
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                                 <atm-label [LabelCaption]="'Kenaikan / Pengurangan Nominal Tarif'"></atm-label>
                             </div>
@@ -231,9 +261,15 @@
 
                         <div class="row mb-3">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
-                                <button class="btn btn-warning btn-sm" type="button"
+                                <button *ngIf="FormKenaikanPersentaseTarifState == 'NotUsingTglBerlaku'"
+                                    class="btn btn-warning btn-sm mx-2" type="button"
                                     (click)="handleSubmitUpdateKenaikanTarifKeseluruhan(FormKenaikanPersentaseTarif.value)">
                                     <i class="fas fa-save fa-sm"></i>&nbsp; Update Keseluruhan Tarif
+                                </button>
+                                <button *ngIf="FormKenaikanPersentaseTarifState == 'UsingTglBerlaku'"
+                                    class="btn btn-primary btn-sm" type="button"
+                                    (click)="handleSubmitInsertKenaikanTarifKeseluruhan(FormKenaikanPersentaseTarif.value)">
+                                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan Keseluruhan Tarif
                                 </button>
                             </div>
                         </div>

@@ -5,10 +5,10 @@ import { catchError } from 'rxjs/operators';
 import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/BILLING';
 import { GetAllByIdKelasPerawatanModel, GetAllTarifBerlakuModel, GetByIdTarifBerlakuModel, PostInsertTarifBerlakuModel, PutUpdateStatusTarifBerlakuModel, PutUpdateTarifBerlakuModel, TarifBerlakuModel } from '../../../models/setting-tarif/setting-tarif-berlaku.model';
 import { GetAllTarifModel } from '../../../models/setup-data/setup-tarif.model';
 import { SetupTarifService } from '../../setup-data/setup-tarif/setup-tarif.service';
+import * as API_CONFIG from '../../../../../api/BILLING';
 
 @Injectable({
     providedIn: 'root'
@@ -68,6 +68,15 @@ export class SettingTarifBerlakuService {
     */
     onPostSaveListOfObject(Data: TarifBerlakuModel[]): Observable<PostInsertTarifBerlakuModel> {
         return this.httpOperationService.defaultPostRequest(this.API_GRUP_TARIF.POST_SAVE_TARIF_BERLAKU_LIST_OF_OBJECT, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onPostSaveKeseluruhanTarif(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_GRUP_TARIF.POST_SAVE_KESELURUHAN_TARIF_BERLAKU, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

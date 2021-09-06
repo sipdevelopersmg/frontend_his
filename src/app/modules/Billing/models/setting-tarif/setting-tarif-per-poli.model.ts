@@ -44,6 +44,16 @@ export class GetByIdTarifPerPoliModel implements HttpResponseModel {
 }
 
 /**
+ * @GetByIdPoliModel response model setelah request Get All Tarif Berlaku By Id Poli
+ * @Key : { responseResult: boolean, data: TarifPerPoliModel, message: string }
+*/
+export class GetByIdPoliModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: TarifPerPoliModel[];
+    message: string;
+}
+
+/**
  * @GetAllTarifModel response model setelah request Get All Tarif Per Poli
  * @Key : { responseResult: boolean, data: TarifPerPoliRecursiveModel[], message: string }
 */
@@ -70,5 +80,23 @@ export class PostInsertTarifPerPoliModel implements HttpResponseModel {
 export class PutUpdateStatusTarifPerPoliModel implements HttpResponseModel {
     responseResult: boolean;
     data: string;
+    message: string;
+}
+
+export interface TarifPerPoliDynamicFilterModel {
+    id_setup_tarif: number;
+    kode_setup_tarif: string;
+    nama_setup_tarif: string;
+    nama_kelas: string;
+    nominal_tarif: number;
+}
+
+/**
+ * @GetAllTarifPerPoliByDynamicFilterModel response model setelah request Get All Tarif Per Poli Dynamic Tarif
+ * @Key : { responseResult: boolean, data: TarifPerPoliDynamicFilterModel, message: string }
+*/
+export class GetAllTarifPerPoliByDynamicFilterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: TarifPerPoliDynamicFilterModel[];
     message: string;
 }

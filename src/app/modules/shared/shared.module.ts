@@ -192,6 +192,7 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         OrgLookUpComponent,
         GridModule,
         TreeViewModule,
+        Ng2SearchPipeModule
     ],
     providers: [
         EditService,

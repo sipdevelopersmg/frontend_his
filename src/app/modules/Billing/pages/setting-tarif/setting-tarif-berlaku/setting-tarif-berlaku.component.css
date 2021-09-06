@@ -26,3 +26,7 @@ span.e-headertext {
 td.e-rowcell {
   padding: 5px !important;
 }
+
+.readonly-state {
+  background-color: var(--abu-muda);
+}
