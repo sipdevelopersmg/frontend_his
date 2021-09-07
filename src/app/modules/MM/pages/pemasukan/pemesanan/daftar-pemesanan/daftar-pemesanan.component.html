@@ -10,7 +10,7 @@
             <mol-grid
             #GridData
             [grid-height]="'calc(100vh - 19rem)'"
-            [grid-DataSource]="inputKontrakPengadaanService.dataSource | async"
+            [grid-DataSource]="pemesananService.dataSource | async"
             [grid-paging]="true"
             [grid-lines]="'Both'"
             [columns]="GridConfig.GridColumns"

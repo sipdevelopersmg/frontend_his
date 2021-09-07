@@ -1,8 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { InputKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component";
+import { ListKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/list-kontrak-pengadaan/list-kontrak-pengadaan.component";
+import { ViewKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/view-kontrak-pengadaan/view-kontrak-pengadaan.component";
+import { DaftarPemesananComponent } from "./pages/pemasukan/pemesanan/daftar-pemesanan/daftar-pemesanan.component";
+import { InputPemesananComponent } from "./pages/pemasukan/pemesanan/input-pemesanan/input-pemesanan.component";
+import { ViewPemesananComponent } from "./pages/pemasukan/pemesanan/view-pemesanan/view-pemesanan.component";
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
-import { InputPOComponent } from "./pages/pemasukan/PO/input-po/input-po.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
@@ -41,12 +45,16 @@ const mmRoutes: Routes = [
         path: "kontrak-pengadaan", component: null, data: { title: "Input Kontrak Pengadaan" },
         children: [
             { path: "input-kontrak-pengadaan", component: InputKontrakPengadaanComponent, data: { title: "Input Kontrak Pengadaan" } },
+            { path: "daftar-kontrak-pengadaan", component: ListKontrakPengadaanComponent, data: { title: "Daftar Kontrak Pengadaan" } },
+            { path: "view-kontrak-pengadaan/:id/:key", component: ViewKontrakPengadaanComponent, data: { title: "View Kontrak Pengadaan" } },
         ],
     },
     {
-        path: "PO", component: null, data: { title: "Input PO" },
-        children: [
-            { path: "input-PO", component: InputPOComponent, data: { title: "Input Pesanan PO" } },
+        path: "pemesanan", component: null, data: {title:"Input PO"},
+        children:[
+            { path: "input-pemesanan", component: InputPemesananComponent, data: { title: "Input Pemesanan" } },
+            { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "daftar Pemesanan" } },
+            { path: "view-pemesanan/:id/:key", component: ViewPemesananComponent, data: { title: "View Pemesanan" } },
         ],
     },
     {

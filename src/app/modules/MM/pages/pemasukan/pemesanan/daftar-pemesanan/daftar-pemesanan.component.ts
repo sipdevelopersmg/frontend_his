@@ -1,17 +1,16 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { InputKontrakPengadaanService } from 'src/app/modules/MM/services/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.service';
+import { PemesananService } from 'src/app/modules/MM/services/pemasukan/pemesanan/pemesanan.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import * as GridConfig from './json/grid.config.json'
-
 @Component({
-  selector: 'app-list-kontrak-pengadaan',
-  templateUrl: './list-kontrak-pengadaan.component.html',
-  styleUrls: ['./list-kontrak-pengadaan.component.css']
+  selector: 'app-daftar-pemesanan',
+  templateUrl: './daftar-pemesanan.component.html',
+  styleUrls: ['./daftar-pemesanan.component.css']
 })
-export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
+export class DaftarPemesananComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
@@ -39,7 +38,7 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private encryptionService: EncryptionService,
-    public inputKontrakPengadaanService: InputKontrakPengadaanService,
+    public pemesananService: PemesananService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -47,11 +46,11 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.inputKontrakPengadaanService.onInitList();
+    this.pemesananService.onInitList();
   }
 
   handlePencarianFilter(args){
-    this.inputKontrakPengadaanService.onGetAllByParamsSource(args);
+    this.pemesananService.onGetAllByParamsSource(args);
     // setTimeout(()=>{
       this.GridData.Grid.refresh();
     // },500)
@@ -64,11 +63,11 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
   handleClickButtonNav(args: any): void {
     switch (args) {
       case 'Add':
-        this.router.navigateByUrl('dashboard/MM/kontrak-pengadaan/input-kontrak-pengadaan');
+        this.router.navigateByUrl('dashboard/MM/pemesanan/input-pemesanan');
         break;
       case 'Edit':
-        const kontrak_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.kontrak_id));
-        this.router.navigate(['dashboard/MM/kontrak-pengadaan/view-kontrak-pengadaan', kontrak_id, "GRAHCIS"]);
+        const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.pemesanan_id));
+        this.router.navigate(['dashboard/MM/pemesanan/view-pemesanan', pemesanan_id, "GRAHCIS"]);
         break;
       case 'Delete':
         // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as GridLoockUpSupplier from "./json/lookupsupplier.json";
 import * as GridLoockUpItem from "./json/lookupitem.json";
 import * as GridDetailItem from "./json/detailItem.json"
@@ -15,6 +16,8 @@ import { InputKontrakPengadaanService } from 'src/app/modules/MM/services/pemasu
 import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { combineLatest, Subscription } from 'rxjs';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
+import { Location } from '@angular/common'
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 
 @Component({
     selector: 'app-input-kontrak-pengadaan',
@@ -39,6 +42,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
     ButtonNav: ButtonNavModel[] = [
         { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
         { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
+        { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
+
     ];
 
     DetailItems: any;
@@ -80,12 +85,17 @@ export class InputKontrakPengadaanComponent implements OnInit {
     TglExpiredParams = { params: { min: new Date() } };
     utilityService: any;
 
+    id_kontrak_from_list:number;
+
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
         public inputKontrakPengadaanService: InputKontrakPengadaanService,
         private changeDetection: ChangeDetectorRef,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private location: Location,
+        private encryptionService: EncryptionService,
+        private activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
@@ -141,6 +151,32 @@ export class InputKontrakPengadaanComponent implements OnInit {
         ];
     }
 
+    ngAfterViewInit(): void {
+        let kontrak_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+        console.log(kontrak_id);
+        this.onLoadDetailData(kontrak_id);
+    }
+
+    onLoadDetailData(kontrak_id){
+        this.inputKontrakPengadaanService.onGetById(kontrak_id).subscribe((result)=>{
+            this.formKontrak.setValue({
+                id_supplier         :result.data.id_supplier,
+                nomor_kontrak_spjb  :result.data.nomor_kontrak_spjb,
+                nomor_kontrak       :result.data.nomor_kontrak,
+                tanggal_ttd_kontrak :result.data.tanggal_ttd_kontrak,
+                tanggal_berlaku_kontrak:result.data.tanggal_berlaku_kontrak,
+                tanggal_berakhir_kontrak:result.data.tanggal_berakhir_kontrak,
+                judul_kontrak       :result.data.judul_kontrak,
+                tahun_anggaran      :result.data.tahun_anggaran,
+                keterangan          :result.data.keterangan,
+                total_transaksi_kontrak:result.data.total_transaksi_kontrak,
+                jumlah_item_kontrak :result.data.jumlah_item_kontrak,
+                user_inputed :1,
+            })
+        });
+        
+    }
+
     onClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
             case 'Save':
@@ -148,6 +184,9 @@ export class InputKontrakPengadaanComponent implements OnInit {
                 break;
             case 'Reset':
                 this.ResetFrom();
+                break;
+            case 'Kembali':
+                this.location.back();
                 break;
             default:
                 break;

@@ -1,0 +1,54 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formKontrak">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+                <mol-input-text [label]="'Supplier'" formControlName="nama_supplier" [inputFieldState]="inputFieldState"></mol-input-text>
+
+                <mol-input-text [label]="'No SPBBJ'" formControlName="nomor_kontrak_spjb" [inputFieldState]="inputFieldState"></mol-input-text>
+
+                <mol-input-text [label]="'Nomor Kontrak'" formControlName="nomor_kontrak" [inputFieldState]="inputFieldState"></mol-input-text>
+
+                <mol-datepicker-syncfusion [label]="'Tgl TTD'" [format]="'dd MMMM yyyy'" [inputFieldState]="inputFieldState"
+                    formControlName="tanggal_ttd_kontrak">
+                </mol-datepicker-syncfusion>
+
+                <mol-input-text [label]="'Judul Kontrak'" formControlName="judul_kontrak" [inputFieldState]="inputFieldState"></mol-input-text>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+                <mol-datepicker-syncfusion [label]="'Tgl Berlaku Kontrak'" [format]="'dd MMMM yyyy'" [inputFieldState]="inputFieldState"
+                    formControlName="tanggal_berlaku_kontrak">
+                </mol-datepicker-syncfusion>
+
+                <mol-datepicker-syncfusion [label]="'Tgl Berakhir Kontrak'" [format]="'dd MMMM yyyy'" [inputFieldState]="inputFieldState"
+                    formControlName="tanggal_berakhir_kontrak">
+                </mol-datepicker-syncfusion>
+
+                <mol-input-text [label]="'Tahun Anggaran'" formControlName="tahun_anggaran" [inputFieldState]="inputFieldState"></mol-input-text>
+
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan" [inputFieldState]="inputFieldState"></mol-input-textarea>
+
+            </div>
+        </div>
+        <mol-grid 
+        [grid-DataSource]="inputKontrakPengadaanService.dataDetail$| async"
+        [columns]="ConfigGrid.TrDetailKontrak"
+        ></mol-grid>
+        <div class="row">
+            <div class="col-sm-8">
+            </div>
+            <div class="col-sm-4">
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="inputKontrakPengadaanService.total" formControlName="total_transaksi_kontrak"
+                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak"
+                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-text>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

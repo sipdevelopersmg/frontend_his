@@ -3,34 +3,37 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { PENERIMAAN } from 'src/app/api/MM/PENERIMAAN';
-import { TrKontrakSpjbDetailItemInsert, TrKontrakSpjbInsert } from 'src/app/modules/MM/models/penerimaan/kontrak-pengadaan/KontrakPengadaanModel';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import 'src/app/prototype/ArrPrototype';
+import { TrPemesananDetailInsert,TrPemesananInsert } from '../../../models/penerimaan/pemesanan/PemesananModel';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
+export class PemesananService {
 
-export class InputKontrakPengadaanService {
-
-    public API = PENERIMAAN.TRANSKONTRAKSPJB;
+    public API = PENERIMAAN.TRANSPEMESANAN;
     public dataSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<TrKontrakSpjbDetailItemInsert[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<TrPemesananDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): TrKontrakSpjbDetailItemInsert[] {
+    get dataDetail(): TrPemesananDetailInsert[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: TrKontrakSpjbDetailItemInsert[]) {
+    set dataDetail(val: TrPemesananDetailInsert[]) {
         this._dataDetail.next(val);
     }
 
-    public total: Number = 0;
-    public jumlahItem: Number = 0;
+    public sub_total_1: Number = 0;
+    public total_disc: Number = 0;
+    public sub_total_2: Number = 0;
+    public total_tax: Number = 0;
+    public total_transaksi_pesan: Number = 0;
+
+    public jumlah_item_pesan: Number = 0;
 
     constructor(
         private notificationService: NotificationService,
@@ -63,7 +66,7 @@ export class InputKontrakPengadaanService {
      * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_BY_PARAMS,req).pipe(
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS,req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
@@ -92,7 +95,7 @@ export class InputKontrakPengadaanService {
         });
     }
 
-    addDataDetail(detail: TrKontrakSpjbDetailItemInsert) {
+    addDataDetail(detail: TrPemesananDetailInsert) {
         this.dataDetail = [
             ...this.dataDetail,
             detail
@@ -100,16 +103,16 @@ export class InputKontrakPengadaanService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: TrKontrakSpjbDetailItemInsert, rowData: TrKontrakSpjbDetailItemInsert) {
+    updateFromInline(index: number, data: TrPemesananDetailInsert, rowData: TrPemesananDetailInsert) {
         let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar);
         let isi = data.satuan[indexsatuan].isi;
         data.isi = isi;
-        data.qty_kontrak = data.qty_kontrak_satuan_besar * isi;
+        data.qty_pesan = data.qty_satuan_besar * isi;
 
-        if (data.sub_total_kontrak != rowData.sub_total_kontrak) {
-            data.harga_satuan = data.sub_total_kontrak / data.qty_kontrak;
+        if (data.sub_total_pesan != rowData.sub_total_pesan) {
+            data.harga_satuan = data.sub_total_pesan / data.qty_pesan;
         } else {
-            data.sub_total_kontrak = data.qty_kontrak * data.harga_satuan;
+            data.sub_total_pesan = data.qty_pesan * data.harga_satuan;
         }
 
         this.dataDetail[index] = data;
@@ -122,23 +125,21 @@ export class InputKontrakPengadaanService {
     }
 
     editBanyak(index: number, banyak: number) {
-        this.dataDetail[index].qty_kontrak_satuan_besar = banyak;
-        this.dataDetail[index].qty_kontrak = banyak * this.dataDetail[index].isi;
-        this.dataDetail[index].sub_total_kontrak = banyak * this.dataDetail[index].isi * this.dataDetail[index].harga_satuan;
+        this.dataDetail[index].qty_satuan_besar = banyak;
+        this.dataDetail[index].qty_pesan = banyak * this.dataDetail[index].isi;
+        this.dataDetail[index].sub_total_pesan = banyak * this.dataDetail[index].isi * this.dataDetail[index].harga_satuan;
     }
 
-    editExpired(index: number, expired: string) {
-        this.dataDetail[index].tanggal_maksimal_expired_date = expired;
-    }
+
 
     editHarga(index: number, harga: number) {
         this.dataDetail[index].harga_satuan = harga;
-        this.dataDetail[index].sub_total_kontrak = harga * this.dataDetail[index].qty_kontrak;
+        this.dataDetail[index].sub_total_pesan = harga * this.dataDetail[index].qty_pesan;
     }
 
     editSubtotal(index: number, subtotal: number) {
-        this.dataDetail[index].sub_total_kontrak = subtotal;
-        this.dataDetail[index].harga_satuan = subtotal / this.dataDetail[index].qty_kontrak
+        this.dataDetail[index].sub_total_pesan = subtotal;
+        this.dataDetail[index].harga_satuan = subtotal / this.dataDetail[index].qty_pesan
     }
 
     editSatuan(index: number, satuan: string) {
@@ -146,23 +147,31 @@ export class InputKontrakPengadaanService {
         let isi = this.dataDetail[index].satuan[indexsatuan].isi;
         this.dataDetail[index].kode_satuan_besar = satuan;
         this.dataDetail[index].isi = isi;
-        this.dataDetail[index].qty_kontrak = this.dataDetail[index].qty_kontrak_satuan_besar * isi;
-        this.dataDetail[index].sub_total_kontrak = this.dataDetail[index].qty_kontrak * this.dataDetail[index].harga_satuan;
+        this.dataDetail[index].qty_pesan = this.dataDetail[index].qty_satuan_besar * isi;
+        this.dataDetail[index].sub_total_pesan = this.dataDetail[index].qty_pesan * this.dataDetail[index].harga_satuan;
 
     }
 
     sum(): void {
-        this.total = this.dataDetail.sum('sub_total_kontrak');
-        this.jumlahItem = this.dataDetail.sum('qty_kontrak_satuan_besar');
+
+        this.sub_total_1 = this.dataDetail.sum('sub_total_pesan');
+        this.sub_total_2 = this.dataDetail.sum('sub_total_pesan');
+        this.total_transaksi_pesan = this.dataDetail.sum('sub_total_pesan');
+
+        this.jumlah_item_pesan = this.dataDetail.sum('qty_satuan_besar');
     }
 
-    Insert( Data:TrKontrakSpjbInsert ): Observable<any>{
+    Insert( Data:TrPemesananInsert ): Observable<any>{
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });
-        Data.detailItem = this.dataDetail;
-        Data.jumlah_item_kontrak = this.jumlahItem;
-        Data.total_transaksi_kontrak = this.total;
+        Data.details = this.dataDetail;
+        Data.sub_total_1 = this.sub_total_1;
+        Data.total_disc = this.total_disc;
+        Data.sub_total_2 = this.sub_total_2;
+        Data.total_tax = this.total_tax;
+        Data.jumlah_item_pesan = this.jumlah_item_pesan;
+        Data.total_transaksi_pesan = this.total_transaksi_pesan;
 
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
@@ -174,8 +183,7 @@ export class InputKontrakPengadaanService {
 
     Reset(){
         this.dataDetail = [] ;
-        this.total = 0 ;
-        this.jumlahItem = 0 ; 
+        this.total_transaksi_pesan = 0 ;
+        this.jumlah_item_pesan = 0 ; 
     }
-
 }
