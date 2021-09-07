@@ -1,0 +1,56 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+               <mol-input-text [label]="'No Pemesanan'" formControlName="nomor_pemesanan" [inputFieldState]="inputFieldState"></mol-input-text>
+               <mol-datepicker-syncfusion [label]="'Tgl Pemesanan'" [format]="'dd MMMM yyyy'"
+                   formControlName="tanggal_pemesanan">
+               </mol-datepicker-syncfusion>
+               <mol-datepicker-syncfusion [label]="'Exired Pemesanan'" [format]="'dd MMMM yyyy'"
+                   formControlName="tanggal_expired_pemesanan">
+               </mol-datepicker-syncfusion>
+               <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text> 
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+                <mol-input-text [label]="'Supplier'" formControlName="nama_supplier" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Kereteanga'" formControlName="keterangan"></mol-input-textarea>
+
+            </div>
+        </div>
+        <mol-grid 
+        [grid-DataSource]="pemesananService.dataDetail$| async"
+        [columns]="ConfigGrid.TrDetail"
+        ></mol-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="pemesananService.jumlah_item_pesan" formControlName="jumlah_item_pesan"
+                    [inputFieldState]="'detail'"></mol-input-text>
+            </div>
+            <div class="col-sm-4">
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="pemesananService.sub_total_1" formControlName="sub_total_1"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Diskon'" [isFooter]="true"
+                    [value]="pemesananService.total_disc" formControlName="total_disc"
+                    [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="pemesananService.sub_total_2" formControlName="sub_total_2"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Tax'" [isFooter]="true"
+                    [value]="pemesananService.total_tax" formControlName="total_tax"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="pemesananService.total_transaksi_pesan" formControlName="total_transaksi_pesan"
+                    [inputFieldState]="'detail'"></mol-input-text>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

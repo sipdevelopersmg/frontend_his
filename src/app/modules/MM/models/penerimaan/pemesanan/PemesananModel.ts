@@ -89,22 +89,22 @@ export interface TrPemesananInsert {
     keterangan?: string | null;
 
     /** @format double */
-    jumlah_item_pesan?: number | null;
+    jumlah_item_pesan?: Number | null;
 
     /** @format double */
-    sub_total_1?: number | null;
+    sub_total_1?: Number | null;
 
     /** @format double */
-    total_disc?: number | null;
+    total_disc?: Number | null;
 
     /** @format double */
-    sub_total_2?: number | null;
+    sub_total_2?: Number | null;
 
     /** @format double */
-    total_tax?: number | null;
+    total_tax?: Number | null;
 
     /** @format double */
-    total_transaksi_pesan?: number | null;
+    total_transaksi_pesan?: Number | null;
 
     details?: TrPemesananDetailInsert[] | null;
 }

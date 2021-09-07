@@ -5,6 +5,7 @@ import { ListKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengada
 import { ViewKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/view-kontrak-pengadaan/view-kontrak-pengadaan.component";
 import { DaftarPemesananComponent } from "./pages/pemasukan/pemesanan/daftar-pemesanan/daftar-pemesanan.component";
 import { InputPemesananComponent } from "./pages/pemasukan/pemesanan/input-pemesanan/input-pemesanan.component";
+import { ViewPemesananComponent } from "./pages/pemasukan/pemesanan/view-pemesanan/view-pemesanan.component";
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
@@ -53,7 +54,7 @@ const mmRoutes: Routes = [
         children:[
             { path: "input-pemesanan", component: InputPemesananComponent, data: { title: "Input Pemesanan" } },
             { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "daftar Pemesanan" } },
-            { path: "view-pemesanan", component: ViewKontrakPengadaanComponent, data: { title: "View Pemesanan" } },
+            { path: "view-pemesanan/:id/:key", component: ViewPemesananComponent, data: { title: "View Pemesanan" } },
         ],
     },
     {

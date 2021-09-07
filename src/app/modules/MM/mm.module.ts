@@ -23,6 +23,7 @@ import { SetupStockroomComponent } from './pages/setup-data/setup-stockroom/setu
 import { ViewKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengadaan/view-kontrak-pengadaan/view-kontrak-pengadaan.component';
 import { InputPemesananComponent } from './pages/pemasukan/pemesanan/input-pemesanan/input-pemesanan.component';
 import { DaftarPemesananComponent } from './pages/pemasukan/pemesanan/daftar-pemesanan/daftar-pemesanan.component';
+import { ViewPemesananComponent } from './pages/pemasukan/pemesanan/view-pemesanan/view-pemesanan.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { DaftarPemesananComponent } from './pages/pemasukan/pemesanan/daftar-pem
         ViewKontrakPengadaanComponent,
         InputPemesananComponent,
         DaftarPemesananComponent,
+        ViewPemesananComponent,
     ],
     imports: [
         FormsModule,

@@ -153,7 +153,11 @@ export class PemesananService {
     }
 
     sum(): void {
+
+        this.sub_total_1 = this.dataDetail.sum('sub_total_pesan');
+        this.sub_total_2 = this.dataDetail.sum('sub_total_pesan');
         this.total_transaksi_pesan = this.dataDetail.sum('sub_total_pesan');
+
         this.jumlah_item_pesan = this.dataDetail.sum('qty_satuan_besar');
     }
 
@@ -161,9 +165,13 @@ export class PemesananService {
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });
-        // Data.detailItem = this.dataDetail;
-        // Data.jumlah_item_kontrak = this.jumlahItem;
-        // Data.total_transaksi_kontrak = this.total;
+        Data.details = this.dataDetail;
+        Data.sub_total_1 = this.sub_total_1;
+        Data.total_disc = this.total_disc;
+        Data.sub_total_2 = this.sub_total_2;
+        Data.total_tax = this.total_tax;
+        Data.jumlah_item_pesan = this.jumlah_item_pesan;
+        Data.total_transaksi_pesan = this.total_transaksi_pesan;
 
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(

@@ -16,6 +16,7 @@ import * as GridLoockUpItem from './json/lookupitem.json'
 import { PemesananService } from 'src/app/modules/MM/services/pemasukan/pemesanan/pemesanan.service';
 import { SetupStockroomService } from 'src/app/modules/MM/services/setup-data/setup-stockroom/setup-stock-room.service';
 import { TrPemesananDetailInsert } from 'src/app/modules/MM/models/penerimaan/pemesanan/PemesananModel';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
   selector: 'app-input-pemesanan',
@@ -80,8 +81,6 @@ export class InputPemesananComponent implements OnInit {
 
 
   TglExpiredParams = { params: { min: new Date() } };
-  utilityService: any;
-
   id_kontrak_from_list:number;
 
   constructor(
@@ -94,12 +93,14 @@ export class InputPemesananComponent implements OnInit {
       private encryptionService: EncryptionService,
       private activatedRoute: ActivatedRoute,
       public setupStockroomService: SetupStockroomService,
+      private   utilityService:UtilityService
 
   ) { }
 
   ngOnInit(): void {
       this.formKontrak = this.formBuilder.group({
           nomor_pemesanan: ["", Validators.required],
+          tanggal_pemesanan: [null, Validators.required],
           tanggal_expired_pemesanan: [null, Validators.required],
           id_stockroom: [0, Validators.required],
           id_supplier: ["", Validators.required],
@@ -213,10 +214,10 @@ export class InputPemesananComponent implements OnInit {
 
   heandleSelectedItem($event) {
       let item: TrPemesananDetailInsert = {
-          kontrak_id: 0,
-          kontrak_detail_item_id: 0,
-          set_harga_order_id: 0,
-          set_harga_order_detail_id: 0,
+          kontrak_id: null,
+          kontrak_detail_item_id: null,
+          set_harga_order_id: null,
+          set_harga_order_detail_id: null,
           no_urut: 0,
           id_item: $event.id_item,
           kode_item: $event.kode_item,
@@ -225,7 +226,7 @@ export class InputPemesananComponent implements OnInit {
           kode_satuan_besar: $event.satuans[0].kode_satuan,
           harga_satuan_besar: $event.harga_beli_terakhir,
           isi: $event.satuans[0].isi,
-          qty_pesan: 1,
+          qty_pesan: $event.satuans[0].isi,
           harga_satuan: $event.harga_beli_terakhir,
           disc_prosentase_1: 0,
           disc_nominal_1: 0,

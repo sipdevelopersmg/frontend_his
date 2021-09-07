@@ -66,8 +66,8 @@ export class DaftarPemesananComponent implements OnInit {
         this.router.navigateByUrl('dashboard/MM/pemesanan/input-pemesanan');
         break;
       case 'Edit':
-        const kontrak_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.kontrak_id));
-        this.router.navigate(['dashboard/MM/pemesanan/view-pemesanan', kontrak_id, "GRAHCIS"]);
+        const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.pemesanan_id));
+        this.router.navigate(['dashboard/MM/pemesanan/view-pemesanan', pemesanan_id, "GRAHCIS"]);
         break;
       case 'Delete':
         // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);
