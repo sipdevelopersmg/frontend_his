@@ -13,6 +13,11 @@ export interface TarifPerPoliModel {
     /** @format int32 */
     id_poli?: number;
 
+    kode_setup_tarif?: string;
+    nama_setup_tarif?: string;
+    nama_kelas?: string;
+    nominal_tarif?: number;
+
     /** @format date-time */
     tgl_berlaku?: string;
 

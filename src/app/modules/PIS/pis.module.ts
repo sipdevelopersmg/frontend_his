@@ -38,7 +38,6 @@ const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
 };
 
-
 @NgModule({
     declarations: [
         PendaftaranPasienBaruComponent,

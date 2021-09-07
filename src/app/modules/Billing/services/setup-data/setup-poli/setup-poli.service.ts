@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/BILLING';
-import { DeletePoliModel, GetAllPoliModel, GetByIdPoliModel, PoliModel, PostInsertPoliModel, PutUpdatePoliModel, PutUpdateStatusPoliModel } from '../../../models/setup-data/setup-poli.model';
+import { DeletePoliModel, GetAllPoliModel, GetByIdJenisRuanganModel, GetByIdPoliModel, PoliModel, PostInsertPoliModel, PutUpdatePoliModel, PutUpdateStatusPoliModel } from '../../../models/setup-data/setup-poli.model';
 
 @Injectable({
     providedIn: 'root'
@@ -92,4 +92,13 @@ export class SetupPoliService {
                 })
             );
     }
+
+    /**
+    * Service Untuk Menampilkan Data Poli Per Ruangan
+    * @onGetAllByIdJenisRuangan Observable<GetByIdJenisRuanganModel>
+   */
+    onGetAllByIdJenisRuangan(JenisRuanganId: number): Observable<GetByIdJenisRuanganModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_POLI.GET_ALL_BY_ID_JENIS_RUANGAN + JenisRuanganId);
+    }
+
 }

@@ -1,12 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import * as API_CONFIG from '../../../../../api/BILLING';
 import { GetAllTarifModel, GetByIdTarifModel, PostInsertTarifModel, PutUpdateStatusTarifModel, PutUpdateTarifModel, TarifModel } from '../../../models/setup-data/setup-tarif.model';
-import { SetupKelompokTarifService } from '../setup-kelompok-tarif/setup-kelompok-tarif.service';
+import * as API_CONFIG from '../../../../../api/BILLING';
 
 @Injectable({
     providedIn: 'root'
