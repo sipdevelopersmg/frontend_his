@@ -1,0 +1,110 @@
+{
+    "GridSettingTarifBerlakuPoliColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "id_setup_tarif",
+            "headerText": "Id Setup Tarif",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "id_kelas",
+            "headerText": "Id Kelas",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "kode_setup_tarif",
+            "headerText": "Kode Tarif",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "nama_setup_tarif",
+            "headerText": "Nama Tarif",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 200
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "nama_kelas",
+            "headerText": "Kelas",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "nominal_tarif",
+            "headerText": "Nilai",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        }
+    ],
+    "LookupTarif": {
+        "columns": [
+            {
+                "width": 50,
+                "type": "Checkbox",
+                "field": "Checkbox",
+                "headerTextAlign": "Center",
+                "textAlign": "Center"
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "id_setup_tarif",
+                "headerText": "ID",
+                "type": "string",
+                "visible": false
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_setup_tarif",
+                "headerText": "Kode Setup Tarif",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_setup_tarif",
+                "headerText": "Nama Setup Tarif",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            }
+        ],
+        "filter": []
+    }
+}

@@ -40,7 +40,7 @@ export class SettingTarifPerPoliService {
      * @onGetById Observable<GetByIdTarifBerlakuModel>
     */
     onGetAllByIdPoli(PoliId: number): Observable<GetByIdPoliModel> {
-        return this.httpOperationService.defaultGetRequest(this.API_SETTING_TARIF_PER_POLI.GET_TARIF_BERLAKU_PER_POLI_BY_ID + PoliId);
+        return this.httpOperationService.defaultGetRequest(this.API_SETTING_TARIF_PER_POLI.GET_TARIF_BERLAKU_PER_POLI_BY_POLI_ID + PoliId);
     }
 
     onGetAllByDynamicFilter(parameter: any): Observable<GetAllTarifPerPoliByDynamicFilterModel> {

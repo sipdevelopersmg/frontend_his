@@ -6,3 +6,4 @@ export const POST_SAVE_POLI = `${environment.webApiBilling}` + `tarif/Poli/Inser
 export const PUT_UPDATE_POLI = `${environment.webApiBilling}` + `tarif/Poli/Update`;
 export const DELETE_POLI_BY_ID = `${environment.webApiBilling}` + `tarif/Poli/Delete/`;
 export const PUT_UPDATE_STATUS_POLI = `${environment.webApiBilling}` + `tarif/Poli/UpdateStatusActive`;
+export const GET_ALL_BY_ID_JENIS_RUANGAN = `${environment.webApiBilling}` + `tarif/Poli/GetByIdJenisRuangan/`;

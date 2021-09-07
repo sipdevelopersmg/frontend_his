@@ -1,1 +1,208 @@
-<p>setting-tarif-berlaku-poli works!</p>
+<org-card-layout>
+    <div class="row mb-2">
+        <!-- Drodpown Ruang dan Listing Poli -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 px-2">
+            <div class="row px-0 mx-0">
+                <!-- Dropdown Ruang -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                    <atm-label [LabelCaption]="'Jenis Ruangan'"></atm-label>
+                    <ejs-dropdownlist [cssClass]="'mt-2'" [dataSource]="DropdownRuanganDatasource"
+                        [fields]="DropdownRuanganFields" [allowFiltering]="true"
+                        (change)="handleChangeDropdownRuangan($event)">
+                    </ejs-dropdownlist>
+                </div>
+
+                <!-- Listing Poli -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-2" style="height: calc(100vh - 15.5rem); overflow-y: auto;">
+                            <!-- <ejs-contextmenu target="#GridTreePoliklinik" [items]="PoliklinikContextMenu"
+                                (select)="handleSelectedPoliContextMenu($event)">
+                            </ejs-contextmenu> -->
+
+                            <ejs-treeview [id]="'GridTreePoliklinik'" [fields]="PoliklinikTreeViewFields"
+                                e-nodeclick="onClick" [allowMultiSelection]='false' [allowDragAndDrop]="false"
+                                (nodeSelected)="handleSelectedPoli($event)">
+                                <ng-template #nodeTemplate="" let-data="">
+                                    <div>
+                                        <div class="treeviewdiv">
+                                            <div class="poli-text">
+                                                <p
+                                                    class="mb-0 {{ data.child?.length > 0 ? 'poli-parent' : 'poli-child' }}">
+                                                    {{ data.nama_poli }}
+                                                </p>
+                                            </div>
+                                            <div class="badge-poli" *ngIf="data.child?.length < 1">
+                                                <span class="badge bg-success fw-light">
+                                                    {{ data.jumlah_tarif_poli }} Item
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ejs-treeview>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daftar Tarif Per Poli -->
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 px-2">
+            <div class="card shadow-sm border">
+                <div class="card-header px-2">
+                    <p class="mb-0 text-biru-muda">
+                        Daftar Tarif Poli
+                    </p>
+                </div>
+                <div class="card-body p-2">
+                    <!-- Informasi Data Poli -->
+                    <div class="row px-0 mx-0 mb-2">
+                        <!-- Kode Poliklinik -->
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 px-1">
+                            <label for="kode_poliklinik" class="form-label mb-1">Kode Poliklinik</label>
+                            <input id="kode_poliklinik" type="text" class="form-control form-select-sm" readonly
+                                [value]="SelectedPoliklinik.kode_poli ? SelectedPoliklinik.kode_poli : ''">
+                        </div>
+
+                        <!-- Nama Poliklinik -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-1">
+                            <label for="nama_poliklinik" class="form-label mb-1">Poliklinik</label>
+                            <input id="nama_poliklinik" type="text" class="form-control form-select-sm" readonly
+                                [value]="SelectedPoliklinik.nama_poli ? SelectedPoliklinik.nama_poli : ''">
+                        </div>
+
+                        <!-- Dropdown Kelas -->
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 px-1">
+                            <label for="kelas_perawatan" class="form-label mb-1">Kelas</label>
+
+                            <ejs-dropdownlist id="kelas_perawatan" #KelasPerawatanDropdown
+                                [dataSource]="DropdownKelasDatasource" [fields]="DropdownKelasFields"
+                                [allowFiltering]="true" [showClearButton]="true"
+                                (change)="handleChangeDropdownKelas($event)">
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+
+                    <!-- Grid Data Poli -->
+                    <div class="row px-0 mx-0 mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
+                            <ejs-grid #GridData [id]="'GridTarifBerlakuPoli'" [height]="'calc(100vh - 27rem)'"
+                                [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                                [pageSettings]="GridPageSettings" [toolbar]="GridDataToolbar" [allowResizing]="true"
+                                [allowFiltering]='true' [editSettings]="GridDataEditSettings"
+                                (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)">
+                                <e-columns>
+                                    <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'"
+                                        [visible]="false" [type]="'number'" [allowEditing]="false"
+                                        [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'" [headerTextAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="80" [field]="'nominal_tarif'" [headerText]="'NILAI'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'">
+                                    </e-column>
+                                    <e-column field='is_active' [headerText]="'STATUS'" [width]='70'
+                                        [textAlign]="'Center'">
+                                        <ng-template #template let-data>
+                                            <div *ngIf="data.is_active === true; else inactive"
+                                                class="statustemp e-activecolor">
+                                                <span class="statustxt e-activecolor">
+                                                    {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                                </span>
+                                            </div>
+                                            <ng-template #inactive>
+                                                <div class="statustemp e-inactivecolor">
+                                                    <span class="statustxt e-inactivecolor">
+                                                        {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                                    </span>
+                                                </div>
+                                            </ng-template>
+                                        </ng-template>
+                                    </e-column>
+                                </e-columns>
+                            </ejs-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Lookup Tarif  -->
+        <ng-template #modalAddLookupTarif>
+            <div class="modal-header px-2 py-1">
+                <h5 class="modal-title pull-left">
+                    Data Tarif Kelas {{ KelasPerawatanDropdown.text }}
+                </h5>
+                <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalLookupTarif()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body p-2">
+                <div class="row mx-0 my-1 align-items-center">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="card-title mb-1">Cari :</h5>
+                    </div>
+                </div>
+
+                <div class="row mx-0 my-1 align-items-center">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioFilterLookupTarif"
+                                id="filter_kode_tarif" value="kode_tarif"
+                                (click)="handleChangeFilterLookupTarif('st.kode_setup_tarif')">
+                            <label class="form-check-label" for="filter_kode_tarif">
+                                Kode Tarif
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioFilterLookupTarif"
+                                id="filter_nama_tarif" value="nama_tarif"
+                                (click)="handleChangeFilterLookupTarif('st.nama_setup_tarif')">
+                            <label class="form-check-label" for="filter_nama_tarif">
+                                Nama Tarif
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mx-0 my-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <input type="text" #searchValueId class="form-control" id="searchValueId"
+                            (keydown.enter)="onSearchLookup(searchValueId.value)" />
+                    </div>
+                </div>
+
+                <div class="row mx-0 my-1">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <mol-grid #GridLookupTarif [grid-height]="270" [grid-DataSource]="GridLookupTarifDatasource"
+                            [grid-paging]="true" [gridInitialPage]="GridLookupTarifPageSettings" [grid-lines]="'Both'"
+                            [columns]="GridConfig.LookupTarif.columns"
+                            (initialized)="InitalizedGridLookupTarif($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer background-abu-muda p-2">
+                <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalLookupTarif()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="handleSubmitLookupTarif()">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+            </div>
+        </ng-template>
+    </div>
+</org-card-layout>

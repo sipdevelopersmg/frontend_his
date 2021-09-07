@@ -1,0 +1,125 @@
+<org-card-layout>
+    <div class="row mb-2 pt-2">
+        <!-- Listing Tarif Paket Parent -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 px-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-muda">
+                        Daftar Tarif Paket
+                    </p>
+                </div>
+                <div class="card-body p-2" style="height: calc(100vh - 13.5rem); overflow-y: auto;">
+                    <div *ngFor="let item of TarifPaketParentDatasource"
+                        class="row px-0 mx-0 py-2 mb-2 border shadow-sm rounded align-items-center"
+                        (click)="handleClickTarifPaketParent(item)">
+                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 pe-0">
+                            <p class="text-biru-muda mb-1" style="font-size: 15px;">
+                                {{ item.kode_setup_tarif }}
+                            </p>
+                            <p class="text-hitam-muda mb-0" style="font-size: 14px;">
+                                {{ item.nama_setup_tarif }}
+                            </p>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ps-0 text-center">
+                            <i class="fas fa-chevron-right text-hitam-muda"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Listing Tarif Paket Child -->
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 px-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <p class="mb-0 text-biru-muda">
+                                Daftar Sub Tarif Paket
+                            </p>
+                        </div>
+                        <div [hidden]="TarifPaketChildDatasource?.length < 1"
+                            class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-end">
+                            <span class="badge bg-success fw-light" (click)="hanldeOpenModalLookupTarif()">
+                                <i class="fas fa-plus-square"></i>&nbsp; Input Sub Group Paket
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-2" style="height: calc(100vh - 13.5rem); overflow-y: auto;">
+                    <div *ngFor="let item of TarifPaketChildDatasource"
+                        class="row px-0 mx-0 py-2 mb-2 border shadow-sm rounded align-items-center">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <p class="text-biru-muda mb-1" style="font-size: 15px;">
+                                {{ item.kode_setup_tarif }}
+                            </p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                            <span [class]="item.is_active ? 'badge bg-primary' : 'badge bg-warning'">
+                                {{ item.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                            </span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p class="text-hitam-muda mb-1" style="font-size: 14px;">
+                                {{ item.nama_setup_tarif }}
+                            </p>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <span class="badge bg-warning" (click)="handleUbahStatusTarifBerlakuPoli(item)">
+                                <i class="fas fa-sync-alt"></i>&nbsp; Ubah Status
+                            </span>
+
+                            <span class="badge bg-danger mx-2" (click)="handleDeleteTarifBerlakuPoli(item)">
+                                <i class="fas fa-trash-alt"></i>&nbsp; Hapus
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Lookup Tarif  -->
+    <ng-template #modalAddLookupTarif>
+        <div class="modal-header px-2 py-1">
+            <h5 class="modal-title pull-left">
+                Add Data Tarif {{ SelectedTarifPaketParent.nama_setup_tarif | titlecase }}
+            </h5>
+            <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalLookupTarif()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-2">
+            <div class="row mx-0 my-1 align-items-center">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="card-title mb-1">Cari :</h5>
+                </div>
+            </div>
+
+            <div class="row mx-0 my-2">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #searchValueId class="form-control" id="searchValueId"
+                        (keydown.enter)="onSearchLookup(searchValueId.value)" />
+                </div>
+            </div>
+
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <mol-grid #GridLookupTarif [grid-height]="270"
+                        [grid-DataSource]="GridLookupTarifDatasource | filter: SearchLookup" [grid-paging]="true"
+                        [gridInitialPage]="GridLookupTarifPageSettings" [grid-lines]="'Both'"
+                        [columns]="GridConfig.LookupTarif.columns" (initialized)="InitalizedGridLookupTarif($event)">
+                    </mol-grid>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda p-2">
+            <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalLookupTarif()">
+                <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="handleSubmitLookupTarif()">
+                <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+            </button>
+        </div>
+    </ng-template>
+</org-card-layout>

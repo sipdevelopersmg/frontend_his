@@ -31,6 +31,9 @@ export interface PoliModel {
 
     /** @format date-time */
     time_deactived?: string;
+
+    /** @format int32 */
+    jumlah_tarif_poli?: number;
 }
 
 /**
@@ -122,5 +125,15 @@ export class PutUpdateStatusPoliModel implements HttpResponseModel {
 export class DeletePoliModel implements HttpResponseModel {
     responseResult: boolean;
     data: string;
+    message: string;
+}
+
+/**
+ * @GetByIdJenisRuanganModel response model setelah request Get All Poli By Id Jenis Ruangan
+ * @Key : { responseResult: boolean, data: PoliModel[], message: string }
+*/
+export class GetByIdJenisRuanganModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: PoliModel[];
     message: string;
 }
