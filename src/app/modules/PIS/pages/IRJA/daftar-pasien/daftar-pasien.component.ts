@@ -61,11 +61,11 @@ export class DaftarPasienComponent implements OnInit {
     handleClickButtonNav(args: any): void {
         switch (args) {
             case 'Add':
-                this.router.navigateByUrl('dashboard/PIS/IRJA/pendaftaran-pasien-baru');
+                this.router.navigateByUrl('dashboard/PIS/pendaftaran-pasien-baru');
                 break;
             case 'Edit':
                 const id_person = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.id_person));
-                this.router.navigate(['dashboard/PIS/IRJA/edit-pasien/', id_person, "GRAHCIS"]);
+                this.router.navigate(['dashboard/PIS/edit-pasien/', id_person, "GRAHCIS"]);
                 break;
             case 'Delete':
                 this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);

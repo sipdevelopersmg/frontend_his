@@ -33,6 +33,9 @@ import { SetupProvinsiComponent } from "./pages/setup-data/setup-wilayah/setup-p
 import { SetupDebiturComponent } from './pages/setup-data/setup-debitur/setup-debitur.component';
 import { InputDokterComponent } from './pages/setup-data/setup-dokter/input-dokter/input-dokter.component';
 import { EditDokterComponent } from './pages/setup-data/setup-dokter/edit-dokter/edit-dokter.component';
+import { ListPasienRawatJalanComponent } from './pages/IRJA/admisi-pasien-rawat-jalan/list-pasien-rawat-jalan/list-pasien-rawat-jalan.component';
+import { PelayananPasienRawatJalanComponent } from './pages/IRJA/admisi-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan.component';
+import { SetupAsalRujukanComponent } from './pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -67,6 +70,9 @@ const ngWizardConfig: NgWizardConfig = {
         SetupDebiturComponent,
         InputDokterComponent,
         EditDokterComponent,
+        ListPasienRawatJalanComponent,
+        PelayananPasienRawatJalanComponent,
+        SetupAsalRujukanComponent,
     ],
     imports: [
         CommonModule,
