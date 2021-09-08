@@ -5,8 +5,8 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { GetAllChildByIdParentModel, GetAllTarifPaketParentModel, PostDeleteTarifPaketModel, PostInsertTarifPaketModel, PutUpdateStatusTarifPaketModel, TarifPaketChildrenModel } from '../../../models/setup-data/setup-tarif-paket.model';
-import * as API_CONFIG from '../../../../../api/BILLING';
 import { GetAllTarifModel } from '../../../models/setup-data/setup-tarif.model';
+import * as API_CONFIG from '../../../../../api/BILLING';
 
 @Injectable({
     providedIn: 'root'

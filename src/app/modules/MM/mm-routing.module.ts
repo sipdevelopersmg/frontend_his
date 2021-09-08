@@ -6,9 +6,7 @@ import { ViewKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengada
 import { DaftarPemesananComponent } from "./pages/pemasukan/pemesanan/daftar-pemesanan/daftar-pemesanan.component";
 import { InputPemesananComponent } from "./pages/pemasukan/pemesanan/input-pemesanan/input-pemesanan.component";
 import { ViewPemesananComponent } from "./pages/pemasukan/pemesanan/view-pemesanan/view-pemesanan.component";
-import { DaftarPenerimaanComponent } from "./pages/pemasukan/penerimaan/daftar-penerimaan/daftar-penerimaan.component";
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
-import { ViewPenerimaanComponent } from "./pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
@@ -55,16 +53,8 @@ const mmRoutes: Routes = [
         path: "pemesanan", component: null, data: {title:"Input PO"},
         children:[
             { path: "input-pemesanan", component: InputPemesananComponent, data: { title: "Input Pemesanan" } },
-            { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "Daftar Pemesanan" } },
+            { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "daftar Pemesanan" } },
             { path: "view-pemesanan/:id/:key", component: ViewPemesananComponent, data: { title: "View Pemesanan" } },
-        ],
-    },
-    {
-        path: "penerimaan", component: null, data: {title:"Input Penerimaan"},
-        children:[
-            { path: "input-penerimaan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
-            { path: "daftar-penerimaan", component: DaftarPenerimaanComponent, data: { title: "Daftar Penerimaan" } },
-            { path: "view-penerimaan/:id/:key", component: ViewPenerimaanComponent, data: { title: "View Penerimaan" } },
         ],
     },
     {
