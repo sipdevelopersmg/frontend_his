@@ -24,6 +24,8 @@ import { ViewKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengada
 import { InputPemesananComponent } from './pages/pemasukan/pemesanan/input-pemesanan/input-pemesanan.component';
 import { DaftarPemesananComponent } from './pages/pemasukan/pemesanan/daftar-pemesanan/daftar-pemesanan.component';
 import { ViewPemesananComponent } from './pages/pemasukan/pemesanan/view-pemesanan/view-pemesanan.component';
+import { DaftarPenerimaanComponent } from './pages/pemasukan/penerimaan/daftar-penerimaan/daftar-penerimaan.component';
+import { ViewPenerimaanComponent } from './pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +50,8 @@ import { ViewPemesananComponent } from './pages/pemasukan/pemesanan/view-pemesan
         InputPemesananComponent,
         DaftarPemesananComponent,
         ViewPemesananComponent,
+        DaftarPenerimaanComponent,
+        ViewPenerimaanComponent,
     ],
     imports: [
         FormsModule,
