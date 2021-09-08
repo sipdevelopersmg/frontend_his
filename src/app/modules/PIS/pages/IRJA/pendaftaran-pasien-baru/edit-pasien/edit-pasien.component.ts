@@ -290,7 +290,7 @@ export class EditPasienIRJAComponent implements OnInit, AfterViewInit, OnDestroy
     onClickButtonNav(args: any): void {
         switch (args) {
             case 'Cancel':
-                this.router.navigateByUrl('dashboard/PIS/IRJA/daftar-pasien')
+                this.router.navigateByUrl('dashboard/PIS/daftar-pasien')
         }
     }
 

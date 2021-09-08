@@ -32,7 +32,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     FormState = "Insert";
 
-    UserData: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+    UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
     /** @ButtonNav Button Navigation Properties */
     ButtonNav: ButtonNavModel[] = [

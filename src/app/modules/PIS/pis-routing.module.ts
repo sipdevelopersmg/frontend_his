@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AdmisiPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.component";
+import { PelayananPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan.component";
 import { AntrianPasienRawatJalanComponent } from "./pages/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.component";
 import { DaftarPasienComponent } from "./pages/IRJA/daftar-pasien/daftar-pasien.component";
 import { DaftarUlangPasienComponent } from "./pages/IRJA/daftar-ulang-pasien/daftar-ulang-pasien.component";
@@ -26,7 +27,10 @@ import { SetupKotaComponent } from "./pages/setup-data/setup-wilayah/setup-kota/
 import { SetupProvinsiComponent } from "./pages/setup-data/setup-wilayah/setup-provinsi/setup-provinsi.component";
 
 const pisRoutes: Routes = [
-    { path: "", component: PendaftaranPasienBaruComponent, data: { title: "Pendaftaran Pasien Baru" }, },
+    { path: "", component: null, data: { title: "Pendaftaran Pasien Baru" }, },
+    { path: "pendaftaran-pasien-baru", component: PendaftaranPasienBaruComponent, data: { title: 'Pendaftaran Pasien Baru' } },
+    { path: "daftar-pasien", component: DaftarPasienComponent, data: { title: "Daftar Pasien" }, },
+    { path: "edit-pasien/:id/:key", component: EditPasienIRJAComponent, data: { title: "Edit Pasien" } },
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
@@ -61,12 +65,10 @@ const pisRoutes: Routes = [
     {
         path: "IRJA", component: null, data: { title: "IRJA" },
         children: [
-            { path: "pendaftaran-pasien-baru", component: PendaftaranPasienBaruComponent, data: { title: "Pendaftaran Pasien Baru Rawat Jalan" }, },
             { path: "antrian-pasien-rawat-jalan", component: AntrianPasienRawatJalanComponent, data: { title: "Antrian Pasien Rawat Jalan" }, },
             { path: "pendaftaran-ulang-pasien", component: DaftarUlangPasienComponent, data: { title: "Pendaftaran Ulang Pasien" }, },
-            { path: "daftar-pasien", component: DaftarPasienComponent, data: { title: "Daftar Pasien" }, },
-            { path: "edit-pasien/:id/:key", component: EditPasienIRJAComponent, data: { title: "Edit Pasien" } },
-            { path: "pelayanan-pasien-irja", component: AdmisiPasienRawatJalanComponent, data: { title: "Pelayanan Pasien Rawat Jalan" }, },
+            { path: "pelayanan-pasien-rawat-jalan", component: AdmisiPasienRawatJalanComponent, data: { title: "Pelayanan Pasien Rawat Jalan" }, },
+            { path: "admisi-pasien-rawat-jalan", component: PelayananPasienRawatJalanComponent, data: { title: "Admisi Pasien Rawat Jalan" }, },
         ]
     },
     {

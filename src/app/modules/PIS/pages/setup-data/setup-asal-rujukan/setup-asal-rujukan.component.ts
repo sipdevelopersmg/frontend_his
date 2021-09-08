@@ -5,22 +5,22 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { BahasaModel } from '../../../models/setup-data/setup-bahasa.model';
-import { SetupBahasaService } from '../../../services/setup-data/setup-bahasa/setup-bahasa.service';
+import { AsalRujukanModel } from '../../../models/setup-data/setup-asal-rujukan';
+import { SetupAsalRujukanService } from '../../../services/setup-data/setup-asal-rujukan/setup-asal-rujukan.service';
 
-import * as Config from './json/setup-bahasa.config.json';
+import * as Config from './json/setup-asal-rujukan.config.json';
 
 @Component({
-    selector: 'app-setup-bahasa',
-    templateUrl: './setup-bahasa.component.html',
-    styleUrls: ['./setup-bahasa.component.css']
+    selector: 'app-setup-asal-rujukan',
+    templateUrl: './setup-asal-rujukan.component.html',
+    styleUrls: ['./setup-asal-rujukan.component.css']
 })
-export class SetupBahasaComponent implements OnInit {
+export class SetupAsalRujukanComponent implements OnInit {
 
     /**
-     * Variable untuk Menympan Navigasi halaman
-     * @ButtonNavModel Array
-    */
+    * Variable untuk Menympan Navigasi halaman
+    * @ButtonNavModel Array
+   */
     ButtonNav: ButtonNavModel[];
 
     /**
@@ -64,16 +64,18 @@ export class SetupBahasaComponent implements OnInit {
      * Berisi Data Yang selected dari dalam grid
      * @Object Single Object
     */
-    SelectedData: BahasaModel;
+    SelectedData: AsalRujukanModel;
 
     constructor(
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
-        private setupBahasaService: SetupBahasaService
+        private setupAsalRujukanService: SetupAsalRujukanService,
     ) {
         this.FormInputData = this.formBuilder.group({
-            id_bahasa: [0, [Validators.required]],
-            bahasa: ['', [Validators.required]],
+            id_asal_rujukan: [0, [Validators.required]],
+            kode_asal_rujukan: ['', [Validators.required]],
+            nama_asal_rujukan: ['', [Validators.required]],
+            is_required_kode_wilayah: [false, [Validators.required]],
         });
     }
 
@@ -95,7 +97,7 @@ export class SetupBahasaComponent implements OnInit {
         if (TabId == 'Input') {
             this.setNewForm();
         } else {
-            this.GetAllData;
+            this.GetAllData();
         }
     }
 
@@ -123,9 +125,6 @@ export class SetupBahasaComponent implements OnInit {
                 break;
             case 'detail':
                 this.setViewForm();
-                break;
-            case 'delete':
-                this.DeleteData();
                 break;
             default:
                 break;
@@ -196,19 +195,21 @@ export class SetupBahasaComponent implements OnInit {
     /* Method untuk mengkosongkan data yang ada di form */
     ResetFrom(): void {
         this.FormInputData.reset();
-        this.bahasa.setValue('');
+        this.kode_asal_rujukan.setValue('');
+        this.nama_asal_rujukan.setValue('');
+        this.is_required_kode_wilayah.setValue(false);
     }
 
     /** Method Untuk Mereload Data Grid */
     GetAllData(): void {
-        this.setupBahasaService.onGetAllBahasa()
+        this.setupAsalRujukanService.onGetAll()
             .subscribe((result) => {
                 this.GridDatasource = result.data;
             });
     }
 
     /** Method Untuk Mengisikan data yang ada di form */
-    SetFrom(Data: BahasaModel): void {
+    SetFrom(Data: AsalRujukanModel): void {
         this.FormInputData.reset();
         this.FormInputData.setValue(Data);
     }
@@ -221,7 +222,7 @@ export class SetupBahasaComponent implements OnInit {
 
             Data.id_bahasa = 0;
 
-            this.setupBahasaService.onPostSaveSetupBahasa(Data)
+            this.setupAsalRujukanService.onPostSave(Data)
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                         .then(() => {
@@ -229,7 +230,7 @@ export class SetupBahasaComponent implements OnInit {
                         });
                 });
         } else {
-            this.setupBahasaService.onPutUpdateSetupBahasa(Data)
+            this.setupAsalRujukanService.onPutUpdate(Data)
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
                         .then(() => {
@@ -237,20 +238,6 @@ export class SetupBahasaComponent implements OnInit {
                         });
                 });
         }
-    }
-
-    /** Method untuk Menghapus data yang ada di grid */
-    DeleteData(): void {
-
-        const Data: BahasaModel = this.SelectedData;
-
-        this.setupBahasaService.onDeleteSetupBahasa(Data.id_bahasa)
-            .subscribe((result) => {
-                this.utilityService.onShowingCustomAlert('success', 'Berhasil Hapus Data', result.message)
-                    .then(() => {
-                        this.Cancel();
-                    });
-            })
     }
 
     Clear(): void {
@@ -275,6 +262,7 @@ export class SetupBahasaComponent implements OnInit {
         }
     }
 
-    get bahasa(): AbstractControl { return this.FormInputData.get('bahasa'); }
-
+    get kode_asal_rujukan(): AbstractControl { return this.FormInputData.get('kode_asal_rujukan'); }
+    get nama_asal_rujukan(): AbstractControl { return this.FormInputData.get('nama_asal_rujukan'); }
+    get is_required_kode_wilayah(): AbstractControl { return this.FormInputData.get('is_required_kode_wilayah'); }
 }

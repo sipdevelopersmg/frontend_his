@@ -1,0 +1,57 @@
+<div class="row pt-2">
+    <!-- Filter Offcanvas -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+        <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+            (handle-pencarian)="handlePencarianFilter($event)">
+        </mol-offcanvas-filter>
+    </div>
+
+    <!-- Grid Daftar Pasien -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 19rem)'"
+            [dataSource]="GridDatasource | async" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+            [allowResizing]="true" [allowFiltering]='true' [pageSettings]="GridPageSettings"
+            [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+            (actionComplete)="handleActionComplete($event)">
+            <e-columns>
+                <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
+                    [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'no_antrian'" [headerText]="'NO. ANTRIAN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'jam_admisi'" [headerText]="'JAM ADMISI'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'jam_masuk'" [headerText]="'JAM MASUK'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                    [format]="'dd/MM/yyyy'">
+                </e-column>
+                <e-column [width]="200" [field]="'full_name'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'umur'" [headerText]="'UMUR'" [visible]="true" [allowEditing]="false"
+                    [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'status_rm'" [headerText]="'STATUS RM'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'poli'" [headerText]="'POLI'" [visible]="true" [allowEditing]="false"
+                    [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'debitur'" [headerText]="'DEBITUR'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+    </div>
+</div>
