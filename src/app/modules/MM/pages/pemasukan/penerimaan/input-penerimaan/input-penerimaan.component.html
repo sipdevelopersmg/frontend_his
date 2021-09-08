@@ -1,88 +1,269 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
-    <form [formGroup]="formPemasukan">
+    <form [formGroup]="formInput">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                
-                <mol-input-text [label]="'SPPB'" formControlName="sppb"></mol-input-text>
-
-                <org-input-look-up #LookupShiping [lookup-url]="url" [idTitle]="'id_shipping_method'" [modal-title]="'Data Shiping'"
-                    (onGetSelectedData)="heandleSelectedShiping($event)" [columns]="GridConfig.Lookup.columns"
-                    [filter-lookup]="GridConfig.Lookup.filter" [label]="'Shiping Method'">
-                </org-input-look-up>
-
-                <org-input-look-up #LookupPayment [lookup-url]="url" [idTitle]="'id_payment_term'" [modal-title]="'Data Payment'"
-                    (onGetSelectedData)="heandleSelectedPayment($event)" [columns]="GridConfig.Lookup.columns"
-                    [filter-lookup]="GridConfig.Lookup.filter" [label]="'Payment '">
-                </org-input-look-up>
-
-                <mol-datepicker-syncfusion [label]="'Tgl Jatuh Tempo'" [format]="'dd MMMM yyyy'"
-                    formControlName="tanggal_jatuh_tempo">
+                <!-- <org-input-look-up-kode #LookupKodePenerimaan [lookup-url]="urlPenerimaan" [idKode]="'id_penerimaan'" [modal-title]="'Data Penerimaan'"
+                    [idTitle]="'penerimaan'" (onGetSelectedData)="heandleSelectedPenerimaan($event)"
+                    [columns]="LookupGridPenerimaan.columns" [filter-lookup]="LookupGridPenerimaan.filter"
+                    [label]="'Penerimaan'">
+                </org-input-look-up-kode> -->
+                <!-- import {MM} from 'src/app/api/MM' -->
+                <!-- import * as LookupGridPenerimaan from './json/LookupGridPenerimaan.json' -->
+                <!-- urlPenerimaan = MM.SETUP_DATA.SETUP_COA.GET_ALL_BY_PARMS; -->
+                <!-- LookupGridPenerimaan = LookupGridPenerimaan; -->
+                <!-- @ViewChild('LookupKodePenerimaan') LookupKodePenerimaan: OrgInputLookUpKodeComponent; -->
+                <!-- heandleSelectedPenerimaan(args: any): void {
+                    this.id_penerimaan.setValue(args.id_penerimaan);
+                } -->
+                <!-- this.LookupKodePenerimaan.resetValue(); -->
+                <mol-datepicker-syncfusion [label]="'Tgl Penerimaan'" [format]="'dd MMMM yyyy'"
+                    formControlName="formControlName">
                 </mol-datepicker-syncfusion>
-
-                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+                <mol-input-text [label]="'Supplier'" formControlName="nama_supplier" [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Stockroom'" formControlName="stockroom" [inputFieldState]="'detail'"></mol-input-text>
+                
 
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-datepicker-syncfusion [label]="'Tgl Penerimaan'" [format]="'dd MMMM yyyy'"
-                    formControlName="tanggal_penerimaan">
-                </mol-datepicker-syncfusion>
-
-                <org-input-look-up #LookupJenisPemerimaan [lookup-url]="url" [idTitle]="'kode_jenis_penerimaan'" [modal-title]="'Data JenisPemerimaan'"
-                    (onGetSelectedData)="heandleSelectedJenisPemerimaan($event)" [columns]="GridConfig.Lookup.columns"
-                    [filter-lookup]="GridConfig.Lookup.filter" [label]="'Jenis Penerimaan'">
-                </org-input-look-up>
-
-                <org-input-look-up-kode #LookupKodeStockroom [lookup-url]="url" [idKode]="'id_stockroom'" [modal-title]="'Data Stockroom'"
-                    [idTitle]="'stockroom'" (onGetSelectedData)="heandleSelectedStockroom($event)"
-                    [columns]="GridConfig.Lookup.columns" [filter-lookup]="GridConfig.Lookup.filter"
-                    [label]="'Stock Room'">
-                </org-input-look-up-kode>
-
-                <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="url" [idKode]="'id_supplier'" [modal-title]="'Data Supplier'"
-                    [idTitle]="'supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
-                    [columns]="GridConfig.Lookup.columns" [filter-lookup]="GridConfig.Lookup.filter"
-                    [label]="'Supplier'">
-                </org-input-look-up-kode>
-
-                <mol-input-text [label]="'Nomor Surat Jalan'" formControlName="nomor_surat_jalan_supplier"></mol-input-text>
-
+                <mol-input-text [label]="'No Surat Jalan'" formControlName="nomor_surat_jalan_supplier" [inputFieldState]="inputFieldState"></mol-input-text>
                 <mol-datepicker-syncfusion [label]="'Tgl Surat Jalan'" [format]="'dd MMMM yyyy'"
-                    formControlName="tanggal_surat_jalan_pasien">
-                </mol-datepicker-syncfusion>
+                    formControlName="tanggal_surat_jalan_supplier">
+                </mol-datepicker-syncfusion> 
+                <!-- Dropdown Shipping Method -->
+                <!-- <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Shipping Method'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalShippingMethodDropdown id="marital"
+                            [dataSource]="setupShippingMethodService.dataSource| async"
+                            [fields]="MaritalShippingMethodDropdownField" [allowFiltering]="true"
+                            formControlName="id_tipe_supplier">
+                        </ejs-dropdownlist>
+                    </div>
+                </div> -->
+                <!-- SetupShippingMethodDropdownField: object = { text: 'shipping_method', value: 'id_shipping_method' }; -->
+                <!-- public setupShippingMethodService: SetupShippingMethodService, -->
+                <!-- this.setupShippingMethodService.setDataSource(); --> 
 
+                <!-- Dropdown Payment Term -->
+                <!-- <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Payment Term'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalPaymentTermDropdown id="marital"
+                            [dataSource]="setupPaymentTermService.dataSource| async"
+                            [fields]="MaritalPaymentTermDropdownField" [allowFiltering]="true"
+                            formControlName="id_tipe_supplier">
+                        </ejs-dropdownlist>
+                    </div>
+                </div> -->
+                <!-- SetupPaymentTermDropdownField: object = { text: 'payment_term', value: 'id_payment_term' }; -->
+                <!-- public setupPaymentTermService: SetupPaymentTermService, -->
+                <!-- this.setupPaymentTermService.setDataSource(); -->
+
+                <mol-datepicker-syncfusion [label]="'Tgl Jatuh Tempo'" [format]="'dd MMMM yyyy'"
+                    formControlName="tangal_jatuh_tempo_bayar">
+                </mol-datepicker-syncfusion>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
             </div>
         </div>
-        <mol-grid #GridDetail [grid-id]="'GridDetail'" [grid-height]="300"
-                [grid-DataSource]="GridConfig.GridDataSource" [grid-paging]="true"
-                [grid-lines]="'Both'"
-                [grid-toolbar]="GridDetailToolbar"
-                (toolbar-click)="onToolbarClick($event)"
-                [columns]="GridConfig.GridColumns">
-        </mol-grid>
+
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='penerimaanService.dataDetail$ | async'
+            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
+            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
+            (rowSelected)="handleSelectdRow($event)">
+            <e-columns>
+                <e-column [visible]="false" field='pemesanan_id' [allowEditing]="false" headerText='Kontrak'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='pemesanan_detail_id' [allowEditing]="false" headerText='Kontrak'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='barcode' [allowEditing]="false" headerText='Kode Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='batch_number' [allowEditing]="true" headerText='Banyak'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='expired_date' [allowEditing]="true" headerText='Banyak'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
+                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
+                    textAlign="left" headerTextAlign="right">
+                </e-column>
+                <e-column [visible]="true" field='qty_terima' [allowEditing]="false" headerText='QTY'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="right">
+                </e-column>
+                <e-column [visible]="true" field='harga_satuan' [allowEditing]="false" headerText='Harga Satuan'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='disc_prosentase_1' [allowEditing]="true" headerText='D1'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="false" field='disc_nominal_1' [allowEditing]="true" headerText='D1'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='disc_prosentase_2' [allowEditing]="true" headerText='D2'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="false" field='disc_nominal_2' [allowEditing]="true" headerText='D2'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='harga_satuan_brutto' [allowEditing]="false" headerText='harga satuan bruto'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='tax_prosentase' [allowEditing]="true" headerText='tax'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="false" field='tax_nominal' [allowEditing]="true" headerText='tax'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='harga_satuan_netto' [allowEditing]="false" headerText='harga satuan netto'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='sub_total' [allowEditing]="false" headerText='Sub Total'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+            </e-columns>
+        </ejs-grid>
 
         <div class="row">
-            <div class="col-sm-8">
-
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="penerimaanService.jumlah_item" formControlName="jumlah_item_pesan"
+                    [inputFieldState]="'detail'"></mol-input-text>
             </div>
             <div class="col-sm-4">
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true" formControlName="jumlah_item" [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="penerimaanService.sub_total_1" formControlName="sub_total_1"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Diskon'" [isFooter]="true"
+                    [value]="penerimaanService.total_disc" formControlName="total_disc"
+                    [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="penerimaanService.sub_total_2" formControlName="sub_total_2"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Tax'" [isFooter]="true"
+                    [value]="penerimaanService.total_tax" formControlName="total_tax"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="penerimaanService.total_transaksi" formControlName="total_transaksi_pesan"
+                    [inputFieldState]="'detail'"></mol-input-text>
             </div>
         </div>
     </form>
-<!-- Modal Dialog  -->
-    <ng-template #modalDialog>
+
+    <org-look-up #LookupItem [lookup-url]="urlItem" (onGetSelectedData)="heandleSelectedItem($event)"
+        [columns]="GridLookUpItem.columns" [filter-lookup]="GridLookUpItem.filter" [modal-title]="'Data Item'">
+    </org-look-up>
+
+    <!-- Modal Harga  -->
+    <ng-template #modalHarga>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">
-            <h5 class="modal-title pull-left">Input No. Batch</h5>
-            <button type="button" class="btn pull-right text-white" aria-label="Close"
-                (click)="modalRef.hide()">
+            <h5 class="modal-title pull-left">Edit Harga</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
                 <i class="fas fa-window-close"></i>
             </button>
         </div>
-        <div class="modal-body p-0">
-
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #hargaValueId id="HargaValueId" class="form-control"
+                        (keydown.enter)="handleHargaChange(hargaValueId.value)" />
+                </div>
+            </div>
         </div>
         <div class="modal-footer background-abu-muda">
-            <button type="button" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-primary">Oke</button>
         </div>
     </ng-template>
+
+    <!-- Modal QTY  -->
+    <ng-template #modalQty>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Qty</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #qtyValueId id="QtyValueId" class="form-control"
+                        (keydown.enter)="handleQtyChange(qtyValueId.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal subtotal  -->
+    <ng-template #modalSubtotal>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Subtotal</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #subtotalValueId id="SubtotalValueId" class="form-control"
+                        (keydown.enter)="handleSubtotalChange(subtotalValueId.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal satuan  -->
+    <ng-template #modalSatuan>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Satuan</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <select #satuanValueId id="SatuanValueId" [value]="detailSelected.kode_satuan_besar"
+                        class="form-control" (keydown.enter)="handleSatuanChange(satuanValueId.value)" multiple>
+                        <option *ngFor="let item of datasatuan" [ngValue]="item.kode_satuan">{{item.kode_satuan}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
 </org-card-layout>

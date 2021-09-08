@@ -36,6 +36,8 @@ export class SetupFormulariumComponent implements OnInit {
     public wrapSettings: TextWrapSettingsModel;
 
   public hideParentTarif: boolean = true;
+  allowMultiSelection=false;
+  public field:any;
 
   @ViewChild('modalTambahTerapi') modalTambahTerapi: TemplateRef<any>;
   @ViewChild('modalTambahTerapiGenerik') modalTambahTerapiGenerik: TemplateRef<any>;
@@ -368,17 +370,13 @@ export class SetupFormulariumComponent implements OnInit {
         this.DataSourceDagang = this.GridSetting.GridItem.DataSource
     }
 
-  get parent_terapi(): AbstractControl { return this.FormInputDataTerapi.get('parent_terapi'); }
-  get id_terapi_parent(): AbstractControl { return this.FormInputDataTerapi.get('id_terapi_parent'); }
-  get kode_terapi(): AbstractControl { return this.FormInputDataTerapi.get('kode_terapi'); }
-  get no_terapi(): AbstractControl { return this.FormInputDataTerapi.get('no_terapi'); }
-  get nama_terapi(): AbstractControl { return this.FormInputDataTerapi.get('nama_terapi'); }
-  get level_rekursif_terapi(): AbstractControl { return this.FormInputDataTerapi.get('level_rekursif_terapi'); }
+    get parent_terapi(): AbstractControl { return this.FormInputDataTerapi.get('parent_terapi'); }
+    get id_terapi_parent(): AbstractControl { return this.FormInputDataTerapi.get('id_terapi_parent'); }
+    get kode_terapi(): AbstractControl { return this.FormInputDataTerapi.get('kode_terapi'); }
+    get no_terapi(): AbstractControl { return this.FormInputDataTerapi.get('no_terapi'); }
+    get nama_terapi(): AbstractControl { return this.FormInputDataTerapi.get('nama_terapi'); }
+    get level_rekursif_terapi(): AbstractControl { return this.FormInputDataTerapi.get('level_rekursif_terapi'); }
   
-  get id_terapi_g(): AbstractControl { return this.FormInputDataTerapiGenerik.get('id_terapi'); }
-  get id_generik_g(): AbstractControl { return this.FormInputDataTerapiGenerik.get('id_generik'); }
-  get no_terapi_generik(): AbstractControl { return this.FormInputDataTerapiGenerik.get('no_terapi_generik'); }
-
     get id_terapi_g(): AbstractControl { return this.FormInputDataTerapiGenerik.get('id_terapi'); }
     get id_generik_g(): AbstractControl { return this.FormInputDataTerapiGenerik.get('id_generik'); }
     get no_terapi_generik(): AbstractControl { return this.FormInputDataTerapiGenerik.get('no_terapi_generik'); }
