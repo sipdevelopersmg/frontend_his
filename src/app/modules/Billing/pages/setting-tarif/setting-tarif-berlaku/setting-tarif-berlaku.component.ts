@@ -7,12 +7,10 @@ import { NumericTextBox } from '@syncfusion/ej2-angular-inputs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { KelasPerawatanModel } from '../../../models/setup-data/setup-kelas-perawatan.model';
 import { SettingTarifBerlakuService } from '../../../services/setting-harga-tarif/setting-tarif-berlaku/setting-tarif-berlaku.service';
 import { SetupKelasPerawatanService } from '../../../services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
-import { SetupTarifService } from '../../../services/setup-data/setup-tarif/setup-tarif.service';
 import * as Config from './json/setting-tarif-berlaku.config.json';
 
 @Component({

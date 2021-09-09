@@ -36,6 +36,8 @@ import { EditDokterComponent } from './pages/setup-data/setup-dokter/edit-dokter
 import { ListPasienRawatJalanComponent } from './pages/IRJA/admisi-pasien-rawat-jalan/list-pasien-rawat-jalan/list-pasien-rawat-jalan.component';
 import { PelayananPasienRawatJalanComponent } from './pages/IRJA/admisi-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan.component';
 import { SetupAsalRujukanComponent } from './pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component';
+import { SetupIcdDiagnosaComponent } from './pages/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.component';
+import { PemasukanRawatJalanComponent } from './pages/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -73,6 +75,8 @@ const ngWizardConfig: NgWizardConfig = {
         ListPasienRawatJalanComponent,
         PelayananPasienRawatJalanComponent,
         SetupAsalRujukanComponent,
+        SetupIcdDiagnosaComponent,
+        PemasukanRawatJalanComponent,
     ],
     imports: [
         CommonModule,

@@ -7,21 +7,20 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class AtmInputGroupComponentAtom implements OnInit {
 
-    @Output('clickButton') clickButton = new EventEmitter<any>();
+    @Input('label') label: string;
+
+    @Input('inputId') inputId: string;
     @Input('value') value: any;
     @Input('disableTitle') disableTitle: boolean;
+
+    @Output('clickButton') clickButton = new EventEmitter<any>();
 
     constructor() { }
 
     ngOnInit(): void {
     }
 
-    @Input('label') label: string;
-
     handelClick($event: any) {
         this.clickButton.emit($event);
     }
-
-
-
 }

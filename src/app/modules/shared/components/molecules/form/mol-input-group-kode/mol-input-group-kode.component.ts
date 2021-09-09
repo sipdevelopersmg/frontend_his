@@ -7,11 +7,12 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class MolInputGroupKodeComponent implements OnInit {
 
-    @Input('label') label: string
+    @Input('label') label: string;
+    @Input('id_input') id_input: string;
+    @Input('kodeValue') kodeValue: string;
+    @Input('titleValue') titleValue: string;
+    @Input('disableTitle') disableTitle: boolean;
     @Output('clickButton') clickButton = new EventEmitter<any>();
-    @Input('kodeValue') kodeValue: string
-    @Input('titleValue') titleValue: string
-    @Input('disableTitle') disableTitle: boolean
     @Output('pressEnter') pressEnter = new EventEmitter<any>();
 
     constructor() { }
@@ -28,5 +29,4 @@ export class MolInputGroupKodeComponent implements OnInit {
             this.pressEnter.emit($event);
         }
     }
-
 }

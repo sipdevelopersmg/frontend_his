@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
+import { MolGridComponent } from '../../../molecules/grid/grid/grid.component';
 import { Columns } from '../../../molecules/grid/grid/grid.model';
 
 @Component({
@@ -35,6 +36,7 @@ export class OrgInputLookUpComponent implements OnInit {
 
     items: any;
 
+    @ViewChild('GridData') GridData: MolGridComponent;
     gridId: string = 'GridModal';
     gridWidth: any = 'auto';
     gridHeight: any = 300;
@@ -64,20 +66,31 @@ export class OrgInputLookUpComponent implements OnInit {
         );
 
         this.openModal.emit(id);
+
+        setTimeout(() => {
+            (<HTMLInputElement>document.getElementById("searchValueId")).focus();
+        }, 200);
     }
 
     onCloseModal() {
-        this.modalRef.hide();
-
         setTimeout(() => {
             this.gridDataSource = [];
         }, 200);
+
+        this.modalRef.hide();
     }
 
     onFetchDataSource(params: any) {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
             .subscribe((_result) => {
                 this.gridDataSource = _result.data;
+
+                setTimeout(() => {
+                    if (_result.data.length > 0) {
+                        this.GridData.Grid.selectedRowIndex = 0;
+                    }
+                }, 200);
+
             }, (pesanError) => {
                 console.log(pesanError);
             })
@@ -106,8 +119,6 @@ export class OrgInputLookUpComponent implements OnInit {
             "searchText2": ""
         }];
 
-        console.log(this.staticFilters);
-
         if (this.staticFilters.length > 0) {
             for (let i = 0; i < this.staticFilters.length; i++) {
                 search.push(this.staticFilters[i]);
@@ -119,13 +130,17 @@ export class OrgInputLookUpComponent implements OnInit {
         this.onFetchDataSource(search);
     }
 
+    onInitialized(component: MolGridComponent) {
+        this.GridData = component;
+    }
+
     onRowSelected(args: any) {
         this.currentData = args.data;
     }
 
     onKeyPressed(args: any) {
         let keycode = args.keyCode;
-        console.log(this.currentData)
+
         if (keycode == 13) {
             args.cancel = true;
             this.onKeyPressedUtility(this.currentData);
@@ -151,7 +166,7 @@ export class OrgInputLookUpComponent implements OnInit {
         this.titleValue = ''
         this.currentData = null
     }
-    
+
     ngOnDestroy() {
         this.gridDataSource = [];
     }

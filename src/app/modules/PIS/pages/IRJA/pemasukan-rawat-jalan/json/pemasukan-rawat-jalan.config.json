@@ -5,7 +5,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "kode_asal_rujukan",
+                "field": "KodeRujuk",
                 "headerText": "KODE",
                 "type": "string",
                 "visible": true,
@@ -15,7 +15,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "nama_asal_rujukan",
+                "field": "NamaRujuk",
                 "headerText": "KETERANGAN",
                 "type": "string",
                 "visible": true,
@@ -25,7 +25,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "is_required_kode_wilayah",
+                "field": "RequiredGeoCode",
                 "headerText": "REQUIRED GEO CODE",
                 "type": "string",
                 "visible": false,
@@ -34,12 +34,12 @@
         ],
         "filter": [
             {
-                "field": "ar.kode_asal_rujukan",
+                "field": "KodeRujuk",
                 "filter": "like",
                 "title": "KODE"
             },
             {
-                "field": "ar.nama_asal_rujukan",
+                "field": "NamaRujuk",
                 "filter": "like",
                 "title": "KETERANGAN"
             }
@@ -123,33 +123,33 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "kode_icd",
-                "headerText": "KODE ICD",
+                "field": "IcdCode",
+                "headerText": "KODE",
                 "type": "string",
                 "visible": true,
-                "width": 100
+                "width": 150
             },
             {
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "nama_icd",
-                "headerText": "NAMA ICD",
+                "field": "IcdDescr",
+                "headerText": "KETERANGAN",
                 "type": "string",
                 "visible": true,
-                "width": 300
+                "width": 150
             }
         ],
         "filter": [
             {
-                "field": " si1.kode_icd",
-                "filter": "like",
-                "title": "KODE ICD"
+                "field": "IcdCode",
+                "filter": "equal",
+                "title": "KODE"
             },
             {
-                "field": "si1.nama_icd",
+                "field": "IcdDescr",
                 "filter": "like",
-                "title": "NAMA ICD"
+                "title": "KETERANGAN"
             }
         ]
     },
@@ -169,7 +169,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "numericEdit",
-                "field": "id_person",
+                "field": "PartyId",
                 "format": "N2",
                 "headerText": "PERSON ID",
                 "type": "number",
@@ -180,7 +180,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "kode_dokter",
+                "field": "KodeDokter",
                 "headerText": "KODE DOKTER",
                 "type": "string",
                 "visible": true,
@@ -190,7 +190,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "full_name",
+                "field": "FirstName",
                 "headerText": "NAMA DOKTER",
                 "type": "string",
                 "visible": true,
@@ -200,8 +200,28 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "spesialisasi_dokter",
+                "field": "Spesialisasi",
                 "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true,
+                "width": 120
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Profession",
+                "headerText": "UNIT",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "Mobile",
+                "headerText": "MOBILE",
                 "type": "string",
                 "visible": true,
                 "width": 120
@@ -209,12 +229,12 @@
         ],
         "filter": [
             {
-                "field": "d.kode_dokter",
+                "field": "dok.KodeDokter",
                 "filter": "like",
                 "title": "KODE DOKTER"
             },
             {
-                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "field": "dok.NamaDokter",
                 "filter": "like",
                 "title": "NAMA DOKTER"
             }
@@ -262,7 +282,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "numericEdit",
-                "field": "kode_wilayah",
+                "field": "Id",
                 "headerText": "ID",
                 "type": "number",
                 "visible": false,
@@ -272,7 +292,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "nama_wilayah",
+                "field": "Nama",
                 "headerText": "NAMA KOTA",
                 "type": "string",
                 "visible": true,
@@ -281,9 +301,9 @@
         ],
         "filter": [
             {
-                "field": "w.nama_wilayah",
+                "field": "nama",
                 "filter": "like",
-                "title": "NAMA KOTA"
+                "title": "KOTA"
             }
         ]
     },
@@ -293,21 +313,11 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no_identitas",
-                "headerText": "NO. IDENTITAS",
-                "type": "string",
-                "visible": true,
-                "width": 100
-            },
-            {
-                "allowEditing": false,
-                "allowSorting": false,
-                "editType": "defaultEdit",
                 "field": "no_rekam_medis",
-                "headerText": "NO. RM",
+                "headerText": "MR NO",
                 "type": "string",
                 "visible": true,
-                "width": 100
+                "width": 70
             },
             {
                 "allowEditing": false,
@@ -317,13 +327,13 @@
                 "headerText": "NAMA",
                 "type": "string",
                 "visible": true,
-                "width": 150
+                "width": 200
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "tanggal_lahir",
+                "field": "tgl_lahir",
                 "format": "dd/MM/yyyy",
                 "headerText": "TGL LAHIR",
                 "type": "date",
@@ -338,24 +348,24 @@
                 "headerText": "ALAMAT",
                 "type": "string",
                 "visible": true,
-                "width": 150
+                "width": 200
             }
         ],
         "filter": [
             {
-                "field": "per.no_identitas",
-                "filter": "like",
-                "title": "NO. IDENTITAS"
-            },
-            {
-                "field": "p.no_rekam_medis",
+                "field": "MrNo",
                 "filter": "like",
                 "title": "MR NO"
             },
             {
-                "field": "concat(per.nama_depan, ' ',per.nama_belakang)",
+                "field": "FirstName",
                 "filter": "like",
                 "title": "NAMA"
+            },
+            {
+                "field": "Alamat",
+                "filter": "like",
+                "title": "ALAMAT"
             }
         ]
     },
@@ -375,60 +385,7 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "kode_poli",
-                "headerText": "KODE POLI",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "nama_poli",
-                "headerText": "NAMA POLI",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "jenis_ruangan",
-                "headerText": "BUILDING NAME",
-                "type": "string",
-                "visible": false,
-                "width": 150
-            }
-        ],
-        "filter": [
-            {
-                "field": "pl.PolyCode",
-                "filter": "like",
-                "title": "KODE POLI"
-            },
-            {
-                "field": "p1.nama_poli",
-                "filter": "like",
-                "title": "NAMA POLI"
-            }
-        ]
-    },
-    "LookupAsalRujukanTes": {
-        "columns": [
-            {
-                "width": 50,
-                "type": "Checkbox",
-                "field": "Checkbox",
-                "headerTextAlign": "Center",
-                "textAlign": "Center"
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "kode_asal_rujukan",
+                "field": "PolyCode",
                 "headerText": "KODE",
                 "type": "string",
                 "visible": true,
@@ -438,7 +395,17 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "nama_asal_rujukan",
+                "field": "PolyJkn",
+                "headerText": "KODE JKN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "PolyName",
                 "headerText": "KETERANGAN",
                 "type": "string",
                 "visible": true,
@@ -448,8 +415,28 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "is_required_kode_wilayah",
-                "headerText": "REQUIRED GEO CODE",
+                "field": "AliasName",
+                "headerText": "ALIAS NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "BuildingName",
+                "headerText": "BUILDING NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "IsPrivate",
+                "headerText": "IS PRIVATE",
                 "type": "string",
                 "visible": false,
                 "width": 150
@@ -457,15 +444,82 @@
         ],
         "filter": [
             {
-                "field": "ar.kode_asal_rujukan",
+                "field": "pl.PolyCode",
                 "filter": "like",
-                "title": "KODE"
+                "title": "POLY CODE"
             },
             {
-                "field": "ar.nama_asal_rujukan",
+                "field": "pl.PolyName",
                 "filter": "like",
-                "title": "KETERANGAN"
+                "title": "POLY NAME"
             }
         ]
-    }
+    },
+    "GridInputTarifPerPoli": [
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "id_setup_tarif",
+            "headerText": "Id Setup Tarif",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "id_kelas",
+            "headerText": "Id Kelas",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "kode_setup_tarif",
+            "headerText": "Kode Tarif",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "nama_setup_tarif",
+            "headerText": "Nama Tarif",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 200
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "nama_kelas",
+            "headerText": "Kelas",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "nominal_tarif",
+            "headerText": "Nilai",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        }
+    ]
 }

@@ -5,10 +5,12 @@ import { PelayananPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-r
 import { AntrianPasienRawatJalanComponent } from "./pages/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.component";
 import { DaftarPasienComponent } from "./pages/IRJA/daftar-pasien/daftar-pasien.component";
 import { DaftarUlangPasienComponent } from "./pages/IRJA/daftar-ulang-pasien/daftar-ulang-pasien.component";
+import { PemasukanRawatJalanComponent } from "./pages/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.component";
 import { EditPasienIRJAComponent } from "./pages/IRJA/pendaftaran-pasien-baru/edit-pasien/edit-pasien.component";
 import { PendaftaranPasienBaruComponent } from "./pages/IRJA/pendaftaran-pasien-baru/input-pasien/pendaftaran-pasien-baru.component";
 import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component";
 import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component";
+import { SetupAsalRujukanComponent } from "./pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component";
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { SetupDebiturComponent } from "./pages/setup-data/setup-debitur/setup-debitur.component";
 import { DataDokterComponent } from "./pages/setup-data/setup-dokter/data-dokter/data-dokter.component";
@@ -16,6 +18,7 @@ import { EditDokterComponent } from "./pages/setup-data/setup-dokter/edit-dokter
 import { InputDokterComponent } from "./pages/setup-data/setup-dokter/input-dokter/input-dokter.component";
 import { SetupEducationComponent } from "./pages/setup-data/setup-education/setup-education.component";
 import { SetupEtnisComponent } from "./pages/setup-data/setup-etnis/setup-etnis.component";
+import { SetupIcdDiagnosaComponent } from "./pages/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.component";
 import { SetupJobTypeComponent } from "./pages/setup-data/setup-job-type/setup-job-type.component";
 import { SetupKebangsaanComponent } from "./pages/setup-data/setup-kebangsaan/setup-kebangsaan.component";
 import { SetupSmfDokterComponent } from "./pages/setup-data/setup-smf-dokter/setup-smf-dokter.component";
@@ -60,6 +63,8 @@ const pisRoutes: Routes = [
             { path: "setup-kota", component: SetupKotaComponent, data: { title: "Setup Kota" } },
             { path: "setup-kecamatan", component: SetupKecamatanComponent, data: { title: "Setup Kecamatan" } },
             { path: "setup-debitur", component: SetupDebiturComponent, data: { title: "Setup Debitur" } },
+            { path: "setup-asal-rujukan", component: SetupAsalRujukanComponent, data: { title: "Setup Asal Rujukan" } },
+            { path: "setup-icd-diagnosa-awal", component: SetupIcdDiagnosaComponent, data: { title: "Setup Diagnosa Awal" } },
         ]
     },
     {
@@ -69,6 +74,7 @@ const pisRoutes: Routes = [
             { path: "pendaftaran-ulang-pasien", component: DaftarUlangPasienComponent, data: { title: "Pendaftaran Ulang Pasien" }, },
             { path: "pelayanan-pasien-rawat-jalan", component: AdmisiPasienRawatJalanComponent, data: { title: "Pelayanan Pasien Rawat Jalan" }, },
             { path: "admisi-pasien-rawat-jalan", component: PelayananPasienRawatJalanComponent, data: { title: "Admisi Pasien Rawat Jalan" }, },
+            { path: "pemasukan-rawat-jalan", component: PemasukanRawatJalanComponent, data: { title: "Pemasukan Rawat Jalan" }, },
         ]
     },
     {

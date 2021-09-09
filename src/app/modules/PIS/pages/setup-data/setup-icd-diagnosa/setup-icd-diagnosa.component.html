@@ -1,0 +1,100 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Diagnosa Awal</org-tabs-label>
+            <org-tabs-body>
+                <ejs-grid #GridData [id]="'GridDaftarTarif'" [height]="'calc(100vh - 19rem)'"
+                    [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                    [toolbar]="GridDataToolbar" [allowResizing]="true" [allowFiltering]='true'
+                    [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+                    (actionComplete)="handleActionComplete($event)" (toolbarClick)="handleToolbarClick($event)">
+                    <e-columns>
+                        <e-column [width]="50" [field]="'id_icd'" [headerText]="'ID'" [visible]="false"
+                            [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                            [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="70" [field]="'kode_icd'" [headerText]="'KODE ICD'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="400" [field]="'nama_icd'" [headerText]="'NAMA ICD'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_dtd'" [headerText]="'NO. DTD'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                            [headerTextAlign]="'Left'" [displayAsCheckBox]="true">
+                        </e-column>
+                        <e-column [width]="80" [field]="'kastropik'" [headerText]="'KASTROPIK'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                            [headerTextAlign]="'Left'">
+                        </e-column>
+                        <e-column field='is_active' [headerText]="'STATUS'" [width]='70' [textAlign]="'Center'">
+                            <ng-template #template let-data>
+                                <div *ngIf="data.is_active === true; else inactive" class="statustemp e-activecolor">
+                                    <span class="statustxt e-activecolor">
+                                        {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                    </span>
+                                </div>
+                                <ng-template #inactive>
+                                    <div class="statustemp e-inactivecolor">
+                                        <span class="statustxt e-inactivecolor">
+                                            {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
+                                        </span>
+                                    </div>
+                                </ng-template>
+                            </ng-template>
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Diagnosa Awal</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text [label]="'Kode ICD'" formControlName="kode_icd"
+                                [IsFormControlInvalid]="kode_icd.invalid"
+                                [ValidatorsCaption]="'Kode ICD Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Nama ICD '" formControlName="nama_icd"
+                                [IsFormControlInvalid]="nama_icd.invalid"
+                                [ValidatorsCaption]="'Nama ICD Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'No. DTD'" formControlName="no_dtd"></mol-input-text>
+
+                            <mol-input-text [label]="'Kastropik'" formControlName="kastropik"></mol-input-text>
+
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Dari CBG ?'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="is_from_cbg"
+                                            name="is_from_cbg" id="is_from_cbg_true" [value]="true">
+                                        <label class="form-check-label" for="is_from_cbg_true">
+                                            Iya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="is_from_cbg"
+                                            name="is_from_cbg" id="is_from_cbg_false" [value]="false">
+                                        <label class="form-check-label" for="is_from_cbg_false">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

@@ -93,4 +93,13 @@ export class SetupKelasPerawatanService {
                 })
             );
     }
+
+    /**
+     * Service Untuk Menampilkan Semua Data Kelas Perawatan
+     * @onGetAllForLookupAdmisiIrja Observable<GetAllKelompokTarifModel>
+    */
+    onGetAllForLookupAdmisiIrja(): Observable<GetAllKelasPerawatanModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_KELAS_PERAWATAN.GET_ALL_KELAS_PERAWATAN_FOR_LOOKUP_ADMISI_IRJA);
+    }
+
 }

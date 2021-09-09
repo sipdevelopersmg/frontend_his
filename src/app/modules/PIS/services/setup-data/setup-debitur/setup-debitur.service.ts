@@ -76,4 +76,7 @@ export class SetupDebiturService {
             );
     }
 
+    onGetAllByPersonId(PersonId: number): Observable<GetAllDebiturModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_DEBITUR.GET_ALL_DEBITUR_FOR_LOOKUP_ADMISI + PersonId);
+    }
 }

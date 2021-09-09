@@ -48,6 +48,10 @@ interface IKontakPerson {
 }
 
 interface IDokter {
+    id_dokter?: number;
+    id_person?: number;
+    kode_dokter?: string;
+    full_name?: string;
     id_spesialisasi_dokter: number;
     no_surat_ijin_praktek: string;
     tgl_exp_surat_ijin_praktek: Date;
@@ -55,8 +59,8 @@ interface IDokter {
     tgl_exp_str: Date;
     id_smf: number;
     id_status_dokter: number;
-    is_active: boolean;
-    user_created: number;
+    is_active?: boolean;
+    user_created?: number;
 }
 
 /**
