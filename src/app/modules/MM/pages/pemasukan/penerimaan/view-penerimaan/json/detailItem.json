@@ -83,8 +83,8 @@
             "field":"expired_date",
             "headerText":"Expired Date",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"",
+            "type":"Date",
+            "format":"dd MMMM yyyy",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -95,7 +95,7 @@
             "headerText":"Banyak",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -118,7 +118,7 @@
             "headerText":"Isi",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "visible": true
         },
@@ -128,7 +128,7 @@
             "headerText":"Qty",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -139,7 +139,7 @@
             "headerText":"Harga Satuan",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -150,7 +150,7 @@
             "headerText":"D1",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -161,7 +161,7 @@
             "headerText":"D2",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -172,7 +172,7 @@
             "headerText":"Harga Bruto",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -183,7 +183,7 @@
             "headerText":"Tax",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -194,7 +194,7 @@
             "headerText":"Harga Neto",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true
@@ -205,7 +205,7 @@
             "headerText":"Sub Total",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
+            "format":"N2",
             "textAlign":"left",
             "headerTextAlign":"Center",
             "visible": true

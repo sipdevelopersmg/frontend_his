@@ -70,18 +70,19 @@
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
             </div>
         </div>
-        <mol-grid 
-        [grid-DataSource]="penerimaanService.dataDetail$| async"
-        [columns]="ConfigGrid.TrDetail"
-        ></mol-grid>
+        <div class="card text-center mb-2">
+            <div class="card-body p-0">
+                <mol-grid 
+                    [grid-DataSource]="penerimaanService.dataDetail$| async"
+                    [columns]="ConfigGrid.TrDetail"
+                ></mol-grid>
+            </div>
+            <div class="card-footer text-end">
+              Total Transaksi : {{ sub_total_1.value | currency:"":"" }}
+            </div>
+          </div>
+        
         <div class="row">
-            <div class="col-sm-5">
-            </div>
-            <div class="col-sm-3">
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="penerimaanService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'"></mol-input-text>
-            </div>
             <div class="col-sm-4">
                 <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="penerimaanService.sub_total_1" formControlName="sub_total_1"
@@ -98,6 +99,19 @@
                 <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="penerimaanService.total_transaksi" formControlName="total_transaksi"
                     [inputFieldState]="'detail'"></mol-input-text>
+            </div>
+            <div class="col-sm-4">
+                <mol-input-text [label]="'Biaya Kirim'" formControlName="biaya_kirim" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'Biaya Asuransi'" formControlName="biaya_asuransi" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'Biaya Lain'" formControlName="biaya_lain" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'Potongan'" formControlName="potongan_nominal" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'Uang Muka'" formControlName="total_uang_muka" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>   
+            </div>
+            <div class="col-sm-4">
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="penerimaanService.jumlah_item" formControlName="jumlah_item"
+                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-text [label]="'Total Tagihan'" formControlName="total_tagihan" [isFooter]="true" [inputFieldState]="inputFieldState"></mol-input-text>
             </div>
         </div>
     </form>

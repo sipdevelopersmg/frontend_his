@@ -26,6 +26,7 @@ import { DaftarPemesananComponent } from './pages/pemasukan/pemesanan/daftar-pem
 import { ViewPemesananComponent } from './pages/pemasukan/pemesanan/view-pemesanan/view-pemesanan.component';
 import { DaftarPenerimaanComponent } from './pages/pemasukan/penerimaan/daftar-penerimaan/daftar-penerimaan.component';
 import { ViewPenerimaanComponent } from './pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component';
+import { SetHargaOrderComponent } from './pages/pemasukan/set-harga-order/set-harga-order.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { ViewPenerimaanComponent } from './pages/pemasukan/penerimaan/view-pener
         ViewPemesananComponent,
         DaftarPenerimaanComponent,
         ViewPenerimaanComponent,
+        SetHargaOrderComponent,
     ],
     imports: [
         FormsModule,

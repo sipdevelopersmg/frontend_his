@@ -114,7 +114,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": false,
+        "visible": true,
         "editType": "defaultEdit"
     },
     {
@@ -132,7 +132,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -141,7 +141,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -150,7 +150,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -159,7 +159,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -168,7 +168,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -177,7 +177,7 @@
         "type": "number",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {

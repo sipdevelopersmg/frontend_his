@@ -14,10 +14,13 @@ import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/o
 import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import * as GridLoockUpSupplier from './json/lookupsupplier.json'
+import * as LookupGridPenerimaan from './json/LookupGridPenerimaan.json'
 import * as GridLoockUpItem from './json/lookupitem.json'
 import { Location } from '@angular/common'
 import { TrPenerimaanDetailItemInsert } from 'src/app/modules/MM/models/penerimaan/penerimaan/PenerimaanModel';
+import { SetupShippingMethodService } from 'src/app/modules/MM/services/setup-data/setup-shipping-method/setup-shipping-method.service';
+import { SetupPaymentTermService } from 'src/app/modules/MM/services/setup-data/setup-payment-term/setup-payment-term.service';
+import { SetupJenisPenerimaanService } from 'src/app/modules/MM/services/setup-data/setup-jenis-penerimaan/setup-jenis-penerimaan.service';
 
 @Component({
   selector: 'app-input-penerimaan',
@@ -25,22 +28,28 @@ import { TrPenerimaanDetailItemInsert } from 'src/app/modules/MM/models/penerima
   styleUrls: ['./input-penerimaan.component.css']
 })
 export class InputPenerimaanComponent implements OnInit {
+  MaritalShippingMethodDropdownField: object = { text: 'shipping_method', value: 'id_shipping_method' };
+  MaritalPaymentTermDropdownField: object = { text: 'payment_term', value: 'id_payment_term' };
+  MaritalJenisPenerimaanDropdownField: object = { text: 'jenis_penerimaan', value: 'kode_jenis_penerimaan' };
+
+
   inputFieldState = 'input'
-  GridLookUpSupplier = GridLoockUpSupplier;
+  LookupGridPenerimaan = LookupGridPenerimaan;
   GridLookUpItem = GridLoockUpItem;
 
   Detail: TrPemesananDetailInsert[] = [];
 
   urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
   urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
+  urlPemesanan = MM.PENERIMAAN.TRANSPEMESANAN.GET_HEADER_BY_PARAMS;
 
   TrPemesananDetailInsert: TrPemesananDetailInsert;
+  @ViewChild('LookupKodePemesanan') LookupKodePemesanan: OrgInputLookUpKodeComponent;
 
   ButtonNav: ButtonNavModel[] = [
-      { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
-      { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
-      { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
-
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-arrow-left' },
+    { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
+    { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
   ];
 
   DetailItems: any;
@@ -92,37 +101,41 @@ export class InputPenerimaanComponent implements OnInit {
       private encryptionService: EncryptionService,
       private activatedRoute: ActivatedRoute,
       public setupStockroomService: SetupStockroomService,
-      private   utilityService:UtilityService
+      private   utilityService:UtilityService,
+      public setupShippingMethodService: SetupShippingMethodService,
+      public setupPaymentTermService: SetupPaymentTermService,
+      public setupJenisPenerimaanService: SetupJenisPenerimaanService,
 
   ) { }
 
   ngOnInit(): void {
     this.formInput = this.formBuilder.group({
       nomor_penerimaan: ['', [Validators.required]],
-      tanggal_penerimaan: ['', [Validators.required]],
+      tanggal_penerimaan: [null, [Validators.required]],
       kode_jenis_penerimaan: ['', [Validators.required]],
       id_stockroom: [0, [Validators.required]],
+      nama_stockroom: ['', [Validators.required]],
       id_supplier: [0, [Validators.required]],
       pemesanan_id: [0, [Validators.required]],
       nomor_surat_jalan_supplier: ['', [Validators.required]],
-      tanggal_surat_jalan_supplier: ['', [Validators.required]],
+      tanggal_surat_jalan_supplier: [null, [Validators.required]],
       id_shipping_method: [0, [Validators.required]],
       id_payment_term: [0, [Validators.required]],
-      tanggal_jatuh_tempo_bayar: ['', [Validators.required]],
+      tanggal_jatuh_tempo_bayar: [null, [Validators.required]],
       keterangan: ['', [Validators.required]],
       jumlah_item: [0, [Validators.required]],
       sub_total_1: [0, [Validators.required]],
-      total_disc: [0, [Validators.required]],
+      total_disc: [0, []],
       sub_total_2: [0, [Validators.required]],
-      total_tax: [0, [Validators.required]],
+      total_tax: [0, []],
       total_transaksi: [0, [Validators.required]],
-      biaya_kirim: [0, [Validators.required]],
-      biaya_asuransi: [0, [Validators.required]],
-      biaya_lain: [0, [Validators.required]],
-      potongan_nominal: [0, [Validators.required]],
-      potongan_prosentase: [0, [Validators.required]],
-      total_uang_muka: [0, [Validators.required]],
-      total_tagihan: [0, [Validators.required]],
+    //   biaya_kirim: [0, []],
+    //   biaya_asuransi: [0, []],
+    //   biaya_lain: [0, []],
+    //   potongan_nominal: [0, []],
+    //   potongan_prosentase: [0, []],
+    //   total_uang_muka: [0, []],
+    //   total_tagihan: [0, []],
     });
 
       this.satuanParams = {
@@ -161,7 +174,10 @@ export class InputPenerimaanComponent implements OnInit {
           { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }
       ];
       this.setupStockroomService.setDataSource();
-
+      this.setupShippingMethodService.setDataSource(); 
+      this.setupPaymentTermService.setDataSource();
+      this.setupJenisPenerimaanService.setDataSource();
+      this.ResetFrom();
   }
 
   ngAfterViewInit(): void {
@@ -198,7 +214,7 @@ export class InputPenerimaanComponent implements OnInit {
           case 'Reset':
               this.ResetFrom();
               break;
-          case 'Kembali':
+          case 'Back':
               this.location.back();
               break;
           default:
@@ -258,8 +274,8 @@ export class InputPenerimaanComponent implements OnInit {
       if ($event.requestType == 'save') {
           console.log($event);
 
-          // this.penerimaanService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
-          // this.gridDetail.refresh();
+          this.penerimaanService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+          this.gridDetail.refresh();
       }
   }
 
@@ -332,6 +348,13 @@ export class InputPenerimaanComponent implements OnInit {
       }
 
   }
+
+  heandleSelectedPemesanan(args: any): void {
+    this.pemesanan_id.setValue(args.pemesanan_id);
+    this.id_stockroom.setValue(args.id_stockroom);
+    this.id_supplier.setValue(args.id_supplier);
+    this.nama_stockroom.setValue(args.nama_stockroom);
+}
 
   onOpenQty() {
 
@@ -477,7 +500,7 @@ export class InputPenerimaanComponent implements OnInit {
   }
 
   onSave(){
-      if (this.formInput.valid) {
+    //   if (this.formInput.valid) {
           this.penerimaanService.Insert(this.formInput.value)
           .subscribe((result) => {
               this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
@@ -485,15 +508,15 @@ export class InputPenerimaanComponent implements OnInit {
                   this.ResetFrom();
               });
           });
-      }else{
-          alert('isi semua data');
-      }
+    //   }else{
+    //       alert('isi semua data');
+    //   }
   }
 
   ResetFrom() {
       this.penerimaanService.Reset();
       this.formInput.reset();
-      this.LookupKodeSupplier.resetValue();
+      this.LookupKodePemesanan.resetValue();
   }
 
   get nomor_penerimaan() : AbstractControl { return this.formInput.get('nomor_penerimaan') }
@@ -501,6 +524,7 @@ export class InputPenerimaanComponent implements OnInit {
   get kode_jenis_penerimaan() : AbstractControl { return this.formInput.get('kode_jenis_penerimaan') }
   get id_stockroom() : AbstractControl { return this.formInput.get('id_stockroom') }
   get id_supplier() : AbstractControl { return this.formInput.get('id_supplier') }
+  get nama_stockroom() : AbstractControl { return this.formInput.get('nama_stockroom') }
   get pemesanan_id() : AbstractControl { return this.formInput.get('pemesanan_id') }
   get nomor_surat_jalan_supplier() : AbstractControl { return this.formInput.get('nomor_surat_jalan_supplier') }
   get tanggal_surat_jalan_supplier() : AbstractControl { return this.formInput.get('tanggal_surat_jalan_supplier') }
@@ -514,11 +538,11 @@ export class InputPenerimaanComponent implements OnInit {
   get sub_total_2() : AbstractControl { return this.formInput.get('sub_total_2') }
   get total_tax() : AbstractControl { return this.formInput.get('total_tax') }
   get total_transaksi() : AbstractControl { return this.formInput.get('total_transaksi') }
-  get biaya_kirim() : AbstractControl { return this.formInput.get('biaya_kirim') }
-  get biaya_asuransi() : AbstractControl { return this.formInput.get('biaya_asuransi') }
-  get biaya_lain() : AbstractControl { return this.formInput.get('biaya_lain') }
-  get potongan_nominal() : AbstractControl { return this.formInput.get('potongan_nominal') }
-  get potongan_prosentase() : AbstractControl { return this.formInput.get('potongan_prosentase') }
-  get total_uang_muka() : AbstractControl { return this.formInput.get('total_uang_muka') }
-  get total_tagihan() : AbstractControl { return this.formInput.get('total_tagihan') }
+//   get biaya_kirim() : AbstractControl { return this.formInput.get('biaya_kirim') }
+//   get biaya_asuransi() : AbstractControl { return this.formInput.get('biaya_asuransi') }
+//   get biaya_lain() : AbstractControl { return this.formInput.get('biaya_lain') }
+//   get potongan_nominal() : AbstractControl { return this.formInput.get('potongan_nominal') }
+//   get potongan_prosentase() : AbstractControl { return this.formInput.get('potongan_prosentase') }
+//   get total_uang_muka() : AbstractControl { return this.formInput.get('total_uang_muka') }
+//   get total_tagihan() : AbstractControl { return this.formInput.get('total_tagihan') }
 }

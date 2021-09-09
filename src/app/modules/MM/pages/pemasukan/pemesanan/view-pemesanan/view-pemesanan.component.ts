@@ -17,7 +17,7 @@ export class ViewPemesananComponent implements OnInit {
   formInput: FormGroup;
   inputFieldState='detail';
   ButtonNav: ButtonNavModel[] = [
-    { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
   ];
 
   ConfigGrid = configGrid;
@@ -28,7 +28,6 @@ export class ViewPemesananComponent implements OnInit {
     private encryptionService: EncryptionService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-
   ) { }
 
   ngOnInit(): void {
@@ -80,7 +79,7 @@ export class ViewPemesananComponent implements OnInit {
 
   onClickButtonNav(ButtonId: string): void {
     switch (ButtonId) {
-        case 'Kembali':
+        case 'Back':
             this.location.back();
             break;
         default:

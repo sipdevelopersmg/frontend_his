@@ -9,6 +9,7 @@ import { ViewPemesananComponent } from "./pages/pemasukan/pemesanan/view-pemesan
 import { DaftarPenerimaanComponent } from "./pages/pemasukan/penerimaan/daftar-penerimaan/daftar-penerimaan.component";
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
 import { ViewPenerimaanComponent } from "./pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component";
+import { SetHargaOrderComponent } from "./pages/pemasukan/set-harga-order/set-harga-order.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
@@ -58,6 +59,13 @@ const mmRoutes: Routes = [
             { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "Daftar Pemesanan" } },
             { path: "view-pemesanan/:id/:key", component: ViewPemesananComponent, data: { title: "View Pemesanan" } },
         ],
+    },
+    {
+        path: "setharga-order", component: null, data: {title:"Input PO"},
+        children:[
+            { path: "input-setharga-order", component: SetHargaOrderComponent, data: { title: "Set Harga Order" } },
+        ],
+        
     },
     {
         path: "penerimaan", component: null, data: {title:"Input Penerimaan"},
