@@ -17,7 +17,7 @@ export class ViewPenerimaanComponent implements OnInit {
   inputFieldState='detail';
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Validasi', Captions: 'Validasi', Icons1: 'fa-check' },
-    { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
   ];
 
   ConfigGrid = configGrid;
@@ -102,7 +102,7 @@ export class ViewPenerimaanComponent implements OnInit {
 
   onClickButtonNav(ButtonId: string): void {
     switch (ButtonId) {
-        case 'Kembali':
+        case 'Back':
             this.location.back();
             break;
         case 'Validasi':

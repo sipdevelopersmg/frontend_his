@@ -38,10 +38,9 @@ export class InputPemesananComponent implements OnInit {
   TrPemesananDetailInsert: TrPemesananDetailInsert;
 
   ButtonNav: ButtonNavModel[] = [
-      { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
-      { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
-      { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
-
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
+    { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
+    { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
   ];
 
   DetailItems: any;
@@ -149,7 +148,7 @@ export class InputPemesananComponent implements OnInit {
 
       this.GridDetailToolbar = [
           { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-          { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }
+          { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
       ];
       this.setupStockroomService.setDataSource();
 
@@ -189,7 +188,7 @@ export class InputPemesananComponent implements OnInit {
           case 'Reset':
               this.ResetFrom();
               break;
-          case 'Kembali':
+          case 'Back':
               this.location.back();
               break;
           default:
@@ -308,13 +307,13 @@ export class InputPemesananComponent implements OnInit {
           }, 100)
       };
 
-      if (event.keyCode === 111) {
-          this.onOpenHarga()
-      }
+    //   if (event.keyCode === 111) {
+    //       this.onOpenHarga()
+    //   }
 
-      if (event.keyCode === 109) {
-          this.onOpenSubtotal()
-      }
+    //   if (event.keyCode === 109) {
+    //       this.onOpenSubtotal()
+    //   }
 
       if (event.keyCode === 107) {
           this.onOpenSatuan()

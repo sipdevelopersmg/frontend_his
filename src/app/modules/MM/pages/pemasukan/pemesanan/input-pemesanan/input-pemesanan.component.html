@@ -32,7 +32,7 @@
                     [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
                     [columns]="GridLookUpSupplier.columns" [filter-lookup]="GridLookUpSupplier.filter"
                     [label]="'Supplier'" [modal-title]="'Data Supplier'"></org-input-look-up-kode>
-
+                    
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
 
             </div>
@@ -61,7 +61,7 @@
                 <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='barcode' [allowEditing]="false" headerText='Barcode'
+                <e-column [visible]="false" field='barcode' [allowEditing]="false" headerText='Barcode'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'

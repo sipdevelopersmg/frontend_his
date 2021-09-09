@@ -62,8 +62,8 @@
             "headerText":"Banyak",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
-            "textAlign":"left",
+            "format":"N2",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -85,8 +85,8 @@
             "headerText":"Isi",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
-            "textAlign":"left",
+            "format":"N2",
+            "textAlign":"right",
             "visible": true
         },
         {
@@ -95,8 +95,8 @@
             "headerText":"Qty",
             "editType": "defaultEdit",
             "type":"",
-            "format":"",
-            "textAlign":"left",
+            "format":"N2",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -109,7 +109,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": true,
@@ -120,7 +120,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": true,
@@ -131,7 +131,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": true,
@@ -142,7 +142,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": true,
@@ -153,7 +153,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": true,
@@ -164,7 +164,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": true,
@@ -175,7 +175,7 @@
             "format":"",
             "textAlign":"left",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         }
     ]
 }

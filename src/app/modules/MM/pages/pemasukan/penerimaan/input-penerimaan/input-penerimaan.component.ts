@@ -47,10 +47,9 @@ export class InputPenerimaanComponent implements OnInit {
   @ViewChild('LookupKodePemesanan') LookupKodePemesanan: OrgInputLookUpKodeComponent;
 
   ButtonNav: ButtonNavModel[] = [
-      { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
-      { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
-      { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
-
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-arrow-left' },
+    { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
+    { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
   ];
 
   DetailItems: any;
@@ -106,7 +105,6 @@ export class InputPenerimaanComponent implements OnInit {
       public setupShippingMethodService: SetupShippingMethodService,
       public setupPaymentTermService: SetupPaymentTermService,
       public setupJenisPenerimaanService: SetupJenisPenerimaanService,
-
 
   ) { }
 
@@ -216,7 +214,7 @@ export class InputPenerimaanComponent implements OnInit {
           case 'Reset':
               this.ResetFrom();
               break;
-          case 'Kembali':
+          case 'Back':
               this.location.back();
               break;
           default:

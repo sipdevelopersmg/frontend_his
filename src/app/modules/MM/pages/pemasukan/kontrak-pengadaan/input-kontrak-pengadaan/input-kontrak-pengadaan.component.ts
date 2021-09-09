@@ -40,10 +40,9 @@ export class InputKontrakPengadaanComponent implements OnInit {
     TrKontrakSpjbDetailItemInsert: TrKontrakSpjbDetailItemInsert;
 
     ButtonNav: ButtonNavModel[] = [
-        { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
+        { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
         { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
-        { Id: 'Kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left' },
-
+        { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
     ];
 
     DetailItems: any;
@@ -185,7 +184,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
             case 'Reset':
                 this.ResetFrom();
                 break;
-            case 'Kembali':
+            case 'Back':
                 this.location.back();
                 break;
             default:
