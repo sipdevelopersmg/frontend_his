@@ -247,9 +247,8 @@ export class InputPemesananComponent implements OnInit {
 
       if ($event.requestType == 'save') {
           console.log($event);
-
-          // this.pemesananService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
-          // this.gridDetail.refresh();
+          this.pemesananService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+          this.gridDetail.refresh();
       }
   }
 

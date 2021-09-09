@@ -109,7 +109,6 @@ export class PenerimaanService {
         let isi = data.satuan[indexsatuan].isi;
         data.isi = isi;
         data.qty_terima = data.qty_satuan_besar * isi;
-
         if (data.sub_total != rowData.sub_total) {
             data.harga_satuan = data.sub_total / data.qty_terima;
         } else {
@@ -171,6 +170,13 @@ export class PenerimaanService {
         Data.total_tax = this.total_tax;
         Data.jumlah_item = this.jumlah_item;
         Data.total_transaksi = this.total_transaksi;
+        Data.biaya_kirim = 0;
+        Data.biaya_asuransi =0;
+        Data.biaya_lain = 0;
+        Data.potongan_nominal = 0;
+        Data.potongan_prosentase = 0;
+        Data.total_uang_muka = 0;
+        Data.total_tagihan = 0;
 
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(

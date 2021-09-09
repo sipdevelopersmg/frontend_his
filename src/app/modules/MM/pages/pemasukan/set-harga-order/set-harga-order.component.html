@@ -1,0 +1,74 @@
+<org-card-layout>
+    <form>
+    <div class="row">
+        <div class="col-sm-6">
+            <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'kode_supplier'" [modal-title]="'Data Supplier'"
+                [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
+                [columns]="LookupGridSupplier.columns" [filter-lookup]="LookupGridSupplier.filter"
+                [label]="'Supplier'">
+            </org-input-look-up-kode>
+            <mol-datepicker-syncfusion [label]="'Tanggal Berlaku'" [format]="'dd MMMM yyyy'"
+                formControlName="tanggal_berlaku">
+            </mol-datepicker-syncfusion>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <ejs-grid #GridData [height]="'calc(100vh - 26rem)'" [dataSource]="GridDatasource"
+                    [allowPaging]="true" [editSettings]="GridDataEditSettings" [gridLines]="'Both'"
+                    [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
+                    (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+                    <e-columns>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'no_urut'"
+                            [headerText]="'No Urut'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
+                            [visible]="false" [editType]="'defaultEdit'">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'id_item'"
+                            [headerText]="'Id Item'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
+                            [visible]="false" [editType]="'defaultEdit'">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'barcode'"
+                            [headerText]="'Barcode'" [textAlign]="'Left'" [visible]="true"
+                            [editType]="'defaultEdit'" [width]="100">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'kode_item'"
+                            [headerText]="'Kode Item'" [textAlign]="'Left'" [visible]="true"
+                            [editType]="'defaultEdit'" [width]="100">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'nama_item'"
+                            [headerText]="'Nama Item'" [textAlign]="'Left'" [visible]="true"
+                            [editType]="'defaultEdit'" [width]="200">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'satuan'"
+                            [headerText]="'Satuan'" [textAlign]="'Left'" [visible]="true"
+                            [editType]="'defaultEdit'" [width]="100">
+                        </e-column>
+                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'harga_order'"
+                            [headerText]="'Harga Order'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100"
+                            [edit]="HargaOrderParams">
+                        </e-column>
+                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon1'"
+                            [headerText]="'Diskon 1'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                            [edit]="Diskon1Params">
+                        </e-column>
+                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon2'"
+                            [headerText]="'Diskon 2'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                            [edit]="Diskon2Params">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto'"
+                            [headerText]="'Harga Netto'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [format]="'N2'" [width]="100">
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</org-card-layout>

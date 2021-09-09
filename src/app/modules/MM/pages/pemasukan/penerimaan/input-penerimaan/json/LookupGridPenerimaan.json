@@ -1,0 +1,61 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nomor_pemesanan",
+            "headerText": "Nomor Pemesanan",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_pemesanan",
+            "headerText": "Tanggal Pemesanan",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_supplier",
+            "headerText": "Nama Supplier",
+            "type": "string",
+            "visible": false
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "alamat_supplier",
+            "headerText": "Alamat Supplier",
+            "type": "string",
+            "visible": false
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "Keterangan",
+            "type": "string",
+            "visible": false
+          }
+    ],
+    "filter": [
+        {
+          "field": "tp.nomor_pemesanan",
+          "filter": "like",
+          "title": "Nomor Pemesanan"
+        },
+        {
+          "field": "sup.nama_supplier",
+          "filter": "like",
+          "title": "Nama Supplier"
+        }
+    ]
+}

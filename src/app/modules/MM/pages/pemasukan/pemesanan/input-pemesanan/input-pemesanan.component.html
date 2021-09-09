@@ -39,7 +39,7 @@
         </div>
 
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='pemesananService.dataDetail$ | async'
-            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
+            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>
@@ -61,6 +61,9 @@
                 <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
+                <e-column [visible]="true" field='barcode' [allowEditing]="false" headerText='Barcode'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
                 <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
@@ -74,39 +77,39 @@
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="left" headerTextAlign="right">
+                    textAlign="right" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='qty_pesan' [allowEditing]="false" headerText='QTY'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="right">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='harga_satuan' [allowEditing]="false" headerText='Harga Satuan'
+                <e-column [visible]="false" field='harga_satuan' [allowEditing]="false" headerText='Harga Satuan'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='disc_prosentase_1' [allowEditing]="true" headerText='D1'
+                <e-column [visible]="false" field='disc_prosentase_1' [allowEditing]="true" headerText='D1'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="false" field='disc_nominal_1' [allowEditing]="true" headerText='D1'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='disc_prosentase_2' [allowEditing]="true" headerText='D2'
+                <e-column [visible]="false" field='disc_prosentase_2' [allowEditing]="true" headerText='D2'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="false" field='disc_nominal_2' [allowEditing]="true" headerText='D2'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='harga_satuan_brutto' [allowEditing]="false" headerText='harga satuan bruto'
+                <e-column [visible]="false" field='harga_satuan_brutto' [allowEditing]="false" headerText='harga satuan bruto'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='tax_prosentase' [allowEditing]="true" headerText='tax'
+                <e-column [visible]="false" field='tax_prosentase' [allowEditing]="true" headerText='tax'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="false" field='tax_nominal' [allowEditing]="true" headerText='tax'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='harga_satuan_netto' [allowEditing]="false" headerText='harga satuan netto'
+                <e-column [visible]="false" field='harga_satuan_netto' [allowEditing]="false" headerText='harga satuan netto'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='sub_total_pesan' [allowEditing]="false" headerText='Sub Total'
+                <e-column [visible]="false" field='sub_total_pesan' [allowEditing]="false" headerText='Sub Total'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
             </e-columns>
@@ -115,13 +118,9 @@
         <div class="row">
             <div class="col-sm-5">
             </div>
-            <div class="col-sm-3">
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="pemesananService.jumlah_item_pesan" formControlName="jumlah_item_pesan"
-                    [inputFieldState]="'detail'"></mol-input-text>
-            </div>
+           
             <div class="col-sm-4">
-                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                <!-- <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="pemesananService.sub_total_1" formControlName="sub_total_1"
                     [inputFieldState]="'detail'"></mol-input-text>
                 <mol-input-text [label]="'Diskon'" [isFooter]="true"
@@ -135,6 +134,11 @@
                     [inputFieldState]="'detail'"></mol-input-text>
                 <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="pemesananService.total_transaksi_pesan" formControlName="total_transaksi_pesan"
+                    [inputFieldState]="'detail'"></mol-input-text> -->
+            </div>
+            <div class="col-sm-3">
+                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="pemesananService.jumlah_item_pesan" formControlName="jumlah_item_pesan"
                     [inputFieldState]="'detail'"></mol-input-text>
             </div>
         </div>

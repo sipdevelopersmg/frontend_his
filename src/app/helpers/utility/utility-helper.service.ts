@@ -37,4 +37,21 @@ export class UtilityHelperService {
 
         return wilayah;
     }
+
+    /**
+     * @getDiskon 
+     * @Param Data: any, key: any[]
+     * @Keterangan Menghapus key array yg ada pada Data
+    */
+     getDiskon(hargaAwal,dc): void {
+        let diskon;
+        let hargaDiskon;
+        if(dc != 0){
+            diskon = parseFloat(hargaAwal) * (parseFloat(dc)/100);
+            hargaDiskon = diskon;
+        }else{
+            hargaDiskon = 0;
+        }
+        return hargaDiskon;
+    }
 }

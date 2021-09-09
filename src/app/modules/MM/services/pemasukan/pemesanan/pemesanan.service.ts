@@ -109,11 +109,11 @@ export class PemesananService {
         data.isi = isi;
         data.qty_pesan = data.qty_satuan_besar * isi;
 
-        if (data.sub_total_pesan != rowData.sub_total_pesan) {
-            data.harga_satuan = data.sub_total_pesan / data.qty_pesan;
-        } else {
+        // if (data.sub_total_pesan != rowData.sub_total_pesan) {
+        //     data.harga_satuan = data.sub_total_pesan / data.qty_pesan;
+        // } else {
             data.sub_total_pesan = data.qty_pesan * data.harga_satuan;
-        }
+        // }
 
         this.dataDetail[index] = data;
         this.sum();
