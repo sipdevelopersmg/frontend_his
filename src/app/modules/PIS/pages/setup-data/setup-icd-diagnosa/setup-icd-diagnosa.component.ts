@@ -1,21 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { Config } from 'protractor';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { AsalRujukanModel } from '../../../models/setup-data/setup-asal-rujukan';
-import { SetupAsalRujukanService } from '../../../services/setup-data/setup-asal-rujukan/setup-asal-rujukan.service';
-
-import * as Config from './json/setup-asal-rujukan.config.json';
+import { DiagnosaAwalModel } from '../../../models/setup-data/setup-icd-diagnosa.model';
+import { SetupIcdDiagnosaService } from '../../../services/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.service';
 
 @Component({
-    selector: 'app-setup-asal-rujukan',
-    templateUrl: './setup-asal-rujukan.component.html',
-    styleUrls: ['./setup-asal-rujukan.component.css']
+    selector: 'app-setup-icd-diagnosa',
+    templateUrl: './setup-icd-diagnosa.component.html',
+    styleUrls: ['./setup-icd-diagnosa.component.css']
 })
-export class SetupAsalRujukanComponent implements OnInit {
+export class SetupIcdDiagnosaComponent implements OnInit {
 
     /**
     * Variable untuk Menympan Navigasi halaman
@@ -34,12 +33,6 @@ export class SetupAsalRujukanComponent implements OnInit {
      * @Boolean 
     */
     StatusFormNew: Boolean;
-
-    /**
-     * Variable untuk menyimpan Configurasi Grid
-     * @Json Config
-    */
-    GridConfig = Config;
 
     /**
      * Variable untuk menentukan component input 
@@ -64,18 +57,21 @@ export class SetupAsalRujukanComponent implements OnInit {
      * Berisi Data Yang selected dari dalam grid
      * @Object Single Object
     */
-    SelectedData: AsalRujukanModel;
+    SelectedData: DiagnosaAwalModel;
 
     constructor(
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
-        private setupAsalRujukanService: SetupAsalRujukanService,
+        private setupIcdDiagnosaService: SetupIcdDiagnosaService
     ) {
         this.FormInputData = this.formBuilder.group({
-            id_asal_rujukan: [0, [Validators.required]],
-            kode_asal_rujukan: ['', [Validators.required]],
-            nama_asal_rujukan: ['', [Validators.required]],
-            is_required_kode_wilayah: [false, [Validators.required]],
+            id_icd: [0, [Validators.required]],
+            kode_icd: ['', [Validators.required]],
+            nama_icd: ['', [Validators.required]],
+            no_dtd: ["", [Validators.required]],
+            kastropik: ["", [Validators.required]],
+            is_active: [false, [Validators.required]],
+            is_from_cbg: [false, [Validators.required]],
         });
     }
 
@@ -109,7 +105,7 @@ export class SetupAsalRujukanComponent implements OnInit {
     }
 
     handleActionComplete(event: any): void {
-        console.log(event);
+        // console.log(event);
     }
 
     handleToolbarClick(args: any): void {
@@ -163,8 +159,8 @@ export class SetupAsalRujukanComponent implements OnInit {
         this.StatusFormNew = true;
         this.ButtonNav = [
             { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
-            { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
             { Id: 'Clear', Captions: 'Clear', Icons1: 'fa-redo-alt' },
+            { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
         ];
     };
 
@@ -178,6 +174,7 @@ export class SetupAsalRujukanComponent implements OnInit {
             { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
             { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
         ];
+
     };
 
     /** Method setting lihat data detail */
@@ -193,21 +190,26 @@ export class SetupAsalRujukanComponent implements OnInit {
     /* Method untuk mengkosongkan data yang ada di form */
     ResetFrom(): void {
         this.FormInputData.reset();
-        this.kode_asal_rujukan.setValue('');
-        this.nama_asal_rujukan.setValue('');
-        this.is_required_kode_wilayah.setValue(false);
+
+        this.id_icd.setValue(0);
+        this.kode_icd.setValue('');
+        this.nama_icd.setValue('');
+        this.no_dtd.setValue('');
+        this.kastropik.setValue('');
+        this.is_active.setValue(false);
+        this.is_from_cbg.setValue(false);
     }
 
     /** Method Untuk Mereload Data Grid */
     GetAllData(): void {
-        this.setupAsalRujukanService.onGetAll()
+        this.setupIcdDiagnosaService.onGetAll()
             .subscribe((result) => {
                 this.GridDatasource = result.data;
             });
     }
 
     /** Method Untuk Mengisikan data yang ada di form */
-    SetFrom(Data: AsalRujukanModel): void {
+    SetFrom(Data: DiagnosaAwalModel): void {
         this.FormInputData.reset();
         this.FormInputData.setValue(Data);
     }
@@ -217,7 +219,11 @@ export class SetupAsalRujukanComponent implements OnInit {
         const Data = this.FormInputData.value;
 
         if (this.inputFieldState == 'normal') {
-            this.setupAsalRujukanService.onPostSave(Data)
+
+            delete Data.id_icd;
+            delete Data.is_active;
+
+            this.setupIcdDiagnosaService.onPostSave(Data)
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                         .then(() => {
@@ -225,7 +231,7 @@ export class SetupAsalRujukanComponent implements OnInit {
                         });
                 });
         } else {
-            this.setupAsalRujukanService.onPutUpdate(Data)
+            this.setupIcdDiagnosaService.onPutUpdate(Data)
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
                         .then(() => {
@@ -257,7 +263,12 @@ export class SetupAsalRujukanComponent implements OnInit {
         }
     }
 
-    get kode_asal_rujukan(): AbstractControl { return this.FormInputData.get('kode_asal_rujukan'); }
-    get nama_asal_rujukan(): AbstractControl { return this.FormInputData.get('nama_asal_rujukan'); }
-    get is_required_kode_wilayah(): AbstractControl { return this.FormInputData.get('is_required_kode_wilayah'); }
+    get id_icd(): AbstractControl { return this.FormInputData.get('id_icd'); }
+    get kode_icd(): AbstractControl { return this.FormInputData.get('kode_icd'); }
+    get nama_icd(): AbstractControl { return this.FormInputData.get('nama_icd'); }
+    get no_dtd(): AbstractControl { return this.FormInputData.get('no_dtd'); }
+    get kastropik(): AbstractControl { return this.FormInputData.get('kastropik'); }
+    get is_active(): AbstractControl { return this.FormInputData.get('is_active'); }
+    get is_from_cbg(): AbstractControl { return this.FormInputData.get('is_from_cbg'); }
+
 }

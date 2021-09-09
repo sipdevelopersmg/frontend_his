@@ -185,6 +185,7 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         OrgTabsBodyComponentComponent,
         OrgCardLayoutComponent,
         OrgInputWilayahComponent,
+        OrgLookUpChecklistComponent,
         DropDownListModule,
         NumericTextBoxModule,
         DatePickerModule,

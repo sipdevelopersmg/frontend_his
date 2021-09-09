@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { MolGridComponent } from '../../../molecules/grid/grid/grid.component';
 import { Columns } from '../../../molecules/grid/grid/grid.model';
 
 
@@ -13,8 +15,11 @@ import { Columns } from '../../../molecules/grid/grid/grid.model';
 })
 export class OrgInputLookUpKodeComponent implements OnInit {
 
-    constructor(private modalService: BsModalService,
-        private httpOperationService: HttpOperationService) { }
+    constructor(
+        private modalService: BsModalService,
+        private utilityService: UtilityService,
+        private httpOperationService: HttpOperationService
+    ) { }
 
     @Input('label') label: string
 
@@ -36,6 +41,7 @@ export class OrgInputLookUpKodeComponent implements OnInit {
 
     items: any;
 
+    @ViewChild('GridData') GridData: MolGridComponent;
     gridId: string = 'GridModal';
     gridWidth: any = 'auto';
     gridHeight: any = 300;
@@ -54,7 +60,7 @@ export class OrgInputLookUpKodeComponent implements OnInit {
     @Output('onOpenModal') openModal = new EventEmitter<any>();
 
     @Input("SelectedInputId") SelectedInputId: string;
-    @ViewChild('template') template:TemplateRef<any>;
+    @ViewChild('template') template: TemplateRef<any>;
 
     ngOnInit(): void {
         this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
@@ -65,29 +71,38 @@ export class OrgInputLookUpKodeComponent implements OnInit {
             this.template,
             Object.assign({}, { class: 'modal-lg' })
         );
+
+        setTimeout(() => {
+            (<HTMLInputElement>document.getElementById("searchValueId")).focus();
+        }, 200);
     }
 
     onCloseModal() {
-        this.modalRef.hide();
-
         setTimeout(() => {
             this.gridDataSource = [];
         }, 200);
+
+        this.modalRef.hide();
     }
 
     onFetchDataSource(params: any) {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
             .subscribe((_result) => {
                 this.gridDataSource = _result.data;
+
+                setTimeout(() => {
+                    if (_result.data.length > 0) {
+                        this.GridData.Grid.selectedRowIndex = 0;
+                    }
+                }, 200);
+
             }, (pesanError) => {
                 console.log(pesanError);
-            })
+            });
     }
 
     onChangeFilters(args: any) {
         this.currentFilters = args;
-
-        console.log(this.filters);
     }
 
     onSearchLookup(value: string) {
@@ -119,13 +134,17 @@ export class OrgInputLookUpKodeComponent implements OnInit {
         this.onFetchDataSource(search);
     }
 
+    onInitialized(component: MolGridComponent) {
+        this.GridData = component;
+    }
+
     onRowSelected(args: any) {
         this.currentData = args.data;
     }
 
     onKeyPressed(args: any) {
         let keycode = args.keyCode;
-        console.log(this.currentData)
+
         if (keycode == 13) {
             args.cancel = true;
             this.onKeyPressedUtility(this.currentData);
@@ -138,14 +157,50 @@ export class OrgInputLookUpKodeComponent implements OnInit {
         this.titleValue = data[this.idTitle];
         this.onGetSelectedData.emit(data);
         this.onCloseModal();
+
+        setTimeout(() => {
+            (<HTMLInputElement>document.getElementById(`atm${this.idKode}`)).focus();
+        }, 500);
     }
 
     onDoubleClicked(args: any) {
         this.onKeyPressedUtility(args);
     }
 
-    handlePressEnter($event) {
-        console.log($event);
+    handlePressEnter($event: KeyboardEvent) {
+        let param = [
+            {
+                "columnName": this.filters[0].field,
+                "filter": this.filters[0].filter,
+                "searchText": $event.srcElement['value'],
+                "searchText2": ""
+            }
+        ];
+
+        this.httpOperationService.defaultPostRequest(this.lookupUrl, param)
+            .subscribe((_result) => {
+                if (_result.data.length == 1) {
+                    this.titleValue = _result.data[this.idTitle];
+
+                    this.onGetSelectedData.emit(_result.data)
+                }
+
+                if (_result.data.length > 1) {
+                    this.onOpenModal();
+
+                    setTimeout(() => {
+                        (<HTMLInputElement>document.getElementById("searchValueId")).value = $event.srcElement['value'];
+                        this.onFetchDataSource(param);
+                    }, 500);
+                }
+
+                if (_result.data.length < 1) {
+                    this.utilityService.onShowingCustomAlert('error', 'Oops', 'Data Tidak Ditemukan')
+                        .then(() => {
+                            this.onOpenModal();
+                        })
+                }
+            });
     }
 
     resetValue() {

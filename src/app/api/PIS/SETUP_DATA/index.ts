@@ -15,6 +15,7 @@ import * as SETUP_DEBITUR from './SETUP_DEBITUR';
 import * as AGAMA from './AGAMA';
 import * as SETUP_DOKTER from './SETUP_DOKTER';
 import * as SETUP_ASAL_RUJUKAN from './SETUP_ASAL_RUJUKAN';
+import * as SETUP_ICD_DIAGNOSA from './SETUP_ICD_DIAGNOSA';
 
 export const API_SETUP_DATA = Object.assign({}, {
     "SETUP_BAHASA": SETUP_BAHASA,
@@ -34,4 +35,5 @@ export const API_SETUP_DATA = Object.assign({}, {
     "AGAMA": AGAMA,
     "SETUP_DOKTER": SETUP_DOKTER,
     "SETUP_ASAL_RUJUKAN": SETUP_ASAL_RUJUKAN,
+    "SETUP_ICD_DIAGNOSA": SETUP_ICD_DIAGNOSA,
 })

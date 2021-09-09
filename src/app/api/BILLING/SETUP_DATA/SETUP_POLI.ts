@@ -7,3 +7,4 @@ export const PUT_UPDATE_POLI = `${environment.webApiBilling}` + `tarif/Poli/Upda
 export const DELETE_POLI_BY_ID = `${environment.webApiBilling}` + `tarif/Poli/Delete/`;
 export const PUT_UPDATE_STATUS_POLI = `${environment.webApiBilling}` + `tarif/Poli/UpdateStatusActive`;
 export const GET_ALL_BY_ID_JENIS_RUANGAN = `${environment.webApiBilling}` + `tarif/Poli/GetByIdJenisRuangan/`;
+export const GET_ALL_POLI_FOR_LOOKUP_ADMISI = `${environment.webApiAdmisi}` + `Admisi/PoliGetAllForLookupAdmisi/`;

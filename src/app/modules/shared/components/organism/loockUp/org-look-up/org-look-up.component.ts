@@ -115,9 +115,12 @@ export class OrgLookUpComponent implements OnInit {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
             .subscribe((_result) => {
                 this.gridDataSource = _result.data;
+
                 setTimeout(() => {
-                    this.grid.Grid.selectedRowIndex = 0;
-                }, 200)
+                    if (_result.data.length > 0) {
+                        this.grid.Grid.selectedRowIndex = 0;
+                    }
+                }, 200);
             }, (pesanError) => {
                 console.log(pesanError);
             })

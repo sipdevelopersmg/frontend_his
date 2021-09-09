@@ -7,67 +7,95 @@
                 </mol-input-text>
 
                 <!-- Foto Pasien -->
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <img [src]="!image ? '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png' : '../../../../../../assets/image/pendaftaran-ulang-pasien/11.jpg'"
-                            class="img-thumbnail" width="120">
+                        <img [src]="image ? imageSrc : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
+                            class="img-thumbnail"
+                            style="width: 120px; max-width: 120px; height: 150px; max-height: 150px;">
                     </div>
                 </div>
 
                 <!-- No. MR -->
-                <org-input-look-up #LookupMr [modal-title]="'Data Pasien'" [lookup-url]="urlRm" [idTitle]="'MrNo'"
-                    (onGetSelectedData)="heandleSelectedMR($event)" [columns]="settingGrid.LookupPasien.columns"
-                    [filter-lookup]="settingGrid.LookupPasien.filter" [label]="'No MR'">
+                <org-input-look-up #LookupMr [modal-title]="'Data Pasien'" [lookup-url]="urlRm"
+                    [idTitle]="'no_rekam_medis'" (onGetSelectedData)="heandleSelectedMR($event)"
+                    [columns]="settingGrid.LookupPasien.columns" [filter-lookup]="settingGrid.LookupPasien.filter"
+                    [label]="'No MR'">
                 </org-input-look-up>
 
                 <!-- Nama Pasien -->
-                <mol-input-text formControlName="NamaPasien" [label]="'Nama Pasien'"></mol-input-text>
+                <mol-input-text [id]="'nama_pasien'" formControlName="NamaPasien" [label]="'Nama Pasien'">
+                </mol-input-text>
 
                 <!-- Tanggal Masuk -->
-                <mol-datepicker-syncfusion [label]="'Tanggal Masuk'" [format]="'dd MMMM yyyy'"
-                    formControlName="TglMasukRawat" [min]="TglMasukMin">
-                </mol-datepicker-syncfusion>
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tanggal Masuk'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-datepicker [format]="'dd/MM/yyyy'" [value]="TglMasuk" [readonly]="true" [disabled]="true">
+                        </ejs-datepicker>
+                    </div>
+                </div>
 
                 <!-- Unit -->
-                <mol-input-text [label]="'Unit'"></mol-input-text>
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Unit'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #DropdownRuangan [dataSource]="DropdownRuanganDatasource"
+                            [fields]="DropdownRuanganField" [allowFiltering]="true" formControlName="id_jenis_ruangan"
+                            (change)="handleChangeDropdownRuangan(DropdownRuangan.value)">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
 
                 <!-- Poli -->
-                <org-input-look-up-kode #LookupKodePoli [modal-title]="'Data Poli'" [lookup-url]="urlPoli"
-                    [idKode]="'PolyCode'" [idTitle]="'PolyName'" (onGetSelectedData)="heandleSelectedPoli($event)"
-                    [columns]="settingGrid.LookupPoli.columns" [filter-lookup]="settingGrid.LookupPoli.filter"
-                    [label]="'Poli'">
+                <org-input-look-up-kode *ngIf="DropdownRuangan.value" #LookupKodePoli [modal-title]="'Data Poli'"
+                    [lookup-url]="urlPoli" [idKode]="'kode_poli'" [idTitle]="'nama_poli'"
+                    (onGetSelectedData)="heandleSelectedPoli($event)" [columns]="settingGrid.LookupPoli.columns"
+                    [filter-lookup]="settingGrid.LookupPoli.filter" [label]="'Poli'">
                 </org-input-look-up-kode>
 
                 <!-- Nama Dokter -->
                 <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Dokter'" [lookup-url]="urlDokter"
-                    [idKode]="'KodeDokter'" [idTitle]="'FirstName'" (onGetSelectedData)="heandleSelectedDokter($event)"
+                    [idKode]="'kode_dokter'" [idTitle]="'full_name'" (onGetSelectedData)="heandleSelectedDokter($event)"
                     [columns]="settingGrid.LookupDokter.columns" [filter-lookup]="settingGrid.LookupDokter.filter"
                     [label]="'Nama Dokter'">
                 </org-input-look-up-kode>
 
                 <!-- Debitur -->
-                <org-input-look-up-kode #LookupKodeDebitur [modal-title]="'Data Debitur'" [lookup-url]="urlDebitur"
-                    [idKode]="'OrgCode'" [idTitle]="'Name'" (onGetSelectedData)="heandleSelectedDebitur($event)"
-                    [columns]="settingGrid.LookupDebitur.columns" [filter-lookup]="settingGrid.LookupDebitur.filter"
-                    [label]="'Debitur'">
-                </org-input-look-up-kode>
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Debitur'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist [dataSource]="DropdownDebiturDatasource" [fields]="DropdownDebiturField"
+                            [allowFiltering]="true">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
 
                 <!-- Kelas Pelayanan -->
-                <org-input-look-up-kode #LookupKelas [modal-title]="'Data Kelas Pelayanan'" [lookup-url]="urlPelayanan"
-                    [idKode]="'ScvCode'" [idTitle]="'ScvDescr'" (onGetSelectedData)="heandleSelectedPelayanan($event)"
-                    [columns]="settingGrid.LookupKelasPelayanan.columns"
-                    [filter-lookup]="settingGrid.LookupKelasPelayanan.filter" [label]="'Kelas Pelayanan'">
-                </org-input-look-up-kode>
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist [dataSource]="DropdownKelasDatasource" [fields]="DropdownKelasField"
+                            [allowFiltering]="true">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
 
+                <!-- No. Peserta -->
+                <!-- <mol-input-text formControlName="FromNoRegister" [label]="'No. Peserta'"></mol-input-text> -->
+
+                <!-- No. SEP -->
+                <!-- <mol-input-text formControlName="ScvCode" [label]="'No. SEP'"></mol-input-text> -->
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <!-- No. Peserta -->
-                <mol-input-text formControlName="FromNoRegister" [label]="'No. Peserta'"></mol-input-text>
-
-                <!-- No. SEP -->
-                <mol-input-text formControlName="ScvCode" [label]="'No. SEP'"></mol-input-text>
-
                 <!-- Jenis Karcis -->
                 <mol-input-text [label]="'Jenis Karcis'"></mol-input-text>
 
@@ -75,17 +103,27 @@
                 <mol-input-text [label]="'No Karcis'"></mol-input-text>
 
                 <!-- Asal Rujukan -->
-                <!-- <org-input-look-up-kode (onGetSelectedData)="heandleSelected($event)" [columns]="settingGrid.LookupAsalRujukan.columns" [filter-lookup]="settingGrid.LookupAsalRujukan.filter" [label]="'Asal Rujukan'"></org-input-look-up-kode> -->
+                <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Asal Rujukan'"
+                    [lookup-url]="urlAsalRujukan" [idKode]="'kode_asal_rujukan'" [idTitle]="'nama_asal_rujukan'"
+                    (onGetSelectedData)="handleSelectedAsalRujukan($event)"
+                    [columns]="settingGrid.LookupAsalRujukan.columns"
+                    [filter-lookup]="settingGrid.LookupAsalRujukan.filter" [label]="'Asal Rujukan'">
+                </org-input-look-up-kode>
 
                 <!-- Kota / Kab -->
-                <!-- <org-input-look-up-kode (onGetSelectedData)="heandleSelectedMR($event)" [columns]="settingGrid.LookupKotaRujukan.columns" [filter-lookup]="settingGrid.LookupKotaRujukan.filter" [label]="'Kota/Kab'"></org-input-look-up-kode> -->
+                <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Kota'" [lookup-url]="urlKotaAsalRujukan"
+                    [idKode]="'kode_wilayah'" [idTitle]="'nama_wilayah'"
+                    (onGetSelectedData)="handleSelectedKotaAsalRujukan($event)"
+                    [columns]="settingGrid.LookupKotaRujukan.columns"
+                    [filter-lookup]="settingGrid.LookupKotaRujukan.filter" [label]="'Kota Asal Rujukan'">
+                </org-input-look-up-kode>
 
                 <!-- Di Rujuk -->
-                <!-- <mol-input-text formControlName="KotaAsalRujukan" [label]="'Di Rujuk Oleh'"></mol-input-text> -->
+                <mol-input-text formControlName="KotaAsalRujukan" [label]="'Di Rujuk Oleh'"></mol-input-text>
 
                 <!-- Diagnosa Awal -->
                 <org-input-look-up-kode #LookupDiagnosa [modal-title]="'Data Diagnosa Awal'" [lookup-url]="urlDiagnosa"
-                    [idKode]="'IcdCode'" [idTitle]="'IcdDescr'"
+                    [idKode]="'kode_icd'" [idTitle]="'nama_icd'"
                     (onGetSelectedData)="heandleSelectedDiagnosaAwal($event)"
                     [columns]="settingGrid.LookupDiagnosa.columns" [filter-lookup]="settingGrid.LookupDiagnosa.filter"
                     [label]="'Diagnosa Awal'">
@@ -102,6 +140,21 @@
 
                 <!-- Operator -->
                 <mol-input-text [label]="'Operator'"></mol-input-text>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary btn-sm" type="button" (click)="tes()">
+                            Tes Lookup Checklist
+                        </button>
+
+                        <org-look-up-checklist #LookupChecklist [LookupTitle]="'Data Asal Rujukan'"
+                            [LookupUrl]="urlAsalRujukan" [LookupFilters]="settingGrid.LookupAsalRujukanTes.filter"
+                            [GridId]="'LookupChecklistAsalRujukan'"
+                            [GridColumns]="settingGrid.LookupAsalRujukanTes.columns"
+                            (OnGetSelectedRecords)="handleSelectedRecordAsalRujukan($event)">
+                        </org-look-up-checklist>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

@@ -1,3 +1,92 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
     <app-list-pasien-rawat-jalan></app-list-pasien-rawat-jalan>
+
+    <!-- Modal Pencarian Pasien  -->
+    <ng-template #modalPencarianPasien>
+        <div class="modal-header px-2 py-1">
+            <h5 class="modal-title pull-left">
+                Pencarian Pasien
+            </h5>
+            <button type="button" class="btn pull-right" aria-label="Close"
+                (click)="handleCloseModalLookupPencarianPasien()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-2">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form [formGroup]="FormPencarianPasien">
+                        <!-- Filter Pencarian -->
+                        <div class="row mb-2 align-items-center">
+                            <!-- Input Field Pencarian -->
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                <!-- No Identitas -->
+                                <mol-input-text [label]="'No. Identitas'" formControlName="no_identitas">
+                                </mol-input-text>
+
+                                <!-- Nama Pasien -->
+                                <mol-input-text [label]="'Nama Pasien'" formControlName="full_name"></mol-input-text>
+
+                                <!-- Tgl Lahir -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Tgl Lahir'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-datepicker [format]="'dd/MM/yyyy'" formControlName="tgl_lahir">
+                                        </ejs-datepicker>
+                                    </div>
+                                </div>
+
+                                <!-- No. Handphone -->
+                                <mol-input-text [label]="'No. Handphone'" formControlName="hand_phone"></mol-input-text>
+
+                                <!-- Alamat Lengkap -->
+                                <mol-input-text [label]="'Alamat'" formControlName="alamat_lengkap"></mol-input-text>
+
+                                <!-- Kelurahan -->
+                                <mol-input-text [label]="'Kelurahan'" formControlName="kelurahan"></mol-input-text>
+                            </div>
+
+                            <!-- Button Button -->
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 d-grid gap-2">
+                                        <button class="btn btn-primary btn-sm" type="button"
+                                            (click)="handleCariLookupPencarianPasien(FormPencarianPasien)">
+                                            <i class="fas fa-search fa-sm"></i>&nbsp; Cari
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 d-grid gap-2">
+                                        <button class="btn btn-success btn-sm" type="button"
+                                            (click)="handleBaruLookupPencarianPasien()">
+                                            <i class="fas fa-plus-square fa-sm"></i>&nbsp; Baru
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-grid gap-2">
+                                        <button class="btn btn-secondary btn-sm" type="button"
+                                            (click)="handleCloseModalLookupPencarianPasien()">
+                                            <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Grid Hasil Pencarian -->
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mol-grid #GridLookupTarif [grid-height]="140" [grid-DataSource]="GridLookupTarifDatasource"
+                                [grid-paging]="true" [gridInitialPage]="GridLookupTarifPageSettings"
+                                [grid-lines]="'Both'" [columns]="GridConfig.LookupPasien.columns"
+                                (initialized)="InitalizedGridLookupPencarianPasien($event)"
+                                (row-selected)="handleSelectedRowLookupPencarianPasien($event)">
+                            </mol-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </org-card-layout>
