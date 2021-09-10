@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
 import { DashboarDokterRoutingModule } from "./dashboard-dokter-routing.module";
 
+import { DashboardDokterComponent } from './dashboard-dokter.component';
 import { InformasiPasienComponent } from './components/informasi-pasien/informasi-pasien.component';
 import { DiagnosaComponent } from './pages/diagnosa/diagnosa.component';
 import { RadiologiComponent } from './pages/radiologi/radiologi.component';
@@ -15,9 +16,13 @@ import { InputOrderBaruLabComponent } from "./pages/laboratorium/input-order-bar
 import { ResepComponent } from './pages/resep/resep.component';
 import { InputResepComponent } from './pages/resep/input-resep/input-resep.component';
 import { HistoryResepComponent } from './pages/resep/history-resep/history-resep.component';
+import { BerandaDokterComponent } from './pages/beranda-dokter/beranda-dokter.component';
+import { CoreModule } from "../core/core.module";
+import { DaftarPasienPerDokterComponent } from './pages/daftar-pasien-per-dokter/daftar-pasien-per-dokter.component';
 
 @NgModule({
     declarations: [
+        DashboardDokterComponent,
         InformasiPasienComponent,
         DiagnosaComponent,
         RadiologiComponent,
@@ -28,18 +33,21 @@ import { HistoryResepComponent } from './pages/resep/history-resep/history-resep
         InputOrderBaruLabComponent,
         ResepComponent,
         InputResepComponent,
-        HistoryResepComponent
+        HistoryResepComponent,
+        BerandaDokterComponent,
+        DaftarPasienPerDokterComponent,
     ],
     imports: [
+        DashboarDokterRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
         SharedModule,
-        DashboarDokterRoutingModule
+        CoreModule
     ],
     exports: [
         InformasiPasienComponent,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DashboardDokterModule { }

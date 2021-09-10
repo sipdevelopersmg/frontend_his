@@ -6,8 +6,8 @@ export interface MenuJsonModel {
 
 export interface MainMenuModel {
     id_menu: number;
-    is_parent: boolean;
-    id_menu_parent: number;
+    is_parent?: boolean;
+    id_menu_parent?: number;
     icon: string;
     icon_menu_parent?: string;
     caption: string;

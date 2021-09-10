@@ -1,5 +1,5 @@
 <div class="card rounded border-left-biru-muda shadow-sm cursor-pointer card-hover" id="{{ IdMenu }}">
-    <div class="card-body py-2">
+    <div class="card-body py-2" (click)="handleClickSingleMenu()">
         <div class="row align-items-center" *ngIf="UserData.id_role != 1">
             <!-- Icon atau Gambar -->
             <div class="col-2 px-0 text-center">

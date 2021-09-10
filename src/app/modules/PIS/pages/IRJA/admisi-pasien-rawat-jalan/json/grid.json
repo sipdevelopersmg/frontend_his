@@ -404,7 +404,7 @@
         ],
         "filter": [
             {
-                "field": "pl.PolyCode",
+                "field": "p1.kode_poli",
                 "filter": "like",
                 "title": "KODE POLI"
             },

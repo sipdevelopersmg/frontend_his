@@ -68,7 +68,7 @@ export class DiagnosaComponent implements OnInit {
             plan: ['', []]
         });
 
-        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+        // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     onClickItemListDiagnosa(item: DiagnosaPasienModel) {

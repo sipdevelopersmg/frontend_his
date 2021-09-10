@@ -83,7 +83,7 @@ export class InputOrderBaruRadComponent implements OnInit {
             plan: ['', []]
         });
 
-        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+        // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     onGetSelectedTabId(args: any): void {

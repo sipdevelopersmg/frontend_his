@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
 
@@ -13,6 +13,8 @@ export class AtmSingleMenuComponent implements OnInit {
     @Input('IconMenu') IconMenu: string;
     @Input('NamaMenu') NamaMenu: string;
 
+    @Output('handleClickedSingleMenu') handleClickedSingleMenu = new EventEmitter<any>();
+
     UserData: IAuthenticationResponseModel;
 
     constructor(private authenticationService: AuthenticationService) { }
@@ -21,4 +23,13 @@ export class AtmSingleMenuComponent implements OnInit {
         this.UserData = this.authenticationService.currentUserValue;
     }
 
+    handleClickSingleMenu() {
+        const menu = {
+            IdMenu: this.IdMenu,
+            IconMenu: this.IconMenu,
+            NamaMenu: this.NamaMenu
+        }
+
+        this.handleClickedSingleMenu.emit(menu);
+    }
 }

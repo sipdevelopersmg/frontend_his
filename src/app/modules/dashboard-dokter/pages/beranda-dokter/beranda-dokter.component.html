@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-2">
+        <h5 class="font-cabin text-biru-tua">
+            Selamat Datang Di GRAHCIS,
+            <span class="font-roboto text-biru-muda">
+                {{ UserFullName }}
+            </span>
+        </h5>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <atm-single-menu [IdMenu]="MainMenu.id_menu" [NamaMenu]="MainMenu.caption" [IconMenu]="MainMenu.icon"
+            (handleClickedSingleMenu)="handleClickSingleMenu($event)">
+        </atm-single-menu>
+    </div>
+</div>

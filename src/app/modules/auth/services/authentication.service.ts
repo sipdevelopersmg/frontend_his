@@ -37,7 +37,6 @@ export class AuthenticationService {
     }
 
     onLogin(Username: string, Password: string): void {
-
         this.httpOperationService.defaultPostRequestWithoutLoading(
             this.API_AUTHENTICATION.POST_AUTHENTICATION,
             {
@@ -55,7 +54,11 @@ export class AuthenticationService {
 
                 this.utilityService.onShowingCustomAlert('success', 'Success', 'Sign In Berhasil')
                     .then(() => {
-                        this.router.navigateByUrl('dashboard/beranda');
+                        if (result.data.id_role == 2 || result.data.nama_role == "dokter") {
+                            this.router.navigateByUrl('Dokter/beranda');
+                        } else {
+                            this.router.navigateByUrl('dashboard/beranda');
+                        }
                     });
             }
         });

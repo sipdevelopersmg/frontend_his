@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 
@@ -26,6 +27,8 @@ export class AtmTreeviewMenuComponent implements OnInit {
     // ** Tree View Menu Attribute
     TreeViewMenuDatasource: Object[];
     TreeViewMenuFields: Object;
+
+    UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
     constructor(
         private router: Router,
@@ -127,7 +130,9 @@ export class AtmTreeviewMenuComponent implements OnInit {
     onClickSidebarItem(item: any) {
         this.navigationService.onSetFieldGridBySidebarMenuId(item.fieldgrid);
 
-        this.router.navigateByUrl("dashboard/" + item.url);
+        let url = this.UserData.id_role == 2 || this.UserData.nama_role == 'dokter' ? '' : 'dashboard/';
+
+        this.router.navigateByUrl(url + item.url);
 
         setTimeout(() => {
             let NavbarBrand = document.getElementById("NavbarBrand");

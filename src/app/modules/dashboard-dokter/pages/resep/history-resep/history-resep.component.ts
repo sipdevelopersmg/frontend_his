@@ -67,7 +67,7 @@ export class HistoryResepComponent implements OnInit {
     ngOnInit(): void {
         this.DaftarHistoryResep = this.History.HistoryResep;
 
-        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+        // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     onLihatDaftarObat(HistoryDaftarObat: DaftarHistoryResepModel): void {

@@ -1,312 +1,4 @@
 {
-    "LookupAsalRujukan": {
-        "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "KodeRujuk",
-                "headerText": "KODE",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "NamaRujuk",
-                "headerText": "KETERANGAN",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "RequiredGeoCode",
-                "headerText": "REQUIRED GEO CODE",
-                "type": "string",
-                "visible": false,
-                "width": 150
-            }
-        ],
-        "filter": [
-            {
-                "field": "KodeRujuk",
-                "filter": "like",
-                "title": "KODE"
-            },
-            {
-                "field": "NamaRujuk",
-                "filter": "like",
-                "title": "KETERANGAN"
-            }
-        ]
-    },
-    "LookupDebitur": {
-        "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "numericEdit",
-                "field": "PartyId",
-                "format": "N2",
-                "headerText": "PERSON ID",
-                "type": "number",
-                "visible": false,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "OrgCode",
-                "headerText": "KODE",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Name",
-                "headerText": "NAMA",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Alamat",
-                "headerText": "ALAMAT",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "OfficePhone",
-                "headerText": "TELP",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            }
-        ],
-        "filter": [
-            {
-                "field": "org.OrgCode",
-                "filter": "like",
-                "title": "KODE"
-            },
-            {
-                "field": "org.Name",
-                "filter": "like",
-                "title": "NAMA"
-            },
-            {
-                "field": "pa.Alamat",
-                "filter": "like",
-                "title": "ALAMAT"
-            }
-        ]
-    },
-    "LookupDiagnosa": {
-        "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "IcdCode",
-                "headerText": "KODE",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "IcdDescr",
-                "headerText": "KETERANGAN",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            }
-        ],
-        "filter": [
-            {
-                "field": "IcdCode",
-                "filter": "equal",
-                "title": "KODE"
-            },
-            {
-                "field": "IcdDescr",
-                "filter": "like",
-                "title": "KETERANGAN"
-            }
-        ]
-    },
-    "LookupDokter": {
-        "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "displayAsCheckBox": true,
-                "editType": "booleanEdit",
-                "field": "cek",
-                "headerText": "CEK",
-                "visible": false,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "numericEdit",
-                "field": "PartyId",
-                "format": "N2",
-                "headerText": "PERSON ID",
-                "type": "number",
-                "visible": false,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "KodeDokter",
-                "headerText": "KODE DOKTER",
-                "type": "string",
-                "visible": true,
-                "width": 80
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "FirstName",
-                "headerText": "NAMA DOKTER",
-                "type": "string",
-                "visible": true,
-                "width": 200
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Spesialisasi",
-                "headerText": "SPESIALISASI",
-                "type": "string",
-                "visible": true,
-                "width": 120
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Profession",
-                "headerText": "UNIT",
-                "type": "string",
-                "visible": true,
-                "width": 80
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Mobile",
-                "headerText": "MOBILE",
-                "type": "string",
-                "visible": true,
-                "width": 120
-            }
-        ],
-        "filter": [
-            {
-                "field": "dok.KodeDokter",
-                "filter": "like",
-                "title": "KODE DOKTER"
-            },
-            {
-                "field": "dok.NamaDokter",
-                "filter": "like",
-                "title": "NAMA DOKTER"
-            }
-        ]
-    },
-    "LookupKelasPelayanan": {
-        "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "ScvCode",
-                "headerText": "KODE",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "ScvDescr",
-                "headerText": "KETERANGAN",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            }
-        ],
-        "filter": [
-            {
-                "field": "ScvCode",
-                "filter": "like",
-                "title": "KODE"
-            },
-            {
-                "field": "ScvDescr",
-                "filter": "like",
-                "title": "KETERANGAN"
-            }
-        ]
-    },
-    "LookupKotaRujukan": {
-        "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "numericEdit",
-                "field": "Id",
-                "headerText": "ID",
-                "type": "number",
-                "visible": false,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "Nama",
-                "headerText": "NAMA KOTA",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            }
-        ],
-        "filter": [
-            {
-                "field": "nama",
-                "filter": "like",
-                "title": "KOTA"
-            }
-        ]
-    },
     "LookupPasien": {
         "columns": [
             {
@@ -369,7 +61,60 @@
             }
         ]
     },
-    "LookupPoli": {
+    "LookupTarifBerlaku": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "kode_setup_tarif",
+                "headerText": "KODE TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_setup_tarif",
+                "headerText": "NAMA TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nominal_tarif",
+                "format": "N2",
+                "headerText": "NOMINAL TARIF",
+                "headerTextAlign": "Right",
+                "textAlign": "Right",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "MrNo",
+                "filter": "like",
+                "title": "MR NO"
+            },
+            {
+                "field": "FirstName",
+                "filter": "like",
+                "title": "NAMA"
+            },
+            {
+                "field": "Alamat",
+                "filter": "like",
+                "title": "ALAMAT"
+            }
+        ]
+    },
+    "LookupDokter": {
         "columns": [
             {
                 "allowEditing": true,
@@ -384,40 +129,11 @@
             {
                 "allowEditing": true,
                 "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "PolyCode",
-                "headerText": "KODE",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "PolyJkn",
-                "headerText": "KODE JKN",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "PolyName",
-                "headerText": "KETERANGAN",
-                "type": "string",
-                "visible": true,
-                "width": 150
-            },
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "editType": "defaultEdit",
-                "field": "AliasName",
-                "headerText": "ALIAS NAME",
-                "type": "string",
+                "editType": "numericEdit",
+                "field": "id_person",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
                 "visible": false,
                 "width": 150
             },
@@ -425,33 +141,43 @@
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "BuildingName",
-                "headerText": "BUILDING NAME",
+                "field": "kode_dokter",
+                "headerText": "KODE DOKTER",
                 "type": "string",
-                "visible": false,
-                "width": 150
+                "visible": true,
+                "width": 80
             },
             {
                 "allowEditing": true,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "IsPrivate",
-                "headerText": "IS PRIVATE",
+                "field": "full_name",
+                "headerText": "NAMA DOKTER",
                 "type": "string",
-                "visible": false,
-                "width": 150
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "spesialisasi_dokter",
+                "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true,
+                "width": 120
             }
         ],
         "filter": [
             {
-                "field": "pl.PolyCode",
+                "field": "d.kode_dokter",
                 "filter": "like",
-                "title": "POLY CODE"
+                "title": "KODE DOKTER"
             },
             {
-                "field": "pl.PolyName",
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
                 "filter": "like",
-                "title": "POLY NAME"
+                "title": "NAMA DOKTER"
             }
         ]
     },
@@ -461,17 +187,6 @@
             "allowSorting": false,
             "field": "id_setup_tarif",
             "headerText": "Id Setup Tarif",
-            "type": "number",
-            "format": "N",
-            "textAlign": "Left",
-            "visible": false,
-            "editType": "defaultEdit"
-        },
-        {
-            "allowEditing": false,
-            "allowSorting": false,
-            "field": "id_kelas",
-            "headerText": "Id Kelas",
             "type": "number",
             "format": "N",
             "textAlign": "Left",
@@ -501,9 +216,56 @@
         {
             "allowEditing": false,
             "allowSorting": false,
-            "field": "nama_kelas",
-            "headerText": "Kelas",
+            "field": "qty",
+            "headerText": "Qty",
             "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": false,
+            "field": "anastesi_local",
+            "headerText": "Ans Local",
+            "headerTextAlign": "Center",
+            "textAlign": "Center",
+            "visible": true,
+            "editType": "defaultEdit",
+            "displayAsCheckbox": true,
+            "width": 80
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": false,
+            "field": "id_dokter",
+            "headerText": "ID DOKTER",
+            "headerTextAlign": "Left",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": false,
+            "field": "nama_dokter",
+            "headerText": "Dr Periksa",
+            "headerTextAlign": "Left",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "doct_fee",
+            "headerText": "J. Dokter",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
             "visible": true,
             "editType": "defaultEdit",
             "width": 80
@@ -511,8 +273,99 @@
         {
             "allowEditing": false,
             "allowSorting": false,
+            "field": "medical_fee",
+            "headerText": "J. Sarana",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "hos_fee",
+            "headerText": "J. RS",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "com_fee",
+            "headerText": "J. Kompensasi",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": false,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "add_fee",
+            "headerText": "J. BHAP",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": false,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "anas_fee",
+            "headerText": "J. Anastesi",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "support_fee",
+            "headerText": "J. Support",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": false,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
             "field": "nominal_tarif",
-            "headerText": "Nilai",
+            "headerText": "Nominal Tarif",
+            "headerTextAlign": "Right",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "total_tarif",
+            "headerText": "Total Tarif",
             "headerTextAlign": "Right",
             "type": "number",
             "format": "N2",

@@ -150,7 +150,11 @@ export class NavigationService {
 
     // !! ============ State Back to Main Menu Subject ============
     onSetBackToMainMenu(value: boolean): any {
-        this.router.navigateByUrl('dashboard/beranda');
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+        let url = UserData.id_role == 2 || UserData.nama_role == "dokter" ? 'Dokter/beranda' : 'dashboard/beranda';
+
+        this.router.navigateByUrl(url);
         this.IsBackToMainMenu.next(value);
     }
 
