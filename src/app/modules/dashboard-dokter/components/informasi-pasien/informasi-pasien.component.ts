@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { PasienModel } from '../../models/informasi-pasien.model';
+import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 
 @Component({
     selector: 'dd-informasi-pasien',
@@ -15,9 +17,10 @@ export class InformasiPasienComponent implements OnInit {
     @Input("ToggleVisibility") ToggleVisibility: boolean = false;
     @Output("onToggledVisibility") onToggledVisibility = new EventEmitter<any>();
 
-    constructor(private navigationService: NavigationService) {
-
-    }
+    constructor(
+        private navigationService: NavigationService,
+        public dashboardDokterService: DashboardDokterService
+    ) { }
 
     ngOnInit(): void {
         this.onTogglingVisibility();
@@ -72,6 +75,6 @@ export class InformasiPasienComponent implements OnInit {
                     console.log(error);
                 }, () => {
 
-                })
+                });
     }
 }

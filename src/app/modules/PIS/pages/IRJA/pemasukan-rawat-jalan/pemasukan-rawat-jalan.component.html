@@ -1,38 +1,232 @@
 <org-card-layout>
-    <!-- Lookup RM -->
+    <!-- Lookup No. Register -->
     <div class="row mb-2">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <!-- No. MR -->
-            <org-input-look-up #LookupMr [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupRM" [idTitle]="'MrNo'"
-                (onGetSelectedData)="heandleSelectedLookupRM($event)" [columns]="PemasukanConfig.LookupPasien.columns"
-                [filter-lookup]="PemasukanConfig.LookupPasien.filter" [label]="'No MR'">
+            <!-- No. Register -->
+            <org-input-look-up #LookupNoReg [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupNoReg"
+                [idTitle]="'MrNo'" (onGetSelectedData)="heandleSelectedLookupRM($event)"
+                [columns]="PemasukanConfig.LookupPasien.columns" [filter-lookup]="PemasukanConfig.LookupPasien.filter"
+                [label]="'No. Register'">
             </org-input-look-up>
 
-            <!-- Poliklinik -->
-            <mol-input-text [label]="'Poliklinik'" [disabled]="true"></mol-input-text>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <!-- No. Identitas -->
-            <mol-input-text [label]="'No. Identitas'" [disabled]="true"></mol-input-text>
+            <!-- No. MR -->
+            <mol-input-text [label]="'No. MR'" [disabled]="true"></mol-input-text>
 
             <!-- Nama Pasien -->
             <mol-input-text [label]="'Nama Pasien'" [disabled]="true"></mol-input-text>
         </div>
 
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <!-- Tgl Lahir -->
-            <mol-input-text [label]="'Tgl Lahir'" [disabled]="true"></mol-input-text>
+            <!-- Tgl. Masuk -->
+            <mol-input-text [label]="'Tgl. Masuk'" [disabled]="true"></mol-input-text>
 
-            <!-- Alamat -->
-            <mol-input-text [label]="'Alamat'" [disabled]="true"></mol-input-text>
+            <!-- Debitur -->
+            <mol-input-text [label]="'Debitur'" [disabled]="true"></mol-input-text>
+
+            <!-- Kelas -->
+            <mol-input-text [label]="'Kelas'" [disabled]="true"></mol-input-text>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <!-- Tgl. Transaksi -->
+            <mol-input-text [label]="'Tgl. Transaksi'" [disabled]="true"></mol-input-text>
+
+            <!-- Poli Tindakan -->
+            <mol-input-text [label]="'Poli Tindakan'" [disabled]="true"></mol-input-text>
+
+            <!-- Dokter -->
+            <mol-input-text [label]="'Dokter'" [disabled]="true"></mol-input-text>
         </div>
     </div>
 
-    <!-- Grid Pemasukan Rawat Jalan -->
+    <!-- Grid Pemasukan Rawat Jalan dan Modal Insert Update -->
     <div class="row mb-2">
+        <!-- Grid -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-grid #GridData [grid-height]="'calc(100vh - 26rem)'" [grid-DataSource]="GridDatasource"
+                [grid-paging]="false" [grid-lines]="'Both'" [grid-toolbar]="GridDataToolbar"
+                [columns]="PemasukanConfig.GridInputTarifPerPoli" (row-selected)="handleSelectedRow($event)"
+                (toolbar-click)="handleToolbarClick($event)" (initialized)="InitalizedGrid($event)"
+                (action-complete)="handleActionComplete($event)">
+            </mol-grid>
+        </div>
 
+        <!-- Modal -->
+        <ng-template #modalPemasukanRawatJalan>
+            <div class="modal-header px-2 py-1">
+                <h5 class="modal-title pull-left">
+                    Add Tarif Pemasukan Rawat Jalan
+                </h5>
+                <button type="button" class="btn pull-right" aria-label="Close"
+                    (click)="handleCloseModalPemasukanRawatJalan()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body p-2">
+                <form [formGroup]="FormPemasukanRawatJalan">
+                    <div class="row mx-0 px-0">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Lookup Tarif Berlaku Poli -->
+                            <org-input-look-up #LookupTarifBerlaku [modal-title]="'Data Tarif Berlaku'"
+                                [lookup-url]="UrlLookupTarifBerlaku" [idTitle]="'kode_setup_tarif'"
+                                (onGetSelectedData)="handleSelectedTarifBerlaku($event)"
+                                [columns]="PemasukanConfig.LookupTarifBerlaku.columns"
+                                [filter-lookup]="PemasukanConfig.LookupTarifBerlaku.filter" [label]="'Pilih Tarif'">
+                            </org-input-look-up>
+
+                            <!-- Nama Setup Tarif -->
+                            <mol-input-text [label]="'Nama Tarif'" formControlName="nama_setup_tarif" [disabled]="true">
+                            </mol-input-text>
+
+                            <!-- Jasa Dokter -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Jasa Dokter'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                    <ejs-numerictextbox formControlName="doct_fee" [format]="'N2'" [enabled]="false"
+                                        [showSpinButton]="false" [cssClass]="'border text-end'">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+
+                            <!-- Jasa Sarana -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Jasa Sarana'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                    <ejs-numerictextbox formControlName="medical_fee" [format]="'N2'" [readonly]="true"
+                                        [enabled]="false" [showSpinButton]="false" [cssClass]="'border text-end'">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+
+                            <!-- Jasa RS -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Jasa Rumah Sakit'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                    <ejs-numerictextbox formControlName="hos_fee" [format]="'N2'" [readonly]="true"
+                                        [enabled]="false" [showSpinButton]="false" [cssClass]="'border text-end'">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+
+                            <!-- Jasa Anastesi -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Jasa Anastesi'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                    <ejs-numerictextbox formControlName="anas_fee" [format]="'N2'" [readonly]="true"
+                                        [enabled]="false" [showSpinButton]="false" [cssClass]="'border text-end'">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Lookup Dokter Periksa -->
+                            <org-input-look-up #LookupDokter [modal-title]="'Data Dokter'"
+                                [lookup-url]="UrlLookupDokter" [idTitle]="'nama_dokter'"
+                                (onGetSelectedData)="handleSelectedTarifBerlaku($event)"
+                                [columns]="PemasukanConfig.LookupDokter.columns"
+                                [filter-lookup]="PemasukanConfig.LookupDokter.filter" [label]="'Dokter Periksa'">
+                            </org-input-look-up>
+
+                            <div class="row align-items-center px-0 mx-0 mt-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body p-2">
+                                            <!-- Ans Local -->
+                                            <div class="row px-0 mx-0 mb-2 align-items-center">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Ans Local'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Nominal Tarif -->
+                                            <div class="row px-0 mx-0 mb-2 align-items-center">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Nominal Tarif'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                                    <ejs-numerictextbox formControlName="nominal_tarif" [format]="'N2'"
+                                                        [readonly]="true" [enabled]="false" [showSpinButton]="false"
+                                                        [cssClass]="'border text-end'">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+
+                                            <!-- Qty -->
+                                            <div class="row px-0 mx-0 mb-2 align-items-center">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Qty'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                                    <ejs-numerictextbox formControlName="qty" [format]="'N2'"
+                                                        [showSpinButton]="true">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+
+                                            <!-- Subtotal Tarif -->
+                                            <div class="row px-0 mx-0 mb-2 align-items-center">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Total Tarif'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                                    <ejs-numerictextbox formControlName="total_tarif" [format]="'N2'"
+                                                        [showSpinButton]="false" [enabled]="false"
+                                                        [cssClass]="'border'">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer background-abu-muda p-2">
+                <button type="button" class="btn btn-secondary btn-sm mx-2"
+                    (click)="handleCloseModalPemasukanRawatJalan()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSimpanModalPemasukanRawatJalan(FormPemasukanRawatJalan.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+            </div>
+        </ng-template>
+    </div>
+
+    <!-- Offcanvas Transaction Record -->
+    <div class="row mb-2">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 d-grid gap-2">
+            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                Transaction Record
+            </button>
+        </div>
+
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+            aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Transaction Record</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                </button>
+            </div>
+            <div class="offcanvas-body small">
+                ...
+            </div>
         </div>
     </div>
 </org-card-layout>

@@ -74,7 +74,7 @@ export class OrgInputLookUpKodeComponent implements OnInit {
 
         setTimeout(() => {
             (<HTMLInputElement>document.getElementById("searchValueId")).focus();
-        }, 200);
+        }, 500);
     }
 
     onCloseModal() {
@@ -180,7 +180,7 @@ export class OrgInputLookUpKodeComponent implements OnInit {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, param)
             .subscribe((_result) => {
                 if (_result.data.length == 1) {
-                    this.titleValue = _result.data[this.idTitle];
+                    this.titleValue = _result.data[0][this.idTitle];
 
                     this.onGetSelectedData.emit(_result.data)
                 }
@@ -198,6 +198,10 @@ export class OrgInputLookUpKodeComponent implements OnInit {
                     this.utilityService.onShowingCustomAlert('error', 'Oops', 'Data Tidak Ditemukan')
                         .then(() => {
                             this.onOpenModal();
+
+                            setTimeout(() => {
+                                (<HTMLInputElement>document.getElementById("searchValueId")).value = "";
+                            }, 500);
                         })
                 }
             });

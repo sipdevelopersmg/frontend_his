@@ -47,11 +47,18 @@ import { DashboardDokterModule } from "../dashboard-dokter/dashboard-dokter.modu
     imports: [
         CommonModule,
         CoreRoutingModule,
-        DashboardDokterModule,
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
         ContextMenuModule,
+    ],
+    exports: [
+        AtmNavbarComponent,
+        AtmTreeviewMenuComponent,
+        AtmSingleMenuComponent,
+        MolSidebarComponent,
+        MolTopMenuComponent,
+        MolMainMenuComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

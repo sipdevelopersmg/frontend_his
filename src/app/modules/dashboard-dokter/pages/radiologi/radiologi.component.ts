@@ -26,10 +26,10 @@ export class RadiologiComponent implements OnInit, AfterViewInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "RiwayatPemeriksaan":
-                this.router.navigateByUrl('/dashboard/Dokter/radiologi/riwayat-pemeriksaan');
+                this.router.navigateByUrl('/Dokter/radiologi/riwayat-pemeriksaan');
                 break;
             case "InputOrderBaru":
-                this.router.navigateByUrl('/dashboard/Dokter/radiologi/input-order-pemeriksaan');
+                this.router.navigateByUrl('/Dokter/radiologi/input-order-pemeriksaan');
                 break;
             default:
                 break;

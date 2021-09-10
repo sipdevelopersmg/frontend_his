@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DashboardDokterComponent } from "./dashboard-dokter.component";
+import { BerandaDokterComponent } from "./pages/beranda-dokter/beranda-dokter.component";
+import { DaftarPasienPerDokterComponent } from "./pages/daftar-pasien-per-dokter/daftar-pasien-per-dokter.component";
 import { DiagnosaComponent } from "./pages/diagnosa/diagnosa.component";
 import { InputOrderBaruLabComponent } from "./pages/laboratorium/input-order-baru/input-order-baru.component";
 import { LaboratoriumComponent } from "./pages/laboratorium/laboratorium.component";
@@ -11,8 +14,10 @@ import { ResepComponent } from "./pages/resep/resep.component";
 
 const dashboarDokterRoutes: Routes = [
     {
-        path: "", component: null, data: { title: "Dashboard Dokter" },
+        path: "", component: DashboardDokterComponent, data: { title: "Dashboard Dokter" },
         children: [
+            { path: "beranda", component: BerandaDokterComponent, data: { title: "Beranda Dokter" } },
+            { path: "daftar-pasien", component: DaftarPasienPerDokterComponent, data: { title: "Daftar Pasien" } },
             { path: "diagnosa", component: DiagnosaComponent, data: { title: "Diagnosa Pasien" } },
             {
                 path: "radiologi", component: RadiologiComponent, data: { title: "Pemeriksaan Radiologi Pasien" },

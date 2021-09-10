@@ -29,7 +29,7 @@ export class RiwayatPemeriksaanLabComponent implements OnInit {
     constructor(private dashboardDokterService: DashboardDokterService) { }
 
     ngOnInit(): void {
-        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+        /*  this.dashboardDokterService.onSetSidebarMenuForDashboardDokter(); */
     }
 
     onToolbarClick(args: any): void {

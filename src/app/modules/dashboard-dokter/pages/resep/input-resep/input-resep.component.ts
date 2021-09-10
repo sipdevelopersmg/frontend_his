@@ -82,7 +82,7 @@ export class InputResepComponent implements OnInit {
             'Search'
         ];
 
-        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+        // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
     }
 
     // ** Dropdown Nama Obat onchange method

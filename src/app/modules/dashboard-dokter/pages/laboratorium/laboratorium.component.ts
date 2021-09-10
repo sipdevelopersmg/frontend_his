@@ -26,10 +26,10 @@ export class LaboratoriumComponent implements OnInit, AfterViewInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "RiwayatPemeriksaan":
-                this.router.navigate(['/dashboard/Dokter/laboratorium/riwayat-pemeriksaan']);
+                this.router.navigate(['/Dokter/laboratorium/riwayat-pemeriksaan']);
                 break;
             case "InputOrderBaru":
-                this.router.navigate(['/dashboard/Dokter/laboratorium/input-order-pemeriksaan']);
+                this.router.navigate(['/Dokter/laboratorium/input-order-pemeriksaan']);
                 break;
             default:
                 break;

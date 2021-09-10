@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { SidebarMenuModel } from '../../core/models/navigation/menu.model';
 import { NavigationService } from '../../shared/services/navigation.service';
 
@@ -6,6 +7,9 @@ import { NavigationService } from '../../shared/services/navigation.service';
     providedIn: 'root'
 })
 export class DashboardDokterService {
+
+    ShowInformasiPasien = new BehaviorSubject(false);
+    ShowInformasiPasien$ = this.ShowInformasiPasien.asObservable();
 
     constructor(private navigationService: NavigationService) { }
 
@@ -64,5 +68,9 @@ export class DashboardDokterService {
         localStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenu));
 
         this.navigationService.onSetActiveSidebarMenuSubject(JSON.parse(localStorage.getItem('ActiveSidebarMenu')));
+    }
+
+    onSetSidebarMenuTitle(): void {
+        this.navigationService.onSetMainMenuTitle('Dashboard Dokter')
     }
 }

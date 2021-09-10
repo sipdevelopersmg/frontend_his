@@ -9,6 +9,10 @@ const routes: Routes = [
     {
         path: "dashboard",
         loadChildren: () => import("./modules/core/core.module").then(m => m.CoreModule),
+    },
+    {
+        path: "Dokter",
+        loadChildren: () => import("./modules/dashboard-dokter/dashboard-dokter.module").then(m => m.DashboardDokterModule),
     }
 ];
 
