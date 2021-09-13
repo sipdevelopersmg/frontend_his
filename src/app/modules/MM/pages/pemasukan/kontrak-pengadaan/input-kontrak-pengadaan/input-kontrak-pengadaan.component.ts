@@ -148,6 +148,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
             { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
             { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }
         ];
+        
+        this.ResetFrom()
     }
 
     ngAfterViewInit(): void {

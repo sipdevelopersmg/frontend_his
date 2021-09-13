@@ -1,5 +1,5 @@
 <org-card-layout>
-    <form>
+    <form [formGroup]="formInput">
     <div class="row">
         <div class="col-sm-6">
             <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'kode_supplier'" [modal-title]="'Data Supplier'"
@@ -10,6 +10,12 @@
             <mol-datepicker-syncfusion [label]="'Tanggal Berlaku'" [format]="'dd MMMM yyyy'"
                 formControlName="tanggal_berlaku">
             </mol-datepicker-syncfusion>
+            <org-look-up-checklist #LookupChecklist [LookupTitle]="'Data Item'"
+                [LookupUrl]="urlItem" [LookupFilters]="GridLookUpItem.filter"
+                [GridId]="'LookupChecklistAsalRujukan'"
+                [GridColumns]="GridLookUpItem.columns"
+                (OnGetSelectedRecords)="handleSelectedRecordItem($event)">
+            </org-look-up-checklist>
         </div>
     </div>
     <div class="row">
@@ -45,23 +51,42 @@
                             [headerText]="'Satuan'" [textAlign]="'Left'" [visible]="true"
                             [editType]="'defaultEdit'" [width]="100">
                         </e-column>
+                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'harga_order_lama'"
+                            [headerText]="'Harga Order Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100"
+                            [edit]="HargaOrderParams">
+                        </e-column>
+                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon1_lama'"
+                            [headerText]="'Diskon 1 Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                            [edit]="Diskon1Params">
+                        </e-column>
+                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon2_lama'"
+                            [headerText]="'Diskon 2 Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                            [edit]="Diskon2Params">
+                        </e-column>
+                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto_lama'"
+                            [headerText]="'Harga Netto Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [visible]="true" [format]="'N2'" [width]="100">
+                        </e-column>
                         <e-column [allowEditing]="true" [allowSorting]="false" [field]="'harga_order'"
-                            [headerText]="'Harga Order'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [headerText]="'Harga Order Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
                             [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100"
                             [edit]="HargaOrderParams">
                         </e-column>
                         <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon1'"
-                            [headerText]="'Diskon 1'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [headerText]="'Diskon 1 Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
                             [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
                             [edit]="Diskon1Params">
                         </e-column>
                         <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon2'"
-                            [headerText]="'Diskon 2'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [headerText]="'Diskon 2 Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
                             [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
                             [edit]="Diskon2Params">
                         </e-column>
                         <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto'"
-                            [headerText]="'Harga Netto'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                            [headerText]="'Harga Netto Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
                             [visible]="true" [format]="'N2'" [width]="100">
                         </e-column>
                     </e-columns>

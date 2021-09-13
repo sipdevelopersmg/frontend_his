@@ -14,7 +14,7 @@ import { TrPenerimaanDetailItemInsert, TrPenerimaanInsert } from '../../../model
 
 export class PenerimaanService {
 
-  public API = PENERIMAAN.TRANSPENERIMAAN;
+    public API = PENERIMAAN.TRANSPENERIMAAN;
     public dataSource = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<TrPenerimaanDetailItemInsert[]>([]);
@@ -96,11 +96,8 @@ export class PenerimaanService {
         });
     }
 
-    addDataDetail(detail: TrPenerimaanDetailItemInsert) {
-        this.dataDetail = [
-            ...this.dataDetail,
-            detail
-        ];
+    addDataDetail(detail: TrPenerimaanDetailItemInsert[]) {
+        this.dataDetail = detail;
         this.sum();
     }
 
@@ -147,7 +144,6 @@ export class PenerimaanService {
         this.dataDetail[index].isi = isi;
         this.dataDetail[index].qty_terima = this.dataDetail[index].qty_satuan_besar * isi;
         this.dataDetail[index].sub_total = this.dataDetail[index].qty_terima * this.dataDetail[index].harga_satuan;
-
     }
 
     sum(): void {

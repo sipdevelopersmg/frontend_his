@@ -96,7 +96,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -119,7 +119,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "visible": true
         },
         {
@@ -129,7 +129,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -140,7 +140,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -151,7 +151,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -162,7 +162,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -173,7 +173,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -184,7 +184,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -195,7 +195,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -206,7 +206,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         }

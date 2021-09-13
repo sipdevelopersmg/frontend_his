@@ -90,9 +90,13 @@ export class PemesananService {
      * @setDetail Void
     */
     setDetail(id): void{
-        this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id).subscribe((result) => {
+        this.getDetail(id).subscribe((result) => {
             this.dataDetail = result.data
         });
+    }
+
+    getDetail(id): Observable<any>{
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id)
     }
 
     addDataDetail(detail: TrPemesananDetailInsert) {

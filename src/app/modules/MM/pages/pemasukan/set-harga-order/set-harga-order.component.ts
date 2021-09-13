@@ -5,7 +5,9 @@ import { MM } from 'src/app/api/MM';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import * as LookupGridSupplier from './json/lookupsupplier.json'
-
+import * as GridLookUpItem from './json/lookupitem.json'
+import { OrgLookUpChecklistComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-set-harga-order',
   templateUrl: './set-harga-order.component.html',
@@ -13,7 +15,9 @@ import * as LookupGridSupplier from './json/lookupsupplier.json'
 })
 export class SetHargaOrderComponent implements OnInit {
   urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
+  urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
   LookupGridSupplier = LookupGridSupplier;
+  GridLookUpItem = GridLookUpItem
   @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
   GridDatasource: any[];
   GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
@@ -32,13 +36,20 @@ export class SetHargaOrderComponent implements OnInit {
   Diskon2Elem: HTMLElement;
   Diskon2Obj: NumericTextBox;
 
+  @ViewChild('LookupChecklist') LookupChecklist: OrgLookUpChecklistComponent;
+  formInput: FormGroup;
 
 
   constructor(
-    utilityHelperService:UtilityHelperService
+    utilityHelperService:UtilityHelperService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.formInput = this.formBuilder.group({
+      tanggal_berlaku: [null, [Validators.required]],
+      id_supplier: [0, [Validators.required]],
+    });
     this.GridDataToolbar = [
       { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
       'Search'
@@ -47,6 +58,7 @@ export class SetHargaOrderComponent implements OnInit {
   }
 
   heandleSelectedSupplier(args: any): void {
+    this.id_supplier.setValue(args.id_supplier);
   }
 
   handleSelectedRow(args: any): void {
@@ -62,7 +74,7 @@ export class SetHargaOrderComponent implements OnInit {
 
     switch (item) {
         case 'add':
-            // this.hanldeOpenModalLookupTarif();
+            this.LookupChecklist.hanldeOpenModalLookupChecklist();
             break;
         default:
             break;
@@ -75,6 +87,10 @@ export class SetHargaOrderComponent implements OnInit {
         
       }
     }
+  }
+
+  handleSelectedRecordItem(args: any): void {
+    console.log(args)
   }
 
   handleSetGridDataParams(): void {
@@ -166,5 +182,9 @@ export class SetHargaOrderComponent implements OnInit {
       }
     };
   }
+
+  get tanggal_berlaku() : AbstractControl { return this.formInput.get('tanggal_berlaku') }
+  get id_supplier() : AbstractControl { return this.formInput.get('id_supplier') }
+
 
 }

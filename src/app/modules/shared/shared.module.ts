@@ -65,6 +65,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
 import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
+import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
 
 @NgModule({
     declarations: [
@@ -119,6 +120,7 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         OrgLookUpComponent,
         OrgInputWilayahComponent,
         OrgLookUpChecklistComponent,
+        MolInputNumericComponent,
     ],
     imports: [
         CommonModule,
@@ -193,7 +195,9 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         OrgLookUpComponent,
         GridModule,
         TreeViewModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
+        MolInputNumericComponent,
+
     ],
     providers: [
         EditService,

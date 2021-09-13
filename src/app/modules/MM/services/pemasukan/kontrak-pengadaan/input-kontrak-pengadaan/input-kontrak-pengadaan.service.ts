@@ -16,7 +16,9 @@ import 'src/app/prototype/ArrPrototype';
 export class InputKontrakPengadaanService {
 
     public API = PENERIMAAN.TRANSKONTRAKSPJB;
-    public dataSource = new BehaviorSubject([]);
+    
+    private readonly _dataSource = new BehaviorSubject([]);
+    readonly dataSource$ = this._dataSource.asObservable();
 
     private readonly _dataDetail = new BehaviorSubject<TrKontrakSpjbDetailItemInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
@@ -24,9 +26,16 @@ export class InputKontrakPengadaanService {
     get dataDetail(): TrKontrakSpjbDetailItemInsert[] {
         return this._dataDetail.getValue();
     }
-
     set dataDetail(val: TrKontrakSpjbDetailItemInsert[]) {
         this._dataDetail.next(val);
+    }
+
+    get dataSource():any {
+        return this._dataSource.getValue();
+    }
+
+    set dataSource(val:any){
+        this._dataSource.next(val);
     }
 
     public total: Number = 0;
@@ -46,7 +55,7 @@ export class InputKontrakPengadaanService {
     }
     
     onInitList(): void{
-        this.dataSource.next([]);
+        this.dataSource = [];
     }
 
     /**
@@ -77,7 +86,7 @@ export class InputKontrakPengadaanService {
     onGetAllByParamsSource(req: PostRequestByDynamicFiterModel[]): void {
          this.onGetAllByParams(req).subscribe((result) => {
             if (result) {
-                this.dataSource.next(result.data);
+                this.dataSource = result.data;
             }
         });
     }

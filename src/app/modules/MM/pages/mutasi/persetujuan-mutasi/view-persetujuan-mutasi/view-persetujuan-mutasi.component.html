@@ -1,0 +1,70 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Nomor Mutasi'" formControlName="nomor_mutasi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Mutasi'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_mutasi">
+                </mol-datepicker-syncfusion>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Stockroom Pemberi'" formControlName="nama_stockroom_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Stockroom Penerima'" formControlName="nama_stockroom_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+            </div>
+        </div>
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='persetujuanMutasiService.dataDetail$ | async'
+            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
+            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
+            (rowSelected)="handleSelectdRow($event)">
+            <e-columns>
+                <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
+                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='isi_mutasi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
+                    textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='qty_permintaan' [allowEditing]="false" headerText='QTY Permintaan'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='qty_mutasi' [allowEditing]="false" headerText='QTY Disetujui'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                
+                <e-column [visible]="false" field='nominal_mutasi' [allowEditing]="true" headerText='nominal_mutasi'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='keterangan_mutasi' [allowEditing]="true" headerText='Keterangan'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" >
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="persetujuanMutasiService.jumlah_item" formControlName="jumlah_item"
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

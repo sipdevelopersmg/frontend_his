@@ -27,6 +27,11 @@ import { ViewPemesananComponent } from './pages/pemasukan/pemesanan/view-pemesan
 import { DaftarPenerimaanComponent } from './pages/pemasukan/penerimaan/daftar-penerimaan/daftar-penerimaan.component';
 import { ViewPenerimaanComponent } from './pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component';
 import { SetHargaOrderComponent } from './pages/pemasukan/set-harga-order/set-harga-order.component';
+import { InputPermintaanMutasiComponent } from './pages/mutasi/permintaan-mutasi/input-permintaan-mutasi/input-permintaan-mutasi.component';
+import { DaftarPermintaanMutasiComponent } from './pages/mutasi/permintaan-mutasi/daftar-permintaan-mutasi/daftar-permintaan-mutasi.component';
+import { ViewPermintaanMutasiComponent } from './pages/mutasi/permintaan-mutasi/view-permintaan-mutasi/view-permintaan-mutasi.component';
+import { DaftarPersetujuanMutasiComponent } from './pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi/daftar-persetujuan-mutasi.component';
+import { ViewPersetujuanMutasiComponent } from './pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi/view-persetujuan-mutasi.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +59,11 @@ import { SetHargaOrderComponent } from './pages/pemasukan/set-harga-order/set-ha
         DaftarPenerimaanComponent,
         ViewPenerimaanComponent,
         SetHargaOrderComponent,
+        InputPermintaanMutasiComponent,
+        DaftarPermintaanMutasiComponent,
+        ViewPermintaanMutasiComponent,
+        DaftarPersetujuanMutasiComponent,
+        ViewPersetujuanMutasiComponent,
     ],
     imports: [
         FormsModule,

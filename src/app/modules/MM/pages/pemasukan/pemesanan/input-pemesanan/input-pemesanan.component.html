@@ -137,9 +137,9 @@
                     [inputFieldState]="'detail'"></mol-input-text> -->
             </div>
             <div class="col-sm-3">
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
                     [value]="pemesananService.jumlah_item_pesan" formControlName="jumlah_item_pesan"
-                    [inputFieldState]="'detail'"></mol-input-text>
+                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-numeric>
             </div>
         </div>
     </form>
