@@ -18,6 +18,7 @@ export interface IPersonPasienForAdmisiRawatJalanModel {
     keterangan?: string | null;
     kelurahan?: string | null;
     is_active?: boolean;
+    sudah_teradmisi?: boolean;
 }
 
 /**

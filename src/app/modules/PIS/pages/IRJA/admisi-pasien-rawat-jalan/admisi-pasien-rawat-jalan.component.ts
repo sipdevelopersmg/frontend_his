@@ -6,6 +6,7 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { IPasienTeradmisiHariIniModel, IPersonPasienForAdmisiRawatJalanModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
 import { AdmisiPasienRawatJalanService } from '../../../services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
 import * as Config from './json/grid.json';
@@ -35,6 +36,7 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
+        private utilityService: UtilityService,
         private bsModalService: BsModalService,
         private encryptionService: EncryptionService,
         private admisiRawatJalanService: AdmisiPasienRawatJalanService
@@ -104,14 +106,21 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
 
     }
 
-    handleDoubleClickLookupPencarianPasien(args: IPersonPasienForAdmisiRawatJalanModel): void {
-        const Person = this.encryptionService.encrypt(JSON.stringify(args));
+    handleDoubleClickLookupPencarianPasien(args: any): void {
 
-        this.handleCloseModalLookupPencarianPasien();
+        const data: IPersonPasienForAdmisiRawatJalanModel = args.rowData;
 
-        setTimeout(() => {
-            this.router.navigate(['dashboard/PIS/IRJA/admisi-pasien-rawat-jalan/', Person, "GRAHCIS"]);
-        }, 400);
+        if (data.sudah_teradmisi) {
+            this.utilityService.onShowingCustomAlert('error', 'Oops', `Pasien ${data.full_name} Sudah Teradmisi`);
+        } else {
+            const Person = this.encryptionService.encrypt(JSON.stringify(data));
+
+            this.handleCloseModalLookupPencarianPasien();
+
+            setTimeout(() => {
+                this.router.navigate(['dashboard/PIS/IRJA/admisi-pasien-rawat-jalan/', Person, "GRAHCIS"]);
+            }, 400);
+        }
     }
 
     handleCariLookupPencarianPasien(FormPencarianPasien: any): void {
