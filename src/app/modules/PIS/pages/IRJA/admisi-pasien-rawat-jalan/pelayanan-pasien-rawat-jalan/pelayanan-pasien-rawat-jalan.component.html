@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <!-- No. Register -->
-                <mol-input-text [disabled]="true" formControlName="NoRegister" [label]="'No Register Pasien'">
+                <mol-input-text [disabled]="true" [label]="'No Register Pasien'">
                 </mol-input-text>
 
                 <!-- Foto Pasien -->
@@ -23,7 +23,7 @@
                 </org-input-look-up>
 
                 <!-- Nama Pasien -->
-                <mol-input-text [id]="'nama_pasien'" formControlName="NamaPasien" [label]="'Nama Pasien'">
+                <mol-input-text [id]="'nama_pasien'" formControlName="full_name" [label]="'Nama Pasien'">
                 </mol-input-text>
 
                 <!-- Tanggal Masuk -->
@@ -70,8 +70,8 @@
                         <atm-label [LabelCaption]="'Debitur'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                        <ejs-dropdownlist [dataSource]="DropdownDebiturDatasource" [fields]="DropdownDebiturField"
-                            [allowFiltering]="true">
+                        <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
+                            [fields]="DropdownDebiturField" [allowFiltering]="true" formControlName="id_debitur">
                         </ejs-dropdownlist>
                     </div>
                 </div>
@@ -82,28 +82,22 @@
                         <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                        <ejs-dropdownlist [dataSource]="DropdownKelasDatasource" [fields]="DropdownKelasField"
-                            [allowFiltering]="true">
+                        <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                            [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas_rawat">
                         </ejs-dropdownlist>
                     </div>
                 </div>
-
-                <!-- No. Peserta -->
-                <!-- <mol-input-text formControlName="FromNoRegister" [label]="'No. Peserta'"></mol-input-text> -->
-
-                <!-- No. SEP -->
-                <!-- <mol-input-text formControlName="ScvCode" [label]="'No. SEP'"></mol-input-text> -->
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <!-- Jenis Karcis -->
-                <mol-input-text [label]="'Jenis Karcis'"></mol-input-text>
+                <!-- <mol-input-text [label]="'Jenis Karcis'"></mol-input-text> -->
 
                 <!-- No. Karcis -->
-                <mol-input-text [label]="'No Karcis'"></mol-input-text>
+                <!-- <mol-input-text [label]="'No Karcis'"></mol-input-text> -->
 
                 <!-- Asal Rujukan -->
-                <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Asal Rujukan'"
+                <org-input-look-up-kode #LookupAsalRujukan [modal-title]="'Data Asal Rujukan'"
                     [lookup-url]="urlAsalRujukan" [idKode]="'kode_asal_rujukan'" [idTitle]="'nama_asal_rujukan'"
                     (onGetSelectedData)="handleSelectedAsalRujukan($event)"
                     [columns]="settingGrid.LookupAsalRujukan.columns"
@@ -111,15 +105,15 @@
                 </org-input-look-up-kode>
 
                 <!-- Kota / Kab -->
-                <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Kota'" [lookup-url]="urlKotaAsalRujukan"
-                    [idKode]="'kode_wilayah'" [idTitle]="'nama_wilayah'"
+                <org-input-look-up-kode #LookupKotaAsalRujukan [modal-title]="'Data Kota'"
+                    [lookup-url]="urlKotaAsalRujukan" [idKode]="'kode_wilayah'" [idTitle]="'nama_wilayah'"
                     (onGetSelectedData)="handleSelectedKotaAsalRujukan($event)"
                     [columns]="settingGrid.LookupKotaRujukan.columns"
                     [filter-lookup]="settingGrid.LookupKotaRujukan.filter" [label]="'Kota Asal Rujukan'">
                 </org-input-look-up-kode>
 
                 <!-- Di Rujuk -->
-                <mol-input-text formControlName="KotaAsalRujukan" [label]="'Di Rujuk Oleh'"></mol-input-text>
+                <mol-input-text [label]="'Di Rujuk Oleh'"></mol-input-text>
 
                 <!-- Diagnosa Awal -->
                 <org-input-look-up-kode #LookupDiagnosa [modal-title]="'Data Diagnosa Awal'" [lookup-url]="urlDiagnosa"
@@ -130,10 +124,10 @@
                 </org-input-look-up-kode>
 
                 <!-- Keluhan -->
-                <mol-input-text formControlName="Keluhan" [label]="'Keluhan'"></mol-input-text>
+                <mol-input-text formControlName="keluhan" [label]="'Keluhan'"></mol-input-text>
 
                 <!-- Catatan -->
-                <mol-input-textarea formControlName="Catatan" [label]="'Catatan'"></mol-input-textarea>
+                <mol-input-textarea formControlName="keterangan_diagnosa" [label]="'Catatan'"></mol-input-textarea>
 
                 <!-- Catatan Terakhir -->
                 <mol-input-textarea [label]="'Catatan Terakhir'"></mol-input-textarea>
@@ -141,20 +135,15 @@
                 <!-- Operator -->
                 <mol-input-text [label]="'Operator'"></mol-input-text>
 
-                <!-- <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <button class="btn btn-primary btn-sm" type="button" (click)="tes()">
-                            Tes Lookup Checklist
-                        </button>
+                <div class="row px-2 pt-2 pb-1 mx-0 mt-3 border shadow-sm">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
+                        <!-- No. Peserta -->
+                        <mol-input-text formControlName="no_peserta" [label]="'No. Peserta'"></mol-input-text>
 
-                        <org-look-up-checklist #LookupChecklist [LookupTitle]="'Data Asal Rujukan'"
-                            [LookupUrl]="urlAsalRujukan" [LookupFilters]="settingGrid.LookupAsalRujukanTes.filter"
-                            [GridId]="'LookupChecklistAsalRujukan'"
-                            [GridColumns]="settingGrid.LookupAsalRujukanTes.columns"
-                            (OnGetSelectedRecords)="handleSelectedRecordAsalRujukan($event)">
-                        </org-look-up-checklist>
+                        <!-- No. SEP -->
+                        <mol-input-text [label]="'No. SEP'"></mol-input-text>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </form>

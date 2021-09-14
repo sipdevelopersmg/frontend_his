@@ -1,0 +1,16 @@
+<div class="accordion shadow-sm" [id]="'accordion' + DetailId">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button px-3 py-2" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#' + DetailId" aria-expanded="false" [attr.aria-controls]="DetailId">
+                {{ DetailCaption }}
+            </button>
+        </h2>
+        <div [id]="DetailId" class="accordion-collapse collapse" aria-labelledby="headingOne"
+            [attr.data-bs-parent]="'#accordion' + DetailId">
+            <div class="accordion-body px-3 py-2">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+</div>

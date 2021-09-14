@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdmisiPasienRawatJalanService } from 'src/app/modules/PIS/services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -17,6 +17,11 @@ import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALA
 import * as API_PIS_SETUP_DATA from '../../../../../../api/PIS/SETUP_DATA';
 import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';
 import { OrgLookUpChecklistComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { IPersonPasienForAdmisiRawatJalanModel } from 'src/app/modules/PIS/models/IRJA/admisi-pasien-rawat-jalan.model';
+import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
+import { DokterModel } from 'src/app/modules/PIS/models/setup-data/setup-dokter.model';
 
 @Component({
     selector: 'app-pelayanan-pasien-rawat-jalan',
@@ -38,6 +43,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     @ViewChild('LookupMr') LookupMr: OrgInputLookUpComponent;
     urlRm = this.API_ADMISI.POST_GET_PASIEN_FOR_LOOKUP_ADMISI;
 
+    @ViewChild('DropdownRuangan') DropdownRuangan: DropDownListComponent;
     DropdownRuanganDatasource: JenisRuanganModel[];
     DropdownRuanganField: object = { text: 'jenis_ruangan', value: 'id_jenis_ruangan' };
 
@@ -62,9 +68,11 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     image = false;
     imageSrc: string;
 
+    @ViewChild('DropdownDebitur') DropdownDebitur: DropDownListComponent;
     DropdownDebiturDatasource: DebiturModel[];
     DropdownDebiturField: object = { text: 'nama_debitur', value: 'id_debitur' };
 
+    @ViewChild('DropdownKelas') DropdownKelas: DropDownListComponent;
     DropdownKelasDatasource: KelasPerawatanModel[];
     DropdownKelasField: object = { text: 'nama_kelas', value: 'id_kelas' };
 
@@ -75,7 +83,9 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
+        private activatedRoute: ActivatedRoute,
         private utilityService: UtilityService,
+        private encryptionService: EncryptionService,
         private setupDebiturService: SetupDebiturService,
         private setupJenisRuanganService: SetupJenisRuanganService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
@@ -92,9 +102,23 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
 
         this.onSetAttributeFormAdmisiPasien();
 
+        this.onGetDetailPersonFromSearching();
+
         this.onGetAllJenisRuangan();
 
         this.onGetAllKelasPelayanan();
+    }
+
+    onGetDetailPersonFromSearching(): void {
+        if (this.activatedRoute.snapshot.params['id']) {
+            let Person: IPersonPasienForAdmisiRawatJalanModel = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params['id']));
+
+            if (Person) {
+                setTimeout(() => {
+                    this.heandleSelectedMR(Person);
+                }, 500);
+            }
+        }
     }
 
     onClickButtonNav(ButtonId: string): void {
@@ -106,85 +130,29 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
                 this.resetForm();
                 break;
             case 'Save':
-                this.onSave();
+                this.onSave(this.formAdmisiPasien.value);
                 break;
             default:
                 break;
         }
     }
 
-    resetForm(): void {
-        this.formAdmisiPasien.reset();
-        this.LookupMr.resetValue();
-        this.LookupKodeDokter.resetValue();
-        this.LookupKodePoli.resetValue();
-        this.LookupKelas.resetValue();
-        this.LookupDiagnosa.resetValue();
-        this.image = false;
-    }
-
-    onSave(): void {
-        const request = this.formAdmisiPasien.value;
-
-        console.log(request);
-    }
-
     onSetAttributeFormAdmisiPasien(): void {
         this.formAdmisiPasien = this.formBuilder.group({
-            PartyId: [0, []],
-            MrNo: ['', [Validators.required]],
-            NamaPasien: ['', []],
-            TglMasukRawat: [null, []],
-            NoRegister: [0, []],
-            TipePasien: ['OUT', []],
-            KodeRujukan: ['', []],
-            KotaAsalRujukan: ['', []],
-            Perujuk: ['', []],
-            AsalMasuk: ['', []],
-            KodeDokterRj: ['', []],
-            TglRujukRi: [null, []],
-            FromNoRegister: [0, []],
-            TransferToNoreg: [0, []],
-            DiagnosaMasuk: ['', []],
-            KetDiagnosaMasuk: ['', []],
-            Keluhan: ['', []],
-            DiagnosaAkhir: ['', []],
-            KetDiagnosaAkhir: ['', []],
-            TglKeluar: [null, []],
-            KondisiKeluar: [0, []],
-            CaraKeluar: [0, []],
-            SebabRi: ['', []],
-            DokterPerujukRi: ['', []],
-            PolyAsalRi: ['', []],
-            PolyRi: ['', []],
-            SubPoly: ['', []],
-            PartyDebitur: [0, []],
-            InsNo: ['', []],
-            InsExpDate: [null, []],
-            ScvCode: ['', []],
-            ScvPelayanan: ['', []],
-            Balance: [0, []],
-            BalancePhar: [0, []],
-            Deposite: [0, []],
-            TotalCharge: [0, []],
-            TicketCode: ['', []],
-            PayTicketDate: [null, []],
-            OprEntry: [0, []],
-            IsVerifiedCoa: ['', []],
-            IsBirth: ['', []],
-            PayCompleteDate: [null, []],
-            CancelDate: [null, []],
-            SendDate: [null, []],
-            CancelBy: [0, []],
-            CancelReason: ['', []],
-            TransferFrom: ['', []],
-            JenisPelayananId: ['', []],
-            KeterbatasanFisik: [0, []],
-            PpjpEmpId: [0, []],
-            BillProcessDate: [null, []],
-            Catatan: [null, []],
             id_person: [0, []],
+            full_name: ["", []],
+            no_rekam_medis: ["", []],
             id_jenis_ruangan: [0, []],
+            id_poli: [0, []],
+            id_dokter: [0, []],
+            id_debitur: [0, []],
+            id_asal_rujukan: [0, []],
+            kode_wilayah_asal_rujukan: ["", []],
+            id_kelas_rawat: [0, []],
+            no_peserta: ["", []],
+            id_icd_masuk: [0, []],
+            keterangan_diagnosa: ["", []],
+            keluhan: ["", []],
         });
     }
 
@@ -216,8 +184,11 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     heandleSelectedMR(args: any): void {
         this.image = true;
 
-        this.MrNo.setValue(args.no_rekam_medis);
-        this.NamaPasien.setValue(args.full_name);
+        (<HTMLInputElement>document.getElementById('inputGroupno_rekam_medis')).value = args.no_rekam_medis;
+
+        this.id_person.setValue(args.id_person);
+        this.no_rekam_medis.setValue(args.no_rekam_medis);
+        this.full_name.setValue(args.full_name);
 
         this.pendaftaranPasienBaruService.onGetLinkFotoPerson(args.id_person, false)
             .subscribe((result) => {
@@ -229,61 +200,120 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
         (<HTMLInputElement>document.getElementById('nama_pasien')).focus();
     }
 
-    heandleSelectedPoli(args: any): void {
-        this.PolyRi.setValue(args.PolyCode);
+    heandleSelectedPoli(args: PoliModel): void {
+        this.id_poli.setValue(args.id_poli || args[0].id_poli);
     }
 
     heandleSelectedDokter(args: any): void {
-        // this.KodeDokterRj.setValue(args.KodeDokter);
-    }
-
-    heandleSelectedDebitur(arg: any): void {
-        this.PartyDebitur.setValue(arg.PartyId);
-    }
-
-    heandleSelectedPelayanan(arg: any): void {
-        this.ScvPelayanan.setValue(arg.ScvCode);
+        this.id_dokter.setValue(args.id_dokter || args[0].id_dokter);
     }
 
     handleSelectedAsalRujukan(args: any): void {
-
+        this.id_asal_rujukan.setValue(args.id_asal_rujukan || args[0].id_asal_rujukan);
     }
 
-    handleSelectedKotaAsalRujukan($event): void {
-
+    handleSelectedKotaAsalRujukan(args: any): void {
+        this.kode_wilayah_asal_rujukan.setValue(args.kode_wilayah || args[0].kode_wilayah);
     }
 
-    heandleSelectedDiagnosaAwal(arg: any): void {
-        this.DiagnosaMasuk.setValue(arg.IcdCode);
+    heandleSelectedDiagnosaAwal(args: any): void {
+        this.id_icd_masuk.setValue(args.id_icd || args[0].id_icd);
     }
 
-    tes() {
-        this.LookupChecklist.hanldeOpenModalLookupChecklist();
+    resetForm(): void {
+        this.formAdmisiPasien.reset();
+        this.LookupMr.resetValue();
+        this.DropdownRuangan.value = null;
+        this.DropdownKelas.value = null;
+        this.LookupKodePoli.resetValue();
+        this.LookupKodeDokter.resetValue();
+        this.DropdownDebitur.value = null;
+        this.LookupAsalRujukan.resetValue();
+        this.LookupKotaAsalRujukan.resetValue();
+        this.LookupDiagnosa.resetValue();
+
+        this.id_person.setValue(0);
+        this.full_name.setValue("");
+        this.no_rekam_medis.setValue("");
+        this.id_jenis_ruangan.setValue(0);
+        this.id_poli.setValue(0);
+        this.id_debitur.setValue(0);
+        this.id_asal_rujukan.setValue(0);
+        this.kode_wilayah_asal_rujukan.setValue("");
+        this.id_kelas_rawat.setValue(0);
+        this.no_peserta.setValue("");
+        this.id_icd_masuk.setValue(0);
+        this.keterangan_diagnosa.setValue("");
+        this.keluhan.setValue(0);
+
+        this.image = false;
     }
 
-    handleSelectedRecordAsalRujukan(args: any): void {
-        console.log(args)
+    onSave(FormAdmisiPasien: any): void {
+        if (FormAdmisiPasien.id_debitur == 1) {
+            this.onSaveNonPenjamin(FormAdmisiPasien);
+        } else {
+            this.onSaveWithPenjamin(FormAdmisiPasien);
+        }
     }
 
-    get PartyId(): AbstractControl { return this.formAdmisiPasien.get('PartyId'); }
-    get NoRegister(): AbstractControl { return this.formAdmisiPasien.get('NoRegister'); }
-    get MrNo(): AbstractControl { return this.formAdmisiPasien.get('MrNo'); }
-    get NamaPasien(): AbstractControl { return this.formAdmisiPasien.get('NamaPasien'); }
-    get TglMasukRawat(): AbstractControl { return this.formAdmisiPasien.get('TglMasukRawat'); }
-    get PolyRi(): AbstractControl { return this.formAdmisiPasien.get('PolyRi'); }
-    get KodeDokterRj(): AbstractControl { return this.formAdmisiPasien.get('KodeDokterRj'); }
-    get PartyDebitur(): AbstractControl { return this.formAdmisiPasien.get('PartyDebitur'); }
-    get ScvPelayanan(): AbstractControl { return this.formAdmisiPasien.get('ScvPelayanan'); }
-    get FromNoRegister(): AbstractControl { return this.formAdmisiPasien.get('FromNoRegister'); }
-    get ScvCode(): AbstractControl { return this.formAdmisiPasien.get('ScvCode'); }
-    get TicketCode(): AbstractControl { return this.formAdmisiPasien.get('TicketCode'); }
-    get KodeRujukan(): AbstractControl { return this.formAdmisiPasien.get('KodeRujukan'); }
-    get KotaAsalRujukan(): AbstractControl { return this.formAdmisiPasien.get('KotaAsalRujukan'); }
-    get Perujuk(): AbstractControl { return this.formAdmisiPasien.get('Perujuk'); }
-    get DiagnosaMasuk(): AbstractControl { return this.formAdmisiPasien.get('DiagnosaMasuk'); }
-    get Keluhan(): AbstractControl { return this.formAdmisiPasien.get('Keluhan'); }
-    get Catatan(): AbstractControl { return this.formAdmisiPasien.get('Catatan'); }
-    get OprEntry(): AbstractControl { return this.formAdmisiPasien.get('OprEntry'); }
+    onSaveNonPenjamin(data: any) {
+        const parameter = {
+            "id_person": data.id_person,
+            "no_rekam_medis": data.no_rekam_medis,
+            "id_jenis_ruangan": data.id_jenis_ruangan,
+            "id_poli": data.id_poli,
+            "id_dokter": data.id_dokter,
+            "id_debitur": data.id_debitur,
+            "id_kelas_rawat": data.id_kelas_rawat,
+            "id_icd_masuk": data.id_icd_masuk,
+            "keterangan_diagnosa": data.keterangan_diagnosa,
+            "keluhan": data.keluhan
+        };
+
+        this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanTanpaPenjamin(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
+                        .then(() => {
+                            this.resetForm();
+
+                            setTimeout(() => {
+                                this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
+                            }, 250);
+                        });
+                }
+            });
+    }
+
+    onSaveWithPenjamin(data: any) {
+        this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanDenganPenjamin(data)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
+                        .then(() => {
+                            this.resetForm();
+
+                            setTimeout(() => {
+                                this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
+                            }, 250);
+                        });
+                }
+            });
+    }
 
     get id_person(): AbstractControl { return this.formAdmisiPasien.get('id_person'); }
+    get full_name(): AbstractControl { return this.formAdmisiPasien.get('full_name'); }
+    get no_rekam_medis(): AbstractControl { return this.formAdmisiPasien.get('no_rekam_medis'); }
+    get id_jenis_ruangan(): AbstractControl { return this.formAdmisiPasien.get('id_jenis_ruangan'); }
+    get id_poli(): AbstractControl { return this.formAdmisiPasien.get('id_poli'); }
+    get id_dokter(): AbstractControl { return this.formAdmisiPasien.get('id_dokter'); }
+    get id_debitur(): AbstractControl { return this.formAdmisiPasien.get('id_debitur'); }
+    get id_asal_rujukan(): AbstractControl { return this.formAdmisiPasien.get('id_asal_rujukan'); }
+    get kode_wilayah_asal_rujukan(): AbstractControl { return this.formAdmisiPasien.get('kode_wilayah_asal_rujukan'); }
+    get id_kelas_rawat(): AbstractControl { return this.formAdmisiPasien.get('id_kelas_rawat'); }
+    get no_peserta(): AbstractControl { return this.formAdmisiPasien.get('no_peserta'); }
+    get id_icd_masuk(): AbstractControl { return this.formAdmisiPasien.get('id_icd_masuk'); }
+    get keterangan_diagnosa(): AbstractControl { return this.formAdmisiPasien.get('keterangan_diagnosa'); }
+    get keluhan(): AbstractControl { return this.formAdmisiPasien.get('keluhan') };
 }

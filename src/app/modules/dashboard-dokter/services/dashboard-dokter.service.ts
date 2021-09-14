@@ -17,6 +17,18 @@ export class DashboardDokterService {
         const sidebarMenu: SidebarMenuModel[] = [
             {
                 button: [],
+                caption: "Kembali",
+                fieldgrid: [],
+                icon: "fas fa-chevron-left",
+                id_menu_sidebar: 0,
+                id_menu_sidebar_parent: 0,
+                id_top_menu: 0,
+                is_parent: true,
+                childSidebarMenu: [],
+                url: "Dokter/daftar-pasien"
+            },
+            {
+                button: [],
                 caption: "Diagnosa (Dx)",
                 fieldgrid: [],
                 icon: "fas fa-diagnoses",

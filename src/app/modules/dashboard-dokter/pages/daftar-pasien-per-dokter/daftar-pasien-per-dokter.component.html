@@ -4,7 +4,37 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'IRJA'">IRJA</org-tabs-label>
             <org-tabs-body>
-
+                <ejs-grid #GridIRJA [id]="'GridIRJA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRJADatasource"
+                    [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                    [allowFiltering]='true' [editSettings]="GridIRJAEditSettings" [toolbar]="GridIRJAToolbar"
+                    (rowSelected)="handleSelectedRowIRJA($event)" (actionComplete)="handleActionCompleteIRJA($event)"
+                    (commandClick)="handleClickCommandGridIRJA($event)" (toolbarClick)="handleToolbarClickIRJA($event)">
+                    <e-columns>
+                        <!-- <e-column [width]="50" [headerText]="'ACTION'" [textAlign]="'Center'"
+                            [headerTextAlign]="'Center'" [commands]="GridIRJACommands">
+                        </e-column> -->
+                        <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false"
+                            [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                            [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="100" [field]="'tgl_masuk'" [headerText]="'TGL. MASUK'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                            [format]="'dd/MM/yyyy'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="200" [field]="'full_name'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="100" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
             </org-tabs-body>
         </org-tabs-item>
 
@@ -12,13 +42,27 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'IRNA'">IRNA</org-tabs-label>
             <org-tabs-body>
-
+                <!-- <mol-grid #GridIRJA [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridIRNADatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridIRNAEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridIRNAToolbar" [columns]="GridConfig.GridDaftarPasienIRNA"
+                    (row-selected)="handleSelectedRowIRNA($event)" (toolbar-click)="handleToolbarClickIRNA($event)"
+                    (initialized)="handleInitializedIRNA($event)" (command-click)="handleClickCommandGridIRNA($event)"
+                    (action-complete)="handleActionCompleteIRNA($event)">
+                </mol-grid> -->
             </org-tabs-body>
         </org-tabs-item>
 
         <!-- IRDA -->
         <org-tabs-item>
             <org-tabs-label [Id]="'IRDA'">IRDA</org-tabs-label>
+            <org-tabs-body>
+
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- KONSULAN -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'IRDA'">Konsulan</org-tabs-label>
             <org-tabs-body>
 
             </org-tabs-body>

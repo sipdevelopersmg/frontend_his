@@ -57,7 +57,7 @@ export class DashboardDokterComponent implements OnInit {
 
             // ** Header Ribbon Hide ketika di halaman Beranda
             routeData.data.subscribe((data: any) => {
-                if (data.title === 'Beranda Dokter') {
+                if (data.title === 'Beranda Dokter' || data.title === "Daftar Pasien") {
                     this.dashboardDokterService.ShowInformasiPasien.next(true);
                 } else {
                     this.dashboardDokterService.ShowInformasiPasien.next(false);

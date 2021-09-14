@@ -32,8 +32,8 @@ section#sidebar-section.hidding-top-menu {
 section#content-section {
   width: 80%;
   max-width: 80%;
-  height: calc(100vh - 8.5rem);
-  max-height: calc(100vh - 8.5rem);
+  height: calc(100vh - 4.5rem);
+  max-height: calc(100vh - 4.5rem);
   transition: all 0.25s;
   padding: 0.5em 0.75em;
 }
@@ -95,8 +95,8 @@ section#content-section {
   section#sidebar-section {
     width: 15%;
     max-width: 15%;
-    height: calc(100vh - 8.5em);
-    max-height: calc(100vh - 8.5em);
+    height: calc(100vh - 4.5em);
+    max-height: calc(100vh - 4.5em);
     z-index: 2;
     box-shadow: 2px 0 2px -2px #888;
     transition: all 0.7s;
@@ -110,8 +110,8 @@ section#content-section {
   section#content-section {
     width: 85%;
     max-width: 85%;
-    height: calc(100vh - 8.5em);
-    max-height: calc(100vh - 8.5em);
+    height: calc(100vh - 4.5em);
+    max-height: calc(100vh - 4.5em);
     transition: all 0.7s;
     padding: 0.5em 0.75em;
   }

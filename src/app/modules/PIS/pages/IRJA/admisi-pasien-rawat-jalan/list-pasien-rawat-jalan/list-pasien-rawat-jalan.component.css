@@ -6,7 +6,7 @@ th.e-headercell {
   background-color: rgba(0, 0, 0, 0.03);
   color: black;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  padding: 10px !important;
+  padding: 10px 5px !important;
   height: 30px !important;
 }
 
@@ -16,4 +16,9 @@ span.e-headertext {
 
 td.e-rowcell {
   padding: 5px !important;
+}
+
+#GridDaftarPasiencaptioncell {
+  background-color: var(--biru-tua);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }

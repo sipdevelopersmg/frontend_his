@@ -3,7 +3,8 @@
         <atm-label [LabelCaption]="label"></atm-label>
     </div>
     <div class="col-sm-8">
-        <atm-input-group-atom [disableTitle]="disableTitle" [value]="titleValue"
-        (clickButton)="handleClickButton($event)">></atm-input-group-atom>
+        <atm-input-group-atom [inputId]="inputId" [disableTitle]="disableTitle" [value]="titleValue"
+            (clickButton)="handleClickButton($event)">
+        </atm-input-group-atom>
     </div>
 </div>

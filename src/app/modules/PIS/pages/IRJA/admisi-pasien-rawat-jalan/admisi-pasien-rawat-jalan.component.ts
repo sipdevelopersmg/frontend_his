@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { IPasienTeradmisiHariIniModel, IPersonPasienForAdmisiRawatJalanModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
+import { AdmisiPasienRawatJalanService } from '../../../services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
 import * as Config from './json/grid.json';
 
 @Component({
@@ -22,16 +26,18 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
 
     FormPencarianPasien: FormGroup;
 
-    GridLookupTarifDatasource: any[];
-    GridLookupTarif: MolGridComponent = null;
-    GridLookupTarifPageSettings: object = { pageSize: 20, pageSizes: true, pageCount: 4 };
-    GridLookupTarifSelectionSettings: object = { type: 'Multiple', enableSimpleMultiRowSelection: true }
-    SelectedFilterLookupTarif: string;
+    GridSearchingPasien: MolGridComponent = null;
+    GridSearchingPasienDatasource: any[] = [];
+    GridSearchingPasienPageSettings: object = { pageSize: 20, pageSizes: true, pageCount: 4 };
+
+    DaftarAdmisiPasien: any[];
 
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
         private bsModalService: BsModalService,
+        private encryptionService: EncryptionService,
+        private admisiRawatJalanService: AdmisiPasienRawatJalanService
     ) { }
 
     @HostListener('document:keydown', ['$event'])
@@ -63,6 +69,10 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
         });
     }
 
+    onGetDaftarAdmisi(args: IPasienTeradmisiHariIniModel[]): void {
+        this.DaftarAdmisiPasien = args;
+    }
+
     handleClickButtonNav(args: any): void {
         switch (args) {
             case 'input_pasien_baru':
@@ -78,7 +88,7 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
     }
 
     hanldeOpenModalPencarianPasien(): void {
-        this.GridLookupTarifDatasource = [];
+        this.GridSearchingPasienDatasource = [];
 
         this.modalRef = this.bsModalService.show(
             this.modalPencarianPasien,
@@ -87,15 +97,92 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
     }
 
     InitalizedGridLookupPencarianPasien(component: MolGridComponent): void {
-        this.GridLookupTarif = component;
+        this.GridSearchingPasien = component;
     }
 
     handleSelectedRowLookupPencarianPasien(args: any): void {
 
     }
 
+    handleDoubleClickLookupPencarianPasien(args: IPersonPasienForAdmisiRawatJalanModel): void {
+        const Person = this.encryptionService.encrypt(JSON.stringify(args));
+
+        this.handleCloseModalLookupPencarianPasien();
+
+        setTimeout(() => {
+            this.router.navigate(['dashboard/PIS/IRJA/admisi-pasien-rawat-jalan/', Person, "GRAHCIS"]);
+        }, 400);
+    }
+
     handleCariLookupPencarianPasien(FormPencarianPasien: any): void {
-        console.log(FormPencarianPasien.value);
+        const parameter: PostRequestByDynamicFiterModel[] = [];
+
+        if (FormPencarianPasien.value.full_name != "") {
+            parameter.push({
+                columnName: "concat(per.nama_depan, ' ',per.nama_belakang)",
+                filter: "like",
+                searchText: FormPencarianPasien.value.full_name,
+                searchText2: ""
+            });
+        }
+
+        if (FormPencarianPasien.value.alamat_lengkap != "") {
+            parameter.push({
+                columnName: "ap.alamat_lengkap",
+                filter: "like",
+                searchText: FormPencarianPasien.value.alamat_lengkap,
+                searchText2: ""
+            });
+        }
+
+        if (FormPencarianPasien.value.tgl_lahir != "") {
+            parameter.push({
+                columnName: "per.tanggal_lahir",
+                filter: "like",
+                searchText: FormPencarianPasien.value.tgl_lahir,
+                searchText2: ""
+            });
+        }
+
+        if (FormPencarianPasien.value.hand_phone != "") {
+            parameter.push({
+                columnName: "kp.hand_phone",
+                filter: "like",
+                searchText: FormPencarianPasien.value.hand_phone,
+                searchText2: ""
+            });
+        }
+
+        if (FormPencarianPasien.value.kelurahan != "") {
+            parameter.push({
+                columnName: "ap.kelurahan",
+                filter: "like",
+                searchText: FormPencarianPasien.value.kelurahan,
+                searchText2: ""
+            });
+        }
+
+        if (FormPencarianPasien.value.no_identitas != "") {
+            parameter.push({
+                columnName: "per.no_identitas",
+                filter: "like",
+                searchText: FormPencarianPasien.value.no_identitas,
+                searchText2: ""
+            });
+        }
+
+        this.admisiRawatJalanService.onGetAllPasienForSearching(parameter)
+            .subscribe((result) => {
+                this.GridSearchingPasienDatasource = result.data;
+
+                // this.DaftarAdmisiPasien.filter((item) => {
+                //     let daftar_admisi_index = result.data.map((item) => { return item.no_rekam_medis }).indexOf(item.no_rekam_medis);
+
+                //     return result.data.splice(daftar_admisi_index, 1);
+                // })
+
+                // console.log(result.data);
+            });
     }
 
     handleBaruLookupPencarianPasien(): void {

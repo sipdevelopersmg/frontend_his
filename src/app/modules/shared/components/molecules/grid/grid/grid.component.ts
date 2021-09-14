@@ -59,17 +59,6 @@ export class MolGridComponent implements OnInit, AfterViewInit {
         if (this.textWrapSettings) {
             this.allowTextWrap = true
         }
-        // this.columns = [
-        //     { headerText: 'NO ANTRIAN', width: 300, field: 'NoAntrian', visible: false },
-        //     { headerText: 'NO ANTRIAN', width: 200, field: 'JamAdmisi', visible: false },
-        //     { headerText: 'TGL ADMISI', width: 200, field: 'TglAdmisi', visible: false },
-        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        //     { headerText: 'JAM MASUK', width: 200, field: 'JamMasukRawat', visible: false },
-        // ]; 
     }
 
     ngAfterViewInit(): void {

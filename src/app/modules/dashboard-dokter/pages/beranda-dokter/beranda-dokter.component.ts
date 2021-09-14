@@ -23,7 +23,7 @@ export class BerandaDokterComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+        // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
 
         this.dashboardDokterService.onSetSidebarMenuTitle();
 

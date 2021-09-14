@@ -19,6 +19,9 @@ import { HistoryResepComponent } from './pages/resep/history-resep/history-resep
 import { BerandaDokterComponent } from './pages/beranda-dokter/beranda-dokter.component';
 import { CoreModule } from "../core/core.module";
 import { DaftarPasienPerDokterComponent } from './pages/daftar-pasien-per-dokter/daftar-pasien-per-dokter.component';
+import { CommandColumnService, EditService } from "@syncfusion/ej2-angular-grids";
+import { AssesmenAwalComponent } from './pages/assesmen-awal/assesmen-awal.component';
+import { DetailRekamMedisComponent } from './components/detail-rekam-medis/detail-rekam-medis.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +39,8 @@ import { DaftarPasienPerDokterComponent } from './pages/daftar-pasien-per-dokter
         HistoryResepComponent,
         BerandaDokterComponent,
         DaftarPasienPerDokterComponent,
+        AssesmenAwalComponent,
+        DetailRekamMedisComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,
@@ -43,7 +48,7 @@ import { DaftarPasienPerDokterComponent } from './pages/daftar-pasien-per-dokter
         ReactiveFormsModule,
         CommonModule,
         SharedModule,
-        CoreModule
+        CoreModule,
     ],
     exports: [
         InformasiPasienComponent,

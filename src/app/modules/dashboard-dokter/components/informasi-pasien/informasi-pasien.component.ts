@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { PasienModel } from '../../models/informasi-pasien.model';
@@ -9,7 +9,7 @@ import { DashboardDokterService } from '../../services/dashboard-dokter.service'
     templateUrl: './informasi-pasien.component.html',
     styleUrls: ['./informasi-pasien.component.css']
 })
-export class InformasiPasienComponent implements OnInit {
+export class InformasiPasienComponent implements OnInit, AfterViewInit {
 
     Pasien: PasienModel;
 
@@ -17,10 +17,17 @@ export class InformasiPasienComponent implements OnInit {
     @Input("ToggleVisibility") ToggleVisibility: boolean = false;
     @Output("onToggledVisibility") onToggledVisibility = new EventEmitter<any>();
 
+    screenWidth: any;
+
     constructor(
         private navigationService: NavigationService,
         public dashboardDokterService: DashboardDokterService
     ) { }
+
+    @HostListener("window:resize", ['$event'])
+    private onResize(event: any) {
+        this.onDetectScreenSize(event.srcElement.innerWidth);
+    }
 
     ngOnInit(): void {
         this.onTogglingVisibility();
@@ -37,6 +44,16 @@ export class InformasiPasienComponent implements OnInit {
             ppjp: "",
             debitur: "Tanggungan Pribadi"
         };
+
+        this.onDetectScreenSize(window.innerWidth);
+    }
+
+    ngAfterViewInit(): void {
+
+    }
+
+    onDetectScreenSize(screenWidth: any): void {
+        this.screenWidth = screenWidth;
     }
 
     onTogglingVisibility() {

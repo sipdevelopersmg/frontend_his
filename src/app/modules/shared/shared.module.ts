@@ -10,8 +10,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { FormsModule } from '@angular/forms';
+import { MatStepperModule } from '@angular/material/stepper';
 
-import { CommandColumnService, DetailRowService, EditService, GridModule, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
+import { CommandColumnService, DetailRowService, EditService, GridModule, GroupService, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
 
 import { AtmLabelComponent } from './components/atoms/form/atm-label/atm-label.component';
 import { AtmValidatorsComponent } from './components/atoms/form/atm-validators/atm-validators.component';
@@ -65,6 +66,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
 import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
+import { OrgStepperComponent } from './components/organism/org-stepper/org-stepper.component';
 
 @NgModule({
     declarations: [
@@ -119,6 +121,7 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         OrgLookUpComponent,
         OrgInputWilayahComponent,
         OrgLookUpChecklistComponent,
+        OrgStepperComponent,
     ],
     imports: [
         CommonModule,
@@ -134,7 +137,8 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         NumericTextBoxModule,
         ComboBoxModule,
         TreeViewModule,
-        FormsModule
+        FormsModule,
+        MatStepperModule
     ],
     exports: [
         AtmLabelComponent,
@@ -186,14 +190,16 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         OrgCardLayoutComponent,
         OrgInputWilayahComponent,
         OrgLookUpChecklistComponent,
+        OrgLookUpComponent,
+        OrgStepperComponent,
         DropDownListModule,
         NumericTextBoxModule,
         DatePickerModule,
         ComboBoxModule,
-        OrgLookUpComponent,
         GridModule,
         TreeViewModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
+        MatStepperModule
     ],
     providers: [
         EditService,
@@ -204,7 +210,8 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
         PageService,
         CommandColumnService,
         BsDropdownDirective,
-        DetailRowService
+        DetailRowService,
+        GroupService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

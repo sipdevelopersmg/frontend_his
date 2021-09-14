@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DashboardDokterComponent } from "./dashboard-dokter.component";
+import { AssesmenAwalComponent } from "./pages/assesmen-awal/assesmen-awal.component";
 import { BerandaDokterComponent } from "./pages/beranda-dokter/beranda-dokter.component";
 import { DaftarPasienPerDokterComponent } from "./pages/daftar-pasien-per-dokter/daftar-pasien-per-dokter.component";
 import { DiagnosaComponent } from "./pages/diagnosa/diagnosa.component";
@@ -18,6 +19,7 @@ const dashboarDokterRoutes: Routes = [
         children: [
             { path: "beranda", component: BerandaDokterComponent, data: { title: "Beranda Dokter" } },
             { path: "daftar-pasien", component: DaftarPasienPerDokterComponent, data: { title: "Daftar Pasien" } },
+            { path: "asesmen-awal", component: AssesmenAwalComponent, data: { title: "Riwayat Pemeriksaan Pasien" } },
             { path: "diagnosa", component: DiagnosaComponent, data: { title: "Diagnosa Pasien" } },
             {
                 path: "radiologi", component: RadiologiComponent, data: { title: "Pemeriksaan Radiologi Pasien" },

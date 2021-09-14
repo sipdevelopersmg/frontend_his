@@ -87,7 +87,9 @@ const ngWizardConfig: NgWizardConfig = {
         ContextMenuModule,
         NgWizardModule.forRoot(ngWizardConfig)
     ],
-    providers: [DatePipe],
+    providers: [
+        DatePipe
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PisModule { }

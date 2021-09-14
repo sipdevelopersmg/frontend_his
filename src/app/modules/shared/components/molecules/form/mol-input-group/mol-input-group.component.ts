@@ -7,10 +7,11 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class MolInputGroupComponent implements OnInit {
 
-    @Input('label') label: string
+    @Input('label') label: string;
+    @Input('titleValue') titleValue: string;
+    @Input('inputId') inputId: string;
+    @Input('disableTitle') disableTitle: boolean;
     @Output('clickButton') clickButton = new EventEmitter<any>();
-    @Input('titleValue') titleValue: string
-    @Input('disableTitle') disableTitle: boolean
     @Output('pressEnter') pressEnter = new EventEmitter<any>();
 
     constructor() { }
