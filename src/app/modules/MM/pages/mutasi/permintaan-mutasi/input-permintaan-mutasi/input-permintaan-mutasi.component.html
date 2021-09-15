@@ -56,23 +56,19 @@
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
+                <e-column [visible]="true" field='qty_satuan_besar_permintaan' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
+                <e-column [visible]="true" field='kode_satuan_besar_permintaan' [allowEditing]="true" headerText='Satuan'
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='isi_mutasi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
+                <e-column [visible]="true" field='isi_permintaan' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
                     textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='qty_mutasi' [allowEditing]="false" headerText='QTY'
+                <e-column [visible]="true" field='qty_permintaan' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-               
-                <e-column [visible]="false" field='nominal_mutasi' [allowEditing]="true" headerText='nominal_mutasi'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
-                </e-column>
-                <e-column [visible]="true" field='keterangan_mutasi' [allowEditing]="true" headerText='Keterangan'
+                <e-column [visible]="true" field='keterangan_permintaan' [allowEditing]="true" headerText='Keterangan'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center" >
                 </e-column>
             </e-columns>

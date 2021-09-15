@@ -1,1 +1,33 @@
-<p>view-permintaan-mutasi works!</p>
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Nomor Mutasi'" formControlName="nomor_mutasi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Mutasi'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_mutasi">
+                </mol-datepicker-syncfusion>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Stockroom Pemberi'" formControlName="nama_stockroom_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Stockroom Penerima'" formControlName="nama_stockroom_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+            </div>
+        </div>
+        <mol-grid 
+        [grid-DataSource]="permintaanMutasiService.dataDetail$| async"
+        [columns]="ConfigGrid.TrDetail"
+        ></mol-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="permintaanMutasiService.jumlah_item" formControlName="jumlah_item"
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

@@ -67,8 +67,8 @@ export class DaftarPermintaanMutasiComponent implements OnInit {
         this.router.navigateByUrl('dashboard/MM/permintaan-mutasi/input-permintaan-mutasi');
         break;
       case 'Edit':
-        const penerimaan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.penerimaan_id));
-        this.router.navigate(['dashboard/MM/permintaan-mutasi/view-permintaan-mutasi', penerimaan_id, "GRAHCIS"]);
+        const mutasi_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.mutasi_id));
+        this.router.navigate(['dashboard/MM/permintaan-mutasi/view-permintaan-mutasi', mutasi_id, "GRAHCIS"]);
         break;
       case 'Delete':
         // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);

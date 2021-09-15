@@ -15,16 +15,28 @@ export interface TrPersetujuanMutasiDetailInsert {
     nama_item?: string;
 
     /** @format double */
-    qty_satuan_besar?: number | null;
-    kode_satuan_besar?: string | null;
+    qty_satuan_besar_permintaan?: number | null;
+    
+    kode_satuan_besar_permintaan?: string | null;
+
+    /** @format int32 */
+    isi_permintaan?: number;
+
+    /** @format double */
+    qty_permintaan?: number | null;
+
+    keterangan_permintaan?: string | null;
+
+    /** @format double */
+    qty_satuan_besar_mutasi?: number | null;
+
+    kode_satuan_besar_mutasi?: string | null;
 
     /** @format int32 */
     isi_mutasi?: number;
 
     /** @format double */
     qty_mutasi?: number | null;
-
-    
 
     /** @format double */
     nominal_mutasi?: number | null;
@@ -33,7 +45,7 @@ export interface TrPersetujuanMutasiDetailInsert {
     keterangan_mutasi?: number | null;
 
     /** @format Array of Object */
-    satuan:satuan[];
+    satuans:satuan[];
 }
 
 export interface TrPersetujuanMutasiInsert {

@@ -113,7 +113,7 @@ export class InputPermintaanMutasiComponent implements OnInit {
           },
           write: () => {
               this.satuanObj = new DropDownList({
-                  value: this.detailSelected.kode_satuan_besar,
+                  value: this.detailSelected.kode_satuan_besar_permintaan,
                   dataSource: this.datasatuan,
                   fields: { value: 'kode_satuan', text: 'kode_satuan' },
                   enabled: true,
@@ -198,11 +198,11 @@ export class InputPermintaanMutasiComponent implements OnInit {
           id_item: $event.id_item,
           kode_item: $event.kode_item,
           nama_item: $event.nama_item,
-          qty_satuan_besar: 1,
-          kode_satuan_besar: $event.satuans[0].kode_satuan,
-          isi_mutasi: $event.satuans[0].isi,
-          qty_mutasi: $event.satuans[0].isi,
-          nominal_mutasi: $event.satuans[0].isi * $event.harga_beli_terakhir,
+          qty_satuan_besar_permintaan: 1,
+          kode_satuan_besar_permintaan: $event.satuans[0].kode_satuan,
+          isi_permintaan: $event.satuans[0].isi,
+          qty_permintaan: $event.satuans[0].isi,
+        //   nominal_mutasi: $event.satuans[0].isi * $event.harga_beli_,
           satuan: $event.satuans,
       }
       this.permintaanMutasiService.addDataDetail(item);

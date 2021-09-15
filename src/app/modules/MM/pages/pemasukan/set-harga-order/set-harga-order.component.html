@@ -1,4 +1,4 @@
-<org-card-layout>
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
     <form [formGroup]="formInput">
     <div class="row">
         <div class="col-sm-6">
@@ -7,6 +7,7 @@
                 [columns]="LookupGridSupplier.columns" [filter-lookup]="LookupGridSupplier.filter"
                 [label]="'Supplier'">
             </org-input-look-up-kode>
+            <mol-input-text [label]="'Nomor Setting Harga'" formControlName="nomor_harga_order"></mol-input-text>
             <mol-datepicker-syncfusion [label]="'Tanggal Berlaku'" [format]="'dd MMMM yyyy'"
                 formControlName="tanggal_berlaku">
             </mol-datepicker-syncfusion>
@@ -22,74 +23,67 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body p-0">
-                    <ejs-grid #GridData [height]="'calc(100vh - 26rem)'" [dataSource]="GridDatasource"
-                    [allowPaging]="true" [editSettings]="GridDataEditSettings" [gridLines]="'Both'"
-                    [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
-                    (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
-                    <e-columns>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'no_urut'"
-                            [headerText]="'No Urut'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
-                            [visible]="false" [editType]="'defaultEdit'">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'id_item'"
-                            [headerText]="'Id Item'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
-                            [visible]="false" [editType]="'defaultEdit'">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'barcode'"
-                            [headerText]="'Barcode'" [textAlign]="'Left'" [visible]="true"
-                            [editType]="'defaultEdit'" [width]="100">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'kode_item'"
-                            [headerText]="'Kode Item'" [textAlign]="'Left'" [visible]="true"
-                            [editType]="'defaultEdit'" [width]="100">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'nama_item'"
-                            [headerText]="'Nama Item'" [textAlign]="'Left'" [visible]="true"
-                            [editType]="'defaultEdit'" [width]="200">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'satuan'"
-                            [headerText]="'Satuan'" [textAlign]="'Left'" [visible]="true"
-                            [editType]="'defaultEdit'" [width]="100">
-                        </e-column>
-                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'harga_order_lama'"
-                            [headerText]="'Harga Order Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100"
-                            [edit]="HargaOrderParams">
-                        </e-column>
-                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon1_lama'"
-                            [headerText]="'Diskon 1 Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
-                            [edit]="Diskon1Params">
-                        </e-column>
-                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon2_lama'"
-                            [headerText]="'Diskon 2 Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
-                            [edit]="Diskon2Params">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto_lama'"
-                            [headerText]="'Harga Netto Lama'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [format]="'N2'" [width]="100">
-                        </e-column>
-                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'harga_order'"
-                            [headerText]="'Harga Order Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100"
-                            [edit]="HargaOrderParams">
-                        </e-column>
-                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon1'"
-                            [headerText]="'Diskon 1 Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
-                            [edit]="Diskon1Params">
-                        </e-column>
-                        <e-column [allowEditing]="true" [allowSorting]="false" [field]="'diskon2'"
-                            [headerText]="'Diskon 2 Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
-                            [edit]="Diskon2Params">
-                        </e-column>
-                        <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto'"
-                            [headerText]="'Harga Netto Baru'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
-                            [visible]="true" [format]="'N2'" [width]="100">
-                        </e-column>
-                    </e-columns>
+                    <ejs-grid #GridDetail [height]="'calc(100vh - 26rem)'" [dataSource]="setHargaOrderService.dataDetail$ | async"
+                        [allowPaging]="true" [editSettings]="GridDataEditSettings" [gridLines]="'Both'"
+                        [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
+                        (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionCompleted($event)">
+                        <e-columns>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'no_urut'"
+                                [headerText]="'No Urut'" [type]="'number'" [format]="'N'" [textAlign]="'Left'" [headerTextAlign]="'center'"
+                                [visible]="false" [editType]="'defaultEdit'">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'id_item'"
+                                [headerText]="'Id Item'" [type]="'number'" [format]="'N'" [textAlign]="'Left'" [headerTextAlign]="'center'"
+                                [visible]="false" [editType]="'defaultEdit'">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'kode_item'"
+                                [headerText]="'Kode Item'" [textAlign]="'Left'" [headerTextAlign]="'center'" [visible]="true"
+                                [editType]="'defaultEdit'" [width]="100">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'nama_item'"
+                                [headerText]="'Nama Item'" [textAlign]="'Left'" [headerTextAlign]="'center'" [visible]="true"
+                                [editType]="'defaultEdit'" [width]="200">
+                            </e-column>
+                            <!-- <e-column [allowEditing]="false" [allowSorting]="false" [field]="'satuan'"
+                                [headerText]="'Satuan'" [textAlign]="'Left'" [headerTextAlign]="'center'" [visible]="true"
+                                [editType]="'defaultEdit'" [width]="100">
+                            </e-column> -->
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_lama'"
+                                [headerText]="'Harga Lama'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'disc_prosentase_1_lama'"
+                                [headerText]="'D1 Lama'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'disc_prosentase_2_lama'"
+                                [headerText]="'D2 Lama'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80">
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto_lama'"
+                                [headerText]="'Harga Netto Lama'" [textAlign]="'Right'"  [headerTextAlign]="'center'"
+                                [visible]="true" [format]="'N2'" [width]="100">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'harga_order'"
+                                [headerText]="'Harga Baru'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="100"
+                                [edit]="HargaOrderParams">
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'disc_prosentase_1'"
+                                [headerText]="'D1 Baru'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                >
+                            </e-column>
+                            <e-column [allowEditing]="true" [allowSorting]="false" [field]="'disc_prosentase_2'"
+                                [headerText]="'D2 Baru'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [editType]="'defaultEdit'" [format]="'N2'" [width]="80"
+                                >
+                            </e-column>
+                            <e-column [allowEditing]="false" [allowSorting]="false" [field]="'harga_order_netto'"
+                                [headerText]="'Harga Netto Baru'" [textAlign]="'Right'" [headerTextAlign]="'center'"
+                                [visible]="true" [format]="'N2'" [width]="100">
+                            </e-column>
+                        </e-columns>
                 </ejs-grid>
                 </div>
             </div>

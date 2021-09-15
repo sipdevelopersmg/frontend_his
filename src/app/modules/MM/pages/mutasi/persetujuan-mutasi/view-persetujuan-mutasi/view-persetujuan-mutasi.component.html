@@ -30,28 +30,42 @@
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
+                <!-- Permintaan -->
+                <e-column [visible]="true" field='qty_satuan_besar_permintaan' [allowEditing]="false" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
+                <e-column [visible]="true" field='kode_satuan_besar_permintaan' [allowEditing]="false" headerText='Satuan'
+                    editType='dropdownedit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='isi_permintaan' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
+                    textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='qty_permintaan' [allowEditing]="false" headerText='QTY '
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='keterangan_permintaan' [allowEditing]="false" headerText='Keterangan'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" >
+                </e-column>
+                <!-- Persetujuan -->
+                <e-column [visible]="true" field='qty_satuan_besar_mutasi' [allowEditing]="true" headerText='Banyak'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='kode_satuan_besar_mutasi' [allowEditing]="true" headerText='Satuan'
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='isi_mutasi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
                     textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='qty_permintaan' [allowEditing]="false" headerText='QTY Permintaan'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
-                </e-column>
-                <e-column [visible]="true" field='qty_mutasi' [allowEditing]="false" headerText='QTY Disetujui'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
-                </e-column>
-                
-                <e-column [visible]="false" field='nominal_mutasi' [allowEditing]="true" headerText='nominal_mutasi'
+                <e-column [visible]="true" field='qty_mutasi' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='keterangan_mutasi' [allowEditing]="true" headerText='Keterangan'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center" >
                 </e-column>
+                <e-column [visible]="false" field='nominal_mutasi' [allowEditing]="false" headerText='Nominal'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <!--  -->
             </e-columns>
         </ejs-grid>
         <div class="row">
@@ -67,4 +81,49 @@
         </div>
     </form>
 
+    <!-- Modal QTY  -->
+    <ng-template #modalQty>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Qty</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #qtyValueId id="QtyValueId" class="form-control"
+                        (keydown.enter)="handleQtyChange(qtyValueId.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal satuan  -->
+    <ng-template #modalSatuan>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Satuan</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <select #satuanValueId id="SatuanValueId" [value]="detailSelected.kode_satuan_besar"
+                        class="form-control" (keydown.enter)="handleSatuanChange(satuanValueId.value)" multiple>
+                        <option *ngFor="let item of datasatuan" [ngValue]="item.kode_satuan">{{item.kode_satuan}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+    
 </org-card-layout>

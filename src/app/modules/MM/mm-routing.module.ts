@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DaftarPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/daftar-permintaan-mutasi/daftar-permintaan-mutasi.component";
 import { InputPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/input-permintaan-mutasi/input-permintaan-mutasi.component";
+import { ViewPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/view-permintaan-mutasi/view-permintaan-mutasi.component";
 import { DaftarPersetujuanMutasiComponent } from "./pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi/daftar-persetujuan-mutasi.component";
 import { ViewPersetujuanMutasiComponent } from "./pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi/view-persetujuan-mutasi.component";
 import { InputKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component";
@@ -83,14 +84,15 @@ const mmRoutes: Routes = [
         path: "permintaan-mutasi", component: null, data: { title: "Input PO" },
         children: [
             { path: "daftar-permintaan-mutasi", component: DaftarPermintaanMutasiComponent, data: { title: "Permintaan Mutasi" } },
-            { path: "input-permintaan-mutasi", component: InputPermintaanMutasiComponent, data: { title: "Input Penerimaan" } },
+            { path: "input-permintaan-mutasi", component: InputPermintaanMutasiComponent, data: { title: "Input Permintaan Mutasi" } },
+            { path: "view-permintaan-mutasi/:id/:key", component: ViewPermintaanMutasiComponent, data: { title: "View Permintaaan Mutasi" } },
         ],
     },
     {
         path: "persetujuan-mutasi", component: null, data: { title: "Input PO" },
         children: [
             { path: "daftar-persetujuan-mutasi", component: DaftarPersetujuanMutasiComponent, data: { title: "Persetujuan Mutasi" } },
-            { path: "proses-persetujuan-mutasi", component: ViewPersetujuanMutasiComponent, data: { title: "Proses Persetujuan Mutasi" } },
+            { path: "proses-persetujuan-mutasi/:id/:key", component: ViewPersetujuanMutasiComponent, data: { title: "Proses Persetujuan Mutasi" } },
         ],
     },
     {

@@ -14,7 +14,7 @@ import * as GridConfig from './json/grid.config.json'
 export class DaftarPersetujuanMutasiComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
-    { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
+    // { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
     { Id: 'Edit', Captions: 'Lihat Detail', Icons1: 'fa-edit fa-sm' }
   ];
 
@@ -64,11 +64,11 @@ export class DaftarPersetujuanMutasiComponent implements OnInit {
   handleClickButtonNav(args: any): void {
     switch (args) {
       case 'Add':
-        this.router.navigateByUrl('dashboard/MM/permintaan-mutasi/input-permintaan-mutasi');
+        this.router.navigateByUrl('dashboard/MM/persetujuan-mutasi/input-persetujuan-mutasi');
         break;
       case 'Edit':
-        const penerimaan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.penerimaan_id));
-        this.router.navigate(['dashboard/MM/permintaan-mutasi/view-permintaan-mutasi', penerimaan_id, "GRAHCIS"]);
+        const mutasi_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.mutasi_id));
+        this.router.navigate(['dashboard/MM/persetujuan-mutasi/proses-persetujuan-mutasi', mutasi_id, "GRAHCIS"]);
         break;
       case 'Delete':
         // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);

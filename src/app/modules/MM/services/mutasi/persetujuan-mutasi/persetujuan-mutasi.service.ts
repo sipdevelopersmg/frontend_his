@@ -104,10 +104,10 @@ export class PersetujuanMutasiService {
     }
 
     updateFromInline(index: number, data: TrPersetujuanMutasiDetailInsert, rowData: TrPersetujuanMutasiDetailInsert) {
-        let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar);
-        let isi = data.satuan[indexsatuan].isi;
+        let indexsatuan = data.satuans.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_mutasi);
+        let isi = data.satuans[indexsatuan].isi;
         data.isi_mutasi = isi;
-        data.qty_mutasi = data.qty_satuan_besar * isi;
+        data.qty_mutasi = data.qty_satuan_besar_mutasi * isi;
 
         this.dataDetail[index] = data;
         this.sum();
@@ -119,17 +119,17 @@ export class PersetujuanMutasiService {
     }
 
     editBanyak(index: number, banyak: number) {
-        this.dataDetail[index].qty_satuan_besar = banyak;
+        this.dataDetail[index].qty_satuan_besar_mutasi = banyak;
         this.dataDetail[index].qty_mutasi = banyak * this.dataDetail[index].isi_mutasi;
     }
 
 
     editSatuan(index: number, satuan: string) {
-        let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar);
-        let isi = this.dataDetail[index].satuan[indexsatuan].isi;
-        this.dataDetail[index].kode_satuan_besar = satuan;
+        let indexsatuan = this.dataDetail[index].satuans.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_mutasi);
+        let isi = this.dataDetail[index].satuans[indexsatuan].isi;
+        this.dataDetail[index].kode_satuan_besar_mutasi = satuan;
         this.dataDetail[index].isi_mutasi = isi;
-        this.dataDetail[index].qty_mutasi = this.dataDetail[index].qty_satuan_besar * isi;
+        this.dataDetail[index].qty_mutasi = this.dataDetail[index].qty_satuan_besar_mutasi * isi;
     }
 
     sum(): void {

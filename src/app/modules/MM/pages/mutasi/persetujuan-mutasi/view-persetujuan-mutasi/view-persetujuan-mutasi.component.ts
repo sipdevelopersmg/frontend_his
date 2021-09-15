@@ -90,7 +90,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
         },
         write: () => {
             this.satuanObj = new DropDownList({
-                value: this.detailSelected.kode_satuan_besar,
+                value: this.detailSelected.kode_satuan_besar_mutasi,
                 dataSource: this.datasatuan,
                 fields: { value: 'kode_satuan', text: 'kode_satuan' },
                 enabled: true,
@@ -109,9 +109,10 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
     });
 
     this.GridDetailToolbar = [
-        { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+        // { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
         { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
     ];
+    
   }
 
   ngAfterViewInit(): void {
@@ -127,7 +128,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
 
   handleSelectdRow(args: any): void {
     this.currentIndex = args.rowIndex;
-    this.datasatuan = args.data.satuan;
+    this.datasatuan = args.data.satuans;
     this.detailSelected = args.data
     this.satuanVal = args.data.kode_satuan_besar;
   }

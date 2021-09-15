@@ -104,10 +104,10 @@ export class PermintaanMutasiService {
     }
 
     updateFromInline(index: number, data: TrPermintaanMutasiDetailInsert, rowData: TrPermintaanMutasiDetailInsert) {
-        let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar);
+        let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_permintaan);
         let isi = data.satuan[indexsatuan].isi;
-        data.isi_mutasi = isi;
-        data.qty_mutasi = data.qty_satuan_besar * isi;
+        data.isi_permintaan = isi;
+        data.qty_permintaan = data.qty_satuan_besar_permintaan * isi;
 
         this.dataDetail[index] = data;
         this.sum();
@@ -119,23 +119,23 @@ export class PermintaanMutasiService {
     }
 
     editBanyak(index: number, banyak: number) {
-        this.dataDetail[index].qty_satuan_besar = banyak;
-        this.dataDetail[index].qty_mutasi = banyak * this.dataDetail[index].isi_mutasi;
+        this.dataDetail[index].qty_satuan_besar_permintaan = banyak;
+        this.dataDetail[index].qty_permintaan = banyak * this.dataDetail[index].isi_permintaan;
     }
 
 
     editSatuan(index: number, satuan: string) {
-        let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar);
+        let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_permintaan);
         let isi = this.dataDetail[index].satuan[indexsatuan].isi;
-        this.dataDetail[index].kode_satuan_besar = satuan;
-        this.dataDetail[index].isi_mutasi = isi;
-        this.dataDetail[index].qty_mutasi = this.dataDetail[index].qty_satuan_besar * isi;
+        this.dataDetail[index].kode_satuan_besar_permintaan = satuan;
+        this.dataDetail[index].isi_permintaan = isi;
+        this.dataDetail[index].qty_permintaan = this.dataDetail[index].qty_satuan_besar_permintaan * isi;
     }
 
     sum(): void {
 
-        this.total_transaksi = this.dataDetail.sum('nominal_mutasi');
-        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar');
+        this.total_transaksi = 0;
+        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_permintaan');
     }
 
     Insert( Data:TrPermintaanMutasiInsert ): Observable<any>{

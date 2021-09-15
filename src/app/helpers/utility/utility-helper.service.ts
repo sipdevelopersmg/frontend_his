@@ -40,14 +40,14 @@ export class UtilityHelperService {
 
     /**
      * @getDiskon 
-     * @Param Data: any, key: any[]
-     * @Keterangan Menghapus key array yg ada pada Data
+     * @Param hargaAwal: number, dc: number
+     * @Keterangan mendapatkan nilai diskon
     */
-     getDiskon(hargaAwal,dc): void {
-        let diskon;
-        let hargaDiskon;
+     getDiskon(hargaAwal:number,dc:number): number {
+        let diskon:number;
+        let hargaDiskon:number;
         if(dc != 0){
-            diskon = parseFloat(hargaAwal) * (parseFloat(dc)/100);
+            diskon =hargaAwal * (dc/100);
             hargaDiskon = diskon;
         }else{
             hargaDiskon = 0;
