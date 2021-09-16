@@ -1,20 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { MolGridComponent } from '../../../molecules/grid/grid/grid.component';
 import { Columns } from '../../../molecules/grid/grid/grid.model';
 
 @Component({
-    selector: 'org-input-look-up',
-    templateUrl: './org-input-look-up.component.html',
-    styleUrls: ['./org-input-look-up.component.css']
+    selector: 'org-input-look-up-static-filter',
+    templateUrl: './org-input-look-up-static-filter.component.html',
+    styleUrls: ['./org-input-look-up-static-filter.component.css']
 })
-export class OrgInputLookUpComponent implements OnInit {
-
-    constructor(
-        private modalService: BsModalService,
-        private httpOperationService: HttpOperationService
-    ) { }
+export class OrgInputLookUpStaticFilterComponent implements OnInit, OnDestroy {
 
     @Input('label') label: string
 
@@ -55,6 +50,13 @@ export class OrgInputLookUpComponent implements OnInit {
 
     @Input("SelectedInputId") SelectedInputId: string;
 
+    @Input('ParameterTambahan') ParameterTambahan: any;
+
+    constructor(
+        private modalService: BsModalService,
+        private httpOperationService: HttpOperationService
+    ) { }
+
     ngOnInit(): void {
         this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
     }
@@ -81,7 +83,13 @@ export class OrgInputLookUpComponent implements OnInit {
     }
 
     onFetchDataSource(params: any) {
-        this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
+
+        const parameter = {
+            "filters": params,
+            ...this.ParameterTambahan
+        };
+
+        this.httpOperationService.defaultPostRequest(this.lookupUrl, parameter)
             .subscribe((_result) => {
                 this.gridDataSource = _result.data;
 

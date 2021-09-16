@@ -1,0 +1,44 @@
+img.img-thumbnail-antrian-irja {
+  width: 103px;
+  max-width: 103px;
+  height: 100px;
+  max-height: 100px;
+  border-radius: 10px;
+}
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 10px 5px !important;
+  height: 30px !important;
+}
+
+span.e-headertext {
+  font-size: 13px !important;
+}
+
+td.e-rowcell {
+  padding: 5px !important;
+}
+
+.visible-smooth {
+  transition: all 0.25ms;
+}
+
+button#btnCardDokter:focus,
+button#btnCardDokter:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.hide-card-dokter {
+  display: none;
+  animation: fadeOut 400ms ease-in-out both;
+}
+
+.show-card-dokter {
+  display: block;
+  animation: fadeIn 400ms ease-in-out both;
+}

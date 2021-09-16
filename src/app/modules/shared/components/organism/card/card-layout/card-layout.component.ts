@@ -9,10 +9,11 @@ import { ButtonNavModel } from '../../../molecules/button/mol-button-nav/mol-but
 })
 export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
 
-    HeaderRibbon: string;
+    @Input('HeaderRibbon') HeaderRibbon: string;
     HideHeaderRibbon: string;
 
-    // tslint:disable-next-line: no-input-rename
+    @Input('ChangeHeaderRibbon') ChangeHeaderRibbon: boolean = false;
+
     @Input('ButtonNav') ButtonNav: ButtonNavModel[];
 
     @Output('onClickButtonNav') onClickButtonNav = new EventEmitter();
@@ -23,7 +24,9 @@ export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
     }
 
     ngAfterContentChecked(): void {
-        this.HeaderRibbon = localStorage.getItem('PageTitle');
+        if (!this.ChangeHeaderRibbon) {
+            this.HeaderRibbon = localStorage.getItem('PageTitle');
+        }
     }
 
     onClickedButtonNav(ButtonId: string): void {

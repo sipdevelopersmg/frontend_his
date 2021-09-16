@@ -34,6 +34,8 @@ export interface PoliModel {
 
     /** @format int32 */
     jumlah_tarif_poli?: number;
+
+    jenis_ruangan?: string;
 }
 
 /**

@@ -20,6 +20,9 @@ export interface TarifBerlakuModel {
     tgl_berakhir?: string | null;
 
     /** @format double */
+    qty?: number;
+
+    /** @format double */
     doct_fee?: number;
 
     /** @format double */
@@ -43,6 +46,7 @@ export interface TarifBerlakuModel {
     /** @format double */
     nominal_tarif?: number;
     is_active?: boolean;
+    is_paket?: boolean;
 
     /** @format int32 */
     user_created?: number;

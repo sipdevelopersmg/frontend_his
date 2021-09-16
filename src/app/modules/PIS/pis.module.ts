@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from "@angular/common";
+import { CommonModule, DatePipe, TitleCasePipe } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { SharedModule } from "../shared/shared.module";
 import { PisRoutingModule } from "./pis-routing.module";
@@ -38,6 +38,7 @@ import { PelayananPasienRawatJalanComponent } from './pages/IRJA/admisi-pasien-r
 import { SetupAsalRujukanComponent } from './pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component';
 import { SetupIcdDiagnosaComponent } from './pages/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.component';
 import { PemasukanRawatJalanComponent } from './pages/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.component';
+import { SetupJadwalDokterComponent } from './pages/setup-data/setup-jadwal-dokter/setup-jadwal-dokter.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -77,6 +78,7 @@ const ngWizardConfig: NgWizardConfig = {
         SetupAsalRujukanComponent,
         SetupIcdDiagnosaComponent,
         PemasukanRawatJalanComponent,
+        SetupJadwalDokterComponent,
     ],
     imports: [
         CommonModule,
@@ -88,7 +90,8 @@ const ngWizardConfig: NgWizardConfig = {
         NgWizardModule.forRoot(ngWizardConfig)
     ],
     providers: [
-        DatePipe
+        DatePipe,
+        TitleCasePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

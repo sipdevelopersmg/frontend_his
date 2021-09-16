@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import Swal from 'sweetalert2';
 import { NavigationService } from './navigation.service';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+import 'moment/locale/id';
 
 @Injectable({
     providedIn: 'root'
@@ -101,5 +102,21 @@ export class UtilityService {
         }
 
         return deletedDetailResep;
+    }
+
+    /**
+     * @onFormatDate Formatting Date Menggunakan Moment 
+     * @param date Wajib type data Date
+     * @param format Wajib type data string
+     * @keterangan format day   -> dddd = Rabu, Do = 15
+     * @keterangan format month -> MMM = Sep, MMMM = September
+     * @keterangan format year  -> yy = 21, yyyy = 2021
+    */
+    onFormatDate(date: any, format: string): any {
+        moment.locale('id')
+
+        const date_now = moment(date).format(format);
+
+        return date_now;
     }
 }

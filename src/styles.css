@@ -252,3 +252,12 @@ body {
 .e-treeview .e-list-text {
   width: 100%;
 }
+
+.readonly-state {
+  background-color: #e9ecef;
+}
+
+span.readonly-state > .e-numerictextbox {
+  background-color: #e9ecef !important;
+  border: 1px solid #dee2e6 !important;
+}

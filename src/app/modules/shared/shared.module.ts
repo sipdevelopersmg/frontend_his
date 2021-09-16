@@ -66,7 +66,7 @@ import { OrgCardLayoutComponent } from './components/organism/card/card-layout/c
 import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/org-look-up.component';
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
-import { OrgStepperComponent } from './components/organism/org-stepper/org-stepper.component';
+import { OrgInputLookUpStaticFilterComponent } from './components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
 
 @NgModule({
     declarations: [
@@ -121,7 +121,7 @@ import { OrgStepperComponent } from './components/organism/org-stepper/org-stepp
         OrgLookUpComponent,
         OrgInputWilayahComponent,
         OrgLookUpChecklistComponent,
-        OrgStepperComponent,
+        OrgInputLookUpStaticFilterComponent,
     ],
     imports: [
         CommonModule,
@@ -191,7 +191,7 @@ import { OrgStepperComponent } from './components/organism/org-stepper/org-stepp
         OrgInputWilayahComponent,
         OrgLookUpChecklistComponent,
         OrgLookUpComponent,
-        OrgStepperComponent,
+        OrgInputLookUpStaticFilterComponent,
         DropDownListModule,
         NumericTextBoxModule,
         DatePickerModule,

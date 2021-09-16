@@ -5,8 +5,8 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no_rekam_medis",
-                "headerText": "MR NO",
+                "field": "no_register",
+                "headerText": "NO. REG",
                 "type": "string",
                 "visible": true,
                 "width": 70
@@ -15,7 +15,17 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "full_name",
+                "field": "no_rekam_medis",
+                "headerText": "MR NO",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
                 "headerText": "NAMA",
                 "type": "string",
                 "visible": true,
@@ -25,9 +35,9 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "tgl_lahir",
+                "field": "tgl_admisi",
                 "format": "dd/MM/yyyy",
-                "headerText": "TGL LAHIR",
+                "headerText": "TGL ADMISI",
                 "type": "date",
                 "visible": true,
                 "width": 100
@@ -36,8 +46,8 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "alamat_lengkap",
-                "headerText": "ALAMAT",
+                "field": "nama_dokter",
+                "headerText": "DOKTER",
                 "type": "string",
                 "visible": true,
                 "width": 200
@@ -45,19 +55,19 @@
         ],
         "filter": [
             {
-                "field": "MrNo",
+                "field": "tp.no_register",
                 "filter": "like",
-                "title": "MR NO"
+                "title": "NO.REG"
             },
             {
-                "field": "FirstName",
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "MR. NO"
+            },
+            {
+                "field": "concat(per.nama_depan, ' ',per.nama_belakang)",
                 "filter": "like",
                 "title": "NAMA"
-            },
-            {
-                "field": "Alamat",
-                "filter": "like",
-                "title": "ALAMAT"
             }
         ]
     },
@@ -98,34 +108,19 @@
         ],
         "filter": [
             {
-                "field": "MrNo",
+                "field": "st.kode_setup_tarif,",
                 "filter": "like",
-                "title": "MR NO"
+                "title": "KODE SETUP TARIF"
             },
             {
-                "field": "FirstName",
+                "field": "st.nama_setup_tarif",
                 "filter": "like",
-                "title": "NAMA"
-            },
-            {
-                "field": "Alamat",
-                "filter": "like",
-                "title": "ALAMAT"
+                "title": "NAMA SETUP TARIF"
             }
         ]
     },
     "LookupDokter": {
         "columns": [
-            {
-                "allowEditing": true,
-                "allowSorting": true,
-                "displayAsCheckBox": true,
-                "editType": "booleanEdit",
-                "field": "cek",
-                "headerText": "CEK",
-                "visible": false,
-                "width": 150
-            },
             {
                 "allowEditing": true,
                 "allowSorting": true,
@@ -185,6 +180,39 @@
         {
             "allowEditing": false,
             "allowSorting": false,
+            "field": "id_kelas_pelayanan",
+            "headerText": "Id Kelas Pelayanan",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "id_poli",
+            "headerText": "Id Poli",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "id_tarif_berlaku",
+            "headerText": "Id Tarif Berlaku",
+            "type": "number",
+            "format": "N",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
             "field": "id_setup_tarif",
             "headerText": "Id Setup Tarif",
             "type": "number",
@@ -218,22 +246,11 @@
             "allowSorting": false,
             "field": "qty",
             "headerText": "Qty",
-            "textAlign": "Left",
-            "visible": true,
-            "editType": "defaultEdit",
-            "width": 80
-        },
-        {
-            "allowEditing": true,
-            "allowSorting": false,
-            "field": "anastesi_local",
-            "headerText": "Ans Local",
+            "textAlign": "Right",
             "headerTextAlign": "Center",
-            "textAlign": "Center",
             "visible": true,
             "editType": "defaultEdit",
-            "displayAsCheckbox": true,
-            "width": 80
+            "width": 50
         },
         {
             "allowEditing": true,
@@ -251,6 +268,28 @@
             "allowSorting": false,
             "field": "nama_dokter",
             "headerText": "Dr Periksa",
+            "headerTextAlign": "Left",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": false,
+            "field": "id_doct_anas",
+            "headerText": "ID DOKTER",
+            "headerTextAlign": "Left",
+            "textAlign": "Left",
+            "visible": false,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": false,
+            "field": "nama_doct_anas",
+            "headerText": "Dr Anastesi",
             "headerTextAlign": "Left",
             "textAlign": "Left",
             "visible": true,
@@ -359,7 +398,7 @@
             "textAlign": "Right",
             "visible": true,
             "editType": "defaultEdit",
-            "width": 80
+            "width": 90
         },
         {
             "allowEditing": false,

@@ -47,7 +47,7 @@ interface IKontakPerson {
     user_created: number
 }
 
-interface IDokter {
+export interface IDokter {
     id_dokter?: number;
     id_person?: number;
     kode_dokter?: string;

@@ -4,3 +4,11 @@
   border-right: 0px;
   border-radius: 0px !important;
 }
+
+img.img-thumbnail {
+  margin-bottom: 20px;
+  width: 112px;
+  max-width: 112px;
+  height: 150.4px;
+  max-height: 150.4px;
+}

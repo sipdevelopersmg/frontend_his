@@ -1,43 +1,58 @@
-<org-card-layout>
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
     <!-- Lookup No. Register -->
-    <div class="row mb-2">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <!-- No. Register -->
-            <org-input-look-up #LookupNoReg [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupNoReg"
-                [idTitle]="'MrNo'" (onGetSelectedData)="heandleSelectedLookupRM($event)"
-                [columns]="PemasukanConfig.LookupPasien.columns" [filter-lookup]="PemasukanConfig.LookupPasien.filter"
-                [label]="'No. Register'">
-            </org-input-look-up>
+    <form [formGroup]="FormSavePemasukanRawatJalan">
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <!-- No. Register -->
+                <org-input-look-up #LookupNoReg [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupNoReg"
+                    [idTitle]="'no_register'" (onGetSelectedData)="handleSelectedLookupPasien($event)"
+                    [columns]="PemasukanConfig.LookupPasien.columns"
+                    [filter-lookup]="PemasukanConfig.LookupPasien.filter" [label]="'No. Register'">
+                </org-input-look-up>
 
-            <!-- No. MR -->
-            <mol-input-text [label]="'No. MR'" [disabled]="true"></mol-input-text>
+                <!-- No. MR -->
+                <mol-input-text [label]="'No. MR'" [disabled]="true" formControlName="no_rekam_medis"></mol-input-text>
 
-            <!-- Nama Pasien -->
-            <mol-input-text [label]="'Nama Pasien'" [disabled]="true"></mol-input-text>
+                <!-- Nama Pasien -->
+                <mol-input-text [label]="'Nama Pasien'" [disabled]="true" formControlName="nama_pasien">
+                </mol-input-text>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <!-- Tgl. Masuk -->
+                <mol-input-text [label]="'Tgl. Masuk'" [disabled]="true" formControlName="tgl_masuk"></mol-input-text>
+
+                <!-- Debitur -->
+                <mol-input-text [label]="'Debitur'" [disabled]="true" formControlName="nama_debitur"></mol-input-text>
+
+                <!-- Kelas -->
+                <mol-input-text [label]="'Kelas'" [disabled]="true" formControlName="nama_kelas"></mol-input-text>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <!-- Tgl. Transaksi -->
+                <mol-input-text [label]="'Tgl. Transaksi'" [disabled]="true" formControlName="tgl_transaksi">
+                </mol-input-text>
+
+                <!-- Poli Tindakan -->
+                <!-- <mol-input-text [label]="'Poli Tindakan'" [disabled]="true"></mol-input-text> -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Poli Tindakan'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #PoliTindakanDropdown [dataSource]="PoliTindakanDatasource"
+                            [fields]="PoliTindakanFields" [allowFiltering]="true" formControlName="id_poli"
+                            (change)="handleChangePoliTindakan($event)">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+
+                <!-- Dokter -->
+                <mol-input-text [label]="'Dokter'" [disabled]="true" formControlName="nama_dokter"></mol-input-text>
+            </div>
         </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <!-- Tgl. Masuk -->
-            <mol-input-text [label]="'Tgl. Masuk'" [disabled]="true"></mol-input-text>
-
-            <!-- Debitur -->
-            <mol-input-text [label]="'Debitur'" [disabled]="true"></mol-input-text>
-
-            <!-- Kelas -->
-            <mol-input-text [label]="'Kelas'" [disabled]="true"></mol-input-text>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <!-- Tgl. Transaksi -->
-            <mol-input-text [label]="'Tgl. Transaksi'" [disabled]="true"></mol-input-text>
-
-            <!-- Poli Tindakan -->
-            <mol-input-text [label]="'Poli Tindakan'" [disabled]="true"></mol-input-text>
-
-            <!-- Dokter -->
-            <mol-input-text [label]="'Dokter'" [disabled]="true"></mol-input-text>
-        </div>
-    </div>
+    </form>
 
     <!-- Grid Pemasukan Rawat Jalan dan Modal Insert Update -->
     <div class="row mb-2">
@@ -55,7 +70,8 @@
         <ng-template #modalPemasukanRawatJalan>
             <div class="modal-header px-2 py-1">
                 <h5 class="modal-title pull-left">
-                    Add Tarif Pemasukan Rawat Jalan
+                    {{ FormPemasukanRawatJalanState == 'Insert' ? 'Add' : 'Edit' }}
+                    Tarif Pemasukan Rawat Jalan Poli {{ SelectedPoli | titlecase }}
                 </h5>
                 <button type="button" class="btn pull-right" aria-label="Close"
                     (click)="handleCloseModalPemasukanRawatJalan()">
@@ -67,12 +83,13 @@
                     <div class="row mx-0 px-0">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <!-- Lookup Tarif Berlaku Poli -->
-                            <org-input-look-up #LookupTarifBerlaku [modal-title]="'Data Tarif Berlaku'"
+                            <org-input-look-up-static-filter #LookupTarifBerlaku [modal-title]="'Data Tarif Berlaku'"
                                 [lookup-url]="UrlLookupTarifBerlaku" [idTitle]="'kode_setup_tarif'"
                                 (onGetSelectedData)="handleSelectedTarifBerlaku($event)"
                                 [columns]="PemasukanConfig.LookupTarifBerlaku.columns"
+                                [ParameterTambahan]="ParamaterTambahanLookupTarifBerlaku"
                                 [filter-lookup]="PemasukanConfig.LookupTarifBerlaku.filter" [label]="'Pilih Tarif'">
-                            </org-input-look-up>
+                            </org-input-look-up-static-filter>
 
                             <!-- Nama Setup Tarif -->
                             <mol-input-text [label]="'Nama Tarif'" formControlName="nama_setup_tarif" [disabled]="true">
@@ -84,8 +101,9 @@
                                     <atm-label [LabelCaption]="'Jasa Dokter'"></atm-label>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
-                                    <ejs-numerictextbox formControlName="doct_fee" [format]="'N2'" [enabled]="false"
-                                        [showSpinButton]="false" [cssClass]="'border text-end'">
+                                    <ejs-numerictextbox formControlName="doct_fee" [format]="'N2'" [readonly]="true"
+                                        [showSpinButton]="false" [cssClass]="'border readonly-state'"
+                                        [enableRtl]="true">
                                     </ejs-numerictextbox>
                                 </div>
                             </div>
@@ -97,7 +115,8 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                                     <ejs-numerictextbox formControlName="medical_fee" [format]="'N2'" [readonly]="true"
-                                        [enabled]="false" [showSpinButton]="false" [cssClass]="'border text-end'">
+                                        [showSpinButton]="false" [cssClass]="'border readonly-state'"
+                                        [enableRtl]="true">
                                     </ejs-numerictextbox>
                                 </div>
                             </div>
@@ -109,7 +128,8 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                                     <ejs-numerictextbox formControlName="hos_fee" [format]="'N2'" [readonly]="true"
-                                        [enabled]="false" [showSpinButton]="false" [cssClass]="'border text-end'">
+                                        [showSpinButton]="false" [cssClass]="'border readonly-state'"
+                                        [enableRtl]="true">
                                     </ejs-numerictextbox>
                                 </div>
                             </div>
@@ -121,7 +141,8 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                                     <ejs-numerictextbox formControlName="anas_fee" [format]="'N2'" [readonly]="true"
-                                        [enabled]="false" [showSpinButton]="false" [cssClass]="'border text-end'">
+                                        [showSpinButton]="false" [cssClass]="'border readonly-state'"
+                                        [enableRtl]="true">
                                     </ejs-numerictextbox>
                                 </div>
                             </div>
@@ -130,26 +151,24 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <!-- Lookup Dokter Periksa -->
                             <org-input-look-up #LookupDokter [modal-title]="'Data Dokter'"
-                                [lookup-url]="UrlLookupDokter" [idTitle]="'nama_dokter'"
-                                (onGetSelectedData)="handleSelectedTarifBerlaku($event)"
+                                [lookup-url]="UrlLookupDokter" [idTitle]="'full_name'"
+                                (onGetSelectedData)="handleSelectedDokterPeriksa($event)"
                                 [columns]="PemasukanConfig.LookupDokter.columns"
                                 [filter-lookup]="PemasukanConfig.LookupDokter.filter" [label]="'Dokter Periksa'">
+                            </org-input-look-up>
+
+                            <!-- Lookup Dokter Anastesi -->
+                            <org-input-look-up #LookupDokterAnastesi [modal-title]="'Data Dokter'"
+                                [lookup-url]="UrlLookupDokter" [idTitle]="'full_name'"
+                                (onGetSelectedData)="handleSelectedDokterAnastesi($event)"
+                                [columns]="PemasukanConfig.LookupDokter.columns"
+                                [filter-lookup]="PemasukanConfig.LookupDokter.filter" [label]="'Dokter Anastesi'">
                             </org-input-look-up>
 
                             <div class="row align-items-center px-0 mx-0 mt-4">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
                                     <div class="card shadow-sm">
                                         <div class="card-body p-2">
-                                            <!-- Ans Local -->
-                                            <div class="row px-0 mx-0 mb-2 align-items-center">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                    <atm-label [LabelCaption]="'Ans Local'"></atm-label>
-                                                </div>
-                                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
-
-                                                </div>
-                                            </div>
-
                                             <!-- Nominal Tarif -->
                                             <div class="row px-0 mx-0 mb-2 align-items-center">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -157,8 +176,8 @@
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                                                     <ejs-numerictextbox formControlName="nominal_tarif" [format]="'N2'"
-                                                        [readonly]="true" [enabled]="false" [showSpinButton]="false"
-                                                        [cssClass]="'border text-end'">
+                                                        [readonly]="true" [showSpinButton]="false"
+                                                        [cssClass]="'border readonly-state'" [enableRtl]="true">
                                                     </ejs-numerictextbox>
                                                 </div>
                                             </div>
@@ -169,8 +188,9 @@
                                                     <atm-label [LabelCaption]="'Qty'"></atm-label>
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
-                                                    <ejs-numerictextbox formControlName="qty" [format]="'N2'"
-                                                        [showSpinButton]="true">
+                                                    <ejs-numerictextbox #QtyTarif formControlName="qty" [format]="'N2'"
+                                                        [showSpinButton]="true" [enableRtl]="true"
+                                                        (change)="handleChangeQtyTarif(QtyTarif.value)" [min]="1">
                                                     </ejs-numerictextbox>
                                                 </div>
                                             </div>
@@ -182,8 +202,8 @@
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                                                     <ejs-numerictextbox formControlName="total_tarif" [format]="'N2'"
-                                                        [showSpinButton]="false" [enabled]="false"
-                                                        [cssClass]="'border'">
+                                                        [showSpinButton]="false" [readonly]="true"
+                                                        [cssClass]="'border readonly-state'" [enableRtl]="true">
                                                     </ejs-numerictextbox>
                                                 </div>
                                             </div>
@@ -200,9 +220,13 @@
                     (click)="handleCloseModalPemasukanRawatJalan()">
                     <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
                 </button>
-                <button type="button" class="btn btn-primary btn-sm"
+                <button *ngIf="FormPemasukanRawatJalanState == 'Insert'" type="button" class="btn btn-primary btn-sm"
                     (click)="handleSimpanModalPemasukanRawatJalan(FormPemasukanRawatJalan.value)">
                     <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+                <button *ngIf="FormPemasukanRawatJalanState == 'Edit'" type="button" class="btn btn-warning btn-sm"
+                    (click)="handleUpdateModalPemasukanRawatJalan(FormPemasukanRawatJalan.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Update
                 </button>
             </div>
         </ng-template>
@@ -211,22 +235,173 @@
     <!-- Offcanvas Transaction Record -->
     <div class="row mb-2">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 d-grid gap-2">
-            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas"
+            <button id="btnOffcanvasBottom" class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                Transaction Record
+                [F3] Transaction Record
             </button>
         </div>
 
         <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-            aria-labelledby="offcanvasBottomLabel">
+            aria-labelledby="offcanvasBottomLabel" style="height: 25rem;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasBottomLabel">Transaction Record</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
                 </button>
             </div>
-            <div class="offcanvas-body small">
-                ...
+            <div class="offcanvas-body py-1 px-2">
+                <div class="row px-0 mx-0">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                        <ejs-grid #GridHistory [id]="'GridHistoryPemasukanRawatJalan'" [height]="'14rem'"
+                            [dataSource]="GridHistoryDatasource" [rowHeight]="30" [gridLines]="'Both'"
+                            [toolbar]="GridHistoryDataToolbar" [allowPaging]="false" [allowResizing]="true"
+                            [allowFiltering]='true' (rowSelected)="handleSelectedRowHistory($event)"
+                            (toolbarClick)="handleToolbarClickHistory($event)">
+                            <e-columns>
+                                <e-column [width]="50" [field]="'id_register'" [headerText]="'ID REG'" [visible]="false"
+                                    [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                    [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="50" [field]="'id_transaksi'" [headerText]="'ID TRANS'"
+                                    [visible]="false" [type]="'number'" [allowEditing]="false" [allowSorting]="false"
+                                    [format]="'N'" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="70" [field]="'waktu_formated'" [headerText]="'WAKTU'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                    [textAlign]="'Right'">
+                                </e-column>
+                                <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="60" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                    [type]="'number'" [format]="'N0'">
+                                </e-column>
+                                <e-column [width]="150" [field]="'dokter'" [headerText]="'DOKTER'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="150" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="60" [field]="'total'" [headerText]="'TARIF RS'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                    [type]="'number'" [format]="'N2'">
+                                </e-column>
+                                <e-column field='status' headerText='STATUS' width='70' textAlign='Center'>
+                                    <ng-template #template let-data>
+                                        <div *ngIf="data.status === 'open';else inactive"
+                                            class="statustemp e-activecolor">
+                                            <span class="statustxt e-activecolor">
+                                                {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                                            </span>
+                                        </div>
+                                        <ng-template #inactive>
+                                            <div class="statustemp e-inactivecolor">
+                                                <span class="statustxt e-inactivecolor">
+                                                    {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                    </ng-template>
+                                </e-column>
+                            </e-columns>
+                        </ejs-grid>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Pembatalan Admisi  -->
+    <ng-template #modalPembatalan>
+        <div class="modal-header px-2 py-1">
+            <h5 class="modal-title pull-left">
+                Pembatalan Transaksi Pemasukan Rawat Jalan
+            </h5>
+            <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalPembatalan()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body pt-0 pb-2 px-2">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form [formGroup]="FormPembatalanTransPemasukanRawatJalan">
+                        <div class="row mb-2 align-items-center">
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="row">
+                                    <!-- Waktu -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
+                                        <atm-label [LabelCaption]="'Waktu'"></atm-label>
+                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.waktu_formated }}</p>
+                                    </div>
+
+                                    <!-- Nama Tarif -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
+                                        <atm-label [LabelCaption]="'Nama Tarif'"></atm-label>
+                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.nama_setup_tarif |
+                                            titlecase}}
+                                        </p>
+                                    </div>
+
+                                    <!-- Qty -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
+                                        <atm-label [LabelCaption]="'Qty'"></atm-label>
+                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.qty }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="row">
+                                    <!-- Dokter -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
+                                        <atm-label [LabelCaption]="'Dokter'"></atm-label>
+                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.dokter | titlecase }}
+                                        </p>
+                                    </div>
+
+                                    <!-- Poliklinik -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
+                                        <atm-label [LabelCaption]="'Poliklinik'"></atm-label>
+                                        <p class="mb-0 text-biru-muda">
+                                            {{ GridHistorySelectedData.nama_poli | titlecase }}
+                                        </p>
+                                    </div>
+
+                                    <!-- Total -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
+                                        <atm-label [LabelCaption]="'Total'"></atm-label>
+                                        <p class="mb-0 text-biru-muda">
+                                            {{ GridHistorySelectedData.total | currency:'':'Rp. ' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alasan Pembatalan -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                <atm-label [LabelCaption]="'Mohon Isikan Alasan Pembatalan'"></atm-label>
+
+                                <textarea rows="3" class="form-control mt-2" formControlName="reason_canceled">
+                                </textarea>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                                <button class="btn btn-secondary btn-sm mx-2" type="button"
+                                    (click)="handleCloseModalPembatalan()">
+                                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                                </button>
+
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="handleSubmitModalPembatalan(FormPembatalanTransPemasukanRawatJalan)">
+                                    <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </org-card-layout>
