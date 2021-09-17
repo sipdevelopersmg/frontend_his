@@ -37,6 +37,9 @@ import { ViewReturPembelianComponent } from './pages/retur/view-retur-pembelian/
 import { InputIssueComponent } from './pages/issue/input-issue/input-issue.component';
 import { DaftarIssueComponent } from './pages/issue/daftar-issue/daftar-issue.component';
 import { ViewIssueComponent } from './pages/issue/view-issue/view-issue.component';
+import { InputReturIssueComponent } from './pages/retur_issue/input-retur-issue/input-retur-issue.component';
+import { DaftarReturIssueComponent } from './pages/retur_issue/daftar-retur-issue/daftar-retur-issue.component';
+import { ViewReturIssueComponent } from './pages/retur_issue/view-retur-issue/view-retur-issue.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +77,9 @@ import { ViewIssueComponent } from './pages/issue/view-issue/view-issue.componen
         InputIssueComponent,
         DaftarIssueComponent,
         ViewIssueComponent,
+        InputReturIssueComponent,
+        DaftarReturIssueComponent,
+        ViewReturIssueComponent,
     ],
     imports: [
         FormsModule,

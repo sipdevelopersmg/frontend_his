@@ -21,6 +21,9 @@ import { SetHargaOrderComponent } from "./pages/pemasukan/set-harga-order/set-ha
 import { DaftarReturPembelianComponent } from "./pages/retur/daftar-retur-pembelian/daftar-retur-pembelian.component";
 import { InputReturPembelianComponent } from "./pages/retur/input-retur/input-retur.component";
 import { ViewReturPembelianComponent } from "./pages/retur/view-retur-pembelian/view-retur-pembelian.component";
+import { DaftarReturIssueComponent } from "./pages/retur_issue/daftar-retur-issue/daftar-retur-issue.component";
+import { InputReturIssueComponent } from "./pages/retur_issue/input-retur-issue/input-retur-issue.component";
+import { ViewReturIssueComponent } from "./pages/retur_issue/view-retur-issue/view-retur-issue.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
@@ -116,6 +119,15 @@ const mmRoutes: Routes = [
             { path: "daftar-issue", component: DaftarIssueComponent, data: { title: "Daftar Issue" } },
             { path: "input-issue", component: InputIssueComponent, data: { title: "Input Issue" } },
             { path: "view-issue/:id/:key", component: ViewIssueComponent, data: { title: "View Issue" } },
+
+        ],
+    },
+    {
+        path: "retur-issue", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-retur-issue", component: DaftarReturIssueComponent, data: { title: "Daftar Retur Issue" } },
+            { path: "input-retur-issue", component: InputReturIssueComponent, data: { title: "Input Retur Issue" } },
+            { path: "view-retur-issue/:id/:key", component: ViewReturIssueComponent, data: { title: "View Retur Issue" } },
 
         ],
     }

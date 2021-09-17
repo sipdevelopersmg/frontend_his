@@ -3,10 +3,17 @@
     <form [formGroup]="formInput">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                
+                <mol-input-text [label]="'Nomor Pemakaian'" formControlName="nomor_pemakaian_internal" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Pemakaian'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_pemakaian_internal">
+                </mol-datepicker-syncfusion>
+                <mol-input-text [label]="'Stokroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Tanggal Serah Terima'" formControlName="tanggal_serah_terima" [inputFieldState]="inputFieldState"></mol-input-text>  
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                
+                <mol-input-text [label]="'PIC Pemberi'" formControlName="pic_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'PIC Penerima'" formControlName="pic_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Keretangan'" formControlName="keterangan_pemakaian_internal"></mol-input-textarea>
             </div>
         </div>
         <mol-grid 
