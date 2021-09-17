@@ -1,0 +1,32 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                
+            </div>
+        </div>
+        <mol-grid 
+        [grid-DataSource]="pemakaianInternalService.dataDetail$| async"
+        [columns]="ConfigGrid.TrDetail"
+        ></mol-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="pemakaianInternalService.jumlah_item" formControlName="jumlah_item"
+                    [inputFieldState]="'detail'" ></mol-input-numeric>
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Nominal'" [isFooter]="true"
+                    [value]="pemakaianInternalService.total_transaksi" formControlName="total_transaksi"
+                    [inputFieldState]="'detail'" ></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputReturPembelianComponent } from './input-retur.component';
+import { DaftarIssueComponent } from './daftar-issue.component';
 
-describe('InputReturComponent', () => {
-  let component: InputReturPembelianComponent;
-  let fixture: ComponentFixture<InputReturPembelianComponent>;
+describe('DaftarIssueComponent', () => {
+  let component: DaftarIssueComponent;
+  let fixture: ComponentFixture<DaftarIssueComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputReturPembelianComponent ]
+      declarations: [ DaftarIssueComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputReturPembelianComponent);
+    fixture = TestBed.createComponent(DaftarIssueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

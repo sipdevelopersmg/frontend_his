@@ -1,0 +1,39 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Nomor Retur'" formControlName="nomor_retur_pembelian" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Retur Pembelian'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_retur_pembelian">
+                </mol-datepicker-syncfusion>
+                <mol-datepicker-syncfusion [label]="'Tanggal Jatuh Tempo'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_jatuh_tempo_pelunasan_retur">
+                </mol-datepicker-syncfusion>
+                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Mekanisme Retur'" formControlName="mekanisme_retur" [inputFieldState]="inputFieldState"></mol-input-text>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Supplier'" formControlName="nama_supplier" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+            </div>
+        </div>
+        <mol-grid 
+        [grid-DataSource]="returPembelianService.dataDetail$| async"
+        [columns]="ConfigGrid.TrDetail"
+        ></mol-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                [value]="returPembelianService.jumlah_item" formControlName="jumlah_item_retur"
+                [inputFieldState]="'detail'"></mol-input-numeric>  
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric  [isFooter]="true" [label]="'Total Transaksi'" formControlName="total_transaksi_retur" [inputFieldState]="inputFieldState"></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

@@ -26,9 +26,7 @@ export interface TrReturPembelianDetailInsert {
      /** @format double */
      qty_satuan_besar?: number;
      kode_satuan_besar?: string | null;
- 
-     /** @format double */
-     harga_satuan_besar?: number;
+
  
      /** @format int32 */
      isi?: number;

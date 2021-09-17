@@ -1,49 +1,38 @@
 import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
 import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription, combineLatest } from 'rxjs';
 import { MM } from 'src/app/api/MM';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
-import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { TrReturPembelianDetailInsert } from '../../../models/retur/retur-pembelian';
-import { PemesananService } from '../../../services/pemasukan/pemesanan/pemesanan.service';
-import { ReturPembelianService } from '../../../services/retur/retur-pembelian.service';
-import { SetupPaymentTermService } from '../../../services/setup-data/setup-payment-term/setup-payment-term.service';
-import { SetupShippingMethodService } from '../../../services/setup-data/setup-shipping-method/setup-shipping-method.service';
+import { TrPemakaianInternalDetailInsert } from '../../../models/issue/issue';
+import { PemakaianInternalService } from '../../../services/issue/pemakaian-internal.service';
 import { SetupStockroomService } from '../../../services/setup-data/setup-stockroom/setup-stock-room.service';
-import * as GridLoockUpItem from './json/lookupitem.json'
-import * as LookupGridSupplier from './json/lookupsupplier.json'
-
 import { Location } from '@angular/common'
-import { SetupMekanismeReturService } from '../../../services/setup-data/setup-mekanisme-retur/setup-mekanisme-retur.service';
-
+import * as GridLoockUpItem from './json/lookupitem.json'
 @Component({
-  selector: 'app-input-retur',
-  templateUrl: './input-retur.component.html',
-  styleUrls: ['./input-retur.component.css']
+  selector: 'app-input-issue',
+  templateUrl: './input-issue.component.html',
+  styleUrls: ['./input-issue.component.css']
 })
-export class InputReturPembelianComponent implements OnInit {
-    MaritalStokroomDropdownField: object = { text: 'nama_stockroom', value: 'id_stockroom' };
-    MaritalMekanismeReturDropdownField: object = { text: 'mekanisme_retur', value: 'id_mekanisme_retur' };
-  
-  inputFieldState = 'input'
-  GridLookUpItem = GridLoockUpItem;
-  LookupGridSupplier = LookupGridSupplier;
-  Detail: TrReturPembelianDetailInsert[] = [];
+export class InputIssueComponent implements OnInit {
 
-  urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
+  MaritalStockroomDropdownField: object = { text: 'nama_stockroom', value: 'id_stockroom' };
+  inputFieldState='input';
+
+  GridLookUpItem = GridLoockUpItem;
+
+  Detail: TrPemakaianInternalDetailInsert[] = [];
+
   urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
 
-  TrReturPembelianDetailInsert: TrReturPembelianDetailInsert;
+  TrPemakaianInternalDetailInsert: TrPemakaianInternalDetailInsert;
 
   ButtonNav: ButtonNavModel[] = [
-    { Id: 'Back', Captions: 'Back', Icons1: 'fa-arrow-left' },
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
     { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
     { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
   ];
@@ -57,14 +46,13 @@ export class InputReturPembelianComponent implements OnInit {
 
   modalRef: BsModalRef;
 
-  formInput: FormGroup;
+  formKontrak: FormGroup;
 
   GridDataEditSettings: EditSettingsModel = { allowEditing: true };
 
   @ViewChild('gridDetail') gridDetail: GridComponent;
   private currentIndex: number;
 
-  @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
   @ViewChild('LookupItem') LookupItem: OrgLookUpComponent;
 
   subscriptions: Subscription[] = []
@@ -80,8 +68,9 @@ export class InputReturPembelianComponent implements OnInit {
   public datasatuan: { [key: string]: Object }[] = [];
   satuanVal: string;
 
-  detailSelected: TrReturPembelianDetailInsert;
+  detailSelected: TrPemakaianInternalDetailInsert;
   globalListenFunc: Function;
+
 
   TglExpiredParams = { params: { min: new Date() } };
   id_kontrak_from_list:number;
@@ -89,28 +78,27 @@ export class InputReturPembelianComponent implements OnInit {
   constructor(
       private modalService: BsModalService,
       private formBuilder: FormBuilder,
-      public returPembelianService: ReturPembelianService,
+      public pemakaianInternalService: PemakaianInternalService,
       private changeDetection: ChangeDetectorRef,
       private renderer: Renderer2,
       private location: Location,
       public setupStockroomService: SetupStockroomService,
-      public setupMekanismeReturService: SetupMekanismeReturService,
-      private utilityService:UtilityService,
+      private   utilityService:UtilityService
 
   ) { }
 
   ngOnInit(): void {
-    this.formInput = this.formBuilder.group({
-      nomor_retur_pembelian: ['', [Validators.required]],
-      tanggal_retur_pembelian: [null, [Validators.required]],
-      tanggal_jatuh_tempo_pelunasan_retur : [null, [Validators.required]],
-      id_stockroom: [0, [Validators.required]],
-      id_mekanisme_retur: [0, [Validators.required]],
-      id_supplier: [0, [Validators.required]],
-      keterangan: ['', [Validators.required]],
-      jumlah_item_retur: [0, [Validators.required]],
-      total_transaksi_retur: [0, [Validators.required]],
-    });
+      this.formKontrak = this.formBuilder.group({
+        nomor_pemakaian_internal: ["", Validators.required],
+        tanggal_pemakaian_internal: [null, Validators.required],
+        id_stockroom: [0, Validators.required],
+        keterangan_pemakaian_internal: [0, Validators.required],
+        time_serah_terima:[null, Validators.required],
+        pic_pemberi: [0, Validators.required],
+        pic_penerima: [0, Validators.required],
+        jumlah_item: [0, Validators.required],
+        total_transaksi: [0, Validators.required],
+      });
 
       this.satuanParams = {
           create: () => {
@@ -125,7 +113,7 @@ export class InputReturPembelianComponent implements OnInit {
           },
           write: () => {
               this.satuanObj = new DropDownList({
-                  value: this.detailSelected.kode_satuan_besar,
+                  value: this.detailSelected.kode_satuan_besar_pemakaian_internal,
                   dataSource: this.datasatuan,
                   fields: { value: 'kode_satuan', text: 'kode_satuan' },
                   enabled: true,
@@ -147,10 +135,8 @@ export class InputReturPembelianComponent implements OnInit {
           { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
           { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
       ];
-
-      this.setupMekanismeReturService.setDataSource();
       this.setupStockroomService.setDataSource();
-      this.returPembelianService.Reset();
+
   }
 
   ngAfterViewInit(): void {
@@ -160,21 +146,21 @@ export class InputReturPembelianComponent implements OnInit {
   }
 
   onLoadDetailData(kontrak_id){
-      this.returPembelianService.onGetById(kontrak_id).subscribe((result)=>{
-          // this.formKontrak.setValue({
-          //     id_supplier         :result.data.id_supplier,
-          //     nomor_kontrak_spjb  :result.data.nomor_kontrak_spjb,
-          //     nomor_kontrak       :result.data.nomor_kontrak,
-          //     tanggal_ttd_kontrak :result.data.tanggal_ttd_kontrak,
-          //     tanggal_berlaku_kontrak:result.data.tanggal_berlaku_kontrak,
-          //     tanggal_berakhir_kontrak:result.data.tanggal_berakhir_kontrak,
-          //     judul_kontrak       :result.data.judul_kontrak,
-          //     tahun_anggaran      :result.data.tahun_anggaran,
-          //     keterangan          :result.data.keterangan,
-          //     total_transaksi_kontrak:result.data.total_transaksi_kontrak,
-          //     jumlah_item_kontrak :result.data.jumlah_item_kontrak,
-          //     user_inputed :1,
-          // })
+      this.pemakaianInternalService.onGetById(kontrak_id).subscribe((result)=>{
+          this.formKontrak.setValue({
+              id_supplier         :result.data.id_supplier,
+              nomor_kontrak_spjb  :result.data.nomor_kontrak_spjb,
+              nomor_kontrak       :result.data.nomor_kontrak,
+              tanggal_ttd_kontrak :result.data.tanggal_ttd_kontrak,
+              tanggal_berlaku_kontrak:result.data.tanggal_berlaku_kontrak,
+              tanggal_berakhir_kontrak:result.data.tanggal_berakhir_kontrak,
+              judul_kontrak       :result.data.judul_kontrak,
+              tahun_anggaran      :result.data.tahun_anggaran,
+              keterangan          :result.data.keterangan,
+              total_transaksi_kontrak:result.data.total_transaksi_kontrak,
+              jumlah_item_kontrak :result.data.jumlah_item_kontrak,
+              user_inputed :1,
+          })
       });
       
   }
@@ -206,29 +192,20 @@ export class InputReturPembelianComponent implements OnInit {
       }
   }
 
-  heandleSelectedSupplier($event) {
-      this.id_supplier.setValue($event.id_supplier);
-  }
-
   heandleSelectedItem($event) {
-      let item: TrReturPembelianDetailInsert = {
-        penerimaan_id:0,
-        penerimaan_detail_id:0,
-        no_urut:0,
-        id_item: $event.id_item,
-        kode_item: $event.kode_item,
-        nama_item: $event.nama_item,
-        batch_number: '',
-        expired_date: '',
-        qty_satuan_besar: 1,
-        kode_satuan_besar: $event.satuans[0].kode_satuan,
-        isi: $event.satuans[0].isi,
-        qty_retur: $event.satuans[0].isi,
-        harga_satuan_retur: $event.harga_beli_terakhir,
-        sub_total: $event.satuans[0].isi * $event.harga_beli_terakhir,
-        satuan: $event.satuans,
+      let item: TrPemakaianInternalDetailInsert = {
+          no_urut: 0,
+          id_item: $event.id_item,
+          kode_item: $event.kode_item,
+          nama_item: $event.nama_item,
+          qty_satuan_besar_pemakaian_internal: 1,
+          kode_satuan_besar_pemakaian_internal: $event.satuans[0].kode_satuan,
+          isi_pemakaian_internal: $event.satuans[0].isi,
+          qty_pemakaian_internal: $event.satuans[0].isi,
+        //   nominal_mutasi: $event.satuans[0].isi * $event.harga_beli_,
+          satuan: $event.satuans,
       }
-      this.returPembelianService.addDataDetail(item);
+      this.pemakaianInternalService.addDataDetail(item);
       this.selectLastRowdetail();
   }
 
@@ -236,8 +213,7 @@ export class InputReturPembelianComponent implements OnInit {
 
       if ($event.requestType == 'save') {
           console.log($event);
-
-          this.returPembelianService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+          this.pemakaianInternalService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
           this.gridDetail.refresh();
       }
   }
@@ -256,30 +232,16 @@ export class InputReturPembelianComponent implements OnInit {
 
   handleQtyChange(args: any) {
       let banyak: number = parseInt(args);
-      this.returPembelianService.editBanyak(this.currentIndex, banyak);
+      this.pemakaianInternalService.editBanyak(this.currentIndex, banyak);
       this.modalRef.hide();
       this.gridDetail.refresh();
   }
 
   handleSatuanChange(args: any) {
-      this.returPembelianService.editSatuan(this.currentIndex, args);
+      this.pemakaianInternalService.editSatuan(this.currentIndex, args);
       this.modalRef.hide();
       this.gridDetail.refresh();
 
-  }
-
-  handleHargaChange(args: any) {
-      let harga: number = parseInt(args);
-      this.returPembelianService.editHarga(this.currentIndex, harga);
-      this.modalRef.hide();
-      this.gridDetail.refresh();
-  }
-
-  handleSubtotalChange(args: any) {
-      let subtotal: number = parseInt(args);
-      this.returPembelianService.editSubtotal(this.currentIndex, subtotal);
-      this.modalRef.hide();
-      this.gridDetail.refresh();
   }
 
   KeyDownHandler(event: KeyboardEvent) {
@@ -289,7 +251,7 @@ export class InputReturPembelianComponent implements OnInit {
       };
 
       if (event.keyCode === 46) {
-          this.returPembelianService.removeDataDetail(this.currentIndex);
+          this.pemakaianInternalService.removeDataDetail(this.currentIndex);
           this.gridDetail.refresh();
           setTimeout(() => {
               if (this.currentIndex != 0) {
@@ -298,13 +260,13 @@ export class InputReturPembelianComponent implements OnInit {
           }, 100)
       };
 
-      if (event.keyCode === 111) {
-          this.onOpenHarga()
-      }
+    //   if (event.keyCode === 111) {
+    //       this.onOpenHarga()
+    //   }
 
-      if (event.keyCode === 109) {
-          this.onOpenSubtotal()
-      }
+    //   if (event.keyCode === 109) {
+    //       this.onOpenSubtotal()
+    //   }
 
       if (event.keyCode === 107) {
           this.onOpenSatuan()
@@ -456,34 +418,22 @@ export class InputReturPembelianComponent implements OnInit {
   }
 
   onSave(){
-    //   if (this.formInput.valid) {
-          this.returPembelianService.Insert(this.formInput.value)
+      if (this.formKontrak.valid) {
+          this.pemakaianInternalService.Insert(this.formKontrak.value)
           .subscribe((result) => {
               this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
               .then(() => {
                   this.ResetFrom();
               });
           });
-    //   }else{
-    //       alert('isi semua data');
-    //   }
+      }else{
+          alert('isi semua data');
+      }
   }
 
   ResetFrom() {
-      this.returPembelianService.Reset();
-      this.formInput.reset();
-      this.LookupKodeSupplier.resetValue();
+      this.pemakaianInternalService.Reset();
+      this.formKontrak.reset();
   }
-
-  get nomor_retur_pembelian() : AbstractControl { return this.formInput.get('nomor_retur_pembelian') }
-  get tanggal_retur_pembelian() : AbstractControl { return this.formInput.get('tanggal_retur_pembelian') }
-  get tanggal_jatuh_tempo_pelunasan_retur() : AbstractControl { return this.formInput.get('tanggal_jatuh_tempo_pelunasan_retur') }
-  get id_stockroom() : AbstractControl { return this.formInput.get('id_stockroom') }
-  get id_supplier() : AbstractControl { return this.formInput.get('id_supplier') }
-  get id_mekanisme_retur() : AbstractControl { return this.formInput.get('id_mekanisme_retur') }
-  get keterangan() : AbstractControl { return this.formInput.get('keterangan') }
-  get jumlah_item_retur() : AbstractControl { return this.formInput.get('jumlah_item_retur') }
-  get total_transaksi_retur() : AbstractControl { return this.formInput.get('total_transaksi_retur') }
-
 
 }

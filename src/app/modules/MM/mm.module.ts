@@ -7,7 +7,7 @@ import { SetupGrupItemComponent } from './pages/setup-data/setup-grup-item/setup
 import { SetupPabrikComponent } from './pages/setup-data/setup-pabrik/setup-pabrik.component';
 import { InputKontrakPengadaanComponent } from './pages/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component';
 import { InputPenerimaanComponent } from './pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component';
-import { InputReturComponent } from './pages/retur/input-retur/input-retur.component';
+import { InputReturPembelianComponent } from './pages/retur/input-retur/input-retur.component';
 import { SetupSatuanComponent } from './pages/setup-data/setup-satuan/setup-satuan.component';
 import { SetupGroupCoaComponent } from './pages/setup-data/setup-group-coa/setup-group-coa.component';
 import { SetupCoaComponent } from './pages/setup-data/setup-coa/setup-coa.component';
@@ -32,6 +32,11 @@ import { DaftarPermintaanMutasiComponent } from './pages/mutasi/permintaan-mutas
 import { ViewPermintaanMutasiComponent } from './pages/mutasi/permintaan-mutasi/view-permintaan-mutasi/view-permintaan-mutasi.component';
 import { DaftarPersetujuanMutasiComponent } from './pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi/daftar-persetujuan-mutasi.component';
 import { ViewPersetujuanMutasiComponent } from './pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi/view-persetujuan-mutasi.component';
+import { DaftarReturPembelianComponent } from './pages/retur/daftar-retur-pembelian/daftar-retur-pembelian.component';
+import { ViewReturPembelianComponent } from './pages/retur/view-retur-pembelian/view-retur-pembelian.component';
+import { InputIssueComponent } from './pages/issue/input-issue/input-issue.component';
+import { DaftarIssueComponent } from './pages/issue/daftar-issue/daftar-issue.component';
+import { ViewIssueComponent } from './pages/issue/view-issue/view-issue.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +44,7 @@ import { ViewPersetujuanMutasiComponent } from './pages/mutasi/persetujuan-mutas
         SetupPabrikComponent,
         InputKontrakPengadaanComponent,
         InputPenerimaanComponent,
-        InputReturComponent,
+        InputReturPembelianComponent,
         SetupSatuanComponent,
         SetupGroupCoaComponent,
         SetupCoaComponent,
@@ -64,6 +69,11 @@ import { ViewPersetujuanMutasiComponent } from './pages/mutasi/persetujuan-mutas
         ViewPermintaanMutasiComponent,
         DaftarPersetujuanMutasiComponent,
         ViewPersetujuanMutasiComponent,
+        DaftarReturPembelianComponent,
+        ViewReturPembelianComponent,
+        InputIssueComponent,
+        DaftarIssueComponent,
+        ViewIssueComponent,
     ],
     imports: [
         FormsModule,

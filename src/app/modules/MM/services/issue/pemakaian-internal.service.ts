@@ -6,24 +6,24 @@ import { MM } from 'src/app/api/MM';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { TrPermintaanMutasiDetailInsert, TrPermintaanMutasiInsert } from '../../../models/mutasi/permintaan-mutasi';
+import { TrPemakaianInternalDetailInsert, TrPemakaianInternalInsert } from '../../models/issue/issue';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PermintaanMutasiService {
+export class PemakaianInternalService {
 
-    public API = MM.MUTASI.PENGAJUAN_MUTASI;
+  public API = MM.PEMAKAIAN_INTERNAL.TRANSPEMAKAIANINTERNAL;
     public dataSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<TrPermintaanMutasiDetailInsert[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<TrPemakaianInternalDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): TrPermintaanMutasiDetailInsert[] {
+    get dataDetail(): TrPemakaianInternalDetailInsert[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: TrPermintaanMutasiDetailInsert[]) {
+    set dataDetail(val: TrPemakaianInternalDetailInsert[]) {
         this._dataDetail.next(val);
     }
 
@@ -95,7 +95,7 @@ export class PermintaanMutasiService {
         });
     }
 
-    addDataDetail(detail: TrPermintaanMutasiDetailInsert) {
+    addDataDetail(detail: TrPemakaianInternalDetailInsert) {
         this.dataDetail =  [
           ...this.dataDetail,
           detail
@@ -103,11 +103,11 @@ export class PermintaanMutasiService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: TrPermintaanMutasiDetailInsert, rowData: TrPermintaanMutasiDetailInsert) {
-        let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_permintaan);
+    updateFromInline(index: number, data: TrPemakaianInternalDetailInsert, rowData: TrPemakaianInternalDetailInsert) {
+        let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_pemakaian_internal);
         let isi = data.satuan[indexsatuan].isi;
-        data.isi_permintaan = isi;
-        data.qty_permintaan = data.qty_satuan_besar_permintaan * isi;
+        data.isi_pemakaian_internal = isi;
+        data.qty_pemakaian_internal = data.qty_satuan_besar_pemakaian_internal * isi;
 
         this.dataDetail[index] = data;
         this.sum();
@@ -119,26 +119,26 @@ export class PermintaanMutasiService {
     }
 
     editBanyak(index: number, banyak: number) {
-        this.dataDetail[index].qty_satuan_besar_permintaan = banyak;
-        this.dataDetail[index].qty_permintaan = banyak * this.dataDetail[index].isi_permintaan;
+        this.dataDetail[index].qty_satuan_besar_pemakaian_internal = banyak;
+        this.dataDetail[index].qty_pemakaian_internal = banyak * this.dataDetail[index].isi_pemakaian_internal;
     }
 
 
     editSatuan(index: number, satuan: string) {
-        let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_permintaan);
+        let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_pemakaian_internal);
         let isi = this.dataDetail[index].satuan[indexsatuan].isi;
-        this.dataDetail[index].kode_satuan_besar_permintaan = satuan;
-        this.dataDetail[index].isi_permintaan = isi;
-        this.dataDetail[index].qty_permintaan = this.dataDetail[index].qty_satuan_besar_permintaan * isi;
+        this.dataDetail[index].kode_satuan_besar_pemakaian_internal = satuan;
+        this.dataDetail[index].isi_pemakaian_internal = isi;
+        this.dataDetail[index].qty_pemakaian_internal = this.dataDetail[index].qty_satuan_besar_pemakaian_internal * isi;
     }
 
     sum(): void {
 
         this.total_transaksi = 0;
-        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_permintaan');
+        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_pemakaian_internal');
     }
 
-    Insert( Data:TrPermintaanMutasiInsert ): Observable<any>{
+    Insert( Data:TrPemakaianInternalInsert ): Observable<any>{
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });

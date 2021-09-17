@@ -177,7 +177,7 @@ export class SetupFormulariumComponent implements OnInit {
     handleAddTerapi() {
         this.id_terapi_parent.setValue(null);
         this.parent_terapi.setValue('');
-        this.level_rekursif_terapi.setValue(1);
+        this.level_rekursif_terapi.setValue(0);
         this.hideParentTarif = true;
         this.modalRef = this.modalService.show(
             this.modalTambahTerapi,
@@ -188,7 +188,7 @@ export class SetupFormulariumComponent implements OnInit {
     handleSubTerapi() {
         this.id_terapi_parent.setValue(this.CurrentDataTerapi.id);
         this.parent_terapi.setValue(this.CurrentDataTerapi.text);
-        this.level_rekursif_terapi.setValue(2);
+        this.level_rekursif_terapi.setValue(1);
         this.hideParentTarif = false;
         this.modalRef = this.modalService.show(
             this.modalTambahTerapi,

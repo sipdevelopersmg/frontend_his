@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputReturPembelianComponent } from './input-retur.component';
+import { ViewIssueComponent } from './view-issue.component';
 
-describe('InputReturComponent', () => {
-  let component: InputReturPembelianComponent;
-  let fixture: ComponentFixture<InputReturPembelianComponent>;
+describe('ViewIssueComponent', () => {
+  let component: ViewIssueComponent;
+  let fixture: ComponentFixture<ViewIssueComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputReturPembelianComponent ]
+      declarations: [ ViewIssueComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputReturPembelianComponent);
+    fixture = TestBed.createComponent(ViewIssueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
