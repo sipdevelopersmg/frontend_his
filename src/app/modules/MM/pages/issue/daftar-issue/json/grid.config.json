@@ -33,7 +33,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {

@@ -28,7 +28,8 @@ export class InputReturIssueComponent implements OnInit {
 
   Detail: TrReturPemakaianInternalDetailInsert[] = [];
 
-  urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
+  urlByStockroom = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_STOCKROOM;
+  urlItem = this.urlByStockroom
 
   TrReturPemakaianInternalDetailInsert: TrReturPemakaianInternalDetailInsert;
 
@@ -93,10 +94,10 @@ export class InputReturIssueComponent implements OnInit {
         nomor_retur_pemakaian_internal: ["", Validators.required],
         tanggal_retur_pemakaian_internal: [null, Validators.required],
         id_stockroom: [0, Validators.required],
-        keterangan_retur_pemakaian_internal: [0, Validators.required],
+        keterangan_retur_pemakaian_internal: ['', Validators.required],
         time_serah_terima:[null, Validators.required],
-        pic_pemberi: [0, Validators.required],
-        pic_penerima: [0, Validators.required],
+        pic_pemberi: ['', Validators.required],
+        pic_penerima: ['', Validators.required],
         jumlah_item: [0, Validators.required],
         total_transaksi: [0, Validators.required],
       });
@@ -137,7 +138,7 @@ export class InputReturIssueComponent implements OnInit {
           { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
       ];
       this.setupStockroomService.setDataSource();
-
+      this.returIssueService.Reset();
   }
 
   ngAfterViewInit(): void {
@@ -203,7 +204,7 @@ export class InputReturIssueComponent implements OnInit {
           kode_satuan_besar_retur_pemakaian_internal: $event.satuans[0].kode_satuan,
           isi_retur_pemakaian_internal: $event.satuans[0].isi,
           qty_retur_pemakaian_internal: $event.satuans[0].isi,
-        //   nominal_mutasi: $event.satuans[0].isi * $event.harga_beli_,
+          nominal_retur_pemakaian_internal: $event.hpp_average,
           satuan: $event.satuans,
       }
       this.returIssueService.addDataDetail(item);
@@ -243,6 +244,12 @@ export class InputReturIssueComponent implements OnInit {
       this.modalRef.hide();
       this.gridDetail.refresh();
 
+  }
+
+
+  handleStockroomChange(args){
+    // console.log(args.value);
+    this.urlItem = this.urlByStockroom+'/'+args.value;
   }
 
   KeyDownHandler(event: KeyboardEvent) {

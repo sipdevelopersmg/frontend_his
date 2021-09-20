@@ -134,8 +134,9 @@ export class ReturIssueService {
 
   sum(): void {
 
-      this.total_transaksi = 0;
-      this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_pemakaian_internal');
+      this.total_transaksi = this.dataDetail.sum('qty_satuan_besar_retur_pemakaian_internal');
+      this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_retur_pemakaian_internal');
+      
   }
 
   Insert( Data:TrReturPemakaianInternalInsert ): Observable<any>{

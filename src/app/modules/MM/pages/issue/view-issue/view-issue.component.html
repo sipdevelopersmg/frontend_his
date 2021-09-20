@@ -8,7 +8,9 @@
                     formControlName="tanggal_pemakaian_internal">
                 </mol-datepicker-syncfusion>
                 <mol-input-text [label]="'Stokroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text>
-                <mol-input-text [label]="'Tanggal Serah Terima'" formControlName="tanggal_serah_terima" [inputFieldState]="inputFieldState"></mol-input-text>  
+                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima'" [format]="'dd MMMM yyyy HH:mm:ss'"
+                    formControlName="time_serah_terima">
+                </mol-datepicker-syncfusion>            
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <mol-input-text [label]="'PIC Pemberi'" formControlName="pic_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>

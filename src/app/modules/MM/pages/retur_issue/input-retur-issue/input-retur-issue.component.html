@@ -15,11 +15,12 @@
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource| async"
                             [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
-                            formControlName="id_stockroom">
+                            formControlName="id_stockroom"
+                            (change)='handleStockroomChange($event)'>
                         </ejs-dropdownlist>
                     </div>
                 </div>
-                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima'" [format]="'dd MMMM yyyy HH:mm:ss'"
                     formControlName="time_serah_terima">
                 </mol-datepicker-syncfusion>
             </div>
@@ -54,22 +55,22 @@
                     headerText='Expired' editType='datepickeredit' textAlign="left" headerTextAlign="center"
                     format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams">
                 </e-column>
-                <e-column [visible]="true" field='qty_satuan_besar_pemakaian_internal' [allowEditing]="true" headerText='Banyak'
+                <e-column [visible]="true" field='qty_satuan_besar_retur_pemakaian_internal' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='kode_satuan_besar_pemakaian_internal' [allowEditing]="true" headerText='Satuan'
+                <e-column [visible]="true" field='kode_satuan_besar_retur_pemakaian_internal' [allowEditing]="true" headerText='Satuan'
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='isi_pemakaian_internal' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
+                <e-column [visible]="true" field='isi_retur_pemakaian_internal' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
                     textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='qty_pemakaian_internal' [allowEditing]="false" headerText='QTY'
+                <e-column [visible]="true" field='qty_retur_pemakaian_internal' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='nominal_pemakaian_internal' [allowEditing]="false" headerText='Nominal'
+                <e-column [visible]="true" field='nominal_retur_pemakaian_internal' [allowEditing]="false" headerText='Nominal'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='keterangan_pemakaian_internal' [allowEditing]="true" headerText='Keterangan'
+                <e-column [visible]="true" field='keterangan_retur_pemakaian_internal' [allowEditing]="true" headerText='Keterangan'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center" >
                 </e-column>
             </e-columns>

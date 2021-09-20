@@ -25,7 +25,7 @@
         },
         {
             "allowEditing": false,
-            "field":"qty_retur_satuan_besar_pemakaian_internal",
+            "field":"qty_satuan_besar_retur_pemakaian_internal",
             "headerText":"Banyak",
             "editType": "defaultEdit",
             "type":"",
@@ -37,7 +37,7 @@
         {
             "allowEditing": false,
             "editParams":"satuanParams",
-            "field":"nama_retur_satuan_besar_pemakaian_internal",
+            "field":"nama_satuan_besar_retur_pemakaian_internal",
             "headerText":"Satuan",
             "editType": "dropdownedit",
             "type":"",

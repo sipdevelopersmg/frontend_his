@@ -1,7 +1,7 @@
 {
   "GridColumns": [
     {
-        "field": "pemakaian_internal_id",
+        "field": "retur_pemakaian_internal_id",
         "headerText": "Id",
         "type": "number",
         "format": "",
@@ -10,8 +10,8 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "nomor_pemakaian_internal",
-        "headerText": "Nomor Pemakaian",
+        "field": "nomor_retur_pemakaian_internal",
+        "headerText": "Nomor retur Pemakaian",
         "type": "string",
         "format": "",
         "textAlign": "Left",
@@ -19,8 +19,8 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "tanggal_pemakaian_internal",
-        "headerText": "Tanggal Pemakaian",
+        "field": "tanggal_retur_pemakaian_internal",
+        "headerText": "Tanggal Retur Pemakaian",
         "type": "string",
         "format": "",
         "textAlign": "Left",
@@ -33,7 +33,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -46,7 +46,7 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "keterangan_pemakaian_internal",
+        "field": "keterangan_retur_pemakaian_internal",
         "headerText": "Keterangan",
         "type": "string",
         "format": "",

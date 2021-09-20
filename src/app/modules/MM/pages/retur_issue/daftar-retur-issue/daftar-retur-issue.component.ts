@@ -66,7 +66,7 @@ export class DaftarReturIssueComponent implements OnInit {
         this.router.navigateByUrl('dashboard/MM/retur-issue/input-retur-issue');
         break;
       case 'Edit':
-        const id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.pemakaian_internal_id));
+        const id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.retur_pemakaian_internal_id));
         this.router.navigate(['dashboard/MM/retur-issue/view-retur-issue', id, "GRAHCIS"]);
         break;
       case 'Delete':

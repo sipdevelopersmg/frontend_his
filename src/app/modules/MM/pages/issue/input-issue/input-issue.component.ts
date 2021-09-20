@@ -92,10 +92,10 @@ export class InputIssueComponent implements OnInit {
         nomor_pemakaian_internal: ["", Validators.required],
         tanggal_pemakaian_internal: [null, Validators.required],
         id_stockroom: [0, Validators.required],
-        keterangan_pemakaian_internal: [0, Validators.required],
+        keterangan_pemakaian_internal: ['', Validators.required],
         time_serah_terima:[null, Validators.required],
-        pic_pemberi: [0, Validators.required],
-        pic_penerima: [0, Validators.required],
+        pic_pemberi: ['', Validators.required],
+        pic_penerima: ['', Validators.required],
         jumlah_item: [0, Validators.required],
         total_transaksi: [0, Validators.required],
       });

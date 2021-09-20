@@ -34,6 +34,7 @@ export class ViewIssueComponent implements OnInit {
     this.formInput = this.formBuilder.group({
       nomor_pemakaian_internal: ["", ],
       tanggal_pemakaian_internal: [null, ],
+      time_serah_terima: [null, ],
       nama_stockroom: [0, ],
       keterangan_pemakaian_internal: [0, ],
       pic_pemberi: [0, ],
@@ -54,6 +55,7 @@ export class ViewIssueComponent implements OnInit {
         this.formInput.setValue({
           nomor_pemakaian_internal      :result.data.nomor_pemakaian_internal,
           tanggal_pemakaian_internal    :result.data.tanggal_pemakaian_internal,
+          time_serah_terima             :result.data.time_serah_terima,
           nama_stockroom                :result.data.nama_stockroom,
           keterangan_pemakaian_internal :result.data.keterangan_pemakaian_internal,
           pic_pemberi                   :result.data.pic_pemberi,
