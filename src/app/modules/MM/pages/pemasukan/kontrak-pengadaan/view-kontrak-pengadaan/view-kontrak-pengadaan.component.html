@@ -37,16 +37,18 @@
         [grid-DataSource]="inputKontrakPengadaanService.dataDetail$| async"
         [columns]="ConfigGrid.TrDetailKontrak"
         ></mol-grid>
-        <div class="row">
-            <div class="col-sm-8">
+        <div class="row mt-2">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak"
+                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-numeric>
             </div>
             <div class="col-sm-4">
-                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
-                    [value]="inputKontrakPengadaanService.total" formControlName="total_transaksi_kontrak"
-                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-text>
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak"
-                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="inputKontrakPengadaanService.total" [id]="'total_transaksi_kontrak'" formControlName="total_transaksi_kontrak"
+                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-numeric>
             </div>
         </div>
     </form>

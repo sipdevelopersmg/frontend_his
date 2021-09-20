@@ -16,8 +16,9 @@ export class ViewPenerimaanComponent implements OnInit {
   formInput: FormGroup;
   inputFieldState='detail';
   ButtonNav: ButtonNavModel[] = [
-    { Id: 'Validasi', Captions: 'Validasi', Icons1: 'fa-check' },
     { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
+    { Id: 'Validasi', Captions: 'Validasi', Icons1: 'fa-check' },
+    { Id: 'Canceled', Captions: 'Canceled', Icons1: 'fa-times', Class:'danger' },
   ];
 
   ConfigGrid = configGrid;
@@ -106,17 +107,20 @@ export class ViewPenerimaanComponent implements OnInit {
             this.location.back();
             break;
         case 'Validasi':
-            console.log('Validasi')
+            this.onValidation();
             break;
         default:
             break;
     }
   }
+
+  onValidation(){
+    console.log(this.formInput.value)
+  }
+
   get tanggal_penerimaan() : AbstractControl { return this.formInput.get('tanggal_penerimaan') }
   get tanggal_surat_jalan_supplier() : AbstractControl { return this.formInput.get('tanggal_surat_jalan_supplier') }
   get tanggal_jatuh_tempo_bayar() : AbstractControl { return this.formInput.get('tanggal_jatuh_tempo_bayar') }
   get sub_total_1() : AbstractControl { return this.formInput.get('sub_total_1') }
-
-  
 
 }

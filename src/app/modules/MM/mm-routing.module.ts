@@ -1,5 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DaftarIssueComponent } from "./pages/issue/daftar-issue/daftar-issue.component";
+import { InputIssueComponent } from "./pages/issue/input-issue/input-issue.component";
+import { ViewIssueComponent } from "./pages/issue/view-issue/view-issue.component";
+import { DaftarPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/daftar-permintaan-mutasi/daftar-permintaan-mutasi.component";
+import { InputPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/input-permintaan-mutasi/input-permintaan-mutasi.component";
+import { ViewPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/view-permintaan-mutasi/view-permintaan-mutasi.component";
+import { DaftarPersetujuanMutasiComponent } from "./pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi/daftar-persetujuan-mutasi.component";
+import { ViewPersetujuanMutasiComponent } from "./pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi/view-persetujuan-mutasi.component";
 import { InputKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/input-kontrak-pengadaan/input-kontrak-pengadaan.component";
 import { ListKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/list-kontrak-pengadaan/list-kontrak-pengadaan.component";
 import { ViewKontrakPengadaanComponent } from "./pages/pemasukan/kontrak-pengadaan/view-kontrak-pengadaan/view-kontrak-pengadaan.component";
@@ -10,6 +18,12 @@ import { DaftarPenerimaanComponent } from "./pages/pemasukan/penerimaan/daftar-p
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
 import { ViewPenerimaanComponent } from "./pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component";
 import { SetHargaOrderComponent } from "./pages/pemasukan/set-harga-order/set-harga-order.component";
+import { DaftarReturPembelianComponent } from "./pages/retur/daftar-retur-pembelian/daftar-retur-pembelian.component";
+import { InputReturPembelianComponent } from "./pages/retur/input-retur/input-retur.component";
+import { ViewReturPembelianComponent } from "./pages/retur/view-retur-pembelian/view-retur-pembelian.component";
+import { DaftarReturIssueComponent } from "./pages/retur_issue/daftar-retur-issue/daftar-retur-issue.component";
+import { InputReturIssueComponent } from "./pages/retur_issue/input-retur-issue/input-retur-issue.component";
+import { ViewReturIssueComponent } from "./pages/retur_issue/view-retur-issue/view-retur-issue.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
@@ -61,13 +75,6 @@ const mmRoutes: Routes = [
         ],
     },
     {
-        path: "setharga-order", component: null, data: {title:"Input PO"},
-        children:[
-            { path: "input-setharga-order", component: SetHargaOrderComponent, data: { title: "Set Harga Order" } },
-        ],
-        
-    },
-    {
         path: "penerimaan", component: null, data: {title:"Input Penerimaan"},
         children:[
             { path: "input-penerimaan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
@@ -76,15 +83,52 @@ const mmRoutes: Routes = [
         ],
     },
     {
-        path: "pemasukan", component: null, data: { title: "Input PO" },
+        path: "setharga-order", component: null, data: {title:"Input PO"},
+        children:[
+            { path: "input-setharga-order", component: SetHargaOrderComponent, data: { title: "Set Harga Order" } },
+        ],
+        
+    },
+    {
+        path: "permintaan-mutasi", component: null, data: { title: "Input PO" },
         children: [
-            { path: "input-pemasukan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
+            { path: "daftar-permintaan-mutasi", component: DaftarPermintaanMutasiComponent, data: { title: "Permintaan Mutasi" } },
+            { path: "input-permintaan-mutasi", component: InputPermintaanMutasiComponent, data: { title: "Input Permintaan Mutasi" } },
+            { path: "view-permintaan-mutasi/:id/:key", component: ViewPermintaanMutasiComponent, data: { title: "View Permintaaan Mutasi" } },
         ],
     },
     {
-        path: "retur", component: null, data: { title: "Input PO" },
+        path: "persetujuan-mutasi", component: null, data: { title: "Input PO" },
         children: [
-            { path: "input-pemasukan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
+            { path: "daftar-persetujuan-mutasi", component: DaftarPersetujuanMutasiComponent, data: { title: "Persetujuan Mutasi" } },
+            { path: "proses-persetujuan-mutasi/:id/:key", component: ViewPersetujuanMutasiComponent, data: { title: "Proses Persetujuan Mutasi" } },
+        ],
+    },
+    {
+        path: "retur-pembelian", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-retur-pembelian", component: DaftarReturPembelianComponent, data: { title: "Persetujuan Mutasi" } },
+            { path: "input-retur-pembelian", component: InputReturPembelianComponent, data: { title: "Input Retur Pembelian" } },
+            { path: "view-retur-pembelian/:id/:key", component: ViewReturPembelianComponent, data: { title: "View Retur Pembelian" } },
+
+        ],
+    },
+    {
+        path: "issue", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-issue", component: DaftarIssueComponent, data: { title: "Daftar Issue" } },
+            { path: "input-issue", component: InputIssueComponent, data: { title: "Input Issue" } },
+            { path: "view-issue/:id/:key", component: ViewIssueComponent, data: { title: "View Issue" } },
+
+        ],
+    },
+    {
+        path: "retur-issue", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-retur-issue", component: DaftarReturIssueComponent, data: { title: "Daftar Retur Issue" } },
+            { path: "input-retur-issue", component: InputReturIssueComponent, data: { title: "Input Retur Issue" } },
+            { path: "view-retur-issue/:id/:key", component: ViewReturIssueComponent, data: { title: "View Retur Issue" } },
+
         ],
     }
 ]

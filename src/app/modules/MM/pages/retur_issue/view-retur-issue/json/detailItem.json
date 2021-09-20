@@ -1,0 +1,93 @@
+{
+    "TrDetail":
+    [
+        {
+            "allowEditing": false,
+            "field":"kode_item",
+            "headerText":"Kode Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"nama_item",
+            "headerText":"Nama Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"qty_satuan_besar_retur_pemakaian_internal",
+            "headerText":"Banyak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "editParams":"satuanParams",
+            "field":"nama_satuan_besar_retur_pemakaian_internal",
+            "headerText":"Satuan",
+            "editType": "dropdownedit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"isi_retur_pemakaian_internal",
+            "headerText":"Isi",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"qty_retur_pemakaian_internal",
+            "headerText":"Qty",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"nominal_retur_pemakaian_internal",
+            "headerText":"Nominal",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"keterangan_retur_pemakaian_internal",
+            "headerText":"Keterangan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        }
+    ]
+}

@@ -74,7 +74,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -97,7 +97,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"",
-            "textAlign":"left",
+            "textAlign":"right",
             "visible": true
         },
         {
@@ -107,7 +107,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -118,7 +118,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         },
@@ -129,7 +129,7 @@
             "editType": "defaultEdit",
             "type":"",
             "format":"",
-            "textAlign":"left",
+            "textAlign":"right",
             "headerTextAlign":"Center",
             "visible": true
         }

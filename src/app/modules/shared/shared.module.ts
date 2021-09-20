@@ -67,6 +67,7 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
 import { OrgInputLookUpStaticFilterComponent } from './components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
+import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
 
 @NgModule({
     declarations: [
@@ -122,6 +123,7 @@ import { OrgInputLookUpStaticFilterComponent } from './components/organism/loock
         OrgInputWilayahComponent,
         OrgLookUpChecklistComponent,
         OrgInputLookUpStaticFilterComponent,
+        MolInputNumericComponent,
     ],
     imports: [
         CommonModule,
@@ -200,6 +202,8 @@ import { OrgInputLookUpStaticFilterComponent } from './components/organism/loock
         TreeViewModule,
         Ng2SearchPipeModule,
         MatStepperModule
+        MolInputNumericComponent,
+
     ],
     providers: [
         EditService,

@@ -72,10 +72,10 @@
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="true" headerText='Isi' editType='defaultEdit'
-                    textAlign="left" headerTextAlign="right">
+                    textAlign="right" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='qty_kontrak' [allowEditing]="false" headerText='QTY'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="right">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='harga_satuan' [allowEditing]="true" headerText='Harga Satuan'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
@@ -86,16 +86,18 @@
             </e-columns>
         </ejs-grid>
 
-        <div class="row">
-            <div class="col-sm-8">
+        <div class="row mt-2">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak"
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
             </div>
             <div class="col-sm-4">
-                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
-                    [value]="inputKontrakPengadaanService.total" formControlName="total_transaksi_kontrak"
-                    [inputFieldState]="'detail'"></mol-input-text>
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="inputKontrakPengadaanService.jumlahItem" formControlName="jumlah_item_kontrak"
-                    [inputFieldState]="'detail'"></mol-input-text>
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="inputKontrakPengadaanService.total" [id]="'total_transaksi_kontrak'" formControlName="total_transaksi_kontrak"
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
             </div>
         </div>
     </form>

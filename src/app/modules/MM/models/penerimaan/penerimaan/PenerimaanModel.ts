@@ -66,8 +66,8 @@ export interface TrPenerimaanDetailItemInsert {
     /** @format double */
     sub_total?: number;
 
-     /** @format Array of Object */
-     satuan:satuan[];
+    /** @format Array of Object */
+    satuan:satuan[];
 }
 
 export interface TrPenerimaanInsert {

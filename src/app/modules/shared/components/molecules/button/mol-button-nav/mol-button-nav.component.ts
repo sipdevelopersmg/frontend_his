@@ -4,6 +4,7 @@ export interface ButtonNavModel {
     Id: string;
     Icons1: string;
     Icons2?: string;
+    Class?:string;
     StackIcon?: boolean;
     Children?: Object[];
     Captions: string;

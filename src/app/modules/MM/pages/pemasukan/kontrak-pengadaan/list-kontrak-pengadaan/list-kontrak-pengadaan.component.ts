@@ -47,7 +47,7 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.inputKontrakPengadaanService.onInitList();
+    // this.inputKontrakPengadaanService.onInitList();
   }
 
   handlePencarianFilter(args){

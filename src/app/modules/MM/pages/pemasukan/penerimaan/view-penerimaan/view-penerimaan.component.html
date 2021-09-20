@@ -84,34 +84,36 @@
         
         <div class="row">
             <div class="col-sm-4">
-                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
-                    [value]="penerimaanService.sub_total_1" formControlName="sub_total_1"
-                    [inputFieldState]="'detail'"></mol-input-text>
-                <mol-input-text [label]="'Diskon'" [isFooter]="true"
+
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="penerimaanService.jumlah_item" formControlName="sub_total_1"
+                    [inputFieldState]="'detail'"></mol-input-numeric>  
+
+                <mol-input-numeric [label]="'Diskon'" [isFooter]="true"
                     [value]="penerimaanService.total_disc" formControlName="total_disc"
-                    [inputFieldState]="'detail'"></mol-input-text>
-                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [inputFieldState]="'detail'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="penerimaanService.sub_total_2" formControlName="sub_total_2"
-                    [inputFieldState]="'detail'"></mol-input-text>
-                <mol-input-text [label]="'Tax'" [isFooter]="true"
+                    [inputFieldState]="'detail'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Tax'" [isFooter]="true"
                     [value]="penerimaanService.total_tax" formControlName="total_tax"
-                    [inputFieldState]="'detail'"></mol-input-text>
-                <mol-input-text [label]="'Total Transaksi'" [isFooter]="true"
+                    [inputFieldState]="'detail'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="penerimaanService.total_transaksi" formControlName="total_transaksi"
-                    [inputFieldState]="'detail'"></mol-input-text>
+                    [inputFieldState]="'detail'"></mol-input-numeric>
             </div>
             <div class="col-sm-4">
-                <mol-input-text [label]="'Biaya Kirim'" formControlName="biaya_kirim" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
-                <mol-input-text [label]="'Biaya Asuransi'" formControlName="biaya_asuransi" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
-                <mol-input-text [label]="'Biaya Lain'" formControlName="biaya_lain" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
-                <mol-input-text [label]="'Potongan'" formControlName="potongan_nominal" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>
-                <mol-input-text [label]="'Uang Muka'" formControlName="total_uang_muka" [isFooter]="true" [inputFieldState]="'input'"></mol-input-text>   
+                <mol-input-numeric [label]="'Biaya Kirim'" formControlName="biaya_kirim" [isFooter]="true" [inputFieldState]="'input'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Biaya Asuransi'" formControlName="biaya_asuransi" [isFooter]="true" [inputFieldState]="'input'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Biaya Lain'" formControlName="biaya_lain" [isFooter]="true" [inputFieldState]="'input'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Potongan'" formControlName="potongan_nominal" [isFooter]="true" [inputFieldState]="'input'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Uang Muka'" formControlName="total_uang_muka" [isFooter]="true" [inputFieldState]="'input'"></mol-input-numeric>   
             </div>
             <div class="col-sm-4">
-                <mol-input-text [label]="'Jumlah Item'" [isFooter]="true"
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
                     [value]="penerimaanService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'"></mol-input-text>
-                <mol-input-text [label]="'Total Tagihan'" formControlName="total_tagihan" [isFooter]="true" [inputFieldState]="inputFieldState"></mol-input-text>
+                    [inputFieldState]="'detail'"></mol-input-numeric>
+                <mol-input-numeric [label]="'Total Tagihan'" formControlName="total_tagihan" [isFooter]="true" [inputFieldState]="inputFieldState"></mol-input-numeric>
             </div>
         </div>
     </form>

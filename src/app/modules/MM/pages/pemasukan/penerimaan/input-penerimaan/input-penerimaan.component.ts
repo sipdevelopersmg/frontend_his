@@ -21,6 +21,7 @@ import { TrPenerimaanDetailItemInsert } from 'src/app/modules/MM/models/penerima
 import { SetupShippingMethodService } from 'src/app/modules/MM/services/setup-data/setup-shipping-method/setup-shipping-method.service';
 import { SetupPaymentTermService } from 'src/app/modules/MM/services/setup-data/setup-payment-term/setup-payment-term.service';
 import { SetupJenisPenerimaanService } from 'src/app/modules/MM/services/setup-data/setup-jenis-penerimaan/setup-jenis-penerimaan.service';
+import { PemesananService } from 'src/app/modules/MM/services/pemasukan/pemesanan/pemesanan.service';
 
 @Component({
   selector: 'app-input-penerimaan',
@@ -105,6 +106,7 @@ export class InputPenerimaanComponent implements OnInit {
       public setupShippingMethodService: SetupShippingMethodService,
       public setupPaymentTermService: SetupPaymentTermService,
       public setupJenisPenerimaanService: SetupJenisPenerimaanService,
+      public pemesananService:PemesananService,
 
   ) { }
 
@@ -170,14 +172,14 @@ export class InputPenerimaanComponent implements OnInit {
       });
 
       this.GridDetailToolbar = [
-          { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+        //   { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
           { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }
       ];
       this.setupStockroomService.setDataSource();
       this.setupShippingMethodService.setDataSource(); 
       this.setupPaymentTermService.setDataSource();
       this.setupJenisPenerimaanService.setDataSource();
-      this.ResetFrom();
+      this.penerimaanService.Reset();
   }
 
   ngAfterViewInit(): void {
@@ -238,35 +240,33 @@ export class InputPenerimaanComponent implements OnInit {
   }
 
   heandleSelectedItem($event) {
-      let item: TrPenerimaanDetailItemInsert = {
-          pemesanan_id: null,
-          pemesanan_detail_id: null,
-          no_urut: 0,
-          id_item: $event.id_item,
-          barcode:$event.barcode,
-          kode_item: $event.kode_item,
-          nama_item: $event.nama_item,
-          batch_number:'',
-          expired_date:null,
-          qty_satuan_besar: 1,
-          kode_satuan_besar: $event.satuans[0].kode_satuan,
-          harga_satuan_besar: $event.harga_beli_terakhir,
-          isi: $event.satuans[0].isi,
-          qty_terima: $event.satuans[0].isi,
-          harga_satuan: $event.harga_beli_terakhir,
-          disc_prosentase_1: 0,
-          disc_nominal_1: 0,
-          disc_prosentase_2: 0,
-          disc_nominal_2: 0,
-          harga_satuan_brutto: $event.harga_beli_terakhir,
-          tax_prosentase: 0,
-          tax_nominal: 0,
-          harga_satuan_netto: $event.harga_beli_terakhir,
-          sub_total: $event.satuans[0].isi * $event.harga_beli_terakhir,
-          satuan: $event.satuans,
-      }
-      this.penerimaanService.addDataDetail(item);
-      this.selectLastRowdetail();
+    //   let item: TrPenerimaanDetailItemInsert = {
+    //       pemesanan_id: null,
+    //       pemesanan_detail_id: null,
+    //       no_urut: 0,
+    //       id_item: $event.id_item,
+    //       barcode:$event.barcode,
+    //       kode_item: $event.kode_item,
+    //       nama_item: $event.nama_item,
+    //       batch_number:'',
+    //       expired_date:null,
+    //       qty_satuan_besar: 1,
+    //       kode_satuan_besar: $event.satuans[0].kode_satuan,
+    //       harga_satuan_besar: $event.harga_beli_terakhir,
+    //       isi: $event.satuans[0].isi,
+    //       qty_terima: $event.satuans[0].isi,
+    //       harga_satuan: $event.harga_beli_terakhir,
+    //       disc_prosentase_1: 0,
+    //       disc_nominal_1: 0,
+    //       disc_prosentase_2: 0,
+    //       disc_nominal_2: 0,
+    //       harga_satuan_brutto: $event.harga_beli_terakhir,
+    //       tax_prosentase: 0,
+    //       tax_nominal: 0,
+    //       harga_satuan_netto: $event.harga_beli_terakhir,
+    //       sub_total: $event.satuans[0].isi * $event.harga_beli_terakhir,
+    //       satuan: $event.satuans,
+    //   }
   }
 
   handleActionCompleted($event) {
@@ -354,7 +354,17 @@ export class InputPenerimaanComponent implements OnInit {
     this.id_stockroom.setValue(args.id_stockroom);
     this.id_supplier.setValue(args.id_supplier);
     this.nama_stockroom.setValue(args.nama_stockroom);
-}
+    this.pemesananService.getDetail(args.pemesanan_id).subscribe((result)=>{
+        let item = result.data
+        item.forEach(element => {
+            element.qty_terima = element.qty_pesan;
+            element.sub_total = element.sub_total_pesan ;
+            element.satuan = element.satuans;
+        });
+        this.penerimaanService.addDataDetail(item);
+        this.selectLastRowdetail();
+    });
+  }
 
   onOpenQty() {
 
