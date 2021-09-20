@@ -201,9 +201,8 @@ import { MolInputNumericComponent } from './components/molecules/form/mol-input-
         GridModule,
         TreeViewModule,
         Ng2SearchPipeModule,
-        MatStepperModule
+        MatStepperModule,
         MolInputNumericComponent,
-
     ],
     providers: [
         EditService,
