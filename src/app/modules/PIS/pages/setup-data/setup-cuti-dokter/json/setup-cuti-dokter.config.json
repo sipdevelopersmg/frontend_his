@@ -1,0 +1,122 @@
+{
+    "GridSetupCutiDokterColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_dokter",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_dokter",
+            "headerText": "NAMA DOKTER",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tgl_mulai_cuti",
+            "headerText": "TGL MULAI CUTI",
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tgl_selesai_cuti",
+            "headerText": "TGL SELESAI CUTI",
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "KETERANGAN",
+            "visible": true,
+            "width": 120
+        }
+    ],
+    "LookupDokter": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "id_person",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_dokter",
+                "headerText": "KODE DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "spesialisasi_dokter",
+                "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true,
+                "width": 120
+            }
+        ],
+        "filter": [
+            {
+                "field": "d.kode_dokter",
+                "filter": "like",
+                "title": "KODE DOKTER"
+            },
+            {
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA DOKTER"
+            }
+        ]
+    }
+}

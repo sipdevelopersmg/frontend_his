@@ -1,0 +1,88 @@
+{
+    "JadwalDokterDummy": {
+        "id_dokter": 0,
+        "id_poli": 0,
+        "nama_poli": "",
+        "nama_dokter": "",
+        "jadwal": [
+            {
+                "id_hari": 0,
+                "nama_hari": "minggu",
+                "waktu": []
+            },
+            {
+                "id_hari": 1,
+                "nama_hari": "senin",
+                "waktu": []
+            },
+            {
+                "id_hari": 2,
+                "nama_hari": "selasa",
+                "waktu": []
+            },
+            {
+                "id_hari": 3,
+                "nama_hari": "rabu",
+                "waktu": []
+            },
+            {
+                "id_hari": 4,
+                "nama_hari": "kamis",
+                "waktu": []
+            },
+            {
+                "id_hari": 5,
+                "nama_hari": "jumat",
+                "waktu": []
+            },
+            {
+                "id_hari": 6,
+                "nama_hari": "sabtu",
+                "waktu": []
+            }
+        ]
+    },
+    "LookupDokter": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_dokter",
+                "headerText": "KODE DOKTER",
+                "type": "string",
+                "visible": true
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA DOKTER",
+                "type": "string",
+                "visible": true
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "spesialisasi_dokter",
+                "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true
+            }
+        ],
+        "filter": [
+            {
+                "field": "d.kode_dokter",
+                "filter": "like",
+                "title": "KODE"
+            },
+            {
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA"
+            }
+        ]
+    }
+}

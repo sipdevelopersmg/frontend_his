@@ -184,7 +184,7 @@
                 "headerText": "KODE DOKTER",
                 "type": "string",
                 "visible": true,
-                "width": 80
+                "width": 90
             },
             {
                 "allowEditing": true,
@@ -204,7 +204,39 @@
                 "headerText": "SPESIALISASI",
                 "type": "string",
                 "visible": true,
-                "width": 120
+                "width": 110
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_hari",
+                "headerText": "HARI PRAKTEK",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "jam_mulai",
+                "headerText": "JAM MULAI",
+                "textAlign": "Right",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "jam_selesai",
+                "headerText": "JAM SELESAI",
+                "textAlign": "Right",
+                "type": "string",
+                "visible": true,
+                "width": 80
             }
         ],
         "filter": [

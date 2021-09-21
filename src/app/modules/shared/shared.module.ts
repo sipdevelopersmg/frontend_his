@@ -67,6 +67,7 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
 import { OrgInputLookUpStaticFilterComponent } from './components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
 
 @NgModule({
@@ -140,7 +141,8 @@ import { MolInputNumericComponent } from './components/molecules/form/mol-input-
         ComboBoxModule,
         TreeViewModule,
         FormsModule,
-        MatStepperModule
+        MatStepperModule,
+        NgxMaterialTimepickerModule,
     ],
     exports: [
         AtmLabelComponent,
@@ -202,6 +204,7 @@ import { MolInputNumericComponent } from './components/molecules/form/mol-input-
         TreeViewModule,
         Ng2SearchPipeModule,
         MatStepperModule,
+        NgxMaterialTimepickerModule,
         MolInputNumericComponent,
     ],
     providers: [

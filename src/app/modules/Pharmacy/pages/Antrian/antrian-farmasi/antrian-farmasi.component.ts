@@ -115,11 +115,7 @@ export class AntrianFarmasiComponent implements OnInit {
 
         this.Columns[0]["Data"].splice(0, 1);
 
-        console.log(this.Columns[0]["Data"]);
-
         this.Columns[1]["Data"].push(item);
-
-        console.log(this.Columns[1]["Data"]);
     }
 
     onTransferItemUsingDataDetailId(StatusBoardAwal: string, StatusBoardAkhir: string, DataDetailId: string) {

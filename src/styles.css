@@ -261,3 +261,8 @@ span.readonly-state > .e-numerictextbox {
   background-color: #e9ecef !important;
   border: 1px solid #dee2e6 !important;
 }
+
+.large-modal-content {
+  width: 60rem !important;
+  margin-left: -5rem !important;
+}

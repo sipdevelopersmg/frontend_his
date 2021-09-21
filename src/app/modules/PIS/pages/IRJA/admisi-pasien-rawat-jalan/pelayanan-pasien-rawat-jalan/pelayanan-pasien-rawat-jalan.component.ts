@@ -13,15 +13,15 @@ import { SetupJenisRuanganService } from 'src/app/modules/Billing/services/setup
 import { SetupDebiturService } from 'src/app/modules/PIS/services/setup-data/setup-debitur/setup-debitur.service';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import settingGrid from '../json/grid.json';
-import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALAN';
-import * as API_PIS_SETUP_DATA from '../../../../../../api/PIS/SETUP_DATA';
-import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';
 import { OrgLookUpChecklistComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { IPersonPasienForAdmisiRawatJalanModel } from 'src/app/modules/PIS/models/IRJA/admisi-pasien-rawat-jalan.model';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
 import { DokterModel } from 'src/app/modules/PIS/models/setup-data/setup-dokter.model';
+import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALAN';
+import * as API_PIS_SETUP_DATA from '../../../../../../api/PIS/SETUP_DATA';
+import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';
 
 @Component({
     selector: 'app-pelayanan-pasien-rawat-jalan',
@@ -144,6 +144,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
             no_rekam_medis: ["", []],
             id_jenis_ruangan: [0, []],
             id_poli: [0, []],
+            id_jadwal_dokter: [0, []],
             id_dokter: [0, []],
             id_debitur: [0, []],
             id_asal_rujukan: [0, []],
@@ -202,10 +203,14 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
 
     heandleSelectedPoli(args: PoliModel): void {
         this.id_poli.setValue(args.id_poli || args[0].id_poli);
+
+        this.urlDokter = this.urlDokter + this.id_poli.value;
     }
 
     heandleSelectedDokter(args: any): void {
         this.id_dokter.setValue(args.id_dokter || args[0].id_dokter);
+
+        this.id_jadwal_dokter.setValue(args.id_jadwal_dokter || args[0].id_jadwal_dokter);
     }
 
     handleSelectedAsalRujukan(args: any): void {
@@ -264,6 +269,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
             "id_jenis_ruangan": data.id_jenis_ruangan,
             "id_poli": data.id_poli,
             "id_dokter": data.id_dokter,
+            "id_jadwal_dokter": data.id_jadwal_dokter,
             "id_debitur": data.id_debitur,
             "id_kelas_rawat": data.id_kelas_rawat,
             "id_icd_masuk": data.id_icd_masuk,
@@ -307,6 +313,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     get no_rekam_medis(): AbstractControl { return this.formAdmisiPasien.get('no_rekam_medis'); }
     get id_jenis_ruangan(): AbstractControl { return this.formAdmisiPasien.get('id_jenis_ruangan'); }
     get id_poli(): AbstractControl { return this.formAdmisiPasien.get('id_poli'); }
+    get id_jadwal_dokter(): AbstractControl { return this.formAdmisiPasien.get('id_jadwal_dokter'); }
     get id_dokter(): AbstractControl { return this.formAdmisiPasien.get('id_dokter'); }
     get id_debitur(): AbstractControl { return this.formAdmisiPasien.get('id_debitur'); }
     get id_asal_rujukan(): AbstractControl { return this.formAdmisiPasien.get('id_asal_rujukan'); }

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
-import { GetAllPasienIRJAModel } from '../../../models/IRJA/daftar-pasien.model';
 import * as API_CONFIG from '../../../../../api';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpResponseModel, PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Injectable({
     providedIn: 'root'
