@@ -39,6 +39,8 @@ import { SetupAsalRujukanComponent } from './pages/setup-data/setup-asal-rujukan
 import { SetupIcdDiagnosaComponent } from './pages/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.component';
 import { PemasukanRawatJalanComponent } from './pages/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.component';
 import { SetupJadwalDokterComponent } from './pages/setup-data/setup-jadwal-dokter/setup-jadwal-dokter.component';
+import { SetupCutiDokterComponent } from './pages/setup-data/setup-cuti-dokter/setup-cuti-dokter.component';
+import { SetupMappingTarifOrderPenunjangComponent } from './pages/setup-data/setup-mapping-tarif-order-penunjang/setup-mapping-tarif-order-penunjang.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -79,6 +81,8 @@ const ngWizardConfig: NgWizardConfig = {
         SetupIcdDiagnosaComponent,
         PemasukanRawatJalanComponent,
         SetupJadwalDokterComponent,
+        SetupCutiDokterComponent,
+        SetupMappingTarifOrderPenunjangComponent,
     ],
     imports: [
         CommonModule,

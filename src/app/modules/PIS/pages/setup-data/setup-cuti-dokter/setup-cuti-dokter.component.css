@@ -6,7 +6,7 @@ th.e-headercell {
   background-color: rgba(0, 0, 0, 0.03);
   color: black;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  padding: 10px 5px !important;
+  padding: 10px !important;
   height: 30px !important;
 }
 
@@ -16,17 +16,4 @@ span.e-headertext {
 
 td.e-rowcell {
   padding: 5px !important;
-}
-
-.statustemp.e-activecolor {
-  padding-top: 1px !important;
-}
-
-.statustemp.e-inactivecolor {
-  padding-top: 1px !important;
-}
-
-.modal-content {
-  width: 60rem !important;
-  margin-left: -5rem !important;
 }

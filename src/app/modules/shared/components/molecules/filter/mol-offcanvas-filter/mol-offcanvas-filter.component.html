@@ -46,7 +46,8 @@
                     class="form-control form-select-sm" (keyup.enter)="handleClickAddFilter()" />
 
                 <ejs-datepicker *ngIf="FilterState == 'Date'" #DateValue [format]="'yyyy-MM-dd'"
-                    (keyup.enter)="handleClickAddFilter()"></ejs-datepicker>
+                    (keyup.enter)="handleClickAddFilter()">
+                </ejs-datepicker>
             </div>
 
             <!-- Button Add -->

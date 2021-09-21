@@ -119,4 +119,12 @@ export class UtilityService {
 
         return date_now;
     }
+
+    onFixingDatepickerSyncfusion(date: any): any {
+        let current_date = new Date(date);
+
+        current_date = new Date(date.setDate(current_date.getDate() + 1));
+
+        return current_date.toISOString();
+    }
 }

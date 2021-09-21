@@ -1,39 +1,39 @@
 <org-card-layout>
     <div class="row mb-2">
-        <!-- Drodpown Ruang dan Listing Poli -->
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 px-2">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="row px-0 mx-0">
-                <!-- Dropdown Ruang -->
+                <!-- Dropdown Jenis Penunjang -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                    <atm-label [LabelCaption]="'Jenis Ruangan'"></atm-label>
-                    <ejs-dropdownlist [cssClass]="'mt-2'" [dataSource]="DropdownRuanganDatasource"
-                        [fields]="DropdownRuanganFields" [allowFiltering]="true"
-                        (change)="handleChangeDropdownRuangan($event)">
+                    <atm-label [LabelCaption]="'Jenis Penunjang'"></atm-label>
+                    <ejs-dropdownlist [cssClass]="'mt-2'"
+                        [dataSource]="setupMappingOrderTarifPenunjangService.JenisPenunjang.value"
+                        [fields]="DropdownJenisPenunjangField" [allowFiltering]="true"
+                        (change)="handleChangeDropdownJenisPenunjang($event)">
                     </ejs-dropdownlist>
                 </div>
 
-                <!-- Listing Poli -->
+                <!-- Listing Order -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card shadow-sm">
                         <div class="card-body p-2" style="height: calc(100vh - 15.5rem); overflow-y: auto;">
-                            <ejs-treeview [id]="'GridTreePoliklinik'" [fields]="PoliklinikTreeViewFields"
-                                e-nodeclick="onClick" [allowMultiSelection]='false' [allowDragAndDrop]="false"
-                                (nodeSelected)="handleSelectedPoli($event)">
+                            <ejs-treeview [id]="'GridTreeOrder'" [fields]="ListingOrderFields" e-nodeclick="onClick"
+                                [allowMultiSelection]='false' [allowDragAndDrop]="false"
+                                (nodeSelected)="handleSelectedKelompokOrder($event)">
                                 <ng-template #nodeTemplate="" let-data="">
-                                    <div>
+                                    <div id="{{ data.id + 'tree' }}">
                                         <div class="treeviewdiv">
                                             <div class="poli-text">
                                                 <p
                                                     class="mb-0 {{ data.child?.length > 0 ? 'poli-parent' : 'poli-child' }}">
-                                                    {{ data.nama_poli }}
+                                                    {{ data.nama_kelompok_tarif }}
                                                 </p>
                                             </div>
-                                            <div class="badge-poli" *ngIf="data.child?.length < 1">
-                                                <span class="badge bg-success fw-light">
-                                                    {{ data.jumlah_tarif_poli }} Item
-                                                </span>
-                                            </div>
                                         </div>
+
+                                        <ejs-contextmenu id="" [target]="'#' + data.id + 'tree'" [items]='MenuItems'
+                                            (beforeOpen)="handleBeforeOpenContextMenu($event, data)"
+                                            (select)="handleClickContextMenu($event, data)">
+                                        </ejs-contextmenu>
                                     </div>
                                 </ng-template>
                             </ejs-treeview>
@@ -43,33 +43,25 @@
             </div>
         </div>
 
-        <!-- Daftar Tarif Per Poli -->
-        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 px-2">
-            <div class="card shadow-sm border">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 ps-0">
+            <div class="card">
                 <div class="card-header px-2">
                     <p class="mb-0 text-biru-muda">
-                        Daftar Tarif Poli
+                        Daftar Tarif Penunjang Kelompok {{ SelectedChild.nama_kelompok_tarif | titlecase }}
                     </p>
                 </div>
                 <div class="card-body p-2">
                     <!-- Informasi Data Poli -->
                     <div class="row px-0 mx-0 mb-2">
-                        <!-- Kode Poliklinik -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 px-1">
-                            <label for="kode_poliklinik" class="form-label mb-1">Kode Poliklinik</label>
-                            <input id="kode_poliklinik" type="text" class="form-control form-select-sm" readonly
-                                [value]="SelectedPoliklinik.kode_poli ? SelectedPoliklinik.kode_poli : ''">
+                        <!-- Nama Kelompok -->
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 px-1">
+                            <label for="kode_poliklinik" class="form-label mb-1">Nama Kelompok</label>
+                            <input id="kode_poliklinik" type="text" class="form-control form-select-sm" readonly>
                         </div>
 
-                        <!-- Nama Poliklinik -->
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-1">
-                            <label for="nama_poliklinik" class="form-label mb-1">Poliklinik</label>
-                            <input id="nama_poliklinik" type="text" class="form-control form-select-sm" readonly
-                                [value]="SelectedPoliklinik.nama_poli ? SelectedPoliklinik.nama_poli : ''">
-                        </div>
 
                         <!-- Dropdown Kelas -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 px-1">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-1">
                             <label for="kelas_perawatan" class="form-label mb-1">Kelas</label>
 
                             <ejs-dropdownlist id="kelas_perawatan" #KelasPerawatanDropdown
@@ -87,8 +79,13 @@
                                 [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
                                 [pageSettings]="GridPageSettings" [toolbar]="GridDataToolbar" [allowResizing]="true"
                                 [allowFiltering]='true' [editSettings]="GridDataEditSettings"
-                                (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)">
+                                (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)"
+                                (actionComplete)="handleActionComplete($event)">
                                 <e-columns>
+                                    <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
+                                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
+                                        [headerTextAlign]="'Center'">
+                                    </e-column>
                                     <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'"
                                         [visible]="false" [type]="'number'" [allowEditing]="false"
                                         [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
@@ -98,11 +95,11 @@
                                         [textAlign]="'Left'">
                                     </e-column>
                                     <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
                                         [textAlign]="'Left'">
                                     </e-column>
                                     <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'KELAS'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
                                         [textAlign]="'Left'" [headerTextAlign]="'Left'">
                                     </e-column>
                                     <e-column [width]="80" [field]="'nominal_tarif'" [headerText]="'NILAI'"
@@ -111,7 +108,7 @@
                                         [format]="'N2'">
                                     </e-column>
                                     <e-column field='is_active' [headerText]="'STATUS'" [width]='70'
-                                        [textAlign]="'Center'">
+                                        [textAlign]="'Center'" [visible]="false">
                                         <ng-template #template let-data>
                                             <div *ngIf="data.is_active === true; else inactive"
                                                 class="statustemp e-activecolor">
@@ -136,11 +133,46 @@
             </div>
         </div>
 
+        <!-- Modal Add Child  -->
+        <ng-template #modalAddChild>
+            <div class="modal-header px-2 py-1">
+                <h5 class="modal-title pull-left">
+                    {{ FormAddChildState == 'Insert' ? 'Add' : 'Edit' }} Kelompok
+                    {{ SelectedChild.nama_kelompok_tarif | titlecase }}
+                </h5>
+                <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalAddChild()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body p-2">
+                <form [formGroup]="FormAddChild">
+                    <mol-input-text [label]="'Kode Kelompok'" formControlName="kode_kelompok_tarif">
+                    </mol-input-text>
+
+                    <mol-input-text [label]="'Nama Kelompok'" formControlName="nama_kelompok_tarif">
+                    </mol-input-text>
+                </form>
+            </div>
+            <div class="modal-footer background-abu-muda p-2">
+                <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalAddChild()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+                <button *ngIf="FormAddChildState == 'Insert'" type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitAddChild(FormAddChild.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+                <button *ngIf="FormAddChildState == 'Edit'" type="button" class="btn btn-warning btn-sm"
+                    (click)="handleUpdateAddChild(FormAddChild.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Update
+                </button>
+            </div>
+        </ng-template>
+
         <!-- Modal Lookup Tarif  -->
         <ng-template #modalAddLookupTarif>
             <div class="modal-header px-2 py-1">
                 <h5 class="modal-title pull-left">
-                    Data Tarif Kelas {{ KelasPerawatanDropdown.text }}
+                    Data Tarif
                 </h5>
                 <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalLookupTarif()">
                     <i class="fas fa-window-close"></i>
