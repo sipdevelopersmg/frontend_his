@@ -1,4 +1,5 @@
 export interface ResepRacikanModel {
+    is_racikan: boolean;
     id_obat: number;
     kode_obat: string;
     nama_obat: string;

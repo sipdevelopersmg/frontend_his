@@ -11,7 +11,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { FormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
-
 import { CommandColumnService, DetailRowService, EditService, GridModule, GroupService, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
 
 import { AtmLabelComponent } from './components/atoms/form/atm-label/atm-label.component';
