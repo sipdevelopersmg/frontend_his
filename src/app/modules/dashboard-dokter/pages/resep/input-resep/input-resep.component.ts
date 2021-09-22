@@ -1,17 +1,15 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Query } from '@syncfusion/ej2-data';
-import { AddEventArgs, EditSettingsModel, GridComponent, GridModel, IEditCell, QueryCellInfoEventArgs } from '@syncfusion/ej2-angular-grids';
+import { AddEventArgs, EditSettingsModel, GridComponent, GridModel, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { InsertGridResepModel } from '../../../models/resep.model';
-import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
 import * as GridConfig from '../json/GridResep.json';
 import { ResepRacikanService } from 'src/app/modules/Pharmacy/services/resep-racikan/resep-racikan.service';
 import { DropDownList, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
 import { SetupLabelPemakaianObatService } from 'src/app/modules/Pharmacy/services/setup-data/setup-label-pemakaian-obat/setup-label-pemakaian-obat.service';
 import { SetupTambahanAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-tambahan-aturan-pakai/setup-tambahan-aturan-pakai.service';
-import { EmitType } from '@syncfusion/ej2-base';
-import { SetupItemService } from 'src/app/modules/MM/services/setup-data/setup-item/setup-item.service';
+import { SetupMetodeRacikanService } from 'src/app/modules/Pharmacy/services/setup-data/setup-metode-racikan/setup-metode-racikan.service';
+import { ResepDokterService } from '../../../services/resep-dokter/resep-dokter.service';
 
 @Component({
     selector: 'app-input-resep',
@@ -32,22 +30,12 @@ export class InputResepComponent implements OnInit {
 
     // ** Satuan 
     SatuanObat: string = "-";
-
    
     DropdownObatFields: object = { text: 'nama_item', value: 'id_item' };
+    DropdownMetodeRacikanFields: object = { text: 'metode_racikan', value: 'id_metode_racikan' };
 
     NamaObatDatasource: any[] = [
        
-    ];
-
-    AturanPakaiDatasource: any[] = [
-        { id: 1, text: "1 Kali Sehari" },
-        { id: 2, text: "2 Kali Sehari" },
-        { id: 3, text: "3 Kali Sehari" },
-    ];
-    KeteranganPakaiDatasource: any[] = [
-        { id: 1, text: "Sebelum Makan" },
-        { id: 2, text: "Setelah Makan" },
     ];
 
     // ** Waktu Pakai
@@ -79,33 +67,32 @@ export class InputResepComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private resepRacikanService: ResepRacikanService,
+        public resepDokterService: ResepDokterService,
         public setupLabelPemakaianObatService:SetupLabelPemakaianObatService,
         public setupTambahanAturanPakaiService:SetupTambahanAturanPakaiService,
-        public setupItemService:SetupItemService,
-        private dashboardDokterService: DashboardDokterService
+        public setupMetodeRacikanService:SetupMetodeRacikanService,
     ) {
 
     }
 
     ngOnInit(): void {
 
-        this.NamaObatDatasource = [
-            { id: 1, nama_generik: "Acetylcysteine", satuan: "TAB", terapi: "Analgesik", restriksi: "Tidak Untuk Pasien Diabetes", peresepan: '20 Tab / Minggu' },
-            { id: 2, nama_generik: "Ambroxol", satuan: "KAP", terapi: "Analgesik", restriksi: "Tidak Untuk Pasien Diabetes", peresepan: '3 Kap / Hari' },
-            { id: 3, nama_generik: "Amoxillin", satuan: "TAB", terapi: "Analgesik", restriksi: "Tidak Untuk Pasien Diabetes", peresepan: '10 Tab / Minggu' },
-        ]
-
         this.FormAddObat = this.formBuilder.group({
-            racik: [false, []],
+            is_racikan: [false, []],
             no_urut: [0, []],
-            kode_resep: ['', []],
-            nama_obat: ['', [Validators.required]],
-            satuan: ['', []],
-            qty_obat: [0, [Validators.required]],
-            aturan_pakai: ['', [Validators.required]],
-            keterangan_pakai: ['', [Validators.required]],
-            //waktu_pakai: ['', [Validators.required]],
-            // catatan: ['', [Validators.required]]
+            set_racikan_id: [0, []],
+            id_metode_racikan: [0, []],
+            metode_racikan: ['', []],
+            id_item: [0, []],
+            nama_obat: ['', []],
+            qty_resep: ['', []],
+            satuan: ['-', []],
+            label: ['', []],
+            id_label_pemakaian_obat: [0, []],
+            label_pemakaian_obat: ['', []],
+            aturan: ['', []],
+            id_tambahan_aturan_pakai: [0, []],
+            label_tambahan_aturan_pakai: ['', []],
         });
 
         this.GridDaftarObatToolbar = [
@@ -114,7 +101,6 @@ export class InputResepComponent implements OnInit {
             'Search'
         ];
 
-        // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
         this.resepRacikanService.onGetResepRacikanDummy()
             .subscribe((result) => {
                 this.GridResepRacikanDatasource = result;
@@ -134,7 +120,7 @@ export class InputResepComponent implements OnInit {
             write: () => {
                 this.itemsObj = new DropDownList({
                     // value: ,
-                    dataSource: this.setupItemService.dataSource.value,
+                    dataSource: this.resepDokterService.dataObat.value,
                     fields: this.DropdownObatFields,
                     enabled: true,
                     placeholder: 'Select a items',
@@ -170,15 +156,17 @@ export class InputResepComponent implements OnInit {
             toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true },
             columns: [
-                { field: "id_obat", headerText: 'ID Obat', visible: false },
-                { field: "nama_obat", headerText: 'Nama Obat',editType:'dropdownedit',edit:this.itemsParams, width: 200 },
-                { field: "satuan", headerText: 'Satuan', width: 100 },
-                { field: "satuan_terkecil", headerText: 'Satuan Terkecil', width: 100 },
-                { field: "dosis_obat", headerText: 'Dosis Obat', textAlign: 'Right', width: 80 },
-                { field: "dosis_yg_diinginkan", headerText: 'Dosis yang Diinginkan', width: 100, headerTextAlign: 'Center', textAlign: 'Right' },
-                { field: "jumlah", headerText: 'Jumlah', textAlign: 'Right', width: 100, format: 'N2' },
-                { field: "harga", headerText: 'Harga (Rp)', textAlign: 'Right', width: 100, format: 'N2' },
-                { field: "subtotal", headerText: 'Subtotal (Rp)', textAlign: 'Right', width: 100, format: 'N2' },
+                { field: "no_urut", headerText: 'ID Obat', visible: false },
+                { field: "nama_item", headerText: 'Nama Obat',editType:'dropdownedit',edit:this.itemsParams, width: 200 },
+                { field: "satuan", headerText: 'Satuan', textAlign: 'Right', width: 80 },
+                { field: "id_item", headerText: 'id', width: 100, visible: false },
+                { field: "counter", headerText: 'c', width: 100, visible: false },
+                { field: "komposisi", headerText: 'kps', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
+                { field: "seper", headerText: '1/', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
+                { field: "kandungan", headerText: 'Kandungan', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
+                { field: "qty_resep", headerText: 'qty', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', visible: false },
+                { field: "qty_racikan", headerText: 'QTY', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
+                { field: "keterangan", headerText: 'Keterangan', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
             ],
             actionBegin(args: AddEventArgs) {
                 if (args.requestType === 'add') {
@@ -189,6 +177,7 @@ export class InputResepComponent implements OnInit {
                 }
             }
         }
+
         this.setupLabelPemakaianObatService.onGetAll().subscribe((result)=>{
             this.dataSourceLabelPemakaian = result.data;
         });
@@ -196,20 +185,9 @@ export class InputResepComponent implements OnInit {
         this.setupTambahanAturanPakaiService.onGetAll().subscribe((result)=>{
             this.dataSourceTambahanAturanPakai = result.data;
         });
-        this.setupItemService.setDataSource();
+        this.setupMetodeRacikanService.setDataSource();
+        this.resepDokterService.setDataObat([]);
     }
-
-    // public onFiltering =  (e: FilteringEventArgs) => {
-    //     // load overall data when search key empty.
-    //     if (e.text === '') {
-    //         e.updateData(this.dataSourceLabelPemakaian);
-    //     } else {
-    //       let query: Query = new Query().from('data').select(['nama_label_pemakaian_obat', 'id_label_pemakaian_obat']);
-    //       // change the type of filtering
-    //       query = (e.text !== '') ? query.where('nama_label_pemakaian_obat', 'endswith', e.text, true) : query;
-    //       e.updateData(this.dataSourceLabelPemakaian, query);
-    //     }
-    // };
 
     onLoad(args: any) {
         this.resepRacikanService.onGetDetailResepRacikanDummy()
@@ -234,18 +212,37 @@ export class InputResepComponent implements OnInit {
     }
 
     // ** Dropdown Nama Obat onchange method
-    onChangeNamaObat(args: any): void {
-        this.SatuanObat = args.itemData.satuan;
-
-        this.satuan.setValue(this.SatuanObat);
-    }
-    
-    handleChangeResep(args: any):void{
-        
+    handleChangeObat(args: any): void {
+        this.satuan.setValue(args.itemData.nama_satuan);
+        this.nama_obat.setValue(args.itemData.nama_item);
     }
 
-    handelClickResep(args:any): void{
+    handleChangeLabel(args: any): void{
+        console.log(args);
+        if(typeof args.value==='number' && (args.value%1)===0) {
+            this.label_pemakaian_obat.setValue('');
+            this.id_label_pemakaian_obat.setValue(args.value);
+        }else{
+            this.label_pemakaian_obat.setValue(args.value);
+            this.id_label_pemakaian_obat.setValue(1);
+        }
+    }
 
+    handleChangeAturan(args: any): void{
+        console.log(args);
+        if(typeof args.value==='number' && (args.value%1)===0) {
+            this.label_tambahan_aturan_pakai.setValue('');
+            this.id_tambahan_aturan_pakai.setValue(args.value);
+        }else{
+            this.label_tambahan_aturan_pakai.setValue(args.value);
+            this.id_tambahan_aturan_pakai.setValue(1);
+        }
+    }
+
+    // ** Button Add Data Obat ke Grid method
+    handleAddObat(FormAddObat: any): void {
+        console.log(FormAddObat);
+        this.resepDokterService.addDetail(FormAddObat);
     }
 
     // ** Dropdown Waktu Pakai onchange method
@@ -267,20 +264,7 @@ export class InputResepComponent implements OnInit {
         // this.waktu_pakai.setValue(this.WaktuPakai.join());
     }
 
-    // ** Button Add Data Obat ke Grid method
-    onSubmitDataObat(FormAddObat: any): void {
-        console.log(FormAddObat);
-        // ** Data dummy
-        // FormAddObat.rx = "rx";
-        // FormAddObat.no_urut = this.GridDaftarObatDataSource.length + 1;
-        // FormAddObat.kode_resep = "KR00" + this.GridDaftarObatDataSource.length + 1;
-
-        // this.onResetFormDataObat();
-
-        // // ** Push ke Grid Daftar Obat
-        // this.GridDaftarObatDataSource.push(FormAddObat);
-        // this.gridDaftarObat.Grid.refresh();
-    }
+    
 
     // ** Update Data Obat method
     onUpdateDataObat(FormAddObat: any): void {
@@ -343,12 +327,18 @@ export class InputResepComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("waktuPakaiMalam")).checked = DataObat.waktu_pakai.indexOf('Malam') > -1 ? true : false;
     }
 
+    get is_racikan(): AbstractControl { return this.FormAddObat.get('is_racikan'); };
+    get set_racikan_id(): AbstractControl { return this.FormAddObat.get('set_racikan_id'); };
+    get id_metode_racikan(): AbstractControl { return this.FormAddObat.get('id_metode_racikan'); };
+    get metode_racikan(): AbstractControl { return this.FormAddObat.get('metode_racikan'); };
+    get id_item(): AbstractControl { return this.FormAddObat.get('id_item'); };
     get nama_obat(): AbstractControl { return this.FormAddObat.get('nama_obat'); };
-    get satuan(): AbstractControl { return this.FormAddObat.get('satuan'); };
-    get qty_obat(): AbstractControl { return this.FormAddObat.get('qty_obat'); };
-    get aturan_pakai(): AbstractControl { return this.FormAddObat.get('aturan_pakai'); };
-    get keterangan_pakai(): AbstractControl { return this.FormAddObat.get('keterangan_pakai'); };
-    get racik() : AbstractControl { return this.FormAddObat.get('racik'); }
-    //get waktu_pakai(): AbstractControl { return this.FormAddObat.get('waktu_pakai'); };
-    // get catatan(): AbstractControl { return this.FormAddObat.get('catatan'); };
+    get qty_resep() : AbstractControl { return this.FormAddObat.get('qty_resep'); }
+    get satuan() : AbstractControl { return this.FormAddObat.get('satuan'); }
+    get label() : AbstractControl { return this.FormAddObat.get('label'); }
+    get id_label_pemakaian_obat() : AbstractControl { return this.FormAddObat.get('id_label_pemakaian_obat'); }
+    get label_pemakaian_obat() : AbstractControl { return this.FormAddObat.get('label_pemakaian_obat'); }
+    get aturan() : AbstractControl { return this.FormAddObat.get('aturan'); }
+    get id_tambahan_aturan_pakai() : AbstractControl { return this.FormAddObat.get('id_tambahan_aturan_pakai'); }
+    get label_tambahan_aturan_pakai() : AbstractControl { return this.FormAddObat.get('label_tambahan_aturan_pakai'); }
 }

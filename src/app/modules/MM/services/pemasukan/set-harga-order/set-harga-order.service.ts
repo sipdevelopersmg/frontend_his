@@ -66,8 +66,8 @@ export class SetHargaOrderService {
      * Service Untuk Menampilkan data berdasarkan dinamik filter
      * @onGetAll Void
     */
- onGetDetailByParamsSource(req: PostRequestByDynamicFiterModel[],id_supplier): void {
-    let detail : TrSethargaOrderDetailInsert[]=[];
+    onGetDetailByParamsSource(req: PostRequestByDynamicFiterModel[],id_supplier): void {
+        let detail : TrSethargaOrderDetailInsert[]=[];
 
         this.onGetAllByParams(req,id_supplier).subscribe((result) => {
             if (result) {
