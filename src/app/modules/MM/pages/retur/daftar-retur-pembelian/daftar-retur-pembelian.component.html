@@ -10,7 +10,7 @@
             <mol-grid
             #GridData
             [grid-height]="'calc(100vh - 19rem)'"
-            [grid-DataSource]="returPembelianService.dataSource | async"
+            [grid-DataSource]="returPembelianService.dataSource.getValue()"
             [grid-paging]="true"
             [grid-lines]="'Both'"
             [columns]="GridConfig.GridColumns"

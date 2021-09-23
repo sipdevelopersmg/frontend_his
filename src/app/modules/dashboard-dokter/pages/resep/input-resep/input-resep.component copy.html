@@ -10,13 +10,14 @@
                     <input
                         class="form-check-input"
                         type="checkbox"
-                        formControlName="is_racikan"
+                        formControlName="racik"
+                        (ngModelChange) = "handleChangeResep($event)"
                     >
                 </div>
             </div>
         </div>
         <!-- Nama Obat -->
-        <div *ngIf="!is_racikan.value" class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+        <div *ngIf="!racik.value" class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Nama Obat</label>
@@ -25,56 +26,72 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
                             <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
-                                [dataSource]="resepDokterService.dataObat | async" 
+                                [dataSource]="setupItemService.dataSource | async" 
                                 [fields]="DropdownObatFields"
-                                (change)="handleChangeObat($event)" 
-                                formControlName="id_item"
+                                (change)="onChangeNamaObat($event)" 
+                                formControlName="nama_obat"
+                                [headerTemplate]="headerTemplate" 
+                                [itemTemplate]="itemTemplate" 
                                 popupWidth='55rem'>
+
+                                <ng-template #itemTemplate let-data>
+                                    <div class="row item">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pe-0 border-end">
+                                            <span class="nama_item">{{ data.nama_item }}</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0 border-end">
+                                            <span class="terapi">{{ data.terapi }}</span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0 border-end">
+                                            <span class="terapi">{{ data.restriksi }}</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ps-0">
+                                            <span class="terapi">{{ data.peresepan }}</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template #headerTemplate let-data>
+                                    <div class="row head">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pe-0">
+                                            <span class="nama_generik">Nama Generik</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
+                                            <span class="terapi">Terapi</span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0">
+                                            <span class="terapi">Restriksi</span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ps-0">
+                                            <span class="terapi">Peresepan</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
                             </ejs-dropdownlist>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
                             <span class="input-group-text bg-primary text-white" id="basic-addon1">
-                                {{ satuan.value }}
+                                {{ SatuanObat }}
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Nama Racikan -->
-        <div *ngIf="is_racikan.value" class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
+        <!-- Nama Resep -->
+        <div *ngIf="racik.value" class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Nama Racikan Obat</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="input-group">
-                        <input type="text" class="form-control form-select-sm" 
-                            formControlName="nama_racikan"
-                            (change)="handleChangeNamaRacikan()">
+                        <input type="text"  class="form-control form-select-sm" >
                         <button id="btnInputGroup" class="btn btn-primary" type="button"
-                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';" (click)="handelClickRacikan($event)">
+                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';" (click)="handelClickResep($event)">
                             <i class="fas fa-search"></i>
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Meode Racikan -->
-        <div *ngIf="is_racikan.value" class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
-            <div class="row mb-2">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <label for="DropdownObat" class="form-label">Kemasan Racikan</label>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="input-group">
-                        <ejs-dropdownlist #MolDropdown 
-                            [dataSource]="setupMetodeRacikanService.dataSource | async" 
-                            [fields]="DropdownMetodeRacikanFields" 
-                            [allowFiltering]="true"
-                            (change)="handleChangeMetodeRacikan($event)"
-                        >
-                        </ejs-dropdownlist>
                     </div>
                 </div>
             </div>
@@ -90,7 +107,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ejs-numerictextbox [format]="'N0'" id="NumericQty" [showSpinButton]="false"
-                                [showClearButton]="false" formControlName="qty_resep" [ste]>
+                                [showClearButton]="false" formControlName="qty_obat" [ste]>
                             </ejs-numerictextbox>
                         </div>
                     </div>
@@ -106,33 +123,30 @@
                             <ejs-combobox id="DropdownLabelPemakaian" 
                                 [allowFiltering]="true"
                                 [dataSource]="dataSourceLabelPemakaian" 
-                                formControlName="label"
+                                formControlName="aturan_pakai"
                                 popupWidth='30rem'
-                                [fields]="DropdownLabelFields"
-                                (change)="handleChangeLabel($event)">
+                                [fields]="DropdownLabelFields">
                             </ejs-combobox>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-1">
                             <ejs-combobox id="DropdownTambahanAturanPakai" [allowFiltering]="true"
                                 [dataSource]="dataSourceTambahanAturanPakai" 
-                                formControlName="aturan"
+                                formControlName="keterangan_pakai"
                                 popupWidth='25rem'
-                                [fields]="DropdownAturanFields"
-                                (change)="handleChangeAturan($event)">
+                                [fields]="DropdownAturanFields">
                             </ejs-combobox>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div class="row align-content-center h-100 mb-2"
                 [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0"
                     [hidden]="FormAddObatState != 'input'">
                     <button class="btn btn-primary btn-sm" type="button" [disabled]="FormAddObat.invalid"
-                        (click)="handleAddObat(FormAddObat.value)">
+                        (click)="onSubmitDataObat(FormAddObat.value)">
                         <i class="fas fa-plus-circle fa-sm"></i>
                         <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Obat</span>
                     </button>
@@ -163,7 +177,7 @@
             </div> -->
             <div class="card-body p-0">
                 <ejs-grid #GridResepRacikan 
-                    [dataSource]="resepDokterService.dataDetail$ | async" 
+                    [dataSource]="GridResepRacikanDatasource" 
                     height="calc(100vh - 22rem)"
                     gridLines="Both" rowHeight="30" 
                     [childGrid]="ChildGrid" 
@@ -172,44 +186,13 @@
                     (dataBound)='onDataBound()'
                     >
                     <e-columns>
-                        <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>              
-                         <e-column [visible]="false" field='is_racikan' [allowEditing]="false" headerText='is_racikan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>   
-                        <e-column [visible]="false" field='set_racikan_id' [allowEditing]="false" headerText='set_racikan_id'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>  
-                        <e-column [visible]="false" field='id_metode_racikan' [allowEditing]="false" headerText='id_metode_racikan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>  
-                        <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column> 
-                        <e-column [visible]="false" field='id_label_pemakaian_obat' [allowEditing]="false" headerText='id_label_pemakaian_obat'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>    
-                        <e-column [visible]="false" field='id_tambahan_aturan_pakai' [allowEditing]="false" headerText='id_tambahan_aturan_pakai'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>
-                        <e-column [visible]="true" field='nama_obat' [allowEditing]="false" headerText='Nama Obat'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>
-                        <e-column [visible]="true" field='satuan' [allowEditing]="false" headerText='Satuan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>
-                        <e-column [visible]="true" field='metode_racikan' [allowEditing]="false" headerText='Kemasan Racikan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>
-                        <e-column [visible]="true" field='qty_resep' [allowEditing]="true" headerText='Qty'
-                            editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
-                        </e-column>
-                        <e-column [visible]="true" field='ket_label' [allowEditing]="false" headerText='Pemakaian'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>
-                        <e-column [visible]="true" field='ket_aturan' [allowEditing]="false" headerText='Aturan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        <e-column field="id_obat" headerText="Nama Obat" textAlign="Left" [visible]="false"></e-column>
+                        <e-column field="nama_obat" headerText="Nama Obat" textAlign="Left"></e-column>
+                        <e-column field="jumlah" headerText="Jumlah" textAlign="Center" format="N1"></e-column>
+                        <e-column field="satuan" headerText="Satuan" textAlign="Left"></e-column>
+                        <e-column field="harga" headerText="Harga (Rp)" textAlign="Right" format="N2"></e-column>
+                        <e-column field="diskon" headerText="Diskon (%)" textAlign="Right" format="N2"></e-column>
+                        <e-column field="subtotal" headerText="Subtotal (Rp)" textAlign="Right" format="N2">
                         </e-column>
                     </e-columns>
                 </ejs-grid>

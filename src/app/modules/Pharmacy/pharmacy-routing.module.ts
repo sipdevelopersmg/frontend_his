@@ -18,7 +18,7 @@ const pharmacyRoutes: Routes = [
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
-            { path: "setuptipe-outlet", component: SetupTipeOutletComponent, data: { title: "Setup Tipe Outlet" } },
+            { path: "setup-tipe-outlet", component: SetupTipeOutletComponent, data: { title: "Setup Tipe Outlet" } },
             { path: "setup-outlet", component: SetupOutletComponent, data: { title: "Setup Outlet" } },
             { path: "setup-grup-obat", component: SetupGrupObatComponent, data: { title: "Setup Grup Obat" } },
             { path: "setup-cara-pakai-obat", component: SetupCaraPakaiObatComponent, data: { title: "Setup Cara Pakai Obat" } },
