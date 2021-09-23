@@ -24,9 +24,11 @@ export interface TrResepDokterIrjaDetailInsert {
     qty_resep: number;
     satuan: string;
     label?:any;
+    ket_label:string;
     id_label_pemakaian_obat?: number;
     label_pemakaian_obat?:string;
     aturan?:any;
+    ket_aturan:string;
     id_tambahan_aturan_pakai?:number;
     label_tambahan_aturan_pakai?:string;
     racikan?:TrResepDokterIrjaDetailRacikanInsert[];

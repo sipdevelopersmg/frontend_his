@@ -6,7 +6,7 @@ import { PHARMACY } from 'src/app/api/PHARMACY';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { TrResepDokterIrjaDetailInsert } from '../../models/resep.model';
+import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert } from '../../models/resep.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +18,21 @@ export class ResepDokterService {
   private readonly _dataDetail = new BehaviorSubject<TrResepDokterIrjaDetailInsert[]>([]);
   readonly dataDetail$ = this._dataDetail.asObservable();
 
+  private readonly _dataDetailRacikan = new BehaviorSubject<TrResepDokterIrjaDetailRacikanInsert[]>([]);
+  readonly dataDetailRacikan$ = this._dataDetailRacikan.asObservable();
+
   public dataObat = new BehaviorSubject([]);
 
-  get dataDetail(): TrResepDokterIrjaDetailInsert[] {
-      return this._dataDetail.getValue();
+  get dataDetailRacikan(): TrResepDokterIrjaDetailRacikanInsert[] {
+      return this._dataDetailRacikan.getValue();
+  }
+  set dataDetailRacikan(val: TrResepDokterIrjaDetailRacikanInsert[]) {
+      this._dataDetailRacikan.next(val);
   }
 
+  get dataDetail(): TrResepDokterIrjaDetailInsert[] {
+    return this._dataDetail.getValue();
+  }
   set dataDetail(val: TrResepDokterIrjaDetailInsert[]) {
       this._dataDetail.next(val);
   }
@@ -64,6 +73,15 @@ export class ResepDokterService {
         detail
     ];
     this.sum();
+    console.log(this.dataDetail);
+    console.log(this.dataDetailRacikan);
+  }
+
+  addDetailRacikan(detailRacikan:TrResepDokterIrjaDetailRacikanInsert): void{
+    this.dataDetailRacikan = [
+      ...this.dataDetailRacikan,
+      detailRacikan
+    ]
   }
 
   sum(): void{
