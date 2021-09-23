@@ -5,20 +5,21 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { DiagnosaAwalModel } from '../../../models/setup-data/setup-icd-diagnosa.model';
-import { SetupIcdDiagnosaService } from '../../../services/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.service';
+import { GrupPenunjangModel } from '../../../models/setup-data/setup_grup_penunjang.model';
+import { SetupGrupPenunjangService } from '../../../services/setup-data/setup-grup-penunjang/setup-grup-penunjang.service';
+import * as Config from './json/setup-grup-penunjang.config.json';
 
 @Component({
-    selector: 'app-setup-icd-diagnosa',
-    templateUrl: './setup-icd-diagnosa.component.html',
-    styleUrls: ['./setup-icd-diagnosa.component.css']
+    selector: 'app-setup-grup-penunjang',
+    templateUrl: './setup-grup-penunjang.component.html',
+    styleUrls: ['./setup-grup-penunjang.component.css']
 })
-export class SetupIcdDiagnosaComponent implements OnInit {
+export class SetupGrupPenunjangComponent implements OnInit {
 
     /**
-    * Variable untuk Menympan Navigasi halaman
-    * @ButtonNavModel Array
-   */
+     * Variable untuk Menympan Navigasi halaman
+     * @ButtonNavModel Array
+    */
     ButtonNav: ButtonNavModel[];
 
     /**
@@ -41,11 +42,13 @@ export class SetupIcdDiagnosaComponent implements OnInit {
 
     /**
      * Variable untuk menentukan tap berada di posisi mana 
-     * @valur data | input
+     * @value data | input
     */
     TabId: string = 'Data';
 
     @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
+
+    Config = Config;
 
     GridDatasource: any[];
     GridData: MolGridComponent = null;
@@ -56,21 +59,16 @@ export class SetupIcdDiagnosaComponent implements OnInit {
      * Berisi Data Yang selected dari dalam grid
      * @Object Single Object
     */
-    SelectedData: DiagnosaAwalModel;
+    SelectedData: GrupPenunjangModel;
 
     constructor(
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
-        private setupIcdDiagnosaService: SetupIcdDiagnosaService
+        private setupGrupPenunjangService: SetupGrupPenunjangService
     ) {
         this.FormInputData = this.formBuilder.group({
-            id_icd: [0, [Validators.required]],
-            kode_icd: ['', [Validators.required]],
-            nama_icd: ['', [Validators.required]],
-            no_dtd: ["", [Validators.required]],
-            kastropik: ["", [Validators.required]],
-            is_active: [false, [Validators.required]],
-            is_from_cbg: [false, [Validators.required]],
+            kode_grup_penunjang: [0, [Validators.required]],
+            nama_grup_penunjang: ['', [Validators.required]],
         });
     }
 
@@ -79,6 +77,7 @@ export class SetupIcdDiagnosaComponent implements OnInit {
             { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
             { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
             { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
+            { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash-alt fa-sm', id: 'delete' },
             'Search'
         ];
 
@@ -120,13 +119,11 @@ export class SetupIcdDiagnosaComponent implements OnInit {
             case 'detail':
                 this.setViewForm();
                 break;
+            case 'delete':
+                this.Delete(this.SelectedData);
             default:
                 break;
         }
-    }
-
-    handleClickCommandGrid(args: any): void {
-        console.log(args);
     }
 
     handleClickButtonNav(ButtonId: string): void {
@@ -143,11 +140,6 @@ export class SetupIcdDiagnosaComponent implements OnInit {
             default:
                 break;
         }
-    }
-
-    /** Untuk identifikasi keyboard down pada grid */
-    handleLoadGrid(args: any): void {
-        document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
     }
 
     /** Method setting input new data */
@@ -186,29 +178,23 @@ export class SetupIcdDiagnosaComponent implements OnInit {
         ];
     }
 
-    /* Method untuk mengkosongkan data yang ada di form */
     ResetFrom(): void {
         this.FormInputData.reset();
 
-        this.id_icd.setValue(0);
-        this.kode_icd.setValue('');
-        this.nama_icd.setValue('');
-        this.no_dtd.setValue('');
-        this.kastropik.setValue('');
-        this.is_active.setValue(false);
-        this.is_from_cbg.setValue(false);
+        this.kode_grup_penunjang.setValue("");
+        this.nama_grup_penunjang.setValue("");
     }
 
     /** Method Untuk Mereload Data Grid */
     GetAllData(): void {
-        this.setupIcdDiagnosaService.onGetAll()
+        this.setupGrupPenunjangService.onGetAll()
             .subscribe((result) => {
                 this.GridDatasource = result.data;
             });
     }
 
     /** Method Untuk Mengisikan data yang ada di form */
-    SetFrom(Data: DiagnosaAwalModel): void {
+    SetFrom(Data: GrupPenunjangModel): void {
         this.FormInputData.reset();
         this.FormInputData.setValue(Data);
     }
@@ -222,7 +208,7 @@ export class SetupIcdDiagnosaComponent implements OnInit {
             delete Data.id_icd;
             delete Data.is_active;
 
-            this.setupIcdDiagnosaService.onPostSave(Data)
+            this.setupGrupPenunjangService.onPostSave(Data)
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                         .then(() => {
@@ -230,7 +216,7 @@ export class SetupIcdDiagnosaComponent implements OnInit {
                         });
                 });
         } else {
-            this.setupIcdDiagnosaService.onPutUpdate(Data)
+            this.setupGrupPenunjangService.onPutUpdate(Data)
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
                         .then(() => {
@@ -238,6 +224,16 @@ export class SetupIcdDiagnosaComponent implements OnInit {
                         });
                 });
         }
+    }
+
+    Delete(Data: GrupPenunjangModel): void {
+        this.setupGrupPenunjangService.onDelete(Data.kode_grup_penunjang)
+            .subscribe((result) => {
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                    .then(() => {
+                        this.Cancel();
+                    });
+            })
     }
 
     Clear(): void {
@@ -250,24 +246,6 @@ export class SetupIcdDiagnosaComponent implements OnInit {
         this.GetAllData();
     }
 
-    KeyDownHandler(event: KeyboardEvent) {
-        if (event.keyCode === 13) {
-            console.log('Enter Has Been Pressed');
-        };
-        if (event.keyCode === 46) {
-            console.log('Delete Key Has Been Pressed');
-        };
-        if (event.keyCode === 40) {
-            console.log('Delete Key Has Been Pressed');
-        }
-    }
-
-    get id_icd(): AbstractControl { return this.FormInputData.get('id_icd'); }
-    get kode_icd(): AbstractControl { return this.FormInputData.get('kode_icd'); }
-    get nama_icd(): AbstractControl { return this.FormInputData.get('nama_icd'); }
-    get no_dtd(): AbstractControl { return this.FormInputData.get('no_dtd'); }
-    get kastropik(): AbstractControl { return this.FormInputData.get('kastropik'); }
-    get is_active(): AbstractControl { return this.FormInputData.get('is_active'); }
-    get is_from_cbg(): AbstractControl { return this.FormInputData.get('is_from_cbg'); }
-
+    get kode_grup_penunjang(): AbstractControl { return this.FormInputData.get('kode_grup_penunjang'); }
+    get nama_grup_penunjang(): AbstractControl { return this.FormInputData.get('nama_grup_penunjang'); }
 }

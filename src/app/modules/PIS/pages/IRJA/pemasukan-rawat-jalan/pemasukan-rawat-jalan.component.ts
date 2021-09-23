@@ -12,8 +12,6 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import * as Config from './json/pemasukan-rawat-jalan.config.json';
 import * as API_CONFIG from '../../../../../api/PIS/IRJA/index';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
-import moment from 'moment';
-import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Component({

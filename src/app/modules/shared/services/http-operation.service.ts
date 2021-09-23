@@ -142,6 +142,27 @@ export class HttpOperationService {
         )
     }
 
+    defaultDeleteRequestWithBody(url: string, req: any): Observable<any> {
+        const options = {
+            headers: new HttpHeaders().set('Content-Type', 'application/json'),
+            body: req
+        };
+
+        return this.httpClient.delete<any>(
+            url, options
+        ).pipe(
+            catchError(this.handlingError),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    // Menampilkan SweetAlert Error
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            })
+        )
+    }
+
     defaultUploadFileRequest(url: string, req: FormData): Observable<any> {
         return this.httpClient.post<any>(url, req)
             .pipe(

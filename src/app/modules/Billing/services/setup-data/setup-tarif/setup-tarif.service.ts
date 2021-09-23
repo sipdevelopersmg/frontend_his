@@ -35,6 +35,10 @@ export class SetupTarifService {
         return this.httpOperationService.defaultGetRequest(this.API_TARIF.GET_TARIF_BY_ID + TarifId);
     }
 
+    onGetByGrupTarifId(GrupTarifId: number): Observable<GetAllTarifModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_TARIF.GET_ALL_BY_GRUP_TARIF + GrupTarifId);
+    }
+
     /**
      * Service Untuk Manyimpan data baru
      * @onPostSave Observable<PostInsertTarifModel>

@@ -31,6 +31,8 @@ export class OrgLookUpChecklistComponent implements OnInit {
     GridDataSource: any[];
     GridPagingSettings: object = { pageSize: 20, pageSizes: true, pageCount: 4 };
 
+    @Input('ParameterTambahan') ParameterTambahan: any;
+
     @Output('OnGetSelectedRecords') OnGetSelectedRecords = new EventEmitter<any>();
 
     constructor(
@@ -83,16 +85,34 @@ export class OrgLookUpChecklistComponent implements OnInit {
             filter = "";
         }
 
-        let search = [
-            {
-                "columnName": columnName,
-                "filter": filter,
-                "searchText": value,
-                "searchText2": ""
-            }
-        ];
+        let parameter = [];
 
-        this.onFetchDataSource(search);
+        if (this.ParameterTambahan && Object.keys(this.ParameterTambahan).length > 0) {
+            parameter = {
+                "filters": [
+                    {
+                        "columnName": columnName,
+                        "filter": filter,
+                        "searchText": value,
+                        "searchText2": ""
+                    }
+                ],
+                ...this.ParameterTambahan
+            };
+        } else {
+            parameter = [
+                {
+                    "columnName": columnName,
+                    "filter": filter,
+                    "searchText": value,
+                    "searchText2": ""
+                }
+            ];
+        };
+
+        console.log(parameter);
+
+        this.onFetchDataSource(parameter);
     }
 
     onRowSelected(args: any): void {
@@ -108,10 +128,10 @@ export class OrgLookUpChecklistComponent implements OnInit {
 
         this.OnGetSelectedRecords.emit(SelectedRow);
 
-        this.handleCloseModalLookupTarif();
+        this.handleCloseModalLookupChecklist();
     }
 
-    handleCloseModalLookupTarif(): void {
+    handleCloseModalLookupChecklist(): void {
         this.modalRef.hide();
     }
 }

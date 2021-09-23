@@ -119,7 +119,9 @@ export class SetupTarifComponent implements OnInit {
                 { text: 'Ubah Status', tooltipText: 'Ubah Status', prefixIcon: 'fas fa-sync-alt fa-sm', id: 'ubahStatus' },
                 'Search'
             ];
-        }
+
+            this.GetAllByGrupTarifId(parseInt(args.id));
+        };
     }
 
     handleSelectedRow(args: any): void {
@@ -199,6 +201,13 @@ export class SetupTarifComponent implements OnInit {
             .subscribe((result) => {
                 this.GridDatasource = result.data;
             });
+    }
+
+    GetAllByGrupTarifId(GrupTarifId: number): void {
+        this.setupTarifService.onGetByGrupTarifId(GrupTarifId)
+            .subscribe((result) => {
+                this.GridDatasource = result.data;
+            })
     }
 
     UbahStatus(): void {

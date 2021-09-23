@@ -7,12 +7,8 @@
                     <label for="DropdownObat" class="form-label">Racik</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        formControlName="racik"
-                        (ngModelChange) = "handleChangeResep($event)"
-                    >
+                    <input class="form-check-input" type="checkbox" formControlName="racik"
+                        (ngModelChange)="handleChangeResep($event)">
                 </div>
             </div>
         </div>
@@ -26,13 +22,9 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
                             <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
-                                [dataSource]="setupItemService.dataSource | async" 
-                                [fields]="DropdownObatFields"
-                                (change)="onChangeNamaObat($event)" 
-                                formControlName="nama_obat"
-                                [headerTemplate]="headerTemplate" 
-                                [itemTemplate]="itemTemplate" 
-                                popupWidth='55rem'>
+                                [dataSource]="setupItemService.dataSource | async" [fields]="DropdownObatFields"
+                                (change)="onChangeNamaObat($event)" formControlName="nama_obat"
+                                [headerTemplate]="headerTemplate" [itemTemplate]="itemTemplate" popupWidth='55rem'>
 
                                 <ng-template #itemTemplate let-data>
                                     <div class="row item">
@@ -87,9 +79,10 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="input-group">
-                        <input type="text"  class="form-control form-select-sm" >
+                        <input type="text" class="form-control form-select-sm">
                         <button id="btnInputGroup" class="btn btn-primary" type="button"
-                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';" (click)="handelClickResep($event)">
+                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
+                            (click)="handelClickResep($event)">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -120,20 +113,15 @@
                             <label for="NumericQty" class="form-label">Aturan Pakai</label>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-1">
-                            <ejs-combobox id="DropdownLabelPemakaian" 
-                                [allowFiltering]="true"
-                                [dataSource]="dataSourceLabelPemakaian" 
-                                formControlName="aturan_pakai"
-                                popupWidth='30rem'
-                                [fields]="DropdownLabelFields">
+                            <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                                [dataSource]="dataSourceLabelPemakaian" formControlName="aturan_pakai"
+                                popupWidth='30rem' [fields]="DropdownLabelFields">
                             </ejs-combobox>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-1">
                             <ejs-combobox id="DropdownTambahanAturanPakai" [allowFiltering]="true"
-                                [dataSource]="dataSourceTambahanAturanPakai" 
-                                formControlName="keterangan_pakai"
-                                popupWidth='25rem'
-                                [fields]="DropdownAturanFields">
+                                [dataSource]="dataSourceTambahanAturanPakai" formControlName="keterangan_pakai"
+                                popupWidth='25rem' [fields]="DropdownAturanFields">
                             </ejs-combobox>
                         </div>
                     </div>
@@ -141,10 +129,8 @@
             </div>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <div class="row align-content-center h-100 mb-2"
-                [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0"
-                    [hidden]="FormAddObatState != 'input'">
+            <div class="row align-content-center h-100 mb-2" [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState != 'input'">
                     <button class="btn btn-primary btn-sm" type="button" [disabled]="FormAddObat.invalid"
                         (click)="onSubmitDataObat(FormAddObat.value)">
                         <i class="fas fa-plus-circle fa-sm"></i>
@@ -152,8 +138,7 @@
                     </button>
                 </div>
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0"
-                    [hidden]="FormAddObatState == 'input'">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState == 'input'">
                     <button class="btn btn-warning btn-sm" type="button" [disabled]="FormAddObat.invalid"
                         (click)="onUpdateDataObat(FormAddObat.value)">
                         <i class="fas fa-edit fa-sm"></i>
@@ -162,7 +147,7 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
 </form>
 
@@ -176,15 +161,9 @@
                 </p>
             </div> -->
             <div class="card-body p-0">
-                <ejs-grid #GridResepRacikan 
-                    [dataSource]="GridResepRacikanDatasource" 
-                    height="calc(100vh - 22rem)"
-                    gridLines="Both" rowHeight="30" 
-                    [childGrid]="ChildGrid" 
-                    (load)="onLoad($event)" 
-                    (rowDataBound)='rowDataBound($event)'
-                    (dataBound)='onDataBound()'
-                    >
+                <ejs-grid #GridResepRacikan [dataSource]="GridResepRacikanDatasource" height="calc(100vh - 22rem)"
+                    gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" (load)="onLoad($event)"
+                    (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'>
                     <e-columns>
                         <e-column field="id_obat" headerText="Nama Obat" textAlign="Left" [visible]="false"></e-column>
                         <e-column field="nama_obat" headerText="Nama Obat" textAlign="Left"></e-column>

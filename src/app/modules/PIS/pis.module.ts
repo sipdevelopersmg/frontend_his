@@ -41,6 +41,7 @@ import { PemasukanRawatJalanComponent } from './pages/IRJA/pemasukan-rawat-jalan
 import { SetupJadwalDokterComponent } from './pages/setup-data/setup-jadwal-dokter/setup-jadwal-dokter.component';
 import { SetupCutiDokterComponent } from './pages/setup-data/setup-cuti-dokter/setup-cuti-dokter.component';
 import { SetupMappingTarifOrderPenunjangComponent } from './pages/setup-data/setup-mapping-tarif-order-penunjang/setup-mapping-tarif-order-penunjang.component';
+import { SetupGrupPenunjangComponent } from './pages/setup-data/setup-grup-penunjang/setup-grup-penunjang.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -83,6 +84,7 @@ const ngWizardConfig: NgWizardConfig = {
         SetupJadwalDokterComponent,
         SetupCutiDokterComponent,
         SetupMappingTarifOrderPenunjangComponent,
+        SetupGrupPenunjangComponent,
     ],
     imports: [
         CommonModule,

@@ -14,248 +14,248 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { Location } from '@angular/common';
 @Component({
-  selector: 'app-set-harga-order',
-  templateUrl: './set-harga-order.component.html',
-  styleUrls: ['./set-harga-order.component.css']
+    selector: 'app-set-harga-order',
+    templateUrl: './set-harga-order.component.html',
+    styleUrls: ['./set-harga-order.component.css']
 })
 export class SetHargaOrderComponent implements OnInit {
 
-  urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
-  urlItemOri = MM.PENERIMAAN.SETHARGA_ORDER.GET_ITEM_BY_SUPPLIER;
-  urlItem:any;
+    urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
+    urlItemOri = MM.PENERIMAAN.SETHARGA_ORDER.GET_ITEM_BY_SUPPLIER;
+    urlItem: any;
 
-  LookupGridSupplier = LookupGridSupplier;
-  GridLookUpItem = GridLookUpItem
-  @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
-  GridDatasource: any[];
-  GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-  GridDataToolbar: any[];
-  SelectedData: any;
+    LookupGridSupplier = LookupGridSupplier;
+    GridLookUpItem = GridLookUpItem
+    @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
+    GridDatasource: any[];
+    GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
+    GridDataToolbar: any[];
+    SelectedData: any;
 
-  HargaOrderParams: IEditCell;
-  HargaOrderElem: HTMLElement;
-  HargaOrderObj: NumericTextBox;
+    HargaOrderParams: IEditCell;
+    HargaOrderElem: HTMLElement;
+    HargaOrderObj: NumericTextBox;
 
-  Diskon1Params: IEditCell;
-  Diskon1Elem: HTMLElement;
-  Diskon1Obj: NumericTextBox;
+    Diskon1Params: IEditCell;
+    Diskon1Elem: HTMLElement;
+    Diskon1Obj: NumericTextBox;
 
-  Diskon2Params: IEditCell;
-  Diskon2Elem: HTMLElement;
-  Diskon2Obj: NumericTextBox;
+    Diskon2Params: IEditCell;
+    Diskon2Elem: HTMLElement;
+    Diskon2Obj: NumericTextBox;
 
-  @ViewChild('LookupChecklist') LookupChecklist: OrgLookUpChecklistComponent;
-  formInput: FormGroup;
-  @ViewChild('GridDetail') GridDetail: GridComponent;
+    @ViewChild('LookupChecklist') LookupChecklist: OrgLookUpChecklistComponent;
+    formInput: FormGroup;
+    @ViewChild('GridDetail') GridDetail: GridComponent;
 
-  ButtonNav: ButtonNavModel[] = [
-    { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
-    { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
-  ];
-
-  constructor(
-    private utilityHelperService:UtilityHelperService,
-    private utilityService:UtilityService,
-    private formBuilder: FormBuilder,
-    public setHargaOrderService:SetHargaOrderService,
-    private location:Location,
-  ) { }
-
-  ngOnInit(): void {
-    this.formInput = this.formBuilder.group({
-      tanggal_berlaku: [null, [Validators.required]],
-      id_supplier: [0, [Validators.required]],
-      nomor_harga_order: ['',],
-    });
-    this.GridDataToolbar = [
-      { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-      'Search'
+    ButtonNav: ButtonNavModel[] = [
+        { Id: 'Reset', Captions: 'Reset', Icons1: 'fa-redo-alt' },
+        { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
     ];
-    // this.handleSetGridDataParams()
-  }
 
-  heandleSelectedSupplier(args: any): void {
-    this.urlItem = this.urlItemOri+'/'+args.id_supplier;
-    this.id_supplier.setValue(args.id_supplier);
-    this.setHargaOrderService.onGetDetailByParamsSource([],args.id_supplier);
-  }
+    constructor(
+        private utilityHelperService: UtilityHelperService,
+        private utilityService: UtilityService,
+        private formBuilder: FormBuilder,
+        public setHargaOrderService: SetHargaOrderService,
+        private location: Location,
+    ) { }
 
-  handleSelectedRow(args: any): void {
-    this.SelectedData = args.data;
-  }
-
-  handleToolbarClick(args: any): void {
-    const item = args.item.id;
-
-    switch (item) {
-        case 'add':
-            this.LookupChecklist.hanldeOpenModalLookupChecklist();
-            break;
-        default:
-            break;
+    ngOnInit(): void {
+        this.formInput = this.formBuilder.group({
+            tanggal_berlaku: [null, [Validators.required]],
+            id_supplier: [0, [Validators.required]],
+            nomor_harga_order: ['',],
+        });
+        this.GridDataToolbar = [
+            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+            'Search'
+        ];
+        // this.handleSetGridDataParams()
     }
-  }
 
-  handleActionCompleted($event) {
-    if ($event.requestType == 'save') {
-        console.log($event);
-        this.setHargaOrderService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+    heandleSelectedSupplier(args: any): void {
+        this.urlItem = this.urlItemOri + '/' + args.id_supplier;
+        this.id_supplier.setValue(args.id_supplier);
+        this.setHargaOrderService.onGetDetailByParamsSource([], args.id_supplier);
+    }
+
+    handleSelectedRow(args: any): void {
+        this.SelectedData = args.data;
+    }
+
+    handleToolbarClick(args: any): void {
+        const item = args.item.id;
+
+        switch (item) {
+            case 'add':
+                this.LookupChecklist.hanldeOpenModalLookupChecklist();
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleActionCompleted($event) {
+        if ($event.requestType == 'save') {
+            console.log($event);
+            this.setHargaOrderService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+            this.GridDetail.refresh();
+        }
+    }
+
+    handleSelectedRecordItem(args): void {
+        let detail: TrSethargaOrderDetailInsert[] = [];
+        args.forEach(element => {
+            detail.push({
+                no_urut: 0,
+                id_item: element.id_item,
+                kode_item: element.nama_item,
+                nama_item: element.nama_item,
+                satuan: element.kode_satuan,
+                harga_order_lama: 0,
+                disc_prosentase_1_lama: 0,
+                disc_prosentase_2_lama: 0,
+                harga_order_netto_lama: 0,
+                harga_order: 0,
+                disc_prosentase_1: 0,
+                disc_prosentase_2: 0,
+                harga_order_netto: 0,
+            })
+        });
+        this.setHargaOrderService.addDataDetail(detail);
         this.GridDetail.refresh();
     }
-  }
 
-  handleSelectedRecordItem(args): void {
-    let detail : TrSethargaOrderDetailInsert[]=[];
-    args.forEach(element => {
-      detail.push({
-        no_urut           : 0,
-        id_item           : element.id_item,
-        kode_item         : element.nama_item,
-        nama_item         : element.nama_item,
-        satuan            : element.kode_satuan,
-        harga_order_lama       : 0,
-        disc_prosentase_1_lama : 0,
-        disc_prosentase_2_lama : 0,
-        harga_order_netto_lama : 0,
-        harga_order       : 0,
-        disc_prosentase_1 : 0,
-        disc_prosentase_2 : 0,
-        harga_order_netto : 0,
-      })
-    });
-    this.setHargaOrderService.addDataDetail(detail);
-    this.GridDetail.refresh();
-  }
+    handleSetGridDataParams(): void {
+        this.HargaOrderParams = {
+            create: () => {
+                this.HargaOrderElem = document.createElement('input');
+                return this.HargaOrderElem;
+            },
+            read: () => {
+                return this.HargaOrderObj.value;
+            },
+            destroy: () => {
+                this.HargaOrderObj.destroy();
+            },
+            write: args => {
+                this.HargaOrderObj = new NumericTextBox({
+                    showSpinButton: false,
+                    cssClass: 'text-end',
+                    value: args.rowData[args.column.field],
+                    change: function (args) {
+                        let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
+                        let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
 
-  handleSetGridDataParams(): void {
-    this.HargaOrderParams = {
-        create: () => {
-            this.HargaOrderElem = document.createElement('input');
-            return this.HargaOrderElem;
-        },
-        read: () => {
-            return this.HargaOrderObj.value;
-        },
-        destroy: () => {
-            this.HargaOrderObj.destroy();
-        },
-        write: args => {
-            this.HargaOrderObj = new NumericTextBox({
-                showSpinButton: false,
-                cssClass: 'text-end',
-                value: args.rowData[args.column.field],
-                change: function (args) {
-                    let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
-                    let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
+                        let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj, this.Diskon1Obj)
+                        nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1, this.Diskon2Obj)
 
-                    let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj,this.Diskon1Obj)
-                    nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1,this.Diskon2Obj)
+                    }.bind(this),
 
-                }.bind(this),
+                });
+                this.HargaOrderObj.appendTo(this.HargaOrderElem);
+            }
+        };
 
-            });
-            this.HargaOrderObj.appendTo(this.HargaOrderElem);
-        }
-    };
+        this.Diskon1Params = {
+            create: () => {
+                this.Diskon1Elem = document.createElement('input');
+                return this.Diskon1Elem;
+            },
+            read: () => {
+                return this.Diskon1Obj.value;
+            },
+            destroy: () => {
+                this.Diskon1Obj.destroy();
+            },
+            write: args => {
+                this.Diskon1Obj = new NumericTextBox({
+                    showSpinButton: false,
+                    cssClass: 'text-end',
+                    value: args.rowData[args.column.field],
+                    change: function (args) {
+                        let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
+                        let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
 
-    this.Diskon1Params = {
-      create: () => {
-          this.Diskon1Elem = document.createElement('input');
-          return this.Diskon1Elem;
-      },
-      read: () => {
-          return this.Diskon1Obj.value;
-      },
-      destroy: () => {
-          this.Diskon1Obj.destroy();
-      },
-      write: args => {
-          this.Diskon1Obj = new NumericTextBox({
-              showSpinButton: false,
-              cssClass: 'text-end',
-              value: args.rowData[args.column.field],
-              change: function (args) {
-                let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
-                let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
-              
-                let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj,this.Diskon1Obj)
-                nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1,this.Diskon2Obj)
-              }.bind(this),
+                        let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj, this.Diskon1Obj)
+                        nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1, this.Diskon2Obj)
+                    }.bind(this),
 
-          });
-          this.Diskon1Obj.appendTo(this.Diskon1Elem);
-      }
-    };
-    
-    this.Diskon1Params = {
-      create: () => {
-          this.Diskon1Elem = document.createElement('input');
-          return this.Diskon1Elem;
-      },
-      read: () => {
-          return this.Diskon1Obj.value;
-      },
-      destroy: () => {
-          this.Diskon1Obj.destroy();
-      },
-      write: args => {
-          this.Diskon2Obj = new NumericTextBox({
-              showSpinButton: false,
-              cssClass: 'text-end',
-              value: args.rowData[args.column.field],
-              change: function (args) {
-                let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
-                let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
+                });
+                this.Diskon1Obj.appendTo(this.Diskon1Elem);
+            }
+        };
 
-                let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj,this.Diskon1Obj)
-                nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1,this.Diskon2Obj)
-              }.bind(this),
+        this.Diskon1Params = {
+            create: () => {
+                this.Diskon1Elem = document.createElement('input');
+                return this.Diskon1Elem;
+            },
+            read: () => {
+                return this.Diskon1Obj.value;
+            },
+            destroy: () => {
+                this.Diskon1Obj.destroy();
+            },
+            write: args => {
+                this.Diskon2Obj = new NumericTextBox({
+                    showSpinButton: false,
+                    cssClass: 'text-end',
+                    value: args.rowData[args.column.field],
+                    change: function (args) {
+                        let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
+                        let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
 
-          });
-          this.Diskon2Obj.appendTo(this.Diskon2Elem);
-      }
-    };
-  }
+                        let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj, this.Diskon1Obj)
+                        nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1, this.Diskon2Obj)
+                    }.bind(this),
 
-  onSetDetail(id): void {
-
-  }
-
-  onClickButtonNav(ButtonId: string): void {
-    switch (ButtonId) {
-        case 'Save':
-            this.onSave();
-            break;
-        case 'Reset':
-            this.ResetFrom();
-            break;
-        default:
-            break;
+                });
+                this.Diskon2Obj.appendTo(this.Diskon2Elem);
+            }
+        };
     }
-  }
 
-  onSave(){
-    if (this.formInput.valid) {
-        this.setHargaOrderService.Insert(this.formInput.value)
-        .subscribe((result) => {
-            this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-            .then(() => {
+    onSetDetail(id): void {
+
+    }
+
+    onClickButtonNav(ButtonId: string): void {
+        switch (ButtonId) {
+            case 'Save':
+                this.onSave();
+                break;
+            case 'Reset':
                 this.ResetFrom();
-            });
-        });
-    }else{
-        alert('isi semua data');
+                break;
+            default:
+                break;
+        }
     }
-  }
 
-  ResetFrom(){
-    this.formInput.reset();
-    this.setHargaOrderService.Reset();
-    this.LookupKodeSupplier.resetValue();
-  }
+    onSave() {
+        if (this.formInput.valid) {
+            this.setHargaOrderService.Insert(this.formInput.value)
+                .subscribe((result) => {
+                    this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                        .then(() => {
+                            this.ResetFrom();
+                        });
+                });
+        } else {
+            alert('isi semua data');
+        }
+    }
 
-  get tanggal_berlaku() : AbstractControl { return this.formInput.get('tanggal_berlaku') }
-  get id_supplier() : AbstractControl { return this.formInput.get('id_supplier') }
+    ResetFrom() {
+        this.formInput.reset();
+        this.setHargaOrderService.Reset();
+        this.LookupKodeSupplier.resetValue();
+    }
+
+    get tanggal_berlaku(): AbstractControl { return this.formInput.get('tanggal_berlaku') }
+    get id_supplier(): AbstractControl { return this.formInput.get('id_supplier') }
 
 
 }

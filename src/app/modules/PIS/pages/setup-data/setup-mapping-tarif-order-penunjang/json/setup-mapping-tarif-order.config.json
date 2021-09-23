@@ -89,7 +89,7 @@
                 "allowSorting": true,
                 "editType": "defaultEdit",
                 "field": "kode_setup_tarif",
-                "headerText": "Kode Setup Tarif",
+                "headerText": "KODE SETUP TARIF",
                 "type": "string",
                 "visible": true,
                 "width": 100
@@ -99,35 +99,51 @@
                 "allowSorting": true,
                 "editType": "defaultEdit",
                 "field": "nama_setup_tarif",
-                "headerText": "Nama Setup Tarif",
+                "headerText": "NAMA SETUP TARIF",
                 "type": "string",
                 "visible": true,
-                "width": 200
+                "width": 150
             },
             {
                 "allowEditing": false,
                 "allowSorting": true,
                 "editType": "defaultEdit",
-                "field": "nama_kelas",
-                "headerText": "Kelas",
+                "field": "nama_grup_tarif",
+                "headerText": "NAMA GRUP TARIF",
                 "type": "string",
                 "visible": true,
-                "width": 80
+                "width": 150
             },
             {
                 "allowEditing": false,
                 "allowSorting": true,
                 "editType": "defaultEdit",
                 "field": "nominal_tarif",
-                "headerText": "Kelas",
+                "headerText": "NOMINAL TARIF",
                 "headerTextAlign": "Right",
                 "textAlign": "Right",
                 "format": "N2",
                 "type": "number",
-                "visible": false,
-                "width": 80
+                "visible": true,
+                "width": 100
             }
         ],
-        "filter": []
+        "filter": [
+            {
+                "field": "st.kode_setup_tarif",
+                "filter": "like",
+                "title": "KODE TARIF"
+            },
+            {
+                "field": "st.nama_setup_tarif",
+                "filter": "like",
+                "title": "NAMA TARIF"
+            },
+            {
+                "field": "sgt.nama_grup_tarif",
+                "filter": "like",
+                "title": "NAMA GRUP TARIF"
+            }
+        ]
     }
 }

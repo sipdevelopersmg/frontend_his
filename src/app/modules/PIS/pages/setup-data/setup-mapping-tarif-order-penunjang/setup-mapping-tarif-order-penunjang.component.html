@@ -15,23 +15,39 @@
                 <!-- Listing Order -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card shadow-sm">
-                        <div class="card-body p-2" style="height: calc(100vh - 15.5rem); overflow-y: auto;">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <p class="mb-0 text-biru-muda">
+                                        Jenis Penunjang {{ SelectedJenisPenunjang.nama_grup_penunjang | titlecase }}
+                                    </p>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-end">
+                                    <span class="badge bg-primary fw-light cursor-pointer"
+                                        (click)="handleOpenModalAddChild(SelectedJenisPenunjang)">
+                                        <i class="fas fa-plus fa-sm"></i>&nbsp; Add Child
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-2" style="height: calc(100vh - 18rem); overflow-y: auto;">
                             <ejs-treeview [id]="'GridTreeOrder'" [fields]="ListingOrderFields" e-nodeclick="onClick"
                                 [allowMultiSelection]='false' [allowDragAndDrop]="false"
                                 (nodeSelected)="handleSelectedKelompokOrder($event)">
                                 <ng-template #nodeTemplate="" let-data="">
-                                    <div id="{{ data.id + 'tree' }}">
+                                    <div id="{{ data.kode_kelompok + 'tree' }}">
                                         <div class="treeviewdiv">
                                             <div class="poli-text">
                                                 <p
                                                     class="mb-0 {{ data.child?.length > 0 ? 'poli-parent' : 'poli-child' }}">
-                                                    {{ data.nama_kelompok_tarif }}
+                                                    {{ data.kode_kelompok }} - {{ data.nama_kelompok }}
                                                 </p>
                                             </div>
                                         </div>
 
-                                        <ejs-contextmenu id="" [target]="'#' + data.id + 'tree'" [items]='MenuItems'
-                                            (beforeOpen)="handleBeforeOpenContextMenu($event, data)"
+                                        <ejs-contextmenu [target]="'#' + data.kode_kelompok + 'tree'"
+                                            [items]='MenuItems' (beforeOpen)="handleBeforeOpenContextMenu($event, data)"
                                             (select)="handleClickContextMenu($event, data)">
                                         </ejs-contextmenu>
                                     </div>
@@ -56,7 +72,7 @@
                         <!-- Nama Kelompok -->
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 px-1">
                             <label for="kode_poliklinik" class="form-label mb-1">Nama Kelompok</label>
-                            <input id="kode_poliklinik" type="text" class="form-control form-select-sm" readonly>
+                            <input id="nama_kelompok_terpilih" type="text" class="form-control form-select-sm" readonly>
                         </div>
 
 
@@ -82,9 +98,12 @@
                                 (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)"
                                 (actionComplete)="handleActionComplete($event)">
                                 <e-columns>
-                                    <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
-                                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
-                                        [headerTextAlign]="'Center'">
+                                    <e-column [width]="50" [visible]="true" [type]="'Checkbox'" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'">
+                                    </e-column>
+                                    <e-column [width]="50" [field]="'id_mapping_tarif_penunjang'" [headerText]="'ID'"
+                                        [visible]="false" [type]="'number'" [allowEditing]="false"
+                                        [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
                                     </e-column>
                                     <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'"
                                         [visible]="false" [type]="'number'" [allowEditing]="false"
@@ -94,36 +113,24 @@
                                         [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                         [textAlign]="'Left'">
                                     </e-column>
-                                    <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
-                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
-                                        [textAlign]="'Left'">
+                                    <e-column [width]="200" [field]="'nama_tindakan_penunjang'"
+                                        [headerText]="'NAMA TARIF'" [visible]="true" [allowEditing]="true"
+                                        [allowSorting]="false" [textAlign]="'Left'">
                                     </e-column>
-                                    <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'KELAS'"
-                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'" [headerTextAlign]="'Left'">
+                                    <e-column [width]="80" [field]="'is_ada_left_right'" [headerText]="'L/R'"
+                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
+                                        [editType]="'booleanedit'" [type]="'boolean'" [headerTextAlign]="'Center'"
+                                        [textAlign]="'Center'" [displayAsCheckBox]="true">
+                                    </e-column>
+                                    <e-column [width]="80" [field]="'is_ada_polos_kontras'" [headerText]="'P/K'"
+                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
+                                        [editType]="'booleanedit'" [type]="'boolean'" [headerTextAlign]="'Center'"
+                                        [textAlign]="'Center'" [displayAsCheckBox]="true">
                                     </e-column>
                                     <e-column [width]="80" [field]="'nominal_tarif'" [headerText]="'NILAI'"
                                         [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'Number'"
                                         [format]="'N2'">
-                                    </e-column>
-                                    <e-column field='is_active' [headerText]="'STATUS'" [width]='70'
-                                        [textAlign]="'Center'" [visible]="false">
-                                        <ng-template #template let-data>
-                                            <div *ngIf="data.is_active === true; else inactive"
-                                                class="statustemp e-activecolor">
-                                                <span class="statustxt e-activecolor">
-                                                    {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
-                                                </span>
-                                            </div>
-                                            <ng-template #inactive>
-                                                <div class="statustemp e-inactivecolor">
-                                                    <span class="statustxt e-inactivecolor">
-                                                        {{ data.is_active ? 'AKTIF' : 'NON AKTIF' }}
-                                                    </span>
-                                                </div>
-                                            </ng-template>
-                                        </ng-template>
                                     </e-column>
                                 </e-columns>
                             </ejs-grid>
@@ -138,18 +145,20 @@
             <div class="modal-header px-2 py-1">
                 <h5 class="modal-title pull-left">
                     {{ FormAddChildState == 'Insert' ? 'Add' : 'Edit' }} Kelompok
-                    {{ SelectedChild.nama_kelompok_tarif | titlecase }}
+                    {{ SelectedChild.nama_grup_penunjang ? (SelectedChild.nama_grup_penunjang | titlecase) :
+                    SelectedChild.nama_kelompok | titlecase }}
                 </h5>
                 <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalAddChild()">
                     <i class="fas fa-window-close"></i>
                 </button>
             </div>
-            <div class="modal-body p-2">
+            <div class="modal-body p-3">
                 <form [formGroup]="FormAddChild">
-                    <mol-input-text [label]="'Kode Kelompok'" formControlName="kode_kelompok_tarif">
+                    <mol-input-text [label]="'Kode Kelompok'" formControlName="kode_kelompok"
+                        [inputFieldState]="FormAddChildState == 'Edit' ? 'detail' : 'normal'">
                     </mol-input-text>
 
-                    <mol-input-text [label]="'Nama Kelompok'" formControlName="nama_kelompok_tarif">
+                    <mol-input-text [label]="'Nama Kelompok'" formControlName="nama_kelompok">
                     </mol-input-text>
                 </form>
             </div>
@@ -169,68 +178,10 @@
         </ng-template>
 
         <!-- Modal Lookup Tarif  -->
-        <ng-template #modalAddLookupTarif>
-            <div class="modal-header px-2 py-1">
-                <h5 class="modal-title pull-left">
-                    Data Tarif
-                </h5>
-                <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalLookupTarif()">
-                    <i class="fas fa-window-close"></i>
-                </button>
-            </div>
-            <div class="modal-body p-2">
-                <div class="row mx-0 my-1 align-items-center">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <h5 class="card-title mb-1">Cari :</h5>
-                    </div>
-                </div>
-
-                <div class="row mx-0 my-1 align-items-center">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radioFilterLookupTarif"
-                                id="filter_kode_tarif" value="kode_tarif"
-                                (click)="handleChangeFilterLookupTarif('st.kode_setup_tarif')">
-                            <label class="form-check-label" for="filter_kode_tarif">
-                                Kode Tarif
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radioFilterLookupTarif"
-                                id="filter_nama_tarif" value="nama_tarif"
-                                (click)="handleChangeFilterLookupTarif('st.nama_setup_tarif')">
-                            <label class="form-check-label" for="filter_nama_tarif">
-                                Nama Tarif
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mx-0 my-2">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <input type="text" #searchValueId class="form-control" id="searchValueId"
-                            (keydown.enter)="onSearchLookup(searchValueId.value)" />
-                    </div>
-                </div>
-
-                <div class="row mx-0 my-1">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <mol-grid #GridLookupTarif [grid-height]="270" [grid-DataSource]="GridLookupTarifDatasource"
-                            [grid-paging]="true" [gridInitialPage]="GridLookupTarifPageSettings" [grid-lines]="'Both'"
-                            [columns]="GridConfig.LookupTarif.columns"
-                            (initialized)="InitalizedGridLookupTarif($event)">
-                        </mol-grid>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer background-abu-muda p-2">
-                <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalLookupTarif()">
-                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
-                </button>
-                <button type="button" class="btn btn-primary btn-sm" (click)="handleSubmitLookupTarif()">
-                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
-                </button>
-            </div>
-        </ng-template>
+        <org-look-up-checklist #LookupChecklist [LookupTitle]="TitleLookupTarifBerlaku"
+            [LookupUrl]="UrlLookupTarifBerlaku" [LookupFilters]="GridConfig.LookupTarif.filter"
+            [GridId]="'LookupChecklistTarifBerlaku'" [GridColumns]="GridConfig.LookupTarif.columns"
+            [ParameterTambahan]="ParameterLookupTarifBerlaku" (OnGetSelectedRecords)="handleSelectedRecordItem($event)">
+        </org-look-up-checklist>
     </div>
 </org-card-layout>

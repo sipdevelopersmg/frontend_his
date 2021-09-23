@@ -11,6 +11,7 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
 import { KelasPerawatanModel } from '../../../models/setup-data/setup-kelas-perawatan.model';
 import { SettingTarifBerlakuService } from '../../../services/setting-harga-tarif/setting-tarif-berlaku/setting-tarif-berlaku.service';
 import { SetupKelasPerawatanService } from '../../../services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
+import { SetupTarifService } from '../../../services/setup-data/setup-tarif/setup-tarif.service';
 import * as Config from './json/setting-tarif-berlaku.config.json';
 
 @Component({
@@ -98,6 +99,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
         private formBuilder: FormBuilder,
         private bsModalService: BsModalService,
         private utilityService: UtilityService,
+        private setupTarifService: SetupTarifService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
         private settingTarifBerlakuService: SettingTarifBerlakuService,
     ) { }
@@ -430,17 +432,12 @@ export class SettingTarifBerlakuComponent implements OnInit {
             };
         }
 
-        this.settingTarifBerlakuService.onGetAllLookupTarifNotInKelas(parameter)
+        this.setupTarifService.onGetAllNotInTarifBerlakuByKelas(parameter)
             .subscribe((result) => {
                 if (result) {
-
-                    this.GridDatasource.filter((item) => {
-                        let tarifIndex = result.data.map((tarif) => { return tarif.id_setup_tarif }).indexOf(item.id_setup_tarif);
-
-                        return result.data.splice(tarifIndex, 1);
-                    });
-
                     this.GridLookupTarifDatasource = result.data;
+
+                    this.GridLookupTarif.Grid.refresh();
                 }
             });
     }

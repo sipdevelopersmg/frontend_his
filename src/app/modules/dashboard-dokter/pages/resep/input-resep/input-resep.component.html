@@ -7,14 +7,11 @@
                     <label for="DropdownObat" class="form-label">Racik</label>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        formControlName="is_racikan"
-                    >
+                    <input class="form-check-input" type="checkbox" formControlName="is_racikan">
                 </div>
             </div>
         </div>
+
         <!-- Nama Obat -->
         <div *ngIf="!is_racikan.value" class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
@@ -25,11 +22,8 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
                             <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
-                                [dataSource]="resepDokterService.dataObat | async" 
-                                [fields]="DropdownObatFields"
-                                (change)="handleChangeObat($event)" 
-                                formControlName="id_item"
-                                popupWidth='55rem'>
+                                [dataSource]="resepDokterService.dataObat | async" [fields]="DropdownObatFields"
+                                (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'>
                             </ejs-dropdownlist>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
@@ -49,11 +43,11 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="input-group">
-                        <input type="text" class="form-control form-select-sm" 
-                            formControlName="nama_racikan"
+                        <input type="text" class="form-control form-select-sm" formControlName="nama_racikan"
                             (change)="handleChangeNamaRacikan()">
                         <button id="btnInputGroup" class="btn btn-primary" type="button"
-                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';" (click)="handelClickRacikan($event)">
+                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
+                            (click)="handelClickRacikan($event)">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -68,17 +62,15 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="input-group">
-                        <ejs-dropdownlist #MolDropdown 
-                            [dataSource]="setupMetodeRacikanService.dataSource | async" 
-                            [fields]="DropdownMetodeRacikanFields" 
-                            [allowFiltering]="true"
-                            (change)="handleChangeMetodeRacikan($event)"
-                        >
+                        <ejs-dropdownlist #MolDropdown [dataSource]="setupMetodeRacikanService.dataSource | async"
+                            [fields]="DropdownMetodeRacikanFields" [allowFiltering]="true"
+                            (change)="handleChangeMetodeRacikan($event)">
                         </ejs-dropdownlist>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Qty Obat dan Aturan Pakai -->
         <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
@@ -103,22 +95,15 @@
                             <label for="NumericQty" class="form-label">Aturan Pakai</label>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-1">
-                            <ejs-combobox id="DropdownLabelPemakaian" 
-                                [allowFiltering]="true"
-                                [dataSource]="dataSourceLabelPemakaian" 
-                                formControlName="label"
-                                popupWidth='30rem'
-                                [fields]="DropdownLabelFields"
-                                (change)="handleChangeLabel($event)">
+                            <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                                [dataSource]="dataSourceLabelPemakaian" formControlName="label" popupWidth='30rem'
+                                [fields]="DropdownLabelFields" (change)="handleChangeLabel($event)">
                             </ejs-combobox>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-1">
                             <ejs-combobox id="DropdownTambahanAturanPakai" [allowFiltering]="true"
-                                [dataSource]="dataSourceTambahanAturanPakai" 
-                                formControlName="aturan"
-                                popupWidth='25rem'
-                                [fields]="DropdownAturanFields"
-                                (change)="handleChangeAturan($event)">
+                                [dataSource]="dataSourceTambahanAturanPakai" formControlName="aturan" popupWidth='25rem'
+                                [fields]="DropdownAturanFields" (change)="handleChangeAturan($event)">
                             </ejs-combobox>
                         </div>
                     </div>
@@ -127,10 +112,8 @@
         </div>
 
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <div class="row align-content-center h-100 mb-2"
-                [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0"
-                    [hidden]="FormAddObatState != 'input'">
+            <div class="row align-content-center h-100 mb-2" [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState != 'input'">
                     <button class="btn btn-primary btn-sm" type="button" [disabled]="FormAddObat.invalid"
                         (click)="handleAddObat(FormAddObat.value)">
                         <i class="fas fa-plus-circle fa-sm"></i>
@@ -138,8 +121,7 @@
                     </button>
                 </div>
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0"
-                    [hidden]="FormAddObatState == 'input'">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState == 'input'">
                     <button class="btn btn-warning btn-sm" type="button" [disabled]="FormAddObat.invalid"
                         (click)="onUpdateDataObat(FormAddObat.value)">
                         <i class="fas fa-edit fa-sm"></i>
@@ -148,7 +130,7 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
 </form>
 
@@ -162,36 +144,35 @@
                 </p>
             </div> -->
             <div class="card-body p-0">
-                <ejs-grid #GridResepRacikan 
-                    [dataSource]="resepDokterService.dataDetail$ | async" 
-                    height="calc(100vh - 22rem)"
-                    gridLines="Both" rowHeight="30" 
-                    [childGrid]="ChildGrid" 
-                    (load)="onLoad($event)" 
-                    (rowDataBound)='rowDataBound($event)'
-                    (dataBound)='onDataBound()'
-                    >
+                <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
+                    height="calc(100vh - 22rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
+                    (load)="onLoad($event)" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
+                    (rowSelected)="onRowSelected($event)">
                     <e-columns>
                         <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>              
-                         <e-column [visible]="false" field='is_racikan' [allowEditing]="false" headerText='is_racikan'
+                        </e-column>
+                        <e-column [visible]="false" field='is_racikan' [allowEditing]="false" headerText='is_racikan'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>   
-                        <e-column [visible]="false" field='set_racikan_id' [allowEditing]="false" headerText='set_racikan_id'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>  
-                        <e-column [visible]="false" field='id_metode_racikan' [allowEditing]="false" headerText='id_metode_racikan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>  
+                        </e-column>
+                        <e-column [visible]="false" field='set_racikan_id' [allowEditing]="false"
+                            headerText='set_racikan_id' editType='defaultEdit' textAlign="left"
+                            headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="false" field='id_metode_racikan' [allowEditing]="false"
+                            headerText='id_metode_racikan' editType='defaultEdit' textAlign="left"
+                            headerTextAlign="center">
+                        </e-column>
                         <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column> 
-                        <e-column [visible]="false" field='id_label_pemakaian_obat' [allowEditing]="false" headerText='id_label_pemakaian_obat'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                        </e-column>    
-                        <e-column [visible]="false" field='id_tambahan_aturan_pakai' [allowEditing]="false" headerText='id_tambahan_aturan_pakai'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="false" field='id_label_pemakaian_obat' [allowEditing]="false"
+                            headerText='id_label_pemakaian_obat' editType='defaultEdit' textAlign="left"
+                            headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="false" field='id_tambahan_aturan_pakai' [allowEditing]="false"
+                            headerText='id_tambahan_aturan_pakai' editType='defaultEdit' textAlign="left"
+                            headerTextAlign="center">
                         </e-column>
                         <e-column [visible]="true" field='nama_obat' [allowEditing]="false" headerText='Nama Obat'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
@@ -199,8 +180,9 @@
                         <e-column [visible]="true" field='satuan' [allowEditing]="false" headerText='Satuan'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
                         </e-column>
-                        <e-column [visible]="true" field='metode_racikan' [allowEditing]="false" headerText='Kemasan Racikan'
-                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        <e-column [visible]="true" field='metode_racikan' [allowEditing]="false"
+                            headerText='Kemasan Racikan' editType='defaultEdit' textAlign="left"
+                            headerTextAlign="center">
                         </e-column>
                         <e-column [visible]="true" field='qty_resep' [allowEditing]="true" headerText='Qty'
                             editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import { ResepDokterService } from '../../services/resep-dokter/resep-dokter.service';
 
 @Component({
     selector: 'app-resep',
@@ -17,7 +18,9 @@ export class ResepComponent implements OnInit {
         { Id: "Simpan", Icons1: "fas fa-save fa-sm", Captions: "Simpan" },
     ];
 
-    constructor() { }
+    constructor(
+        private resepDokterService: ResepDokterService
+    ) { }
 
     ngOnInit(): void { }
 
@@ -26,6 +29,7 @@ export class ResepComponent implements OnInit {
             case "Reset":
                 break;
             case "Simpan":
+                console.log(this.resepDokterService.dataSourceChildGrid.value);
                 break;
             default:
                 break;

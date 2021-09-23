@@ -14,6 +14,8 @@ export interface GrupTarifModel {
 
     /** @format int32 */
     level: number;
+
+    kode_grup_penunjang?: string;
 }
 
 /**
@@ -27,6 +29,8 @@ export interface GrupTarifRecursiveModel {
 
     /** @format int32 */
     level?: number;
+
+    kode_grup_penunjang?: string;
 
     /** @format int32 */
     id_grup_tarif_parent?: number;

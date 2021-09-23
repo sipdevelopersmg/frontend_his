@@ -1,7 +1,10 @@
 import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
+import { GrupPenunjangModel } from 'src/app/modules/PIS/models/setup-data/setup_grup_penunjang.model';
+import { SetupGrupPenunjangService } from 'src/app/modules/PIS/services/setup-data/setup-grup-penunjang/setup-grup-penunjang.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { GrupTarifModel, GrupTarifRecursiveModel } from '../../../models/setup-data/setup-grup-tarif.model';
 import { SetupGrupTarifService } from '../../../services/setup-data/setup-grup-tarif/setup-grup-tarif.service';
@@ -36,18 +39,28 @@ export class SetupGrupTarifComponent implements OnInit {
 
     @Output('select-node') SelectedNode = new EventEmitter<any>();
 
+    @ViewChild('GrupPenunjangDropdown') GrupPenunjangDropdown: DropDownListComponent;
+    GrupPenunjangDatasource: GrupPenunjangModel[] = [];
+    GrupPenunjangFields = { text: 'nama_grup_penunjang', value: 'kode_grup_penunjang' };
+
     constructor(
         private formBuilder: FormBuilder,
         private bsModalService: BsModalService,
         private utilityService: UtilityService,
         private utilityHelperService: UtilityHelperService,
         private setupGrupTarifService: SetupGrupTarifService,
+        private setupGrupPenunjangService: SetupGrupPenunjangService,
     ) { }
 
     ngOnInit(): void {
         this.onGetAllGrupTarif();
 
         this.onSetFormGrupTarifAttributes();
+
+        this.setupGrupPenunjangService.onGetAll()
+            .subscribe((result) => {
+                this.GrupPenunjangDatasource = result.data;
+            });
     }
 
     onSetFormGrupTarifAttributes(): void {
@@ -59,6 +72,7 @@ export class SetupGrupTarifComponent implements OnInit {
             kode_grup_tarif: ["", []],
             nama_grup_tarif: ["", []],
             level: [0, []],
+            kode_grup_penunjang: [0, []],
         });
     }
 
@@ -122,6 +136,7 @@ export class SetupGrupTarifComponent implements OnInit {
                 this.kode_grup_tarif_parent.setValue(data.kode_grup_tarif);
                 this.nama_grup_tarif_parent.setValue(data.nama_grup_tarif);
                 this.level.setValue(data.level + 1);
+                this.kode_grup_penunjang.setValue(data['kode_grup_penunjang']);
             }
             // ** Update Level 1
             else {
@@ -130,6 +145,7 @@ export class SetupGrupTarifComponent implements OnInit {
                 this.kode_grup_tarif.setValue(data.kode_grup_tarif);
                 this.nama_grup_tarif.setValue(data.nama_grup_tarif);
                 this.level.setValue(data.level);
+                this.kode_grup_penunjang.setValue(data['kode_grup_penunjang']);
             }
         }
         // ** Child Level 2
@@ -149,6 +165,7 @@ export class SetupGrupTarifComponent implements OnInit {
                 this.kode_grup_tarif.setValue(data.kode_grup_tarif);
                 this.nama_grup_tarif.setValue(data.nama_grup_tarif);
                 this.level.setValue(data.level);
+                this.kode_grup_penunjang.setValue(data['kode_grup_penunjang']);
             }
         }
         else {
@@ -158,7 +175,7 @@ export class SetupGrupTarifComponent implements OnInit {
 
     handleSubmitFormGrupTarif(FormGrupTarif: any): void {
 
-        let parameter: GrupTarifModel;
+        let parameter: any;
 
         if (FormGrupTarif.level == 1) {
             parameter = {
@@ -166,6 +183,7 @@ export class SetupGrupTarifComponent implements OnInit {
                 kode_grup_tarif: FormGrupTarif.kode_grup_tarif,
                 nama_grup_tarif: FormGrupTarif.nama_grup_tarif,
                 level: FormGrupTarif.level,
+                kode_grup_penunjang: FormGrupTarif.kode_grup_penunjang
             }
         } else {
             parameter = {
@@ -173,6 +191,7 @@ export class SetupGrupTarifComponent implements OnInit {
                 kode_grup_tarif: `${FormGrupTarif.kode_grup_tarif_parent}.${FormGrupTarif.kode_grup_tarif}`,
                 nama_grup_tarif: FormGrupTarif.nama_grup_tarif,
                 level: FormGrupTarif.level,
+                kode_grup_penunjang: FormGrupTarif.kode_grup_penunjang
             }
         }
 
@@ -235,6 +254,7 @@ export class SetupGrupTarifComponent implements OnInit {
         this.kode_grup_tarif.setValue("");
         this.nama_grup_tarif.setValue("");
         this.level.setValue(0);
+        this.kode_grup_penunjang.setValue("");
     }
 
     get id_grup_tarif_parent(): AbstractControl { return this.FormGrupTarif.get('id_grup_tarif_parent') };
@@ -244,4 +264,5 @@ export class SetupGrupTarifComponent implements OnInit {
     get kode_grup_tarif(): AbstractControl { return this.FormGrupTarif.get('kode_grup_tarif') };
     get nama_grup_tarif(): AbstractControl { return this.FormGrupTarif.get('nama_grup_tarif') };
     get level(): AbstractControl { return this.FormGrupTarif.get('level') };
+    get kode_grup_penunjang(): AbstractControl { return this.FormGrupTarif.get('kode_grup_penunjang') };
 }

@@ -19,6 +19,7 @@ import { EditDokterComponent } from "./pages/setup-data/setup-dokter/edit-dokter
 import { InputDokterComponent } from "./pages/setup-data/setup-dokter/input-dokter/input-dokter.component";
 import { SetupEducationComponent } from "./pages/setup-data/setup-education/setup-education.component";
 import { SetupEtnisComponent } from "./pages/setup-data/setup-etnis/setup-etnis.component";
+import { SetupGrupPenunjangComponent } from "./pages/setup-data/setup-grup-penunjang/setup-grup-penunjang.component";
 import { SetupIcdDiagnosaComponent } from "./pages/setup-data/setup-icd-diagnosa/setup-icd-diagnosa.component";
 import { SetupJadwalDokterComponent } from "./pages/setup-data/setup-jadwal-dokter/setup-jadwal-dokter.component";
 import { SetupJobTypeComponent } from "./pages/setup-data/setup-job-type/setup-job-type.component";
@@ -71,6 +72,7 @@ const pisRoutes: Routes = [
             { path: "setup-asal-rujukan", component: SetupAsalRujukanComponent, data: { title: "Setup Asal Rujukan" } },
             { path: "setup-icd-diagnosa-awal", component: SetupIcdDiagnosaComponent, data: { title: "Setup Diagnosa Awal" } },
             { path: "setup-mapping-order-tarif-penunjang", component: SetupMappingTarifOrderPenunjangComponent, data: { title: "Mapping Order Tarif Penunjang" } },
+            { path: "setup-grup-penunjang", component: SetupGrupPenunjangComponent, data: { title: "Setup Grup Order Tarif Penunjang" } },
         ]
     },
     {

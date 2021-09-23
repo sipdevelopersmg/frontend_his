@@ -1,0 +1,22 @@
+{
+    "GridSetupGrupPenunjangColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_grup_penunjang",
+            "headerText": "KODE GRUP PENUNJANG",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_grup_penunjang",
+            "headerText": "NAMA GRUP PENUNJANG",
+            "visible": true,
+            "width": 120
+        }
+    ]
+}
