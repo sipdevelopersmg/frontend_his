@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddEventArgs, EditSettingsModel, GridComponent, GridModel, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
@@ -34,9 +34,7 @@ export class InputResepComponent implements OnInit {
     DropdownObatFields: object = { text: 'nama_item', value: 'id_item' };
     DropdownMetodeRacikanFields: object = { text: 'metode_racikan', value: 'id_metode_racikan' };
 
-    NamaObatDatasource: any[] = [
-
-    ];
+    NamaObatDatasource: any[] = [];
 
     // ** Waktu Pakai
     WaktuPakai: any[] = [];
@@ -145,9 +143,8 @@ export class InputResepComponent implements OnInit {
             }
         }
 
-        let dataSourceGridChild = this.resepDokterService.dataSourceChildGrid;
-
-        let data = [];
+        let dataSourceChild = this.dataScourceGridChild;
+        this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
 
         this.ChildGrid = {
             dataSource: this.dataScourceGridChild,
@@ -176,15 +173,17 @@ export class InputResepComponent implements OnInit {
                     const counter = 'counter';
                     (args.data as object)[counter] = this.parentDetails.parentKeyFieldValue;
                     (args.data as object)['qty_resep'] = this.parentDetails.parentRowData.qty_resep;
-
-                    console.log(args);
                 }
             },
             actionComplete(args: AddEventArgs) {
                 if (args.requestType === 'save') {
-                    data.push(args.data)
+                    dataSourceChild.push(args.data);
+                }
 
-                    dataSourceGridChild.next(data);
+                if (args.requestType === "delete") {
+                    let index = dataSourceChild.map((item) => { return item.nama_item }).indexOf(args.data[0].nama_item);
+
+                    dataSourceChild.splice(index, 1);
                 }
             }
         }
@@ -339,6 +338,14 @@ export class InputResepComponent implements OnInit {
             default:
                 break;
         };
+    }
+
+    onActionComplete(args: any): void {
+        let dataSourceParent: any = this.GridResepRacikan.dataSource;
+        this.resepDokterService.dataSourceParentGrid.next(dataSourceParent);
+
+        console.log("Parent", this.GridResepRacikan.dataSource);
+        console.log("Children", this.GridResepRacikan.childGrid.dataSource);
     }
 
     // ** Grid Daftar Obat method

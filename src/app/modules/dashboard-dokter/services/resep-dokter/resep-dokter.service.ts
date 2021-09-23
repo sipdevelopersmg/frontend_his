@@ -37,6 +37,7 @@ export class ResepDokterService {
         this._dataDetail.next(val);
     }
 
+    public dataSourceParentGrid = new BehaviorSubject([]);
     public dataSourceChildGrid = new BehaviorSubject([]);
 
     public jumlah_item: number = 0;

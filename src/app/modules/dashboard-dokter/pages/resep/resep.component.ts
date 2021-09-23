@@ -18,6 +18,8 @@ export class ResepComponent implements OnInit {
         { Id: "Simpan", Icons1: "fas fa-save fa-sm", Captions: "Simpan" },
     ];
 
+    Data: any[] = [];
+
     constructor(
         private resepDokterService: ResepDokterService
     ) { }
@@ -29,7 +31,7 @@ export class ResepComponent implements OnInit {
             case "Reset":
                 break;
             case "Simpan":
-                console.log(this.resepDokterService.dataSourceChildGrid.value);
+                this.onGetGridResepDatasource();
                 break;
             default:
                 break;
@@ -50,5 +52,14 @@ export class ResepComponent implements OnInit {
             default:
                 break;
         }
+    }
+
+    onGetGridResepDatasource(): void {
+        let parent = this.resepDokterService.dataSourceParentGrid.value;
+
+        let children = this.resepDokterService.dataSourceChildGrid.value;
+
+        console.log("parent", parent);
+        console.log("children", children);
     }
 }

@@ -147,7 +147,7 @@
                 <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
                     height="calc(100vh - 22rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
                     (load)="onLoad($event)" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
-                    (rowSelected)="onRowSelected($event)">
+                    (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
                     <e-columns>
                         <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
