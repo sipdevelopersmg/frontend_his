@@ -171,6 +171,8 @@ export class InputPenerimaanComponent implements OnInit {
           }
       });
 
+      
+
       this.GridDetailToolbar = [
         //   { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
           { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }

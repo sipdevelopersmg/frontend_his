@@ -39,6 +39,7 @@ export class ResepDokterService {
 
     public dataSourceParentGrid = new BehaviorSubject([]);
     public dataSourceChildGrid = new BehaviorSubject([]);
+    public dataSelectRacikan = new BehaviorSubject({});
 
     public jumlah_item: number = 0;
     private counter: number = 0;
@@ -76,8 +77,6 @@ export class ResepDokterService {
             detail
         ];
         this.sum();
-        console.log(this.dataDetail);
-        console.log(this.dataDetailRacikan);
     }
 
     addDetailRacikan(detailRacikan: TrResepDokterIrjaDetailRacikanInsert): void {
@@ -85,6 +84,16 @@ export class ResepDokterService {
             ...this.dataDetailRacikan,
             detailRacikan
         ]
+    }
+
+    editDetail(index: number, data) {
+        this.dataDetail[index] = data;
+        this.sum();
+    }
+
+    removeDataDetail(index: number) {
+        this.dataDetail.splice(index, 1);
+        this.sum();
     }
 
     sum(): void {

@@ -1,9 +1,10 @@
 export interface TrResepDokterIrjaDetailRacikanInsert {
     counter: number;
+    counterRacikan: number;
     no_urut: number;
     id_item: number;
-    nama_item: string;
-    satuan: string;
+    nama_obat: string;
+    nama_satuan: string;
     komposisi:number;
     seper:number;
     kandungan:number;
@@ -22,7 +23,7 @@ export interface TrResepDokterIrjaDetailInsert {
     id_item: number;
     nama_obat: string;
     qty_resep: number;
-    satuan: string;
+    nama_satuan: string;
     label?:any;
     ket_label:string;
     id_label_pemakaian_obat?: number;

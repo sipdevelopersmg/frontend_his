@@ -177,7 +177,6 @@ export class SetHargaOrderComponent implements OnInit {
                     change: function (args) {
                         let formEle = this.GridDetail.element.querySelector('form').ej2_instances[0];
                         let nominal_tarif_ele = formEle.getInputElement('harga_order_netto');
-
                         let diskon1 = this.HargaOrderObj - this.utilityHelperService.diskon(this.HargaOrderObj, this.Diskon1Obj)
                         nominal_tarif_ele.value = diskon1 - this.utilityHelperService.diskon(diskon1, this.Diskon2Obj)
                     }.bind(this),
