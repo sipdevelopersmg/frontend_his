@@ -38,4 +38,24 @@ export class VerifikasiOrderLabService {
             })
         );
     }
+
+    onPostVerifikasiOrderLab(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_VERIFIKASI_ORDER_LAB, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onPostCancelOrderLab(id_order_penunjang: number, reason_canceled: string): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_CANCEL_ORDER_LAB, {
+            id_order_penunjang: id_order_penunjang,
+            reason_canceled: reason_canceled
+        }).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
 }

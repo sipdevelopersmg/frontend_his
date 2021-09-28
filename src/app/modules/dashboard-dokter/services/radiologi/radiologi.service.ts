@@ -35,4 +35,12 @@ export class RadiologiService {
                 })
             );
     }
+
+    onGetRiwayatOrderLab(RegisterId: number): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_RIWAYAT_ORDER_RAD + RegisterId);
+    }
+
+    onGetDetailRiwayatOrderLab(OrderPenunjangId: number): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_DETAIL_RIWAYAT_ORDER_RAD + OrderPenunjangId);
+    }
 }

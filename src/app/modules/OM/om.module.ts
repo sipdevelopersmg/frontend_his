@@ -6,11 +6,13 @@ import { SharedModule } from "../shared/shared.module";
 import { VerifikasiOrderLabComponent } from './pages/verifikasi-order-lab/verifikasi-order-lab.component';
 import { OrderManagementRoutingModule } from './om-routing.module';
 import { VerifikasiOrderRadComponent } from './pages/verifikasi-order-rad/verifikasi-order-rad.component';
+import { SetupPetugasComponent } from './pages/setup-data/setup-petugas/setup-petugas.component';
 
 @NgModule({
     declarations: [
         VerifikasiOrderLabComponent,
-        VerifikasiOrderRadComponent
+        VerifikasiOrderRadComponent,
+        SetupPetugasComponent
     ],
     imports: [
         CommonModule,

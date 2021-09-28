@@ -11,7 +11,9 @@ import { ITabsPemeriksaanModel } from '../../../models/radiologi.model';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
 import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
 import { RadiologiService } from '../../../services/radiologi/radiologi.service';
-import * as TabsConfig from '../json/InputOrderBaru.json';
+import Config from '../json/InputOrderBaru.json';
+import * as API_PIS_SETUP_DATA from '../../../../../api/PIS/SETUP_DATA';
+import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 
 @Component({
     selector: 'app-input-order-baru',
@@ -20,11 +22,18 @@ import * as TabsConfig from '../json/InputOrderBaru.json';
 })
 export class InputOrderBaruRadComponent implements OnInit {
 
+    Config = Config;
+
+    API_PIS_SETUP_DATA = API_PIS_SETUP_DATA.API_SETUP_DATA;
+
     // ** Tabs Order Radiologi Dummy Datasource
     TabsOrderRadiologi: ITabsPemeriksaanModel[] = [];
 
     // ** Selected Checkbox Datasource
     SelectedCheckbox: any[];
+
+    @ViewChild('LookupDiagnosa') LookupDiagnosa: OrgInputLookUpKodeComponent;
+    urlDiagnosa = this.API_PIS_SETUP_DATA.SETUP_ICD_DIAGNOSA.GET_ALL_DIAGNOSA_FOR_LOOKUP_ADMISI;
 
     // ** Grid Daftar Order Properties
     GridDaftarOrderEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
@@ -375,13 +384,22 @@ export class InputOrderBaruRadComponent implements OnInit {
         );
     }
 
+    onClickPilihDiagnosa(): void {
+        this.LookupDiagnosa.onOpenModal();
+    }
+
+    onGetSeletedLookupDiagnosa(args: any): void {
+        this.id_icd.setValue(args.id_icd);
+        this.keterangan.setValue(`${args.kode_icd} - ${args.nama_icd}`);
+    }
+
     onSubmitFormAddDiagnosa(FormAddDiagnosa: any): void {
         console.log(FormAddDiagnosa);
     }
 
     onSubmitRadiologiPasien(FormInsertOrderRad: any): void {
         FormInsertOrderRad.id_dokter_order = this.daftarPasienService.ActivePasien.value.id_dokter;
-        FormInsertOrderRad.id_icd = this.daftarPasienService.ActivePasien.value.id_icd_masuk;
+        // FormInsertOrderRad.id_icd = this.daftarPasienService.ActivePasien.value.id_icd_masuk;
         FormInsertOrderRad.id_kelas = this.daftarPasienService.ActivePasien.value.id_kelas_rawat;
         FormInsertOrderRad.id_poli_order = this.daftarPasienService.ActivePasien.value.id_poli;
         FormInsertOrderRad.id_register = this.daftarPasienService.ActivePasien.value.id_register;
@@ -440,7 +458,7 @@ export class InputOrderBaruRadComponent implements OnInit {
                             this.onResetFormRadiologiPasien();
 
                             setTimeout(() => {
-                                this.router.navigate(['/Dokter/laboratorium/riwayat-pemeriksaan']);
+                                this.router.navigate(['/Dokter/radiologi/riwayat-pemeriksaan']);
                             }, 500);
                         })
                 }

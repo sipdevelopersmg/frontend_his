@@ -10,7 +10,9 @@ import { ITabsPemeriksaanModel } from '../../../models/laboratorium.model';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
 import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
 import { LaboratoriumService } from '../../../services/laboratorium/laboratorium.service';
-import * as TabsConfig from '../json/InputOrderBaru.json';
+import Config from '../json/InputOrderBaru.json';
+import * as API_PIS_SETUP_DATA from '../../../../../api/PIS/SETUP_DATA';
+import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 
 @Component({
     selector: 'app-input-order-baru',
@@ -18,6 +20,10 @@ import * as TabsConfig from '../json/InputOrderBaru.json';
     styleUrls: ['./input-order-baru.component.css']
 })
 export class InputOrderBaruLabComponent implements OnInit {
+
+    Config = Config;
+
+    API_PIS_SETUP_DATA = API_PIS_SETUP_DATA.API_SETUP_DATA;
 
     // ** Tabs Order Laboratorium Dummy Datasource
     TabsOrderLaboratorium: ITabsPemeriksaanModel[] = [];
@@ -33,6 +39,9 @@ export class InputOrderBaruLabComponent implements OnInit {
 
     // ** Form Add Diagnosa
     FormAddDiagnosa: FormGroup;
+
+    @ViewChild('LookupDiagnosa') LookupDiagnosa: OrgInputLookUpKodeComponent;
+    urlDiagnosa = this.API_PIS_SETUP_DATA.SETUP_ICD_DIAGNOSA.GET_ALL_DIAGNOSA_FOR_LOOKUP_ADMISI;
 
     // ** Modal Dialog Add / Edit Setup User Properties
     modalRef: BsModalRef;
@@ -222,6 +231,15 @@ export class InputOrderBaruLabComponent implements OnInit {
         );
     }
 
+    onClickPilihDiagnosa(): void {
+        this.LookupDiagnosa.onOpenModal();
+    }
+
+    onGetSeletedLookupDiagnosa(args: any): void {
+        this.id_icd.setValue(args.id_icd);
+        this.keterangan.setValue(`${args.kode_icd} - ${args.nama_icd}`);
+    }
+
     onSubmitFormAddDiagnosa(FormAddDiagnosa: any): void {
         console.log(FormAddDiagnosa);
     }
@@ -230,7 +248,6 @@ export class InputOrderBaruLabComponent implements OnInit {
         FormInsertOrderLab.id_register = this.daftarPasienService.ActivePasien.value.id_register;;
         FormInsertOrderLab.id_kelas = this.daftarPasienService.ActivePasien.value.id_kelas_rawat;
         FormInsertOrderLab.kode_grup_penunjang = "LAB";
-        FormInsertOrderLab.id_icd = this.daftarPasienService.ActivePasien.value.id_icd_masuk;
         FormInsertOrderLab.id_poli_order = this.daftarPasienService.ActivePasien.value.id_poli;
         FormInsertOrderLab.id_dokter_order = this.daftarPasienService.ActivePasien.value.id_dokter;
         FormInsertOrderLab.item_order = this.GridDaftarOrderDatasource;

@@ -1,0 +1,52 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Petugas</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridSetupPetugasColumns"
+                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)" (action-complete)="handleActionComplete($event)">
+                </mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Education</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text [label]="'Nama Petugas'" formControlName="nama_petugas"
+                                [IsFormControlInvalid]="nama_petugas.invalid"
+                                [ValidatorsCaption]="'Nama Petugas Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kode Grup Penunjang'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist [dataSource]="KodeGrupPenunjangDatasource"
+                                        [fields]="KodeGrupPenunjangFiels" formControlName="kode_grup_penunjang"
+                                        [enabled]="inputFieldState == 'normal' || inputFieldState == 'edit'">
+                                    </ejs-dropdownlist>
+
+                                    <atm-validators [IsFormControlTouched]="kode_grup_penunjang.touched"
+                                        [IsFormControlInvalid]="kode_grup_penunjang.invalid"
+                                        [ValidatorsCaption]="'Kode Grup Penunjang Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

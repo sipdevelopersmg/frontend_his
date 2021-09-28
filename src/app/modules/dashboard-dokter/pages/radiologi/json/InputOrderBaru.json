@@ -1,266 +1,38 @@
 {
-    "Tabs": [
-        {
-            "tab_id": "RadiologiIntervensi",
-            "tab_caption": "Radiologi Intervensi",
-            "tab_buttons": [
-                {
-                    "tab_button_id": "1",
-                    "tab_button_caption": "Radiologi Intervensi 1",
-                    "parameter": [
-                        {
-                            "parameter_id": "11",
-                            "parameter_caption": "Radiologi Intervensi Parameter 1.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "12",
-                            "parameter_caption": "Radiologi Intervensi Parameter 1.2",
-                            "parameter_checked": false
-                        }
-                    ]
-                },
-                {
-                    "tab_button_id": "2",
-                    "tab_button_caption": "Radiologi Intervensi 2",
-                    "parameter": [
-                        {
-                            "parameter_id": "21",
-                            "parameter_caption": "Radiologi Intervensi Parameter 2.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "22",
-                            "parameter_caption": "Radiologi Intervensi Parameter 2.2",
-                            "parameter_checked": false
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "tab_id": "Konvensional",
-            "tab_caption": "Konvensional",
-            "tab_buttons": [
-                {
-                    "tab_button_id": "3",
-                    "tab_button_caption": "Konvensional 1",
-                    "parameter": [
-                        {
-                            "parameter_id": "31",
-                            "parameter_caption": "Konvensional Parameter 1.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "32",
-                            "parameter_caption": "Konvensional Parameter 1.2",
-                            "parameter_checked": false
-                        }
-                    ]
-                },
-                {
-                    "tab_button_id": "4",
-                    "tab_button_caption": "Konvensional 2",
-                    "parameter": [
-                        {
-                            "parameter_id": "41",
-                            "parameter_caption": "Konvensional Parameter 2.1",
-                            "parameter_checked": false
-                        },
-                        {
-                            "parameter_id": "42",
-                            "parameter_caption": "Konvensional Parameter 2.2",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "tab_id": "MRI",
-            "tab_caption": "MRI",
-            "tab_buttons": [
-                {
-                    "tab_button_id": "5",
-                    "tab_button_caption": "MRI 1",
-                    "parameter": [
-                        {
-                            "parameter_id": "51",
-                            "parameter_caption": "MRI Parameter 1.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "52",
-                            "parameter_caption": "MRI Parameter 1.2",
-                            "parameter_checked": false
-                        }
-                    ]
-                },
-                {
-                    "tab_button_id": "6",
-                    "tab_button_caption": "MRI 2",
-                    "parameter": [
-                        {
-                            "parameter_id": "61",
-                            "parameter_caption": "MRI Parameter 2.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "62",
-                            "parameter_caption": "MRI Parameter 2.2",
-                            "parameter_checked": false
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "tab_id": "NonKonvensional",
-            "tab_caption": "Non Konvensional",
-            "tab_buttons": [
-                {
-                    "tab_button_id": "7",
-                    "tab_button_caption": "Non Konvensional 1",
-                    "parameter": [
-                        {
-                            "parameter_id": "71",
-                            "parameter_caption": "Non Konvensional Parameter 1.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "72",
-                            "parameter_caption": "Non Konvensional Parameter 1.2",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "tab_button_id": "8",
-                    "tab_button_caption": "Non Konvensional 2",
-                    "parameter": [
-                        {
-                            "parameter_id": "81",
-                            "parameter_caption": "Non Konvensional Parameter 2.1",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        },
-                        {
-                            "parameter_id": "82",
-                            "parameter_caption": "Non Konvensional Parameter 2.2",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "tab_id": "UsgKhusus",
-            "tab_caption": "USG Khusus",
-            "tab_buttons": [
-                {
-                    "tab_button_id": "9",
-                    "tab_button_caption": "USG Khusus 1",
-                    "parameter": [
-                        {
-                            "parameter_id": "91",
-                            "parameter_caption": "USG Khusus Parameter 1.1",
-                            "parameter_checked": false
-                        },
-                        {
-                            "parameter_id": "92",
-                            "parameter_caption": "USG Khusus Parameter 1.2",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "tab_button_id": "10",
-                    "tab_button_caption": "USG Khusus 2",
-                    "parameter": [
-                        {
-                            "parameter_id": "101",
-                            "parameter_caption": "USG Khusus Parameter 2.1",
-                            "parameter_checked": false
-                        },
-                        {
-                            "parameter_id": "102",
-                            "parameter_caption": "USG Khusus Parameter 2.2",
-                            "parameter_checked": false,
-                            "parameter_hasil": {
-                                "parameter_left": false,
-                                "parameter_right": false,
-                                "parameter_polos": false,
-                                "parameter_kontras": false
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+    "LookupDiagnosa": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_icd",
+                "headerText": "KODE ICD",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_icd",
+                "headerText": "NAMA ICD",
+                "type": "string",
+                "visible": true,
+                "width": 300
+            }
+        ],
+        "filter": [
+            {
+                "field": " si1.kode_icd",
+                "filter": "like",
+                "title": "KODE ICD"
+            },
+            {
+                "field": "si1.nama_icd",
+                "filter": "like",
+                "title": "NAMA ICD"
+            }
+        ]
+    }
 }

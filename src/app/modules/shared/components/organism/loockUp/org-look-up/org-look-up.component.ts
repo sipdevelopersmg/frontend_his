@@ -71,7 +71,6 @@ export class OrgLookUpComponent implements OnInit {
     }
 
     onOpenModal() {
-
         const _combine = combineLatest(
             this.modalService.onShow,
             this.modalService.onHidden
@@ -81,9 +80,7 @@ export class OrgLookUpComponent implements OnInit {
             setTimeout(() => {
                 (<HTMLInputElement>document.getElementById("searchValueId")).focus();
             }, 100)
-        })
-
-        );
+        }));
 
         this.subscriptions.push(_combine);
 
@@ -93,7 +90,6 @@ export class OrgLookUpComponent implements OnInit {
         );
 
         this.unsubscribe();
-
     }
 
     unsubscribe() {

@@ -109,7 +109,7 @@
 
                         <!-- Button Pilih Diagnosa -->
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
-                            <button class="btn btn-success btn-sm" type="button">
+                            <button class="btn btn-success btn-sm" type="button" (click)="onClickPilihDiagnosa()">
                                 Pilih Diagnosa
                             </button>
                         </div>
@@ -205,4 +205,9 @@
             </div>
         </div>
     </div>
+
+    <org-look-up #LookupDiagnosa [modal-title]="'Pilih Diagnosa'" [filter-lookup]="Config.LookupDiagnosa.filter"
+        [lookup-url]="urlDiagnosa" [columns]="Config.LookupDiagnosa.columns"
+        (onGetSelectedData)="onGetSeletedLookupDiagnosa($event)">
+    </org-look-up>
 </div>
