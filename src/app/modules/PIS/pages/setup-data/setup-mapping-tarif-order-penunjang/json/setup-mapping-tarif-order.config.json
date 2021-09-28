@@ -145,5 +145,78 @@
                 "title": "NAMA GRUP TARIF"
             }
         ]
+    },
+    "LookupTarifRadiologi": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "id_setup_tarif",
+                "headerText": "ID",
+                "type": "string",
+                "visible": false
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_setup_tarif",
+                "headerText": "KODE SETUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_setup_tarif",
+                "headerText": "NAMA SETUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_grup_tarif",
+                "headerText": "NAMA GRUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nominal_tarif",
+                "headerText": "NOMINAL TARIF",
+                "headerTextAlign": "Right",
+                "textAlign": "Right",
+                "format": "N2",
+                "type": "number",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "st.kode_setup_tarif",
+                "filter": "like",
+                "title": "KODE TARIF"
+            },
+            {
+                "field": "st.nama_setup_tarif",
+                "filter": "like",
+                "title": "NAMA TARIF"
+            },
+            {
+                "field": "sgt.nama_grup_tarif",
+                "filter": "like",
+                "title": "NAMA GRUP TARIF"
+            }
+        ]
     }
 }

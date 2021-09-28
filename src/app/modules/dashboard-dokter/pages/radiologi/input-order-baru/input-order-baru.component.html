@@ -1,20 +1,20 @@
 <div class="row pt-2">
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-        <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
+        <org-tabs *ngIf="TabsOrderRadiologi.length > 0" #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
             <!-- Radiologi Intervensi  -->
-            <org-tabs-item *ngFor="let tab of TabsOrderRadiologi.Tabs">
-                <org-tabs-label [Id]="tab.tab_id">{{ tab.tab_caption }}</org-tabs-label>
+            <org-tabs-item *ngFor="let tab of TabsOrderRadiologi">
+                <org-tabs-label>{{ tab.nama_kelompok | titlecase }}</org-tabs-label>
                 <org-tabs-body>
                     <div class="row">
                         <!-- Dynamic Button for Each Tab -->
                         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                             <div class="card shadow-sm border-0">
                                 <div class="card-body px-2 py-1 cardButtonRadiologi">
-                                    <div class="mb-2" *ngFor="let button of tab.tab_buttons">
+                                    <div class="mb-2" *ngFor="let button of tab.child">
                                         <button class="btn btn-primary btn-sm" type="button"
-                                            id="tab.tab_id{{ tab_button_id }}Button" style="width: 100%;"
+                                            id="tab.tab_id{{ button.kode_kelompok }}Button" style="width: 100%;"
                                             (click)="onClickTabButton(button)">
-                                            {{ button.tab_button_caption }}
+                                            {{ button.nama_kelompok }}
                                         </button>
                                     </div>
                                 </div>
@@ -28,55 +28,59 @@
                                     <div class="form-check" *ngFor="let check of SelectedCheckbox">
                                         <input class="form-check-input" type="checkbox"
                                             [value]="check.parameter_checked"
-                                            [id]="check.parameter_id + 'CheckParameter'"
+                                            [id]="check.id_mapping_tarif_penunjang + 'CheckParameter'"
                                             [checked]="check.parameter_checked"
                                             (change)="onChangeTabsCheckbox(check, 'parent')">
-                                        <label class="form-check-label" [class.text-biru-muda]="check.parameter_hasil"
-                                            for="{{ check.parameter_id }}CheckParameter">
-                                            {{ check.parameter_caption }}
+                                        <label class="form-check-label" [class.text-biru-muda]="check.item_rad"
+                                            for="{{ check.id_mapping_tarif_penunjang }}CheckParameter">
+                                            {{ check.nama_tindakan_penunjang }}
                                         </label>
 
-                                        <div class="my-1" *ngIf="check.parameter_hasil">
-                                            <!-- Left -->
-                                            <div class="form-check form-check-inline">
+                                        <div class="my-1" *ngIf="check.item_rad">
+                                            <div *ngIf="check.is_ada_left_right" class="form-check form-check-inline">
                                                 <input class="form-check-input" type="checkbox"
-                                                    id="{{check.parameter_id}}Left"
-                                                    [checked]="check.hasil == 'L' || check.hasil == 'LR'"
+                                                    id="{{check.id_mapping_tarif_penunjang}}Left"
+                                                    [checked]="check.left_or_right == 'L' || check.left_or_right == 'LR'"
                                                     (change)="onChangeTabsCheckboxChildren(check, 'Left')">
-                                                <label class="form-check-label" for="{{check.parameter_id}}Left">
+                                                <label class="form-check-label"
+                                                    for="{{check.id_mapping_tarif_penunjang}}Left">
                                                     Left
                                                 </label>
                                             </div>
 
-                                            <!-- Right -->
-                                            <div class="form-check form-check-inline">
+                                            <div *ngIf="check.is_ada_left_right" class="form-check form-check-inline">
                                                 <input class="form-check-input" type="checkbox"
-                                                    id="{{check.parameter_id}}Right"
-                                                    [checked]="check.hasil == 'R' || check.hasil == 'LR'"
+                                                    id="{{check.id_mapping_tarif_penunjang}}Right"
+                                                    [checked]="check.left_or_right == 'R' || check.left_or_right == 'LR'"
                                                     (change)="onChangeTabsCheckboxChildren(check, 'Right')">
-                                                <label class="form-check-label" for="{{check.parameter_id}}Right">
+                                                <label class="form-check-label"
+                                                    for="{{check.id_mapping_tarif_penunjang}}Right">
                                                     Right
                                                 </label>
                                             </div>
 
-                                            <!-- Polos -->
-                                            <div class="form-check form-check-inline">
+                                            <div *ngIf="check.is_ada_polos_kontras"
+                                                class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="polosOrKontras"
-                                                    id="{{check.parameter_id}}Polos" value="polos"
-                                                    [checked]="check.polos_or_kontras == 'polos'"
+                                                    id="{{check.id_mapping_tarif_penunjang}}Polos" value="polos"
+                                                    [checked]="check.polos_or_kontras == 'P'"
                                                     (change)="onChangeTabsCheckboxChildren(check, 'Polos')">
                                                 <label class="form-check-label"
-                                                    for="{{check.parameter_id}}Polos">Polos</label>
+                                                    for="{{check.id_mapping_tarif_penunjang}}Polos">
+                                                    Polos
+                                                </label>
                                             </div>
 
-                                            <!-- Kontras -->
-                                            <div class="form-check form-check-inline">
+                                            <div *ngIf="check.is_ada_polos_kontras"
+                                                class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="polosOrKontras"
-                                                    id="{{check.parameter_id}}Kontras" value="kontras"
-                                                    [checked]="check.polos_or_kontras == 'kontras'"
+                                                    id="{{check.id_mapping_tarif_penunjang}}Kontras" value="kontras"
+                                                    [checked]="check.polos_or_kontras == 'K'"
                                                     (change)="onChangeTabsCheckboxChildren(check, 'Kontras')">
                                                 <label class="form-check-label"
-                                                    for="{{check.parameter_id}}Kontras">Kontras</label>
+                                                    for="{{check.id_mapping_tarif_penunjang}}Kontras">
+                                                    Kontras
+                                                </label>
                                             </div>
                                         </div>
 
@@ -93,106 +97,111 @@
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         <div class="card border-0 shadow-sm">
             <div class="card-body p-2">
-                <!-- Button - Button -->
-                <div class="row mb-3">
-                    <!-- Button Input Diagnosa -->
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
-                        <button class="btn btn-primary btn-sm" type="button" (click)="onClickButtonAddDiagnosa()">
-                            Input Diagnosa
-                        </button>
-                    </div>
-
-                    <!-- Button Pilih Diagnosa -->
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
-                        <button class="btn btn-success btn-sm" type="button">
-                            Pilih Diagnosa
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Modal Dialog Add Diagnosa Baru -->
-                <ng-template #modalDialogAddDiagnosa>
-                    <form [formGroup]="FormAddDiagnosa">
-                        <div class="modal-header px-2 py-1 background-biru-muda text-white">
-                            <h5 class="modal-title pull-left">Input Diagnosa Baru</h5>
-                            <button type="button" class="btn pull-right text-white" aria-label="Close"
-                                (click)="modalRef.hide()">
-                                <i class="fas fa-window-close"></i>
+                <form [formGroup]="FormInsertOrderRad">
+                    <!-- Button - Button -->
+                    <div class="row mb-3">
+                        <!-- Button Input Diagnosa -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
+                            <button class="btn btn-primary btn-sm" type="button" (click)="onClickButtonAddDiagnosa()">
+                                Input Diagnosa
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <!-- Subjective -->
-                            <mol-input-text [label]="'Subjective'" formControlName="subjective"></mol-input-text>
 
-                            <!-- Objective -->
-                            <mol-input-text [label]="'Objective'" formControlName="objective"></mol-input-text>
-
-                            <!-- Assesment -->
-                            <org-input-look-up-kode [label]="'Assesment'" [modal-title]="'Pilih Diagnosa'">
-                            </org-input-look-up-kode>
-
-                            <!-- Catatan -->
-                            <mol-input-text [label]="'Assesment (Catatan)'"></mol-input-text>
-
-                            <!-- Plan -->
-                            <mol-input-textarea [label]="'Plan'" formControlName="plan"></mol-input-textarea>
+                        <!-- Button Pilih Diagnosa -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                            <button class="btn btn-success btn-sm" type="button">
+                                Pilih Diagnosa
+                            </button>
                         </div>
-                        <div class="modal-footer p-2 background-abu-muda">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
-                                    <button class="btn btn-primary btn-sm" type="button"
-                                        (click)="onSubmitFormAddDiagnosa(FormAddDiagnosa.value)">
-                                        Simpan
-                                    </button>
+                    </div>
+
+                    <!-- Modal Dialog Add Diagnosa Baru -->
+                    <ng-template #modalDialogAddDiagnosa>
+                        <form [formGroup]="FormAddDiagnosa">
+                            <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                                <h5 class="modal-title pull-left">Input Diagnosa Baru</h5>
+                                <button type="button" class="btn pull-right text-white" aria-label="Close"
+                                    (click)="modalRef.hide()">
+                                    <i class="fas fa-window-close"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Subjective -->
+                                <mol-input-text [label]="'Subjective'" formControlName="subjective"></mol-input-text>
+
+                                <!-- Objective -->
+                                <mol-input-text [label]="'Objective'" formControlName="objective"></mol-input-text>
+
+                                <!-- Assesment -->
+                                <org-input-look-up-kode [label]="'Assesment'" [modal-title]="'Pilih Diagnosa'">
+                                </org-input-look-up-kode>
+
+                                <!-- Catatan -->
+                                <mol-input-text [label]="'Assesment (Catatan)'"></mol-input-text>
+
+                                <!-- Plan -->
+                                <mol-input-textarea [label]="'Plan'" formControlName="plan"></mol-input-textarea>
+                            </div>
+                            <div class="modal-footer p-2 background-abu-muda">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                                        <button class="btn btn-primary btn-sm" type="button"
+                                            (click)="onSubmitFormAddDiagnosa(FormAddDiagnosa.value)">
+                                            Simpan
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+
+                    <!-- Input Field Keterangan dan Catatan -->
+                    <div class="row mb-2">
+                        <!-- Keterangan Klinik Penderita -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <label for="Keterangan" class="form-label">Keterangan Klinik Penderita</label>
+                            <textarea type="text" class="form-control" id="Keterangan" rows="2"
+                                formControlName="keterangan">
+                            </textarea>
+                        </div>
+
+                        <!-- Catatan -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <label for="Keterangan" class="form-label">Catatan</label>
+                            <input type="text" class="form-control" id="Catatan" formControlName="keterangan_sample">
+                        </div>
+                    </div>
+
+                    <!-- Grid Daftar Order -->
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p class="text-biru-muda mb-0">
+                                        Daftar Order
+                                    </p>
+                                </div>
+                                <div class="card-body p-0">
+                                    <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
+                                        [grid-height]="'calc(100vh - 34.1rem)'" [grid-lines]="'Both'"
+                                        [grid-editSettings]="GridDaftarOrderEditSettings"
+                                        [columns]="GridDaftarOrderColumns" [grid-DataSource]="GridDaftarOrderDatasource"
+                                        (row-selected)="onRowSelected($event)" (initialized)="onInitalizedGrid($event)">
+                                    </mol-grid>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </ng-template>
-
-                <!-- Input Field Keterangan dan Catatan -->
-                <div class="row mb-2">
-                    <!-- Keterangan Klinik Penderita -->
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                        <label for="Keterangan" class="form-label">Keterangan Klinik Penderita</label>
-                        <textarea type="text" class="form-control" id="Keterangan" rows="2"></textarea>
                     </div>
 
-                    <!-- Catatan -->
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                        <label for="Keterangan" class="form-label">Catatan</label>
-                        <input type="text" class="form-control" id="Catatan">
-                    </div>
-                </div>
-
-                <!-- Grid Daftar Order -->
-                <div class="row mb-2">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <p class="text-biru-muda mb-0">
-                                    Daftar Order
-                                </p>
-                            </div>
-                            <div class="card-body p-0">
-                                <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'" [grid-height]="110"
-                                    [grid-lines]="'Both'" [grid-editSettings]="GridDaftarOrderEditSettings"
-                                    [columns]="GridDaftarOrderColumns" [grid-DataSource]="GridDaftarOrderDatasource"
-                                    (row-selected)="onRowSelected($event)" (initialized)="onInitalizedGrid($event)">
-                                </mol-grid>
-                            </div>
+                    <!-- Button Simpan dan Button Cancel -->
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                            <button class="btn btn-primary btn-sm me-2" type="button"
+                                (click)="onSubmitRadiologiPasien(FormInsertOrderRad.value)">Simpan</button>
+                            <button class="btn btn-danger btn-sm" type="button">Cancel</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Button Simpan dan Button Cancel -->
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
-                        <button class="btn btn-primary btn-sm me-2" type="button"
-                            (click)="onSubmitRadiologiPasien()">Simpan</button>
-                        <button class="btn btn-danger btn-sm" type="button">Cancel</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

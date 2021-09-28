@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { DokterModel, IGetAllDokterModel, GetAllDokterModel, GetByIdDokterModel, IPersonDokterSudahAdaModel, PostSavePendaftaranDokterBaruModel, PostSavePendaftaranDokterPersonSudahAdaModel, PostUploadFotoPersonDokterModel, PutUpdateDokterModel, IPutDetailDokterModel } from '../../../models/setup-data/setup-dokter.model';
@@ -20,6 +20,7 @@ import { SetupSpesialisasiDokterService } from '../setup-spesialisasi-dokter/set
 import { SetupSmfDokterService } from '../setup-smf-dokter/setup-smf-dokter.service';
 import { SetupStatusDokterService } from '../setup-status-dokter/setup-status-dokter.service';
 import * as API_CONFIG from '../../../../../api';
+import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Injectable({
     providedIn: 'root'
@@ -333,5 +334,17 @@ export class SetupDokterService {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
+    }
+
+    onGetDokterByDokterName(Name: string): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_DOKTER.GET_ALL_DOKTER)
+            .pipe(
+                map((result) => {
+                    return result.data.filter((item: any) => { return item.full_name == Name })[0];
+                }),
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }

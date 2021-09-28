@@ -55,9 +55,13 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
         "Search"
     ];
     GridPageSettings: object = { pageSizes: true, pageSize: 20, pageCount: 4 };
-    GridDataSelectedRow: any[] = [];
+    GridDataSelectedRow: any = {};
     GridDataSelectedRecords: any[] = [];
     GridDataUpdatedRecords: any = {};
+
+    @ViewChild('GridDetailData') GridDetailData: GridComponent;
+    GridDetailDatasource: any[] = [];
+    GridDetailDataToolbar: any[] = ["Search"];
 
     SelectedJenisPemeriksaan: any = {};
 
@@ -67,6 +71,15 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
     UrlLookupTarifBerlaku: string;
     TitleLookupTarifBerlaku: string;
     ParameterLookupTarifBerlaku: any;
+
+    modalRefTarifRadiologi: BsModalRef;
+    @ViewChild('modalInsertTarifRadiologi') modalInsertTarifRadiologi: TemplateRef<any>;
+
+    FormAddTarifRadiologi: FormGroup;
+    FormAddTarifRadiologiState: string = "Header";
+
+    FormAddTarifRadiologiDetail: FormGroup;
+    FormAddTarifRadiologiDetailState: string = "TanpaSisi";
 
     constructor(
         private formBuilder: FormBuilder,
@@ -81,6 +94,8 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
         this.setupMappingOrderTarifPenunjangService.onGetJenisPenunjang();
 
         this.onSetFormAddChildAttributes();
+
+        this.onSetFormInsertTarifRadiologi();
 
         this.onGetKelasPerawatan();
     }
@@ -101,12 +116,16 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
         const grid_columns = this.GridData.getColumns();
 
         let field_polos_kontras = grid_columns.map((item) => { return item.field }).indexOf("is_ada_polos_kontras");
-
-        let field_left_right = grid_columns.map((item) => { return item.field }).indexOf("is_ada_left_right");
-
         grid_columns[field_polos_kontras].visible = show;
 
+        let field_left_right = grid_columns.map((item) => { return item.field }).indexOf("is_ada_left_right");
         grid_columns[field_left_right].visible = show;
+
+        let field_kode_tarif = grid_columns.map((item) => { return item.field }).indexOf("kode_setup_tarif");
+        grid_columns[field_kode_tarif].visible = !show;
+
+        let field_nominal_tarif = grid_columns.map((item) => { return item.field }).indexOf("nominal_tarif");
+        grid_columns[field_nominal_tarif].visible = !show;
 
         this.GridDatasource = [];
 
@@ -196,13 +215,21 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
                 break;
             case 'add_charge':
                 this.SelectedChild = data;
-                this.TitleLookupTarifBerlaku = `Data Tarif Kelompok ${data.kode_kelompok} - ${data.nama_kelompok}`;
-                this.UrlLookupTarifBerlaku = this.API_CONFIG.LOOKUP_TARIF_MAPPING_ORDER_BY_KODE_KELOMPOK;
+
                 this.ParameterLookupTarifBerlaku = {
                     kode_kelompok: data.kode_kelompok,
                     kode_grup_penunjang: this.SelectedJenisPenunjang.kode_grup_penunjang
                 };
-                this.LookupChecklist.hanldeOpenModalLookupChecklist();
+
+                this.UrlLookupTarifBerlaku = this.API_CONFIG.LOOKUP_TARIF_MAPPING_ORDER_BY_KODE_KELOMPOK;
+
+                if (this.SelectedJenisPenunjang.kode_grup_penunjang === "RAD") {
+                    this.handleOpenModalInsertTarifRadiolog(this.SelectedChild);
+                } else {
+                    this.TitleLookupTarifBerlaku = `Data Tarif Kelompok ${data.kode_kelompok} - ${data.nama_kelompok}`;
+                    this.LookupChecklist.hanldeOpenModalLookupChecklist();
+                }
+
                 break;
         }
     }
@@ -337,6 +364,13 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
 
     handleSelectedRow(args: any): void {
         this.GridDataSelectedRow = args.data;
+
+        this.setupMappingOrderTarifPenunjangService.onGetDetailOrderRadiologi(this.GridDataSelectedRow.id_mapping_tarif_penunjang)
+            .subscribe((result) => {
+                this.GridDetailDatasource = result.data;
+
+                this.GridDetailData.refresh();
+            })
     }
 
     handleToolbarClick(args: any): void {
@@ -396,6 +430,8 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
                 if (result) {
                     this.utilityService.onShowingCustomAlert('success', 'Success', `${Data.length} Data Berhasil Disimpan`)
                         .then(() => {
+                            this.handleCloseModalInsertTarifRadiologi();
+
                             this.onGetMappingTarifOrderPenunjang(this.SelectedChild.kode_kelompok, 0);
                         })
                 }
@@ -434,8 +470,288 @@ export class SetupMappingTarifOrderPenunjangComponent implements OnInit {
             })
     }
 
+    // ** Insert Tarif Radiologi ======
+    onSetFormInsertTarifRadiologi(): void {
+        this.FormAddTarifRadiologi = this.formBuilder.group({
+            kode_kelompok: ["", []],
+            nama_tindakan_penunjang: ["", []],
+            is_ada_left_right: [false, []],
+            is_ada_polos_kontras: [false, []]
+        });
+
+        this.FormAddTarifRadiologiDetail = this.formBuilder.group({
+            tanpa_sisi: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [false, []],
+                is_dua_sisi: [false, []],
+                is_polos: [false, []],
+                is_kontras: [false, []],
+            }),
+            satu_sisi: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [true, []],
+                is_dua_sisi: [false, []],
+                is_polos: [false, []],
+                is_kontras: [false, []],
+            }),
+            dua_sisi: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [false, []],
+                is_dua_sisi: [true, []],
+                is_polos: [false, []],
+                is_kontras: [false, []],
+            }),
+            polos: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [false, []],
+                is_dua_sisi: [false, []],
+                is_polos: [true, []],
+                is_kontras: [false, []],
+            }),
+            kontras: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [false, []],
+                is_dua_sisi: [false, []],
+                is_polos: [false, []],
+                is_kontras: [true, []],
+            }),
+            satu_sisi_polos: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [true, []],
+                is_dua_sisi: [false, []],
+                is_polos: [true, []],
+                is_kontras: [false, []],
+            }),
+            satu_sisi_kontras: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [true, []],
+                is_dua_sisi: [false, []],
+                is_polos: [false, []],
+                is_kontras: [true, []],
+            }),
+            dua_sisi_polos: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [false, []],
+                is_dua_sisi: [true, []],
+                is_polos: [true, []],
+                is_kontras: [false, []],
+            }),
+            dua_sisi_kontras: this.formBuilder.group({
+                id_setup_tarif: [0, []],
+                is_satu_sisi: [false, []],
+                is_dua_sisi: [true, []],
+                is_polos: [false, []],
+                is_kontras: [true, []],
+            }),
+        });
+    }
+
+    handleOpenModalInsertTarifRadiolog(Data: any): void {
+        this.handleResetFormInsertRadiologi();
+
+        this.FormAddTarifRadiologiState = "Header";
+
+        this.FormAddTarifRadiologiDetailState = "TanpaSisi";
+
+        this.kode_kelompok_radiologi.setValue(Data.kode_kelompok);
+
+        setTimeout(() => {
+            this.modalRefTarifRadiologi = this.bsModalService.show(this.modalInsertTarifRadiologi);
+        }, 250);
+    }
+
+    handleCloseModalInsertTarifRadiologi(): void {
+        this.modalRefTarifRadiologi.hide();
+    }
+
+    handleShowFormDetailRadiologi(FormAddTarifRadiologi: any): void {
+        this.handleChooseFormDetailPattern(JSON.parse(FormAddTarifRadiologi.is_ada_left_right), JSON.parse(FormAddTarifRadiologi.is_ada_polos_kontras));
+    }
+
+    handleHideFormDetailRadiologi(): void {
+        this.FormAddTarifRadiologiState = "Header";
+    }
+
+    handleChooseFormDetailPattern(is_ada_left_right: boolean, is_ada_polos_kontras: boolean): void {
+        this.FormAddTarifRadiologiState = "Detail";
+
+        if (!is_ada_left_right && !is_ada_polos_kontras) {
+            this.FormAddTarifRadiologiDetailState = "TanpaSisi";
+        };
+
+        if (is_ada_left_right && !is_ada_polos_kontras) {
+            this.FormAddTarifRadiologiDetailState = "DuaSisi";
+        };
+
+        if (!is_ada_left_right && is_ada_polos_kontras) {
+            this.FormAddTarifRadiologiDetailState = "DenganKontras";
+        };
+
+        if (is_ada_left_right && is_ada_polos_kontras) {
+            this.FormAddTarifRadiologiDetailState = "DenganSisiDanKontras";
+        };
+    }
+
+    handleSelectedTarifBerlaku(args: any, FormState: string): void {
+        switch (FormState) {
+            case 'TanpaSisi':
+                this.id_setup_tarif_tanpa_sisi.setValue(args.id_setup_tarif);
+                break;
+            case 'SatuSisi':
+                this.id_setup_tarif_satu_sisi.setValue(args.id_setup_tarif);
+                break;
+            case 'DuaSisi':
+                this.id_setup_tarif_dua_sisi.setValue(args.id_setup_tarif);
+                break;
+            case 'Polos':
+                this.id_setup_tarif_polos.setValue(args.id_setup_tarif);
+                break;
+            case 'Kontras':
+                this.id_setup_tarif_kontras.setValue(args.id_setup_tarif);
+                break;
+            case 'SatuSisiPolos':
+                this.id_setup_tarif_satu_sisi_polos.setValue(args.id_setup_tarif);
+                break;
+            case 'SatuSisiKontras':
+                this.id_setup_tarif_satu_satu_sisi_kontras.setValue(args.id_setup_tarif);
+                break;
+            case 'DuaSisiPolos':
+                this.id_setup_tarif_satu_dua_sisi_polos.setValue(args.id_setup_tarif);
+                break;
+            case 'DuaSisiKontras':
+                this.id_setup_tarif_satu_dua_sisi_kontras.setValue(args.id_setup_tarif);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    handleSubmitInsertTarifRadiologi(FormAddTarifRadiologiDetail: any): void {
+        let data = [];
+
+        switch (this.FormAddTarifRadiologiDetailState) {
+            case 'TanpaSisi':
+                data = [];
+                data.push({ ...FormAddTarifRadiologiDetail.tanpa_sisi });
+                break;
+            case 'DuaSisi':
+                data = [];
+                data.push({ ...FormAddTarifRadiologiDetail.satu_sisi }, { ...FormAddTarifRadiologiDetail.dua_sisi });
+                break;
+            case 'DenganKontras':
+                data = [];
+                data.push({ ...FormAddTarifRadiologiDetail.polos }, { ...FormAddTarifRadiologiDetail.kontras });
+                break;
+            case 'DenganSisiDanKontras':
+                data = [];
+                data.push(
+                    { ...FormAddTarifRadiologiDetail.satu_sisi_polos },
+                    { ...FormAddTarifRadiologiDetail.satu_sisi_kontras },
+                    { ...FormAddTarifRadiologiDetail.dua_sisi_polos },
+                    { ...FormAddTarifRadiologiDetail.dua_sisi_kontras },
+                );
+                break;
+            default:
+                data = [];
+                break;
+        }
+
+        setTimeout(() => {
+            this.handlePostRequestInsertTarifRadiologi(data);
+        }, 200);
+    }
+
+    handlePostRequestInsertTarifRadiologi(Data: any): void {
+        let header = this.FormAddTarifRadiologi.value;
+
+        header.is_ada_left_right = JSON.parse(header.is_ada_left_right);
+        header.is_ada_polos_kontras = JSON.parse(header.is_ada_polos_kontras);
+        header.item_tarif = Data;
+
+        this.setupMappingOrderTarifPenunjangService.onPostSaveOrderRadiologi(header)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', `${Data.length} Data Berhasil Disimpan`)
+                        .then((result) => {
+                            this.handleCloseModalInsertTarifRadiologi();
+
+                            this.onGetMappingTarifOrderPenunjang(header.kode_kelompok, 0);
+                        });
+                }
+            });
+    }
+
+    handleResetFormInsertRadiologi(): void {
+        this.FormAddTarifRadiologi.reset();
+
+        this.nama_tindakan_penunjang.setValue("");
+        this.kode_kelompok_radiologi.setValue("");
+        this.is_ada_left_right.setValue(false);
+        this.is_ada_polos_kontras.setValue(false);
+    }
+
     get parent_kode_kelompok(): AbstractControl { return this.FormAddChild.get('parent_kode_kelompok'); }
     get kode_kelompok(): AbstractControl { return this.FormAddChild.get('kode_kelompok'); }
     get nama_kelompok(): AbstractControl { return this.FormAddChild.get('nama_kelompok'); }
     get kode_grup_penunjang(): AbstractControl { return this.FormAddChild.get('kode_grup_penunjang'); }
+
+    get kode_kelompok_radiologi(): AbstractControl { return this.FormAddTarifRadiologi.get('kode_kelompok') }
+    get nama_tindakan_penunjang(): AbstractControl { return this.FormAddTarifRadiologi.get('nama_tindakan_penunjang') }
+    get is_ada_left_right(): AbstractControl { return this.FormAddTarifRadiologi.get('is_ada_left_right') }
+    get is_ada_polos_kontras(): AbstractControl { return this.FormAddTarifRadiologi.get('is_ada_polos_kontras') }
+
+    get id_setup_tarif_tanpa_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('tanpa_sisi.id_setup_tarif') }
+    get is_satu_sisi_tanpa_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('tanpa_sisi.is_satu_sisi') }
+    get is_dua_sisi_tanpa_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('tanpa_sisi.is_dua_sisi') }
+    get is_polos_tanpa_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('tanpa_sisi.is_polos') }
+    get is_kontras_tanpa_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('tanpa_sisi.is_kontras') }
+
+    get id_setup_tarif_satu_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi.id_setup_tarif') }
+    get is_satu_sisi_satu_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi.is_satu_sisi') }
+    get is_dua_sisi_satu_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi.is_dua_sisi') }
+    get is_polos_satu_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi.is_polos') }
+    get is_kontras_satu_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi.is_kontras') }
+
+    get id_setup_tarif_dua_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi.id_setup_tarif') }
+    get is_satu_sisi_dua_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi.is_satu_sisi') }
+    get is_dua_sisi_dua_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi.is_dua_sisi') }
+    get is_polos_dua_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi.is_polos') }
+    get is_kontras_dua_sisi(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi.is_kontras') }
+
+    get id_setup_tarif_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('polos.id_setup_tarif') }
+    get is_satu_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('polos.is_satu_sisi') }
+    get is_dua_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('polos.is_dua_sisi') }
+    get is_polos_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('polos.is_polos') }
+    get is_kontras_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('polos.is_kontras') }
+
+    get id_setup_tarif_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('kontras.id_setup_tarif') }
+    get is_satu_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('kontras.is_satu_sisi') }
+    get is_dua_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('kontras.is_dua_sisi') }
+    get is_polos_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('kontras.is_polos') }
+    get is_kontras_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('kontras.is_kontras') }
+
+    get id_setup_tarif_satu_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_polos.id_setup_tarif') }
+    get is_satu_sisi_satu_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_polos.is_satu_sisi') }
+    get is_dua_sisi_satu_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_polos.is_dua_sisi') }
+    get is_polos_satu_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_polos.is_polos') }
+    get is_kontras_satu_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_polos.is_kontras') }
+
+    get id_setup_tarif_satu_satu_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_kontras.id_setup_tarif') }
+    get is_satu_sisi_satu_satu_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_kontras.is_satu_sisi') }
+    get is_dua_sisi_satu_satu_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_kontras.is_dua_sisi') }
+    get is_polos_satu_satu_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_kontras.is_polos') }
+    get is_kontras_satu_satu_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('satu_sisi_kontras.is_kontras') }
+
+    get id_setup_tarif_satu_dua_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_polos.id_setup_tarif') }
+    get is_satu_sisi_satu_dua_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_polos.is_satu_sisi') }
+    get is_dua_sisi_satu_dua_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_polos.is_dua_sisi') }
+    get is_polos_satu_dua_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_polos.is_polos') }
+    get is_kontras_satu_dua_sisi_polos(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_polos.is_kontras') }
+
+    get id_setup_tarif_satu_dua_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_kontras.id_setup_tarif') }
+    get is_satu_sisi_satu_dua_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_kontras.is_satu_sisi') }
+    get is_dua_sisi_satu_dua_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_kontras.is_dua_sisi') }
+    get is_polos_satu_dua_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_kontras.is_polos') }
+    get is_kontras_satu_dua_sisi_kontras(): AbstractControl { return this.FormAddTarifRadiologiDetail.get('dua_sisi_kontras.is_kontras') }
 }

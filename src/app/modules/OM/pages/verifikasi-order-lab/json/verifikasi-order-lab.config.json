@@ -1,0 +1,69 @@
+{
+    "GridConfig": [
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "numericEdit",
+            "field": "no_order",
+            "headerText": "NO.ORDER",
+            "visible": true,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "waktu_order",
+            "headerText": "WAKTU ORDER",
+            "visible": true,
+            "type": "DateTime",
+            "format": "dd/MM/yyyy - HH:mm",
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "no_register",
+            "headerText": "NO. REGISTER",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "no_rekam_medis",
+            "headerText": "NO. RM",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_pasien",
+            "headerText": "NAMA PASIEN",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_dokter",
+            "headerText": "NAMA DOKTER",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_debitur",
+            "headerText": "DEBITUR",
+            "visible": true,
+            "width": 150
+        }
+    ]
+}

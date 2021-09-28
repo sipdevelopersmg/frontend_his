@@ -10,6 +10,7 @@ import * as API_CONFIG from '../../../../../api/PIS/SETUP_DATA/MAPPING_ORDER_TAR
 import { DeleteMappingTarifPenunjangModel, GetAllMappingTarifPenunjangModel, MappingTarifPenunjangModel, PostSaveMappingTarifPenunjangModel, UpdateMappingTarifPenunjangModel } from '../../../models/setup-data/setup_mapping_tarif_penunjang.model';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Injectable({
     providedIn: 'root'
@@ -100,5 +101,18 @@ export class SetupMappingOrderTarifPenunjangService {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
                 })
             );
+    }
+
+    onPostSaveOrderRadiologi(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_MMAPING_ORDER_TARIF_PENUNJANG.POST_SAVE_MAPPING_TARIF_PENUNJANG_RADIOLOGI, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onGetDetailOrderRadiologi(MappingOrderId: number): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_MMAPING_ORDER_TARIF_PENUNJANG.GET_ALL_CHILD_RADIOLOGI_BY_MAPPING_ORDER_ID + MappingOrderId);
     }
 }

@@ -1,7 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { PendaftaranPasienBaruService } from 'src/app/modules/PIS/services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
+import { IDaftarPasienIRJAModel } from '../../models/daftar_pasien.model';
 import { PasienModel } from '../../models/informasi-pasien.model';
+import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
 import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 
 @Component({
@@ -11,7 +14,7 @@ import { DashboardDokterService } from '../../services/dashboard-dokter.service'
 })
 export class InformasiPasienComponent implements OnInit, AfterViewInit {
 
-    Pasien: PasienModel;
+    Pasien: IDaftarPasienIRJAModel;
 
     // ** Toggling Properties
     @Input("ToggleVisibility") ToggleVisibility: boolean = false;
@@ -19,9 +22,13 @@ export class InformasiPasienComponent implements OnInit, AfterViewInit {
 
     screenWidth: any;
 
+    photo_pasien: string = "";
+
     constructor(
         private navigationService: NavigationService,
-        public dashboardDokterService: DashboardDokterService
+        public daftarPasienService: DaftarPasienService,
+        public dashboardDokterService: DashboardDokterService,
+        private pendaftaranPasienBaruService: PendaftaranPasienBaruService,
     ) { }
 
     @HostListener("window:resize", ['$event'])
@@ -32,24 +39,20 @@ export class InformasiPasienComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.onTogglingVisibility();
 
-        this.Pasien = {
-            full_name: "Soetomo",
-            jenis_kelamin: "Pria",
-            umur: "23 Tahun, 11 Bulan, 29 Hari",
-            tanggal_lahir: new Date("04/08/1997"),
-            no_rm: "C00005946",
-            no_reg: "A12.2016.05506",
-            tanggal_masuk: new Date(),
-            dpjp: "dr. Anastasia Nadia",
-            ppjp: "",
-            debitur: "Tanggungan Pribadi"
-        };
+        this.daftarPasienService.onGetActivePasien();
 
         this.onDetectScreenSize(window.innerWidth);
     }
 
     ngAfterViewInit(): void {
+        // this.onGetFotoPasien();
+    }
 
+    onGetFotoPasien(): void {
+        // this.pendaftaranPasienBaruService.onGetLinkFotoPerson(this.daftarPasienService.ActivePasien.value.id_person)
+        //     .subscribe((result) => {
+        //         this.photo_pasien = result.data;
+        //     })
     }
 
     onDetectScreenSize(screenWidth: any): void {

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
+import { SetupDokterService } from 'src/app/modules/PIS/services/setup-data/setup-dokter/setup-dokter.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
 import * as Config from './json/GridPasienPerDokter.config.json';
 
 @Component({
@@ -35,6 +38,7 @@ export class DaftarPasienPerDokterComponent implements OnInit {
             },
         }
     ];
+    GridIRJASelectedRow: any;
 
     GridIRNA: MolGridComponent = null;
     GridIRNADatasource: any[];
@@ -47,20 +51,33 @@ export class DaftarPasienPerDokterComponent implements OnInit {
     GridIRDAToolbar: any[];
 
     constructor(
-        private router: Router
+        private router: Router,
+        private dokterService: SetupDokterService,
+        private daftarPasienService: DaftarPasienService
     ) { }
 
     ngOnInit(): void {
-        this.GridIRJADatasource = [
-            {
-                id_person: 1,
-                tgl_masuk: new Date(),
-                no_rekam_medis: 'C00005946',
-                no_register: 'A12.2016.05506',
-                full_name: 'Soetomo',
-                gender: 'PRIA'
-            }
-        ];
+        this.dokterService.onGetAllDokter();
+
+        this.onGetDokterId();
+    }
+
+    onGetDokterId(): void {
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem("UserData"));
+
+        const full_name = UserData.full_name.replace('dr. ', '');
+
+        this.dokterService.onGetDokterByDokterName(full_name)
+            .subscribe((result) => {
+                this.onGetPasienIRJAByDokterId(result['id_dokter']);
+            });
+    }
+
+    onGetPasienIRJAByDokterId(DokterId: number): void {
+        this.daftarPasienService.onGetAllDaftarPasienIRJA(DokterId)
+            .subscribe((result) => {
+                this.GridIRJADatasource = result.data;
+            });
     }
 
     handleSelectedTabId(args: any): void {
@@ -68,13 +85,14 @@ export class DaftarPasienPerDokterComponent implements OnInit {
     }
 
     handleSelectedRowIRJA(args: any): void {
+        this.GridIRJASelectedRow = args.data;
     }
 
     handleToolbarClickIRJA(args: any): void {
-        console.log(args);
-
         switch (args.item.id) {
             case 'riwayat_pemeriksaan':
+                this.daftarPasienService.ActivePasien.next({});
+                this.daftarPasienService.onSetActivePasien(this.GridIRJASelectedRow);
                 this.router.navigateByUrl('Dokter/asesmen-awal');
                 break;
             default:

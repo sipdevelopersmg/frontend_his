@@ -137,7 +137,10 @@ export class InputResepComponent implements OnInit {
                     //         '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ps-0">'+
                     //             '<span class="terapi">${ peresepan }</span>'+
                     //         '</div>'+
-                    //     '</div>'
+                    //     '</div>',
+                    change: function (args) {
+                        console.log(this.GridResepRacikan.childGrid);
+                    }
                 });
                 this.itemsObj.appendTo(this.itemsElem);
             }

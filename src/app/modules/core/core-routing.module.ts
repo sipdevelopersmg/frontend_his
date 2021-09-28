@@ -31,7 +31,11 @@ const coreRoutes: Routes = [
             {
                 path: "Billing",
                 loadChildren: () => import("../Billing/billing.module").then(m => m.BillingModule)
-            }
+            },
+            {
+                path: "OM",
+                loadChildren: () => import("../OM/om.module").then(m => m.OrderManagementModule)
+            },
         ]
     },
     { path: "**", component: PageNotFoundComponent, data: { title: 'Page Not Found' } },

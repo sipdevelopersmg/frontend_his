@@ -8,3 +8,5 @@ export const DELETE_MAPPING_TARIF_PENUNJANG = `${environment.webApiPis}` + `OmMa
 export const PUT_UPDATE_MAPPING_TARIF_PENUNJANG = `${environment.webApiPis}` + `OmMappingTarifPenunjang/Update`;
 export const LOOKUP_TARIF_MAPPING_ORDER_BY_KODE_KELOMPOK = `${environment.webApiPis}` + `OmMappingTarifPenunjang/TarifGetAllForLookupMappingPenunjangNotInKodeKelompok`;
 export const GET_ALL_BY_KODE_KELOMPOK_AND_KELAS_PERAWATAN = `${environment.webApiPis}` + `OmMappingTarifPenunjang/GetAllByKodeKelompokAndKodeKelas`;
+export const POST_SAVE_MAPPING_TARIF_PENUNJANG_RADIOLOGI = `${environment.webApiPis}` + `OmMappingTarifPenunjang/InsertMappingRadiologi`;
+export const GET_ALL_CHILD_RADIOLOGI_BY_MAPPING_ORDER_ID = `${environment.webApiPis}` + `OmMappingTarifPenunjang/GetAllChildRAD/`;

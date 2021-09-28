@@ -60,80 +60,136 @@
         </div>
 
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 ps-0">
-            <div class="card">
-                <div class="card-header px-2">
-                    <p class="mb-0 text-biru-muda">
-                        Daftar Tarif Penunjang Kelompok {{ SelectedChild.nama_kelompok_tarif | titlecase }}
-                    </p>
-                </div>
-                <div class="card-body p-2">
-                    <!-- Informasi Data Poli -->
-                    <div class="row px-0 mx-0 mb-2">
-                        <!-- Nama Kelompok -->
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 px-1">
-                            <label for="kode_poliklinik" class="form-label mb-1">Nama Kelompok</label>
-                            <input id="nama_kelompok_terpilih" type="text" class="form-control form-select-sm" readonly>
+            <div class="row mb-2">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header px-2">
+                            <p class="mb-0 text-biru-muda">
+                                Daftar Tarif Penunjang Kelompok {{ SelectedChild.nama_kelompok_tarif | titlecase }}
+                            </p>
                         </div>
+                        <div class="card-body p-2">
+                            <!-- Informasi Data Kelompok -->
+                            <div class="row px-0 mx-0 mb-2">
+                                <!-- Nama Kelompok -->
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 px-1">
+                                    <label for="nama_kelompok_terpilih" class="form-label mb-1">Nama Kelompok</label>
+                                    <input id="nama_kelompok_terpilih" type="text" class="form-control form-select-sm"
+                                        readonly>
+                                </div>
 
 
-                        <!-- Dropdown Kelas -->
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-1">
-                            <label for="kelas_perawatan" class="form-label mb-1">Kelas</label>
+                                <!-- Dropdown Kelas -->
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-1">
+                                    <label for="kelas_perawatan" class="form-label mb-1">Kelas</label>
 
-                            <ejs-dropdownlist id="kelas_perawatan" #KelasPerawatanDropdown
-                                [dataSource]="DropdownKelasDatasource" [fields]="DropdownKelasFields"
-                                [allowFiltering]="true" [showClearButton]="true"
-                                (change)="handleChangeDropdownKelas($event)">
-                            </ejs-dropdownlist>
+                                    <ejs-dropdownlist id="kelas_perawatan" #KelasPerawatanDropdown
+                                        [dataSource]="DropdownKelasDatasource" [fields]="DropdownKelasFields"
+                                        [allowFiltering]="true" [showClearButton]="true"
+                                        (change)="handleChangeDropdownKelas($event)">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Grid Data Kelompok -->
+                            <div class="row px-0 mx-0 mb-2">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
+                                    <ejs-grid #GridData [id]="'GridTarifBerlakuPoli'"
+                                        [height]="SelectedJenisPenunjang.kode_grup_penunjang == 'RAD' ? 'calc(100vh - 45rem)' : 'calc(100vh - 24rem)'"
+                                        [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'"
+                                        [allowPaging]="false" [pageSettings]="GridPageSettings"
+                                        [toolbar]="GridDataToolbar" [allowResizing]="true" [allowFiltering]='true'
+                                        [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+                                        (toolbarClick)="handleToolbarClick($event)"
+                                        (actionComplete)="handleActionComplete($event)">
+                                        <e-columns>
+                                            <e-column [width]="50" [visible]="true" [type]="'Checkbox'"
+                                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
+                                                [headerTextAlign]="'Center'">
+                                            </e-column>
+                                            <e-column [width]="50" [field]="'id_mapping_tarif_penunjang'"
+                                                [headerText]="'ID'" [visible]="false" [type]="'number'"
+                                                [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'"
+                                                [visible]="false" [type]="'number'" [allowEditing]="false"
+                                                [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="100" [field]="'kode_setup_tarif'"
+                                                [headerText]="'KODE TARIF'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="200" [field]="'nama_tindakan_penunjang'"
+                                                [headerText]="'NAMA TARIF'" [visible]="true" [allowEditing]="true"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="80" [field]="'is_ada_left_right'" [headerText]="'L/R'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [editType]="'booleanedit'" [type]="'boolean'"
+                                                [headerTextAlign]="'Center'" [textAlign]="'Center'"
+                                                [displayAsCheckBox]="true">
+                                            </e-column>
+                                            <e-column [width]="80" [field]="'is_ada_polos_kontras'" [headerText]="'P/K'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [editType]="'booleanedit'" [type]="'boolean'"
+                                                [headerTextAlign]="'Center'" [textAlign]="'Center'"
+                                                [displayAsCheckBox]="true">
+                                            </e-column>
+                                            <e-column [width]="80" [field]="'nominal_tarif'" [headerText]="'NILAI'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'Number'"
+                                                [format]="'N2'">
+                                            </e-column>
+                                        </e-columns>
+                                    </ejs-grid>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Grid Data Poli -->
-                    <div class="row px-0 mx-0 mb-2">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
-                            <ejs-grid #GridData [id]="'GridTarifBerlakuPoli'" [height]="'calc(100vh - 27rem)'"
-                                [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
-                                [pageSettings]="GridPageSettings" [toolbar]="GridDataToolbar" [allowResizing]="true"
-                                [allowFiltering]='true' [editSettings]="GridDataEditSettings"
-                                (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)"
-                                (actionComplete)="handleActionComplete($event)">
-                                <e-columns>
-                                    <e-column [width]="50" [visible]="true" [type]="'Checkbox'" [allowEditing]="false"
-                                        [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'">
-                                    </e-column>
-                                    <e-column [width]="50" [field]="'id_mapping_tarif_penunjang'" [headerText]="'ID'"
-                                        [visible]="false" [type]="'number'" [allowEditing]="false"
-                                        [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'"
-                                        [visible]="false" [type]="'number'" [allowEditing]="false"
-                                        [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="100" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="200" [field]="'nama_tindakan_penunjang'"
-                                        [headerText]="'NAMA TARIF'" [visible]="true" [allowEditing]="true"
-                                        [allowSorting]="false" [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="80" [field]="'is_ada_left_right'" [headerText]="'L/R'"
-                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
-                                        [editType]="'booleanedit'" [type]="'boolean'" [headerTextAlign]="'Center'"
-                                        [textAlign]="'Center'" [displayAsCheckBox]="true">
-                                    </e-column>
-                                    <e-column [width]="80" [field]="'is_ada_polos_kontras'" [headerText]="'P/K'"
-                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
-                                        [editType]="'booleanedit'" [type]="'boolean'" [headerTextAlign]="'Center'"
-                                        [textAlign]="'Center'" [displayAsCheckBox]="true">
-                                    </e-column>
-                                    <e-column [width]="80" [field]="'nominal_tarif'" [headerText]="'NILAI'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'Number'"
-                                        [format]="'N2'">
-                                    </e-column>
-                                </e-columns>
-                            </ejs-grid>
+            <div *ngIf="SelectedJenisPenunjang.kode_grup_penunjang == 'RAD'" class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header px-2">
+                            <p class="mb-0 text-biru-muda">
+                                Detail Tarif Penunjang Kelompok
+                                {{ GridDataSelectedRow.nama_tindakan_penunjang | titlecase }}
+                            </p>
+                        </div>
+                        <div class="card-body p-0">
+                            <!-- Grid Detail Kelompok -->
+                            <div class="row px-0 mx-0 mb-0">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                                    <ejs-grid #GridDetailData [id]="'GridTarifBerlakuPoliDetail'"
+                                        [height]="'calc(100vh - 47.5rem)'" [dataSource]="GridDetailDatasource"
+                                        [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
+                                        [toolbar]="GridDetailDataToolbar" [allowResizing]="true"
+                                        [allowFiltering]='true'>
+                                        <e-columns>
+                                            <e-column [width]="50" [field]="'id_setup_tarif'" [headerText]="'ID'"
+                                                [visible]="false" [type]="'number'" [allowEditing]="false"
+                                                [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="100" [field]="'kode_setup_tarif'"
+                                                [headerText]="'KODE TARIF'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="200" [field]="'nama_tindakan_penunjang'"
+                                                [headerText]="'NAMA TARIF'" [visible]="true" [allowEditing]="true"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="80" [field]="'nominal_tarif'" [headerText]="'NILAI'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'Number'"
+                                                [format]="'N2'">
+                                            </e-column>
+                                        </e-columns>
+                                    </ejs-grid>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,11 +233,187 @@
             </div>
         </ng-template>
 
-        <!-- Modal Lookup Tarif  -->
+        <!-- Modal Insert Tarif Lab  -->
         <org-look-up-checklist #LookupChecklist [LookupTitle]="TitleLookupTarifBerlaku"
             [LookupUrl]="UrlLookupTarifBerlaku" [LookupFilters]="GridConfig.LookupTarif.filter"
             [GridId]="'LookupChecklistTarifBerlaku'" [GridColumns]="GridConfig.LookupTarif.columns"
             [ParameterTambahan]="ParameterLookupTarifBerlaku" (OnGetSelectedRecords)="handleSelectedRecordItem($event)">
         </org-look-up-checklist>
+
+        <!-- Modal Insert Tarif Radiologi  -->
+        <ng-template #modalInsertTarifRadiologi>
+            <div class="modal-header px-2 py-1">
+                <h5 class="modal-title pull-left">
+                    Add Tarif Kelompok {{ SelectedChild.nama_kelompok | titlecase }}
+                </h5>
+                <button type="button" class="btn pull-right" aria-label="Close"
+                    (click)="handleCloseModalInsertTarifRadiologi()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body p-3">
+                <!-- Form Header -->
+                <form *ngIf="FormAddTarifRadiologiState == 'Header'" [formGroup]="FormAddTarifRadiologi">
+                    <mol-input-text [label]="'Kode Kelompok'" formControlName="kode_kelompok"
+                        [inputFieldState]="'detail'">
+                    </mol-input-text>
+
+                    <mol-input-text [label]="'Nama Pemeriksaan'" formControlName="nama_tindakan_penunjang">
+                    </mol-input-text>
+
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Apakah Dua Sisi ?'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input form-select-sm" type="radio" name="is_ada_left_right"
+                                    id="is_ada_left_right_true" value="true" formControlName="is_ada_left_right">
+                                <label class="form-check-label" for="is_ada_left_right_true">
+                                    Ya
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input form-select-sm" type="radio" name="is_ada_left_right"
+                                    id="is_ada_left_right_false" value="false" formControlName="is_ada_left_right">
+                                <label class="form-check-label" for="is_ada_left_right_false">
+                                    Tidak
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Apakah Ada Kontras ?'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input form-select-sm" type="radio" name="is_ada_polos_kontras"
+                                    id="is_ada_polos_kontras_true" value="true" formControlName="is_ada_polos_kontras">
+                                <label class="form-check-label" for="is_ada_polos_kontras_true">
+                                    Ya
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input form-select-sm" type="radio" name="is_ada_polos_kontras"
+                                    id="is_ada_polos_kontras_false" value="false"
+                                    formControlName="is_ada_polos_kontras">
+                                <label class="form-check-label" for="is_ada_polos_kontras_false">
+                                    Tidak
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Form Detail Tanpa Sisi Tanpa Kontras -->
+                <form *ngIf="FormAddTarifRadiologiState == 'Detail'" [formGroup]="FormAddTarifRadiologiDetail">
+
+                    <!-- Tanpa Sisi -->
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'TanpaSisi'"
+                        [label]="'Pilih Tarif'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'TanpaSisi')">
+                    </org-input-look-up-static-filter>
+
+                    <!-- Dua Sisi -->
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DuaSisi'"
+                        [label]="'Satu Sisi'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'SatuSisi')">
+                    </org-input-look-up-static-filter>
+
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DuaSisi'"
+                        [label]="'Dua Sisi'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'DuaSisi')">
+                    </org-input-look-up-static-filter>
+
+                    <!-- Kontras -->
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DenganKontras'"
+                        [label]="'Polos'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'" [modal-title]="'Daftar Tarif'"
+                        [lookup-url]="UrlLookupTarifBerlaku" [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'Polos')">
+                    </org-input-look-up-static-filter>
+
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DenganKontras'"
+                        [label]="'Kontras'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'Kontras')">
+                    </org-input-look-up-static-filter>
+
+                    <!-- Sisi Dan Kontras -->
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DenganSisiDanKontras'"
+                        [label]="'Satu Sisi Polos'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'SatuSisiPolos')">
+                    </org-input-look-up-static-filter>
+
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DenganSisiDanKontras'"
+                        [label]="'Satu Sisi Kontras'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'SatuSisiKontras')">
+                    </org-input-look-up-static-filter>
+
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DenganSisiDanKontras'"
+                        [label]="'Dua Sisi Polos'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'DuaSisiPolos')">
+                    </org-input-look-up-static-filter>
+
+                    <org-input-look-up-static-filter *ngIf="FormAddTarifRadiologiDetailState == 'DenganSisiDanKontras'"
+                        [label]="'Dua Sisi Kontras'" #LookupTanpaSisi [idTitle]="'nama_setup_tarif'"
+                        [modal-title]="'Daftar Tarif'" [lookup-url]="UrlLookupTarifBerlaku"
+                        [columns]="GridConfig.LookupTarifRadiologi.columns"
+                        [filter-lookup]="GridConfig.LookupTarifRadiologi.filter"
+                        [ParameterTambahan]="ParameterLookupTarifBerlaku"
+                        (onGetSelectedData)="handleSelectedTarifBerlaku($event, 'DuaSisiKontras')">
+                    </org-input-look-up-static-filter>
+
+                </form>
+            </div>
+            <div class="modal-footer background-abu-muda p-2">
+                <button *ngIf="FormAddTarifRadiologiState == 'Header'" type="button"
+                    class="btn btn-secondary btn-sm mx-2" (click)="handleCloseModalInsertTarifRadiologi()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+                <button *ngIf="FormAddTarifRadiologiState == 'Header'" type="button" class="btn btn-success btn-sm mx-2"
+                    (click)="handleShowFormDetailRadiologi(FormAddTarifRadiologi.value)">
+                    <i class="fas fa-chevron-right fa-sm"></i>&nbsp; Next
+                </button>
+                <button *ngIf="FormAddTarifRadiologiState == 'Detail'" type="button"
+                    class="btn btn-secondary btn-sm mx-2" (click)="handleHideFormDetailRadiologi()">
+                    <i class="fas fa-chevron-left fa-sm"></i>&nbsp; Kembali
+                </button>
+                <button *ngIf="FormAddTarifRadiologiState == 'Detail'" type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitInsertTarifRadiologi(FormAddTarifRadiologiDetail.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                </button>
+            </div>
+        </ng-template>
     </div>
 </org-card-layout>

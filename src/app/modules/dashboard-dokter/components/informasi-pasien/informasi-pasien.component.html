@@ -4,10 +4,10 @@
         <div class="row px-0 mx-0" [hidden]="dashboardDokterService.ShowInformasiPasien$| async">
             <!-- Informasi Pasien -->
             <div class="col-11 pe-0 py-2" [class]="ToggleVisibility ? '' : 'height-6rem'">
-                <div class="row" [hidden]="ToggleVisibility">
+                <div class="row" *ngIf="daftarPasienService.ActivePasien.value" [hidden]="ToggleVisibility">
                     <!-- Foto Pasien -->
                     <div class="col-lg-1 col-md-3 col-sm-3 col-xs-3 px-2 text-center">
-                        <img src="../../../../../assets/image/dokter/soetomo.jpg" alt=""
+                        <img [src]="daftarPasienService.ActivePasien.value.photo_url" alt=""
                             style="height: 5.4rem; max-height: 5.4rem;">
                     </div>
 
@@ -17,14 +17,15 @@
                         <!-- Nama Pasien -->
                         <div class="mb-2">
                             <h5 class="text-biru-muda mb-0">
-                                {{ Pasien.full_name }}
+                                {{ daftarPasienService.ActivePasien.value.nama_pasien }}
                             </h5>
                         </div>
 
                         <!-- Umur dan Jenis Kelamin -->
                         <div class="mb-2">
                             <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                {{ Pasien.umur }} / {{ Pasien.jenis_kelamin }}
+                                {{ daftarPasienService.ActivePasien.value.umur }} /
+                                {{ daftarPasienService.ActivePasien.value.gender | titlecase }}
                             </p>
                         </div>
 
@@ -35,7 +36,10 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.tanggal_lahir | date:"dd/MM/yyyy" }}
+                                    : &nbsp;
+                                    {{
+                                    daftarPasienService.ActivePasien.value.tanggal_lahir | date: 'dd/MM/yyyy HH:mm:ss'
+                                    }}
                                 </p>
                             </div>
                         </div>
@@ -51,7 +55,7 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.no_rm }}
+                                    : &nbsp; {{ daftarPasienService.ActivePasien.value.no_rekam_medis }}
                                 </p>
                             </div>
                         </div>
@@ -63,7 +67,7 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.no_reg }}
+                                    : &nbsp; {{ daftarPasienService.ActivePasien.value.no_register }}
                                 </p>
                             </div>
                         </div>
@@ -75,7 +79,8 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.tanggal_masuk | date: 'dd/MM/yyyy HH:mm:ss' }}
+                                    : &nbsp; {{ daftarPasienService.ActivePasien.value.tgl_admisi | date: 'dd/MM/yyyy
+                                    HH:mm:ss' }}
                                 </p>
                             </div>
                         </div>
@@ -91,7 +96,7 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.dpjp }}
+                                    : &nbsp; {{ daftarPasienService.ActivePasien.value.dpjp }}
                                 </p>
                             </div>
                         </div>
@@ -103,7 +108,7 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.ppjp }}
+                                    : &nbsp;
                                 </p>
                             </div>
                         </div>
@@ -115,7 +120,7 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ Pasien.debitur }}
+                                    : &nbsp; {{ daftarPasienService.ActivePasien.value.nama_debitur }}
                                 </p>
                             </div>
                         </div>

@@ -1,0 +1,203 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <!-- Offcanvas Filter -->
+    <div class="row pt-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-filter>
+        </div>
+    </div>
+
+    <!-- Daftar History Order Lab -->
+    <div class="row pt-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                [allowFiltering]='true' [pageSettings]="GridPageSettings" [toolbar]="GridToolbar"
+                [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+                (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+                <e-columns>
+                    <e-column [width]="50" [field]="'id_order_penunjang'" [headerText]="'ID'" [visible]="false"
+                        [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                        [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'tanggal_order_penunjang'" [headerText]="'TGL ORDER'"
+                        [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                        [type]="'Date'" [format]="'dd/MM/yyyy'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'time_inputed'" [headerText]="'JAM MASUK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                        [format]="'HH:mm:ss'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_dokter'" [headerText]="'DOKTER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_debitur'" [headerText]="'DEBITUR'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                    </e-column>
+                    <e-column field='status_pembayaran' headerText='STATUS' width='70' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <div *ngIf="data.status_pembayaran === 'open';else inactive"
+                                class="statustemp e-activecolor">
+                                <span class="statustxt e-activecolor">
+                                    {{ data.status_pembayaran === 'open' ? 'OPEN' : 'CLOSED' }}
+                                </span>
+                            </div>
+                            <ng-template #inactive>
+                                <div class="statustemp e-inactivecolor">
+                                    <span class="statustxt e-inactivecolor">
+                                        {{ data.status_pembayaran === 'open' ? 'OPEN' : 'CLOSED' }}
+                                    </span>
+                                </div>
+                            </ng-template>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
+
+    <!-- Modal Dialog Add Diagnosa Baru -->
+    <ng-template #modalDialogVerifikasiOrderLab>
+        <form [formGroup]="FormVerifikasiOrderLab">
+            <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                <h5 class="modal-title pull-left">Verifikasi Order</h5>
+                <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body p-2">
+                <!-- Data Pasien -->
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                        <p class="mb-0 text-biru-muda">Data Pasien</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end">
+                                        <button class="btn btn-secondary btn-sm" type="button">
+                                            <i class="fas fa-window-minimize fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body px-2 pt-0 pb-2">
+                                <!-- OM No, No. Reg, No. RM -->
+                                <div class="row justify-content-start mb-1 px-0 mx-0">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-1">
+                                        <atm-label [LabelCaption]="'OM No'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="nomor_order_penunjang">
+                                    </div>
+
+                                    <!-- No. Reg -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-1">
+                                        <atm-label [LabelCaption]="'No. Reg'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="no_register">
+                                    </div>
+
+                                    <!-- No. RM -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-1">
+                                        <atm-label [LabelCaption]="'No. RM'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="no_rekam_medis">
+                                    </div>
+                                </div>
+
+                                <!-- Nama Pasien, Tgl Lahir, Umur -->
+                                <div class="row justify-content-start mb-1 px-0 mx-0">
+                                    <!-- Nama Pasien -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-1">
+                                        <atm-label [LabelCaption]="'Nama Pasien'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="nama_pasien">
+                                    </div>
+
+                                    <!-- Tgl Lahir -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-1">
+                                        <atm-label [LabelCaption]="'Tgl Lahir'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="tanggal_lahir">
+                                    </div>
+                                </div>
+
+                                <!-- Kelas, Debitur dan Alamat -->
+                                <div class="row justify-content-start mb-1 px-0 mx-0">
+                                    <!-- Kelas dan Debitur -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-1">
+                                        <atm-label [LabelCaption]="'Kelas / Debitur'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="nama_debitur">
+                                    </div>
+
+                                    <!-- Alamat -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-1">
+                                        <atm-label [LabelCaption]="'Alamat'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1" readonly
+                                            formControlName="alamat_lengkap">
+                                    </div>
+                                </div>
+
+                                <!-- No. Sample dan Tgl. Estimasi -->
+                                <div class="row justify-content-start mb-1 px-0 mx-0">
+                                    <!-- No. Sample -->
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 px-1">
+                                        <atm-label [LabelCaption]="'No. Sample'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm mt-1">
+                                    </div>
+
+                                    <!-- Tgl Estimasi -->
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 px-1">
+                                        <atm-label [LabelCaption]="'Tgl. Estimasi'"></atm-label>
+                                        <ejs-datepicker [format]="'dd/MM/yyyy'" [cssClass]="'mt-1'"></ejs-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Tab -->
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
+                            <!-- Tabs Detail -->
+                            <org-tabs-item>
+                                <org-tabs-label>
+                                    <p class="tab-heading mb-0">
+                                        Detail
+                                    </p>
+                                </org-tabs-label>
+                                <org-tabs-body>
+
+                                </org-tabs-body>
+                            </org-tabs-item>
+                        </org-tabs>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-2 background-abu-muda">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                        <button class="btn btn-primary btn-sm" type="button"
+                            (click)="onSubmitFormVerifikasiOrderLab(FormVerifikasiOrderLab.value)">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</org-card-layout>

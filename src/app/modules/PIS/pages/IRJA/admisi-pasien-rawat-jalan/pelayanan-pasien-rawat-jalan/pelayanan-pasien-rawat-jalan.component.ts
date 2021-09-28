@@ -51,7 +51,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     urlPoli: string;
 
     @ViewChild('LookupKodeDokter') LookupKodeDokter: OrgInputLookUpKodeComponent;
-    urlDokter = this.API_PIS_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP_ADMISI;
+    urlDokter = "";
 
     @ViewChild('LookupAsalRujukan') LookupAsalRujukan: OrgInputLookUpKodeComponent;
     urlAsalRujukan = this.API_PIS_SETUP_DATA.SETUP_ASAL_RUJUKAN.GET_ALL_ASAL_RUJUKAN_FOR_LOOKUP_ADMISI;
@@ -204,7 +204,9 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     heandleSelectedPoli(args: PoliModel): void {
         this.id_poli.setValue(args.id_poli || args[0].id_poli);
 
-        this.urlDokter = this.urlDokter + this.id_poli.value;
+        this.urlDokter = "";
+
+        this.urlDokter = this.API_PIS_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP_ADMISI + this.id_poli.value;
     }
 
     heandleSelectedDokter(args: any): void {
