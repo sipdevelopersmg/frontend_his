@@ -161,7 +161,10 @@ export class InputResepComponent implements OnInit {
                     //         '</div>'+
                     //     '</div>'
                     change: function (args) {
-                        this.setFormGrif(args,currentQtyResep,currentIdItem);
+                        if(SelectedDataRacikanObat){
+                            console.log('form set',SelectedDataRacikanObat);
+                        }
+                        this.setFormGrif(args,currentQtyResep,currentIdItem,SelectedDataRacikanObat);
                         currentIdItem = args.itemData.id_item;
                     }.bind(this),
                 });
@@ -175,8 +178,7 @@ export class InputResepComponent implements OnInit {
         let counterRacikan = this.counterRacikan;
         let dataSourceChild = this.dataScourceGridChild;
         this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
-        // this.resepDokterService.dataDetailRacikan = dataSourceChild;
-
+        let nav = 'add';
         this.ChildGrid = {
             dataSource: this.dataScourceGridChild,
             queryString: "counter",
@@ -201,15 +203,21 @@ export class InputResepComponent implements OnInit {
             ],
             rowSelected(args){
                 SelectedDataRacikanObat = args.data
+                console.log(SelectedDataRacikanObat)
             },
             actionBegin(args: AddEventArgs) {
+                console.log('begin',args)
                 if (args.requestType === 'add') {
                     const counter = 'counter';
                     (args.data as object)[counter] = this.parentDetails.parentKeyFieldValue;
                     (args.data as object)['qty_resep'] = this.parentDetails.parentRowData.qty_resep;
                     (args.data as object)['counterRacikan'] = counterRacikan++;
                     currentQtyResep = this.parentDetails.parentRowData.qty_resep;
+                    SelectedDataRacikanObat = null;
                 }
+                // if (args.requestType === 'beginEdit'){
+                //     SelectedDataRacikanObat = args.rowData;
+                // }
             },
             actionComplete(args) {
                 if (args.requestType === 'save') {
@@ -219,8 +227,8 @@ export class InputResepComponent implements OnInit {
                     }
                     if(args.action === 'edit'){
                         args.data.id_item = currentIdItem;
-                        console.log('sourch grid',dataSourceChild);
-                        console.log('dt',args.data);
+                        let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
+                        dataSourceChild[index]=args.data;
                     }
                 }
 
@@ -245,20 +253,26 @@ export class InputResepComponent implements OnInit {
 
     }
 
-    tes(){
-        console.log(this.resepDokterService.dataSelectRacikan.value);
-    }
-
     onLoad(args:any){
 
     }
 
-    setFormGrif(args,currentQtyResep){
-        (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=args.itemData.nama_satuan;
-        (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value=args.itemData.kandungan_obat;
-        (<HTMLInputElement>document.getElementsByName("seper")[0]).value='1';
-        (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value=args.itemData.kandungan_obat;
-        (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=currentQtyResep.toString();
+    setFormGrif(args,currentQtyResep,id_item,SelectedDataRacikanObat){
+        console.log('function setgrid',SelectedDataRacikanObat);
+        if(SelectedDataRacikanObat){
+            (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=SelectedDataRacikanObat.nama_satuan;
+            (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value=SelectedDataRacikanObat.komposisi;
+            (<HTMLInputElement>document.getElementsByName("seper")[0]).value=SelectedDataRacikanObat.seper;
+            (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value=SelectedDataRacikanObat.kandungan;
+            (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=SelectedDataRacikanObat.qty_racikan;
+        }else{
+            (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=args.itemData.nama_satuan;
+            (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value=args.itemData.kandungan_obat;
+            (<HTMLInputElement>document.getElementsByName("seper")[0]).value='1';
+            (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value=args.itemData.kandungan_obat;
+            (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=currentQtyResep.toString();
+        }
+
         let seper = (<HTMLInputElement>document.getElementsByName("seper")[0])
         if(seper){
             seper.addEventListener('click', (event) => {

@@ -54,16 +54,17 @@ export class ResepComponent implements OnInit {
         }
     }
 
-    async onGetGridResepDatasource() {
-        let parent = []
+    onGetGridResepDatasource() {
+        // let parent = []
         
-        await this.resepDokterService.dataDetail$.subscribe((result)=>{
-            parent = result
-        });
+        // await this.resepDokterService.dataDetail$.subscribe((result)=>{
+        //     parent = result
+        // });
 
-        let children = this.resepDokterService.dataSourceChildGrid.value;
-        // let children = this.resepDokterService.dataDetail.values()
-        console.log("parent", parent);
-        console.log("children", children);
+        // let children = this.resepDokterService.dataSourceChildGrid.value;
+        // // let children = this.resepDokterService.dataDetail.values()
+        // console.log("parent", parent);
+        // console.log("children", children);
+        this.resepDokterService.saveResep()
     }
 }
