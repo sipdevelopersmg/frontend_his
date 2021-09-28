@@ -39,6 +39,7 @@ export class ResepDokterService {
 
     public dataSourceParentGrid = new BehaviorSubject([]);
     public dataSourceChildGrid = new BehaviorSubject([]);
+    public dataSelectRacikan = new BehaviorSubject({});
 
     public jumlah_item: number = 0;
     private counter: number = 0;
@@ -76,8 +77,6 @@ export class ResepDokterService {
             detail
         ];
         this.sum();
-        console.log(this.dataDetail);
-        console.log(this.dataDetailRacikan);
     }
 
     addDetailRacikan(detailRacikan: TrResepDokterIrjaDetailRacikanInsert): void {
@@ -86,6 +85,39 @@ export class ResepDokterService {
             detailRacikan
         ]
     }
+
+    editDetail(index: number, data) {
+        this.dataDetail[index] = data;
+        this.sum();
+    }
+
+    removeDataDetail(index: number) {
+        this.dataDetail.splice(index, 1);
+        this.sum();
+    }
+
+    saveResep(){
+        console.log('parent',this.dataDetail)
+        console.log('child',this.dataSourceChildGrid.value)
+
+    }
+
+    // Insert(): Observable<any>{
+    //     // let Data:any
+    //     this.dataDetail.map((e,i)=>{
+    //         return e.no_urut = i+1;
+    //     });
+    //     // Data.detailItem = this.dataDetail;
+    //     // Data.jumlah_item_kontrak = this.jumlahItem;
+    //     // Data.total_transaksi_kontrak = this.total;
+
+    //     return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
+    //         .pipe(
+    //             catchError((error: HttpErrorResponse): any => {
+    //             this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+    //             })
+    //         );
+    // }
 
     sum(): void {
         this.jumlah_item = this.dataDetail.sum('qty_resep');

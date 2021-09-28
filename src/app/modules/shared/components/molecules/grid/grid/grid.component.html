@@ -6,7 +6,8 @@
     (keyPressed)="onKeyPressing($event)" (recordDoubleClick)="onDoubleClick($event)"
     (actionBegin)="onActionBegin($event)" (actionComplete)="onActionComplete($event)"
     (toolbarClick)="onToolbarClick($event)" (commandClick)="onCommandClick($event)" (load)="onLoadGrid($event)"
-    (queryCellInfo)="onQueryCellInfo($event)">
+    (queryCellInfo)="onQueryCellInfo($event)"
+    [childGrid]="childGrid">
     <e-columns>
         <ng-template ngFor let-item [ngForOf]="columns">
             <e-column [width]="item.width" [field]="item.field" [headerText]="item.headerText" [visible]="item.visible"

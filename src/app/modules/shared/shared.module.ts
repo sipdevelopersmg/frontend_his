@@ -68,6 +68,7 @@ import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-l
 import { OrgInputLookUpStaticFilterComponent } from './components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
+import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 
 @NgModule({
     declarations: [
@@ -124,6 +125,7 @@ import { MolInputNumericComponent } from './components/molecules/form/mol-input-
         OrgLookUpChecklistComponent,
         OrgInputLookUpStaticFilterComponent,
         MolInputNumericComponent,
+        OrgLookUpHirarkiComponent,
     ],
     imports: [
         CommonModule,
@@ -205,6 +207,7 @@ import { MolInputNumericComponent } from './components/molecules/form/mol-input-
         MatStepperModule,
         NgxMaterialTimepickerModule,
         MolInputNumericComponent,
+        OrgLookUpHirarkiComponent
     ],
     providers: [
         EditService,

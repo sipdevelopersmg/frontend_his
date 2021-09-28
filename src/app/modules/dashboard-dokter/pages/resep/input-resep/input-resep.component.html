@@ -1,6 +1,7 @@
 <!-- Field Pencarian -->
 <form [formGroup]="FormAddObat">
     <div class="row pt-2 mb-2">
+        <!-- Is Racikan -->
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -13,7 +14,7 @@
         </div>
 
         <!-- Nama Obat -->
-        <div *ngIf="!is_racikan.value" class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+        <div *ngIf="!is_racikan.value" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Nama Obat</label>
@@ -28,15 +29,16 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
                             <span class="input-group-text bg-primary text-white" id="basic-addon1">
-                                {{ satuan.value }}
+                                {{ nama_satuan.value }}
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Nama Racikan -->
-        <div *ngIf="is_racikan.value" class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
+        <div *ngIf="is_racikan.value" class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Nama Racikan Obat</label>
@@ -54,6 +56,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Meode Racikan -->
         <div *ngIf="is_racikan.value" class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
@@ -64,7 +67,9 @@
                     <div class="input-group">
                         <ejs-dropdownlist #MolDropdown [dataSource]="setupMetodeRacikanService.dataSource | async"
                             [fields]="DropdownMetodeRacikanFields" [allowFiltering]="true"
-                            (change)="handleChangeMetodeRacikan($event)">
+                            (change)="handleChangeMetodeRacikan($event)"
+                            formControlName="id_metode_racikan"
+                            >
                         </ejs-dropdownlist>
                     </div>
                 </div>
@@ -72,7 +77,7 @@
         </div>
 
         <!-- Qty Obat dan Aturan Pakai -->
-        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
             <div class="row mb-2">
                 <!-- Qty Obat -->
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-2">
@@ -125,15 +130,25 @@
                     <button class="btn btn-warning btn-sm" type="button" [disabled]="FormAddObat.invalid"
                         (click)="onUpdateDataObat(FormAddObat.value)">
                         <i class="fas fa-edit fa-sm"></i>
-                        <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Obat</span>
+                        <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Edit Obat</span>
                     </button>
                 </div>
             </div>
         </div>
 
+        <!-- LookUp Racikan -->
+        <org-look-up-hirarki
+            #LookupRacikan 
+            [lookup-url]="urlRacikan" 
+            (onGetSelectedData)="heandleSelectedRacikan($event)"
+            [columns]="GridLookUpItem.columns" 
+            [columnsChild]="GridLookUpItem.columnsChild"
+            [filter-lookup]="GridLookUpItem.filter" 
+            [modal-title]="'Data Racikan Dokter'"
+
+        ></org-look-up-hirarki>
     </div>
 </form>
-
 <!-- Grid Daftar Obat -->
 <div class="row pt-2 mb-2">
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -145,7 +160,8 @@
             </div> -->
             <div class="card-body p-0">
                 <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
-                    height="calc(100vh - 22rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
+                    height="calc(100vh - 24rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" 
+                    [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)"
                     (load)="onLoad($event)" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                     (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
                     <e-columns>
@@ -177,7 +193,7 @@
                         <e-column [visible]="true" field='nama_obat' [allowEditing]="false" headerText='Nama Obat'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
                         </e-column>
-                        <e-column [visible]="true" field='satuan' [allowEditing]="false" headerText='Satuan'
+                        <e-column [visible]="true" field='nama_satuan' [allowEditing]="false" headerText='Satuan'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">
                         </e-column>
                         <e-column [visible]="true" field='metode_racikan' [allowEditing]="false"
