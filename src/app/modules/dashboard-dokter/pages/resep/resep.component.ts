@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { ResepDokterService } from '../../services/resep-dokter/resep-dokter.service';
+import moment from 'moment';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
     selector: 'app-resep',
@@ -20,11 +22,16 @@ export class ResepComponent implements OnInit {
 
     Data: any[] = [];
 
+    currentTanggal:string;
+
     constructor(
-        private resepDokterService: ResepDokterService
+        private resepDokterService: ResepDokterService,
+        private utilityService: UtilityService
     ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        this.currentTanggal = moment().format()
+    }
 
     onClickButtonNav(args: any): void {
         switch (args) {
@@ -55,16 +62,19 @@ export class ResepComponent implements OnInit {
     }
 
     onGetGridResepDatasource() {
-        // let parent = []
-        
-        // await this.resepDokterService.dataDetail$.subscribe((result)=>{
-        //     parent = result
-        // });
-
-        // let children = this.resepDokterService.dataSourceChildGrid.value;
-        // // let children = this.resepDokterService.dataDetail.values()
-        // console.log("parent", parent);
-        // console.log("children", children);
-        this.resepDokterService.saveResep()
+        let Data ={
+            id_dokter:1,
+            id_register:1,
+            id_outlet:1,
+            jenis_rawat:'J',
+            tanggal_resep:this.currentTanggal
+        }
+        this.resepDokterService.Insert(Data,1).subscribe((result)=>{
+            this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                .then(() => {
+                    this.resepDokterService.reset();
+                });
+            console.log(result);
+        })
     }
 }

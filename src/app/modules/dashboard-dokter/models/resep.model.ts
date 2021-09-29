@@ -31,16 +31,17 @@ export interface TrResepDokterIrjaDetailInsert {
     aturan?:any;
     ket_aturan:string;
     id_tambahan_aturan_pakai?:number;
-    label_tambahan_aturan_pakai?:string;
-    racikan?:TrResepDokterIrjaDetailRacikanInsert[];
+    label_tambahan_aturan_pakai_obat?:string;
+    racikans?:TrResepDokterIrjaDetailRacikanInsert[];
 }
 
 export interface TrResepDokterIrjaInsert {
+    tanggal_resep: string;
     id_dokter: number;
     id_register: number;
     id_outlet: number;
     jenis_rawat: string;
-    jumlah_item: number;
+    jumlah_item?: number;
     details?: TrResepDokterIrjaDetailInsert[] | null;
 }
 
