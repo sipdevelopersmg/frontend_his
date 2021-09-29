@@ -18,7 +18,11 @@
         <div class="row px-0 mx-0">
             <!-- Sidebar -->
             <section id="sidebar-section" class="p-0" [class.collapse-sidebar]="SidebarCollapse">
-                <mol-sidebar [SidebarCollapse]="SidebarCollapse"></mol-sidebar>
+                <mol-sidebar [SidebarCollapse]="SidebarCollapse"
+                    [IsAdaButtonSidebar]="navigationService.ButtonSidebarMenuState | async"
+                    [ButtonSidebarCaption]="'Periksa Selesai'" [ButtonSidebarIcon]="'fa-check-double fa-sm'"
+                    (handleClickedButtonSidebar)="handleClickButtonSidebar($event)">
+                </mol-sidebar>
             </section>
 
             <!-- Content -->

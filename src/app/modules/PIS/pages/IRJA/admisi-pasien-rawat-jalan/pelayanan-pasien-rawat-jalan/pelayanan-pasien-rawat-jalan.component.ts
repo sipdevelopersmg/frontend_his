@@ -210,9 +210,18 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     }
 
     heandleSelectedDokter(args: any): void {
-        this.id_dokter.setValue(args.id_dokter || args[0].id_dokter);
+        let sisa_kuota: any = args.sisa_kuota == ' - ' ? "Bebas" : parseInt(args.sisa_kuota);
 
-        this.id_jadwal_dokter.setValue(args.id_jadwal_dokter || args[0].id_jadwal_dokter);
+        if (sisa_kuota == "Bebas" || sisa_kuota > 0) {
+            this.id_dokter.setValue(args.id_dokter || args[0].id_dokter);
+
+            this.id_jadwal_dokter.setValue(args.id_jadwal_dokter || args[0].id_jadwal_dokter);
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', `Dokter ${args.full_name} Tidak Memiliki Kuota Tersisa`, 'Mohon Pilih Dokter Lain')
+                .then(() => {
+                    this.LookupKodeDokter.onOpenModal();
+                });
+        }
     }
 
     handleSelectedAsalRujukan(args: any): void {

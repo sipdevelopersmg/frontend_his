@@ -1,0 +1,24 @@
+.e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
+  min-height: 14px !important;
+}
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 10px !important;
+  height: 30px !important;
+}
+
+span.e-headertext {
+  font-size: 13px !important;
+}
+
+td.e-rowcell {
+  padding: 5px !important;
+}
+
+.modal-content-xxl {
+  width: 60rem !important;
+  max-width: 60rem !important;
+}

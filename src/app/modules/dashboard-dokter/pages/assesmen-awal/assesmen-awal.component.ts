@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 
 @Component({
@@ -6,18 +7,25 @@ import { DashboardDokterService } from '../../services/dashboard-dokter.service'
     templateUrl: './assesmen-awal.component.html',
     styleUrls: ['./assesmen-awal.component.css']
 })
-export class AssesmenAwalComponent implements OnInit {
+export class AssesmenAwalComponent implements OnInit, AfterViewInit {
 
     StepperDatasource: any[];
 
     constructor(
-        private dashboardDokterService: DashboardDokterService
+        private navigationService: NavigationService,
+        private dashboardDokterService: DashboardDokterService,
     ) { }
 
     ngOnInit(): void {
         this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
 
         this.onSetStepperDatasource();
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.navigationService.ButtonSidebarMenuState.next(true);
+        }, 1);
     }
 
     onSetStepperDatasource(): void {

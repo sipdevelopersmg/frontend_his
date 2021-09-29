@@ -28,6 +28,9 @@ body {
   --hitam-muda: #637280;
   --abu-muda: #cbd1d6;
   --abu-tua: #9f9f9f;
+  --hijau-muda: #00ff7a;
+  --hijau-tua: #009f4c;
+  --kuning-tua: #9f9b00;
 }
 
 .icon {
@@ -242,6 +245,26 @@ body {
 .statustemp.e-inactivecolor {
   color: white !important;
   background-color: var(--abu-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.statustemp.e-warningcolor {
+  color: white !important;
+  background-color: var(--kuning-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.statustemp.e-postedcolor {
+  color: white !important;
+  background-color: var(--hijau-tua) !important;
   height: 19px;
   width: 100%;
   padding-top: 10px;

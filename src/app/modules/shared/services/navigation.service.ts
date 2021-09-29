@@ -37,6 +37,8 @@ export class NavigationService {
 
     public FieldGridSubject = new BehaviorSubject([]);
 
+    public ButtonSidebarMenuState = new BehaviorSubject<any>(false);
+
     constructor(
         private router: Router,
         private httpClient: HttpClient,
@@ -214,5 +216,9 @@ export class NavigationService {
         }
 
         return this.FieldGridSubject.asObservable();
+    }
+
+    onSetVisibilitySidebarButton(State: boolean): void {
+        this.ButtonSidebarMenuState.next(State);
     }
 }

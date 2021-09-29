@@ -1,6 +1,7 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { DiagnosaPasienModel } from '../../models/diagnosa-pasien.model';
 import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 
@@ -9,7 +10,7 @@ import { DashboardDokterService } from '../../services/dashboard-dokter.service'
     templateUrl: './diagnosa.component.html',
     styleUrls: ['./diagnosa.component.css']
 })
-export class DiagnosaComponent implements OnInit {
+export class DiagnosaComponent implements OnInit, AfterViewInit {
 
     // ** List Diagnosa Pasien
     DiagnosaPasien: DiagnosaPasienModel[];
@@ -27,6 +28,7 @@ export class DiagnosaComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private modalService: BsModalService,
+        private navigationService: NavigationService,
         private dashboardDokterService: DashboardDokterService
     ) { }
 
@@ -69,6 +71,12 @@ export class DiagnosaComponent implements OnInit {
         });
 
         // this.dashboardDokterService.onSetSidebarMenuForDashboardDokter();
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.navigationService.ButtonSidebarMenuState.next(true);
+        }, 1);
     }
 
     onClickItemListDiagnosa(item: DiagnosaPasienModel) {

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { ResepDokterService } from '../../services/resep-dokter/resep-dokter.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { ResepDokterService } from '../../services/resep-dokter/resep-dokter.ser
     templateUrl: './resep.component.html',
     styleUrls: ['./resep.component.css']
 })
-export class ResepComponent implements OnInit {
+export class ResepComponent implements OnInit, AfterViewInit {
 
     /**
     * Variable Button Nav
@@ -21,10 +22,18 @@ export class ResepComponent implements OnInit {
     Data: any[] = [];
 
     constructor(
+        private navigationService: NavigationService,
         private resepDokterService: ResepDokterService
     ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.navigationService.ButtonSidebarMenuState.next(true);
+        }, 1);
+    }
 
     onClickButtonNav(args: any): void {
         switch (args) {
@@ -56,7 +65,7 @@ export class ResepComponent implements OnInit {
 
     onGetGridResepDatasource() {
         // let parent = []
-        
+
         // await this.resepDokterService.dataDetail$.subscribe((result)=>{
         //     parent = result
         // });

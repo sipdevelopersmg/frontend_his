@@ -40,10 +40,15 @@
                             </div>
                         </div>
                         <div [id]="'card_body' + item.kode_dokter" class="card-body p-2 show-card-dokter">
+                            <ejs-contextmenu target="{{ '#GridDaftarPasien' + item.kode_dokter }}"
+                                [items]="GridContextMenuItems" (select)="handleSelectGridContextMenu($event, item)">
+                            </ejs-contextmenu>
+
                             <ejs-grid #GridData [id]="'GridDaftarPasien' + item.kode_dokter"
                                 [dataSource]="item.daftar_pasien" [rowHeight]="30" [gridLines]="'Both'"
                                 [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
                                 [pageSettings]="GridPageSettings" [editSettings]="GridDataEditSettings"
+                                [contextMenuItems]="GridContextMenuItems"
                                 (rowSelected)="handleSelectedRow($event, 'GridDaftarPasien' + item.kode_dokter)">
                                 <e-columns>
                                     <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false"
@@ -128,8 +133,7 @@
             <i class="fas fa-search fa-sm"></i> Open Offcanvas
         </button>
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCariPoli"
-            aria-labelledby="offcanvasCariPoliLabel">
+        <div class="offcanvas offcanvas-end" id="offcanvasCariPoli" aria-labelledby="offcanvasCariPoliLabel">
             <div class="offcanvas-header">
                 <h5 id="offcanvasCariPoliLabel">Pilih Poliklinik</h5>
                 <button id="btnCloseFilter" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"

@@ -57,28 +57,7 @@ export class VerifikasiOrderLabComponent implements OnInit {
     GridDetailOrderDatasource: any[] = [];
     GridDetailOrderSelectedRecords: any;
     GridDetailOrderSelectedRowIndex: any;
-    GridDetailOrderContextMenuItems: MenuItemModel[] = [
-        {
-            id: 'drop_order',
-            text: 'Drop Order',
-            iconCss: 'fas fa-trash-alt'
-        },
-        {
-            id: 'restore_order',
-            text: 'Restore Order',
-            iconCss: 'fas fa-trash-restore'
-        },
-        {
-            id: 'dokter_dpjp',
-            text: 'Dokter DPJP',
-            iconCss: 'fas fa-user-md'
-        },
-        {
-            id: 'dokter_dpjp_semua',
-            text: 'Semua Dokter DPJP',
-            iconCss: 'fas fa-user-md'
-        }
-    ];
+    GridDetailOrderContextMenuItems: MenuItemModel[] = [];
 
     @ViewChild('LookupDokter') LookupDokter: OrgInputLookUpKodeComponent;
     UrlLookupDokter = this.API_PIS_SETUP_DATA.API_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP;
@@ -102,6 +81,9 @@ export class VerifikasiOrderLabComponent implements OnInit {
 
     modalCancelOrderRef: BsModalRef;
     @ViewChild('modalPembatalanOrderLab') modalPembatalanOrderLab: TemplateRef<any>;
+
+    DisabledButtonBatalOrder: boolean = false;
+    DisabledButtonVerifikasiOrder: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -229,6 +211,8 @@ export class VerifikasiOrderLabComponent implements OnInit {
                     this.GridDiagnosaDatasource = result.data.diagnosa;
 
                     this.keterangan_diagnosa.setValue(result.data.diagnosa[0]['nama_icd']);
+
+                    this.onCheckIsPostedAll(result.data.details);
                 });
         }, 500);
     }
@@ -263,6 +247,36 @@ export class VerifikasiOrderLabComponent implements OnInit {
     handleSelectedRowGridDetailOrder(args: any): void {
         this.GridDetailOrderSelectedRecords = args.data;
         this.GridDetailOrderSelectedRowIndex = args.rowIndex;
+
+        if (args.data.status === "posted") {
+            this.GridDetailOrderContextMenuItems = [];
+            this.GridDataDetail.contextMenuItems = null;
+        } else {
+            this.GridDetailOrderContextMenuItems = [
+                {
+                    id: 'drop_order',
+                    text: 'Drop Order',
+                    iconCss: 'fas fa-trash-alt'
+                },
+                {
+                    id: 'restore_order',
+                    text: 'Restore Order',
+                    iconCss: 'fas fa-trash-restore'
+                },
+                {
+                    id: 'dokter_dpjp',
+                    text: 'Dokter DPJP',
+                    iconCss: 'fas fa-user-md'
+                },
+                {
+                    id: 'dokter_dpjp_semua',
+                    text: 'Semua Dokter DPJP',
+                    iconCss: 'fas fa-user-md'
+                }
+            ];
+
+            this.GridDataDetail.contextMenuItems = this.GridDetailOrderContextMenuItems;
+        }
     }
 
     handleToolbarClickGridDetailOrder(args: any): void {
@@ -300,9 +314,35 @@ export class VerifikasiOrderLabComponent implements OnInit {
     }
 
     onChangeStatusOrder(Index: number, ChangeTo: string): void {
-        this.GridDetailOrderDatasource[Index]['status'] = ChangeTo
+        this.GridDetailOrderDatasource[Index]['status'] = ChangeTo;
 
         this.GridDataDetail.refresh();
+
+        this.onCheckIsRemovedAll();
+    }
+
+    onCheckIsRemovedAll(): void {
+        let isRemovedAll = this.GridDetailOrderDatasource.find(item => item.status === 'open');
+
+        if (isRemovedAll) {
+            this.DisabledButtonBatalOrder = false;
+            this.DisabledButtonVerifikasiOrder = false;
+        } else {
+            this.DisabledButtonBatalOrder = false;
+            this.DisabledButtonVerifikasiOrder = true;
+        }
+    }
+
+    onCheckIsPostedAll(Data: any): void {
+        let isPostedAll = Data.find(item => item.status === 'posted');
+
+        if (isPostedAll) {
+            this.DisabledButtonBatalOrder = true;
+            this.DisabledButtonVerifikasiOrder = true;
+        } else {
+            this.DisabledButtonBatalOrder = false;
+            this.DisabledButtonVerifikasiOrder = false;
+        }
     }
 
     onGetSelectedLookupDokter(args: any): void {
@@ -368,6 +408,8 @@ export class VerifikasiOrderLabComponent implements OnInit {
     onSubmitFormVerifikasiOrderLab(FormVerifikasiOrderLab: any): void {
         this.GridDetailOrderDatasource.forEach((item) => {
             item['id_petugas'] = FormVerifikasiOrderLab.id_petugas;
+            item['qty'] = item['qty_order'];
+            item['is_cancel'] = item['status'] == 'canceled' ? true : false;
         });
 
         setTimeout(() => {

@@ -34,7 +34,7 @@ export class ListPasienRawatJalanComponent implements OnInit {
         { text: 'Batalkan Admisi', tooltipText: 'Batalkan Admisi', prefixIcon: 'fas fa-ban fa-sm', id: 'cancel_admisi' },
         "Search"
     ];
-    GridGroupSettings: object = { showDropArea: false, columns: ['nama_poli'] };
+    GridGroupSettings: object = { showDropArea: false, columns: ['nama_poli', 'gender'] };
 
     /**
      * Berisi Data Yang selected dari dalam grid

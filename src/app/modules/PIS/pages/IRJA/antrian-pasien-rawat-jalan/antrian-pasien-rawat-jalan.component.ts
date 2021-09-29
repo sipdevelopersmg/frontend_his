@@ -2,6 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel } from '@syncfusion/ej2-grids';
 import { take } from 'rxjs/operators';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
@@ -34,6 +35,9 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridDatasource: IPasienTeradmisiHariIniModel[] = [];
+    GridContextMenuItems: MenuItemModel[] = [
+        { id: 'konsul', iconCss: 'fas fa-user-edit fa-sm', text: 'Konsul' }
+    ];
 
     SelectedDataPasien: any;
 
@@ -63,9 +67,9 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const today = this.utilityService.onFormatDate(new Date(), "dddd, Do MMMM yyyy");
+        const today = this.utilityService.onFormatDate(new Date(), "dddd, Do MMM yyyy");
 
-        this.HeaderRibbon = `Antrian Pasien Rawat Jalan Hari ${today}`;
+        this.HeaderRibbon = `Antrian Pasien Rawat Jalan - ${today}`;
 
         this.onGetAllDokter();
 
@@ -150,6 +154,10 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
         }, 200);
     }
 
+    handleSelectGridContextMenu(args: any, Data: any): void {
+        console.log(args, Data);
+    }
+
     onGetDetailPasien(PersonId: number): void {
         this.pendaftaranPasienBaruService.onGetLinkFotoPerson(PersonId)
             .subscribe((result) => {
@@ -178,9 +186,9 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     }
 
     handlePencarianAntrianPoliklinik(PoliklinikId: number, NamaPoliklinik: string): void {
-        const today = this.utilityService.onFormatDate(new Date(), "dddd, Do MMMM yyyy");
+        const today = this.utilityService.onFormatDate(new Date(), "dddd, Do MMM yyyy");
 
-        this.HeaderRibbon = `Antrian Pasien Rawat Jalan Poli ${this.titleCasePipe.transform(NamaPoliklinik)} Hari ${today}`;
+        this.HeaderRibbon = `Antrian Pasien Rawat Jalan Poli ${this.titleCasePipe.transform(NamaPoliklinik)} - ${today}`;
 
         setTimeout(() => {
             (<HTMLElement>document.getElementById('btnCloseFilter')).click();

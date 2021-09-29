@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
@@ -29,6 +29,11 @@ export class AtmTreeviewMenuComponent implements OnInit {
     TreeViewMenuFields: Object;
 
     UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+    @Input('IsAdaButtonSidebar') IsAdaButtonSidebar: boolean = false;
+    @Input('ButtonSidebarCaption') ButtonSidebarCaption: string;
+    @Input('ButtonSidebarIcon') ButtonSidebarIcon: string;
+    @Output('handleClickedButtonSidebar') handleClickedButtonSidebar = new EventEmitter<any>();
 
     constructor(
         private router: Router,
@@ -144,6 +149,11 @@ export class AtmTreeviewMenuComponent implements OnInit {
 
     onClickBackToMainMenu(args: any) {
         this.navigationService.onSetBackToMainMenu(true);
+
+        if (!this.SidebarCollapse) {
+            let NavbarBrand = document.getElementById("NavbarBrand");
+            NavbarBrand.click();
+        }
     }
 
     onGetActiveSidebarMenu() {
@@ -157,5 +167,9 @@ export class AtmTreeviewMenuComponent implements OnInit {
         else {
             return activatedRoute;
         }
+    }
+
+    handleClickButtonSidebar(args: any): void {
+        this.handleClickedButtonSidebar.emit(args);
     }
 }

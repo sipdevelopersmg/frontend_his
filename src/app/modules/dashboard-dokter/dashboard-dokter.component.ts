@@ -1,10 +1,12 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
+import { MolSidebarComponent } from '../core/components/sidebar/sidebar.component';
 import { MolTopMenuComponent } from '../core/components/top-menu/top-menu.component';
 import { NavigationService } from '../shared/services/navigation.service';
 import { NotificationService } from '../shared/services/notification.service';
-import { InformasiPasienComponent } from './components/informasi-pasien/informasi-pasien.component';
+import { UtilityService } from '../shared/services/utility.service';
+import { DaftarPasienService } from './services/daftar-pasien/daftar-pasien.service';
 import { DashboardDokterService } from './services/dashboard-dokter.service';
 
 @Component({
@@ -18,7 +20,7 @@ export class DashboardDokterComponent implements OnInit {
     ShowInformasiPasien: boolean = false;
 
     // ** Sidebar Collapse State
-    SidebarCollapse: boolean = true;
+    SidebarCollapse: boolean;
     SidebarMenuTitle: string;
     SidebarMenuDatasource: any[] = [];
 
@@ -26,18 +28,21 @@ export class DashboardDokterComponent implements OnInit {
     ToggleTopMenu: boolean = false;
     DashboardDokterState: boolean = false;
 
+    @ViewChild(MolSidebarComponent) MolSidebarComponent: MolSidebarComponent;
+
     constructor(
         private router: Router,
         // private socket: Socket,
+        private utilityService: UtilityService,
         private activatedRoute: ActivatedRoute,
-        private navigationService: NavigationService,
+        public navigationService: NavigationService,
         private notificationService: NotificationService,
+        private daftarPasienService: DaftarPasienService,
         private dashboardDokterService: DashboardDokterService
-    ) {
-        this.onCheckIsSidebarEmpty();
-    }
+    ) { }
 
     ngOnInit(): void {
+        this.onCheckIsSidebarEmpty();
     }
 
     onClickNavbarBrand(args: any): void {
@@ -97,9 +102,11 @@ export class DashboardDokterComponent implements OnInit {
     onCheckIsSidebarEmpty(): void {
         this.navigationService.onGetActiveSidebarMenuSubject()
             .subscribe((result: any) => {
-                setTimeout(() => {
-                    this.SidebarCollapse = false;
-                }, 250);
+                if (result.length > 0) {
+                    setTimeout(() => {
+                        this.SidebarCollapse = false;
+                    }, 250);
+                }
             });
     }
 
@@ -111,5 +118,24 @@ export class DashboardDokterComponent implements OnInit {
         const sidebarSection = document.getElementById('sidebar-section');
 
         args === true ? sidebarSection.classList.add('hidding-top-menu') : sidebarSection.classList.remove('hidding-top-menu');
+    }
+
+    handleClickButtonSidebar(args: any): void {
+        this.dashboardDokterService.onPeriksaPasien()
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', `${this.daftarPasienService.ActivePasien.value.nama_pasien} Finish Periksa`, 'Kembali Ke Daftar Pasien')
+                        .then((result) => {
+                            this.router.navigateByUrl('Dokter/daftar-pasien');
+
+                            if (!this.MolSidebarComponent.SidebarCollapse) {
+                                this.MolSidebarComponent.SidebarCollapse = true;
+
+                                let NavbarBrand = document.getElementById("NavbarBrand");
+                                NavbarBrand.click();
+                            }
+                        })
+                }
+            });
     }
 }

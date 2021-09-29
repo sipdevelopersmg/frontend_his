@@ -113,3 +113,9 @@ ul.list-group-child.is-hidden {
   background-color: #f6f4f7 !important;
   transition: all 0.7s !important;
 }
+
+.is-ada-button-sidebar {
+  height: calc(100vh - 10rem);
+  max-height: calc(100vh - 10rem);
+  overflow-y: auto;
+}

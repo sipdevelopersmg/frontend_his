@@ -1,0 +1,136 @@
+{
+    "GridConfig": [
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "numericEdit",
+            "field": "no_order",
+            "headerText": "NO.ORDER",
+            "visible": true,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "waktu_order",
+            "headerText": "WAKTU ORDER",
+            "visible": true,
+            "type": "DateTime",
+            "format": "dd/MM/yyyy - HH:mm",
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "no_register",
+            "headerText": "NO. REGISTER",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "no_rekam_medis",
+            "headerText": "NO. RM",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_pasien",
+            "headerText": "NAMA PASIEN",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_dokter",
+            "headerText": "NAMA DOKTER",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_debitur",
+            "headerText": "DEBITUR",
+            "visible": true,
+            "width": 150
+        }
+    ],
+    "LookupDokter": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "id_person",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_dokter",
+                "headerText": "KODE DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "spesialisasi_dokter",
+                "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true,
+                "width": 110
+            }
+        ],
+        "filter": [
+            {
+                "field": "d.kode_dokter",
+                "filter": "like",
+                "title": "KODE DOKTER"
+            },
+            {
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA DOKTER"
+            }
+        ]
+    }
+}
