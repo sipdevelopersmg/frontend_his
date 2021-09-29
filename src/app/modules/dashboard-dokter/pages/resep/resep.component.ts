@@ -28,7 +28,7 @@ export class ResepComponent implements OnInit, AfterViewInit {
 
     constructor(
         private resepDokterService: ResepDokterService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
         private navigationService: NavigationService,
     ) { }
 
