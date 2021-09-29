@@ -14,6 +14,10 @@ import { NumericTextBox } from '@syncfusion/ej2-angular-inputs';
 import { PHARMACY } from 'src/app/api/PHARMACY';
 import * as GridLookUpItem from './json/lookupitem.json';
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
+import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
+import { EmitType } from '@syncfusion/ej2-base';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
+
 @Component({
     selector: 'app-input-resep',
     templateUrl: './input-resep.component.html',
@@ -82,6 +86,50 @@ export class InputResepComponent implements OnInit {
     currentIdItem:number;
     currentIndex:number;
 
+    // SERVER SIDE 
+    public IsUserLogin: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+    public data: DataManager = new DataManager({
+        headers:[
+            {
+                Authorization: "Bearer " + this.IsUserLogin.token
+            }
+        ],
+        url: PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_OBAT_PARAMS_DROPDOWNLIST,
+        adaptor: new ODataV4Adaptor,
+        crossDomain: true,
+    });
+
+    public fields: Object = { text: 'nama_obat', value: 'id_item' };
+    public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+    public text: string = "Select a Obat";
+    public sorting: string = 'Ascending';
+    public onFiltering =  (e: FilteringEventArgs) => {
+        // load overall data when search key empty.
+        if (e.text === '') {
+            e.updateData(this.data);
+        } else {
+        //   let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10);
+          // change the type of filtering
+        //   query = (e.text !== '') ? query.where('nama_obat', 'contains', e.text, true) : query;
+          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+
+          e.updateData(this.data, query);
+        }
+    };
+    //=====================
+    public dataChild: DataManager = new DataManager({
+        headers:[
+            {
+                Authorization: "Bearer " + this.IsUserLogin.token
+            }
+        ],
+        url: PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_OBAT_PARAMS_DROPDOWNLIST,
+        adaptor: new ODataV4Adaptor,
+        crossDomain: true,
+    });
+    public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+
+    
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterService: ResepDokterService,
@@ -98,22 +146,22 @@ export class InputResepComponent implements OnInit {
             counter: [0,[]],
             is_racikan: [false, []],
             no_urut: [0, []],
-            set_racikan_id: [0, []],
-            id_metode_racikan: [0, []],
+            set_racikan_id: [null, []],
+            id_metode_racikan: [null, []],
             metode_racikan: ['', []],
-            id_item: [0, []],
+            id_item: [null, []],
             nama_racikan: ['', []],
             nama_obat: ['', []],
             qty_resep: ['', []],
             nama_satuan: ['-', []],
             label: ['', []],
             ket_label: ['', []],
-            id_label_pemakaian_obat: [0, []],
+            id_label_pemakaian_obat: [null, []],
             label_pemakaian_obat: ['', []],
             aturan: ['', []],
             ket_aturan: ['', []],
-            id_tambahan_aturan_pakai: [0, []],
-            label_tambahan_aturan_pakai: ['', []],
+            id_tambahan_aturan_pakai: [null, []],
+            label_tambahan_aturan_pakai_obat: ['', []],
         });
 
         this.GridDaftarObatToolbar = [
@@ -128,6 +176,13 @@ export class InputResepComponent implements OnInit {
         this.resepDokterService.dataSelectRacikan.next(SelectedDataRacikanObat);
         this.itemsParams = {
             create: () => {
+                
+                if(SelectedDataRacikanObat){
+                    this.queryChild = new Query().from('Obat')
+                    .select(['nama_obat', 'id_item','kandungan_obat','nama_satuan'])
+                    .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
+                }
+
                 this.itemsElem = document.createElement('input');
                 return this.itemsElem;
             },
@@ -139,38 +194,40 @@ export class InputResepComponent implements OnInit {
             },
             write: () => {
                 this.itemsObj = new DropDownList({
-                    dataSource: this.resepDokterService.dataObat.value,
-                    fields: this.DropdownObatFields,
+                    dataSource: this.dataChild,
+                    fields: this.fields,
+                    query: this.queryChild,
                     enabled: true,
-                    placeholder: 'Select a items',
-                    floatLabelType: 'Never',
+                    placeholder: 'Select a obat',
+                    // floatLabelType: 'Never',
                     allowFiltering: true,
                     popupWidth: '55rem',
-                    // itemTemplate:'<div class="row item">'+
-                    //         '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pe-0 border-end">'+
-                    //             '<span class="nama_generik">${ nama_generik }</span>'+
-                    //         '</div>'+
-                    //         '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0 border-end">'+
-                    //             '<span class="terapi">${ terapi }</span>'+
-                    //         '</div>'+
-                    //         '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0 border-end">'+
-                    //             '<span class="terapi">${ restriksi }</span>'+
-                    //         '</div>'+
-                    //         '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ps-0">'+
-                    //             '<span class="terapi">${ peresepan }</span>'+
-                    //         '</div>'+
-                    //     '</div>'
-                    change: function (args) {
-                        if(SelectedDataRacikanObat){
-                            console.log('form set',SelectedDataRacikanObat);
+                    filtering: function(e){
+                        if (e.text === '') {
+                            e.updateData(this.data);
+                        } else {
+                            let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+                            e.updateData(this.data, query);
                         }
+                    }.bind(this),
+                    change: function (args) {
                         this.setFormGrif(args,currentQtyResep,currentIdItem,SelectedDataRacikanObat);
                         currentIdItem = args.itemData.id_item;
                     }.bind(this),
                 });
+                
                 this.itemsObj.appendTo(this.itemsElem);
+
                 if(SelectedDataRacikanObat){
-                    this.itemsObj.value = SelectedDataRacikanObat.id_item;
+                   
+                    // this.itemsObj.dataSource = this.data;
+                    // console.log('set value',SelectedDataRacikanObat);
+                    // console.log('query',this.query);
+                   
+                    setTimeout(()=>{
+                        this.itemsObj.value = SelectedDataRacikanObat.id_item;
+                    },500)
+
                 }
             }
         }
@@ -203,7 +260,8 @@ export class InputResepComponent implements OnInit {
             ],
             rowSelected(args){
                 SelectedDataRacikanObat = args.data
-                console.log(SelectedDataRacikanObat)
+                // console.log('row selected',SelectedDataRacikanObat)
+               
             },
             actionBegin(args: AddEventArgs) {
                 console.log('begin',args)
@@ -230,6 +288,7 @@ export class InputResepComponent implements OnInit {
                         let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
                         dataSourceChild[index]=args.data;
                     }
+                    
                 }
 
                 if (args.requestType === "delete") {
@@ -258,7 +317,7 @@ export class InputResepComponent implements OnInit {
     }
 
     setFormGrif(args,currentQtyResep,id_item,SelectedDataRacikanObat){
-        console.log('function setgrid',SelectedDataRacikanObat);
+        // console.log('function setgrid',SelectedDataRacikanObat);
         if(SelectedDataRacikanObat){
             (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=SelectedDataRacikanObat.nama_satuan;
             (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value=SelectedDataRacikanObat.komposisi;
@@ -300,7 +359,8 @@ export class InputResepComponent implements OnInit {
             kandungan.addEventListener('keyup', (event) => {
                 let kandungan = parseInt((<HTMLInputElement>document.getElementsByName("kandungan")[0]).value);
                 let komposisi = parseInt((<HTMLInputElement>document.getElementsByName("komposisi")[0]).value);
-                let butuh = this.currentQtyResep * kandungan;
+                let butuh = currentQtyResep * kandungan;
+                console.log(butuh)
                 let qty = butuh/komposisi;
                 (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=qty.toString();
                 (<HTMLInputElement>document.getElementsByName("seper")[0]).value = '1';
@@ -339,7 +399,6 @@ export class InputResepComponent implements OnInit {
         });
     }
     
-
     rowDataBound(args: any) {
         var is_racikan = args.data.is_racikan;
         if (!is_racikan) {
@@ -375,11 +434,11 @@ export class InputResepComponent implements OnInit {
 
     handleChangeAturan(args: any): void {
         if (typeof args.value === 'number' && (args.value % 1) === 0) {
-            this.label_tambahan_aturan_pakai.setValue('');
+            this.label_tambahan_aturan_pakai_obat.setValue('');
             this.id_tambahan_aturan_pakai.setValue(args.value);
             this.ket_aturan.setValue(args.itemData.tambahan_aturan_pakai);
         } else {
-            this.label_tambahan_aturan_pakai.setValue(args.value);
+            this.label_tambahan_aturan_pakai_obat.setValue(args.value);
             this.id_tambahan_aturan_pakai.setValue(1);
             this.ket_aturan.setValue(args.itemData.tambahan_aturan_pakai);
         }
@@ -398,15 +457,15 @@ export class InputResepComponent implements OnInit {
     }
 
     heandleSelectedRacikan(args: any): void {
-        var counter = this.counter++;
-        args.counter = counter;
+        this.counter++;
+        args.counter = this.counter;
         args.is_racikan = true;
         this.resepDokterService.addDetail(args);
         let detail;
         detail = this.GridResepRacikan.childGrid.dataSource;
         args.details.forEach(element => {
             let counterRacikan = this.counterRacikan++;
-            element.counter = counter;
+            element.counter = this.counter;
             element.counterRacikan = counterRacikan;
             detail.push(element);
         });
@@ -419,6 +478,9 @@ export class InputResepComponent implements OnInit {
         FormAddObat.counter = this.counter;
         if (FormAddObat.is_racikan) {
             FormAddObat.nama_obat = FormAddObat.nama_racikan;
+        }else{
+            FormAddObat.id_metode_racikan = null;
+            FormAddObat.metode_racikan = null;
         }
         this.resepDokterService.addDetail(FormAddObat);
         this.onResetFormObat();
@@ -513,6 +575,6 @@ export class InputResepComponent implements OnInit {
     get aturan(): AbstractControl { return this.FormAddObat.get('aturan'); }
     get ket_aturan(): AbstractControl { return this.FormAddObat.get('ket_aturan'); }
     get id_tambahan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_tambahan_aturan_pakai'); }
-    get label_tambahan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('label_tambahan_aturan_pakai'); }
+    get label_tambahan_aturan_pakai_obat(): AbstractControl { return this.FormAddObat.get('label_tambahan_aturan_pakai_obat'); }
     get nama_racikan(): AbstractControl { return this.FormAddObat.get('nama_racikan'); }
 }

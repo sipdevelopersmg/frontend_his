@@ -6,7 +6,8 @@ import { PHARMACY } from 'src/app/api/PHARMACY';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert } from '../../models/resep.model';
+import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert, TrResepDokterIrjaInsert } from '../../models/resep.model';
+import { DaftarPasienService } from '../daftar-pasien/daftar-pasien.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,8 @@ import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert } f
 export class ResepDokterService {
 
     private API = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA;
+
+    public dataHistoryResep = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<TrResepDokterIrjaDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
@@ -46,7 +49,8 @@ export class ResepDokterService {
 
     constructor(
         private httpOperationService: HttpOperationService,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        public daftarPasienService: DaftarPasienService
     ) { }
 
     /**
@@ -59,12 +63,27 @@ export class ResepDokterService {
         });
     }
 
+    setDataResep(req: PostRequestByDynamicFiterModel[]): void {
+        this.onGetAllByRegister(req).subscribe((result) =>{
+            this.dataHistoryResep.next(result.data);
+        })
+    }
+
     /**
     * Service Untuk Menampilkan data berdasarkan dinamik filter
     * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
         return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_OBAT, req).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
+    onGetAllByRegister(req: PostRequestByDynamicFiterModel[]): Observable<any> {
+        let id_register = 1; //this.daftarPasienService.ActivePasien.value.id_register;
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER+"/"+id_register, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
@@ -99,28 +118,46 @@ export class ResepDokterService {
     saveResep(){
         console.log('parent',this.dataDetail)
         console.log('child',this.dataSourceChildGrid.value)
-
     }
 
-    // Insert(): Observable<any>{
-    //     // let Data:any
-    //     this.dataDetail.map((e,i)=>{
-    //         return e.no_urut = i+1;
-    //     });
-    //     // Data.detailItem = this.dataDetail;
-    //     // Data.jumlah_item_kontrak = this.jumlahItem;
-    //     // Data.total_transaksi_kontrak = this.total;
+    Insert(Data:TrResepDokterIrjaInsert,is_simpan_racikan:number): Observable<any>{
+        let id_item = 0 ;
+        let urut = 0 ;
+        this.dataDetail.map((e,i)=>{
+            e.no_urut = i+1;
+            e.racikans = [];
+            return e;
+        });
 
-    //     return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
-    //         .pipe(
-    //             catchError((error: HttpErrorResponse): any => {
-    //             this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-    //             })
-    //         );
-    // }
+        this.dataSourceChildGrid.value.forEach((item)=>{
+            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
+            
+            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
+            id_item =this.dataDetail[index].id_item;
+            urut++
+            item.no_urut = urut
+
+            this.dataDetail[index].racikans.push(item);
+        })
+
+        Data.details = this.dataDetail;
+        Data.jumlah_item = this.jumlah_item;
+        // console.log(Data);
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA+'/'+is_simpan_racikan, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
 
     sum(): void {
         this.jumlah_item = this.dataDetail.sum('qty_resep');
+    }
+
+    reset():void {
+        this.dataSourceChildGrid.next([])
+        this.dataDetail = []
     }
 
 }

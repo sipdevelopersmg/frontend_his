@@ -22,9 +22,21 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
-                            <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
+                            <!-- <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
                                 [dataSource]="resepDokterService.dataObat | async" [fields]="DropdownObatFields"
                                 (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'>
+                            </ejs-dropdownlist> -->
+                            <ejs-dropdownlist id='DropdownObat' #Drop 
+                                [allowFiltering]="true" 
+                                [dataSource]='data' 
+                                [fields]='fields' 
+                                [placeholder]='text' 
+                                [query]='query' 
+                                [sortOrder]='sorting'  
+                                [allowFiltering]='true'
+                                (filtering)='onFiltering($event)'
+                                (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'
+                                >
                             </ejs-dropdownlist>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
