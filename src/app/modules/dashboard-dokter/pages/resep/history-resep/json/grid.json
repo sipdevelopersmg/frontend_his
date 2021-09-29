@@ -1,0 +1,62 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "set_racikan_id",
+            "headerText": "Id",
+            "type": "string",
+            "visible": false
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_obat",
+            "headerText": "Nama Racikan",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_resep",
+            "headerText": "Qty",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "label_pemakaian_obat",
+            "headerText": "Label",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "label_tambahan_aturan_pakai_obat",
+            "headerText": "Tambahan Aturan",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "columnsChild": [
+        { "field": "nama_obat", "headerText": "Nama Obat"},
+        { "field": "kandungan_obat", "headerText": "Kandungan" },
+        { "field": "nama_satuan", "headerText": "Satuan" },
+        { "field": "qty_racikan", "headerText": "Qty" }
+    ],
+    "filter": [
+        {
+            "field": "nama_racikan",
+            "filter": "like",
+            "title": "Nama Racikan"
+        }
+    ]
+}

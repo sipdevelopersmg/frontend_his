@@ -52,6 +52,8 @@ export class MolGridComponent implements OnInit, AfterViewInit {
     @Output('initialized') initialized: EventEmitter<MolGridComponent> = new EventEmitter<MolGridComponent>();
     @Output('load-grid') onLoadedGrid = new EventEmitter<any>();
     @Output('query-cell-info') onQueryingCellInfo = new EventEmitter<any>();
+    @Output('data-bound') dataBound = new EventEmitter<any>();
+    @Output('row-data-bound') rowDataBound = new EventEmitter<any>();
 
     allowTextWrap = false;
     constructor() {
@@ -65,6 +67,14 @@ export class MolGridComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.initialized.emit(this);
+    }
+
+    onDataBound(args): void {
+        this.dataBound.emit(args);
+    }
+
+    onRowDataBound(args): void {
+        this.rowDataBound.emit(args);
     }
 
     onRowSelecting(args: RowSelectEventArgs): void {

@@ -3,6 +3,7 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { ResepDokterService } from '../../services/resep-dokter/resep-dokter.service';
 import moment from 'moment';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-resep',
@@ -55,13 +56,14 @@ export class ResepComponent implements OnInit {
                 break;
             case "HistoryResep":
                 this.ButtonNav = [];
+                this.resepDokterService.setDataResep([]);
                 break;
             default:
                 break;
         }
     }
 
-    onGetGridResepDatasource() {
+    async onGetGridResepDatasource() {
         let Data ={
             id_dokter:1,
             id_register:1,
@@ -69,12 +71,48 @@ export class ResepComponent implements OnInit {
             jenis_rawat:'J',
             tanggal_resep:this.currentTanggal
         }
-        this.resepDokterService.Insert(Data,1).subscribe((result)=>{
-            this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-                .then(() => {
-                    this.resepDokterService.reset();
-                });
-            console.log(result);
+
+        let detail = await this.resepDokterService.dataDetail
+        // console.log('asli',detail);
+
+        let newdetail = detail.filter((item)=>{
+            return  item.is_racikan && !item.set_racikan_id
         })
+        // console.log('update',newdetail);
+        let baru = 0
+        if(newdetail.length > 0){
+            Swal.fire({
+                title: 'Apakah Anda Ingin Menyimapan Racikan Baru ke dalam Setting Racikan dokter?',
+                text: "Racikan akan bisa di gunakan lagi untuk template",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, Saya Yakin',
+                focusCancel: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    baru = 1
+                }else{
+                    baru = 0
+                }
+                this.resepDokterService.Insert(Data,baru).subscribe((result)=>{
+                    this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                        .then(() => {
+                            this.resepDokterService.reset();
+                        });
+                    console.log(result);
+                })
+            });
+        }else{
+            this.resepDokterService.Insert(Data,0).subscribe((result)=>{
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                    .then(() => {
+                        this.resepDokterService.reset();
+                    });
+                console.log(result);
+            })
+        }
+        
     }
 }

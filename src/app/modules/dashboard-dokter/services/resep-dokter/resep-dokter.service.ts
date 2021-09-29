@@ -7,6 +7,7 @@ import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Ht
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert, TrResepDokterIrjaInsert } from '../../models/resep.model';
+import { DaftarPasienService } from '../daftar-pasien/daftar-pasien.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,8 @@ import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert, Tr
 export class ResepDokterService {
 
     private API = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA;
+
+    public dataHistoryResep = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<TrResepDokterIrjaDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
@@ -46,7 +49,8 @@ export class ResepDokterService {
 
     constructor(
         private httpOperationService: HttpOperationService,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        public daftarPasienService: DaftarPasienService
     ) { }
 
     /**
@@ -59,12 +63,27 @@ export class ResepDokterService {
         });
     }
 
+    setDataResep(req: PostRequestByDynamicFiterModel[]): void {
+        this.onGetAllByRegister(req).subscribe((result) =>{
+            this.dataHistoryResep.next(result.data);
+        })
+    }
+
     /**
     * Service Untuk Menampilkan data berdasarkan dinamik filter
     * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
         return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_OBAT, req).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
+    onGetAllByRegister(req: PostRequestByDynamicFiterModel[]): Observable<any> {
+        let id_register = 1; //this.daftarPasienService.ActivePasien.value.id_register;
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER+"/"+id_register, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })

@@ -288,6 +288,7 @@ export class InputResepComponent implements OnInit {
                         let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
                         dataSourceChild[index]=args.data;
                     }
+                    
                 }
 
                 if (args.requestType === "delete") {
