@@ -1,0 +1,34 @@
+{
+    "GridBankDarahColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_pemeriksaan",
+            "headerText": "KODE PEMERIKSAAN",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_order_pemeriksaan",
+            "headerText": "NAMA ORDER TINDAKAN",
+            "visible": true,
+            "width": 200
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_order",
+            "headerText": "Qty",
+            "visible": true,
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        }
+    ]
+}

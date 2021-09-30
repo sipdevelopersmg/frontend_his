@@ -1,0 +1,24 @@
+{
+    "GridAlergiColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "alergi",
+            "headerText": "ALERGI",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_mulai_alergi",
+            "headerText": "TGL. MULAI ALERGI",
+            "visible": true,
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
+            "width": 120
+        }
+    ]
+}

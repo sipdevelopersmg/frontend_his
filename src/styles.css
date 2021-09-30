@@ -232,6 +232,11 @@ body {
   margin-bottom: 15px;
 }
 
+.e-activecolor-background {
+  background-color: #d1eaf6 !important;
+  color: white !important;
+}
+
 .statustemp.e-activecolor {
   color: white !important;
   background-color: var(--biru-muda) !important;
@@ -240,6 +245,11 @@ body {
   padding-top: 10px;
   text-align: center;
   border-radius: 15px;
+}
+
+.e-inactivecolor {
+  background-color: var(--abu-tua) !important;
+  color: white !important;
 }
 
 .statustemp.e-inactivecolor {

@@ -1,0 +1,103 @@
+{
+    "GridVitalSignColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_periksa",
+            "headerText": "TGL. PERIKSA",
+            "visible": true,
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tinggi_badan_cm",
+            "headerText": "TINGGI BADAN (cm)",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "berat_badan_kg",
+            "headerText": "BERAT BADAN (kg)",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "suhu_badan_celcius",
+            "headerText": "SUHU BADAN (C)",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tekanan_darah_atas",
+            "headerText": "TEKANAN DARAH ATAS",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tekanan_darah_atas",
+            "headerText": "TEKANAN DARAH BAWAH",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "saturasi_oksigen",
+            "headerText": "SATURASI OKSIGEN",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "denyut_nadi_per_menit",
+            "headerText": "DENYUT NADI / Menit",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "respirasi_nafas_per_menit",
+            "headerText": "RESPIRASI NAFAS / Menit",
+            "visible": true,
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "width": 100
+        }
+    ]
+}

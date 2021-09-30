@@ -2,60 +2,91 @@
     (onClickButtonNav)="handleClickButtonNav($event)">
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-            <div class="row mb-3" *ngFor="let item of DataDokter">
+            <div class="row mb-3" *ngFor="let item of AntrianPasienRawatJalan">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card shadow-sm border-0">
                         <div class="card-header shadow-sm border rounded">
                             <div class="row">
                                 <!-- Foto Dokter -->
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center px-0">
-                                    <img [src]="item.url_foto" alt="foto-dokter" class="img-thumbnail-antrian-irja">
+                                    <img [src]="item.link_foto" alt="foto-dokter" class="img-thumbnail-antrian-irja">
                                 </div>
 
                                 <!-- Informasi Dokter -->
                                 <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 px-0 pt-2">
                                     <!-- Nama Dokter -->
-                                    <p class="mb-0 text-biru-muda" style="font-size: 22px;">
-                                        {{ item.full_name | titlecase }}
-                                    </p>
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <p class="mb-0 text-biru-muda" style="font-size: 22px;">
+                                                {{ item.full_name | titlecase }}
+                                            </p>
+                                        </div>
+                                    </div>
 
-                                    <!-- Kode Dokter -->
-                                    <p class="mb-0 text-abu-tua" style="font-size: 16px;">
-                                        Kode Dokter : {{ item.kode_dokter }}
-                                    </p>
+                                    <div class="row align-items-center">
+                                        <!-- Kode Dokter -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <p class="mb-0 text-abu-tua" style="font-size: 16px;">
+                                                Kode Dokter : {{ item.kode_dokter }}
+                                            </p>
+                                        </div>
 
-                                    <!-- Spesialisasi Dokter -->
-                                    <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
-                                        Spesialis {{ item.spesialisasi_dokter | titlecase }}
-                                    </p>
+                                        <!-- Jadwal Praktek -->
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                            <p class="mb-0 text-abu-tua" style="font-size: 16px;">
+                                                Jadwal Praktek : {{ item.jam_mulai }} - {{ item.jam_selesai }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center">
+                                        <!-- Spesialisasi Dokter -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
+                                                Spesialis {{ item.spesialisasi_dokter | titlecase }}
+                                            </p>
+                                        </div>
+
+                                        <!-- Sisa Kuota Dokter -->
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                            <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
+                                                Sisa Kuota : {{ item.sisa_kuota }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Toggle Card Dokter Button -->
                                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end">
                                     <button id="btnCardDokter" class="btn btn-outline-primary btn-sm border-0"
-                                        type="button" (click)="togglingCardDokter(item.kode_dokter)">
-                                        <i [id]="'icon' + item.kode_dokter" class="fas fa-window-minimize fa-sm"></i>
+                                        type="button" (click)="togglingCardDokter(item.id_jadwal_dokter)">
+                                        <i [id]="'icon' + item.id_jadwal_dokter"
+                                            class="fas fa-window-minimize fa-sm"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div [id]="'card_body' + item.kode_dokter" class="card-body p-2 show-card-dokter">
-                            <ejs-contextmenu target="{{ '#GridDaftarPasien' + item.kode_dokter }}"
+                        <div [id]="'card_body' + item.id_jadwal_dokter" class="card-body p-2 show-card-dokter">
+                            <p class="text-black mb-1" style="font-size: 12px; font-style: italic;">
+                                *) Warna Background Biru <span style="color: #74afca">Sudah Diperiksa</span>
+                            </p>
+
+                            <ejs-contextmenu target="{{ '#GridDaftarPasien' + item.id_jadwal_dokter }}"
                                 [items]="GridContextMenuItems" (select)="handleSelectGridContextMenu($event, item)">
                             </ejs-contextmenu>
 
-                            <ejs-grid #GridData [id]="'GridDaftarPasien' + item.kode_dokter"
-                                [dataSource]="item.daftar_pasien" [rowHeight]="30" [gridLines]="'Both'"
-                                [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
-                                [pageSettings]="GridPageSettings" [editSettings]="GridDataEditSettings"
-                                [contextMenuItems]="GridContextMenuItems"
-                                (rowSelected)="handleSelectedRow($event, 'GridDaftarPasien' + item.kode_dokter)">
+                            <ejs-grid #GridData [id]="'GridDaftarPasien' + item.id_jadwal_dokter"
+                                [dataSource]="item.pasien" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
+                                [allowResizing]="true" [allowFiltering]='true' [pageSettings]="GridPageSettings"
+                                [editSettings]="GridDataEditSettings" [contextMenuItems]="GridContextMenuItems"
+                                (rowSelected)="handleSelectedRow($event, 'GridDaftarPasien' + item.id_jadwal_dokter)"
+                                (rowDataBound)="handleDataBound($event)">
                                 <e-columns>
                                     <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false"
                                         [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
                                         [textAlign]="'Left'">
                                     </e-column>
-                                    <e-column [width]="80" [field]="'no_antrian'" [headerText]="'NO. ANTRIAN'"
+                                    <e-column [width]="60" [field]="'no_urut_antrian'" [headerText]="'NO. ANTRIAN'"
                                         [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                         [textAlign]="'Left'">
                                     </e-column>
@@ -71,6 +102,14 @@
                                         [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                         [textAlign]="'Left'">
                                     </e-column>
+                                    <e-column [width]="90" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="150" [field]="'nama_debitur'" [headerText]="'DEBITUR'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
                                 </e-columns>
                             </ejs-grid>
                         </div>
@@ -80,20 +119,20 @@
         </div>
 
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 visible-smooth" *ngIf="SelectedDataPasien">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm position-fixed" style="width: calc(100vw - 68rem)">
                 <div class="card-header">
                     <h5 class="mb-0 text-biru-muda">Detail Pasien {{ SelectedDataPasien.nama_pasien }}</h5>
                 </div>
-                <div class="card-body" style="height: calc(100vh - 12.5rem);">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
-                            <img class="shadow-sm"
-                                [src]="foto_pasien ? foto_pasien : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
-                                alt="" style="height: 170px; width: 150px; border-radius: 5px;">
+                            <img class="shadow"
+                                [src]="SelectedDataPasien.link_foto ? SelectedDataPasien.link_foto : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
+                                alt="" style="height: 130px; width: 125px; border-radius: 5px;">
                         </div>
 
                         <!-- Nama Pasien -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 text-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
                             <p class="mb-0 text-biru-muda">Nama Pasien </p>
                             <p class="mb-0 text-hitam-muda">
                                 {{ SelectedDataPasien.nama_pasien | titlecase }}
@@ -101,7 +140,7 @@
                         </div>
 
                         <!-- No. Rekam Medis -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 text-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
                             <p class="mb-0 text-biru-muda">No. Rekam Medis</p>
                             <p class="mb-0 text-hitam-muda">
                                 {{ SelectedDataPasien.no_rekam_medis }}
@@ -109,10 +148,18 @@
                         </div>
 
                         <!-- Umur -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 text-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
                             <p class="mb-0 text-biru-muda">Umur</p>
                             <p class="mb-0 text-hitam-muda">
                                 {{ SelectedDataPasien.umur}}
+                            </p>
+                        </div>
+
+                        <!-- Kelas Perawatan -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
+                            <p class="mb-0 text-biru-muda">Kelas Perawatan</p>
+                            <p class="mb-0 text-hitam-muda">
+                                {{ SelectedDataPasien.nama_kelas}}
                             </p>
                         </div>
 
@@ -163,5 +210,267 @@
                 </div>
             </div>
         </div>
+
+        <!-- Button Open Modal Konsul Pasien -->
+        <button type="button" id="btnKonsulPasien" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#modalKonsul" hidden>
+        </button>
+
+        <!-- Modal Konsul -->
+        <div class="modal fade" id="modalKonsul" aria-labelledby="modalKonsul" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <form [formGroup]="FormKonsul">
+                        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                            <h5 class="modal-title pull-left">Konsul Pasien</h5>
+                            <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body p-2">
+                            <div class="row px-0 mx-0 mb-2">
+                                <!-- Poliklinik -->
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <atm-label [LabelCaption]="'Pilih Poliklinik'"></atm-label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <ejs-dropdownlist #DropdownPoliKonsul [dataSource]="DropdownPoliDatasource"
+                                                [fields]="DropdownPoliFields" [allowFiltering]="true"
+                                                (change)="handleChangePoli($event)" formControlName="id_poli">
+                                            </ejs-dropdownlist>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dokter -->
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <org-input-look-up #LookupKodeDokter [modal-title]="'Data Dokter'"
+                                        [lookup-url]="urlDokter" [idKode]="'kode_dokter'" [idTitle]="'full_name'"
+                                        (onGetSelectedData)="handleSelectedDokter($event)"
+                                        [columns]="Config.LookupDokter.columns"
+                                        [filter-lookup]="Config.LookupDokter.filter" [label]="'Pilih Dokter'">
+                                    </org-input-look-up>
+                                </div>
+
+                                <!-- Catatan Konsul -->
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <atm-label [LabelCaption]="'Catatan'"></atm-label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <input class="form-control form-select-sm" type="text"
+                                                formControlName="catatan_konsul">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <button class="btn btn-primary btn-sm" type="button"
+                                                (click)="handleSaveFormKonsul(FormKonsul.value)">
+                                                <i class="fas fa-plus"></i>&nbsp; Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row px-0 mx-0 mb-2">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <ejs-grid #GridDataKonsul [id]="'GridDaftarKonsul'" [height]="200"
+                                        [dataSource]="GridKonsulDatasource" [rowHeight]="30" [gridLines]="'Both'"
+                                        [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+                                        [toolbar]="GridKonsulToolbar" (rowSelected)="handleSelectedRowKonsul($event)"
+                                        (toolbarClick)="handleToolbarClickKonsul($event)">
+                                        <e-columns>
+                                            <e-column [width]="50" [field]="'id_register'" [headerText]="'ID'"
+                                                [visible]="false" [type]="'number'" [allowEditing]="false"
+                                                [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="50" [field]="'id_poli'" [headerText]="'ID POLI'"
+                                                [visible]="false" [type]="'number'" [allowEditing]="false"
+                                                [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="50" [field]="'id_dokter_asal'"
+                                                [headerText]="'ID DOKTER ASAL'" [visible]="false" [type]="'number'"
+                                                [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="50" [field]="'id_jadwal_dokter'"
+                                                [headerText]="'ID JADWAL DOKTER'" [visible]="false" [type]="'number'"
+                                                [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="120" [field]="'nama_dokter_asal'"
+                                                [headerText]="'DOKTER ASAL'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="100" [field]="'nama_poli'"
+                                                [headerText]="'POLIKLINIK PEMERIKSA'" [visible]="true"
+                                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="120" [field]="'nama_dokter_pemeriksa'"
+                                                [headerText]="'DOKTER PEMERIKSA'" [visible]="true"
+                                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="150" [field]="'jadwal_dokter'"
+                                                [headerText]="'JADWAL DOKTER PEMERIKSA'" [visible]="true"
+                                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="150" [field]="'catatan_konsul'"
+                                                [headerText]="'CATATAN KONSUL'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                        </e-columns>
+                                    </ejs-grid>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer p-2 background-abu-muda">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                                    <button class="btn btn-danger btn-sm mx-2" type="button"
+                                        (click)="handleCloseModalKonsul()">
+                                        Tutup
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" type="button" (click)="handleSubmitKonsul()">
+                                        Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button Open Modal Riwayat Pemeriksaan -->
+        <button type="button" id="btnRiwayatPemeriksaan" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#modalRiwayatPemeriksaan" hidden>
+        </button>
+
+        <!-- Modal Riwayat Pemeriksaan -->
+        <div class="modal fade" id="modalRiwayatPemeriksaan" aria-labelledby="modalRiwayatPemeriksaan"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                        <h5 class="modal-title pull-left">Riwayat Pemeriksaan Pasien</h5>
+                        <button id="btnCloseModalRiwayat" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body p-2">
+                        <div class="row px-0 mx-0 mb-2">
+                            <!-- No. RM -->
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                                <atm-label [LabelCaption]="'No. RM'"></atm-label>
+                                <input id="no_rekam_medis_riwayat" class="form-control form-select-sm" type="text"
+                                    readonly>
+                            </div>
+
+                            <!-- No. Register -->
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                                <atm-label [LabelCaption]="'No. Register'"></atm-label>
+                                <input id="no_register_riwayat" class="form-control form-select-sm" type="text"
+                                    readonly>
+                            </div>
+
+                            <!-- Nama Pasien -->
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
+                                <atm-label [LabelCaption]="'Nama Pasien'"></atm-label>
+                                <input id="nama_pasien_riwayat" class="form-control form-select-sm" type="text"
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <!-- Riwayat Pemeriksaan Pasien -->
+                        <div class="row px-0 mx-0 mb-2">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <ejs-grid #GridRiwayatPeriksa [id]="'GridRiwayatPemeriksaan'" [height]="200"
+                                    [dataSource]="GridRiwayatDatasource" [rowHeight]="30" [gridLines]="'Both'"
+                                    [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+                                    [toolbar]="GridRiwayatToolbar" (rowSelected)="handleSelectedRowRiwayat($event)"
+                                    (toolbarClick)="handleToolbarClickRiwayat($event)">
+                                    <e-columns>
+                                        <e-column [width]="90" [field]="'jam_masuk'" [headerText]="'JAM MASUK'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="90" [field]="'kode_poli'" [headerText]="'KODE POLI'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="120" [field]="'nama_poli'"
+                                            [headerText]="'POLIKLINIK PEMERIKSA'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="120" [field]="'nama_dokter'"
+                                            [headerText]="'DOKTER PEMERIKSA'" [visible]="true" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="90" [field]="'jam_periksa'" [headerText]="'JAM PERIKSA'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'status'" [headerText]="'STATUS'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Pembatalan Konsul  -->
+        <ng-template #modalPembatalanKonsul>
+            <div class="modal-header px-2 py-1">
+                <h5 class="modal-title pull-left">
+                    Pembatalan Konsul {{ SelectedDataPasien.nama_pasien }}
+                </h5>
+                <button type="button" class="btn pull-right" aria-label="Close"
+                    (click)="handleCloseModalPembatalanKonsul()">
+                    <i class="fas fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-0 pb-2 px-2">
+                <div class="row mx-0 my-1">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <form [formGroup]="FormPembatalanKonsul">
+                            <div class="row mb-2 align-items-center">
+                                <!-- Alasan Pembatalan -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 px-0">
+                                    <atm-label [LabelCaption]="'Mohon Isikan Alasan Pembatalan'"></atm-label>
+
+                                    <textarea rows="3" class="form-control mt-2" formControlName="reason_canceled">
+                                </textarea>
+                                </div>
+
+                                <!-- Button -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 text-end">
+                                    <button class="btn btn-secondary btn-sm mx-2" type="button"
+                                        (click)="handleCloseModalPembatalanKonsul()">
+                                        <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                                    </button>
+
+                                    <button class="btn btn-primary btn-sm" type="button"
+                                        (click)="handleSubmitModalPembatalanKonsul(FormPembatalanKonsul.value)">
+                                        <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
     </div>
 </org-card-layout>

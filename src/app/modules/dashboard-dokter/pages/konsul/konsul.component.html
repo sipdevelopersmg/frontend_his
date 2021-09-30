@@ -1,0 +1,85 @@
+<org-card-layout>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-grid #gridDataKonsul [grid-id]="'GridDaftarKonsul'" [grid-height]="'calc(100vh - 18rem)'"
+                [grid-lines]="'Both'" [grid-toolbar]="GridDaftarKonsulToolbar" [grid-paging]="true"
+                [columns]="Config.GridDaftarOrder.columns" [grid-DataSource]="GridDaftarKonsulDataSource"
+                (toolbar-click)="onToolbarClick($event)" (row-selected)="onRowSelected($event)">
+            </mol-grid>
+        </div>
+    </div>
+
+    <button type="button" id="btnKonsul" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalDialogKonsul" hidden>
+    </button>
+
+    <div class="modal fade" id="modalDialogKonsul" aria-labelledby="modalDialogKonsul" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                    <h5 class="modal-title pull-left">Konsul Pasien</h5>
+                    <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body p-2">
+                    <form [formGroup]="FormKonsulPasien">
+                        <div class="row px-0 mx-0 mb-2">
+                            <!-- Poliklinik -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Pilih Poliklinik'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #DropdownPoli [dataSource]="DropdownPoliDatasource"
+                                            [fields]="DropdownPoliFields" [allowFiltering]="true"
+                                            (change)="handleChangePoli($event)" formControlName="id_poli">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dokter -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <org-input-look-up #LookupKodeDokter [modal-title]="'Data Dokter'"
+                                    [lookup-url]="urlDokter" [idKode]="'kode_dokter'" [idTitle]="'full_name'"
+                                    (onGetSelectedData)="handleSelectedDokter($event)"
+                                    [columns]="Config.LookupDokter.columns" [filter-lookup]="Config.LookupDokter.filter"
+                                    [label]="'Pilih Dokter'">
+                                </org-input-look-up>
+                            </div>
+
+                            <!-- Catatan Konsul -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Catatan Konsul'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <input class="form-control form-select-sm" type="text"
+                                            formControlName="catatan_konsul">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer p-2 background-abu-muda">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                            <button class="btn btn-danger btn-sm mx-2" type="button"
+                                (click)="handleCloseModalKonsulPasien()">
+                                Tutup
+                            </button>
+                            <button class="btn btn-primary btn-sm" type="button"
+                                (click)="handleSubmitKonsulPasien(FormKonsulPasien.value)">
+                                Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

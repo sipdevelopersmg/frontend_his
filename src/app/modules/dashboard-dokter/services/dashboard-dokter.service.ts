@@ -51,7 +51,7 @@ export class DashboardDokterService {
                 id_top_menu: 0,
                 is_parent: true,
                 childSidebarMenu: [],
-                url: "Dokter/diagnosa"
+                url: "Dokter/konsul"
             },
             {
                 button: [],
@@ -111,11 +111,11 @@ export class DashboardDokterService {
                 id_top_menu: 0,
                 is_parent: true,
                 childSidebarMenu: [],
-                url: "Dokter/laboratorium/riwayat-pemeriksaan"
+                url: "Dokter/alergi"
             },
             {
                 button: [],
-                caption: "Riwayat Visit",
+                caption: "Vital Sign",
                 fieldgrid: [],
                 icon: "fas fa-file-medical",
                 id_menu_sidebar: 0,
@@ -123,7 +123,7 @@ export class DashboardDokterService {
                 id_top_menu: 0,
                 is_parent: true,
                 childSidebarMenu: [],
-                url: "Dokter/laboratorium/riwayat-pemeriksaan"
+                url: "Dokter/vital-sign"
             },
         ];
 

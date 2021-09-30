@@ -463,7 +463,7 @@ export class InputDokterComponent implements OnInit {
     handleCheckPersonByNoIdentitas(NoIdentitas: string): void {
         this.setupDokterService.onCheckPersonByNoIdentitas(NoIdentitas)
             .subscribe((result) => {
-                if (result) {
+                if (Object.keys(result.data).length > 0) {
                     const kode_dokter = result.data.kode_dokter;
 
                     // ** Terdaftar sebagai Person / Pasien, tetapi belum terdaftar sebagai Dokter

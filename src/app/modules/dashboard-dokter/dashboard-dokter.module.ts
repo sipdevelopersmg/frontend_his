@@ -22,6 +22,10 @@ import { DaftarPasienPerDokterComponent } from './pages/daftar-pasien-per-dokter
 import { CommandColumnService, EditService } from "@syncfusion/ej2-angular-grids";
 import { AssesmenAwalComponent } from './pages/assesmen-awal/assesmen-awal.component';
 import { DetailRekamMedisComponent } from './components/detail-rekam-medis/detail-rekam-medis.component';
+import { KonsulComponent } from './pages/konsul/konsul.component';
+import { AlergiComponent } from './pages/alergi/alergi.component';
+import { VitalSignComponent } from './pages/vital-sign/vital-sign.component';
+import { BankDarahComponent } from './pages/bank-darah/bank-darah.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +45,10 @@ import { DetailRekamMedisComponent } from './components/detail-rekam-medis/detai
         DaftarPasienPerDokterComponent,
         AssesmenAwalComponent,
         DetailRekamMedisComponent,
+        KonsulComponent,
+        AlergiComponent,
+        VitalSignComponent,
+        BankDarahComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,

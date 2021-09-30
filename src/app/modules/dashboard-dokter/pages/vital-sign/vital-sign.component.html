@@ -1,0 +1,189 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Vital Sign</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid #GridData [grid-height]="'calc(100vh - 18rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="Config.GridVitalSignColumns"
+                    [textWrapSettings]="GridTextWrapSettings" (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)" (initialized)="InitalizedGrid($event)"
+                    (action-complete)="handleActionComplete($event)">
+                </mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Vital Sign</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Berat Badan -->
+                            <div class="row mb-1">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Berat Badan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="input-group flex-nowrap px-0 form-select-sm">
+                                        <input type="number" class="form-control form-select-sm"
+                                            formControlName="berat_badan_kg">
+                                        <span class="input-group-text py-1" id="addon-wrapping" style="width: 3rem;">
+                                            Kg
+                                        </span>
+                                    </div>
+
+                                    <atm-validators [ValidatorsCaption]="'Berat Badan Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="berat_badan_kg.invalid"
+                                        [IsFormControlTouched]="berat_badan_kg.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Tinggi Badan -->
+                            <div class="row mb-1">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tinggi Badan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="input-group flex-nowrap px-0 form-select-sm">
+                                        <input type="number" class="form-control form-select-sm"
+                                            formControlName="tinggi_badan_cm">
+                                        <span class="input-group-text py-1" id="addon-wrapping" style="width: 3rem;">
+                                            Cm
+                                        </span>
+                                    </div>
+
+                                    <atm-validators [ValidatorsCaption]="'Tinggi Badan Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="tinggi_badan_cm.invalid"
+                                        [IsFormControlTouched]="tinggi_badan_cm.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Suhu Badan -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Suhu Badan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="input-group flex-nowrap px-0 form-select-sm">
+                                        <input type="number" class="form-control form-select-sm"
+                                            formControlName="suhu_badan_celcius">
+                                        <span class="input-group-text py-1" id="addon-wrapping" style="width: 3rem;">
+                                            °C
+                                        </span>
+                                    </div>
+
+                                    <atm-validators [ValidatorsCaption]="'Tinggi Badan Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="suhu_badan_celcius.invalid"
+                                        [IsFormControlTouched]="suhu_badan_celcius.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Tekanan Darah -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tekanan Darah'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 pe-0">
+                                            <input type="number" class="form-control form-select-sm"
+                                                formControlName="tekanan_darah_bawah">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center px-0">
+                                            <p class="mb-0">/</p>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ps-0">
+                                            <input type="number" class="form-control form-select-sm"
+                                                formControlName="tekanan_darah_atas">
+                                        </div>
+                                    </div>
+
+                                    <atm-validators [ValidatorsCaption]="'Tekanan Darah Bawah Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="tekanan_darah_bawah.invalid"
+                                        [IsFormControlTouched]="tekanan_darah_bawah.touched">
+                                    </atm-validators>
+
+                                    <atm-validators [ValidatorsCaption]="'Tekanan Darah Atas Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="tekanan_darah_atas.invalid"
+                                        [IsFormControlTouched]="tekanan_darah_atas.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Saturasi Oksigen -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Saturasi Oksigen'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <input type="number" class="form-control form-select-sm"
+                                        formControlName="saturasi_oksigen">
+
+                                    <atm-validators [ValidatorsCaption]="'Saturasi Oksigen Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="saturasi_oksigen.invalid"
+                                        [IsFormControlTouched]="saturasi_oksigen.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Denyut Nadi -->
+                            <div class="row mb-1">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Denyut Nadi'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="input-group flex-nowrap px-0 form-select-sm">
+                                        <input type="number" class="form-control form-select-sm"
+                                            formControlName="denyut_nadi_per_menit">
+                                        <span class="input-group-text py-1" id="addon-wrapping">Per / Menit</span>
+                                    </div>
+
+                                    <atm-validators [ValidatorsCaption]="'Denyut Nadi Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="denyut_nadi_per_menit.invalid"
+                                        [IsFormControlTouched]="denyut_nadi_per_menit.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Respirasi Nafas -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Respirasi Nafas'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="input-group flex-nowrap px-0 form-select-sm">
+                                        <input type="number" class="form-control form-select-sm"
+                                            formControlName="respirasi_nafas_per_menit">
+                                        <span class="input-group-text py-1" id="addon-wrapping">Per / Menit</span>
+                                    </div>
+
+                                    <atm-validators [ValidatorsCaption]="'Respirasi Nafas Tidak Boleh Kosong'"
+                                        [IsFormControlInvalid]="respirasi_nafas_per_menit.invalid"
+                                        [IsFormControlTouched]="respirasi_nafas_per_menit.touched">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Keterangan -->
+                            <div class="row mb-1">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Keterangan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <input type="text" class="form-control form-select-sm" formControlName="keterangan">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

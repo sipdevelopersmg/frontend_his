@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DashboardDokterComponent } from "./dashboard-dokter.component";
+import { AlergiComponent } from "./pages/alergi/alergi.component";
 import { AssesmenAwalComponent } from "./pages/assesmen-awal/assesmen-awal.component";
 import { BerandaDokterComponent } from "./pages/beranda-dokter/beranda-dokter.component";
 import { DaftarPasienPerDokterComponent } from "./pages/daftar-pasien-per-dokter/daftar-pasien-per-dokter.component";
 import { DiagnosaComponent } from "./pages/diagnosa/diagnosa.component";
+import { KonsulComponent } from "./pages/konsul/konsul.component";
 import { InputOrderBaruLabComponent } from "./pages/laboratorium/input-order-baru/input-order-baru.component";
 import { LaboratoriumComponent } from "./pages/laboratorium/laboratorium.component";
 import { RiwayatPemeriksaanLabComponent } from "./pages/laboratorium/riwayat-pemeriksaan/riwayat-pemeriksaan.component";
@@ -12,6 +14,7 @@ import { InputOrderBaruRadComponent } from "./pages/radiologi/input-order-baru/i
 import { RadiologiComponent } from "./pages/radiologi/radiologi.component";
 import { RiwayatPemeriksaanRadComponent } from "./pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component";
 import { ResepComponent } from "./pages/resep/resep.component";
+import { VitalSignComponent } from "./pages/vital-sign/vital-sign.component";
 
 const dashboarDokterRoutes: Routes = [
     {
@@ -20,6 +23,7 @@ const dashboarDokterRoutes: Routes = [
             { path: "beranda", component: BerandaDokterComponent, data: { title: "Beranda Dokter" } },
             { path: "daftar-pasien", component: DaftarPasienPerDokterComponent, data: { title: "Daftar Pasien" } },
             { path: "asesmen-awal", component: AssesmenAwalComponent, data: { title: "Riwayat Pemeriksaan Pasien" } },
+            { path: "konsul", component: KonsulComponent, data: { title: "Konsul Pasien" } },
             { path: "diagnosa", component: DiagnosaComponent, data: { title: "Diagnosa Pasien" } },
             {
                 path: "radiologi", component: RadiologiComponent, data: { title: "Pemeriksaan Radiologi Pasien" },
@@ -37,7 +41,13 @@ const dashboarDokterRoutes: Routes = [
             },
             {
                 path: "resep", component: ResepComponent, data: { title: "Resep Pasien" },
-            }
+            },
+            {
+                path: "alergi", component: AlergiComponent, data: { title: "Alergi Pasien" },
+            },
+            {
+                path: "vital-sign", component: VitalSignComponent, data: { title: "Vital Sign Pasien" },
+            },
         ]
     }
 ]
