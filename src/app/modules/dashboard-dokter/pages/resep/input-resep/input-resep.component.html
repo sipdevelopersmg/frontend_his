@@ -156,8 +156,19 @@
             [columns]="GridLookUpItem.columns" 
             [columnsChild]="GridLookUpItem.columnsChild"
             [filter-lookup]="GridLookUpItem.filter" 
+            [queryString]="'set_racikan_id'"
             [modal-title]="'Data Racikan Dokter'"
+        ></org-look-up-hirarki>
 
+        <org-look-up-hirarki
+            #LookupTemplateResep 
+            [lookup-url]="urlTemplateResep" 
+            (onGetSelectedData)="heandleSelectedTemplateResep($event)"
+            [columns]="GridlookUpTemplateResep.columns" 
+            [columnsChild]="GridlookUpTemplateResep.columnsChild"
+            [filter-lookup]="GridlookUpTemplateResep.filter" 
+            [modal-title]="'Data Template Resep Dokter'"
+            [queryString]="'resep_id'"
         ></org-look-up-hirarki>
     </div>
 </form>

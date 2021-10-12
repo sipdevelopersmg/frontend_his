@@ -120,7 +120,7 @@ export class ResepDokterService {
         console.log('child',this.dataSourceChildGrid.value)
     }
 
-    Insert(Data:TrResepDokterIrjaInsert,is_simpan_racikan:number): Observable<any>{
+    Insert(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
         let id_item = 0 ;
         let urut = 0 ;
         this.dataDetail.map((e,i)=>{
@@ -143,7 +143,7 @@ export class ResepDokterService {
         Data.details = this.dataDetail;
         Data.jumlah_item = this.jumlah_item;
         // console.log(Data);
-        return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA+'/'+is_simpan_racikan, Data)
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA+'/'+is_simpan_template+'/'+is_simpan_racikan, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

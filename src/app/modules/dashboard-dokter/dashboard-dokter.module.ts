@@ -22,6 +22,9 @@ import { DaftarPasienPerDokterComponent } from './pages/daftar-pasien-per-dokter
 import { CommandColumnService, EditService } from "@syncfusion/ej2-angular-grids";
 import { AssesmenAwalComponent } from './pages/assesmen-awal/assesmen-awal.component';
 import { DetailRekamMedisComponent } from './components/detail-rekam-medis/detail-rekam-medis.component';
+import { InputResepIrnaComponent } from './pages/resep-irna/input-resep-irna/input-resep-irna.component';
+import { DaftarResepIrnaComponent } from './pages/resep-irna/daftar-resep-irna/daftar-resep-irna.component';
+import { ViewResepIrnaComponent } from './pages/resep-irna/view-resep-irna/view-resep-irna.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +44,9 @@ import { DetailRekamMedisComponent } from './components/detail-rekam-medis/detai
         DaftarPasienPerDokterComponent,
         AssesmenAwalComponent,
         DetailRekamMedisComponent,
+        InputResepIrnaComponent,
+        DaftarResepIrnaComponent,
+        ViewResepIrnaComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,

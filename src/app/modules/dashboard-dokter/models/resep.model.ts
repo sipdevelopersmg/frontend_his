@@ -22,6 +22,7 @@ export interface TrResepDokterIrjaDetailInsert {
     metode_racikan?:string;
     id_item: number;
     nama_obat: string;
+    nama_racikan?: string;
     qty_resep: number;
     nama_satuan: string;
     label?:any;
@@ -32,6 +33,18 @@ export interface TrResepDokterIrjaDetailInsert {
     ket_aturan:string;
     id_tambahan_aturan_pakai?:number;
     label_tambahan_aturan_pakai_obat?:string;
+    
+    // IRNA
+    jumlah_hari: number;
+    qty_harian: number;
+
+    id_rute_pemberian_obat?:number;
+    jumlah_satuan_aturan_pakai?:number;
+    id_satuan_aturan_pakai?:number;
+    jumlah_interval_aturan_pakai?:number;
+    id_interval_aturan_pakai?:number;
+    interval_aturan_pakai?:string;
+
     racikans?:TrResepDokterIrjaDetailRacikanInsert[];
 }
 
@@ -42,6 +55,7 @@ export interface TrResepDokterIrjaInsert {
     id_outlet: number;
     jenis_rawat: string;
     jumlah_item?: number;
+    nama_template?: number;
     details?: TrResepDokterIrjaDetailInsert[] | null;
 }
 
