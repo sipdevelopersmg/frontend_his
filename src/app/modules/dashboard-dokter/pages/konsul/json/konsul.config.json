@@ -7,8 +7,6 @@
                 "editType": "defaultEdit",
                 "field": "jam_masuk",
                 "headerText": "JAM MASUK",
-                "type": "DateTime",
-                "format": "HH:mm:ss",
                 "visible": true,
                 "width": 80
             },

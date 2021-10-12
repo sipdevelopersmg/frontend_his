@@ -1,0 +1,12 @@
+#Kesan_toolbar_wrapper {
+  height: 40px !important;
+}
+
+#Kesanrte-view {
+  height: 260px !important;
+}
+
+li.list-group-item:hover {
+  background-color: var(--biru-muda);
+  color: white;
+}

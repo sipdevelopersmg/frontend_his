@@ -143,12 +143,14 @@ export class DashboardDokterService {
     }
 
     onPeriksaPasien(): Observable<HttpResponseModel> {
-        return this.httpOperationService.defaultPutRequestWithoutParams(this.API_CONFIG.API_DASHBOARD_DOKTER.API_PERIKSA_PASIEN + this.daftarPasienService.ActivePasien.value.id_register)
-            .pipe(
-                catchError((error: HttpErrorResponse): any => {
-                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-                })
-            );
+        return this.httpOperationService.defaultPutRequest(this.API_CONFIG.API_DASHBOARD_DOKTER.API_PERIKSA_PASIEN, {
+            id_register: this.daftarPasienService.ActivePasien.value.id_register,
+            id_poli: this.daftarPasienService.ActivePasien.value.id_poli
+        }).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
 
     }
 }

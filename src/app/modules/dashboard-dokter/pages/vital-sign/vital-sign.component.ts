@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditSettingsModel, TextWrapSettings, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
+import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { IVitalSignModel } from '../../models/vital_sign.model';
 import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
@@ -15,7 +16,7 @@ import * as Config from './json/vital-sign.config.json';
     templateUrl: './vital-sign.component.html',
     styleUrls: ['./vital-sign.component.css']
 })
-export class VitalSignComponent implements OnInit {
+export class VitalSignComponent implements OnInit, AfterViewInit {
 
     /**
      * Variable untuk Menympan Navigasi halaman
@@ -67,6 +68,7 @@ export class VitalSignComponent implements OnInit {
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         private vitalSignService: VitalSignService,
+        private navigationService: NavigationService,
         private daftarPasienService: DaftarPasienService
     ) {
         this.FormInputData = this.formBuilder.group({
@@ -95,6 +97,12 @@ export class VitalSignComponent implements OnInit {
         ];
 
         this.GetAllData();
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.navigationService.ButtonSidebarMenuState.next(true);
+        }, 1);
     }
 
     handleSelectedTabId(TabId: string): void {

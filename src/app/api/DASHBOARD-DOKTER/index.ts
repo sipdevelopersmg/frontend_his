@@ -5,8 +5,10 @@ import * as RADIOLOGI from './radiologi_api';
 import * as KONSUL from './konsul_api';
 import * as ALERGI from './alergi_api';
 import * as VITAL_SIGN from './vital_sign_api';
+import * as BANK_DARAH from './bank_darah_api';
+import * as DIAGNOSA from './diagnosa_api';
 
-const API_PERIKSA_PASIEN = `${environment.webApiPis}` + 'Pasien/PasienPeriksa/';
+const API_PERIKSA_PASIEN = `${environment.webApiPis}` + 'Pasien/PasienPeriksa';
 
 export const API_DASHBOARD_DOKTER = Object.assign({},
     {
@@ -17,5 +19,7 @@ export const API_DASHBOARD_DOKTER = Object.assign({},
         KONSUL: KONSUL,
         ALERGI: ALERGI,
         VITAL_SIGN: VITAL_SIGN,
+        BANK_DARAH: BANK_DARAH,
+        DIAGNOSA: DIAGNOSA,
     }
 )

@@ -51,6 +51,16 @@
                 "type": "string",
                 "visible": true,
                 "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 150
             }
         ],
         "filter": [
@@ -242,17 +252,6 @@
             "width": 200
         },
         {
-            "allowEditing": false,
-            "allowSorting": false,
-            "field": "qty",
-            "headerText": "Qty",
-            "textAlign": "Right",
-            "headerTextAlign": "Center",
-            "visible": true,
-            "editType": "defaultEdit",
-            "width": 50
-        },
-        {
             "allowEditing": true,
             "allowSorting": false,
             "field": "id_dokter",
@@ -399,6 +398,28 @@
             "visible": true,
             "editType": "defaultEdit",
             "width": 90
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "qty",
+            "headerText": "Qty",
+            "textAlign": "Right",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "doct_disc",
+            "headerText": "DISC. DOKTER",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
         },
         {
             "allowEditing": false,

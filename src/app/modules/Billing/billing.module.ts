@@ -14,6 +14,21 @@ import { SettingTarifBerlakuComponent } from './pages/setting-tarif/setting-tari
 import { SetupPoliComponent } from './pages/setup-data/setup-poli/setup-poli.component';
 import { SettingTarifBerlakuPoliComponent } from './pages/setting-tarif/setting-tarif-berlaku-poli/setting-tarif-berlaku-poli.component';
 import { SetupTarifPaketComponent } from './pages/setup-data/setup-tarif-paket/setup-tarif-paket.component';
+import { ScanningComponent } from './pages/transaksi-billing/scanning/scanning.component';
+import { InputBillingComponent } from './pages/transaksi-billing/input-billing/input-billing.component';
+import { CashComponent } from './pages/transaksi-billing/input-billing/payment-method/cash/cash.component';
+import { QrisComponent } from './pages/transaksi-billing/input-billing/payment-method/qris/qris.component';
+import { SetupPaymentMethodComponent } from './pages/setup-data/setup-payment-method/setup-payment-method.component';
+import { SetupBankPaymentComponent } from './pages/setup-data/setup-bank-payment/setup-bank-payment.component';
+import { SetupEdcPaymentComponent } from './pages/setup-data/setup-edc-payment/setup-edc-payment.component';
+import { SetupVoucherPaymentComponent } from './pages/setup-data/setup-voucher-payment/setup-voucher-payment.component';
+import { VoucherComponent } from './pages/transaksi-billing/input-billing/payment-method/voucher/voucher.component';
+import { PaymentDebitIrjaComponent } from './pages/transaksi-billing/input-billing/payment-method/payment-debit-irja/payment-debit-irja.component';
+import { PaymentCreditIrjaComponent } from './pages/transaksi-billing/input-billing/payment-method/payment-credit-irja/payment-credit-irja.component';
+import { HistoryPembayaranComponent } from './pages/transaksi-billing/input-billing/history-pembayaran/history-pembayaran.component';
+import { HistoryInvoiceIrjaComponent } from './pages/transaksi-billing/input-billing/history-invoice-irja/history-invoice-irja.component';
+import { SetupBukaKasirIrjaComponent } from './pages/kasir-rawat-jalan/setup-buka-kasir-irja/setup-buka-kasir-irja.component';
+
 
 @NgModule({
     declarations: [
@@ -25,7 +40,21 @@ import { SetupTarifPaketComponent } from './pages/setup-data/setup-tarif-paket/s
         SettingTarifBerlakuComponent,
         SetupPoliComponent,
         SettingTarifBerlakuPoliComponent,
-        SetupTarifPaketComponent
+        SetupTarifPaketComponent,
+        ScanningComponent,
+        InputBillingComponent,
+        CashComponent,
+        QrisComponent,
+        SetupPaymentMethodComponent,
+        SetupBankPaymentComponent,
+        SetupEdcPaymentComponent,
+        SetupVoucherPaymentComponent,
+        VoucherComponent,
+        PaymentDebitIrjaComponent,
+        PaymentCreditIrjaComponent,
+        HistoryPembayaranComponent,
+        HistoryInvoiceIrjaComponent,
+        SetupBukaKasirIrjaComponent
     ],
     imports: [
         CommonModule,

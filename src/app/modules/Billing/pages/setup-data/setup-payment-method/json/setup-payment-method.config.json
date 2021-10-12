@@ -1,0 +1,65 @@
+{
+    "GridSetupPaymentMethodDetailColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_payment_method",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_payment_method_detail",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "payment_method_detail",
+            "headerText": "NAMA PAYMENT METHOD",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "charge",
+            "headerText": "CHARGE",
+            "visible": true,
+            "width": 100,
+            "format": "N2",
+            "headerTextAlign": "Right",
+            "textAlign": "Right"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": " id_bank_payment",
+            "headerText": "ID BANK PAYMENT",
+            "visible": false,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_bank_payment",
+            "headerText": "BANK PAYMENT",
+            "visible": true,
+            "width": 100
+        }
+    ]
+}

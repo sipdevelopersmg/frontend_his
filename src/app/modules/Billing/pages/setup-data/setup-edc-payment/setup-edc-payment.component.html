@@ -1,0 +1,46 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data EDC Payment</org-tabs-label>
+            <org-tabs-body>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                            [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                            [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridSetupBankPaymentColumns"
+                            (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                            (initialized)="InitalizedGrid($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input EDC Payment</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text [label]="'Kode EDC'" formControlName="kode_edc_payment"
+                                [IsFormControlInvalid]="kode_edc_payment.invalid"
+                                [ValidatorsCaption]="'Kode EDC Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Nama EDC'" formControlName="nama_edc_payment"
+                                [IsFormControlInvalid]="nama_edc_payment.invalid"
+                                [ValidatorsCaption]="'Nama EDC Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Keterangan'" formControlName="keterangan"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

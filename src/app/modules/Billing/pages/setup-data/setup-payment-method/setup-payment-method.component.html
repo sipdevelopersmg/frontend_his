@@ -1,0 +1,107 @@
+<org-card-layout>
+    <div class="row">
+        <!-- Listing Payment Method Header -->
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-muda">Daftar Payment Method</p>
+                </div>
+                <div class="card-body card_body_payment">
+                    <ul class="list-group">
+                        <li class="list_group_item_payment list-group-item cursor-pointer mb-2 rounded shadow-sm border"
+                            *ngFor="let item of PaymentMethodDatasource" (click)="handleClickListPaymentMethod(item)">
+                            {{ item.payment_method }} &nbsp;<span class="float-end">
+                                <i class="fas fa-chevron-right fa-sm"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Listing Payment Method Detail -->
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="card">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-muda">Detail Payment Method
+                        {{ SelectedPaymentMethod ? SelectedPaymentMethod.payment_method : '' }}
+                    </p>
+                </div>
+                <div class="card-body p-0">
+                    <mol-grid #GridData [grid-height]="'calc(100vh - 18rem)'" [grid-DataSource]="GridDatasource"
+                        [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                        [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridSetupPaymentMethodDetailColumns"
+                        (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                        (initialized)="InitalizedGrid($event)">
+                    </mol-grid>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button trigger modal -->
+        <button id="btnPaymentMethodDetail" type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#paymentMethodDetail" [hidden]="true">
+            Payment Method Detail Modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="paymentMethodDetail" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="paymentMethodDetailLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header background-biru-muda text-white px-3 py-2">
+                        <h5 class="modal-title" id="paymentMethodDetailLabel">{{ PaymentMethodDetailModalTitle }}</h5>
+
+                        <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="FormPaymentMethodDetail">
+                            <!-- payment_method_detail -->
+                            <div class="row mb-2">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <atm-label [LabelCaption]="'Nama Payment Method'"></atm-label>
+                                    <input type="text" class="form-control form-select-sm"
+                                        formControlName="payment_method_detail">
+                                </div>
+                            </div>
+
+                            <!-- charge -->
+                            <div class="row mb-2"
+                                *ngIf="SelectedPaymentMethod && SelectedPaymentMethod.payment_method != 'CASH'">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <atm-label [LabelCaption]="'Charge'"></atm-label>
+                                    <ejs-numerictextbox [format]="'N2'" [enableRtl]="true" formControlName="charge">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+
+                            <!-- id_bank_payment -->
+                            <div class="row mb-2"
+                                *ngIf="SelectedPaymentMethod && SelectedPaymentMethod.payment_method != 'CASH'">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <atm-label [LabelCaption]="'Bank Payment'"></atm-label>
+                                    <ejs-dropdownlist [dataSource]="BankPaymentDatasource" [fields]="BankPaymentFields"
+                                        formControlName="id_bank_payment">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer background-abu-muda px-3 py-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button *ngIf="FormPaymentMethodDetailState == 'Insert'" type="button" class="btn btn-primary"
+                            (click)="handleSubmitFormPaymentMethodDetail(FormPaymentMethodDetail.value) ">
+                            Simpan
+                        </button>
+                        <button *ngIf="FormPaymentMethodDetailState == 'Edit'" type="button" class="btn btn-warning"
+                            (click)="handleUpdateFormPaymentMethodDetail(FormPaymentMethodDetail.value)">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

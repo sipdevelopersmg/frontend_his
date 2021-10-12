@@ -15,11 +15,11 @@
                     <!-- Informasi Pasien -->
                     <div class="row mb-2">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="card">
+                            <div class="card shadow-sm">
                                 <div class="card-header p-2">
                                     <p class="text-biru-muda mb-0">Pasien</p>
                                 </div>
-                                <div class="card-body p-2">
+                                <div class="card-body py-1 px-2">
                                     <div class="row">
                                         <!-- No Reg / No. RM dan Nama Pasien -->
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -32,7 +32,8 @@
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                             <input type="text" class="form-control form-select-sm"
-                                                                readonly>
+                                                                readonly
+                                                                value="{{ daftarPasienService.ActivePasien.value.no_register }} / {{ daftarPasienService.ActivePasien.value.no_rekam_medis }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -45,7 +46,8 @@
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                             <input type="text" class="form-control form-select-sm"
-                                                                readonly>
+                                                                readonly
+                                                                value="{{ daftarPasienService.ActivePasien.value.nama_pasien }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -54,7 +56,12 @@
 
                                         <!-- Diagnosa -->
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <org-input-look-up [label]="'Diagnosa'"></org-input-look-up>
+                                            <org-input-look-up [label]="'Diagnosa'" [modal-title]="'Pilih Diagnosa'"
+                                                [filter-lookup]="Config.LookupDiagnosa.filter"
+                                                [lookup-url]="urlDiagnosa" [columns]="Config.LookupDiagnosa.columns"
+                                                [idTitle]="'nama_icd'"
+                                                (onGetSelectedData)="handleSelectedDiagnosa($event)">
+                                            </org-input-look-up>
                                         </div>
                                     </div>
                                 </div>
@@ -65,11 +72,11 @@
                     <!-- Data Transfusi -->
                     <div class="row mb-2">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="card">
-                                <div class="card-header p-2">
+                            <div class="card shadow-sm">
+                                <div class="card-header py-1 px-2">
                                     <p class="text-biru-muda mb-0">Data Transfusi</p>
                                 </div>
-                                <div class="card-body p-2">
+                                <div class="card-body p-2" formGroupName="master_order_darah">
                                     <div class="row">
                                         <!-- Banyak -->
                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -84,8 +91,9 @@
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pt-2">
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="transfusi_sebelumnya"
-                                                                    id="transfusi_sebelumnya_pernah" value="pernah">
+                                                                    name="is_pernah_tranfusi"
+                                                                    id="transfusi_sebelumnya_pernah" [value]="true"
+                                                                    formControlName="is_pernah_tranfusi">
                                                                 <label class="form-check-label"
                                                                     for="transfusi_sebelumnya_pernah">
                                                                     Pernah
@@ -93,8 +101,9 @@
                                                             </div>
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="transfusi_sebelumnya"
-                                                                    id="transfusi_sebelumnya_tidak" value="tidak">
+                                                                    name="is_pernah_tranfusi"
+                                                                    id="transfusi_sebelumnya_tidak" [value]="false"
+                                                                    formControlName="is_pernah_tranfusi">
                                                                 <label class="form-check-label"
                                                                     for="transfusi_sebelumnya_tidak">
                                                                     Tidak
@@ -111,8 +120,8 @@
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pt-2">
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="untuk_wanita" id="untuk_wanita_hamil"
-                                                                    value="hamil">
+                                                                    name="is_hamil" id="untuk_wanita_hamil"
+                                                                    [value]="true" formControlName="is_hamil">
                                                                 <label class="form-check-label"
                                                                     for="untuk_wanita_hamil">
                                                                     Hamil
@@ -120,8 +129,8 @@
                                                             </div>
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="untuk_wanita" id="hamil_wanita_tidak"
-                                                                    value="tidak">
+                                                                    name="is_hamil" id="hamil_wanita_tidak"
+                                                                    [value]="false" formControlName="is_hamil">
                                                                 <label class="form-check-label"
                                                                     for="hamil_wanita_tidak">
                                                                     Tidak
@@ -138,7 +147,11 @@
                                                             <atm-label [LabelCaption]="'Gol. Darah'"></atm-label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-1">
-                                                            <ejs-dropdownlist></ejs-dropdownlist>
+                                                            <ejs-dropdownlist #GolonganDarah
+                                                                [dataSource]="GolonganDarahDatasource"
+                                                                [fields]="GolonganDarahFields"
+                                                                formControlName="gol_darah">
+                                                            </ejs-dropdownlist>
                                                         </div>
                                                     </div>
 
@@ -148,15 +161,24 @@
                                                             <atm-label [LabelCaption]="'Tgl. Diperlukan'"></atm-label>
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-1">
-                                                            <ejs-datepicker [format]="'dd/MM/yyyy'"></ejs-datepicker>
+                                                            <ejs-datepicker [format]="'dd/MM/yyyy'"
+                                                                formControlName="tgl_diperlukan"></ejs-datepicker>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Lookup Dokter -->
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <org-input-look-up [label]="'Dokter Peminta'"></org-input-look-up>
+                                                    <org-input-look-up [label]="'Dokter Peminta'"
+                                                        [divLabelClass]="'col-lg-3'" [divInputClass]="'col-lg-9'"
+                                                        [modal-title]="'Data Dokter'"
+                                                        [filter-lookup]="Config.LookupDokter.filter"
+                                                        [lookup-url]="urlDokter" [columns]="Config.LookupDokter.columns"
+                                                        [idTitle]="'full_name'"
+                                                        (onGetSelectedData)="handleSelectedDiagnosa($event)">
+                                                    </org-input-look-up>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,11 +186,12 @@
                                         <!-- Indikasi Transfusi dan Catatan -->
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                             <!-- Indikasi Transfusi -->
-                                            <div class="row mb-2">
+                                            <div class="row mb-1">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <atm-label [LabelCaption]="'Indikasi Transfusi'">
                                                     </atm-label>
-                                                    <input class="form-control form-select-sm" id="indikasi_transfusi">
+                                                    <input class="form-control form-select-sm" id="indikasi_transfusi"
+                                                        formControlName="indikasi_transfusi">
                                                 </div>
                                             </div>
 
@@ -177,7 +200,8 @@
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <atm-label [LabelCaption]="'Catatan'">
                                                     </atm-label>
-                                                    <input class="form-control form-select-sm" id="catatan_order_darah">
+                                                    <input class="form-control form-select-sm" id="catatan"
+                                                        formControlName="catatan">
                                                 </div>
                                             </div>
                                         </div>
@@ -197,9 +221,15 @@
                             </mol-grid>
                         </div>
                     </div>
+
+                    <org-look-up-checklist #LookupChecklist [LookupTitle]="'Daftar Tarif Order Darah'"
+                        [LookupUrl]="UrlLookupTarifBerlaku" [LookupFilters]="Config.LookupTarif.filter"
+                        [GridId]="'LookupChecklistTarifBerlaku'" [GridColumns]="Config.LookupTarif.columns"
+                        (OnGetSelectedRecords)="handleSelectedLookupTarif($event)">
+                    </org-look-up-checklist>
                 </form>
             </div>
-            <div class="modal-footer p-2 background-abu-muda">
+            <div class="modal-footer p-1 background-abu-muda">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
                         <button class="btn btn-danger btn-sm mx-2" type="button" (click)="handleCloseModalBankDarah()">

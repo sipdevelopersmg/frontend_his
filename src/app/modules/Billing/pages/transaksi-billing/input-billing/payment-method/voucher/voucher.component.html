@@ -1,0 +1,29 @@
+<section id="payment_method_voucher">
+    <form [formGroup]="FormPaymentVoucher">
+        <!-- Belum Lunas -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Pilih Voucher'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-dropdownlist #DropdownVoucher [allowFiltering]="true" formControlName="id_voucher"
+                    [dataSource]="VoucherDatasource" [fields]="VoucherFields"
+                    (change)="handleChangeDropdownVoucher($event)">
+                </ejs-dropdownlist>
+            </div>
+        </div>
+
+        <!-- Nilai Voucher -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Nilai Voucher'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                    formControlName="jumlah_bayar">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+    </form>
+</section>

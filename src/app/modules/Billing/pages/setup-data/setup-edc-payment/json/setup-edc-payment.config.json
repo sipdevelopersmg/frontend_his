@@ -1,0 +1,42 @@
+{
+    "GridSetupBankPaymentColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_edc_payment",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_edc_payment",
+            "headerText": "KODE EDC",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "NAMA EDC",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "KETERANGAN",
+            "visible": true,
+            "width": 100
+        }
+    ]
+}

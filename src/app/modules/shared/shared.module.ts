@@ -12,6 +12,7 @@ import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { FormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CommandColumnService, DetailRowService, EditService, GridModule, GroupService, PageService, PdfExportService, ResizeService, SearchService, ToolbarService } from '@syncfusion/ej2-angular-grids';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { AtmLabelComponent } from './components/atoms/form/atm-label/atm-label.component';
 import { AtmValidatorsComponent } from './components/atoms/form/atm-validators/atm-validators.component';
@@ -54,6 +55,7 @@ import { MolDropdownSyncfusionComponent } from './components/molecules/form/mol-
 import { MolTreeGridComponent } from './components/molecules/grid/tree-grid/tree-grid.component';
 import { MolOffcanvasFilterComponent } from './components/molecules/filter/mol-offcanvas-filter/mol-offcanvas-filter.component';
 import { MolInputCheckboxSingleComponent } from './components/molecules/form/mol-input-checkbox-single/mol-input-checkbox-single.component';
+import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
 
 import { OrgInputLookUpKodeComponent } from './components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from './components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -66,8 +68,6 @@ import { OrgLookUpComponent } from './components/organism/loockUp/org-look-up/or
 import { OrgInputWilayahComponent } from './components/organism/org-input-wilayah/org-input-wilayah.component';
 import { OrgLookUpChecklistComponent } from './components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
 import { OrgInputLookUpStaticFilterComponent } from './components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
 import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 
 @NgModule({

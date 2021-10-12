@@ -14,6 +14,9 @@ export class MolInputGroupComponent implements OnInit {
     @Output('clickButton') clickButton = new EventEmitter<any>();
     @Output('pressEnter') pressEnter = new EventEmitter<any>();
 
+    @Input('divLabelClass') divLabelClass: string = "col-lg-4";
+    @Input('divInputClass') divInputClass: string = "col-lg-8";
+
     constructor() { }
 
     ngOnInit(): void {

@@ -1,0 +1,10 @@
+.card_body_payment {
+  height: calc(100vh - 13rem);
+  max-height: calc(100vh - 13rem);
+  overflow-y: auto;
+}
+
+li.list_group_item_payment:hover {
+  background-color: var(--biru-muda) !important;
+  color: white !important;
+}

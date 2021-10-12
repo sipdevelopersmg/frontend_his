@@ -1,0 +1,59 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Bank Payment</org-tabs-label>
+            <org-tabs-body>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                            [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                            [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridSetupBankPaymentColumns"
+                            (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                            (initialized)="InitalizedGrid($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Bank Payment</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text [label]="'Kode Bank'" formControlName="kode_bank_payment"
+                                [IsFormControlInvalid]="kode_bank_payment.invalid"
+                                [ValidatorsCaption]="'Kode Bank Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Nama Bank'" formControlName="nama_bank_payment"
+                                [IsFormControlInvalid]="nama_bank_payment.invalid"
+                                [ValidatorsCaption]="'Nama Bank Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <mol-input-text [label]="'Keterangan'" formControlName="keterangan"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Biaya'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-numerictextbox [enableRtl]="true" [format]="'N2'" [showClearButton]="false"
+                                        [showSpinButton]="false" formControlName="biaya">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

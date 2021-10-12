@@ -55,6 +55,9 @@ export class OrgInputLookUpComponent implements OnInit {
 
     @Input("SelectedInputId") SelectedInputId: string;
 
+    @Input('divLabelClass') divLabelClass: string = "col-lg-4";
+    @Input('divInputClass') divInputClass: string = "col-lg-8";
+
     ngOnInit(): void {
         this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
     }

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { GrupPenunjangModel } from 'src/app/modules/PIS/models/setup-data/setup_grup_penunjang.model';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
+import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { IAlergiModel } from '../../models/alergi.model';
 import { AlergiService } from '../../services/alergi/alergi.service';
@@ -16,7 +17,7 @@ import * as Config from './json/alergi.config.json';
     templateUrl: './alergi.component.html',
     styleUrls: ['./alergi.component.css']
 })
-export class AlergiComponent implements OnInit {
+export class AlergiComponent implements OnInit, AfterViewInit {
 
     /**
      * Variable untuk Menympan Navigasi halaman
@@ -67,6 +68,7 @@ export class AlergiComponent implements OnInit {
         private formBuilder: FormBuilder,
         private alergiService: AlergiService,
         private utilityService: UtilityService,
+        private navigationService: NavigationService,
         private daftarPasienService: DaftarPasienService
     ) {
         this.FormInputData = this.formBuilder.group({
@@ -86,6 +88,12 @@ export class AlergiComponent implements OnInit {
         ];
 
         this.GetAllData();
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.navigationService.ButtonSidebarMenuState.next(true);
+        }, 1);
     }
 
     handleSelectedTabId(TabId: string): void {

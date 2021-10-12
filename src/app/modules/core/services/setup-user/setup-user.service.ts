@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
-import { PostSetupUserModel } from '../../models/setup-user/setup-user.model';
+import { GetAllUserKasirModel, PostSetupUserModel } from '../../models/setup-user/setup-user.model';
 import * as API_CONFIG from '../../../../api';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,5 +29,9 @@ export class SetupUserService {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
+    }
+
+    onGetAllUserKasir(): Observable<GetAllUserKasirModel> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_ALL_USER_KASIR);
     }
 }

@@ -23,7 +23,7 @@ export class ListPasienRawatJalanComponent implements OnInit {
         { text: 'No. Rekam Medis', value: 'tp.no_rekam_medis' },
         { text: 'Nama Poli', value: 'p.nama_poli' },
         { text: 'Nama Debitur', value: 'sd.nama_debitur' },
-    ];
+    ]
 
     GridData: MolGridComponent = null;
     GridPageSettings = { pageSizes: false, pageSize: 12 };

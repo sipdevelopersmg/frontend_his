@@ -1,0 +1,43 @@
+{
+    "GridSetupBukaKasirIRJAColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "no_faktur",
+            "headerText": "NO. FAKTUR",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_kasir",
+            "headerText": "NAMA KASIR",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "waktu_buka_kasir",
+            "headerText": "WAKTU BUKA KASIR",
+            "format": "dd/MM/yyyy HH:mm:ss",
+            "type": "DateTime",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "jumlah_modal",
+            "headerText": "JUMLAH MODAL",
+            "format": "N2",
+            "visible": true,
+            "width": 100
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+p.p_informasi_pasien {
+  font-size: 15px;
+  color: var(--abu-tua);
+}
+
+p.p_informasi_pasien_value {
+  font-size: 17px;
+  color: var(--biru-muda);
+}
+
+.card_billing {
+  background: rgba(251, 251, 251, 0.2);
+  box-shadow: 0 2px 5px 0 rgb(31 38 135 / 37%);
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(9px);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
+  min-height: 14px !important;
+}
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 5px !important;
+  height: 30px !important;
+}
+
+span.e-headertext {
+  font-size: 13px !important;
+}
+
+td.e-rowcell {
+  padding: 5px !important;
+}
+
+.disablecheckbox {
+  pointer-events: none;
+  opacity: 0.5;
+}

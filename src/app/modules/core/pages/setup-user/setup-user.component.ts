@@ -185,6 +185,8 @@ export class SetupUserComponent implements OnInit {
                             this.onClearFormSetupUser();
 
                             this.modalRef.hide();
+
+                            this.onGetAllActiveUser();
                         });
                 };
 

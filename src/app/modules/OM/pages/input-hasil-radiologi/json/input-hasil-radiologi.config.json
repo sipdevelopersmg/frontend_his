@@ -1,0 +1,94 @@
+{
+    "DummyDatasource": [
+        {
+            "id_order_penunjang": 1,
+            "tanggal_order_penunjang": "10/03/2021",
+            "tanggal_hasil_order_penunjang": null,
+            "nama_pasien": "Soetomo",
+            "gender": "L",
+            "nama_dokter": "Lalisa Manoban",
+            "nama_poli": "DALAM",
+            "kelas_perawatan": "III",
+            "detail": [
+                {
+                    "id_order_penunjang": 1,
+                    "id_order_penunjang_detail": 1,
+                    "nama_pemeriksaan": "MRI 1,5 T - Cervical",
+                    "left_or_right": "LR",
+                    "polos_or_kontras": "P",
+                    "no_order": "01",
+                    "kode_tarif": "TRF.AC0001",
+                    "nama_tarif": "Pemeriksaan Tes",
+                    "tgl_hasil": null
+                }
+            ]
+        }
+    ],
+    "LookupDokter": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "id_person",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_dokter",
+                "headerText": "KODE DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "spesialisasi_dokter",
+                "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true,
+                "width": 110
+            }
+        ],
+        "filter": [
+            {
+                "field": "d.kode_dokter",
+                "filter": "like",
+                "title": "KODE DOKTER"
+            },
+            {
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA DOKTER"
+            }
+        ]
+    }
+}

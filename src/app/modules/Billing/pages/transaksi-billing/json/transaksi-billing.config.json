@@ -1,0 +1,184 @@
+{
+    "DummyDatasource": [
+        {
+            "id": 1,
+            "nama_item": "TIKET",
+            "tgl_input": "03/10/2021",
+            "status": "OPEN",
+            "total_transaksi": 60000,
+            "detail": [
+                {
+                    "id_detail": 1,
+                    "nama_tiket": "PEMERIKSAAN POLI DALAM",
+                    "nama_dokter": "Lalisa Manoban",
+                    "tarif_dokter": 50000
+                },
+                {
+                    "id_detail": 22,
+                    "nama_tiket": "PEMERIKSAAN RUTIN",
+                    "nama_dokter": "Lalisa Manoban",
+                    "tarif_dokter": 10000
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "nama_item": "TDMK",
+            "tgl_input": "03/10/2021",
+            "status": "OPEN",
+            "total_transaksi": 100000,
+            "detail": [
+                {
+                    "id_detail": 2,
+                    "tgl_tindakan": "03/10/2021",
+                    "kode_tarif": "AKA.AKO.0000041",
+                    "nama_tarif": "KONSULTASI DOKTER SPESIALIS",
+                    "qty": 1,
+                    "nama_kelas": "PRIVATE",
+                    "nama_poli": "POLI DALAM"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "nama_item": "RESEP",
+            "tgl_input": "03/10/2021",
+            "status": "OPEN",
+            "total_transaksi": 615000,
+            "detail": [
+                {
+                    "id_detail": 3,
+                    "kode_obat": "AOG00002",
+                    "nama_obat": "ARTONVASTATIN 20 MG TAB",
+                    "unit_price": 5000,
+                    "qty": 15,
+                    "total": 75000
+                },
+                {
+                    "id_detail": 4,
+                    "kode_obat": "AOG00003",
+                    "nama_obat": "FENOFIBRATE",
+                    "unit_price": 3000,
+                    "qty": 30,
+                    "total": 90000
+                },
+                {
+                    "id_detail": 5,
+                    "kode_obat": "AOG00004",
+                    "nama_obat": "MICARDIS 80 MG TAB",
+                    "unit_price": 7500,
+                    "qty": 60,
+                    "total": 450000
+                }
+            ]
+        }
+    ],
+    "LookupPasien": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "id_person",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "no_register",
+                "headerText": "NO. REGISTER",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. RM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "tgl_admisi",
+                "headerText": "TGL. ADMISI",
+                "type": "Date",
+                "format": "dd/MM/yyyy",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_debitur",
+                "headerText": "DEBITUR",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "p.no_identitas",
+                "filter": "like",
+                "title": "NO. IDENTITAS"
+            },
+            {
+                "field": "tp.no_register",
+                "filter": "like",
+                "title": "NO. REGISTER"
+            },
+            {
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
+            },
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "NO. RM"
+            }
+        ]
+    }
+}

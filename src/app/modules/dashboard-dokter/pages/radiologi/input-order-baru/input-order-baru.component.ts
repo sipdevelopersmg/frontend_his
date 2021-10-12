@@ -398,7 +398,9 @@ export class InputOrderBaruRadComponent implements OnInit {
     }
 
     onSubmitRadiologiPasien(FormInsertOrderRad: any): void {
-        FormInsertOrderRad.id_dokter_order = this.daftarPasienService.ActivePasien.value.id_dokter;
+        let UserData = JSON.parse(localStorage.getItem('UserData'));
+        FormInsertOrderRad.id_dokter_order = UserData.id_karyawan;
+
         // FormInsertOrderRad.id_icd = this.daftarPasienService.ActivePasien.value.id_icd_masuk;
         FormInsertOrderRad.id_kelas = this.daftarPasienService.ActivePasien.value.id_kelas_rawat;
         FormInsertOrderRad.id_poli_order = this.daftarPasienService.ActivePasien.value.id_poli;

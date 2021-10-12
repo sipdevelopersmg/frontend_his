@@ -1,0 +1,98 @@
+{
+    "GridSetupBankPaymentColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_voucher",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nomor_urut_voucher",
+            "headerText": "NO. URUT",
+            "visible": true,
+            "width": 70
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_voucher",
+            "headerText": "KODE VOUCHER",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama",
+            "headerText": "NAMA VOUCHER",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nilai",
+            "headerText": "NILAI",
+            "visible": true,
+            "width": 80,
+            "textAlign": "Right",
+            "format": "N2",
+            "headerTextAlign": "Right"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_expired",
+            "headerText": "TGL. EXPIRED",
+            "visible": true,
+            "width": 90,
+            "format": "dd/MM/yyyy",
+            "type": "Date"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "is_terpakai",
+            "headerText": "TERPAKAI",
+            "visible": true,
+            "width": 70,
+            "displayAsCheckbox": true,
+            "textAlign": "Center",
+            "headerTextAlign": "Center"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "KETERANGAN",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "syarat_min_belanja",
+            "headerText": "MIN. BELANJA",
+            "visible": true,
+            "width": 90,
+            "textAlign": "Right",
+            "format": "N2",
+            "headerTextAlign": "Right"
+        }
+    ]
+}

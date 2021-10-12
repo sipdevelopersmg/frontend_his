@@ -1,0 +1,874 @@
+<org-card-layout [ChangeHeaderRibbon]="true" [HeaderRibbon]="HeaderRibbon" [ButtonNav]="ButtonNav"
+    (onClickButtonNav)="handleClickButtonNav($event)">
+    <!-- Informasi Pasien -->
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <div class="card shadow-sm">
+                <div class="card-body p-2">
+                    <div class="row align-items-center px-0 mx-0">
+                        <!-- Foto Pasien -->
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center px-0">
+                            <img [src]=" InformasiPasien ? InformasiPasien.link_foto : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
+                                alt="img-pasien" style="height: 7rem; width: 6rem;" class="rounded shadow-sm">
+                        </div>
+
+                        <!-- No. RM dan Tgl Masuk -->
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <div class="row">
+                                <!-- No. Rekam Medis -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="p_informasi_pasien mb-0">No. RM</p>
+                                    <p class="p_informasi_pasien_value mb-2">
+                                        {{ InformasiPasien ? InformasiPasien.no_rekam_medis : "" }}
+                                    </p>
+                                </div>
+
+                                <!-- Tgl Masuk -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="p_informasi_pasien mb-0">Tgl. Masuk</p>
+                                    <p class="p_informasi_pasien_value mb-2">
+                                        {{ InformasiPasien ? (InformasiPasien.tgl_admisi | date: 'dd MMMM yyyy') : "" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- No. Register dan Alamat -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="row">
+                                <!-- No. Register -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="p_informasi_pasien mb-0">No. Register</p>
+                                    <p class="p_informasi_pasien_value mb-2">
+                                        {{ InformasiPasien ? InformasiPasien.no_register : "" }}
+                                    </p>
+                                </div>
+
+                                <!-- Alamat -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="p_informasi_pasien mb-0">Alamat</p>
+                                    <p class="p_informasi_pasien_value mb-2">
+                                        {{ InformasiPasien ? (InformasiPasien.alamat_pasien | titlecase) : "" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Debitur dan No. Penjamin -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="row">
+                                <!-- Debitur -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="p_informasi_pasien mb-0">Debitur</p>
+                                    <p class="p_informasi_pasien_value mb-2">
+                                        {{ InformasiPasien ? (InformasiPasien.nama_debitur) : "" }}
+                                    </p>
+                                </div>
+
+                                <!-- No. Penjamin -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="p_informasi_pasien mb-0">No. Penjamin</p>
+                                    <p class="p_informasi_pasien_value mb-2"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daftar Slip Tagihan dan Total -->
+    <div class="row mb-2">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="height: calc(100vh - 19rem); overflow-y: auto;">
+            <!-- Daftar Tagihan -->
+            <div class="row mb-2 align-items-center">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end px-0">
+                    <input id="daftar_slip_tagihan_check" class="form-check-input form-select-sm me-1" type="checkbox"
+                        (change)="handleChangeSlipTagihanCheck()">
+                </div>
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                    <h5 class="mb-0" for="daftar_slip_tagihan_check">Daftar Tagihan</h5>
+                </div>
+            </div>
+
+            <!-- Daftar Item Billing -->
+            <div class="row mb-3" *ngFor="let item of BillingItem" [hidden]="item.detail?.length < 1">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end px-0 pt-2">
+                    <input [id]="item.jenis_transaksi + '_check'" class="form-check-input form-select-sm me-1"
+                        type="checkbox" (change)="handleChangeItemBillingCheck(item)"
+                        [disabled]="item.status == 'PAID'">
+                </div>
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header p-2 border">
+                            <div class="row">
+                                <!-- Nama Item -->
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 cursor-pointer"
+                                    (click)="handleTogglingCardDetailItem(item)">
+                                    <p class="text-hitam-muda mb-0">
+                                        <i [id]="'icon_' + item.jenis_transaksi"
+                                            class="fas fa-chevron-down fa-sm"></i>&nbsp;
+                                        {{ item.jenis_transaksi }}
+                                    </p>
+                                </div>
+
+                                <!-- Tanggal Item -->
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <!-- <p class="text-hitam-muda mb-0">
+                                        {{ item.tgl_input }}
+                                    </p> -->
+                                </div>
+
+                                <!-- Status Item -->
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <!-- <p class="mb-0 fw-bold"
+                                        [class]="item.status == 'PAID' ? 'text-danger' : 'text-success'">
+                                        {{ item.status }}
+                                    </p> -->
+                                </div>
+
+                                <!-- Total -->
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-end">
+                                    <p class="mb-0 fw-bold">
+                                        {{ item.total | currency: 'Rp. ' }}&nbsp;
+                                        <span class="cursor-pointer" (click)="handleClickHistoryItem(item)">
+                                            <i class="fas fa-file-invoice-dollar text-biru-muda ms-2"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div [id]="'card_body_' + item.jenis_transaksi" class="card-body p-2" [hidden]="true">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <!-- TIKET -->
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TKT'" #GridDataTiket [id]="'GridDataTiket'"
+                                    [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
+                                    [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    [selectionSettings]="GridDataTiketSelectionSettings"
+                                    (rowSelected)="handleSelectedRowDataTiket($event, item)"
+                                    (rowDeselected)="handleDeselectedRowDataTiket($event, item)"
+                                    (rowDataBound)="handleRowDataBound($event)">
+                                    <e-columns>
+                                        <e-column [width]="30" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
+                                            [textAlign]="'Center'" [headerTextAlign]="'Center'" [allowEditing]="false">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'id_transaksi'" [headerText]="'ID DETAIL'"
+                                            [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'kode_setup_tarif'" [headerText]="'KODE TIKET'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="150" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                            [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'unit_amount'" [headerText]="'HARGA'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'total_amount'" [headerText]="'SUBTOTAL'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column field='status_bayar' headerText='STATUS' width='80' textAlign='Center'
+                                            [headerTextAlign]="'Center'">
+                                            <ng-template #template let-data>
+                                                <div *ngIf="data.status_bayar === 'OPEN';"
+                                                    class="statustemp e-activecolor">
+                                                    <span class="statustxt e-activecolor">OPEN</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                    class="statustemp e-warningcolor">
+                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'PAID';"
+                                                    class="statustemp e-postedcolor">
+                                                    <span class="statustxt e-postedcolor">PAID</span>
+                                                </div>
+                                            </ng-template>
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+
+                                <!-- TDMK -->
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDMK' " #GridDataTDMK [id]="'GridDataTDMK'"
+                                    [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
+                                    [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    (rowSelected)="handleSelectedRowDataTDMK($event, item)"
+                                    (rowDeselected)="handleDeselectedRowDataTDMK($event, item)"
+                                    (rowDataBound)="handleRowDataBound($event)">
+                                    <e-columns>
+                                        <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'checkbox'"
+                                            [textAlign]="'Center'" [headerTextAlign]="'Center'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'id_transaksi'" [headerText]="'ID TRANSAKSI'"
+                                            [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                        </e-column>
+                                        <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                            [headerTextAlign]="'Right'" [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'unit_amount'" [headerText]="'HARGA'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'total_amount'" [headerText]="'SUBTOTAL'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column field='status_bayar' headerText='STATUS' width='80' textAlign='Center'
+                                            [headerTextAlign]="'Center'">
+                                            <ng-template #template let-data>
+                                                <div *ngIf="data.status_bayar === 'OPEN';"
+                                                    class="statustemp e-activecolor">
+                                                    <span class="statustxt e-activecolor">OPEN</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                    class="statustemp e-warningcolor">
+                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'PAID';"
+                                                    class="statustemp e-postedcolor">
+                                                    <span class="statustxt e-postedcolor">PAID</span>
+                                                </div>
+                                            </ng-template>
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+
+                                <!-- TDLAB -->
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDLAB' " #GridDataTDLAB [id]="'GridDataTDLAB'"
+                                    [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
+                                    [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    (rowSelected)="handleSelectedRowDataTDLAB($event, item)"
+                                    (rowDeselected)="handleDeselectedRowDataTDLAB($event, item)"
+                                    (rowDataBound)="handleRowDataBound($event)">
+                                    <e-columns>
+                                        <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
+                                            [textAlign]="'Center'" [headerTextAlign]="'Center'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'id_transaksi'" [headerText]="'ID TRANSAKSI'"
+                                            [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                        </e-column>
+                                        <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                            [headerTextAlign]="'Right'" [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'unit_amount'" [headerText]="'HARGA'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'total_amount'" [headerText]="'SUBTOTAL'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column field='status_bayar' headerText='STATUS' width='80' textAlign='Center'
+                                            [headerTextAlign]="'Center'">
+                                            <ng-template #template let-data>
+                                                <div *ngIf="data.status_bayar === 'OPEN';"
+                                                    class="statustemp e-activecolor">
+                                                    <span class="statustxt e-activecolor">OPEN</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                    class="statustemp e-warningcolor">
+                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'PAID';"
+                                                    class="statustemp e-postedcolor">
+                                                    <span class="statustxt e-postedcolor">PAID</span>
+                                                </div>
+                                            </ng-template>
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+
+                                <!-- TDRAD -->
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDRAD' " #GridDataTDRAD [id]="'GridDataTDRAD'"
+                                    [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
+                                    [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    (rowSelected)="handleSelectedRowDataTDRAD($event, item)"
+                                    (rowDeselected)="handleDeselectedRowDataTDRAD($event, item)"
+                                    (rowDataBound)="handleRowDataBound($event)">
+                                    <e-columns>
+                                        <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
+                                            [textAlign]="'Center'" [headerTextAlign]="'Center'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'id_transaksi'" [headerText]="'ID TRANSAKSI'"
+                                            [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                        </e-column>
+                                        <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                            [headerTextAlign]="'Right'" [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'unit_amount'" [headerText]="'HARGA'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'total_amount'" [headerText]="'SUBTOTAL'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column field='status_bayar' headerText='STATUS' width='80' textAlign='Center'
+                                            [headerTextAlign]="'Center'">
+                                            <ng-template #template let-data>
+                                                <div *ngIf="data.status_bayar === 'OPEN';"
+                                                    class="statustemp e-activecolor">
+                                                    <span class="statustxt e-activecolor">OPEN</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                    class="statustemp e-warningcolor">
+                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'PAID';"
+                                                    class="statustemp e-postedcolor">
+                                                    <span class="statustxt e-postedcolor">PAID</span>
+                                                </div>
+                                            </ng-template>
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+
+                                <!-- RESEP -->
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'RESEP'" #GridDataResep [id]="'GridDataResep'"
+                                    [width]="'100%'" [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
+                                    [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    [resizeSettings]="GridResepResizeSettings" [childGrid]='ChildGridResep'
+                                    (load)="handleLoadDataResep($event)"
+                                    (rowSelected)="handleSelectedRowDataResep($event, item)"
+                                    (rowDeselected)="handleDeselectedRowDataResep($event, item)"
+                                    (rowDataBound)="handleRowDataBound($event)"
+                                    (dataBound)="handleDataBoundDataResep()">
+                                    <e-columns>
+                                        <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
+                                            [textAlign]="'Center'" [headerTextAlign]="'Center'">
+                                        </e-column>
+                                        <e-column [width]="80" [field]="'penjualan_obat_id'"
+                                            [headerText]="'PENJUALAN OBAT ID'" [visible]="false" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="150" [field]="'nomor_penjualan_obat'"
+                                            [headerText]="'NO. PENJUALAN OBAT'" [visible]="true" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="80" [field]="'nomor_resep'" [headerText]="'NO. RESEP'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'nama_dokter'" [headerText]="'NAMA DOKTER'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="80" [field]="'sub_total'" [headerText]="'SUBTOTAL'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="80" [field]="'potongan'" [headerText]="'POTONGAN'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'total_transaksi'"
+                                            [headerText]="'TOTAL TRANSAKSI'" [visible]="true" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                            [format]="'N2'">
+                                        </e-column>
+                                        <e-column field='status_bayar' headerText='STATUS' width='80' textAlign='Center'
+                                            [headerTextAlign]="'Center'">
+                                            <ng-template #template let-data>
+                                                <div *ngIf="data.status_bayar === 'OPEN';"
+                                                    class="statustemp e-activecolor">
+                                                    <span class="statustxt e-activecolor">OPEN</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                    class="statustemp e-warningcolor">
+                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                </div>
+                                                <div *ngIf="data.status_bayar === 'PAID';"
+                                                    class="statustemp e-postedcolor">
+                                                    <span class="statustxt e-postedcolor">PAID</span>
+                                                </div>
+                                            </ng-template>
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rincian Total -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="card shadow-sm border">
+                <div class="card-body">
+                    <form [formGroup]="FormInputInvoice">
+                        <!-- Total Biaya -->
+                        <div class="row align-items-center mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0">Total Biaya</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="total_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div>
+
+                        <!-- Asuransi -->
+                        <!-- <div class="row align-items-center mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0">Asuransi / Tgg</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="asuransi">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div> -->
+
+                        <!-- Total Tagihan -->
+                        <div class="row align-items-center mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0 fw-bold">Total Tagihan</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="total_tagihan">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div>
+
+                        <!-- Diskon Dokter -->
+                        <!-- <div class="row align-items-center mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0">Diskon Dokter</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="disc_dokter_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div> -->
+
+                        <!-- Saldo Klaim -->
+                        <div class="row align-items-center mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0">Saldo Klaim</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="claim_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modalSaldoKlaim"
+                                    (click)="handleGetSaldoKlaim(InformasiPasien.id_register)">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+
+                            <div class="modal fade" id="modalSaldoKlaim" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalSaldoKlaimLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content border-0">
+                                        <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                                            <h5 class="modal-title" id="modalSaldoKlaimLabel">Input Klaim Debitur</h5>
+                                            <button id="btnCloseKlaim" type="button" class="btn-close"
+                                                data-bs-dismiss="modal" aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form [formGroup]="FormInputKlaimDebitur">
+                                                <div class="row">
+                                                    <!-- Nilai Klaim -->
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <atm-label [LabelCaption]="'Nilai Klaim'"></atm-label>
+                                                        <ejs-numerictextbox #JumlahKlaim [enableRtl]="true"
+                                                            [format]="'N2'" [showSpinButton]="false"
+                                                            [showClearButton]="false" formControlName="jumlah_klaim"
+                                                            (change)="handleChangeJumlahKlaim(JumlahKlaim.value)">
+                                                        </ejs-numerictextbox>
+                                                    </div>
+
+                                                    <!-- Klaim Sudah Digunakan -->
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <atm-label [LabelCaption]="'Klaim Sudah Digunakan'"></atm-label>
+                                                        <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                                            [cssClass]="'readonly-state rounded border-0'"
+                                                            [showSpinButton]="false" [showClearButton]="false"
+                                                            [readonly]="true" formControlName="saldo_klaim_digunakan">
+                                                        </ejs-numerictextbox>
+                                                    </div>
+
+                                                    <!-- Sisa Klaim -->
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <atm-label [LabelCaption]="'Sisa Klaim'"></atm-label>
+                                                        <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                                            [cssClass]="'readonly-state rounded border-0'"
+                                                            [showSpinButton]="false" [showClearButton]="false"
+                                                            [readonly]="true" formControlName="saldo_klaim_sisa">
+                                                        </ejs-numerictextbox>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                (click)="handleSubmitFormInputKlaimDebitur(FormInputKlaimDebitur.value)">
+                                                Simpan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Telah Dibayar -->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0">Telah Dibayar</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="deposit_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div>
+
+                        <!-- Sisa Tagihan -->
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0 fw-bold">Sisa Tagihan</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state-blue rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="paid_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pembayaran -->
+    <button id="btnModalPembayaran" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalPembayaran" [hidden]="true">
+        Launch Modal Pembayaran
+    </button>
+
+    <div class="modal fade" id="modalPembayaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modalPembayaranLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                    <h5 class="modal-title" id="modalPembayaranLabel">{{ ModalPembayaranTitle }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="handleCloseModalPembayaran()">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <!-- Pembayaran State -->
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <div class="card card_billing">
+                                <div class="card-body">
+                                    <app-payment-cash-irja *ngIf="PembayaranState == 'CASH'"
+                                        (onSendPaymentCash)="onSendPaymentCash($event)">
+                                    </app-payment-cash-irja>
+
+                                    <app-payment-qris-irja *ngIf="PembayaranState == 'QR'"
+                                        (onSendPaymentQRIS)="onSendPaymentQRIS($event)">
+                                    </app-payment-qris-irja>
+
+                                    <app-payment-voucher-irja *ngIf="PembayaranState == 'VOUCHER'"
+                                        (onSendPaymentVoucher)="onSendPaymentVoucher($event)">
+                                    </app-payment-voucher-irja>
+
+                                    <app-payment-debit-irja *ngIf="PembayaranState == 'DEBIT_CARD'"
+                                        (onSendPaymentDebit)="onSendPaymentDebit($event)">
+                                    </app-payment-debit-irja>
+
+                                    <app-payment-credit-irja *ngIf="PembayaranState == 'CREDIT_CARD'"
+                                        (onSendPaymentCredit)="onSendPaymentCredit($event)">
+                                    </app-payment-credit-irja>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button Payment Method -->
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="row">
+                                <div *ngFor="let item of PaymentMethod"
+                                    class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 d-grid gap-2">
+                                    <button [id]="'btn' + (item.payment_method).replace(' ', '_')"
+                                        class="btn btn-success " type="button"
+                                        (click)="handleClickButtonPaymentMethod(item)">
+                                        {{ item.payment_method }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid Pembayaran -->
+                    <div class="row mb-2">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <ejs-grid #GridDataPembayaran [id]="'GridDataPembayaran'"
+                                [dataSource]="GridDataPembayaranDatasource" [rowHeight]="30" [gridLines]="'Both'"
+                                [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                (commandClick)="handleCommandClickPembayaran($event)">
+                                <e-columns>
+                                    <e-column [width]="100" [field]="'id_payment_method'"
+                                        [headerText]="'ID PAYMENT METHOD'" [visible]="false" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'id_payment_method_detail'"
+                                        [headerText]="'ID PAYMENT METHOD DETAIL'" [visible]="false"
+                                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="50" [field]="'no_urut'" [headerText]="'NO'" [visible]="false"
+                                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
+                                        [headerTextAlign]="'Center'">
+                                    </e-column>
+                                    <e-column [width]="140" [field]="'jenis_pembayaran'"
+                                        [headerText]="'JENIS PEMBAYARAN'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'jumlah_bayar'" [headerText]="'JUMLAH BAYAR'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'id_voucher'" [headerText]="'ID VOUCHER'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'id_bank_payment'" [headerText]="'ID BANK PAYMENT'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'id_edc_payment'" [headerText]="'ID EDC PAYMENT'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'trace_number'" [headerText]="'TRACE NUMBER'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'jenis_kartu'" [headerText]="'JENIS KARTU'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'card_holder'" [headerText]="'CARD HOLDER'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'nomor_kartu'" [headerText]="'NO. KARTU'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'keterangan'" [headerText]="'KETERANGAN'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="50" [headerText]="'AKSI'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                                        [commands]="CommandPembayaran">
+                                    </e-column>
+                                </e-columns>
+                            </ejs-grid>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2 justify-content-start">
+                        <!-- Total Transaksi -->
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <p class="mb-0">Total Transaksi</p>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                    <p class="mb-0">{{ TotalTransaksiPembayaran | currency: 'Rp. ' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Biaya Bank -->
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <p class="mb-0">Biaya Bank</p>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                    <p class="mb-0">{{ BiayaBankPembayaran | currency: 'Rp. ' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Transaksi -->
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <p class="mb-0">Total Transaksi</p>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                    <p class="mb-0">{{ GrandTotalTransaksiPembayaran | currency: 'Rp. ' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Jumlah Bayar -->
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <p class="mb-0">Jumlah Bayar</p>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                    <p class="mb-0">{{ JumlahBayarPembayaran | currency: 'Rp. ' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kurang Bayar -->
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <p class="mb-0 fw-bold" style="font-size: 20px;">Kurang Bayar</p>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                    <p class="mb-0 fw-bold" style="font-size: 20px;">
+                                        {{ KurangBayarPembayaran | currency: 'Rp. ' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+                        (click)="handleCloseModalPembayaran()">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="handleClickSubmitPembayaran()">
+                        Bayar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-history-pembayaran #HistoryPembayaranBillingRawatJalan [OffcanvasRiwayatTitle]="OffcanvasRiwayatTitle">
+    </app-history-pembayaran>
+
+    <app-history-invoice-irja #HistoryInvoiceRawatJalan [InformasiPasien]="InformasiPasien"></app-history-invoice-irja>
+</org-card-layout>

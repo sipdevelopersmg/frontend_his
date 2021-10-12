@@ -13,6 +13,7 @@ import * as Config from './json/pemasukan-rawat-jalan.config.json';
 import * as API_CONFIG from '../../../../../api/PIS/IRJA/index';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import Swal from 'sweetalert2';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'app-pemasukan-rawat-jalan',
@@ -142,6 +143,9 @@ export class PemasukanRawatJalanComponent implements OnInit {
     modalPembatalanRef: BsModalRef;
     @ViewChild('modalPembatalan') modalPembatalan: TemplateRef<any>;
 
+    DiskonDokter = new BehaviorSubject(0);
+    QtyTarif = new BehaviorSubject(0);
+
     @HostListener('document:keydown', ['$event'])
     onKeyDownHandler(event: KeyboardEvent) {
         if (event.keyCode === 112) {
@@ -224,6 +228,7 @@ export class PemasukanRawatJalanComponent implements OnInit {
             anas_fee: [0, [Validators.required]],
             nominal_tarif: [0, [Validators.required]],
             total_tarif: [0, [Validators.required]],
+            doct_disc: [0, Validators.required],
             id_poli: [0, [Validators.required]],
             id_kelas_pelayanan: [0, [Validators.required]],
         });
@@ -236,6 +241,7 @@ export class PemasukanRawatJalanComponent implements OnInit {
 
         delete args.gender;
         delete args.umur;
+        delete args.nama_poli;
 
         this.FormSavePemasukanRawatJalan.setValue(args);
 
@@ -319,8 +325,6 @@ export class PemasukanRawatJalanComponent implements OnInit {
 
                 this.id_dokter.setValue(this.id_dokter_save.value);
                 this.nama_dokter.setValue(this.nama_dokter_save.value);
-
-                console.log(this.FormPemasukanRawatJalan.value);
             }, 500);
         }
 
@@ -372,8 +376,9 @@ export class PemasukanRawatJalanComponent implements OnInit {
         this.anas_fee.setValue(args.anas_fee);
         this.nominal_tarif.setValue(args.nominal_tarif);
         this.qty.setValue(args.qty);
+        this.QtyTarif.next(args.qty);
 
-        this.onHitungTotalTarif(args.qty);
+        this.onHitungTotalTarif();
     }
 
     handleSelectedDokterPeriksa(args: any): void {
@@ -387,11 +392,21 @@ export class PemasukanRawatJalanComponent implements OnInit {
     }
 
     handleChangeQtyTarif(QtyTarif: number): void {
-        this.onHitungTotalTarif(QtyTarif);
+        this.QtyTarif.next(QtyTarif);
+
+        this.onHitungTotalTarif();
     }
 
-    onHitungTotalTarif(QtyTarif: number): void {
-        this.total_tarif.setValue(this.nominal_tarif.value * QtyTarif);
+    handleChangeDiscDoctor(DiscDoctor: number): void {
+        this.DiskonDokter.next(DiscDoctor);
+
+        this.onHitungTotalTarif();
+    }
+
+    onHitungTotalTarif(): void {
+        let total_tarif = (this.nominal_tarif.value * this.QtyTarif.value) - this.DiskonDokter.value;
+
+        this.total_tarif.setValue(total_tarif);
     }
 
     handleSimpanModalPemasukanRawatJalan(FormPemasukanRawatJalan: any): void {
@@ -441,6 +456,9 @@ export class PemasukanRawatJalanComponent implements OnInit {
         this.anas_fee.setValue(0);
         this.nominal_tarif.setValue(0);
         this.total_tarif.setValue(0);
+        this.doct_disc.setValue(0);
+        this.QtyTarif.next(0);
+        this.DiskonDokter.next(0);
     }
 
     onResetFormSavePemasukanRawatJalan(): void {
@@ -471,6 +489,7 @@ export class PemasukanRawatJalanComponent implements OnInit {
             grid_datasource.push({
                 'id_doct_anas': item.id_doct_anas,
                 'id_dokter': item.id_dokter,
+                'doct_disc': item.doct_disc,
                 'id_kelas_pelayanan': item.id_kelas_pelayanan,
                 'id_poli': item.id_poli,
                 'id_setup_tarif': item.id_setup_tarif,
@@ -500,7 +519,7 @@ export class PemasukanRawatJalanComponent implements OnInit {
                             this.onResetFormSavePemasukanRawatJalan();
                         });
                 }
-            })
+            });
     }
 
     handleSelectedRowHistory(args: any): void {
@@ -610,6 +629,7 @@ export class PemasukanRawatJalanComponent implements OnInit {
     get anas_fee(): AbstractControl { return this.FormPemasukanRawatJalan.get('anas_fee'); }
     get nominal_tarif(): AbstractControl { return this.FormPemasukanRawatJalan.get('nominal_tarif'); }
     get total_tarif(): AbstractControl { return this.FormPemasukanRawatJalan.get('total_tarif'); }
+    get doct_disc(): AbstractControl { return this.FormPemasukanRawatJalan.get('doct_disc'); }
     get id_poli_tarif(): AbstractControl { return this.FormPemasukanRawatJalan.get('id_poli'); }
     get id_kelas_pelayanan(): AbstractControl { return this.FormPemasukanRawatJalan.get('id_kelas_pelayanan'); }
 

@@ -1,0 +1,79 @@
+<section id="payment_method_qris">
+    <form [formGroup]="FormPaymentQRIS">
+        <!-- Keterangan -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Keterangan'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control form-select-sm" formControlName="keterangan">
+            </div>
+        </div>
+
+        <!-- Belum Lunas -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Belum Lunas'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                    formControlName="belum_lunas">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+
+        <!-- Koreksi -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Koreksi'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                    formControlName="koreksi">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+
+        <!-- Total Belum Lunas -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Total Belum Lunas'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                    formControlName="total_belum_lunas">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+
+        <!-- Jumlah Bayar -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Jumlah Bayar'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox #JumlahBayar [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" formControlName="jumlah_bayar" [max]="belum_lunas.value"
+                    (change)="handleChangeJumlahBayar(JumlahBayar.value)"
+                    (keyup.enter)="onSendJumlahBayar(FormPaymentQRIS.value)">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+
+        <!-- Kembalian -->
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Kembalian'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                    formControlName="kembalian">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+    </form>
+</section>

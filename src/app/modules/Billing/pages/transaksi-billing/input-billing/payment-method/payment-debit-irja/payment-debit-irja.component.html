@@ -1,0 +1,59 @@
+<section id="payment_method_debit">
+    <form [formGroup]="FormPaymentDebit">
+        <!-- Belum Lunas -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Belum Lunas'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                    formControlName="belum_lunas">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+
+        <!-- Bank -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Nama Bank'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-dropdownlist [allowFiltering]="true" formControlName="id_bank_payment"></ejs-dropdownlist>
+            </div>
+        </div>
+
+        <!-- EDC -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Nama EDC'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-dropdownlist [allowFiltering]="true" formControlName="id_edc_payment"></ejs-dropdownlist>
+            </div>
+        </div>
+
+        <!-- Trace Number -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Trace Number'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input class="form-control form-select-sm" type="text" formControlName="trace_number">
+            </div>
+        </div>
+
+        <!-- Jumlah Bayar -->
+        <div class="row mb-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <atm-label [LabelCaption]="'Jumlah Bayar'"></atm-label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <ejs-numerictextbox #JumlahBayar [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
+                    [format]="'N2'" formControlName="jumlah_bayar" [max]="belum_lunas.value"
+                    (keyup.enter)="onSendJumlahBayar(FormPaymentDebit.value)">
+                </ejs-numerictextbox>
+            </div>
+        </div>
+    </form>
+</section>

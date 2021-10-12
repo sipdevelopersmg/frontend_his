@@ -1,0 +1,54 @@
+{
+    "GridSetupBankPaymentColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_bank_payment",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_bank_payment",
+            "headerText": "KODE BANK",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_bank_payment",
+            "headerText": "NAMA BANK",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "KETERANGAN",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "biaya",
+            "headerText": "BIAYA",
+            "visible": true,
+            "width": 80,
+            "textAlign": "Right",
+            "format": "N2",
+            "headerTextAlign": "Right"
+        }
+    ]
+}

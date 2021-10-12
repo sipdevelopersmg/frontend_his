@@ -13,6 +13,7 @@
 @import "~@syncfusion/ej2-lists/styles/fabric.css";
 @import "~@syncfusion/ej2-angular-inputs/styles/fabric.css";
 @import "~@syncfusion/ej2-angular-navigations/styles/fabric.css";
+@import "~@syncfusion/ej2-richtexteditor/styles/fabric.css";
 @import "~ng-wizard/themes/ng_wizard.min.css";
 @import "~ng-wizard/themes/ng_wizard_theme_dots.min.css";
 
@@ -28,6 +29,7 @@ body {
   --hitam-muda: #637280;
   --abu-muda: #cbd1d6;
   --abu-tua: #9f9f9f;
+  --putih-tua: #f9f9fa;
   --hijau-muda: #00ff7a;
   --hijau-tua: #009f4c;
   --kuning-tua: #9f9b00;
@@ -207,6 +209,10 @@ body {
   border-top: 0.25em solid #432158 !important;
 }
 
+/* .background-putih-tua {
+    background-color: ;
+} */
+
 .e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
   min-height: 14px !important;
 }
@@ -290,6 +296,11 @@ body {
   background-color: #e9ecef;
 }
 
+.readonly-state-blue {
+  background-color: var(--biru-muda) !important;
+  color: white !important;
+}
+
 span.readonly-state > .e-numerictextbox {
   background-color: #e9ecef !important;
   border: 1px solid #dee2e6 !important;
@@ -298,4 +309,17 @@ span.readonly-state > .e-numerictextbox {
 .large-modal-content {
   width: 60rem !important;
   margin-left: -5rem !important;
+}
+
+.see-detail {
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-radius: 0 !important;
+  background-color: white !important;
+}
+
+.see-detail:focus,
+.see-detail:active {
+  box-shadow: none !important;
 }

@@ -9,11 +9,11 @@ ul.list-group.border-0.shadow-sm {
   max-width: 13rem;
 }
 
-li.list-group-item.border-0 {
+li.item_diagnosa {
   font-size: 14px;
 }
 
-li.list-group-item.border-0:hover {
+li.item_diagnosa:hover {
   background-color: var(--biru-muda);
   color: white;
 }

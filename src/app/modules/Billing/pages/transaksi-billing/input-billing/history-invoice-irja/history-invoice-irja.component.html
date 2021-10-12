@@ -1,0 +1,225 @@
+<!-- Modal History Invoice -->
+<button id="btnModalHistoryInvoice" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalHistoryInvoice" [hidden]="true">
+    Launch Modal Invoice IRJA
+</button>
+
+<div class="modal fade" id="modalHistoryInvoice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalHistoryInvoiceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalHistoryInvoiceLabel">Daftar Invoice</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Listing Daftar Invoice -->
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="row">
+                            <!-- Listing Invoice -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card shadow-sm">
+                                    <div class="card-header">
+                                        <p class="text-biru-muda mb-0">Daftar Invoice</p>
+                                    </div>
+                                    <div class="card-body py-2 px-3"
+                                        style="height: 30.5rem; max-height: 30.5rem; overflow-y: auto;">
+                                        <div class="row px-2">
+                                            <div *ngFor="let item of DaftarInvoice"
+                                                class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 pt-2 pb-1 border shadow-sm rounded div_item_invoice"
+                                                (click)="handleClickDetailItemInvoice(item)">
+                                                <div class="form-check form-check-inline float-start">
+                                                    <input class="form-check-input form-select-sm" type="checkbox"
+                                                        id="check{{ item.id_invoice }}"
+                                                        (change)="handleChangeCheckboxItemInvoice(item)">
+                                                    <label class="form-check-label" for="check{{ item.id_invoice }}">
+                                                        {{ item.nomor_invoice }}
+                                                    </label>
+                                                </div>
+                                                <span class="float-end">
+                                                    <i class="fas fa-check-circle fa-sm text-abu-muda"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Invoice -->
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header border">
+                                <p class="text-biru-muda mb-0">Detail Invoice</p>
+                            </div>
+                            <div class="card-body p-2 border-0">
+                                <form [formGroup]="FormHistoryInvoice">
+                                    <div class="row">
+                                        <!-- Grid Detail Invoice -->
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <ejs-grid #GridDetailInvoice [id]="'GridDetailInvoice'" [height]="'15rem'"
+                                                [dataSource]="GridDetailInvoiceDatasource" [rowHeight]="30"
+                                                [gridLines]="'Both'" [allowPaging]="false" [allowResizing]="true"
+                                                [allowFiltering]='true'
+                                                (rowSelected)="handleSelectedRowDetailInvoice($event)">
+                                                <e-columns>
+                                                    <e-column [width]="100" [field]="'id_invoice'"
+                                                        [headerText]="'ID DETAIL'" [visible]="false"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'id_invoice_item'"
+                                                        [headerText]="'ID DETAIL'" [visible]="false"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="90" [field]="'tgl_invoice'"
+                                                        [headerText]="'TGL ORDER'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'nomor_invoice'"
+                                                        [headerText]="'NO. INVOICE'" [visible]="false"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'kode_setup_tarif'"
+                                                        [headerText]="'KODE TARIF'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="250" [field]="'nama_setup_tarif'"
+                                                        [headerText]="'NAMA TARIF'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'"
+                                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                        [type]="'number'" [format]="'N2'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'unit_amount'"
+                                                        [headerText]="'HARGA'" [visible]="true" [allowEditing]="false"
+                                                        [allowSorting]="false" [textAlign]="'Right'"
+                                                        [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'total_amount'"
+                                                        [headerText]="'SUBTOTAL'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                        [type]="'number'" [format]="'N2'">
+                                                    </e-column>
+                                                </e-columns>
+                                            </ejs-grid>
+                                        </div>
+
+                                        <!-- Total Dll -->
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0">
+                                            <!-- Total -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                                    <p class="text-black mb-0">Total :</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                                        [showSpinButton]="false" [format]="'N2'"
+                                                        [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                                        formControlName="total_amount">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+
+                                            <!-- Diskon Dokter -->
+                                            <!-- <div class="row mb-2">
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                                    <p class="text-black mb-0">Diskon Dokter :</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                                        [showSpinButton]="false" [format]="'N2'"
+                                                        [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                                        formControlName="disc_dokter_amount">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div> -->
+
+                                            <!-- Klaim Debitur -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                                    <p class="text-black mb-0">Klaim Debitur :</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                                        [showSpinButton]="false" [format]="'N2'"
+                                                        [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                                        formControlName="claim_amount">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+
+                                            <!-- Uang Muka -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                                    <p class="text-black mb-0">Uang Muka :</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                                        [showSpinButton]="false" [format]="'N2'"
+                                                        [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                                        formControlName="deposit_amount">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+
+                                            <!-- Sudah Dibayar -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                                    <p class="text-black mb-0">Sudah Dibayar :</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                                        [showSpinButton]="false" [format]="'N2'"
+                                                        [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                                        formControlName="paid_amount">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+
+                                            <!-- Tagihan Akhir -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                                                    <p class="text-danger mb-0">Tagihan Akhir :</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                                        [showSpinButton]="false" [format]="'N2'"
+                                                        [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                                        value="{{ total_amount.value - paid_amount.value }}">
+                                                    </ejs-numerictextbox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-success btn-sm">
+                    Cetak Rincian
+                </button>
+                <button type="button" class="btn btn-primary btn-sm">
+                    Bayar Tagihan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

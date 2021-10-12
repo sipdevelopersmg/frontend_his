@@ -57,12 +57,21 @@ export class KonsulComponent implements OnInit, AfterViewInit {
         });
 
         this.onGetAllPoliklinik();
+
+        this.onGetAllRiwayatKonsul(this.daftarPasienService.ActivePasien.value.id_dokter);
     }
 
     ngAfterViewInit(): void {
         setTimeout(() => {
             this.navigationService.ButtonSidebarMenuState.next(true);
         }, 1);
+    }
+
+    onGetAllRiwayatKonsul(DokterId: number): void {
+        this.konsulService.onGetAllRiwayatKonsul(DokterId)
+            .subscribe((result) => {
+                this.GridDaftarKonsulDataSource = result.data;
+            });
     }
 
     onGetAllPoliklinik(): void {

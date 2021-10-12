@@ -1,0 +1,111 @@
+<org-card-layout>
+    <!-- Offcanvas Filter -->
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-filter>
+        </div>
+    </div>
+
+    <!-- Daftar Order -->
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-muda">Daftar Order</p>
+                </div>
+                <div class="card-body p-0">
+                    <ejs-grid #GridData [id]="'GridDaftarOrder'"
+                        [height]="screenWidth >= 1920 ? 'calc(100vh - 44rem)' : 'calc(100vh - 34rem)'"
+                        [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
+                        [allowResizing]="true" [allowFiltering]='true' [toolbar]="GridToolbar"
+                        (rowSelected)="handleSelectedRow($event)">
+                        <e-columns>
+                            <e-column [width]="50" [field]="'id_order_penunjang'" [headerText]="'ID'" [visible]="false"
+                                [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="100" [field]="'tanggal_hasil_order_penunjang'" [headerText]="'TGL HASIL'"
+                                [visible]="false" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                                [type]="'Date'" [format]="'dd/MM/yyyy'">
+                            </e-column>
+                            <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="90" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="120" [field]="'nama_dokter'" [headerText]="'DOKTER'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLIKLINIK'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                            </e-column>
+                            <e-column [width]="100" [field]="'nama_kelas'" [headerText]="'KELAS'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Order -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <p class="mb-0 text-biru-muda">Detail Order</p>
+                </div>
+                <div class="card-body p-0">
+                    <ejs-contextmenu target="#GridDetailOrder" [items]="GridDetailOrderContextMenuItems"
+                        (select)="handleSelectGridContextMenu($event)">
+                    </ejs-contextmenu>
+
+                    <ejs-grid #GridDetail [id]="'GridDetailOrder'"
+                        [height]="screenWidth >= 1920 ? 'calc(100vh - 45rem)' : 'calc(100vh - 35rem)'"
+                        [dataSource]="GridDetailDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
+                        [allowResizing]="true" [allowFiltering]='true' [toolbar]="GridDetailToolbar"
+                        [contextMenuItems]="GridDetailOrderContextMenuItems"
+                        (rowSelected)="handleSelectedRowDetail($event)">
+                        <e-columns>
+                            <e-column [width]="50" [field]="'id_order_penunjang'" [headerText]="'ID'" [visible]="false"
+                                [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="50" [field]="'id_order_penunjang_detail'" [headerText]="'ID'"
+                                [visible]="false" [type]="'number'" [allowEditing]="false" [allowSorting]="false"
+                                [format]="'N'" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="150" [field]="'nama_tindakan_penunjang'"
+                                [headerText]="'NAMA PEMERIKSAAN'" [visible]="true" [allowEditing]="false"
+                                [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="70" [field]="'rad_posisi'" [headerText]="'L/R'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="70" [field]="'rad_pk'" [headerText]="'P/K'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="100" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="150" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="100" [field]="'tgl_hasil'" [headerText]="'TGL HASIL'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                                [format]="'dd/MM/yyyy'">
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

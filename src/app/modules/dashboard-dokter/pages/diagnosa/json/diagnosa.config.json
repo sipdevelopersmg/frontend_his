@@ -1,0 +1,38 @@
+{
+    "LookupDiagnosa": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_icd",
+                "headerText": "KODE ICD",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_icd",
+                "headerText": "NAMA ICD",
+                "type": "string",
+                "visible": true,
+                "width": 300
+            }
+        ],
+        "filter": [
+            {
+                "field": " si1.kode_icd",
+                "filter": "like",
+                "title": "KODE ICD"
+            },
+            {
+                "field": "si1.nama_icd",
+                "filter": "like",
+                "title": "NAMA ICD"
+            }
+        ]
+    }
+}

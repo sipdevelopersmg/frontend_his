@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "node --max_old_space_size=4192 ./node_modules/@angular/cli/bin/ng serve",
+        "start": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng serve",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
@@ -31,6 +31,7 @@
         "@syncfusion/ej2-angular-grids": "^19.1.66",
         "@syncfusion/ej2-angular-inputs": "^19.1.66",
         "@syncfusion/ej2-angular-navigations": "^19.1.66",
+        "@syncfusion/ej2-angular-richtexteditor": "^19.3.43",
         "@syncfusion/ej2-base": "^19.1.66",
         "@types/crypto-js": "^4.0.2",
         "bootstrap": "^5.0.1",

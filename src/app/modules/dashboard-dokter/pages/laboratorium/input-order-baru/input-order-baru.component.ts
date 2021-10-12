@@ -249,7 +249,10 @@ export class InputOrderBaruLabComponent implements OnInit {
         FormInsertOrderLab.id_kelas = this.daftarPasienService.ActivePasien.value.id_kelas_rawat;
         FormInsertOrderLab.kode_grup_penunjang = "LAB";
         FormInsertOrderLab.id_poli_order = this.daftarPasienService.ActivePasien.value.id_poli;
-        FormInsertOrderLab.id_dokter_order = this.daftarPasienService.ActivePasien.value.id_dokter;
+
+        let UserData = JSON.parse(localStorage.getItem('UserData'));
+        FormInsertOrderLab.id_dokter_order = UserData.id_karyawan;
+
         FormInsertOrderLab.item_order = this.GridDaftarOrderDatasource;
 
         this.laboratoriumService.onPostSaveOrderPenunjang(FormInsertOrderLab)

@@ -7,12 +7,17 @@ import { VerifikasiOrderLabComponent } from './pages/verifikasi-order-lab/verifi
 import { OrderManagementRoutingModule } from './om-routing.module';
 import { VerifikasiOrderRadComponent } from './pages/verifikasi-order-rad/verifikasi-order-rad.component';
 import { SetupPetugasComponent } from './pages/setup-data/setup-petugas/setup-petugas.component';
+import { InputHasilRadiologiComponent } from './pages/input-hasil-radiologi/input-hasil-radiologi.component';
+import { DetailHasilRadiologiComponent } from './pages/input-hasil-radiologi/detail-hasil-radiologi/detail-hasil-radiologi.component';
+import { HtmlEditorService, ImageService, LinkService, RichTextEditorModule, ToolbarService } from "@syncfusion/ej2-angular-richtexteditor";
 
 @NgModule({
     declarations: [
         VerifikasiOrderLabComponent,
         VerifikasiOrderRadComponent,
-        SetupPetugasComponent
+        SetupPetugasComponent,
+        InputHasilRadiologiComponent,
+        DetailHasilRadiologiComponent
     ],
     imports: [
         CommonModule,
@@ -20,7 +25,14 @@ import { SetupPetugasComponent } from './pages/setup-data/setup-petugas/setup-pe
         ReactiveFormsModule,
         SharedModule,
         ContextMenuModule,
-        OrderManagementRoutingModule
+        OrderManagementRoutingModule,
+        RichTextEditorModule,
+    ],
+    providers: [
+        ToolbarService,
+        LinkService,
+        ImageService,
+        HtmlEditorService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

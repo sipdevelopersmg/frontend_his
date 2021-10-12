@@ -4,17 +4,26 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "kode_pemeriksaan",
-            "headerText": "KODE PEMERIKSAAN",
-            "visible": true,
+            "field": "id_mapping_tarif_penunjang",
+            "headerText": "ID MAPPING TARIF PENUNJANG",
+            "visible": false,
             "width": 100
         },
         {
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_order_pemeriksaan",
-            "headerText": "NAMA ORDER TINDAKAN",
+            "field": "kode_setup_tarif",
+            "headerText": "KODE ",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_tindakan_penunjang",
+            "headerText": "ORDER TINDAKAN",
             "visible": true,
             "width": 200
         },
@@ -23,12 +32,199 @@
             "allowSorting": true,
             "editType": "defaultEdit",
             "field": "qty_order",
-            "headerText": "Qty",
+            "headerText": "QTY",
             "visible": true,
             "format": "N2",
             "textAlign": "Right",
             "headerTextAlign": "Right",
             "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan_order",
+            "headerText": "KETERANGAN ORDER",
+            "visible": false,
+            "width": 100
         }
-    ]
+    ],
+    "LookupDiagnosa": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_icd",
+                "headerText": "KODE ICD",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_icd",
+                "headerText": "NAMA ICD",
+                "type": "string",
+                "visible": true,
+                "width": 300
+            }
+        ],
+        "filter": [
+            {
+                "field": " si1.kode_icd",
+                "filter": "like",
+                "title": "KODE ICD"
+            },
+            {
+                "field": "si1.nama_icd",
+                "filter": "like",
+                "title": "NAMA ICD"
+            }
+        ]
+    },
+    "LookupDokter": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "numericEdit",
+                "field": "id_person",
+                "format": "N2",
+                "headerText": "PERSON ID",
+                "type": "number",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_dokter",
+                "headerText": "KODE DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA DOKTER",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "spesialisasi_dokter",
+                "headerText": "SPESIALISASI",
+                "type": "string",
+                "visible": true,
+                "width": 110
+            }
+        ],
+        "filter": [
+            {
+                "field": "d.kode_dokter",
+                "filter": "like",
+                "title": "KODE DOKTER"
+            },
+            {
+                "field": "concat(p.nama_depan, ' ',p.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA DOKTER"
+            }
+        ]
+    },
+    "LookupTarif": {
+        "columns": [
+            {
+                "width": 50,
+                "type": "Checkbox",
+                "field": "Checkbox",
+                "headerTextAlign": "Center",
+                "textAlign": "Center"
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "id_setup_tarif",
+                "headerText": "ID",
+                "type": "string",
+                "visible": false
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_setup_tarif",
+                "headerText": "KODE SETUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_setup_tarif",
+                "headerText": "NAMA SETUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_grup_tarif",
+                "headerText": "NAMA GRUP TARIF",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nominal_tarif",
+                "headerText": "NOMINAL TARIF",
+                "headerTextAlign": "Right",
+                "textAlign": "Right",
+                "format": "N2",
+                "type": "number",
+                "visible": false,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "st.kode_setup_tarif",
+                "filter": "like",
+                "title": "KODE TARIF"
+            },
+            {
+                "field": "st.nama_setup_tarif",
+                "filter": "like",
+                "title": "NAMA TARIF"
+            }
+        ]
+    }
 }

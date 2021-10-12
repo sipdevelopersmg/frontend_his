@@ -18,6 +18,10 @@ export class KonsulService {
         private httpOperationService: HttpOperationService
     ) { }
 
+    onGetAllRiwayatKonsul(DokterId: number): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_RIWAYAT_KONSUL_BY_ID_DOKTER + DokterId);
+    }
+
     onPostSaveKonsulRawatJalan(Data: any): Observable<any> {
         return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_KONSUL_PASIEN_IRJA, Data)
             .pipe(
