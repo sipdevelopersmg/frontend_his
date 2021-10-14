@@ -84,7 +84,7 @@
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                 <ejs-numerictextbox #JumlahBayar [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
-                    [format]="'N2'" formControlName="jumlah_bayar" [max]="belum_lunas.value"
+                    [format]="'N2'" formControlName="jumlah_bayar" [readonly]="true"
                     (keyup.enter)="onSendJumlahBayar(FormPaymentCredit.value)">
                 </ejs-numerictextbox>
             </div>

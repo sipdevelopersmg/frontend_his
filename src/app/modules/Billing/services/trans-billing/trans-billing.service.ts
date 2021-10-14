@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -20,6 +20,8 @@ export class TransBillingService {
 
     HeaderBilling = new BehaviorSubject({});
     HeaderBilling$ = this.HeaderBilling.asObservable();
+
+    HistoryInvoicePaid = new BehaviorSubject([]);
 
     constructor(
         private notificationService: NotificationService,
@@ -86,5 +88,48 @@ export class TransBillingService {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
+    }
+
+    onGetSaldoDeposit(RegisterId: number): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_TRANS_BILLING.GET_SALDO_DEPOSIT_BY_NO_REGISTER + RegisterId)
+    }
+
+    onPostSaveDeposit(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_SAVE_DEPOSIT, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onPostPaymentWithExistingInvoice(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_SAVE_PAYMENT_WITH_EXISTING_INVOICE, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onPostRestitusi(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_SAVE_RESTITUSI, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onGetAllHistoryInvoicePaid(JenisPembayaran: string, RegisterId: number): void {
+        this.httpOperationService.defaultGetRequest(this.API_TRANS_BILLING.GET_HISTORY_INVOICE_PAID + RegisterId)
+            .pipe(
+                map((result) => {
+                    return result.data[JenisPembayaran];
+                })
+            )
+            .subscribe((result) => {
+                this.HistoryInvoicePaid.next(result);
+            });
     }
 }

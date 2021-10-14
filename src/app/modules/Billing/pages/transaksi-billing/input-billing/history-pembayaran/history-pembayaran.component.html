@@ -5,12 +5,20 @@
 </button>
 
 <div class="offcanvas offcanvas-end" id="offcanvasRiwayat" aria-labelledby="offcanvasRiwayatLabel"
-    style="width: 40rem;">
+    style="width: 50rem;">
     <div class="offcanvas-header">
         <h5 id="offcanvasRiwayatLabel">{{ OffcanvasRiwayatTitle }}</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <mol-grid #GridData [grid-height]="'100%'"
+                    [grid-DataSource]="transBillingService.HistoryInvoicePaid.value" [grid-paging]="false"
+                    [grid-lines]="'Both'" [columns]="GridConfig.GridHistoryPembayaranColumns"
+                    (row-selected)="handleSelectedRow($event)" (initialized)="InitalizedGrid($event)">
+                </mol-grid>
+            </div>
+        </div>
     </div>
 </div>

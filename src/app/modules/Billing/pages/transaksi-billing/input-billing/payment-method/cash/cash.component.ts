@@ -74,8 +74,6 @@ export class CashComponent implements OnInit {
     }
 
     onSendJumlahBayar(FormPaymentCash: any): void {
-        FormPaymentCash.jumlah_bayar = FormPaymentCash.belum_lunas;
-
         this.onSendPaymentCash.emit(FormPaymentCash);
 
         this.onResetFormPaymentCash();

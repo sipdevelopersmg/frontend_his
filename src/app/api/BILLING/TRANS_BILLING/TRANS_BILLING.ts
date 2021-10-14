@@ -8,5 +8,14 @@ export const GET_SALDO_KLAIM_BY_NO_REGISTER = `${environment.webApiBilling}` + `
 export const POST_SAVE_SALDO_KLAIM = `${environment.webApiBilling}` + `tarif/TrKlaimSaldo/Insert`;
 
 export const POST_SAVE_INVOICE_TANPA_PAYMENT = `${environment.webApiBilling}` + `tarif/TrInvoice/InsertInvoiceWithoutPayment`;
+export const POST_SAVE_PAYMENT_WITH_EXISTING_INVOICE = `${environment.webApiBilling}` + `tarif/TrInvoice/PaymentForExistingInvoice`;
+
 export const POST_SAVE_INVOICE_DENGAN_PAYMENT = `${environment.webApiBilling}` + `tarif/TrInvoice/InsertInvoiceWithPayment`;
 export const GET_HISTORY_INVOICE_TANPA_PAYMENT = `${environment.webApiBilling}` + `tarif/TrInvoice/GetHistoryInvoiceByIdRegister/`;
+
+export const GET_SALDO_DEPOSIT_BY_NO_REGISTER = `${environment.webApiBilling}` + `tarif/TransBilling/DepositGetByIdRegister/`;
+export const POST_SAVE_DEPOSIT = `${environment.webApiBilling}` + `tarif/TransBilling/Deposit`;
+
+export const POST_SAVE_RESTITUSI = `${environment.webApiBilling}` + `tarif/TransBilling/Restitusi`;
+
+export const GET_HISTORY_INVOICE_PAID = `${environment.webApiBilling}` + `tarif/TransBilling/GetDataTransaksi_PAID/`;

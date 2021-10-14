@@ -80,7 +80,7 @@
 
     <!-- Daftar Slip Tagihan dan Total -->
     <div class="row mb-2">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="height: calc(100vh - 19rem); overflow-y: auto;">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="height: calc(100vh - 19.5rem); overflow-y: auto;">
             <!-- Daftar Tagihan -->
             <div class="row mb-2 align-items-center">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end px-0">
@@ -95,9 +95,41 @@
             <!-- Daftar Item Billing -->
             <div class="row mb-3" *ngFor="let item of BillingItem" [hidden]="item.detail?.length < 1">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end px-0 pt-2">
-                    <input [id]="item.jenis_transaksi + '_check'" class="form-check-input form-select-sm me-1"
-                        type="checkbox" (change)="handleChangeItemBillingCheck(item)"
-                        [disabled]="item.status == 'PAID'">
+                    <!-- TIKET -->
+                    <input *ngIf="item.jenis_transaksi == 'TKT'" [id]="item.jenis_transaksi + '_check'"
+                        class="form-check-input form-select-sm me-1" type="checkbox"
+                        [class.cursor-disabled]="GridDataTiketContainsNotOpen"
+                        [disabled]="GridDataTiketContainsNotOpen ? true : false"
+                        (change)="GridDataTiketContainsNotOpen ? '' : handleChangeItemBillingCheck(item)">
+
+                    <!-- TDMK -->
+                    <input *ngIf="item.jenis_transaksi == 'TDMK'" [id]="item.jenis_transaksi + '_check'"
+                        class="form-check-input form-select-sm me-1" type="checkbox"
+                        [class.cursor-disabled]="GridDataTDMKContainsNotOpen"
+                        [disabled]="GridDataTDMKContainsNotOpen ? true : false"
+                        (change)="GridDataTDMKContainsNotOpen ? '' : handleChangeItemBillingCheck(item)">
+
+                    <!-- TDLAB -->
+                    <input *ngIf="item.jenis_transaksi == 'TDLAB'" [id]="item.jenis_transaksi + '_check'"
+                        class="form-check-input form-select-sm me-1" type="checkbox"
+                        [class.cursor-disabled]="GridDataTDLABContainsNotOpen"
+                        [disabled]="GridDataTDLABContainsNotOpen ? true : false"
+                        (change)="GridDataTDLABContainsNotOpen ? '' : handleChangeItemBillingCheck(item)">
+
+                    <!-- TDRAD -->
+                    <input *ngIf="item.jenis_transaksi == 'TDRAD'" [id]="item.jenis_transaksi + '_check'"
+                        class="form-check-input form-select-sm me-1" type="checkbox"
+                        [class.cursor-disabled]="GridDataTDRADContainsNotOpen"
+                        [disabled]="GridDataTDRADContainsNotOpen ? true : false"
+                        (change)="GridDataTDRADContainsNotOpen ? '' : handleChangeItemBillingCheck(item)">
+
+                    <!-- RESEP -->
+                    <input *ngIf="item.jenis_transaksi == 'RESEP'" [id]="item.jenis_transaksi + '_check'"
+                        class="form-check-input form-select-sm me-1" type="checkbox"
+                        [class.cursor-disabled]="GridDataResepContainsNotOpen"
+                        [disabled]="GridDataResepContainsNotOpen ? true : false"
+                        (change)="GridDataResepContainsNotOpen ? '' : handleChangeItemBillingCheck(item)">
+
                 </div>
                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
                     <div class="card shadow-sm border-0">
@@ -146,6 +178,7 @@
                                     [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
                                     [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
                                     [selectionSettings]="GridDataTiketSelectionSettings"
+                                    (rowSelecting)="GridDataTiketContainsNotOpen ? handleSelectingRowDataTiket($event) : null"
                                     (rowSelected)="handleSelectedRowDataTiket($event, item)"
                                     (rowDeselected)="handleDeselectedRowDataTiket($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)">
@@ -212,9 +245,11 @@
                                 </ejs-grid>
 
                                 <!-- TDMK -->
-                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDMK' " #GridDataTDMK [id]="'GridDataTDMK'"
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDMK'" #GridDataTDMK [id]="'GridDataTDMK'"
                                     [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
                                     [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    [selectionSettings]="GridDataTDMKSelectionSettings"
+                                    (rowSelecting)="GridDataTDMKContainsNotOpen ? handleSelectingRowDataTDMK($event) : null"
                                     (rowSelected)="handleSelectedRowDataTDMK($event, item)"
                                     (rowDeselected)="handleDeselectedRowDataTDMK($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)">
@@ -228,7 +263,7 @@
                                         </e-column>
                                         <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                            [textAlign]="'Left'">
                                         </e-column>
                                         <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
@@ -281,9 +316,11 @@
                                 </ejs-grid>
 
                                 <!-- TDLAB -->
-                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDLAB' " #GridDataTDLAB [id]="'GridDataTDLAB'"
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDLAB'" #GridDataTDLAB [id]="'GridDataTDLAB'"
                                     [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
                                     [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    [selectionSettings]="GridDataTDLABSelectionSettings"
+                                    (rowSelecting)="GridDataTDLABContainsNotOpen ? handleSelectingRowDataTDLAB($event) : null"
                                     (rowSelected)="handleSelectedRowDataTDLAB($event, item)"
                                     (rowDeselected)="handleDeselectedRowDataTDLAB($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)">
@@ -295,11 +332,11 @@
                                             [visible]="false" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                        <e-column [width]="120" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                            [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                        <e-column [width]="120" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
@@ -350,9 +387,11 @@
                                 </ejs-grid>
 
                                 <!-- TDRAD -->
-                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDRAD' " #GridDataTDRAD [id]="'GridDataTDRAD'"
+                                <ejs-grid *ngIf="item.jenis_transaksi == 'TDRAD'" #GridDataTDRAD [id]="'GridDataTDRAD'"
                                     [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
                                     [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                    [selectionSettings]="GridDataTDRADSelectionSettings"
+                                    (rowSelecting)="GridDataTDRADContainsNotOpen ? handleSelectingRowDataTDRAD($event) : null"
                                     (rowSelected)="handleSelectedRowDataTDRAD($event, item)"
                                     (rowDeselected)="handleDeselectedRowDataTDRAD($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)">
@@ -366,7 +405,7 @@
                                         </e-column>
                                         <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                            [textAlign]="'Left'">
                                         </e-column>
                                         <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
@@ -423,7 +462,9 @@
                                     [width]="'100%'" [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
                                     [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
                                     [resizeSettings]="GridResepResizeSettings" [childGrid]='ChildGridResep'
+                                    [selectionSettings]="GridDataResepSelectionSettings"
                                     (load)="handleLoadDataResep($event)"
+                                    (rowSelecting)="GridDataResepContainsNotOpen ? handleSelectingRowDataResep($event) : null"
                                     (rowSelected)="handleSelectedRowDataResep($event, item)"
                                     (rowDeselected)="handleDeselectedRowDataResep($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)"
@@ -489,7 +530,7 @@
         </div>
 
         <!-- Rincian Total -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top: 2rem">
             <div class="card shadow-sm border">
                 <div class="card-body">
                     <form [formGroup]="FormInputInvoice">
@@ -520,7 +561,7 @@
                         </div> -->
 
                         <!-- Total Tagihan -->
-                        <div class="row align-items-center mb-2">
+                        <div [hidden]="true" class="row align-items-center mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <p class="text-hitam-muda mb-0 fw-bold">Total Tagihan</p>
                             </div>
@@ -630,10 +671,10 @@
                             </div>
                         </div>
 
-                        <!-- Telah Dibayar -->
+                        <!-- Saldo Deposit -->
                         <div class="row align-items-center mb-4">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <p class="text-hitam-muda mb-0">Telah Dibayar</p>
+                                <p class="text-hitam-muda mb-0">Saldo Deposit</p>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -661,23 +702,69 @@
         </div>
     </div>
 
-    <!-- Modal Pembayaran -->
+    <!-- Button Modal Pembayaran -->
     <button id="btnModalPembayaran" type="button" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#modalPembayaran" [hidden]="true">
         Launch Modal Pembayaran
     </button>
 
+    <!-- Modal Pembayaran -->
     <div class="modal fade" id="modalPembayaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="modalPembayaranLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header py-2 px-3 background-biru-muda text-white">
-                    <h5 class="modal-title" id="modalPembayaranLabel">{{ ModalPembayaranTitle }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        (click)="handleCloseModalPembayaran()">
+                    <h5 *ngIf="ModalPembayaranState == 'Invoice'" class="modal-title" id="modalPembayaranLabel">
+                        {{ ModalPembayaranTitle }}
+                    </h5>
+                    <h5 *ngIf="ModalPembayaranState == 'Deposit'" class="modal-title" id="modalPembayaranLabel">
+                        Deposit
+                    </h5>
+                    <h5 *ngIf="ModalPembayaranState == 'Existing_Invoice'" class="modal-title"
+                        id="modalPembayaranLabel">
+                        {{ ModalPembayaranTitle }}
+                    </h5>
+                    <h5 *ngIf="ModalPembayaranState == 'Restitusi'" class="modal-title" id="modalPembayaranLabel">
+                        Restitusi
+                    </h5>
+                    <button *ngIf="ModalPembayaranState == 'Invoice'" type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close" (click)="handleCloseModalPembayaran()">
+                    </button>
+                    <button *ngIf="ModalPembayaranState != 'Invoice'" type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close" (click)="handleEmptyBillingHeader()">
+                    </button>
+                    <button id="btnCloseModalPembayaran" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" [hidden]="true">
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-1">
+                    <div class="row mb-2 align-items-start">
+                        <!-- Pembayar -->
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Dibayar Oleh'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <input id="pembayar" type="text" class="form-control form-select-sm"
+                                        [value]="ModalPembayaranState == 'Restitusi' ? InformasiUser.full_name : ( InformasiPasien ? InformasiPasien.nama_pasien : '')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Keterangan Bayar -->
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Keterangan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <input id="keterangan" type="text" class="form-control form-select-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mb-2">
                         <!-- Pembayaran State -->
                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
@@ -790,7 +877,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-2 justify-content-start">
+                    <div class="row mb-0 justify-content-start">
                         <!-- Total Transaksi -->
                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
                             <div class="row">
@@ -840,7 +927,8 @@
                         </div>
 
                         <!-- Kurang Bayar -->
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-1 pe-3">
+                        <div *ngIf="ModalPembayaranState != 'Deposit'"
+                            class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mb-2 pe-3">
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <p class="mb-0 fw-bold" style="font-size: 20px;">Kurang Bayar</p>
@@ -854,12 +942,68 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer py-2 px-3 background-abu-muda text-white">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
-                        (click)="handleCloseModalPembayaran()">
-                        Close
+                <div class="modal-footer p-0 bg-white border-0">
+                    <div class="row w-100 p-0">
+                        <div *ngIf="ModalPembayaranState != 'Deposit'"
+                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-grid gap-2 p-0">
+                            <button type="button" class="btn background-biru-muda text-white" data-bs-toggle="modal"
+                                data-bs-target="#modalPembayaranFinalisasi">
+                                Bayar
+                            </button>
+                        </div>
+                        <div *ngIf="ModalPembayaranState == 'Deposit'"
+                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-grid gap-2 p-0">
+                            <button type="button" class="btn background-biru-muda text-white"
+                                (click)="handleClickSubmitDeposit()">
+                                Deposit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Finalisasi Pembayaran -->
+    <div class="modal fade" id="modalPembayaranFinalisasi" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-labelledby="modalPembayaranFinalisasiLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl px-5">
+            <div class="modal-content border-0">
+                <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                    <h5 class="modal-title" id="modalPembayaranFinalisasiLabel">Bayar</h5>
+                    <button id="btnCloseModalFinalisasiPembayaran" type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close">
                     </button>
-                    <button type="button" class="btn btn-primary btn-sm" (click)="handleClickSubmitPembayaran()">
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr *ngFor="let item of DataFinalisasiPembayaran.value">
+                                        <td class="border-end fw-bold" style="font-size: 25px;">
+                                            {{ item.jenis_pembayaran }}
+                                        </td>
+                                        <td class="text-end fw-bold" style="font-size: 25px;">
+                                            {{ item.jumlah_pembayaran | currency: 'Rp. ' }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                    <button *ngIf="ModalPembayaranState == 'Invoice'" type="button" class="btn btn-primary"
+                        (click)="handleClickSubmitPembayaran()">
+                        Bayar
+                    </button>
+                    <button *ngIf="ModalPembayaranState == 'Existing_Invoice'" type="button" class="btn btn-primary"
+                        (click)="handleClickSubmitPaymentWithExisitingInvoice()">
+                        Bayar
+                    </button>
+                    <button *ngIf="ModalPembayaranState == 'Restitusi'" type="button" class="btn btn-primary"
+                        (click)="handleClickSubmitRestitusi()">
                         Bayar
                     </button>
                 </div>
@@ -870,5 +1014,7 @@
     <app-history-pembayaran #HistoryPembayaranBillingRawatJalan [OffcanvasRiwayatTitle]="OffcanvasRiwayatTitle">
     </app-history-pembayaran>
 
-    <app-history-invoice-irja #HistoryInvoiceRawatJalan [InformasiPasien]="InformasiPasien"></app-history-invoice-irja>
+    <app-history-invoice-irja #HistoryInvoiceRawatJalan [InformasiPasien]="InformasiPasien"
+        (onSendPaymentWithExistingInvoice)="handleSendPaymentWithExistingInvoice($event)">
+    </app-history-invoice-irja>
 </org-card-layout>

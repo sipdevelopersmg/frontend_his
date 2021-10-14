@@ -84,6 +84,7 @@ export class PaymentCreditIrjaComponent implements OnInit {
             .subscribe((result) => {
                 if (Object.keys(result).length > 0) {
                     this.belum_lunas.setValue(result['belum_lunas']);
+                    this.jumlah_bayar.setValue(result['belum_lunas']);
                     this.total_belum_lunas.setValue(this.belum_lunas.value - this.koreksi.value);
                 }
             });

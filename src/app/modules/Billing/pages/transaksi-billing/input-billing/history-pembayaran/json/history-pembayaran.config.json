@@ -1,0 +1,78 @@
+{
+    "GridHistoryPembayaranColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nomor_invoice",
+            "headerText": "NO. INVOICE",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "tgl_invoice",
+            "headerText": "TGL. INVOICE",
+            "type": "DateTime",
+            "format": "dd/MM/yyyy HH:mm:ss",
+            "visible": false,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "kode_setup_tarif",
+            "headerText": "KODE TARIF",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_setup_tarif",
+            "headerText": "NAMA TARIF",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "unit_amount",
+            "headerText": "HARGA",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 90
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty",
+            "headerText": "QTY",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 90
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "total_amount",
+            "headerText": "TOTAL",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 90
+        }
+    ]
+}

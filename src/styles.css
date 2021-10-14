@@ -115,6 +115,10 @@ body {
   cursor: pointer;
 }
 
+.cursor-disabled {
+  cursor: not-allowed !important;
+}
+
 .font-roboto {
   font-family: "Roboto", sans-serif;
 }

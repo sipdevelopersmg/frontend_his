@@ -25,31 +25,43 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     HeaderRibbon: string = "Input Billing Pasien";
 
     ButtonNav: ButtonNavModel[] = [
-        { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Daftar Invoice' },
         { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+        { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+        { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+        { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Daftar Invoice' },
         { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
     ];
 
     InformasiPasien: IInformasiPasienModel;
 
+    InformasiUser = JSON.parse(localStorage.getItem('UserData'));
+
     BillingItem: any[] = [];
     SelectedBillingItem: any;
 
     @ViewChild('GridDataTiket') GridDataTiket: GridComponent;
-    GridDataTiketSelectionSettings: SelectionSettingsModel = { type: 'Multiple', mode: 'Row', checkboxMode: 'Default' };
+    GridDataTiketSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
+    GridDataTiketContainsNotOpen: boolean = false;
     TotalAmountTiket = new BehaviorSubject(0);
 
     @ViewChild('GridDataTDMK') GridDataTDMK: GridComponent;
-    GridDataTDMKSelectionSettings = { persistSelection: true }
+    GridDataTDMKSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
+    GridDataTDMKContainsNotOpen: boolean = false;
     TotalAmountTDMK = new BehaviorSubject(0);
 
     @ViewChild('GridDataTDLAB') GridDataTDLAB: GridComponent;
+    GridDataTDLABSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
+    GridDataTDLABContainsNotOpen: boolean = false;
     TotalAmountTDLAB = new BehaviorSubject(0);
 
     @ViewChild('GridDataTDRAD') GridDataTDRAD: GridComponent;
+    GridDataTDRADSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
+    GridDataTDRADContainsNotOpen: boolean = false;
     TotalAmountTDRAD = new BehaviorSubject(0);
 
     @ViewChild('GridDataResep') GridDataResep: GridComponent;
+    GridDataResepSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
+    GridDataResepContainsNotOpen: boolean = false;
     GridResepResizeSettings = { mode: 'Auto' };
     ChildResepDatasource: IResepBillingSubDetailModel[] = [];
     ChildGridResep: GridModel = {};
@@ -76,13 +88,19 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         { buttonOption: { iconCss: 'fas fa-times fa-sm' } }
     ];
 
+    ModalPembayaranState = "Invoice";
+
     TotalTransaksiPembayaran = 0;
     BiayaBankPembayaran = 0;
     GrandTotalTransaksiPembayaran = 0;
     JumlahBayarPembayaran = 0;
     KurangBayarPembayaran = 0;
 
+    DataFinalisasiPembayaran = new BehaviorSubject([]);
+    DataFinalisasiPembayaran$ = this.DataFinalisasiPembayaran.asObservable();
+
     @ViewChild('HistoryInvoiceRawatJalan') HistoryInvoiceRawatJalan: HistoryInvoiceIrjaComponent;
+    SelectedInvoiceRawatJalan: number[];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -147,10 +165,85 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
                 this.handleGetSaldoKlaim(this.InformasiPasien.id_register);
 
-                this.total_tagihan.setValue(this.InformasiPasien.total_biaya);
+                this.onGetSaldoDeposit(this.InformasiPasien.id_register);
+
+                this.onCountTotalTagihan(result.data.tiket.detail, result.data.tdmk.detail, result.data.tdlab.detail, result.data.tdrad.detail, result.data.resep.detail);
 
                 this.HeaderRibbon = `Input Billing Pasien ${this.InformasiPasien.nama_pasien}`;
             });
+    }
+
+    onGetSaldoDeposit(RegisterId: number): void {
+        this.transBillingService.onGetSaldoDeposit(RegisterId)
+            .subscribe((result) => {
+                if (result.responseResult) {
+                    this.deposit_amount.setValue(result.data.saldo_deposit_sisa);
+
+                    this.onCountSisaTagihan();
+                }
+            })
+    }
+
+    onCountTotalTagihan(tiket: any[], tdmk: any[], tdlab: any[], tdrad: any[], resep: any[]): void {
+
+        // ** ===== TIKET =======
+        this.GridDataTiketContainsNotOpen = tiket.some((item) => { return item.status_bayar != "OPEN" });
+
+        let total_tagihan_tiket = 0;
+
+        tiket.filter((item) => {
+            if (item.status_bayar == "OPEN") {
+                return total_tagihan_tiket += item.total_amount;
+            }
+        });
+
+        // ** ===== TDMK ======
+        let total_tagihan_tdmk = 0;
+
+        this.GridDataTDMKContainsNotOpen = tdmk.some((item) => { return item.status_bayar != "OPEN" });
+
+        tdmk.filter((item) => {
+            if (item.status_bayar == "OPEN") {
+                return total_tagihan_tdmk += item.total_amount;
+            }
+        });
+
+        // ** ===== TDLAB =====
+        let total_tagihan_tdlab = 0;
+
+        this.GridDataTDLABContainsNotOpen = tdlab.some((item) => { return item.status_bayar != "OPEN" });
+
+        tdlab.filter((item) => {
+            if (item.status_bayar == "OPEN") {
+                return total_tagihan_tdlab += item.total_amount;
+            }
+        });
+
+        // ** ===== TDRAD =====
+        let total_tagihan_tdrad = 0;
+
+        this.GridDataTDRADContainsNotOpen = tdrad.some((item) => { return item.status_bayar != "OPEN" });
+
+        tdrad.filter((item) => {
+            if (item.status_bayar == "OPEN") {
+                return total_tagihan_tdrad += item.total_amount;
+            }
+        });
+
+        // ** ===== RESEP =====
+        let total_tagihan_resep = 0;
+
+        this.GridDataResepContainsNotOpen = resep.some((item) => { return item.status_bayar != "OPEN" });
+
+        resep.filter((item) => {
+            if (item.status_bayar == "OPEN") {
+                return total_tagihan_resep += item.total_amount;
+            }
+        });
+
+        let total_tagihan = total_tagihan_tiket + total_tagihan_tdmk + total_tagihan_tdlab + total_tagihan_tdrad + total_tagihan_resep;
+
+        this.total_tagihan.setValue(total_tagihan);
     }
 
     onGetDataPaymentMethod(): void {
@@ -162,12 +255,20 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     handleClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
+            case 'Restitusi':
+                this.handleOpenModalPembayaran("Restitusi");
+                break;
+            case 'Deposit':
+                this.handleOpenModalPembayaran("Deposit");
+                break;
             case 'Daftar_Invoice':
                 this.HistoryInvoiceRawatJalan.handleOpenHistoryInvoice();
                 break;
             case 'Create_Invoice':
-                this.handleOpenModalPembayaran();
-                // this.onCreateInvoice();
+                this.handleOpenModalPembayaran("Invoice");
+                break;
+            case 'Baru':
+                this.handleClearSelectionAllGrid();
                 break;
             default:
                 break;
@@ -180,7 +281,15 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         this.BillingItem.forEach((item) => {
             let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
 
-            daftar_slip_tagihan_check.checked == true ? check.checked = true : check.checked = false;
+            let contains_not_open = item.detail.some((el) => { return el.status_bayar != 'OPEN' });
+
+            if (daftar_slip_tagihan_check && !contains_not_open) {
+                check.checked = true;
+            };
+
+            if (!daftar_slip_tagihan_check) {
+                check.checked = false;
+            }
 
             this.handleChangeItemBillingCheck(item);
         });
@@ -224,19 +333,49 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         if (check) {
             switch (item.jenis_transaksi) {
                 case 'TKT':
-                    this.GridDataTiket.selectRowsByRange(0, this.GridDataTiket.dataSource['length'] - 1);
+                    let tiket_contains_open = [];
+                    for (let i = 0; i < this.GridDataTiket.dataSource['length']; i++) {
+                        if (this.GridDataTiket.dataSource[i].status_bayar === "OPEN") {
+                            tiket_contains_open.push(i);
+                        };
+                    };
+                    this.GridDataTiket.selectRows(tiket_contains_open);
                     break;
                 case 'TDMK':
-                    this.GridDataTDMK.selectRowsByRange(0, this.GridDataTDMK.dataSource['length'] - 1);
+                    let tdmk_contains_open = [];
+                    for (let i = 0; i < this.GridDataTDMK.dataSource['length']; i++) {
+                        if (this.GridDataTDMK.dataSource[i].status_bayar === "OPEN") {
+                            tdmk_contains_open.push(i);
+                        };
+                    };
+                    this.GridDataTDMK.selectRows(tdmk_contains_open);
                     break;
                 case 'TDLAB':
-                    this.GridDataTDLAB.selectRowsByRange(0, this.GridDataTDLAB.dataSource['length'] - 1);
+                    let tdlab_contains_open = [];
+                    for (let i = 0; i < this.GridDataTDLAB.dataSource['length']; i++) {
+                        if (this.GridDataTDLAB.dataSource[i].status_bayar === "OPEN") {
+                            tdlab_contains_open.push(i);
+                        };
+                    };
+                    this.GridDataTDLAB.selectRows(tdlab_contains_open);
                     break;
                 case 'TDRAD':
-                    this.GridDataTDRAD.selectRowsByRange(0, this.GridDataTDRAD.dataSource['length'] - 1);
+                    let tdrad_contains_open = [];
+                    for (let i = 0; i < this.GridDataTDRAD.dataSource['length']; i++) {
+                        if (this.GridDataTDRAD.dataSource[i].status_bayar === "OPEN") {
+                            tdrad_contains_open.push(i);
+                        };
+                    };
+                    this.GridDataTDRAD.selectRows(tdrad_contains_open);
                     break;
                 case 'RESEP':
-                    this.GridDataResep.selectRowsByRange(0, this.GridDataResep.dataSource['length'] - 1);
+                    let resep_contains_open = [];
+                    for (let i = 0; i < this.GridDataResep.dataSource['length']; i++) {
+                        if (this.GridDataResep.dataSource[i].status_bayar === "OPEN") {
+                            resep_contains_open.push(i);
+                        };
+                    };
+                    this.GridDataResep.selectRows(resep_contains_open);
                     break;
                 default:
                     break;
@@ -265,57 +404,48 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onCheckIfAllGridChecked(): void {
-        let jenis_transaksi = [];
+    handleClearSelectionAllGrid(): void {
+        this.GridDataTiket.clearSelection();
+        this.GridDataTDMK.clearSelection();
+        this.GridDataTDLAB.clearSelection();
+        this.GridDataTDRAD.clearSelection();
+        this.GridDataResep.clearSelection();
 
-        this.BillingItem.filter((item) => {
-            if (item.detail.length > 0) {
-                jenis_transaksi.push(item);
-            }
-        });
-
-        let is_checked_all = [];
-
-        for (let i = 0; i < jenis_transaksi.length; i++) {
-            let check = document.getElementById(jenis_transaksi[i].jenis_transaksi + '_check') as HTMLInputElement;
-
-            is_checked_all.push(check.checked);
-        }
-
-        let found = false;
-
-        for (let i = 0; i < is_checked_all.length; i++) {
-            if (is_checked_all[i] === false) {
-                found = false;
-                break;
-            }
-        }
-
-        console.log(found);
+        setTimeout(() => {
+            this.onCountTotalDataTiket();
+            this.onCountTotalDataTDMK();
+            this.onCountTotalDataTDLAB();
+            this.onCountTotalDataTDRAD();
+            this.onCountTotalDataResep();
+        }, 500);
     }
 
     // ** TIKET ==============
+    handleSelectingRowDataTiket(args: any): void {
+        let status_bayar = args.data.status_bayar;
+
+        if (status_bayar !== "OPEN") {
+            args.cancel = true;
+
+            let removedIndexLength = 0;
+
+            if (args.row.length >= 0) {
+                args.rowIndexes.filter((rowIndex) => {
+                    if (this.GridDataTiket.getRowByIndex(rowIndex).classList.contains('e-disabled')) {
+                        args.rowIndexes.splice(rowIndex + removedIndexLength, 1);
+                        removedIndexLength--;
+                    }
+                });
+            };
+        };
+    }
+
     handleSelectedRowDataTiket(args: any, item: any): void {
         let selected_records = this.GridDataTiket.getSelectedRecords();
 
-        if (args.data.status_bayar != "OPEN") {
-            args.cancel = true;
-
-            let index = selected_records.map((item) => { return item['id_transaksi'] }).indexOf(args.data.id_transaksi);
-
-            selected_records.splice(index, 1);
-
-            this.GridDataTiket.refresh();
-        }
-
-        let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
-
         if (selected_records.length == this.GridDataTiket.dataSource['length']) {
+            let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
             check.checked = true;
-        }
-
-        if (selected_records.length == 0) {
-            check.checked = false;
         }
 
         this.onCountTotalDataTiket();
@@ -349,21 +479,31 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     // ** TDMK ===============
-    handleSelectedRowDataTDMK(args: any, item: any): void {
-        let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
+    handleSelectingRowDataTDMK(args: any): void {
+        let status_bayar = args.data.status_bayar;
 
+        if (status_bayar !== "OPEN") {
+            args.cancel = true;
+
+            let removedIndexLength = 0;
+
+            if (args.row.length >= 0) {
+                args.rowIndexes.filter((rowIndex) => {
+                    if (this.GridDataTDMK.getRowByIndex(rowIndex).classList.contains('e-disabled')) {
+                        args.rowIndexes.splice(rowIndex + removedIndexLength, 1);
+                        removedIndexLength--;
+                    }
+                });
+            };
+        };
+    }
+
+    handleSelectedRowDataTDMK(args: any, item: any): void {
         let selected_records = this.GridDataTDMK.getSelectedRecords();
 
-        let contains_not_open = selected_records.some((item) => { return item['status_bayar'] !== "OPEN" });
-
-        if (contains_not_open) {
-            this.GridDataTDMK.clearSelection();
-            this.GridDataTDMK.refresh();
-            check.checked = false;
-        } else {
-            if (selected_records.length == this.GridDataTDMK.dataSource['length']) {
-                check.checked = true;
-            }
+        if (selected_records.length == this.GridDataTDMK.dataSource['length']) {
+            let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
+            check.checked = true;
         }
 
         this.onCountTotalDataTDMK();
@@ -397,6 +537,25 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     // ** TDLAB =============
+    handleSelectingRowDataTDLAB(args: any): void {
+        let status_bayar = args.data.status_bayar;
+
+        if (status_bayar !== "OPEN") {
+            args.cancel = true;
+
+            let removedIndexLength = 0;
+
+            if (args.row.length >= 0) {
+                args.rowIndexes.filter((rowIndex) => {
+                    if (this.GridDataTDLAB.getRowByIndex(rowIndex).classList.contains('e-disabled')) {
+                        args.rowIndexes.splice(rowIndex + removedIndexLength, 1);
+                        removedIndexLength--;
+                    }
+                });
+            };
+        }
+    }
+
     handleSelectedRowDataTDLAB(args: any, item: any): void {
         let selected_records = this.GridDataTDLAB.getSelectedRecords();
 
@@ -436,6 +595,25 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     // ** TDRAD =============
+    handleSelectingRowDataTDRAD(args: any): void {
+        let status_bayar = args.data.status_bayar;
+
+        if (status_bayar !== "OPEN") {
+            args.cancel = true;
+
+            let removedIndexLength = 0;
+
+            if (args.row.length >= 0) {
+                args.rowIndexes.filter((rowIndex) => {
+                    if (this.GridDataTDRAD.getRowByIndex(rowIndex).classList.contains('e-disabled')) {
+                        args.rowIndexes.splice(rowIndex + removedIndexLength, 1);
+                        removedIndexLength--;
+                    }
+                });
+            };
+        }
+    }
+
     handleSelectedRowDataTDRAD(args: any, item: any): void {
         let selected_records = this.GridDataTDRAD.getSelectedRecords();
 
@@ -475,10 +653,31 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     // ** RESEP ==============
-    handleSelectedRowDataResep(args: any, item: any): void {
-        let selected_records = this.GridDataTDRAD.getSelectedRecords();
+    handleSelectingRowDataResep(args: any): void {
+        let status_bayar = args.data.status_bayar;
 
-        if (selected_records.length == this.GridDataTDRAD.dataSource['length']) {
+        if (status_bayar == "PAID" || status_bayar == "CLOSE") {
+            args.cancel = true;
+
+            let removedIndexLength = 0;
+
+            if (args.row.length >= 0) {
+                args.rowIndexes.filter((rowIndex) => {
+                    if (this.GridDataResep.getRowByIndex(rowIndex).classList.contains('e-disabled')) {
+                        console.log(rowIndex);
+
+                        args.rowIndexes.splice(rowIndex + removedIndexLength, 1);
+                        removedIndexLength--;
+                    }
+                });
+            };
+        }
+    }
+
+    handleSelectedRowDataResep(args: any, item: any): void {
+        let selected_records = this.GridDataResep.getSelectedRecords();
+
+        if (selected_records.length == this.GridDataResep.dataSource['length']) {
             let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
             check.checked = true;
         }
@@ -487,9 +686,9 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     handleDeselectedRowDataResep(args: any, item: any): void {
-        let selected_records = this.GridDataTDRAD.getSelectedRecords();
+        let selected_records = this.GridDataResep.getSelectedRecords();
 
-        if (selected_records.length < this.GridDataTDRAD.dataSource['length']) {
+        if (selected_records.length < this.GridDataResep.dataSource['length']) {
             let check = document.getElementById(item.jenis_transaksi + '_check') as HTMLInputElement;
             check.checked = false;
         }
@@ -596,6 +795,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             this.onResetFormKlaimDebitur();
 
                             this.claim_amount.setValue(FormInputKlaimDebitur.saldo_klaim_sisa);
+
+                            this.onCountSisaTagihan();
                         })
                 }
             })
@@ -610,8 +811,11 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     // ** HITUNG SISA TAGIHAN =================
     onCountSisaTagihan(): void {
-        // this.paid_amount.setValue(this.total_amount.value - (this.disc_dokter_amount.value + this.claim_amount.value + this.deposit_amount.value));
-        this.paid_amount.setValue(this.total_amount.value - (this.claim_amount.value + this.deposit_amount.value));
+        if (this.total_amount.value < (this.claim_amount.value + this.deposit_amount.value)) {
+            this.paid_amount.setValue(0);
+        } else {
+            this.paid_amount.setValue(this.total_amount.value - (this.claim_amount.value + this.deposit_amount.value));
+        }
     }
 
     // ** CREATE INVOICE ======================
@@ -632,7 +836,6 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 let trans_header = {
                     id_register: this.InformasiPasien.id_register,
                     total_amount: this.FormInputInvoice.value.total_amount,
-                    // disc_dokter_amount: this.FormInputInvoice.value.disc_dokter_amount,
                     claim_amount: this.FormInputInvoice.value.claim_amount,
                     deposit_amount: this.FormInputInvoice.value.deposit_amount,
                     paid_amount: this.FormInputInvoice.value.paid_amount
@@ -656,7 +859,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                                     this.BillingItem = [];
 
                                     this.onGetDataBillingByNoRegister(NoRegister);
-                                })
+                                });
                         }
                     })
 
@@ -666,32 +869,83 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     // ** HISTORY PEMBAYARAN ITEM =============
     handleClickHistoryItem(item: any): void {
+        let jenis_transaksi = "";
+
+        switch (item.jenis_transaksi) {
+            case 'TKT':
+                jenis_transaksi = "tiket";
+                break;
+            case 'TDMK':
+                jenis_transaksi = "tdmk";
+                break;
+            case 'TDLAB':
+                jenis_transaksi = "tdlab";
+                break;
+            case 'TDLAB':
+                jenis_transaksi = "tdrad";
+                break;
+            case 'RESEP':
+                jenis_transaksi = "resep";
+                break;
+            default:
+                break;
+        };
+
+        this.transBillingService.onGetAllHistoryInvoicePaid(jenis_transaksi, this.InformasiPasien.id_register);
+
         this.HistoryPembayaranBillingRawatJalan.handleOpenRiwayatPembayaran();
 
         this.OffcanvasRiwayatTitle = `${'Riwayat Pembayaran ' + item.jenis_transaksi}`;
     }
 
     // ** MODAL PEMBAYARAN ====================
-    handleOpenModalPembayaran(): void {
+    handleOpenModalPembayaran(ModalPembayaranState: string): void {
         let btnModalPembayaran = document.getElementById('btnModalPembayaran') as HTMLElement;
         btnModalPembayaran.click();
 
         this.GridDataPembayaranDatasource = [];
 
-        let header = {
-            id_register: this.InformasiPasien.id_register,
-            total_amount: this.FormInputInvoice.value.total_amount,
-            claim_amount: this.FormInputInvoice.value.claim_amount,
-            deposit_amount: this.FormInputInvoice.value.deposit_amount,
-            paid_amount: this.FormInputInvoice.value.paid_amount,
-            belum_lunas: this.FormInputInvoice.value.paid_amount,
+        this.ModalPembayaranState = ModalPembayaranState;
+
+        if (ModalPembayaranState == "Invoice") {
+            let header = {
+                id_register: this.InformasiPasien.id_register,
+                total_amount: this.FormInputInvoice.value.total_amount,
+                claim_amount: this.FormInputInvoice.value.claim_amount,
+                deposit_amount: this.FormInputInvoice.value.deposit_amount,
+                paid_amount: this.FormInputInvoice.value.paid_amount,
+                belum_lunas: this.FormInputInvoice.value.paid_amount,
+            };
+
+            this.TotalTransaksiPembayaran = header.paid_amount;
+
+            this.GrandTotalTransaksiPembayaran = header.paid_amount - this.BiayaBankPembayaran;
+
+            this.transBillingService.HeaderBilling.next(header);
         };
 
-        this.TotalTransaksiPembayaran = header.paid_amount;
+        if (ModalPembayaranState == "Existing_Invoice") {
+            this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'];
 
-        this.GrandTotalTransaksiPembayaran = header.paid_amount - this.BiayaBankPembayaran;
+            this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'] - this.BiayaBankPembayaran;
+        };
 
-        this.transBillingService.HeaderBilling.next(header);
+        if (ModalPembayaranState == "Restitusi") {
+            let header = {
+                id_register: this.InformasiPasien.id_register,
+                total_amount: 0,
+                claim_amount: 0,
+                deposit_amount: 0,
+                paid_amount: this.deposit_amount.value,
+                belum_lunas: this.deposit_amount.value,
+            };
+
+            this.transBillingService.HeaderBilling.next(header);
+
+            this.TotalTransaksiPembayaran = this.deposit_amount.value;
+
+            this.GrandTotalTransaksiPembayaran = this.deposit_amount.value;
+        }
     }
 
     handleCloseModalPembayaran(): void {
@@ -759,24 +1013,59 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     onCountTotalPembayaran(): void {
+        // ** Hitung Kurang Pembayaran
         this.JumlahBayarPembayaran = 0;
 
         for (let i = 0; i < this.GridDataPembayaranDatasource.length; i++) {
             this.JumlahBayarPembayaran += this.GridDataPembayaranDatasource[i].jumlah_bayar;
         }
 
-        this.KurangBayarPembayaran = this.GrandTotalTransaksiPembayaran - this.JumlahBayarPembayaran;
+        if (this.JumlahBayarPembayaran > this.GrandTotalTransaksiPembayaran) {
+            this.KurangBayarPembayaran = 0;
+        } else {
+            this.KurangBayarPembayaran = this.GrandTotalTransaksiPembayaran - this.JumlahBayarPembayaran;
+        }
 
-        let header = {
-            id_register: this.InformasiPasien.id_register,
-            total_amount: this.FormInputInvoice.value.total_amount,
-            claim_amount: this.FormInputInvoice.value.claim_amount,
-            deposit_amount: this.FormInputInvoice.value.deposit_amount,
-            paid_amount: this.FormInputInvoice.value.paid_amount,
-            belum_lunas: this.KurangBayarPembayaran,
+        if (this.ModalPembayaranState == "Invoice") {
+
+            // ** Set Header Parameter
+            let header = {
+                id_register: this.InformasiPasien.id_register,
+                total_amount: this.FormInputInvoice.value.total_amount,
+                claim_amount: this.FormInputInvoice.value.claim_amount,
+                deposit_amount: this.FormInputInvoice.value.deposit_amount,
+                paid_amount: this.FormInputInvoice.value.paid_amount,
+                belum_lunas: this.KurangBayarPembayaran,
+            };
+
+            // ** Insert Into HeaderBilling BehaviorSubject
+            this.transBillingService.HeaderBilling.next(header);
+        }
+
+        // ** Create Data Finalisasi Bayar
+        let data_finalisasi_bayar = [
+            { jenis_pembayaran: 'TOTAL TRANSAKSI', jumlah_pembayaran: this.GrandTotalTransaksiPembayaran },
+        ];
+
+        // ** Insert Into Data Finalisasi Bayar
+        this.GridDataPembayaranDatasource.filter((item) => {
+            data_finalisasi_bayar.push({
+                jenis_pembayaran: item['jenis_pembayaran'],
+                jumlah_pembayaran: item['jumlah_bayar'],
+            });
+        });
+
+        let total_pembayaran_pasien = 0;
+
+        for (let i = 1; i < data_finalisasi_bayar.length; i++) {
+            total_pembayaran_pasien += data_finalisasi_bayar[i].jumlah_pembayaran;
         };
 
-        this.transBillingService.HeaderBilling.next(header);
+        let kembalian = { jenis_pembayaran: 'KEMBALIAN', jumlah_pembayaran: total_pembayaran_pasien - data_finalisasi_bayar[0].jumlah_pembayaran };
+
+        data_finalisasi_bayar.push(kembalian);
+
+        this.DataFinalisasiPembayaran.next(data_finalisasi_bayar);
     }
 
     handleCommandClickPembayaran(args: any): void {
@@ -794,12 +1083,228 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     handleClickSubmitPembayaran(): void {
+        let trans_header = this.transBillingService.HeaderBilling.value;
+        let trans_detail = [
+            ...this.GridDataTiket.getSelectedRecords(),
+            ...this.GridDataTDMK.getSelectedRecords(),
+            ...this.GridDataTDLAB.getSelectedRecords(),
+            ...this.GridDataTDRAD.getSelectedRecords(),
+            ...this.GridDataResep.getSelectedRecords(),
+        ];
+        let payment = {
+            jumlah_payment: this.JumlahBayarPembayaran,
+            keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
+            pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
+        };
+        let payment_detail = this.GridDataPembayaranDatasource;
 
+        let parameter = {
+            trans_header: trans_header,
+            trans_detail: trans_detail,
+            payment: payment,
+            payment_detail: payment_detail,
+        };
+
+        let btnCloseModalPembayaran = document.getElementById('btnCloseModalPembayaran') as HTMLElement;
+
+        let btnCloseModalFinalisasiPembayaran = document.getElementById('btnCloseModalFinalisasiPembayaran') as HTMLElement;
+
+        this.transBillingService.onPostSaveInvoiceWithPayment(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Payment Berhasil Disimpan')
+                        .then(() => {
+                            btnCloseModalFinalisasiPembayaran.click();
+
+                            setTimeout(() => {
+                                btnCloseModalPembayaran.click();
+                            }, 250);
+
+                            setTimeout(() => {
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                this.BillingItem = [];
+
+                                this.onGetDataBillingByNoRegister(NoRegister);
+
+                                this.handleClearSelectionAllGrid()
+
+                                this.handleEmptyBillingHeader();
+                            }, 500);
+                        })
+                }
+            })
+    }
+
+    handleClickSubmitDeposit(): void {
+        let payment = {
+            jumlah_payment: this.JumlahBayarPembayaran,
+            keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
+            pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
+        };
+
+        let payment_detail = this.GridDataPembayaranDatasource;
+
+        let deposit = {
+            id_register: this.InformasiPasien.id_register,
+            jumlah_deposit: this.JumlahBayarPembayaran,
+        };
+
+        let parameter = {
+            payment: payment,
+            payment_detail: payment_detail,
+            deposit: deposit
+        };
+
+        let btnCloseModalPembayaran = document.getElementById('btnCloseModalPembayaran') as HTMLElement;
+
+        this.transBillingService.onPostSaveDeposit(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Deposit Berhasil Disimpan')
+                        .then(() => {
+                            btnCloseModalPembayaran.click();
+
+                            setTimeout(() => {
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                this.BillingItem = [];
+
+                                this.onGetDataBillingByNoRegister(NoRegister);
+
+                                this.handleClearSelectionAllGrid()
+
+                                this.handleEmptyBillingHeader();
+                            }, 250);
+                        })
+                }
+            });
+    }
+
+    handleSendPaymentWithExistingInvoice(args: any): void {
+        this.SelectedInvoiceRawatJalan = args;
+
+        this.handleOpenModalPembayaran("Existing_Invoice");
+    }
+
+    handleClickSubmitPaymentWithExisitingInvoice(): void {
+        let payment = {
+            jumlah_payment: this.JumlahBayarPembayaran,
+            keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
+            pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
+        };
+
+        let payment_detail = this.GridDataPembayaranDatasource;
+
+        let parameter = {
+            id_register: this.InformasiPasien.id_register,
+            item_invoice: this.SelectedInvoiceRawatJalan,
+            payment: payment,
+            payment_detail: payment_detail,
+        };
+
+        let btnCloseModalPembayaran = document.getElementById('btnCloseModalPembayaran') as HTMLElement;
+
+        let btnCloseModalFinalisasiPembayaran = document.getElementById('btnCloseModalFinalisasiPembayaran') as HTMLElement;
+
+        this.transBillingService.onPostPaymentWithExistingInvoice(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Payment Berhasil Disimpan')
+                        .then(() => {
+                            btnCloseModalFinalisasiPembayaran.click();
+
+                            setTimeout(() => {
+                                btnCloseModalPembayaran.click();
+                            }, 250);
+
+                            setTimeout(() => {
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                this.BillingItem = [];
+
+                                this.onGetDataBillingByNoRegister(NoRegister);
+
+                                this.handleClearSelectionAllGrid();
+
+                                this.SelectedInvoiceRawatJalan = [];
+
+                                this.handleEmptyBillingHeader();
+                            }, 500);
+                        })
+                }
+            });
+    }
+
+    handleClickSubmitRestitusi(): void {
+        let payment = {
+            jumlah_payment: this.JumlahBayarPembayaran,
+            keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
+            pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
+        };
+
+        let payment_detail = this.GridDataPembayaranDatasource;
+
+        let parameter = {
+            id_register: this.InformasiPasien.id_register,
+            payment: payment,
+            payment_detail: payment_detail,
+        };
+
+        let btnCloseModalPembayaran = document.getElementById('btnCloseModalPembayaran') as HTMLElement;
+
+        let btnCloseModalFinalisasiPembayaran = document.getElementById('btnCloseModalFinalisasiPembayaran') as HTMLElement;
+
+        this.transBillingService.onPostRestitusi(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Restitusi Berhasil Disimpan')
+                        .then(() => {
+                            btnCloseModalFinalisasiPembayaran.click();
+
+                            setTimeout(() => {
+                                btnCloseModalPembayaran.click();
+                            }, 250);
+
+                            setTimeout(() => {
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                this.BillingItem = [];
+
+                                this.onGetDataBillingByNoRegister(NoRegister);
+
+                                this.handleClearSelectionAllGrid();
+
+                                this.SelectedInvoiceRawatJalan = [];
+
+                                this.handleEmptyBillingHeader();
+                            }, 500);
+                        })
+                }
+            });
+    }
+
+    handleEmptyBillingHeader(): void {
+        let header = {
+            id_register: this.InformasiPasien.id_register,
+            total_amount: 0,
+            claim_amount: 0,
+            deposit_amount: 0,
+            paid_amount: 0,
+            belum_lunas: 0,
+        };
+
+        this.transBillingService.HeaderBilling.next(header);
+
+        this.TotalTransaksiPembayaran = 0;
+        this.BiayaBankPembayaran = 0;
+        this.GrandTotalTransaksiPembayaran = 0;
+        this.JumlahBayarPembayaran = 0;
+        this.KurangBayarPembayaran = 0;
     }
 
     get total_amount(): AbstractControl { return this.FormInputInvoice.get('total_amount'); }
     get total_tagihan(): AbstractControl { return this.FormInputInvoice.get('total_tagihan'); }
-    // get disc_dokter_amount(): AbstractControl { return this.FormInputInvoice.get('disc_dokter_amount'); }
     get claim_amount(): AbstractControl { return this.FormInputInvoice.get('claim_amount'); }
     get deposit_amount(): AbstractControl { return this.FormInputInvoice.get('deposit_amount'); }
     get paid_amount(): AbstractControl { return this.FormInputInvoice.get('paid_amount'); }

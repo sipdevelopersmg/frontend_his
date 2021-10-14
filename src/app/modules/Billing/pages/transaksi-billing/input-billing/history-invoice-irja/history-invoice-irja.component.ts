@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
@@ -20,6 +20,10 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
     FormHistoryInvoice: FormGroup;
 
+    SelectedInvoice: any[] = [];
+
+    @Output('onSendPaymentWithExistingInvoice') onSendPaymentWithExistingInvoice = new EventEmitter<any>();
+
     constructor(
         private formBuilder: FormBuilder,
         private transBillingService: TransBillingService
@@ -34,7 +38,6 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
             paid_amount: [0, []],
             claim_amount: [0, []],
             total_amount: [0, []],
-            // disc_dokter_amount: [0, []],
             deposit_amount: [0, []],
             invoice_item: [[], []],
         });
@@ -71,11 +74,62 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     }
 
     handleChangeCheckboxItemInvoice(item: any): void {
-        console.log(item);
+        this.SelectedInvoice.push(item);
     }
 
     handleSelectedRowDetailInvoice(args: any): void {
 
+    }
+
+    handleSubmitBayarTagihan(): void {
+        let item_invoice = [];
+
+        let total_amount = 0;
+        let claim_amount = 0;
+        let deposit_amount = 0;
+        let paid_amount = 0;
+        let belum_lunas = 0;
+
+        this.SelectedInvoice.filter((item) => {
+            let item_transaksi = [];
+
+            item.invoice_item.filter((child_item) => { return item_transaksi.push(child_item.id_transaksi) });
+
+            item_invoice.push(
+                {
+                    id_invoice: item.id_invoice,
+                    item_transaksi: item_transaksi
+                }
+            );
+
+            total_amount += item.total_amount;
+            claim_amount += item.claim_amount;
+            deposit_amount += item.deposit_amount;
+            paid_amount += item.paid_amount;
+            belum_lunas += item.paid_amount;
+        });
+
+        let header = {
+            id_register: this.InformasiPasien.id_register,
+            total_amount: total_amount,
+            claim_amount: claim_amount,
+            deposit_amount: deposit_amount,
+            paid_amount: paid_amount,
+            belum_lunas: belum_lunas,
+        };
+
+        this.transBillingService.HeaderBilling.next(header);
+
+        let btnCloseHistoryInvoice = document.getElementById('btnCloseHistoryInvoice') as HTMLElement;
+        btnCloseHistoryInvoice.click();
+
+        setTimeout(() => {
+            this.onSendPaymentWithExistingInvoice.emit(item_invoice);
+
+            this.SelectedInvoice = [];
+
+            this.GridDetailInvoiceDatasource = [];
+        }, 500);
     }
 
     get id_register(): AbstractControl { return this.FormHistoryInvoice.get('id_register'); }
@@ -85,7 +139,6 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     get paid_amount(): AbstractControl { return this.FormHistoryInvoice.get('paid_amount'); }
     get claim_amount(): AbstractControl { return this.FormHistoryInvoice.get('claim_amount'); }
     get total_amount(): AbstractControl { return this.FormHistoryInvoice.get('total_amount'); }
-    // get disc_dokter_amount(): AbstractControl { return this.FormHistoryInvoice.get('disc_dokter_amount'); }
     get deposit_amount(): AbstractControl { return this.FormHistoryInvoice.get('deposit_amount'); }
 
 }
