@@ -7,7 +7,7 @@
             "field": "nomor_invoice",
             "headerText": "NO. INVOICE",
             "visible": true,
-            "width": 80
+            "width": 90
         },
         {
             "allowEditing": false,
@@ -27,7 +27,7 @@
             "field": "kode_setup_tarif",
             "headerText": "KODE TARIF",
             "visible": true,
-            "width": 100
+            "width": 95
         },
         {
             "allowEditing": false,
@@ -36,7 +36,7 @@
             "field": "nama_setup_tarif",
             "headerText": "NAMA TARIF",
             "visible": true,
-            "width": 120
+            "width": 200
         },
         {
             "allowEditing": false,
@@ -48,7 +48,7 @@
             "textAlign": "Right",
             "headerTextAlign": "Right",
             "visible": true,
-            "width": 90
+            "width": 80
         },
         {
             "allowEditing": false,
@@ -60,7 +60,7 @@
             "textAlign": "Right",
             "headerTextAlign": "Right",
             "visible": true,
-            "width": 90
+            "width": 60
         },
         {
             "allowEditing": false,

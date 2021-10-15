@@ -22,6 +22,8 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
     SelectedInvoice: any[] = [];
 
+    NomorInvoiceTerpilih: string = "";
+
     @Output('onSendPaymentWithExistingInvoice') onSendPaymentWithExistingInvoice = new EventEmitter<any>();
 
     constructor(
@@ -61,6 +63,8 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     }
 
     handleClickDetailItemInvoice(item: any): void {
+        this.NomorInvoiceTerpilih = item.nomor_invoice;
+
         this.FormHistoryInvoice.setValue(item);
 
         this.GridDetailInvoiceDatasource = [];

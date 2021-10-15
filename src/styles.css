@@ -327,3 +327,8 @@ span.readonly-state > .e-numerictextbox {
 .see-detail:active {
   box-shadow: none !important;
 }
+
+.swal-wide {
+  width: 35rem !important;
+  max-width: 35rem !important;
+}

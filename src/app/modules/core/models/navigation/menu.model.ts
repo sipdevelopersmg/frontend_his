@@ -36,7 +36,7 @@ export interface SidebarMenuModel {
     fieldgrid?: FieldGridModel[];
 }
 
-interface SidebarChildMenuModel {
+export interface SidebarChildMenuModel {
     id_menu_sidebar: number;
     id_menu_sidebar_parent: number;
     is_parent: boolean;

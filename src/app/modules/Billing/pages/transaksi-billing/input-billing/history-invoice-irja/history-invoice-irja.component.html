@@ -9,7 +9,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content border-0">
             <div class="modal-header py-2 px-3 background-biru-muda text-white">
-                <h5 class="modal-title" id="modalHistoryInvoiceLabel">Daftar Invoice</h5>
+                <h5 class="modal-title" id="modalHistoryInvoiceLabel">Daftar Invoice Belum Terbayar</h5>
                 <button id="btnCloseHistoryInvoice" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close">
                 </button>
@@ -23,7 +23,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="card shadow-sm">
                                     <div class="card-header">
-                                        <p class="text-biru-muda mb-0">Daftar Invoice</p>
+                                        <p class="text-biru-muda mb-0">Daftar Invoice Belum Terbayar</p>
                                     </div>
                                     <div class="card-body py-2 px-3"
                                         style="height: 30.5rem; max-height: 30.5rem; overflow-y: auto;">
@@ -54,7 +54,7 @@
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                         <div class="card border-0 shadow-sm">
                             <div class="card-header border">
-                                <p class="text-biru-muda mb-0">Detail Invoice</p>
+                                <p class="text-biru-muda mb-0">Detail Invoice {{ NomorInvoiceTerpilih }}</p>
                             </div>
                             <div class="card-body p-2 border-0">
                                 <form [formGroup]="FormHistoryInvoice">
@@ -150,7 +150,7 @@
                                             <!-- Klaim Debitur -->
                                             <div class="row mb-2">
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
-                                                    <p class="text-black mb-0">Klaim Debitur :</p>
+                                                    <p class="text-black mb-0">Saldo Klaim :</p>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                     <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
@@ -164,7 +164,7 @@
                                             <!-- Uang Muka -->
                                             <div class="row mb-2">
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
-                                                    <p class="text-black mb-0">Uang Muka :</p>
+                                                    <p class="text-black mb-0">Saldo Deposit :</p>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                     <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
@@ -217,7 +217,8 @@
                 <button type="button" class="btn btn-success btn-sm">
                     Cetak Rincian
                 </button>
-                <button type="button" class="btn btn-primary btn-sm" (click)="handleSubmitBayarTagihan()">
+                <button [disabled]="SelectedInvoice.length < 1" type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitBayarTagihan()">
                     Bayar Tagihan
                 </button>
             </div>

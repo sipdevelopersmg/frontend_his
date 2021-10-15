@@ -28,6 +28,10 @@ export class HistoryPembayaranComponent implements OnInit {
         let btnRiwayatItem = document.getElementById('btnRiwayatItem') as HTMLElement;
 
         btnRiwayatItem.click();
+
+        setTimeout(() => {
+            console.log(this.transBillingService.HistoryInvoicePaid.value);
+        }, 500);
     }
 
     InitalizedGrid(component: MolGridComponent) {

@@ -110,8 +110,8 @@
                         <div class="modal-footer p-2 background-abu-muda">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
-                                    <button class="btn btn-primary btn-sm" type="button"
-                                        (click)="onSubmitFormAddDiagnosa(FormAddDiagnosa.value)">
+                                    <button [disabled]="FormAddDiagnosa.invalid" class="btn btn-primary btn-sm"
+                                        type="button" (click)="onSubmitFormAddDiagnosa(FormAddDiagnosa.value)">
                                         Simpan
                                     </button>
                                 </div>

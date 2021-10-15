@@ -26,6 +26,8 @@ export class AtmCardComponent implements OnInit {
 
     @Output("onMarkedResepAsComplete") onMarkedResepAsComplete = new EventEmitter();
 
+    @Output("onMarkedResepSudahDilayani") onMarkedResepSudahDilayani = new EventEmitter();
+
     constructor(private utilityService: UtilityService) { }
 
     ngOnInit(): void {
@@ -65,5 +67,9 @@ export class AtmCardComponent implements OnInit {
 
     onMarkResepAsComplete(Id: string) {
         this.onMarkedResepAsComplete.emit(Id);
+    }
+
+    onMarkResepSudahDilayani(Id: string) {
+        this.onMarkedResepSudahDilayani.emit(Id);
     }
 }

@@ -183,22 +183,22 @@
                                     (rowDeselected)="handleDeselectedRowDataTiket($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)">
                                     <e-columns>
-                                        <e-column [width]="30" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
+                                        <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
                                             [textAlign]="'Center'" [headerTextAlign]="'Center'" [allowEditing]="false">
                                         </e-column>
                                         <e-column [width]="100" [field]="'id_transaksi'" [headerText]="'ID DETAIL'"
                                             [visible]="false" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                        <e-column [width]="120" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="100" [field]="'kode_setup_tarif'" [headerText]="'KODE TIKET'"
+                                        <e-column [width]="120" [field]="'kode_setup_tarif'" [headerText]="'KODE TIKET'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="150" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                        <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
@@ -261,11 +261,11 @@
                                             [visible]="false" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                        <e-column [width]="120" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                        <e-column [width]="120" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
@@ -403,11 +403,11 @@
                                             [visible]="false" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="100" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
+                                        <e-column [width]="120" [field]="'tgl_order'" [headerText]="'TGL ORDER'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="150" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
+                                        <e-column [width]="120" [field]="'kode_setup_tarif'" [headerText]="'KODE TARIF'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
@@ -537,7 +537,7 @@
                         <!-- Total Biaya -->
                         <div class="row align-items-center mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <p class="text-hitam-muda mb-0">Total Biaya</p>
+                                <p class="text-hitam-muda mb-0 fw-bold">Total Biaya</p>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -602,10 +602,11 @@
                                     [showClearButton]="false" [readonly]="true" formControlName="claim_amount">
                                 </ejs-numerictextbox>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-start">
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modalSaldoKlaim"
-                                    (click)="handleGetSaldoKlaim(InformasiPasien.id_register)">
+                                    (click)="handleGetSaldoKlaim(InformasiPasien.id_register)"
+                                    [disabled]="InformasiPasien && InformasiPasien.status_billing == 'CLOSED'">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -685,7 +686,7 @@
                         </div>
 
                         <!-- Sisa Tagihan -->
-                        <div class="row align-items-center">
+                        <div class="row align-items-center mb-3">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <p class="text-hitam-muda mb-0 fw-bold">Sisa Tagihan</p>
                             </div>
@@ -694,6 +695,19 @@
                                     [cssClass]="'readonly-state-blue rounded border-0'" [showSpinButton]="false"
                                     [showClearButton]="false" [readonly]="true" formControlName="paid_amount">
                                 </ejs-numerictextbox>
+                            </div>
+                        </div>
+
+                        <!-- Status Billing -->
+                        <div class="row align-items-center" *ngIf="InformasiPasien">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0 fw-bold">Status</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <p
+                                    [class]="InformasiPasien.status_billing == 'OPEN' ? 'text-success mb-0 fw-bold' : 'text-danger mb-0 fw-bold'">
+                                    {{ InformasiPasien.status_billing == 'OPEN' ? 'OPEN' : 'CLOSED' }}
+                                </p>
                             </div>
                         </div>
                     </form>
@@ -1017,4 +1031,45 @@
     <app-history-invoice-irja #HistoryInvoiceRawatJalan [InformasiPasien]="InformasiPasien"
         (onSendPaymentWithExistingInvoice)="handleSendPaymentWithExistingInvoice($event)">
     </app-history-invoice-irja>
+
+    <app-history-semua-pembayaran #HistorySemuaPembayaranRawatJalan [InformasiPasien]="InformasiPasien">
+    </app-history-semua-pembayaran>
+
+    <!-- Modal Pembatalan  -->
+    <ng-template #modalPembatalan>
+        <div class="modal-header background-biru-muda px-2 py-1">
+            <h5 class="modal-title pull-left text-white">
+                Pembatalan {{ ModalPembatalanTitle }}
+            </h5>
+            <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalPembatalan()">
+                <i class="fas fa-window-close text-white"></i>
+            </button>
+        </div>
+        <div class="modal-body pt-0 pb-2 px-2">
+            <form [formGroup]="FormPembatalan">
+                <div class="row mb-2 align-items-center">
+                    <!-- Alasan Pembatalan -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <atm-label [LabelCaption]="'Mohon Isikan Alasan Pembatalan'"></atm-label>
+
+                        <textarea rows="3" class="form-control mt-2" formControlName="reason_canceled">
+                        </textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer background-abu-muda p-2">
+            <!-- Button -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 text-end">
+                <button class="btn btn-secondary btn-sm mx-2" type="button" (click)="handleCloseModalPembatalan()">
+                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                </button>
+
+                <button class="btn btn-primary btn-sm" type="button"
+                    (click)="handleSubmitModalPembatalan(FormPembatalan)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan
+                </button>
+            </div>
+        </div>
+    </ng-template>
 </org-card-layout>

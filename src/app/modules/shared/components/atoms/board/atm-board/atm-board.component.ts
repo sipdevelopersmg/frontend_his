@@ -80,6 +80,16 @@ export class AtmBoardComponent implements OnInit {
         return CardBodyData;
     }
 
+    onMarkResepSudahDilayani(Id: string, CardBodyData: KanbanCardModel[]) {
+        console.log(Id);
+
+        // let index = CardBodyData.findIndex(item => item.Id == Id);
+
+        // CardBodyData.splice(index, 1);
+
+        // return CardBodyData;
+    }
+
     onChangeSearchFilter() {
         console.log(this.FilterPencarianGlobal);
     }

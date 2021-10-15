@@ -2,7 +2,6 @@ import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output } f
 import { ButtonNavModel } from '../../../molecules/button/mol-button-nav/mol-button-nav.component';
 
 @Component({
-    // tslint:disable-next-line: component-selector
     selector: 'org-card-layout',
     templateUrl: './card-layout.component.html',
     styleUrls: ['./card-layout.component.css']

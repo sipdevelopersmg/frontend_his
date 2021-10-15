@@ -19,3 +19,7 @@ export const POST_SAVE_DEPOSIT = `${environment.webApiBilling}` + `tarif/TransBi
 export const POST_SAVE_RESTITUSI = `${environment.webApiBilling}` + `tarif/TransBilling/Restitusi`;
 
 export const GET_HISTORY_INVOICE_PAID = `${environment.webApiBilling}` + `tarif/TransBilling/GetDataTransaksi_PAID/`;
+
+export const POST_SAVE_POSTING_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillPosting/`;
+export const POST_CANCEL_POSTING_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillBatalPosting`;
+

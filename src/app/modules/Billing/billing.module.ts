@@ -28,6 +28,7 @@ import { PaymentCreditIrjaComponent } from './pages/transaksi-billing/input-bill
 import { HistoryPembayaranComponent } from './pages/transaksi-billing/input-billing/history-pembayaran/history-pembayaran.component';
 import { HistoryInvoiceIrjaComponent } from './pages/transaksi-billing/input-billing/history-invoice-irja/history-invoice-irja.component';
 import { SetupBukaKasirIrjaComponent } from './pages/kasir-rawat-jalan/setup-buka-kasir-irja/setup-buka-kasir-irja.component';
+import { HistorySemuaPembayaranComponent } from './pages/transaksi-billing/input-billing/history-semua-pembayaran/history-semua-pembayaran.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { SetupBukaKasirIrjaComponent } from './pages/kasir-rawat-jalan/setup-buk
         PaymentCreditIrjaComponent,
         HistoryPembayaranComponent,
         HistoryInvoiceIrjaComponent,
-        SetupBukaKasirIrjaComponent
+        SetupBukaKasirIrjaComponent,
+        HistorySemuaPembayaranComponent
     ],
     imports: [
         CommonModule,

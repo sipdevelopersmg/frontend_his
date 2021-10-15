@@ -1,0 +1,60 @@
+.div_item_invoice:hover {
+  background-color: var(--biru-muda) !important;
+  color: white !important;
+}
+
+.card_body_daftar_payment {
+  height: 30.5rem;
+  max-height: 30.5rem;
+  overflow-y: auto;
+}
+
+.invoice-parent {
+  color: var(--biru-tua);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.invoice-child {
+  color: var(--hitam-muda);
+  font-size: 13px;
+}
+
+.e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
+  min-height: 14px !important;
+}
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 5px !important;
+  height: 30px !important;
+}
+
+span.e-headertext {
+  font-size: 13px !important;
+}
+
+td.e-rowcell {
+  padding: 5px !important;
+}
+
+.invoice-text {
+  float: left;
+}
+
+.invoice-parent {
+  color: var(--biru-tua);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.invoice-child {
+  color: var(--hitam-muda);
+  font-size: 13px;
+}
+
+.badge-invoice {
+  float: right;
+}

@@ -25,7 +25,7 @@ export class AntrianFarmasiComponent implements OnInit {
         this.Columns = [
             {
                 Id: 1,
-                HeaderText: "Data",
+                HeaderText: "Resep Open",
                 HeaderBackgroundColor: "#0251cc",
                 ColumnIcon: "fa-calendar",
                 KeyField: "Data",
@@ -56,7 +56,12 @@ export class AntrianFarmasiComponent implements OnInit {
                 KeyField: "SiapDiracik",
                 Data: [
                     {
-                        Id: "DETS-3", Status: "SiapDiracik", KodeResep: "PCR004", NamaPasien: "Triastartya M", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:02:00"),
+                        Id: "DETS-3",
+                        Status: "SiapDiracik",
+                        KodeResep: "PCR004",
+                        NamaPasien: "Triastartya M",
+                        NamaDokter: "dr. Nanda Sonia",
+                        Waktu: new Date("2021-07-07 16:02:00"),
                         DetailResep: [
                             { Id: "PCR004-DET1", KodeResep: "PCR004", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 }
                         ]

@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
-import { DiagnosaPasienModel, IDiagnosaPasienModel } from '../../models/diagnosa-pasien.model';
+import { IDiagnosaPasienModel } from '../../models/diagnosa-pasien.model';
 import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
-import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 import Config from './json/diagnosa.config.json';
 import * as API_PIS_SETUP_DATA from '../../../../api/PIS/SETUP_DATA';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
@@ -57,12 +56,12 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
             id_register: [this.daftarPasienService.ActivePasien.value.id_register, []],
             id_dokter: [UserData.id_karyawan, []],
             keluhan: ['', []],
-            id_icd: [0, []],
-            soap_subjective: ['', []],
-            soap_objective: ['', []],
-            soap_assesment: ['', []],
+            id_icd: [0, [Validators.required]],
+            soap_subjective: ['', [Validators.required]],
+            soap_objective: ['', [Validators.required]],
+            soap_assesment: ['', [Validators.required]],
             catatan: ['', []],
-            soap_plan: ['', []]
+            soap_plan: ['', [Validators.required]]
         });
 
         this.onGetAllDiagnosa();
@@ -99,9 +98,9 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
     }
 
     handleSelectedDiagnosa(args: any): void {
-        this.id_icd.setValue(args.id_icd);
+        this.id_icd.setValue(args.id_icd || args[0].id_icd);
 
-        this.soap_assesment.setValue(args.nama_icd);
+        this.soap_assesment.setValue(args.nama_icd || args[0].nama_icd);
     }
 
     onSubmitFormAddDiagnosa(FormAddDiagnosa: any): void {
