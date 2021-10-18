@@ -14,7 +14,7 @@
         </div>
 
         <!-- Nama Obat -->
-        <div *ngIf="!is_racikan.value" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div *ngIf="!is_racikan.value" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Nama Obat</label>
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Nama Racikan -->
-        <div *ngIf="is_racikan.value" class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+        <div *ngIf="is_racikan.value" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Nama Racikan Obat</label>
@@ -70,7 +70,7 @@
         </div>
 
         <!-- Meode Racikan -->
-        <div *ngIf="is_racikan.value" class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
+        <div *ngIf="is_racikan.value" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <div class="row mb-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="DropdownObat" class="form-label">Kemasan Racikan</label>
@@ -88,47 +88,62 @@
             </div>
         </div>
 
-        <!-- Qty Obat dan Aturan Pakai -->
-        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
-            <div class="row mb-2">
-                <!-- Qty Obat -->
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-2">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label for="NumericQty" class="form-label">Qty</label>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <ejs-numerictextbox [format]="'N0'" id="NumericQty" [showSpinButton]="false"
-                                [showClearButton]="false" formControlName="qty_resep" [ste]>
-                            </ejs-numerictextbox>
-                        </div>
-                    </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pe-1">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="NumericQty" class="form-label">Qty</label>
                 </div>
-
-                <!-- Aturan Pakai -->
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ps-2">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label for="NumericQty" class="form-label">Aturan Pakai</label>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-1">
-                            <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
-                                [dataSource]="dataSourceLabelPemakaian" formControlName="label" popupWidth='30rem'
-                                [fields]="DropdownLabelFields" (change)="handleChangeLabel($event)">
-                            </ejs-combobox>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-1">
-                            <ejs-combobox id="DropdownTambahanAturanPakai" [allowFiltering]="true"
-                                [dataSource]="dataSourceTambahanAturanPakai" formControlName="aturan" popupWidth='25rem'
-                                [fields]="DropdownAturanFields" (change)="handleChangeAturan($event)">
-                            </ejs-combobox>
-                        </div>
-                    </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <ejs-numerictextbox [format]="'N0'" id="NumericQty" [showSpinButton]="false"
+                        [showClearButton]="false" formControlName="qty_resep" [ste]>
+                    </ejs-numerictextbox>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-1">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="NumericQty" class="form-label">Label Obat</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                    <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                        [dataSource]="dataSourceLabelPemakaian" formControlName="label" popupWidth='30rem'
+                        [fields]="DropdownLabelFields" (change)="handleChangeLabel($event)">
+                    </ejs-combobox>
+                </div>
+            </div>
+        </div>
+        
+        <div *ngIf="!is_racikan.value" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pe-1">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="NumericQty" class="form-label">Satuan</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                    <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                        [dataSource]="dataSourceSatuanAturanPakai" formControlName="id_satuan_aturan_pakai" popupWidth='30rem'
+                        [fields]="DropdownsatuanPakaiFields" (change)="handleChangeSatuanAturan($event)">
+                    </ejs-combobox>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-1">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="NumericQty" class="form-label">Aturan Tambahan</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                    <ejs-combobox id="DropdownTambahanAturanPakai" [allowFiltering]="true"
+                        [dataSource]="dataSourceTambahanAturanPakai" formControlName="aturan" popupWidth='25rem'
+                        [fields]="DropdownAturanFields" (change)="handleChangeAturan($event)">
+                    </ejs-combobox>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ps-4">
             <div class="row align-content-center h-100 mb-2" [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState != 'input'">
                     <button class="btn btn-primary btn-sm" type="button" [disabled]="FormAddObat.invalid"
@@ -142,7 +157,7 @@
                     <button class="btn btn-warning btn-sm" type="button" [disabled]="FormAddObat.invalid"
                         (click)="onUpdateDataObat(FormAddObat.value)">
                         <i class="fas fa-edit fa-sm"></i>
-                        <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Edit Obat</span>
+                        <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Edit</span>
                     </button>
                 </div>
             </div>

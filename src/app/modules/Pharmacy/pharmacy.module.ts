@@ -14,6 +14,7 @@ import { SetupRutePemberianObatComponent } from './pages/setup-data/setup-rute-p
 import { SetupLabelPemakaianObatComponent } from './pages/setup-data/setup-label-pemakaian-obat/setup-label-pemakaian-obat.component';
 import { SetupGenerikComponent } from './pages/setup-formularium/setup-formularium/setup-generik/setup-generik.component';
 import { TransaksiObatIrnaComponent } from './pages/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.component';
+import { TransaksiObatIrjaComponent } from './pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { TransaksiObatIrnaComponent } from './pages/transaksi-obat/transaksi-oba
         SetupLabelPemakaianObatComponent,
         SetupGenerikComponent,
         TransaksiObatIrnaComponent,
+        TransaksiObatIrjaComponent,
     ],
     imports: [
         CommonModule,

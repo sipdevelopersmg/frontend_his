@@ -18,6 +18,7 @@ import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/org
 import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
 import { EmitType } from '@syncfusion/ej2-base';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
+import { SetupSatuanAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-satuan-aturan-pakai/setup-satuan-aturan-pakai.service';
 
 @Component({
     selector: 'app-input-resep',
@@ -42,6 +43,7 @@ export class InputResepComponent implements OnInit {
 
     DropdownLabelFields: object = { text: "nama_label_pemakaian_obat", value: "id_label_pemakaian_obat" };
     DropdownAturanFields: object = { text: "tambahan_aturan_pakai", value: "id_tambahan_aturan_pakai" };
+    DropdownsatuanPakaiFields: object = { text: "satuan_aturan_pakai", value: "id_satuan_aturan_pakai" };
 
     // ** Form Add Obat Properties
     FormAddObat: FormGroup;
@@ -81,6 +83,7 @@ export class InputResepComponent implements OnInit {
     globalListenFunc:Function;
     dataSourceLabelPemakaian = [];
     dataSourceTambahanAturanPakai = [];
+    dataSourceSatuanAturanPakai = [];
     counter: number = 0;
     counterRacikan: number = 0;
     dataScourceGridChild: any[] = [];
@@ -141,6 +144,7 @@ export class InputResepComponent implements OnInit {
         public resepDokterService: ResepDokterService,
         public setupLabelPemakaianObatService: SetupLabelPemakaianObatService,
         public setupTambahanAturanPakaiService: SetupTambahanAturanPakaiService,
+        public setupSatuanAturanPakaiService:SetupSatuanAturanPakaiService,
         public setupMetodeRacikanService: SetupMetodeRacikanService,
         private renderer: Renderer2
     ) {
@@ -148,6 +152,7 @@ export class InputResepComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.FormAddObat = this.formBuilder.group({
             counter: [0,[]],
             is_racikan: [false, []],
@@ -160,10 +165,15 @@ export class InputResepComponent implements OnInit {
             nama_obat: ['', []],
             qty_resep: ['', []],
             nama_satuan: ['-', []],
+
             label: ['', []],
             ket_label: ['', []],
             id_label_pemakaian_obat: [null, []],
             label_pemakaian_obat: ['', []],
+
+            id_satuan_aturan_pakai:[null,[]],
+            satuan_aturan_pakai:[null,[]],
+            
             aturan: ['', []],
             ket_aturan: ['', []],
             id_tambahan_aturan_pakai: [null, []],
@@ -313,6 +323,10 @@ export class InputResepComponent implements OnInit {
             this.dataSourceTambahanAturanPakai = result.data;
         });
 
+        this.setupSatuanAturanPakaiService.onGetAll().subscribe((result)=>{
+            this.dataSourceSatuanAturanPakai = result.data;
+        })
+
         this.setupMetodeRacikanService.setDataSource();
         this.resepDokterService.setDataObat([]);
 
@@ -448,6 +462,10 @@ export class InputResepComponent implements OnInit {
             this.id_tambahan_aturan_pakai.setValue(1);
             this.ket_aturan.setValue(args.itemData.tambahan_aturan_pakai);
         }
+    }
+
+    handleChangeSatuanAturan(args: any): void {
+        this.satuan_aturan_pakai.setValue(args.itemData.satuan_aturan_pakai);
     }
 
     handleChangeNamaRacikan(): void {
@@ -623,7 +641,9 @@ export class InputResepComponent implements OnInit {
              ket_aturan         :data.ket_aturan,
              id_tambahan_aturan_pakai:data.id_tambahan_aturan_pakai,
              label_tambahan_aturan_pakai_obat:data.label_tambahan_aturan_pakai_obat,
-             nama_racikan       :data.nama_racikan
+             nama_racikan       :data.nama_racikan,
+             id_satuan_aturan_pakai : data.id_satuan_aturan_pakai,
+             satuan_aturan_pakai : data.satuan_aturan_pakai,
         });
     }
 
@@ -649,13 +669,16 @@ export class InputResepComponent implements OnInit {
     get nama_obat(): AbstractControl { return this.FormAddObat.get('nama_obat'); };
     get qty_resep(): AbstractControl { return this.FormAddObat.get('qty_resep'); }
     get nama_satuan(): AbstractControl { return this.FormAddObat.get('nama_satuan'); }
+
     get label(): AbstractControl { return this.FormAddObat.get('label'); }
     get ket_label(): AbstractControl { return this.FormAddObat.get('ket_label'); }
     get id_label_pemakaian_obat(): AbstractControl { return this.FormAddObat.get('id_label_pemakaian_obat'); }
     get label_pemakaian_obat(): AbstractControl { return this.FormAddObat.get('label_pemakaian_obat'); }
+    
     get aturan(): AbstractControl { return this.FormAddObat.get('aturan'); }
     get ket_aturan(): AbstractControl { return this.FormAddObat.get('ket_aturan'); }
     get id_tambahan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_tambahan_aturan_pakai'); }
     get label_tambahan_aturan_pakai_obat(): AbstractControl { return this.FormAddObat.get('label_tambahan_aturan_pakai_obat'); }
     get nama_racikan(): AbstractControl { return this.FormAddObat.get('nama_racikan'); }
+    get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai')};
 }

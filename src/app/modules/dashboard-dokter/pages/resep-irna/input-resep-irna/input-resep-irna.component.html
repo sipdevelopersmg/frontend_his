@@ -2,109 +2,164 @@
 <!-- Field Pencarian -->
 <form [formGroup]="FormAddObat" class="form-irna">
     <div class="row">
-        <div class="col-lg-4">
-            <div class="row">
+        <div class="col-lg-4">      
+            <div class="row mb-2">
+                <!-- Is Racikan -->
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="DropdownObat" class="form-label">Racik</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input class="form-check-input" type="checkbox" formControlName="is_racikan">
+                        </div>
+                    </div>
+                </div>
+                <!-- Obat -->
+                <div *ngIf="!is_racikan.value" class="col-lg-10 col-md-11 col-sm-11 col-xs-11">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Obat</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ejs-dropdownlist id='DropdownObat' #Drop
+                                [allowFiltering]="true" 
+                                [dataSource]='data' 
+                                [fields]='fields' 
+                                [placeholder]='text' 
+                                [query]='query' 
+                                [sortOrder]='sorting'  
+                                [allowFiltering]='true'
+                                (filtering)='onFiltering($event)'
+                                (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'
+                            ></ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <!-- Racikan -->
+                <div *ngIf="is_racikan.value" class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Nama Racikan Obat</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="input-group ">
+                                <input type="text" class="form-control form-select-sm" formControlName="nama_racikan"
+                                    (change)="handleChangeNamaRacikan()">
+                                <button id="btnInputGroup" class="btn btn-primary" type="button"
+                                    style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
+                                    (click)="handelClickRacikan()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Kemasan -->
+            <div *ngIf="is_racikan.value" class="row">
                 <div class="col-lg-12">
                     <div class="row">
-                        <p style="display: inline-block;" style="line-height: 3!important;font-weight: bold;">
-                            Racikan? <input class="form-check-input" style="vertical-align: inherit" (ngModelChange)="handleChangeRacikan($event)" type="checkbox" formControlName="is_racikan">
-                            Pillih
-                            <span *ngIf="!is_racikan.value">
-                                Obat 
-                                <!-- <div style="width: 50px;"> -->
-                                    <ejs-dropdownlist id='DropdownObat' #Drop class="form_paragraf"
-                                        [allowFiltering]="true" 
-                                        [dataSource]='data' 
-                                        [fields]='fields' 
-                                        [placeholder]='text' 
-                                        [query]='query' 
-                                        [sortOrder]='sorting'  
-                                        [allowFiltering]='true'
-                                        (filtering)='onFiltering($event)'
-                                        (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'
-                                    ></ejs-dropdownlist>
-                                <!-- </div> -->
-                            </span>
-                            <span *ngIf="is_racikan.value">
-                                Racikan
-                                <div class="form_paragraf">
-                                    <div class="input-group " style="width: 200px;">
-                                        <input type="text" class="form-control form-select-sm" formControlName="nama_racikan"
-                                            (change)="handleChangeNamaRacikan()">
-                                        <button id="btnInputGroup" class="btn btn-primary" type="button"
-                                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
-                                            (click)="handelClickRacikan($event)">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                kemasan
-                                <ejs-dropdownlist #MolDropdown [dataSource]="setupMetodeRacikanService.dataSource | async"
-                                    [fields]="DropdownMetodeRacikanFields" [allowFiltering]="true"
-                                    class="form_paragraf"
-                                    (change)="handleChangeMetodeRacikan($event)"
-                                    formControlName="id_metode_racikan"
-                                >
-                                </ejs-dropdownlist>
-                            </span>
-                            , Rute Pemberian Obat 
-                            <ejs-combobox id="DropdownLabelPemakaian" class="form_paragraf" [allowFiltering]="true"
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="kemasan" class="form-label">Kemasan</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ejs-dropdownlist #MolDropdown [dataSource]="setupMetodeRacikanService.dataSource | async"
+                                [fields]="DropdownMetodeRacikanFields" [allowFiltering]="true"
+                                (change)="handleChangeMetodeRacikan($event)"
+                                formControlName="id_metode_racikan"
+                            ></ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Rute -->
+            <div class="row mb-2">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="kemasan" class="form-label">Rute Pemberian Obat</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
                                 [dataSource]="setupRutePemberianObatService.dataSource | async" formControlName="id_rute_pemberian_obat" popupWidth='30rem'
                                 [fields]="DropdownRuteFields" (change)="handleChangeRute($event)">
                             </ejs-combobox>
-                            sehari 
-                            <ejs-numerictextbox [format]="'N0'" style="width: 50px;" class="form_paragraf" id="NumericQty" [showSpinButton]="false"
-                                [showClearButton]="false" formControlName="qty_harian" [ste]>
-                            </ejs-numerictextbox> {{ nama_satuan.value }}
-                            , Diberikan 
-                            <ejs-numerictextbox [format]="'N0'" style="width: 50px;" class="form_paragraf" id="NumericQty" [showSpinButton]="false"
-                                [showClearButton]="false" formControlName="jumlah_satuan_aturan_pakai" [ste]>
-                            </ejs-numerictextbox> {{ nama_satuan.value }}
-                            Tiap 
-                            <ejs-numerictextbox [format]="'N0'" style="width: 50px;" class="form_paragraf" id="NumericQty" [showSpinButton]="false"
-                                [showClearButton]="false" formControlName="jumlah_interval_aturan_pakai" [ste]>
-                            </ejs-numerictextbox> 
-                            <ejs-combobox id="DropdownLabelPemakaian" style="width: 100px;" class="form_paragraf" [allowFiltering]="true"
-                                [dataSource]="setupIntervalAturanPakaiService.dataSource | async" formControlName="id_interval_aturan_pakai" popupWidth='30rem'
-                                [fields]="DropdownPemakaianFields" (change)="handleChangePemakaian($event)">
-                            </ejs-combobox>
-                            aturan pakai
-                            <ejs-combobox id="DropdownTambahanAturanPakai"  class="form_paragraf" [allowFiltering]="true"
-                                [dataSource]="dataSourceTambahanAturanPakai" formControlName="aturan" popupWidth='25rem'
-                                [fields]="DropdownAturanFields" (change)="handleChangeAturan($event)">
-                            </ejs-combobox>
-                        </p>  
-                        <p style="font-weight: bold;"> 
-                            Obat ini akan diberikan selama
-                            <ejs-numerictextbox [format]="'N0'" style="width: 50px;" class="form_paragraf" id="NumericQty" [showSpinButton]="false"
-                                [showClearButton]="false" formControlName="jumlah_hari" [ste]>
-                            </ejs-numerictextbox> hari
-                        </p>  
+                        </div>
                     </div>
-                    <!-- LookUp Resep dokter -->
-                    <org-look-up-hirarki
-                        #LookupTemplateResep 
-                        [lookup-url]="urlTemplateResep" 
-                        (onGetSelectedData)="heandleSelectedTemplateResep($event)"
-                        [columns]="GridlookUpTemplateResep.columns" 
-                        [columnsChild]="GridlookUpTemplateResep.columnsChild"
-                        [filter-lookup]="GridlookUpTemplateResep.filter" 
-                        [modal-title]="'Data Template Resep Dokter'"
-                        [queryString]="'resep_id'"
-                    ></org-look-up-hirarki>
-                    
-                    <!-- LookUp Racikan -->
-                    <org-look-up-hirarki
-                         #LookupRacikan 
-                         [lookup-url]="urlRacikan" 
-                         (onGetSelectedData)="handleSelectedRacikan($event)"
-                         [columns]="GridLookUpItem.columns" 
-                         [columnsChild]="GridLookUpItem.columnsChild"
-                         [filter-lookup]="GridLookUpItem.filter" 
-                         [modal-title]="'Data Racikan Dokter'"
-            
-                     ></org-look-up-hirarki>
                 </div>
+            </div>
+            <!-- label -->
+            <div class="row mb-2">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="label" class="form-label">Label</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ejs-dropdownlist id="DropdownLabelPemakaian" [allowFiltering]="true"
+                                [dataSource]="dataSourceLabelPemakaian" formControlName="label" popupWidth='30rem'
+                                [fields]="DropdownLabelFields" (change)="handleChangeLabel($event)">
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- satuan -->
+            <div *ngIf="!is_racikan.value" class="row mb-2">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Satuan</label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                            <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                                [dataSource]="dataSourceSatuanAturanPakai" formControlName="id_satuan_aturan_pakai" popupWidth='30rem'
+                                [fields]="DropdownsatuanPakaiFields" (change)="handleChangeSatuanAturan($event)">
+                            </ejs-combobox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- aturan tambhan -->
+            <div class="row mb-2">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Aturan Tambahan</label>
+                        </div>
+                        <ejs-combobox id="DropdownTambahanAturanPakai"  [allowFiltering]="true"
+                            [dataSource]="dataSourceTambahanAturanPakai" formControlName="aturan" popupWidth='25rem'
+                            [fields]="DropdownAturanFields" (change)="handleChangeAturan($event)">
+                        </ejs-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Qty/Hari</label>
+                        </div>
+                        <ejs-numerictextbox [format]="'N0'" id="NumericQty" [showSpinButton]="false" [readonly]="true"
+                            [showClearButton]="false" formControlName="qty_harian" [ste]>
+                        </ejs-numerictextbox>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label for="NumericQty" class="form-label">Untuk Berapa Hari</label>
+                        </div>
+                        <ejs-numerictextbox [format]="'N0'"  class="form_paragraf" id="NumericQty" [showSpinButton]="false"
+                            [showClearButton]="false" formControlName="jumlah_hari" [ste]>
+                        </ejs-numerictextbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-lg-12">
                     <!-- Tombol -->
                     <button class="btn btn-primary btn-sm" type="button" [disabled]="FormAddObat.invalid" [hidden]="FormAddObatState != 'input'"
@@ -121,7 +176,34 @@
                 </div>
             </div>
         
+            <!-- LookUp Resep dokter -->
+            <org-look-up-hirarki
+            #LookupTemplateResep 
+            [lookup-url]="urlTemplateResep" 
+            (onGetSelectedData)="heandleSelectedTemplateResep($event)"
+            [columns]="GridlookUpTemplateResep.columns" 
+            [columnsChild]="GridlookUpTemplateResep.columnsChild"
+            [filter-lookup]="GridlookUpTemplateResep.filter" 
+            [modal-title]="'Data Template Resep Dokter'"
+            [queryString]="'resep_id'"
+            ></org-look-up-hirarki>
+
+            <!-- LookUp Racikan -->
+            <org-look-up-hirarki
+                #LookupRacikan 
+                [lookup-url]="urlRacikan" 
+                (onGetSelectedData)="handleSelectedRacikan($event)"
+                [columns]="GridLookUpItem.columns" 
+                [columnsChild]="GridLookUpItem.columnsChild"
+                [filter-lookup]="GridLookUpItem.filter" 
+                [modal-title]="'Data Racikan Dokter'"
+
+            ></org-look-up-hirarki>
+
         </div>
+
+        
+        
         <!-- GRID OBAT -->
         <div class="col-lg-8">
             <div class="card">

@@ -1,35 +1,23 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { IEditCell, EditSettingsModel, GridModel, GridComponent, AddEventArgs } from '@syncfusion/ej2-angular-grids';
-
-import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
-import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import Swal from 'sweetalert2';
-import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/resep-dokter-irna.service';
-import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
-import { ActivatedRoute } from '@angular/router';
-import * as GridConfig from './json/grid.config.json'
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
-
+import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
+import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import * as GridConfig from './json/grid.config.json'
 @Component({
-  selector: 'app-view-resep-irna',
-  templateUrl: './view-resep-irna.component.html',
-  styleUrls: ['./view-resep-irna.component.css'],
-  providers: [BsModalService]
-
+  selector: 'app-transaksi-obat-irja',
+  templateUrl: './transaksi-obat-irja.component.html',
+  styleUrls: ['./transaksi-obat-irja.component.css']
 })
+export class TransaksiObatIrjaComponent implements OnInit {
 
-export class ViewResepIrnaComponent implements OnInit {
-    
   ButtonNav: ButtonNavModel[] = [
     { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
-    { Id: 'lanjutkan', Captions: 'Lanjutkan Resep', Icons1: 'fa-forward fa-sm' },
-    { Id: 'ubah', Captions: 'Ubah Resep', Icons1: 'fa-edit fa-sm' },
-    { Id: 'stop', Captions: 'Hentikan Resep', Icons1: 'fa-stop-circle fa-sm' }
+    { Id: 'simpan', Captions: 'Simpan Penjualan Resep', Icons1: 'fa-save fa-sm' },
   ];
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
@@ -60,8 +48,8 @@ export class ViewResepIrnaComponent implements OnInit {
     dataSourceChild:any = [];
     dataSource:any = [];
     dataHeader:any = [];
+    
     constructor(
-        private formBuilder: FormBuilder,
         public resepDokterIrnaService: ResepDokterIrnaService,
         private router:Router,
         private encryptionService: EncryptionService,

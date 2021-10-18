@@ -29,3 +29,7 @@
   .form_paragraf{
     display: inline-block!important;
   }
+
+.form-label {
+  margin-bottom: 0px;
+}

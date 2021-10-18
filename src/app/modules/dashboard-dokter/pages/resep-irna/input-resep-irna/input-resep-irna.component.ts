@@ -24,6 +24,9 @@ import { SetupTambahanAturanPakaiService } from 'src/app/modules/Pharmacy/servic
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/resep-dokter-irna.service';
+import { Router,ActivatedRoute } from '@angular/router';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 
 @Component({
   selector: 'app-input-resep-irna',
@@ -38,6 +41,7 @@ export class InputResepIrnaComponent implements OnInit {
     * @ButtonNav: ButtonNavModel[]
     */
   ButtonNav: ButtonNavModel[] = [
+    { Id: "Kembali", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
     { Id: "Template", Icons1: "fas fa-tags fa-sm", Captions: "Template Resep" },
     { Id: "Reset", Icons1: "fas fa-undo fa-sm", Captions: "Reset" },
     { Id: "Simpan", Icons1: "fas fa-save fa-sm", Captions: "Simpan" },
@@ -55,7 +59,7 @@ export class InputResepIrnaComponent implements OnInit {
     isGetFromTemplate:boolean;
 
     public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+1;
-    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP+'/'+1;
+    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRNA.GET_TEMPLATE_RESEP+'/'+1;
     public GridLookUpItem = GridLookUpItem;
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
 
@@ -63,6 +67,8 @@ export class InputResepIrnaComponent implements OnInit {
     DropdownAturanFields: object = { text: "tambahan_aturan_pakai", value: "id_tambahan_aturan_pakai" };
     DropdownRuteFields: object = { text: "nama_rute_pemberian_obat", value: "id_rute_pemberian_obat" };
     DropdownPemakaianFields: object = { text: "interval_aturan_pakai", value: "id_interval_aturan_pakai" };
+    DropdownLabelFields: object = { text: "nama_label_pemakaian_obat", value: "id_label_pemakaian_obat" };
+
     // ** Form Add Obat Properties
     FormAddObat: FormGroup;
     FormAddObatState: string = "input";
@@ -72,9 +78,13 @@ export class InputResepIrnaComponent implements OnInit {
 
     DropdownObatFields: object = { text: 'nama_obat', value: 'id_item' };
     DropdownMetodeRacikanFields: object = { text: 'metode_racikan', value: 'id_metode_racikan' };
+    DropdownsatuanPakaiFields: object = { text: "satuan_aturan_pakai", value: "id_satuan_aturan_pakai" };
+
 
     NamaObatDatasource: any[] = [];
     dataSourceTambahanAturanPakai: any[] = [];
+    dataSourceLabelPemakaian: any = [];
+    dataSourceSatuanAturanPakai = [];
 
     // ** Waktu Pakai
     WaktuPakai: any[] = [];
@@ -168,9 +178,7 @@ export class InputResepIrnaComponent implements OnInit {
         //        ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['interval_aturan_pakai']+' sekali';
         return  data1['nama_obat'] +' '+
                 data1['rute_pemberian_obat'] + ', sehari ' + 
-                data1['qty_harian'] +' '+ data1['nama_satuan']+', '+ data1['jumlah_satuan_aturan_pakai']+' '+ data1['nama_satuan']+
-                ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['interval_aturan_pakai']+' sekali, '+
-                data1['ket_aturan'];
+                data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
     }
 
     public quantity = (field: string, data1: object) => {
@@ -178,17 +186,22 @@ export class InputResepIrnaComponent implements OnInit {
                 data1['nama_satuan']+'/Hari, untuk '+data1['jumlah_hari']+' Hari';
     }
 
+    private dataUbah:any = null;
+    private updateResepDokter:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
-    public resepDokterService: ResepDokterService,
+    public resepDokterService: ResepDokterIrnaService,
     public setupMetodeRacikanService: SetupMetodeRacikanService,
     public setupRutePemberianObatService:SetupRutePemberianObatService,
     public setupSatuanAturanPakaiService:SetupSatuanAturanPakaiService,
     public setupIntervalAturanPakaiService:SetupIntervalAturanPakaiService,
     public setupTambahanAturanPakaiService: SetupTambahanAturanPakaiService,
+    public setupLabelPemakaianObatService: SetupLabelPemakaianObatService,
     private utilityService:UtilityService,
     private modalService: BsModalService,
-
+    private router: Router,
+    private encryptionService:EncryptionService,
+    private activatedRoute:ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -210,16 +223,19 @@ export class InputResepIrnaComponent implements OnInit {
         
         id_rute_pemberian_obat: [null, []],
         rute_pemberian_obat: ['', []],
-        jumlah_satuan_aturan_pakai: [1, []],
-        
-        id_satuan_aturan_pakai: [1, []],
+
+        // jumlah_satuan_aturan_pakai: [1, []],
+        id_satuan_aturan_pakai: [null, []],
         satuan_aturan_pakai: ['', []],
         
-        jumlah_interval_aturan_pakai: [8, []],
-        id_interval_aturan_pakai: [1, []],
-        interval_aturan_pakai: ['JAM', []],
+        // jumlah_interval_aturan_pakai: [8, []],
+        // id_interval_aturan_pakai: [1, []],
+        // interval_aturan_pakai: ['JAM', []],
 
+        label: ['', []],
+        ket_label: ['', []],
         id_label_pemakaian_obat: [null, []],
+        label_pemakaian_obat: ['', []],
 
         aturan: ['', []],
         ket_aturan: ['', []],
@@ -364,15 +380,43 @@ export class InputResepIrnaComponent implements OnInit {
         }
     }
 
+    this.setupLabelPemakaianObatService.onGetAll().subscribe((result) => {
+        this.dataSourceLabelPemakaian = result.data;
+    });
+
     this.setupMetodeRacikanService.setDataSource();
     this.resepDokterService.setDataObat([]);
     this.setupRutePemberianObatService.setDataSource();
     this.setupIntervalAturanPakaiService.setDataSource();
-    this.setupSatuanAturanPakaiService.setDataSource();
+    
     this.setupTambahanAturanPakaiService.onGetAll().subscribe((result) => {
         this.dataSourceTambahanAturanPakai = result.data;
     });
+
+    this.setupSatuanAturanPakaiService.onGetAll().subscribe((result)=>{
+        this.dataSourceSatuanAturanPakai = result.data;
+    })
   }
+
+    ngAfterViewInit(): void {
+        let id:any = null;
+        if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined'){
+            id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            this.ButtonNav = [
+                { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
+              ];
+            this.updateResep(id);
+        }
+    }
+
+    updateResep(id){
+        this.resepDokterService.onGetById(id).subscribe((result)=>{
+            this.dataUbah = result.data;
+            this.heandleSelectedTemplateResep(result.data);
+            this.updateResepDokter = true;
+        })
+    }
 
   handleClickTambahObat(){
     this.inputObat = true;
@@ -488,6 +532,14 @@ export class InputResepIrnaComponent implements OnInit {
       this.nama_obat.setValue(args.itemData.nama_obat);
   }
 
+
+    handleChangeLabel(args: any): void {
+        this.label_pemakaian_obat.setValue('');
+        this.id_label_pemakaian_obat.setValue(args.value);
+        this.ket_label.setValue(args.itemData.nama_label_pemakaian_obat);
+        this.qty_harian.setValue(args.itemData.berapa_kali_per_hari);
+    }
+
   handleChangeAturan(args: any): void {
     if (typeof args.value === 'number' && (args.value % 1) === 0) {
         this.label_tambahan_aturan_pakai_obat.setValue('');
@@ -527,7 +579,11 @@ export class InputResepIrnaComponent implements OnInit {
 
   handleChangePemakaian(args:any): void{
       console.log(args);
-      this.interval_aturan_pakai.setValue(args.itemData.interval_aturan_pakai);
+    //   this.interval_aturan_pakai.setValue(args.itemData.interval_aturan_pakai);
+  }
+
+  handleChangeSatuanAturan(args:any): void{
+    this.satuan_aturan_pakai.setValue(args.itemData.satuan_aturan_pakai);
   }
 
   handleSelectedRacikan(args: any): void {
@@ -603,7 +659,6 @@ export class InputResepIrnaComponent implements OnInit {
           FormAddObat.metode_racikan = null;
       }
       this.resepDokterService.addDetail(FormAddObat);
-      console.log(this.DataRacikan);
       if(this.is_racikan.value && this.DataRacikan.length > 0){
         this.DataRacikan.map((e,i)=>{
             e.counter = this.counter;
@@ -665,9 +720,10 @@ export class InputResepIrnaComponent implements OnInit {
   onToolbarClick(args: any): void {
       switch (args.item.id) {
           case "edit":
-              this.FormAddObat.setValue(this.SelectedDataObat);
-              this.FormAddObatState = "edit";
-              break;
+            //   this.FormAddObat.setValue(this.SelectedDataObat);
+                this.onEditData();
+                this.FormAddObatState = "edit";
+                break;
           case "delete":
               this.resepDokterService.removeDataDetail(this.currentIndex);
               this.GridResepRacikan.refresh();
@@ -676,6 +732,38 @@ export class InputResepIrnaComponent implements OnInit {
               break;
       };
   }
+
+  onEditData(){
+    let data = this.SelectedDataObat
+    this.FormAddObat.setValue({
+         counter            :data.counter,
+         no_urut            :data.no_urut,
+         is_racikan         :data.is_racikan,
+         set_racikan_id     :data.set_racikan_id,
+         id_metode_racikan  :data.id_metode_racikan,
+         metode_racikan     :data.metode_racikan,
+         id_item            :data.id_item,
+         nama_obat          :data.nama_obat,
+         qty_resep          :data.qty_resep,
+         nama_satuan        :data.nama_satuan,
+         label              :data.label,
+         ket_label          :data.ket_label,
+         id_label_pemakaian_obat:data.id_label_pemakaian_obat,
+         label_pemakaian_obat:data.label_pemakaian_obat,
+         aturan             :data.aturan,
+         ket_aturan         :data.ket_aturan,
+         id_tambahan_aturan_pakai:data.id_tambahan_aturan_pakai,
+         label_tambahan_aturan_pakai_obat:data.label_tambahan_aturan_pakai_obat,
+         nama_racikan       :data.nama_racikan,
+         id_satuan_aturan_pakai : data.id_satuan_aturan_pakai,
+         satuan_aturan_pakai : data.satuan_aturan_pakai,
+
+         jumlah_hari            :data.jumlah_hari,
+         qty_harian             :data.qty_harian,
+         id_rute_pemberian_obat :data.id_rute_pemberian_obat,
+         rute_pemberian_obat    :data.nama_rute_pemberian_obat
+    });
+}
 
     onActionComplete(args: any): void {
         // let dataSourceParent: any = this.GridResepRacikan.dataSource;
@@ -767,10 +855,32 @@ export class InputResepIrnaComponent implements OnInit {
                 });
         })
     }
+
+    ubahResep(){
+        this.resepDokterService.ubahResepRawatInap(this.dataUbah).subscribe((result)=>{
+            this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Ubah', result.message)
+            .then(() => {
+                const id = this.encryptionService.encrypt(JSON.stringify(result.data));
+                this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+            });
+        });
+    }
+
     onClickButtonNav(args: any): void {
         switch (args) {
+            case "kembali_update":
+                const id = this.encryptionService.encrypt(JSON.stringify(this.dataUbah.resep_id));
+                this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+                break;
+            case "ubah":
+                this.ubahResep();
+                break;
+            case "Kembali":
+                this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                break;
             case "Template":
                 this.handelClickTemplateResep();
+                break;
             case "Reset":
                 this.resepDokterService.reset();
                 this.isGetFromTemplate = false;
@@ -786,6 +896,8 @@ export class InputResepIrnaComponent implements OnInit {
     handelClickTemplateResep(): void {
         this.LookupTemplateResep.onOpenModal();
     }
+
+   
     
   get tanggal_mulai(): AbstractControl { return this.FormAddObat.get('tanggal_mulai'); };
   get tanggal_sampai(): AbstractControl { return this.FormAddObat.get('tanggal_sampai'); };
@@ -806,14 +918,19 @@ export class InputResepIrnaComponent implements OnInit {
   get rute_pemberian_obat(): AbstractControl { return this.FormAddObat.get('rute_pemberian_obat'); }
   get jumlah_satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('jumlah_satuan_aturan_pakai'); }
   get id_satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_satuan_aturan_pakai'); }
-  get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai'); }
-  get jumlah_interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('jumlah_interval_aturan_pakai'); }
-  get id_interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_interval_aturan_pakai'); }
-  get interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('interval_aturan_pakai'); }
+    get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai'); }
+//   get jumlah_interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('jumlah_interval_aturan_pakai'); }
+//   get id_interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_interval_aturan_pakai'); }
+//   get interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('interval_aturan_pakai'); }
 
   get aturan(): AbstractControl { return this.FormAddObat.get('aturan'); }
   get ket_aturan(): AbstractControl { return this.FormAddObat.get('ket_aturan'); }
   get id_tambahan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_tambahan_aturan_pakai'); }
   get label_tambahan_aturan_pakai_obat(): AbstractControl { return this.FormAddObat.get('label_tambahan_aturan_pakai_obat'); }
+
+  get label(): AbstractControl { return this.FormAddObat.get('label'); }
+  get ket_label(): AbstractControl { return this.FormAddObat.get('ket_label'); }
+  get id_label_pemakaian_obat(): AbstractControl { return this.FormAddObat.get('id_label_pemakaian_obat'); }
+  get label_pemakaian_obat(): AbstractControl { return this.FormAddObat.get('label_pemakaian_obat'); }
 
 }

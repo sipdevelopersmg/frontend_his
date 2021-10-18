@@ -39,8 +39,12 @@ export interface TrResepDokterIrjaDetailInsert {
     qty_harian: number;
 
     id_rute_pemberian_obat?:number;
+    rute_pemberian_obat?:string;
+    nama_rute_pemberian_obat?:string;
+
     jumlah_satuan_aturan_pakai?:number;
     id_satuan_aturan_pakai?:number;
+    satuan_aturan_pakai?:string;
     jumlah_interval_aturan_pakai?:number;
     id_interval_aturan_pakai?:number;
     interval_aturan_pakai?:string;

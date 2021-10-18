@@ -148,5 +148,6 @@ export class AntrianFarmasiComponent implements OnInit {
 
             item = {} as KanbanCardModel;
         }
+        
     }
 }

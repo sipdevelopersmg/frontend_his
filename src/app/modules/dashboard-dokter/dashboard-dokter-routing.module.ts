@@ -47,6 +47,7 @@ const dashboarDokterRoutes: Routes = [
                     { path: "daftar-resep-irna", component: DaftarResepIrnaComponent, data: { title: "Daftar Resep Active" } },
                     { path: "input-resep-irna", component: InputResepIrnaComponent, data: { title: "Form Resep Rawat Inap" } },
                     { path: "view-resep-irna/:id/:key", component: ViewResepIrnaComponent, data: { title: "Detail Resep Rawat Inap" } },
+                    { path: "ubah-resep-irna/:id/:key", component: InputResepIrnaComponent, data: { title: "Ubah Resep Rawat Inap" } },
                 ]
             },
         ]
