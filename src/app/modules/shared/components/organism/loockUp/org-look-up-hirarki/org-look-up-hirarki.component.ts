@@ -40,6 +40,8 @@ export class OrgLookUpHirarkiComponent implements OnInit {
   @Input('columns') columns: Columns[];
   @Input('columnsChild') columnsChild: any;  
   @Input('sourceGrid') sourceGrid: any;
+  @Input('queryString') queryString: string;
+
 
   @Input('idKode') idKode: string;
   @Input('idTitle') idTitle: string;
@@ -73,7 +75,7 @@ export class OrgLookUpHirarkiComponent implements OnInit {
       this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
       this.childGrid = {
         dataSource: this.gridChildDataSource,
-        queryString: "set_racikan_id",
+        queryString: this.queryString,
         rowHeight: 30,
         allowResizing: true,
         allowTextWrap: true,
@@ -225,7 +227,7 @@ export class OrgLookUpHirarkiComponent implements OnInit {
 
     this.childGrid = {
       dataSource: this.gridChildDataSource,
-      queryString: "set_racikan_id",
+      queryString: this.queryString,
       rowHeight: 30,
       allowResizing: true,
       allowTextWrap: true,

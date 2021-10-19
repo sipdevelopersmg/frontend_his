@@ -9,6 +9,8 @@ import { SetupOutletComponent } from "./pages/setup-data/setup-outlet/setup-outl
 import { SetupRutePemberianObatComponent } from "./pages/setup-data/setup-rute-pemberian-obat/setup-rute-pemberian-obat.component";
 import { SetupTipeOutletComponent } from "./pages/setup-data/setup-tipe-outlet/setup-tipe-outlet.component";
 import { SetupFormulariumComponent } from "./pages/setup-formularium/setup-formularium/setup-formularium.component";
+import { TransaksiObatIrjaComponent } from "./pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component";
+import { TransaksiObatIrnaComponent } from "./pages/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.component";
 
 const pharmacyRoutes: Routes = [
     { path: "", component: null, data: { title: "Pharmacy" } },
@@ -24,6 +26,13 @@ const pharmacyRoutes: Routes = [
             { path: "setup-cara-pakai-obat", component: SetupCaraPakaiObatComponent, data: { title: "Setup Cara Pakai Obat" } },
             { path: "setup-rute-pemberian-obat", component: SetupRutePemberianObatComponent, data: { title: "Setup rute Pemberian Obat" } },
             { path: "setup-label-pemakaian-obat", component: SetupLabelPemakaianObatComponent, data: { title: "Setup Label Pemakaian Obat" } },
+        ]
+    },
+    {
+        path: "transaksi-obat", component: null, data: { title: "Transaksi Obat" },
+        children: [
+            { path: "transaksi-obat-irja/:id/:key", component: TransaksiObatIrjaComponent, data: { title: "Transaksi Obat Rawat Jalan" } },
+            { path: "transaksi-obat-irna", component: TransaksiObatIrnaComponent, data: { title: "Transaksi Obat Rawat Inap" } },
         ]
     },
 ]

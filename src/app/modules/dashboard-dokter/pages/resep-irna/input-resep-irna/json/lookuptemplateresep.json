@@ -1,0 +1,33 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "set_racikan_id",
+            "headerText": "Id",
+            "type": "string",
+            "visible": false
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_template",
+            "headerText": "Nama Template Resep",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "columnsChild": [
+        { "field": "nama_obat", "headerText": "Nama Obat"},
+        { "field": "qty_resep", "headerText": "Qty" }
+    ],
+    "filter": [
+        {
+            "field": "nama_racikan",
+            "filter": "like",
+            "title": "Nama Racikan"
+        }
+    ]
+}

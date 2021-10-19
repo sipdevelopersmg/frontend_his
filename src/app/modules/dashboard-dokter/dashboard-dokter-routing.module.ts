@@ -13,6 +13,9 @@ import { RiwayatPemeriksaanLabComponent } from "./pages/laboratorium/riwayat-pem
 import { InputOrderBaruRadComponent } from "./pages/radiologi/input-order-baru/input-order-baru.component";
 import { RadiologiComponent } from "./pages/radiologi/radiologi.component";
 import { RiwayatPemeriksaanRadComponent } from "./pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component";
+import { DaftarResepIrnaComponent } from "./pages/resep-irna/daftar-resep-irna/daftar-resep-irna.component";
+import { InputResepIrnaComponent } from "./pages/resep-irna/input-resep-irna/input-resep-irna.component";
+import { ViewResepIrnaComponent } from "./pages/resep-irna/view-resep-irna/view-resep-irna.component";
 import { ResepComponent } from "./pages/resep/resep.component";
 import { VitalSignComponent } from "./pages/vital-sign/vital-sign.component";
 
@@ -41,6 +44,15 @@ const dashboarDokterRoutes: Routes = [
             },
             {
                 path: "resep", component: ResepComponent, data: { title: "Resep Pasien" },
+            },
+            {
+                path: "resep-irna", component: null, data: { title: "Pemeriksaan Laboratorium Pasien" },
+                children: [
+                    { path: "daftar-resep-irna", component: DaftarResepIrnaComponent, data: { title: "Daftar Resep Active" } },
+                    { path: "input-resep-irna", component: InputResepIrnaComponent, data: { title: "Form Resep Rawat Inap" } },
+                    { path: "view-resep-irna/:id/:key", component: ViewResepIrnaComponent, data: { title: "Detail Resep Rawat Inap" } },
+                    { path: "ubah-resep-irna/:id/:key", component: InputResepIrnaComponent, data: { title: "Ubah Resep Rawat Inap" } },
+                ]
             },
             {
                 path: "alergi", component: AlergiComponent, data: { title: "Alergi Pasien" },

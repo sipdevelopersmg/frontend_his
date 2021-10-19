@@ -26,6 +26,9 @@ import { KonsulComponent } from './pages/konsul/konsul.component';
 import { AlergiComponent } from './pages/alergi/alergi.component';
 import { VitalSignComponent } from './pages/vital-sign/vital-sign.component';
 import { BankDarahComponent } from './pages/bank-darah/bank-darah.component';
+import { InputResepIrnaComponent } from './pages/resep-irna/input-resep-irna/input-resep-irna.component';
+import { DaftarResepIrnaComponent } from './pages/resep-irna/daftar-resep-irna/daftar-resep-irna.component';
+import { ViewResepIrnaComponent } from './pages/resep-irna/view-resep-irna/view-resep-irna.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +52,9 @@ import { BankDarahComponent } from './pages/bank-darah/bank-darah.component';
         AlergiComponent,
         VitalSignComponent,
         BankDarahComponent,
+        InputResepIrnaComponent,
+        DaftarResepIrnaComponent,
+        ViewResepIrnaComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,

@@ -13,6 +13,8 @@ import { SetupCaraPakaiObatComponent } from './pages/setup-data/setup-cara-pakai
 import { SetupRutePemberianObatComponent } from './pages/setup-data/setup-rute-pemberian-obat/setup-rute-pemberian-obat.component';
 import { SetupLabelPemakaianObatComponent } from './pages/setup-data/setup-label-pemakaian-obat/setup-label-pemakaian-obat.component';
 import { SetupGenerikComponent } from './pages/setup-formularium/setup-formularium/setup-generik/setup-generik.component';
+import { TransaksiObatIrnaComponent } from './pages/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.component';
+import { TransaksiObatIrjaComponent } from './pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +28,8 @@ import { SetupGenerikComponent } from './pages/setup-formularium/setup-formulari
         SetupRutePemberianObatComponent,
         SetupLabelPemakaianObatComponent,
         SetupGenerikComponent,
+        TransaksiObatIrnaComponent,
+        TransaksiObatIrjaComponent,
     ],
     imports: [
         CommonModule,
