@@ -11,9 +11,13 @@ export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
     @Input('HeaderRibbon') HeaderRibbon: string;
     HideHeaderRibbon: string;
 
+    @Input('HeaderRibbonClass') HeaderRibbonClass: string = "col-lg-6 col-md-6 col-sm-6 col-xs-6";
+
     @Input('ChangeHeaderRibbon') ChangeHeaderRibbon: boolean = false;
 
     @Input('ButtonNav') ButtonNav: ButtonNavModel[];
+
+    @Input('ButtonNavClass') ButtonNavClass: string = "col-lg-6 col-md-6 col-sm-6 col-xs-6";
 
     @Output('onClickButtonNav') onClickButtonNav = new EventEmitter();
 

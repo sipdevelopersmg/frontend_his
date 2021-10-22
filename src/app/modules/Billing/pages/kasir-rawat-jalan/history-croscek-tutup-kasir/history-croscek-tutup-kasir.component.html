@@ -1,0 +1,77 @@
+<org-card-layout>
+    <div class="row">
+        <!-- Filter Offcanvas -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                [FilterDropdownDatasource]="FilterDropdownDatasource" [FilterDropdownFields]="FilterDropdownFields"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-filter>
+        </div>
+
+        <!-- Grid History -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <div class="card">
+                <div class="card-header px-2">
+                    <p class="text-biru-muda mb-0">Daftar Transaksi Cross Check Tutup Kasir</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ejs-grid #GridTransaksiTutupKasir [id]="'GridDaftarTransaksiTutupKasir'"
+                                [height]="'calc(100vh - 18rem)'" [dataSource]="GridDatasource" [rowHeight]="30"
+                                [gridLines]="'Both'" [allowResizing]="true" [allowFiltering]='true'
+                                [allowTextWrap]="true" [textWrapSettings]="GridWrapSettings"
+                                (recordDoubleClick)="handleDoubleClick($event)"
+                                (rowSelected)="handleSelectedRow($event)">
+                                <e-columns>
+                                    <e-column [width]="50" [field]="'id_saldo_kasir'" [headerText]="'ID'"
+                                        [visible]="false" [type]="'number'" [allowEditing]="false"
+                                        [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="80" [field]="'nomor_saldo_kasir'" [headerText]="'NO. FAKTUR'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="80" [field]="'user_name'" [headerText]="'NAMA KASIR'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'waktu_buka_kasir'"
+                                        [headerText]="'WAKTU BUKA KASIR'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                                        [format]="'dd/MM/yyyy HH:mm:ss'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'waktu_tutup_kasir'"
+                                        [headerText]="'WAKTU TUTUP KASIR'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                                        [format]="'dd/MM/yyyy HH:mm:ss'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'keterangan_tutup_kasir'"
+                                        [headerText]="'KET. TUTUP KASIR'" [visible]="false" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'jumlah_modal_awal'" [headerText]="'JUMLAH MODAL'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="150" [field]="'jumlah_penerimaan_ver_sistem'"
+                                        [headerText]="'PENDAPATAN VERSI SISTEM'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                        [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="150" [field]="'jumlah_penerimaan_ver_kasir'"
+                                        [headerText]="'PENDAPATAN VERSI KASIR'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                        [format]="'N2'">
+                                    </e-column>
+                                </e-columns>
+                            </ejs-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-modal-detail-cross-check #DetailCrossCheck></app-modal-detail-cross-check>
+    </div>
+</org-card-layout>

@@ -1,0 +1,72 @@
+{
+    "GridSetupTutupKasirColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "nomor_saldo_kasir",
+            "headerText": "NO. FAKTUR",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "waktu_buka_kasir",
+            "headerText": "WAKTU ENTRY",
+            "format": "dd/MM/yyyy HH:mm:ss",
+            "type": "DateTime",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "jumlah_modal_awal",
+            "headerText": "MODAL AWAL",
+            "format": "N2",
+            "type": "number",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 100
+        }
+    ],
+    "GridSetupSetoranColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "nomor_saldo_kasir",
+            "headerText": "NO. FAKTUR",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "time_inputed",
+            "headerText": "WAKTU ENTRY",
+            "format": "dd/MM/yyyy HH:mm:ss",
+            "type": "DateTime",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tambahan_setoran",
+            "headerText": "JUMLAH SETORAN",
+            "format": "N2",
+            "type": "number",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 100
+        }
+    ]
+}

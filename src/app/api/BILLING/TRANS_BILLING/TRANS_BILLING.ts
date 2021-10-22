@@ -23,3 +23,9 @@ export const GET_HISTORY_INVOICE_PAID = `${environment.webApiBilling}` + `tarif/
 export const POST_SAVE_POSTING_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillPosting/`;
 export const POST_CANCEL_POSTING_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillBatalPosting`;
 
+export const GET_HISTORY_ALL_PAYMENT = `${environment.webApiBilling}` + `tarif/TransBilling/GetDaftarPayment/`;
+export const POST_CANCEL_PAYMENT_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillBatalPayment`;
+
+export const POST_CANCEL_INVOICE_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillBatalInvoice`;
+
+

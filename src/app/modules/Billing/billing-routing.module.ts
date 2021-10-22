@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { HistoryCroscekTutupKasirComponent } from "./pages/kasir-rawat-jalan/history-croscek-tutup-kasir/history-croscek-tutup-kasir.component";
 import { SetupBukaKasirIrjaComponent } from "./pages/kasir-rawat-jalan/setup-buka-kasir-irja/setup-buka-kasir-irja.component";
+import { SetupCroscekTutupKasirComponent } from "./pages/kasir-rawat-jalan/setup-croscek-tutup-kasir/setup-croscek-tutup-kasir.component";
+import { SetupSetoranKasirIrjaComponent } from "./pages/kasir-rawat-jalan/setup-setoran-kasir-irja/setup-setoran-kasir-irja.component";
+import { SetupTutupKasirComponent } from "./pages/kasir-rawat-jalan/setup-tutup-kasir/setup-tutup-kasir.component";
 import { SettingTarifBerlakuPoliComponent } from "./pages/setting-tarif/setting-tarif-berlaku-poli/setting-tarif-berlaku-poli.component";
 import { SettingTarifBerlakuComponent } from "./pages/setting-tarif/setting-tarif-berlaku/setting-tarif-berlaku.component";
 import { SetupBankPaymentComponent } from "./pages/setup-data/setup-bank-payment/setup-bank-payment.component";
@@ -30,9 +34,13 @@ const billingRoutes: Routes = [
             { path: "setup-edc-payment", component: SetupEdcPaymentComponent, data: { title: 'Setup EDC Payment' } },
             { path: "setup-voucher-payment", component: SetupVoucherPaymentComponent, data: { title: 'Setup Voucher Payment' } },
             { path: "setup-payment-method", component: SetupPaymentMethodComponent, data: { title: 'Setup Payment Method' } },
-            { path: "setup-buka-kasir-irja", component: SetupBukaKasirIrjaComponent, data: { title: 'Setup Buka Kasir Rawat Jalan' } },
+            { path: "setup-buka-kasir", component: SetupBukaKasirIrjaComponent, data: { title: 'Setup Buka Kasir' } },
+            { path: "setup-setoran-kasir", component: SetupSetoranKasirIrjaComponent, data: { title: 'Setup Setoran Kasir' } },
+            { path: "setup-tutup-kasir", component: SetupTutupKasirComponent, data: { title: 'Setup Tutup Kasir' } },
         ]
     },
+    { path: "cross-check-tutup-kasir", component: SetupCroscekTutupKasirComponent, data: { title: 'Cross Check Tutup Kasir' } },
+    { path: "history-cross-check-tutup-kasir", component: HistoryCroscekTutupKasirComponent, data: { title: 'History Cross Check Tutup Kasir' } },
     { path: "setting-tarif-berlaku", component: SettingTarifBerlakuComponent, data: { title: 'Setting Tarif Berlaku' } },
     { path: "setting-tarif-berlaku-per-poli", component: SettingTarifBerlakuPoliComponent, data: { title: 'Setting Tarif Berlaku Per Poli' } },
     {

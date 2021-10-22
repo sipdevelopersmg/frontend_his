@@ -12,13 +12,11 @@ import { SetupPaymentMethodService } from '../../../services/setup-data/setup-pa
 import { TransBillingService } from '../../../services/trans-billing/trans-billing.service';
 import { HistoryInvoiceIrjaComponent } from './history-invoice-irja/history-invoice-irja.component';
 import { HistoryPembayaranComponent } from './history-pembayaran/history-pembayaran.component';
-import Swal from 'sweetalert2';
-import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
-import { SetupRoleMenuService } from 'src/app/modules/core/services/setup-role-menu/setup-role-menu.service';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { SidebarChildMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HistorySemuaPembayaranComponent } from './history-semua-pembayaran/history-semua-pembayaran.component';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-input-billing',
@@ -1185,7 +1183,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             ...this.GridDataResep.getSelectedRecords(),
         ];
         let payment = {
-            jumlah_payment: this.JumlahBayarPembayaran,
+            jumlah_payment: trans_header['paid_amount'],
             keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
             pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
         };
@@ -1299,13 +1297,19 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     handleClickSubmitPaymentWithExisitingInvoice(): void {
+        let payment_detail = this.GridDataPembayaranDatasource;
+
+        let jumlah_payment = 0;
+
+        payment_detail.forEach((item) => {
+            jumlah_payment += item['belum_lunas'];
+        });
+
         let payment = {
-            jumlah_payment: this.JumlahBayarPembayaran,
+            jumlah_payment: jumlah_payment,
             keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
             pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
         };
-
-        let payment_detail = this.GridDataPembayaranDatasource;
 
         let parameter = {
             id_register: this.InformasiPasien.id_register,
@@ -1458,7 +1462,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleOpenModalPembatalan(FormPembatalanState: string): void {
         this.FormPembatalanState = FormPembatalanState;
 
-        this.handleResetFormPembatalan();
+        // this.handleResetFormPembatalan();
 
         this.modalRef = this.bsModalService.show(this.modalPembatalan);
     }
@@ -1494,9 +1498,61 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                         }
                     });
                 break;
+            case 'Batal_Payment':
+                parameter = {
+                    id_register: this.FormPembatalan.value.id_register,
+                    id_payment: this.FormPembatalan.value.id_payment,
+                    reason_canceled: this.FormPembatalan.value.reason_canceled,
+                };
+                this.transBillingService.onCancelPaymentBillingRawatJalan(parameter)
+                    .subscribe((result) => {
+                        if (result.responseResult) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Payment Berhasil Dibatalkan')
+                                .then(() => {
+                                    this.handleCloseModalPembatalan();
+
+                                    setTimeout(() => {
+                                        this.BillingItem = [];
+
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                        this.onGetDataBillingByNoRegister(NoRegister);
+                                    }, 250);
+                                })
+                        }
+                    });
+                break;
+            case 'Batal_Invoice':
+                parameter = {
+                    id_register: this.FormPembatalan.value.id_register,
+                    id_invoice: this.FormPembatalan.value.id_invoice,
+                    reason_canceled: this.FormPembatalan.value.reason_canceled,
+                };
+
+                this.transBillingService.onCancelInvoiceBillingRawatJalan(parameter)
+                    .subscribe((result) => {
+                        if (result.responseResult) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Invoice Berhasil Dibatalkan')
+                                .then(() => {
+                                    this.handleCloseModalPembatalan();
+
+                                    setTimeout(() => {
+                                        this.BillingItem = [];
+
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                        this.onGetDataBillingByNoRegister(NoRegister);
+                                    }, 250);
+                                })
+                        }
+                    });
+
+                break;
             default:
                 break;
         }
+
+        this.handleResetFormPembatalan();
     }
 
     handleResetFormPembatalan(): void {
@@ -1506,6 +1562,46 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         this.id_payment.setValue(0);
         this.id_invoice.setValue(0);
         this.reason_canceled.setValue("");
+    }
+
+    onSendBatalPayment(args: any): void {
+        this.id_register.setValue(args.id_register);
+        this.id_payment.setValue(args.id_payment);
+
+        this.HistorySemuaPembayaranRawatJalan.handleCloseHistoryAllPayment();
+
+        setTimeout(() => {
+            this.ModalPembatalanTitle = "Payment";
+            this.handleOpenModalPembatalan("Batal_Payment");
+        }, 500);
+    }
+
+    handleCloseModalPembatalanPayment(): void {
+        this.handleCloseModalPembatalan();
+
+        setTimeout(() => {
+            this.HistorySemuaPembayaranRawatJalan.handleOpenHistoryAllPayment();
+        }, 500);
+    }
+
+    onSendBatalInvoice(args: any): void {
+        this.id_register.setValue(args.id_register);
+        this.id_invoice.setValue(args.id_invoice);
+
+        this.HistoryInvoiceRawatJalan.handleCloseHistoryInvoice();
+
+        setTimeout(() => {
+            this.ModalPembatalanTitle = "Invoice";
+            this.handleOpenModalPembatalan("Batal_Invoice");
+        }, 500);
+    }
+
+    handleCloseModalPembatalanInvoice(): void {
+        this.handleCloseModalPembatalan();
+
+        setTimeout(() => {
+            this.HistoryInvoiceRawatJalan.handleOpenHistoryInvoice();
+        }, 500);
     }
 
     get total_amount(): AbstractControl { return this.FormInputInvoice.get('total_amount'); }

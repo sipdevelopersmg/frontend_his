@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
 import { TransBillingService } from 'src/app/modules/Billing/services/trans-billing/trans-billing.service';
+import { SidebarChildMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 
 @Component({
     selector: 'app-history-invoice-irja',
@@ -17,6 +19,7 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
     @ViewChild('GridDetailInvoice') GridDetailInvoice: GridComponent;
     GridDetailInvoiceDatasource: any[] = [];
+    GridDetailInvoiceToolbar: any[] = [];
 
     FormHistoryInvoice: FormGroup;
 
@@ -25,6 +28,7 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     NomorInvoiceTerpilih: string = "";
 
     @Output('onSendPaymentWithExistingInvoice') onSendPaymentWithExistingInvoice = new EventEmitter<any>();
+    @Output('onSendBatalInvoice') onSendBatalInvoice = new EventEmitter<any>();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -45,14 +49,42 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
         });
     }
 
+    onGetButtonSidebarMenu(): void {
+        let SidebarMenu: SidebarChildMenuModel = JSON.parse(localStorage.getItem('ActiveSidebarMenu'))[0];
+
+        let Button = SidebarMenu.button;
+
+        if (Button.length > 0) {
+            Button.forEach((item) => {
+                if (item.caption == "Batal Payment") {
+                    this.GridDetailInvoiceToolbar = [
+                        { text: 'Batalkan Invoice', tooltipText: 'Batalkan Invoice', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_invoice' },
+                    ];
+                }
+            });
+        } else {
+            this.GridDetailInvoiceToolbar = [];
+        }
+    }
+
     handleOpenHistoryInvoice(): void {
         let btnModalHistoryInvoice = document.getElementById('btnModalHistoryInvoice') as HTMLElement;
 
         btnModalHistoryInvoice.click();
 
+        this.GridDetailInvoiceDatasource = [];
+        this.GridDetailInvoice.refresh();
+
+        this.onGetButtonSidebarMenu();
+
         setTimeout(() => {
             this.onGetHistoryInvoice();
         }, 500);
+    }
+
+    handleCloseHistoryInvoice(): void {
+        let btnCloseHistoryInvoice = document.getElementById('btnCloseHistoryInvoice') as HTMLElement;
+        btnCloseHistoryInvoice.click();
     }
 
     onGetHistoryInvoice(): void {
@@ -71,6 +103,23 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
         this.GridDetailInvoiceDatasource = item.invoice_item;
 
         this.GridDetailInvoice.refresh();
+    }
+
+    handleToolbarClickDetailInvoice(args: any): void {
+        const item = args.item.id;
+
+        switch (item) {
+            case 'batal_invoice':
+                let parameter = {};
+                parameter = {
+                    id_register: this.id_register.value,
+                    id_invoice: this.id_invoice.value,
+                };
+                this.onSendBatalInvoice.emit(parameter);
+                break;
+            default:
+                break;
+        }
     }
 
     onFillFormHistoryInvoice(Data: any): void {

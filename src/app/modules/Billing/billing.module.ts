@@ -29,6 +29,13 @@ import { HistoryPembayaranComponent } from './pages/transaksi-billing/input-bill
 import { HistoryInvoiceIrjaComponent } from './pages/transaksi-billing/input-billing/history-invoice-irja/history-invoice-irja.component';
 import { SetupBukaKasirIrjaComponent } from './pages/kasir-rawat-jalan/setup-buka-kasir-irja/setup-buka-kasir-irja.component';
 import { HistorySemuaPembayaranComponent } from './pages/transaksi-billing/input-billing/history-semua-pembayaran/history-semua-pembayaran.component';
+import { SetupSetoranKasirIrjaComponent } from './pages/kasir-rawat-jalan/setup-setoran-kasir-irja/setup-setoran-kasir-irja.component';
+import { SetupTambahModalKasirIrjaComponent } from './pages/kasir-rawat-jalan/setup-tambah-modal-kasir-irja/setup-tambah-modal-kasir-irja.component';
+import { SetupTutupKasirComponent } from './pages/kasir-rawat-jalan/setup-tutup-kasir/setup-tutup-kasir.component';
+import { SetupCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/setup-croscek-tutup-kasir/setup-croscek-tutup-kasir.component';
+import { ModalDetailCrossCheckComponent } from './components/modal-detail-cross-check/modal-detail-cross-check.component';
+import { ModalDetailPendapatanSistemComponent } from './components/modal-detail-pendapatan-sistem/modal-detail-pendapatan-sistem.component';
+import { HistoryCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/history-croscek-tutup-kasir/history-croscek-tutup-kasir.component';
 
 
 @NgModule({
@@ -56,7 +63,14 @@ import { HistorySemuaPembayaranComponent } from './pages/transaksi-billing/input
         HistoryPembayaranComponent,
         HistoryInvoiceIrjaComponent,
         SetupBukaKasirIrjaComponent,
-        HistorySemuaPembayaranComponent
+        HistorySemuaPembayaranComponent,
+        SetupSetoranKasirIrjaComponent,
+        SetupTambahModalKasirIrjaComponent,
+        SetupTutupKasirComponent,
+        SetupCroscekTutupKasirComponent,
+        ModalDetailCrossCheckComponent,
+        ModalDetailPendapatanSistemComponent,
+        HistoryCroscekTutupKasirComponent
     ],
     imports: [
         CommonModule,
