@@ -26,6 +26,8 @@ export class ResepDokterService {
 
     public dataObat = new BehaviorSubject([]);
 
+    public dataAntrianIrja = new BehaviorSubject([]);
+
     get dataDetailRacikan(): TrResepDokterIrjaDetailRacikanInsert[] {
         return this._dataDetailRacikan.getValue();
     }
@@ -82,12 +84,29 @@ export class ResepDokterService {
     }
 
     onGetAllByRegister(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        let id_register = 1; //this.daftarPasienService.ActivePasien.value.id_register;
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER+"/"+id_register, req).pipe(
+        let id_person = this.daftarPasienService.ActivePasien.value.id_person;
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER+"/"+id_person, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
+    }
+
+    onGetAntrian(): void{
+        this.httpOperationService.defaultPostRequestWithoutLoading(this.API.GET_ANTRIAN,[])
+        .pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        )
+        .subscribe((result)=>{
+            console.log(result.data);
+            this.dataAntrianIrja.next(result.data);
+        })
+    }
+
+    onGetById(Id): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
     }
 
     addDetail(detail: TrResepDokterIrjaDetailInsert): void {

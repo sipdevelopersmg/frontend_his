@@ -27,6 +27,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/resep-dokter-irna.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
 
 @Component({
   selector: 'app-input-resep-irna',
@@ -58,8 +59,8 @@ export class InputResepIrnaComponent implements OnInit {
     public itemsObj: DropDownList;
     isGetFromTemplate:boolean;
 
-    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+1;
-    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRNA.GET_TEMPLATE_RESEP+'/'+1;
+    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2;
+    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRNA.GET_TEMPLATE_RESEP+'/'+2;
     public GridLookUpItem = GridLookUpItem;
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
 
@@ -201,7 +202,8 @@ export class InputResepIrnaComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private encryptionService:EncryptionService,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    public daftarPasienService: DaftarPasienService
   ) { }
 
   ngOnInit(): void {
@@ -782,10 +784,10 @@ export class InputResepIrnaComponent implements OnInit {
 
     async Insert() {
         this.data_header ={
-            id_dokter:1,
-            id_register:1,
-            id_person:1,
+            id_dokter:2,//this.daftarPasienService.ActivePasien.value.id_dokter,
+            id_register:1,//this.daftarPasienService.ActivePasien.value.id_register,
             id_outlet:1,
+            id_person:1,//this.daftarPasienService.ActivePasien.value.id_person,
             jenis_rawat:'I',
             nama_template:'',
             tanggal_resep:moment().format()

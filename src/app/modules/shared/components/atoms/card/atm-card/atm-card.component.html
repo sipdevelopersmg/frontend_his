@@ -4,6 +4,13 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
                 <div class="row align-items-center">
+                    <p class="font-cabin mb-0 text-hitam textSubTitle fw-bold text-center">
+                        {{ NomorAntrian }}
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                <div class="row align-items-center">
                     <!-- Nama Pasien -->
                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 pe-0">
                         <p class="font-cabin mb-0 text-hitam textSubTitle fw-bold">
@@ -13,16 +20,27 @@
                     <!-- Date -->
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-end ps-0">
                         <p class="font-cabin mb-0 text-hitam-muda textSubText">
-                            {{ Waktu | date: "dd MMM yy, HH:mm:ss" }}
+                            No.Reg {{ NoRegister }}
                         </p>
 
                     </div>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
-                <p class="font-cabin mb-0 text-biru-tua">
-                    {{ NamaDokter }}
-                </p>
+                <div class="row align-items-center">
+                    <!-- Nama Pasien -->
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 pe-0">
+                        <p class="font-cabin mb-0 text-biru-tua">
+                            {{ NamaDokter }}
+                        </p>
+                    </div>
+                    <!-- Date -->
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-end ps-0">
+                        <p class="font-cabin mb-0 text-hitam-muda textSubText">
+                            {{ Waktu | date: "dd MMM yy, HH:mm:ss" }}
+                        </p>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                 <div class="row align-items-center">

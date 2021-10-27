@@ -73,6 +73,14 @@ export class ResepDokterIrnaService {
       );
     }
 
+    onGetByIdRegisterToTrans(id_register: number):  Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_RESEP_BY_REGISTER+"/"+id_register).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
 
     /**
       * Service Untuk Mengisi dataScource

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+import { map } from 'rxjs/operators';
+import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { KanbanCardModel, KanbanColumnModel } from 'src/app/modules/shared/models/KanbanCardModel.model';
+import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 
 @Component({
     selector: 'app-antrian-farmasi',
@@ -15,92 +19,33 @@ export class AntrianFarmasiComponent implements OnInit {
 
     ButtonNav: ButtonNavModel[];
 
-    constructor() {
+    constructor(
+        public resepDokterService:ResepDokterService,
+        private socket:Socket,
+    ) {
         this.ButtonNav = [
             { Id: "MoveItem", Captions: "Move Item", Icons1: "fa-arrows-alt" }
         ]
     }
 
     ngOnInit(): void {
-        this.Columns = [
-            {
-                Id: 1,
-                HeaderText: "Resep Open",
-                HeaderBackgroundColor: "#0251cc",
-                ColumnIcon: "fa-calendar",
-                KeyField: "Data",
-                ConnectedTo: ["SiapDiracik"],
-                Data: [
-                    {
-                        Id: "DETS-1", Status: "Data", KodeResep: "PCR001", NamaPasien: "Fatur Gautama S", NamaDokter: "dr. Anastasia Nadia", Waktu: new Date("2021-07-07 16:10:00"),
-                        DetailResep: [
-                            { Id: "PCR001-DET1", KodeResep: "PCR001", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 },
-                            { Id: "PCR001-DET2", KodeResep: "PCR001", NamaObat: "ASAM MEFENAMAT 250 MG", KodeObat: "0B002", Satuan: "STRIP", Qty: 2 },
-                        ]
-                    },
-                    {
-                        Id: "DETS-2", Status: "Data", KodeResep: "PCR002", NamaPasien: "Lalisa Manoban", NamaDokter: "dr. Anastasia Nadia", Waktu: new Date("2021-07-07 16:19:00"),
-                        DetailResep: [
-                            { Id: "PCR002-DET1", KodeResep: "PCR002", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 },
-                            { Id: "PCR002-DET2", KodeResep: "PCR002", NamaObat: "ASAM MEFENAMAT 250 MG", KodeObat: "0B002", Satuan: "STRIP", Qty: 2 },
-                        ]
-                    }
-                ],
-            },
-            {
-                Id: 2,
-                HeaderText: "Antrian",
-                HeaderBackgroundColor: "#ea9713",
-                ColumnIcon: "fa-calendar-check",
-                ConnectedTo: ["ProsesBilling"],
-                KeyField: "SiapDiracik",
-                Data: [
-                    {
-                        Id: "DETS-3",
-                        Status: "SiapDiracik",
-                        KodeResep: "PCR004",
-                        NamaPasien: "Triastartya M",
-                        NamaDokter: "dr. Nanda Sonia",
-                        Waktu: new Date("2021-07-07 16:02:00"),
-                        DetailResep: [
-                            { Id: "PCR004-DET1", KodeResep: "PCR004", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 }
-                        ]
-                    },
-                ],
-            },
-            {
-                Id: 3,
-                HeaderText: "Proses Billing",
-                HeaderBackgroundColor: "#8e4399",
-                ColumnIcon: "fa-file-invoice",
-                KeyField: "ProsesBilling",
-                ConnectedTo: ["SedangDiracik"],
-                Data: [
-                    {
-                        Id: "DETS-4", Status: "ProsesBilling", KodeResep: "PCR006", NamaPasien: "Wawan Chahyo", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:03:00"),
-                        DetailResep: [
-                            { Id: "PCR006-DET1", KodeResep: "PCR006", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 }
-                        ]
-                    },
-                ],
-            },
-            {
-                Id: 4,
-                HeaderText: "Siap Diserahkan",
-                HeaderBackgroundColor: "#63ba3c",
-                ColumnIcon: "fa-spinner",
-                KeyField: "SedangDiracik",
-                ConnectedTo: [],
-                Data: [
-                    {
-                        Id: "DETS-5", Status: "SedangDiracik", KodeResep: "PCR005", NamaPasien: "Andre Kurniawan", NamaDokter: "dr. Nanda Sonia", Waktu: new Date("2021-07-07 16:04:00"),
-                        DetailResep: [
-                            { Id: "PCR005-DET1", KodeResep: "PCR005", NamaObat: "PARACETAMOL 250 MG", KodeObat: "0B001", Satuan: "PAK", Qty: 15 }
-                        ]
-                    },
-                ],
-            }
-        ];
+        this.resepDokterService.onGetAntrian();
+        this.onSocketAntrian();
+        this.onSocketPembayaran();
+    }
+
+    onSocketAntrian(): any {
+        return this.socket.fromEvent('antrian-callback')
+            .subscribe((_result) => {
+                this.resepDokterService.onGetAntrian();
+            });
+    }
+
+    onSocketPembayaran(): any {
+        return this.socket.fromEvent('pembayaran-callback')
+            .subscribe((_result) => {
+                this.resepDokterService.onGetAntrian();
+            });
     }
 
     onClickButtonNav(args: any) {

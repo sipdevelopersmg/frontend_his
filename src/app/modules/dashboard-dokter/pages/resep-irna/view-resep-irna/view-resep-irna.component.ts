@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as GridConfig from './json/grid.config.json'
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class ViewResepIrnaComponent implements OnInit {
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
 
     GridConfig = GridConfig;
-
+    inputFieldState = 'detail';
     childGrid: GridModel;
 
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
@@ -60,6 +61,8 @@ export class ViewResepIrnaComponent implements OnInit {
     dataSourceChild:any = [];
     dataSource:any = [];
     dataHeader:any = [];
+    formInput: FormGroup;
+
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterIrnaService: ResepDokterIrnaService,
@@ -68,9 +71,18 @@ export class ViewResepIrnaComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private utilityService:UtilityService,
         private modalService: BsModalService,
+        private utilityHelperService:UtilityHelperService
     ) { }
 
     ngOnInit(): void {
+        
+        this.formInput = this.formBuilder.group({
+            pasien: ['', []],
+            bed: ['', []],
+            dokter : ['', []],
+            umur : ['', []],
+        });
+
         this.childGrid = {
             dataSource: this.dataSourceChild,
             queryString: "resep_detail_id",
@@ -94,6 +106,13 @@ export class ViewResepIrnaComponent implements OnInit {
            this.dataSource = result.data.details;
            this.GridResepRacikan.refresh();
            this.mapingRacikan(result.data.details);
+           let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
+           this.formInput.setValue({
+                // bed:result.data.nama_poli,
+                pasien:result.data.nama_pasien,
+                dokter: result.data.nama_dokter,
+                umur: umur.years+' tahun, '+umur.months+' Bulan, '+umur.days+' Hari'
+           })
        })
     }
 

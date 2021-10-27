@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 
+interface age {
+    years   :number;
+    months  :number;
+    days    :number;
+}
+
 @Injectable({
     providedIn: 'root'
 })
+
 export class UtilityHelperService {
 
     constructor() { }
@@ -53,5 +60,52 @@ export class UtilityHelperService {
             hargaDiskon = 0;
         }
         return hargaDiskon;
+    }
+
+    getAge(dateString:string):age{
+        let now = new Date();
+      
+        var yearNow = now.getFullYear();
+        var monthNow = now.getMonth()+1;
+        var dateNow = now.getDate();
+        var tgl = dateString.split('-');
+        var m = tgl[1];
+
+        var dob = new Date(parseInt(tgl[0]),parseInt(tgl[1]),parseInt(tgl[2]));
+
+        var yearDob = dob.getFullYear();
+        var monthDob = dob.getMonth();
+        var dateDob = dob.getDate();
+        var age = {};
+      
+        var yearAge:number;
+        yearAge = yearNow - yearDob;
+      
+        if (monthNow >= monthDob)
+          var monthAge:number = monthNow - monthDob;
+        else {
+          yearAge--;
+          var monthAge:number = 12 + monthNow -monthDob;
+        }
+      
+        if (dateNow >= dateDob)
+          var dateAge:number = dateNow - dateDob;
+        else {
+          monthAge--;
+          var dateAge:number = 31 + dateNow - dateDob;
+      
+          if (monthAge < 0) {
+            monthAge = 11;
+            yearAge--;
+          }
+        }
+      
+        let _age:age = {
+                years: yearAge,
+                months: monthAge,
+                days: dateAge
+            };      
+        
+        return _age;
     }
 }

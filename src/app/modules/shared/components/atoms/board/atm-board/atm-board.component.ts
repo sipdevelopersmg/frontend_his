@@ -1,6 +1,11 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { KanbanCardModel } from 'src/app/modules/shared/models/KanbanCardModel.model';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { Router } from '@angular/router';
+import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
+import { TransaksiObatIrjaService } from 'src/app/modules/Pharmacy/services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
     selector: 'atm-board',
@@ -19,17 +24,24 @@ export class AtmBoardComponent implements OnInit {
     @Input("ConnectedTo") ConnectedTo: Object[];
 
     @Output("onClickedCard") onClickedCard = new EventEmitter();
-
+    
     HideBoard: boolean = false;
 
     Search: string;
 
     @Input("FilterPencarianGlobal") FilterPencarianGlobal: string;
 
-    constructor() { }
+    constructor(
+        private router: Router,
+        private encryptionService: EncryptionService,
+        public resepDokterService: ResepDokterService,
+        public transaksiObatIrjaService:TransaksiObatIrjaService,
+        private utilityService:UtilityService,
+
+    ) { }
 
     ngOnInit(): void {
-        this.onSortCardByDate();
+        // this.onSortCardByDate();
     }
 
     onSortCardByDate() {
@@ -72,22 +84,18 @@ export class AtmBoardComponent implements OnInit {
         this.Search = FilterPencarian;
     }
 
-    onMarkResepAsComplete(Id: string, CardBodyData: KanbanCardModel[]) {
-        let index = CardBodyData.findIndex(item => item.Id == Id);
-
-        CardBodyData.splice(index, 1);
-
-        return CardBodyData;
+    onMarkResepAsComplete(Id: number, CardBodyData: KanbanCardModel[]) {
+        this.transaksiObatIrjaService.obatDiserahakan(Id).subscribe((result)=>{
+            this.utilityService.onShowingCustomAlert('success', 'Data Berhasil Diserahkan', result.message)
+            .then(() => {
+                this.resepDokterService.onGetAntrian();
+            });
+        });
     }
 
     onMarkResepSudahDilayani(Id: string, CardBodyData: KanbanCardModel[]) {
-        console.log(Id);
-
-        // let index = CardBodyData.findIndex(item => item.Id == Id);
-
-        // CardBodyData.splice(index, 1);
-
-        // return CardBodyData;
+        const id = this.encryptionService.encrypt(JSON.stringify(Id));
+        this.router.navigate(['dashboard/Pharmacy/transaksi-obat/transaksi-obat-irja', id, "GRAHCIS"]);
     }
 
     onChangeSearchFilter() {

@@ -35,8 +35,8 @@ export class InputResepComponent implements OnInit {
     public itemsElem: HTMLElement;
     public itemsObj: DropDownList;
 
-    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+1+'/I';
-    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP+'/'+1;
+    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2+'/J';
+    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP+'/'+2;
     public GridLookUpItem = GridLookUpItem;
 
     public GridlookUpTemplateResep = GridlookUpTemplateResep;

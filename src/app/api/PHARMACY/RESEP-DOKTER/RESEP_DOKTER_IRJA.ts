@@ -7,3 +7,6 @@ export const INSERT_RESEP_IRJA = `${environment.webApiPHARMACY}` +'TransResepDok
 export const GET_OBAT_PARAMS_DROPDOWNLIST = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/GetSetupObatForlookupParams';
 export const GET_ALL_RESEP_BY_REGISTER = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/GetAllByIdPersonAndParams';
 export const GET_TEMPLATE_RESEP = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/GetTemplateResepByIdDokterAndParams';
+export const GET_ANTRIAN = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/GetDataAntrian';
+export const UPDATETOANTRIAN = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/UpdateToAntrian';  
+export const GET_BY_ID = `${environment.webApiPHARMACY}` +'TransResepDokterIrna/GetById';
