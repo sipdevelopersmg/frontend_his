@@ -9,14 +9,14 @@ import { EncryptionService } from 'src/app/modules/shared/services/encryption.se
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { IPasienTeradmisiHariIniModel, IPersonPasienForAdmisiRawatJalanModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
 import { AdmisiPasienRawatJalanService } from '../../../services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
-import * as Config from './json/grid.json';
+import * as Config from './json/admisi-pasien-rawat-inap.config.json';
 
 @Component({
-    selector: 'app-admisi-pasien-rawat-jalan',
-    templateUrl: './admisi-pasien-rawat-jalan.component.html',
-    styleUrls: ['./admisi-pasien-rawat-jalan.component.css']
+    selector: 'app-admisi-pasien-rawat-inap',
+    templateUrl: './admisi-pasien-rawat-inap.component.html',
+    styleUrls: ['./admisi-pasien-rawat-inap.component.css']
 })
-export class AdmisiPasienRawatJalanComponent implements OnInit {
+export class AdmisiPasienRawatInapComponent implements OnInit {
 
     GridConfig = Config;
 
@@ -33,8 +33,6 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
 
     DaftarAdmisiPasien: any[];
 
-    SelectedPasien: any;
-
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
@@ -43,6 +41,7 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
         private encryptionService: EncryptionService,
         private admisiRawatJalanService: AdmisiPasienRawatJalanService
     ) { }
+
 
     @HostListener('document:keydown', ['$event'])
     onKeyDownHandler(event: KeyboardEvent) {
@@ -60,8 +59,7 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
     ngOnInit(): void {
         this.ButtonNav = [
             { Id: "input_pasien_baru", Icons1: 'fa-user-plus', Captions: '[F3] Pasien Baru' },
-            { Id: "pelayanan_pasien_irja", Icons1: 'fa-folder-plus', Captions: '[F5] Pelayanan Pasien' },
-            { Id: "cetak_bukti_admisi", Icons1: 'fa-print', Captions: 'Cetak Bukti Admisi' },
+            { Id: "pelayanan_pasien_irna", Icons1: 'fa-folder-plus', Captions: '[F5] Pelayanan Pasien' },
         ];
 
         this.FormPencarianPasien = this.formBuilder.group({
@@ -83,11 +81,8 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
             case 'input_pasien_baru':
                 this.hanldeOpenModalPencarianPasien();
                 break;
-            case 'pelayanan_pasien_irja':
-                this.router.navigateByUrl('dashboard/PIS/IRJA/admisi-pasien-rawat-jalan');
-                break;
-            case 'cetak_bukti_admisi':
-                this.onPrintBuktiAdmisi();
+            case 'pelayanan_pasien_irna':
+                this.router.navigateByUrl('dashboard/PIS/IRNA/admisi-pasien-rawat-inap');
                 break;
             default:
                 break;
@@ -124,7 +119,7 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
             this.handleCloseModalLookupPencarianPasien();
 
             setTimeout(() => {
-                this.router.navigate(['dashboard/PIS/IRJA/admisi-pasien-rawat-jalan/', Person, "GRAHCIS"]);
+                this.router.navigate(['dashboard/PIS/IRNA/admisi-pasien-rawat-inap/', Person, "GRAHCIS"]);
             }, 400);
         }
     }
@@ -210,14 +205,6 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
 
     handleCloseModalLookupPencarianPasien(): void {
         this.modalRef.hide();
-    }
-
-    onGetSelectedDataAdmisi(args: any): void {
-        this.SelectedPasien = args;
-    }
-
-    onPrintBuktiAdmisi(): void {
-        this.admisiRawatJalanService.onPrintBuktiAdmisiRawatJalan(this.SelectedPasien.nama_pasien, this.SelectedPasien.no_register);
     }
 
     get no_identitas(): AbstractControl { return this.FormPencarianPasien.get('no_identitas') };

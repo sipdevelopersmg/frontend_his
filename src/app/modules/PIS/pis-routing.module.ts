@@ -8,8 +8,8 @@ import { DaftarUlangPasienComponent } from "./pages/IRJA/daftar-ulang-pasien/daf
 import { PemasukanRawatJalanComponent } from "./pages/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.component";
 import { EditPasienIRJAComponent } from "./pages/IRJA/pendaftaran-pasien-baru/edit-pasien/edit-pasien.component";
 import { PendaftaranPasienBaruComponent } from "./pages/IRJA/pendaftaran-pasien-baru/input-pasien/pendaftaran-pasien-baru.component";
-import { PelayananPasienIrnaComponent } from "./pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component";
-import { PendaftaranPasienBaruIrnaComponent } from "./pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component";
+import { AdmisiPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.component";
+import { PelayananPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component";
 import { SetupAsalRujukanComponent } from "./pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component";
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { SetupCutiDokterComponent } from "./pages/setup-data/setup-cuti-dokter/setup-cuti-dokter.component";
@@ -89,8 +89,9 @@ const pisRoutes: Routes = [
     {
         path: "IRNA", component: null, data: { title: "IRNA" },
         children: [
-            { path: "pelayanan-pasien-irna", component: PelayananPasienIrnaComponent, data: { title: "Pelayanan Pasien Rawat Inap" } },
-            { path: "pendaftaran-pasien-baru", component: PendaftaranPasienBaruIrnaComponent, data: { title: "Pendaftaran Pasien Baru Rawat Inap" } }
+            { path: "pelayanan-pasien-rawat-inap", component: AdmisiPasienRawatInapComponent, data: { title: "Pelayanan Pasien Rawat Inap" } },
+            { path: "admisi-pasien-rawat-inap", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
+            { path: "admisi-pasien-rawat-inap/:id/:key", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
         ]
     }
 ]

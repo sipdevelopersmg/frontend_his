@@ -28,6 +28,13 @@ export const environment = {
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /admisi 
     */
     webApiAdmisi: "http://174.138.22.139:8888/api/admisi/",
+
+    /** 
+     * @webApiLaporan http://174.138.22.139:8888/api/billing/
+     * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /billing 
+    */
+    webApiLaporan: "http://174.138.22.139:8080/jasperserver/rest_v2/reports/",
+    // webApiLaporan: "http://192.168.0.106:8081/jasperserver/rest_v2/reports/",
 };
 
 /*

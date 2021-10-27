@@ -204,6 +204,10 @@ export class SetupCroscekTutupKasirComponent implements OnInit, OnDestroy {
                                     searchText2: `${this.utilityService.onFormatDate(new Date(), 'yyyy-MM-Do')}`,
                                 }
                             ]);
+
+                            this.GridPendapatanSistemDatasource = [];
+
+                            this.GridPendapatanKasirDatasource = [];
                         });
                 }
             })

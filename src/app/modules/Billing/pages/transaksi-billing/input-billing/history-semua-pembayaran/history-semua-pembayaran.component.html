@@ -25,7 +25,7 @@
                                     <div class="card-header">
                                         <p class="text-biru-muda mb-0">Daftar Payment</p>
                                     </div>
-                                    <div class="card-body py-2 px-3 card_body_daftar_payment">
+                                    <div class="card-body py-2 px-1 card_body_daftar_payment">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-sx-12">
                                                 <!-- Sidebar Menu Item -->
@@ -45,6 +45,10 @@
                                                             <span class="font-cabin mb-2">
                                                                 {{ item.nomor_payment }}
                                                             </span>
+                                                            <span
+                                                                class="font-cabin mb-0 float-end fst-italic text-biru-muda">
+                                                                {{ item.jumlah_payment | currency: 'Rp. '}}
+                                                            </span>
                                                         </div>
                                                     </div>
 
@@ -58,7 +62,7 @@
                                                                 data-bs-toggle="tooltip"
                                                                 title="{{ childItem.nomor_invoice }}">
 
-                                                                <div class="col-12 ps-2">
+                                                                <div class="col-12 ps-4">
                                                                     <span class="font-cabin mb-2">
                                                                         {{ childItem.nomor_invoice }}
                                                                     </span>

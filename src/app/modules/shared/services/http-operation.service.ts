@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
 import { HttpResponseModel, PostRequestByDynamicFiterModel } from '../models/Http-Operation/HttpResponseModel';
+import { NotificationService } from './notification.service';
 import { UtilityService } from './utility.service';
 
 @Injectable({
@@ -12,6 +13,7 @@ export class HttpOperationService {
     constructor(
         private httpClient: HttpClient,
         private utilityService: UtilityService,
+        private notificationService: NotificationService
     ) { }
 
     defaultGetRequest(url: string, params?: any, showErrorAlert?: boolean): Observable<any> {
@@ -203,7 +205,104 @@ export class HttpOperationService {
         );
     }
 
+    defaultPostLoginPrintPanel(): Observable<any> {
+        // let body = `j_username=jasperadmin&j_password=bitnami`;
+
+        let body = new HttpParams({
+            fromObject: {
+                "j_username": "jasperadmin",
+                "j_password": "bitnami",
+            }
+        });
+
+        return this.httpClient.post<any>(
+            "http://192.168.0.107:8081/jasperserver/rest_v2/login",
+            body.toString(),
+            {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    Accept: '*/*',
+                })
+            }
+        ).pipe(
+            catchError(this.handlingError),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            })
+        );
+    }
+
+    defaultGetPrintRequest(url: string, params: any, filename?: string): void {
+        let base64encodedData = btoa('jasperadmin:jasperadmin');
+
+        this.httpClient.get(
+            url,
+            {
+                headers: new HttpHeaders()
+                    .set('Accept', "application/pdf")
+                    .set('Authorization', `Basic ${base64encodedData}`),
+                params: params,
+                responseType: 'arraybuffer',
+            }
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            }),
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result) => {
+                return result;
+            })
+        ).subscribe((result: any) => {
+            const file = new Blob([result], { type: 'application/pdf' });
+
+            const fileUrl = window.URL.createObjectURL(file);
+
+            window.open(fileUrl);
+        })
+    }
+
+    defaultGetPrintOnlyPreview(url: string, params: any, filename?: string): Observable<any> {
+        let base64encodedData = btoa('jasperadmin:jasperadmin');
+
+        return this.httpClient.get(
+            url,
+            {
+                headers: new HttpHeaders()
+                    .set('Accept', "text/plain")
+                    .set('Authorization', `Basic ${base64encodedData}`),
+                params: params,
+                responseType: 'text',
+            }
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            }),
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result) => {
+                return result;
+            })
+        );
+    }
+
     private handlingErrorWithStatusCode200(response: HttpResponseModel): any {
+        // let message = [];
+
+        // response.data.forEach((item) => {
+        //     message.push(item['errors'][0]['errorMessage']);
+        // });
+
+        // return this.utilityService.onShowingMultipleMessageAlert('error', 'Oops...', message);
+
         return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
     }
 

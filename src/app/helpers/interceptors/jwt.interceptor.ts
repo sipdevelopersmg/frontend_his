@@ -14,10 +14,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
         const WebApiUrl = httpRequest.url.startsWith(`${environment.webApiUrl}`);
 
-        // const IsUserLogin: IAuthenticationResponseModel = JSON.parse(sessionStorage.getItem('UserData'));
+        const WebApiLaporan = httpRequest.url.startsWith(`${environment.webApiLaporan}`);
+
         const IsUserLogin: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
-        if (WebApiUrl && IsUserLogin) {
+        if (!WebApiLaporan && IsUserLogin) {
             const modifiedRequest = httpRequest.clone({
                 setHeaders: {
                     Authorization: "Bearer " + IsUserLogin.token
@@ -25,8 +26,8 @@ export class JwtInterceptor implements HttpInterceptor {
             });
 
             return next.handle(modifiedRequest);
+        } else {
+            return next.handle(httpRequest);
         }
-
-        return next.handle(httpRequest);
     }
 }

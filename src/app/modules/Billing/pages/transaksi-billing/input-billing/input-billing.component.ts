@@ -35,6 +35,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
         { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
         { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
+        { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
         // { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' },
         // { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting' },
     ];
@@ -354,6 +355,9 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             case 'Daftar_Payment':
                 this.HistorySemuaPembayaranRawatJalan.handleOpenHistoryAllPayment();
                 break;
+            case 'Cetak_Rincian_Biaya':
+                this.onPrintRincianBiayaBilling(this.id_register.value);
+                break;
             default:
                 break;
         }
@@ -502,6 +506,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             this.onCountTotalDataTDRAD();
             this.onCountTotalDataResep();
         }, 500);
+
+        console.log()
     }
 
     // ** TIKET ==============
@@ -944,6 +950,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                                     this.BillingItem = [];
 
                                     this.onGetDataBillingByNoRegister(NoRegister);
+
+                                    this.handleClearSelectionAllGrid()
+
+                                    this.handleEmptyBillingHeader();
                                 });
                         } else {
                             let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
@@ -951,6 +961,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             this.BillingItem = [];
 
                             this.onGetDataBillingByNoRegister(NoRegister);
+
+                            this.handleClearSelectionAllGrid()
+
+                            this.handleEmptyBillingHeader();
                         }
                     })
 
@@ -1602,6 +1616,13 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
             this.HistoryInvoiceRawatJalan.handleOpenHistoryInvoice();
         }, 500);
+    }
+
+    onPrintRincianBiayaBilling(id_register: number): void {
+        this.transBillingService.onPrintRincianBiayaBilling(id_register)
+            .subscribe((result) => {
+                console.log(result);
+            })
     }
 
     get total_amount(): AbstractControl { return this.FormInputInvoice.get('total_amount'); }

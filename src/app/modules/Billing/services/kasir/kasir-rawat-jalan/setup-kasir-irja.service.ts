@@ -158,4 +158,12 @@ export class SetupKasirIrjaService {
                 })
             );
     }
+
+    onPrintDetailPendapatanVersiSistem(SaldoKasirId: number): void {
+        this.httpOperationService.defaultGetPrintRequest(this.API_SETUP_KASIR_IRJA.GET_LAPORAN_PENDAPATAN_VERSI_SYSTEM, { ID_SALDO_KASIR: SaldoKasirId }, "DETAIL PENDAPATAN KASIR VERSI SISTEM")
+    }
+
+    onPreviewDetailPendapatanVersiSistem(SaldoKasirId: number): Observable<any> {
+        return this.httpOperationService.defaultGetPrintOnlyPreview(this.API_SETUP_KASIR_IRJA.GET_PREVIEW_LAPORAN_PENDAPATAN_VERSI_SYSTEM, { ID_SALDO_KASIR: SaldoKasirId }, "DETAIL PENDAPATAN KASIR VERSI SISTEM")
+    }
 }

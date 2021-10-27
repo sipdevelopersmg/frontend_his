@@ -19,7 +19,9 @@
                 <atm-label [LabelCaption]="'Nama Bank'"></atm-label>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <ejs-dropdownlist [allowFiltering]="true" formControlName="id_bank_payment"></ejs-dropdownlist>
+                <ejs-dropdownlist [allowFiltering]="true" formControlName="id_bank_payment"
+                    [dataSource]="BankPaymentDatasource" [fields]="BankPaymentFields">
+                </ejs-dropdownlist>
             </div>
         </div>
 
@@ -29,7 +31,9 @@
                 <atm-label [LabelCaption]="'Nama EDC'"></atm-label>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <ejs-dropdownlist [allowFiltering]="true" formControlName="id_edc_payment"></ejs-dropdownlist>
+                <ejs-dropdownlist [allowFiltering]="true" formControlName="id_edc_payment"
+                    [dataSource]="EdcPaymentDatasource" [fields]="EdcPaymentFields">
+                </ejs-dropdownlist>
             </div>
         </div>
 

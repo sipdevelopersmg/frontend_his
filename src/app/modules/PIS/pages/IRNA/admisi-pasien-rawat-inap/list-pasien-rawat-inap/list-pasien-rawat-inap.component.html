@@ -1,0 +1,113 @@
+<div class="row pt-2">
+    <!-- Filter Offcanvas -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+        <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+            (handle-pencarian)="handlePencarianFilter($event)">
+        </mol-offcanvas-filter>
+    </div>
+
+    <!-- Grid Daftar Pasien -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
+            [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+            [allowGrouping]="true" [groupSettings]="GridGroupSettings" [allowTextWrap]="true"
+            [textWrapSettings]="GridWrapSettings" [pageSettings]="GridPageSettings" [toolbar]="GridToolbar"
+            [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+            (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+            <e-columns>
+                <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
+                    [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'no_antrian'" [headerText]="'NO. ANTRIAN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'tgl_admisi'" [headerText]="'TGL ADMISI'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                    [format]="'dd/MM/yyyy'">
+                </e-column>
+                <e-column [width]="120" [field]="'jam_masuk'" [headerText]="'JAM MASUK'" [visible]="false"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="70" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="130" [field]="'umur'" [headerText]="'UMUR'" [visible]="true" [allowEditing]="false"
+                    [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'status_rm'" [headerText]="'STATUS RM'" [visible]="false"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLI'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="250" [field]="'nama_debitur'" [headerText]="'DEBITUR'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                </e-column>
+            </e-columns>
+            <ng-template #groupSettingsCaptionTemplate let-data>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-white mb-0" style="font-size: 15px">
+                            {{ data.headerText | titlecase }} {{ data.key | titlecase }} - &nbsp;
+                            <span class="mb-0 text-white">
+                                {{ data.count }} Pasien
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </ng-template>
+        </ejs-grid>
+    </div>
+
+    <!-- Modal Pembatalan Admisi  -->
+    <ng-template #modalPembatalanAdmisi>
+        <div class="modal-header px-2 py-1">
+            <h5 class="modal-title pull-left">
+                Pembatalan Admisi Pasien {{ SelectedData.nama_pasien }}
+            </h5>
+            <button type="button" class="btn pull-right" aria-label="Close"
+                (click)="handleCloseModalPembatalanAdmisi()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body pt-0 pb-2 px-2">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form [formGroup]="FormPembatalanAdmisi">
+                        <div class="row mb-2 align-items-center">
+                            <!-- Alasan Pembatalan -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 px-0">
+                                <atm-label [LabelCaption]="'Mohon Isikan Alasan Pembatalan'"></atm-label>
+
+                                <textarea rows="3" class="form-control mt-2" formControlName="reason_canceled">
+                                </textarea>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 text-end">
+                                <button class="btn btn-secondary btn-sm mx-2" type="button"
+                                    (click)="handleCloseModalPembatalanAdmisi()">
+                                    <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
+                                </button>
+
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="handleSubmitModalPembatalanAdmisi(FormPembatalanAdmisi)">
+                                    <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

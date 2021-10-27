@@ -24,3 +24,7 @@ export const POST_VALIDASI_CROSS_CHECK_TUTUP_KASIR = `${environment.webApiBillin
 export const GET_HISTORY_CROSS_CHECK_TUTUP_KASIR = `${environment.webApiBilling}` + `tarif/TrSaldoKasir/GetHistoryValidatedDynamic`;
 export const GET_DETAIL_HISTORY_CROSS_CHECK_TUTUP_KASIR = `${environment.webApiBilling}` + `tarif/TrSaldoKasir/GetDetailValidatedByPerKasir/`;
 
+// export const GET_LAPORAN_PENDAPATAN_VERSI_SYSTEM = `${environment.webApiLaporan}` + `PIS/Billing_Pendapatan_Versi_Sistem.pdf`;
+export const GET_LAPORAN_PENDAPATAN_VERSI_SYSTEM = `${environment.webApiLaporan}` + `PIS/Transaksi_Cross_Check_Kasir.pdf`;
+export const GET_PREVIEW_LAPORAN_PENDAPATAN_VERSI_SYSTEM = `${environment.webApiLaporan}` + `PIS/Billing_Pendapatan_Versi_Sistem.html`;
+
