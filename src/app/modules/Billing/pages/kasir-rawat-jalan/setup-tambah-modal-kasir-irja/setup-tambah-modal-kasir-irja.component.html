@@ -1,0 +1,93 @@
+<!-- Modal Buka Kasir -->
+<button id="btnModalTambahModal" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalTambahModal" [hidden]="true">
+    Launch Modal Tambah Modal Kasir
+</button>
+
+<div class="modal fade" id="modalTambahModal" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalTambahModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalTambahModalLabel">Input Tambah Modal Kasir</h5>
+                <button id="btnCloseModalTambahModal" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <org-tabs #OrgTabsRef>
+                    <org-tabs-item>
+                        <org-tabs-label [Id]="'Tambah_Modal_Kasir'">Input Tambah Modal</org-tabs-label>
+                        <org-tabs-body>
+                            <form [formGroup]="FormTambahModalKasir">
+                                <div class="row px-0 mx-0">
+                                    <!-- Pilih Kasir -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                        <atm-label [LabelCaption]="'Nama Kasir'"></atm-label>
+                                        <input type="text" class="form-control form-select-sm" readonly
+                                            formControlName="user_name">
+                                    </div>
+
+                                    <!-- Jumlah Modal -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                        <atm-label [LabelCaption]="'Jumlah Modal'"></atm-label>
+                                        <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                            [showSpinButton]="false" [format]="'N2'" id="modal_awal"
+                                            [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
+                                            formControlName="jumlah_modal_awal">
+                                        </ejs-numerictextbox>
+                                    </div>
+
+                                    <!-- Tambah Modal -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                        <atm-label [LabelCaption]="'Tambah Modal'"></atm-label>
+                                        <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                            [showSpinButton]="false" [format]="'N2'" formControlName="tambahan_modal">
+                                        </ejs-numerictextbox>
+                                    </div>
+                                </div>
+                            </form>
+                        </org-tabs-body>
+                    </org-tabs-item>
+
+                    <org-tabs-item>
+                        <org-tabs-label [Id]="'Browse_Modal_Kasir'">Browse Modal</org-tabs-label>
+                        <org-tabs-body>
+                            <div class="row px-0 mx-0">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <ejs-grid #GridDataTambahModal [id]="'GridDataTambahModalKasir'"
+                                        [dataSource]="GridTambahModalDatasource" [rowHeight]="30"
+                                        [height]="'calc(100vh - 49rem)'" [gridLines]="'Both'" [allowPaging]="false"
+                                        [allowResizing]="true" [allowFiltering]='true'>
+                                        <e-columns>
+                                            <e-column [width]="120" [field]="'time_inputed'"
+                                                [headerText]="'WAKTU ENTRY'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                                                [format]="'dd/MM/yyyy HH:mm:ss'">
+                                            </e-column>
+
+                                            <e-column [width]="100" [field]="'tambahan_modal'"
+                                                [headerText]="'JUMLAH MODAL'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                [type]="'number'" [format]="'N2'">
+                                            </e-column>
+                                        </e-columns>
+                                    </ejs-grid>
+                                </div>
+                            </div>
+                        </org-tabs-body>
+                    </org-tabs-item>
+                </org-tabs>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitModalTambahModal(FormTambahModalKasir.value)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -62,10 +62,12 @@
                                         <!-- Grid Detail Invoice -->
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                                             <ejs-grid #GridDetailInvoice [id]="'GridDetailInvoice'" [height]="'15rem'"
-                                                [dataSource]="GridDetailInvoiceDatasource" [rowHeight]="30"
+                                                [dataSource]="GridDetailInvoiceDatasource"
+                                                [toolbar]="GridDetailInvoiceToolbar" [rowHeight]="30"
                                                 [gridLines]="'Both'" [allowPaging]="false" [allowResizing]="true"
                                                 [allowFiltering]='true'
-                                                (rowSelected)="handleSelectedRowDetailInvoice($event)">
+                                                (rowSelected)="handleSelectedRowDetailInvoice($event)"
+                                                (toolbarClick)="handleToolbarClickDetailInvoice($event)">
                                                 <e-columns>
                                                     <e-column [width]="100" [field]="'id_invoice'"
                                                         [headerText]="'ID DETAIL'" [visible]="false"

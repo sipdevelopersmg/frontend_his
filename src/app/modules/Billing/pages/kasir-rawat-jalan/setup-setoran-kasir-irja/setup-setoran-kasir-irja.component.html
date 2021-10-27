@@ -1,0 +1,98 @@
+<org-card-layout>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header p-2 border">
+                    <p class="text-biru-muda mb-0">Riwayat Transaksi Setoran Kasir</p>
+                </div>
+                <div class="card-body p-0">
+                    <ejs-grid #GridDataSetoran [id]="'GridDataSetoran'" [dataSource]="GridSetoranDatasource"
+                        [rowHeight]="30" [height]="'calc(100vh - 17rem)'" [gridLines]="'Both'" [allowPaging]="false"
+                        [allowResizing]="true" [allowFiltering]='true' [toolbar]="GridSetoranToolbar"
+                        (rowSelected)="handleSelectedRowSetoran($event)"
+                        (toolbarClick)="handleToolbarClickSetoran($event)">
+                        <e-columns>
+                            <e-column [width]="100" [field]="'nomor_saldo_kasir'" [headerText]="'NO. FAKTUR'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="120" [field]="'user_name'" [headerText]="'NAMA KASIR'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            </e-column>
+                            <e-column [width]="120" [field]="'time_inputed'" [headerText]="'WAKTU SETORAN KASIR'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                                [type]="'Date'" [format]="'dd/MM/yyyy HH:mm:ss'">
+                            </e-column>
+                            <e-column [width]="100" [field]="'tambahan_setoran'" [headerText]="'JUMLAH SETORAN'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Buka Kasir -->
+        <button id="btnModalSetoranKasir" type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#modalSetoranKasir" [hidden]="true">
+            Launch Modal Pembayaran
+        </button>
+
+        <div class="modal fade" id="modalSetoranKasir" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="modalSetoranKasirLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border-0">
+                    <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                        <h5 class="modal-title" id="modalSetoranKasirLabel">Input Setoran Kasir</h5>
+                        <button id="btnCloseModalSetoranKasir" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="FormSetoran">
+                            <div class="row">
+                                <!-- Nama Kasir -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <atm-label [LabelCaption]="'Nama Kasir'"></atm-label>
+                                    <input type="text" class="form-control form-select-sm" readonly
+                                        formControlName="nama_kasir">
+                                </div>
+
+                                <!-- Nama Kasir -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <atm-label [LabelCaption]="'Waktu Buka Kasir'"></atm-label>
+                                    <input type="text" class="form-control form-select-sm" readonly
+                                        formControlName="waktu_buka_kasir">
+                                </div>
+
+                                <!-- Jumlah Setoran -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <atm-label [LabelCaption]="'Jumlah Setoran'"></atm-label>
+                                    <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
+                                        [showSpinButton]="false" [format]="'N2'" formControlName="tambahan_setoran">
+                                    </ejs-numerictextbox>
+                                </div>
+
+                                <!-- Keterangan Setoran -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <atm-label [LabelCaption]="'Keterangan Setoran'"></atm-label>
+                                    <textarea class="form-control" rows="3" formControlName="keterangan_setoran">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm"
+                            (click)="handleSubmitModalSetoranKasir(FormSetoran.value)">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

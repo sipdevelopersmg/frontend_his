@@ -48,6 +48,11 @@
                 <ejs-datepicker *ngIf="FilterState == 'Date'" #DateValue [format]="'yyyy-MM-dd'"
                     (keyup.enter)="handleClickAddFilter()">
                 </ejs-datepicker>
+
+                <ejs-dropdownlist *ngIf="FilterState == 'Dropdown'" #DropdownValue
+                    [dataSource]="FilterDropdownDatasource" [fields]="FilterDropdownFields"
+                    (keyup.enter)="handleClickAddFilter()">
+                </ejs-dropdownlist>
             </div>
 
             <!-- Button Add -->

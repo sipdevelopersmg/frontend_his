@@ -64,6 +64,16 @@ export class MolOffcanvasFilterComponent implements OnInit {
     @ViewChild('DateValue') DateValue: DatePickerComponent;
 
     /**
+     * @DropdownValue
+     * @Keterangan DropdownValue khusus untuk input field Dropdown
+    */
+    @ViewChild('DropdownValue') DropdownValue: DropDownListComponent;
+
+    @Input('FilterDropdownDatasource') FilterDropdownDatasource: any[] = [];
+
+    @Input('FilterDropdownFields') FilterDropdownFields: any = {};
+
+    /**
      * @HandlingPencarian
      * @Keterangan EventEmitter untuk mendapatkan AdvancedFilterArray pada parent Component
     */
@@ -83,9 +93,21 @@ export class MolOffcanvasFilterComponent implements OnInit {
                 this.FilterState = 'Date';
 
                 this.FilterConditionDatasource = [
-                    { text: 'Equal', value: 'equal' },
+                    { text: 'Equal', value: 'between' },
                 ];
-            } else {
+            };
+
+            const is_dropdown_filter = columnText.indexOf('Pilih') > -1 ? true : false;
+
+            if (is_dropdown_filter) {
+                this.FilterState = 'Dropdown';
+
+                this.FilterConditionDatasource = [
+                    { text: 'Contains', value: 'like' }
+                ];
+            };
+
+            if (!is_date_filter && !is_dropdown_filter) {
                 this.FilterState = 'String';
 
                 this.FilterConditionDatasource = [
@@ -97,11 +119,28 @@ export class MolOffcanvasFilterComponent implements OnInit {
     }
 
     handleClickAddFilter(): void {
+        let searchText: any;
+
+        switch (this.FilterState) {
+            case "String":
+                searchText = this.Value.nativeElement.value;
+                break;
+            case "Date":
+                searchText = formatDate(this.DateValue.value, 'yyyy-MM-dd', 'EN');
+                break;
+            case "Dropdown":
+                searchText = this.DropdownValue.value;
+                break;
+            default:
+                searchText = "";
+                break;
+        }
+
         const items = {
             'columnText': this.Column.text,
             'columnName': this.Column.value,
             'filter': this.Condition.value,
-            'searchText': this.FilterState == 'String' ? this.Value.nativeElement.value : formatDate(this.DateValue.value, 'yyyy-MM-dd', 'EN'),
+            'searchText': searchText,
         };
 
         this.AdvancedFilterArray.push(items);
@@ -109,9 +148,11 @@ export class MolOffcanvasFilterComponent implements OnInit {
         const itemsEmit = {
             'columnName': this.Column.value,
             'filter': this.Condition.value,
-            'searchText': this.FilterState == 'String' ? this.Value.nativeElement.value : `'${formatDate(this.DateValue.value, 'yyyy-MM-dd', 'EN')}'`,
-            'searchText2': "",
+            'searchText': searchText,
+            'searchText2': this.FilterState == 'Date' ? searchText : "",
         };
+
+        console.log(itemsEmit);
 
         this.AdvancedFilterArrayEmitting.push(itemsEmit);
 
@@ -136,10 +177,18 @@ export class MolOffcanvasFilterComponent implements OnInit {
         this.Column.value = null;
         this.Condition.value = null;
 
-        if (this.FilterState == 'String') {
-            this.Value.nativeElement.value = "";
-        } else {
-            this.DateValue.value = null;
+        switch (this.FilterState) {
+            case "String":
+                this.Value.nativeElement.value = "";
+                break;
+            case "Date":
+                this.DateValue.value = null;
+                break;
+            case "Dropdown":
+                this.DropdownValue.value = null;
+                break;
+            default:
+                break;
         }
     }
 

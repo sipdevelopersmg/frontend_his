@@ -1,0 +1,179 @@
+<!-- Button Modal Detail Cross Check Tutup Kasir -->
+<button id="btnModalDetailCrossCheck" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalDetailCrossCheck" [hidden]="true">
+    Launch Modal Detail Cross Check
+</button>
+
+<div class="modal fade" id="modalDetailCrossCheck" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalDetailCrossCheckLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title">Detail Cross Check Tutup Kasir</h5>
+                <button id="btnCloseModalDetailCrossCheck" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormDetailCrossCheck">
+                    <!-- Informasi Kasir -->
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- User Pengawas Kasir -->
+                            <div class="row align-items-center mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <p class="mb-0 pt-2 text-black" style="font-size: 14px">User P. Kasir</p>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input class="form-control form-select-sm see-detail" type="text" readonly
+                                        formControlName="user_pengawas_kasir">
+                                </div>
+                            </div>
+
+                            <!-- User Kasir -->
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <p class="mb-0 pt-2 text-black" style="font-size: 14px">User Kasir</p>
+                                </div>
+                                <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input class="form-control form-select-sm see-detail" type="text" readonly
+                                        formControlName="user_kasir">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Waktu Cross Check -->
+                            <div class="row align-items-center mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <p class="mb-0 pt-2 text-black" style="font-size: 14px">Waktu Cross Check</p>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input class="form-control form-select-sm see-detail" type="text" readonly
+                                        formControlName="waktu_cross_check">
+                                </div>
+                            </div>
+
+                            <!-- Status Cross Check -->
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <p class="mb-0 pt-2 text-black" style="font-size: 14px">Status Cross Check</p>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input class="form-control form-select-sm see-detail" type="text" readonly
+                                        formControlName="status_cross_check">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keterangan -->
+                    <div class="row mb-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <p class="mb-0 pt-2 text-black" style="font-size: 14px">Keterangan</p>
+                                </div>
+                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11" style="padding-left: 3.7rem;">
+                                    <input class="form-control form-select-sm see-detail" type="text" readonly
+                                        formControlName="keterangan">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid -->
+                    <div class="row">
+                        <!-- Detail Pendapatan Kasir Versi Sistem Komputer -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="card shadow-sm">
+                                <div class="card-header px-2">
+                                    <p class="text-biru-muda mb-0">
+                                        Detail Pendapatan Kasir Versi Sistem Komputer
+                                    </p>
+                                </div>
+                                <div class="card-body border-0 p-0">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <ejs-grid #GridPendapatanVersiSistem [id]="'GridPendapatanVersiSistem'"
+                                                [height]="250" [dataSource]="GridPendapatanSistemDatasource"
+                                                [rowHeight]="30" [gridLines]="'Both'" [allowResizing]="true"
+                                                [allowFiltering]='true'
+                                                (rowSelected)="handleSelectedRowVersiSistem($event)"
+                                                (commandClick)="handleCommandClickVersiSistem($event)">
+                                                <e-columns>
+                                                    <e-column [width]="50" [field]="'id_payment_method'"
+                                                        [headerText]="'ID'" [visible]="false" [type]="'number'"
+                                                        [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'payment_method'"
+                                                        [headerText]="'METODE BAYAR'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="150" [field]="'jumlah_bayar'"
+                                                        [headerText]="'PENDAPATAN VERSI SISTEM'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                        [format]="'N2'">
+                                                    </e-column>
+                                                    <e-column [width]="70" [field]="'command'" [headerText]="'DETAIL'"
+                                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                                                        [commands]="CommandLihatDetailVersiKomputer">
+                                                    </e-column>
+                                                </e-columns>
+                                            </ejs-grid>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detail Pendapatan Kasir Versis Kasir -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="card">
+                                <div class="card-header px-2">
+                                    <p class="text-biru-muda mb-0">Daftar Pendapatan Kasir Versi Kasir</p>
+                                </div>
+                                <div class="card-body border-0 p-0">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <ejs-grid #GridPendapatanVersiKasir [id]="'GridPendapatanVersiKasir'"
+                                                [height]="250" [dataSource]="GridPendapatanKasirDatasource"
+                                                [rowHeight]="30" [gridLines]="'Both'" [allowResizing]="true"
+                                                [allowFiltering]='true'
+                                                (rowSelected)="handleSelectedRowVersiKasir($event)">
+                                                <e-columns>
+                                                    <e-column [width]="50" [field]="'id_payment_method'"
+                                                        [headerText]="'ID'" [visible]="false" [type]="'number'"
+                                                        [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'payment_method'"
+                                                        [headerText]="'METODE BAYAR'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="150" [field]="'jumlah_penerimaan'"
+                                                        [headerText]="'PENDAPATAN VERSI KASIR'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                        [format]="'N2'">
+                                                    </e-column>
+                                                </e-columns>
+                                            </ejs-grid>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal-detail-pendapatan-sistem #DetailPendapatanSistem></app-modal-detail-pendapatan-sistem>

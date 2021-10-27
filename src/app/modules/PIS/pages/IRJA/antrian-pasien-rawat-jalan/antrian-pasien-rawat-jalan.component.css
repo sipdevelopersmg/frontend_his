@@ -42,3 +42,13 @@ button#btnCardDokter:active {
   display: block;
   animation: fadeIn 400ms ease-in-out both;
 }
+
+.card_detail_pasien {
+  width: calc(100vw - 68rem);
+}
+
+@media (min-width: 1400px) {
+  .card_detail_pasien {
+    width: calc(100vw - 94rem);
+  }
+}
