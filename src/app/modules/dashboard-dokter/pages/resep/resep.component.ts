@@ -7,6 +7,7 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
 import Swal from 'sweetalert2';
 import { InputResepComponent } from './input-resep/input-resep.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
 
 @Component({
     selector: 'app-resep',
@@ -43,10 +44,13 @@ export class ResepComponent implements OnInit, AfterViewInit {
         private utilityService: UtilityService,
         private navigationService: NavigationService,
         private modalService: BsModalService,
+        public daftarPasienService: DaftarPasienService
+
     ) { }
 
     ngOnInit(): void { 
         this.currentTanggal = moment().format()
+        console.log(this.daftarPasienService.ActivePasien.value);
     }
 
     ngAfterViewInit(): void {
@@ -95,10 +99,10 @@ export class ResepComponent implements OnInit, AfterViewInit {
 
     async onGetGridResepDatasource() {
         this.data ={
-            id_dokter:1,
-            id_register:1,
+            id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
+            id_register:this.daftarPasienService.ActivePasien.value.id_register,
             id_outlet:1,
-            id_person:1,
+            id_person:this.daftarPasienService.ActivePasien.value.id_person,
             jenis_rawat:'J',
             nama_template:'',
             tanggal_resep:this.currentTanggal

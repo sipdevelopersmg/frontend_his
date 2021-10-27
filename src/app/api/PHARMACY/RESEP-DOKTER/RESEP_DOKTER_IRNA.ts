@@ -12,3 +12,4 @@ export const UPDATE_TO_STOP = `${environment.webApiPHARMACY}` +'TransResepDokter
 export const UPDATE_TO_LANJUT = `${environment.webApiPHARMACY}` +'TransResepDokterIrna/UpdateToLanjut';
 export const UPDATE_TO_UBAH = `${environment.webApiPHARMACY}` +'TransResepDokterIrna/UpdateToUbah';
 export const GET_TEMPLATE_RESEP = `${environment.webApiPHARMACY}` +'TransResepDokterIrna/GetTemplateResepByIdDokterAndParams';
+export const GET_RESEP_BY_REGISTER = `${environment.webApiPHARMACY}` +'TransResepDokterIrna/GetByIdRegister';

@@ -1,0 +1,29 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_ruangan",
+            "headerText": "Id",
+            "type": "string",
+            "visible": false
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_ruangan",
+            "headerText": "Nama Ruangan",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "nama_ruangan",
+            "filter": "like",
+            "title": "Nama Ruangan"
+        }
+    ]
+}

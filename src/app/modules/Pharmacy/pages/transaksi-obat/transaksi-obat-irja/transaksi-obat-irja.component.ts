@@ -1,12 +1,17 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
+import utilityHelper from 'src/app/helpers/utility/utilityHelper';
 import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
+import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { TransaksiObatIrjaService } from '../../../services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
 import * as GridConfig from './json/grid.config.json'
 @Component({
   selector: 'app-transaksi-obat-irja',
@@ -23,7 +28,7 @@ export class TransaksiObatIrjaComponent implements OnInit {
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
 
     GridConfig = GridConfig;
-
+    inputFieldState = 'detail';
     childGrid: GridModel;
 
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
@@ -33,32 +38,41 @@ export class TransaksiObatIrjaComponent implements OnInit {
     modalRef: BsModalRef;
 
     public keterangan = (field: string, data1: object) => {
-        return  data1['nama_obat'] +' '+
-                data1['rute_pemberian_obat'] + ', sehari ' + 
-                data1['qty_harian'] +' '+ data1['nama_satuan']+', '+ data1['jumlah_satuan_aturan_pakai']+' '+ data1['nama_satuan']+
-                ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['interval_aturan_pakai']+' sekali, '+
+        return  data1['nama_obat'] +', '+
+                data1['ket_label'] +', '+
                 data1['ket_aturan'];
     }
 
     public quantity = (field: string, data1: object) => {
-        return  data1['qty_harian'] +' '+
-                data1['nama_satuan']+'/Hari, untuk '+data1['jumlah_hari']+' Hari';
+        return  data1['qty_resep'] + ' ' +data1['nama_satuan'] 
     }
 
     dataSourceChild:any = [];
     dataSource:any = [];
     dataHeader:any = [];
-    
+    formInput: FormGroup;
+    imageSrc: string;
     constructor(
-        public resepDokterIrnaService: ResepDokterIrnaService,
+        public resepDokterService: ResepDokterService,
+        public transaksiObatIrjaService:TransaksiObatIrjaService,
         private router:Router,
         private encryptionService: EncryptionService,
         private activatedRoute: ActivatedRoute,
         private utilityService:UtilityService,
-        private modalService: BsModalService,
+        private utilityHelperService:UtilityHelperService,
+        private formBuilder: FormBuilder,
     ) { }
 
     ngOnInit(): void {
+
+        this.formInput = this.formBuilder.group({
+            pasien: ['', []],
+            poli: ['', []],
+            dokter : ['', []],
+            umur : ['', []],
+        });
+
+
         this.childGrid = {
             dataSource: this.dataSourceChild,
             queryString: "resep_detail_id",
@@ -77,11 +91,19 @@ export class TransaksiObatIrjaComponent implements OnInit {
     }
 
     onLoadDetailData(id) {
-       this.resepDokterIrnaService.onGetById(id).subscribe((result)=>{
+       this.resepDokterService.onGetById(id).subscribe((result)=>{
            this.dataHeader = result.data;
            this.dataSource = result.data.details;
            this.GridResepRacikan.refresh();
            this.mapingRacikan(result.data.details);
+           let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
+           this.formInput.setValue({
+               poli:result.data.nama_poli,
+               pasien:result.data.nama_pasien,
+               dokter: result.data.nama_dokter,
+               umur: result.data.tgl_lahir
+           })
+           this.imageSrc = result.data.nama_foto
        })
     }
 
@@ -117,44 +139,19 @@ export class TransaksiObatIrjaComponent implements OnInit {
     onDataBound(){
         this.GridResepRacikan.detailRowModule.expandAll();
     }
-
-    handleClickLanjutkanResepDokter(args){
-        let Body:any
-        Body = this.GridResepRacikan.getSelectedRecords()
-        Body.map((e,i)=>{
-            e.jumlah_hari = args;
-            return e;
-        });
-        // console.log(Body);
-        this.resepDokterIrnaService.lanjutakanResepRawatInap(Body).subscribe((result)=>{
-            this.utilityService.onShowingCustomAlert('success', 'Obat ini berhasil di lanjutkan', result.message)
-                .then(() => {
-                    this.modalRef.hide();
-                    this.onLoadDetailData(this.dataHeader.resep_id);
-                });
-        })
-    }
    
     onClickButtonNav(args: any): void {
         switch (args) {
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
                 break;
-            case "lanjutkan":
-                this.modalRef = this.modalService.show(
-                    this.modalTambahanHariResep,
-                    Object.assign({}, { class: 'modal-md' })
-                );
-                break;
-            case "ubah":
-                const id = this.encryptionService.encrypt(JSON.stringify(this.dataHeader.resep_id));
-                this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id, "GRAHCIS"]);
-                break;
-            case "stop":
-                this.resepDokterIrnaService.stopResepRawatInap(this.dataHeader.resep_id).subscribe((result)=>{
-                    this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Stop', result.message)
+            case "simpan":
+                let Data = this.dataHeader
+                Data.details = this.GridResepRacikan.getSelectedRecords()
+                this.transaksiObatIrjaService.Insert(Data).subscribe((result)=>{
+                    this.utilityService.onShowingCustomAlert('success', 'Data Berhasil Tersimpan', result.message)
                     .then(() => {
-                        this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                        this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
                     });
                 });
                 break;

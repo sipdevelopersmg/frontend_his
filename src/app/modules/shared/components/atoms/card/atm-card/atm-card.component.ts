@@ -18,6 +18,8 @@ export class AtmCardComponent implements OnInit {
     @Input("Status") Status: string;
     @Input("NamaDokter") NamaDokter: string;
     @Input("KodeResep") KodeResep: string;
+    @Input("NoRegister") NoRegister: string;
+    @Input("NomorAntrian") NomorAntrian:string;
     @Input("DetailResep") DetailResep: KanbanDetailResep[];
 
     ShowDetailObat: boolean = false;
