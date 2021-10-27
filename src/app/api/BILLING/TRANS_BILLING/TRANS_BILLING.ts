@@ -28,4 +28,7 @@ export const POST_CANCEL_PAYMENT_BILLING_IRJA = `${environment.webApiBilling}` +
 
 export const POST_CANCEL_INVOICE_BILLING_IRJA = `${environment.webApiBilling}` + `tarif/TransBilling/BillBatalInvoice`;
 
+export const GET_PRINT_RINCIAN_BIAYA_BILLING = `${environment.webApiLaporan}` + `PIS/Rincian_Biaya_Billing.html`;
+
+
 

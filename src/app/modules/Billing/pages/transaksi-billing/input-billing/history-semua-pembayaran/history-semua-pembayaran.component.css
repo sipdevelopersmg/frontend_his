@@ -72,6 +72,7 @@ div.items-group {
   display: flex;
   padding: 5px;
   transition: all 0.25s;
+  font-size: 13.5px;
 }
 
 li.list-group-item > div.items-group:hover,
@@ -98,7 +99,7 @@ div.items-group-child {
   display: flex;
   padding: 5px;
   transition: all 0.25s;
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
 li.list-group-item > div.items-group-child:hover {

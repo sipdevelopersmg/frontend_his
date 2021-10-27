@@ -11,11 +11,11 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-list-pasien-rawat-jalan',
-    templateUrl: './list-pasien-rawat-jalan.component.html',
-    styleUrls: ['./list-pasien-rawat-jalan.component.css']
+    selector: 'app-list-pasien-rawat-inap',
+    templateUrl: './list-pasien-rawat-inap.component.html',
+    styleUrls: ['./list-pasien-rawat-inap.component.css']
 })
-export class ListPasienRawatJalanComponent implements OnInit {
+export class ListPasienRawatInapComponent implements OnInit {
 
     FilterColumnDatasource: any[] = [
         { text: 'No. Register', value: 'tp.no_register' },
@@ -49,7 +49,6 @@ export class ListPasienRawatJalanComponent implements OnInit {
 
     @Output('onGetDaftarAdmisi') onGetDaftarAdmisi = new EventEmitter<any>();
 
-    @Output('onGetSelectedDataAdmisi') onGetSelectedDataAdmisi = new EventEmitter<any>();
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
@@ -85,8 +84,6 @@ export class ListPasienRawatJalanComponent implements OnInit {
 
     handleSelectedRow(args: any): void {
         this.SelectedData = args.data;
-
-        this.onGetSelectedDataAdmisi.emit(this.SelectedData);
     }
 
     handleActionComplete(event: any): void {

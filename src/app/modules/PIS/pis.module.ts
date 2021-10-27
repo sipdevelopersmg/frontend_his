@@ -14,10 +14,8 @@ import { GroupComponent } from './pages/setup-data/setup-tarif/setup-kode-tarif/
 import { SubgroupComponent } from './pages/setup-data/setup-tarif/setup-kode-tarif/subgroup/subgroup.component';
 import { TarifComponent } from './pages/setup-data/setup-tarif/setup-kode-tarif/tarif/tarif.component';
 import { DataDokterComponent } from './pages/setup-data/setup-dokter/data-dokter/data-dokter.component';
-import { PelayananPasienIrnaComponent } from './pages/IRNA/pelayanan-pasien-irna/pelayanan-pasien-irna.component';
 import { AntrianPasienRawatJalanComponent } from './pages/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.component';
 import { DaftarUlangPasienComponent } from './pages/IRJA/daftar-ulang-pasien/daftar-ulang-pasien.component';
-import { PendaftaranPasienBaruIrnaComponent } from './pages/IRNA/pendaftaran-pasien-baru-irna/pendaftaran-pasien-baru-irna.component';
 import { SetupBahasaComponent } from './pages/setup-data/setup-bahasa/setup-bahasa.component';
 import { SetupKebangsaanComponent } from './pages/setup-data/setup-kebangsaan/setup-kebangsaan.component';
 import { SetupEtnisComponent } from './pages/setup-data/setup-etnis/setup-etnis.component';
@@ -42,6 +40,9 @@ import { SetupJadwalDokterComponent } from './pages/setup-data/setup-jadwal-dokt
 import { SetupCutiDokterComponent } from './pages/setup-data/setup-cuti-dokter/setup-cuti-dokter.component';
 import { SetupMappingTarifOrderPenunjangComponent } from './pages/setup-data/setup-mapping-tarif-order-penunjang/setup-mapping-tarif-order-penunjang.component';
 import { SetupGrupPenunjangComponent } from './pages/setup-data/setup-grup-penunjang/setup-grup-penunjang.component';
+import { AdmisiPasienRawatInapComponent } from './pages/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.component';
+import { PelayananPasienRawatInapComponent } from './pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component';
+import { ListPasienRawatInapComponent } from './pages/IRNA/admisi-pasien-rawat-inap/list-pasien-rawat-inap/list-pasien-rawat-inap.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -57,10 +58,8 @@ const ngWizardConfig: NgWizardConfig = {
         SubgroupComponent,
         TarifComponent,
         DataDokterComponent,
-        PelayananPasienIrnaComponent,
         AntrianPasienRawatJalanComponent,
         DaftarUlangPasienComponent,
-        PendaftaranPasienBaruIrnaComponent,
         SetupBahasaComponent,
         SetupKebangsaanComponent,
         SetupEtnisComponent,
@@ -85,6 +84,9 @@ const ngWizardConfig: NgWizardConfig = {
         SetupCutiDokterComponent,
         SetupMappingTarifOrderPenunjangComponent,
         SetupGrupPenunjangComponent,
+        AdmisiPasienRawatInapComponent,
+        PelayananPasienRawatInapComponent,
+        ListPasienRawatInapComponent,
     ],
     imports: [
         CommonModule,

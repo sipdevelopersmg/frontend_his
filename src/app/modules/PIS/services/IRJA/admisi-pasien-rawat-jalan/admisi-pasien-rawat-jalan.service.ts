@@ -99,4 +99,8 @@ export class AdmisiPasienRawatJalanService {
             })
         );
     }
+
+    onPrintBuktiAdmisiRawatJalan(nama_pasien: string, no_register: string): void {
+        this.httpOperationService.defaultGetPrintRequest(this.API_CONFIG.GET_PRINT_BUKTI_ADMISI_RAWAT_JALAN, { NAMA_PASIEN: nama_pasien, NO_REGISTER: no_register }, "BUKTI ADMISI IRJA");
+    }
 }

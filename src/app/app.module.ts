@@ -8,6 +8,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
 import { CommandColumnService, EditService } from '@syncfusion/ej2-angular-grids';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: '', options: {} };
 
 @NgModule({
     declarations: [
@@ -20,6 +23,7 @@ import { CommandColumnService, EditService } from '@syncfusion/ej2-angular-grids
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
+        // SocketIoModule.forRoot(config)
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

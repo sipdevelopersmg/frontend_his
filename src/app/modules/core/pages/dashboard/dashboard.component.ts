@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, take } from 'rxjs/operators';
+// import { Socket } from 'ngx-socket-io';
+import { filter, map, take } from 'rxjs/operators';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { MolTopMenuComponent } from '../../components/top-menu/top-menu.component';
@@ -35,7 +36,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.onCheckIsSidebarEmpty();
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        // this.onGetNotification();
+    }
 
     onClickNavbarBrand(args: any): void {
         const type = args.type;
@@ -92,7 +95,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.ToggleTopMenu = true;
     }
 
-    onGetNotification(): void {
+    onGetNotification(): any {
         // return this.socket.fromEvent('notification')
         //     .pipe(
         //         map((notify: any) => {

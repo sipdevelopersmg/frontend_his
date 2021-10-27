@@ -22,6 +22,22 @@ export class UtilityService {
         });
     }
 
+    onShowingMultipleMessageAlert(icon: any, title: string, message: any): Promise<any> {
+        let text = "";
+
+        message.forEach((item) => {
+            text += `<p class="text-black mb-1">${item}</p>`;
+        });
+
+        return Swal.fire({
+            icon,
+            title,
+            html: text,
+            showCloseButton: false,
+            showConfirmButton: true,
+        })
+    }
+
     onShowCustomAlertWithTimer(icon: any, title: string, message: string, timer?: number): Promise<any> {
         return Swal.fire({
             icon,
