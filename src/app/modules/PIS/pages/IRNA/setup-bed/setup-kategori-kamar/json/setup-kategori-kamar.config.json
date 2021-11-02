@@ -1,0 +1,47 @@
+{
+    "GridKategoriKamarColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_setup_room_category",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_category",
+            "headerText": "KATEGORI KAMAR",
+            "visible": true,
+            "width": 200
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "time_created",
+            "headerText": "WAKTU ENTRY",
+            "type": "DateTime",
+            "format": "dd/MM/yyyy HH:mm:ss",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "displayAsCheckbox": true,
+            "editType": "defaultEdit",
+            "field": "is_active",
+            "headerText": "STATUS",
+            "visible": true,
+            "width": 90,
+            "textAlign": "Center",
+            "headerTextAlign": "Center"
+        }
+    ]
+}

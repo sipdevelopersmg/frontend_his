@@ -7,6 +7,7 @@ import * as ALERGI from './alergi_api';
 import * as VITAL_SIGN from './vital_sign_api';
 import * as BANK_DARAH from './bank_darah_api';
 import * as DIAGNOSA from './diagnosa_api';
+import * as SURAT_PERINTAH_MONDOK from './surat_perintah_mondok';
 
 const API_PERIKSA_PASIEN = `${environment.webApiPis}` + 'Pasien/PasienPeriksa';
 
@@ -21,5 +22,6 @@ export const API_DASHBOARD_DOKTER = Object.assign({},
         VITAL_SIGN: VITAL_SIGN,
         BANK_DARAH: BANK_DARAH,
         DIAGNOSA: DIAGNOSA,
+        SURAT_PERINTAH_MONDOK: SURAT_PERINTAH_MONDOK,
     }
 )

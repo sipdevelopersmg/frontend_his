@@ -1,0 +1,69 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Status Bed</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridBedColumns"
+                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                    (initialized)="InitalizedGrid($event)" (action-complete)="handleActionComplete($event)">
+                </mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Status Bed</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Status Bed -->
+                            <mol-input-text [label]="'Status Bed'" formControlName="status_bed"
+                                [IsFormControlInvalid]="status_bed.invalid"
+                                [ValidatorsCaption]="'Status Bed Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Keterangan -->
+                            <mol-input-text [label]="'Keterangan'" formControlName="status_bed_descr"
+                                [IsFormControlInvalid]="status_bed_descr.invalid"
+                                [ValidatorsCaption]="'Keterangan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Status -->
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Opsi Status Bed'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radio_opsi_status_bed"
+                                            id="is_ready" value="is_ready" [disabled]="inputFieldState == 'detail'"
+                                            (change)="handleChangeRadioButtonOpsi('is_ready')">
+                                        <label class="form-check-label" for="is_ready">Ready</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radio_opsi_status_bed"
+                                            id="is_new" value="is_new" [disabled]="inputFieldState == 'detail'"
+                                            (change)="handleChangeRadioButtonOpsi('is_new')">
+                                        <label class="form-check-label" for="is_new">New</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radio_opsi_status_bed"
+                                            id="is_fill" value="is_fill" [disabled]="inputFieldState == 'detail'"
+                                            (change)="handleChangeRadioButtonOpsi('is_fill')">
+                                        <label class="form-check-label" for="is_fill">Fill</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

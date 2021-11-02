@@ -16,6 +16,7 @@ export interface IDaftarPasienIRJAModel {
     id_kelas_rawat?: number;
     nama_debitur?: string;
     dpjp?: string;
+    photo_url?: string;
 }
 
 export class GetAllPasienIRJAByDokterModel implements HttpResponseModel {

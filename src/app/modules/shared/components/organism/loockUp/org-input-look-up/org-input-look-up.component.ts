@@ -115,19 +115,21 @@ export class OrgInputLookUpComponent implements OnInit {
             filter = "";
         }
 
-        let search = [{
-            "columnName": columnName,
-            "filter": filter,
-            "searchText": value,
-            "searchText2": ""
-        }];
+        let search = [];
 
         if (this.staticFilters.length > 0) {
             for (let i = 0; i < this.staticFilters.length; i++) {
                 search.push(this.staticFilters[i]);
             }
         } else {
-            //... do nothing
+            search = [
+                {
+                    "columnName": columnName,
+                    "filter": filter,
+                    "searchText": value,
+                    "searchText2": ""
+                }
+            ];
         }
 
         this.onFetchDataSource(search);

@@ -18,9 +18,9 @@ import * as Config from './json/setup-asal-rujukan.config.json';
 export class SetupAsalRujukanComponent implements OnInit {
 
     /**
-    * Variable untuk Menympan Navigasi halaman
-    * @ButtonNavModel Array
-   */
+     * Variable untuk Menympan Navigasi halaman
+     * @ButtonNavModel Array
+    */
     ButtonNav: ButtonNavModel[];
 
     /**

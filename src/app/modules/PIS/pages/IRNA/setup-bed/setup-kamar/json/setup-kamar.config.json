@@ -1,0 +1,113 @@
+{
+    "GridKamarColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_setup_room",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_setup_room_category",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_no",
+            "headerText": "NO. ROOM",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_descr",
+            "headerText": "LABEL ROOM",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "floor_no",
+            "headerText": "LANTAI",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_poli",
+            "headerText": "POLIKLINIK",
+            "visible": true,
+            "width": 200
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_kelas",
+            "headerText": "KELAS",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "gender",
+            "headerText": "GENDER",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "KETERANGAN",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "displayAsCheckbox": true,
+            "editType": "defaultEdit",
+            "field": "is_isolasi",
+            "headerText": "ISOLASI",
+            "visible": true,
+            "width": 80,
+            "headerTextAlign": "Center",
+            "textAlign": "Center"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "displayAsCheckbox": true,
+            "editType": "defaultEdit",
+            "field": "is_active",
+            "headerText": "STATUS",
+            "visible": true,
+            "width": 80,
+            "headerTextAlign": "Center",
+            "textAlign": "Center"
+        }
+    ]
+}

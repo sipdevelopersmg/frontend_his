@@ -1,0 +1,177 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Bed</org-tabs-label>
+            <org-tabs-body>
+                <!-- Offcanvas Filter -->
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                            [FilterDropdownDatasource]="FilterDropdownDatasource"
+                            [FilterDropdownFields]="FilterDropdownFields"
+                            (handle-change-filter)="handleChangeFilterPencarian($event)"
+                            (handle-pencarian)="handlePencarianFilter($event)">
+                        </mol-offcanvas-filter>
+                    </div>
+                </div>
+
+                <!-- Grid Data Bed -->
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <!-- <mol-grid #GridData [grid-height]="'calc(100vh - 19rem)'" [grid-DataSource]="GridDatasource"
+                            [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                            [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridBedColumns"
+                            (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                            (initialized)="InitalizedGrid($event)" (action-complete)="handleActionComplete($event)">
+                        </mol-grid> -->
+
+                        <ejs-grid #GridData [id]="'GridDataBed'" [height]="'calc(100vh - 22rem)'"
+                            [dataSource]="GridDatasource" [toolbar]="GridDataToolbar" [rowHeight]="30"
+                            [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+                            (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)">
+                            <e-columns>
+                                <e-column [width]="80" [field]="'bed_no'" [headerText]="'NO. BED'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="80" [field]="'room_no'" [headerText]="'NO. ROOM'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="80" [field]="'kode_poli'" [headerText]="'KODE POLI'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="150" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'KELAS'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <!-- <e-column field='status_bed_descr' headerText='STATUS BED' width='100' textAlign='Center'>
+                                    <ng-template #template let-data>
+                                        <div *ngIf="data.status_bed_descr === true;"
+                                            class="statustemp e-activecolor">
+                                            <span class="statustxt e-activecolor">
+                                                {{ data.status_bed_descr ? 'SUDAH ADMISI' : 'BELUM ADMISI' }}
+                                            </span>
+                                        </div>
+                                        <div *ngIf="data.status_bed_descr === true;"
+                                            class="statustemp e-activecolor">
+                                            <span class="statustxt e-activecolor">
+                                                {{ data.status_bed_descr ? 'SUDAH ADMISI' : 'BELUM ADMISI' }}
+                                            </span>
+                                        </div>
+                                        <div *ngIf="data.status_bed_descr === true;"
+                                            class="statustemp e-activecolor">
+                                            <span class="statustxt e-activecolor">
+                                                {{ data.status_bed_descr ? 'SUDAH ADMISI' : 'BELUM ADMISI' }}
+                                            </span>
+                                        </div>
+                                        <div *ngIf="data.status_bed_descr === true"
+                                            class="statustemp e-activecolor">
+                                            <span class="statustxt e-activecolor">
+                                                {{ data.status_bed_descr ? 'SUDAH ADMISI' : 'BELUM ADMISI' }}
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                </e-column> -->
+                                <e-column [width]="100" [field]="'status_bed_descr'" [headerText]="'STATUS BED'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="90" [field]="'no_register'" [headerText]="'NO. REGISTER'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="90" [field]="'no_rekam_medis'" [headerText]="'NO. RM'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="120" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'"
+                                    [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="100" [field]="'usia'" [headerText]="'USIA'" [visible]="true"
+                                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                            </e-columns>
+                        </ejs-grid>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Bed</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <org-input-look-up-kode #LookupRoom [modal-title]="'Data Room'" [lookup-url]="UrlLookupRoom"
+                                [idKode]="'room_no'" [idTitle]="'room_descr'"
+                                (onGetSelectedData)="handleSelectedRoom($event)"
+                                [columns]="GridConfig.LookupRoom.columns" [filter-lookup]="GridConfig.LookupRoom.filter"
+                                [label]="'Pilih Room'">
+                            </org-input-look-up-kode>
+
+                            <!-- Poliklinik Room -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Poliklinik'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                    <input type="text" class="form-control form-select-sm" readonly id="nama_poli">
+                                </div>
+                            </div>
+
+                            <!-- Kelas Room -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kelas'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                    <input type="text" class="form-control form-select-sm" readonly id="nama_kelas">
+                                </div>
+                            </div>
+
+                            <!-- Tampilkan Di Antrian -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tampilkan Di Antrian'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_view_antrian"
+                                            id="is_view_antrian_iya" [value]="true" formControlName="is_view_antrian">
+                                        <label class="form-check-label" for="is_view_antrian_iya">Iya</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_view_antrian"
+                                            id="is_view_antrian_tidak" [value]="false"
+                                            formControlName="is_view_antrian">
+                                        <label class="form-check-label" for="is_view_antrian_tidak">Tidak</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sesuai SK -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Sesuai SK'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_sesuai_sk"
+                                            id="is_sesuai_sk_iya" [value]="true" formControlName="is_sesuai_sk">
+                                        <label class="form-check-label" for="is_sesuai_sk_iya">Iya</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_sesuai_sk"
+                                            id="is_sesuai_sk_tidak" [value]="false" formControlName="is_sesuai_sk">
+                                        <label class="form-check-label" for="is_sesuai_sk_tidak">Tidak</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

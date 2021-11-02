@@ -29,6 +29,7 @@ import { BankDarahComponent } from './pages/bank-darah/bank-darah.component';
 import { InputResepIrnaComponent } from './pages/resep-irna/input-resep-irna/input-resep-irna.component';
 import { DaftarResepIrnaComponent } from './pages/resep-irna/daftar-resep-irna/daftar-resep-irna.component';
 import { ViewResepIrnaComponent } from './pages/resep-irna/view-resep-irna/view-resep-irna.component';
+import { SuratPerintahMondokComponent } from './pages/surat-perintah-mondok/surat-perintah-mondok.component';
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import { ViewResepIrnaComponent } from './pages/resep-irna/view-resep-irna/view-
         InputResepIrnaComponent,
         DaftarResepIrnaComponent,
         ViewResepIrnaComponent,
+        SuratPerintahMondokComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,

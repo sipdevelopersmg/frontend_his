@@ -11,6 +11,8 @@ export class MolLockUpFiltersComponent implements OnInit {
 
     @Output('onChangeFilters') onChangeFilters = new EventEmitter<any>();
 
+    PreviousCheckbox: any = {};
+
     constructor() { }
 
     ngOnInit(): void {
@@ -18,6 +20,22 @@ export class MolLockUpFiltersComponent implements OnInit {
     }
 
     onFilterChanged(checkbox: any) {
+        this.onUncheckPreviousCheckbox(checkbox);
+
         this.onChangeFilters.emit(checkbox);
+
+        this.PreviousCheckbox = checkbox;
+    }
+
+    onUncheckPreviousCheckbox(checkbox: any): void {
+        let CurrentCheckbox = checkbox;
+
+        if (Object.keys(this.PreviousCheckbox).length > 0) {
+            if (CurrentCheckbox.field !== this.PreviousCheckbox.field) {
+                let previous_checkbox_el = document.getElementById(this.PreviousCheckbox.field) as HTMLInputElement;
+
+                previous_checkbox_el.checked = false;
+            }
+        }
     }
 }

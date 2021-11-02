@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { HttpResponseModel, PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/BILLING';
@@ -101,4 +102,7 @@ export class SetupPoliService {
         return this.httpOperationService.defaultGetRequest(this.API_POLI.GET_ALL_BY_ID_JENIS_RUANGAN + JenisRuanganId);
     }
 
+    onGetAllForLookupRawatInap(Data: PostRequestByDynamicFiterModel[]): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API_POLI.GET_ALL_POLI_FOR_LOOKUP_RAWAT_INAP, Data);
+    }
 }

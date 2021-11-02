@@ -1,0 +1,144 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Kamar</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridKamarColumns"
+                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                    (initialized)="InitalizedGrid($event)" (action-complete)="handleActionComplete($event)">
+                </mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Kamar</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Kategori Kamar -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kategori Kamar'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownKategoriKamar
+                                        [dataSource]="DropdownKategoriKamarDatasource"
+                                        [fields]="DropdownKategoriKamarField" [allowFiltering]="true"
+                                        formControlName="id_setup_room_category"
+                                        [enabled]="inputFieldState == 'normal' || inputFieldState == 'edit'">
+                                    </ejs-dropdownlist>
+
+                                    <atm-validators [IsFormControlTouched]="id_setup_room_category.touched"
+                                        [IsFormControlInvalid]="id_setup_room_category.invalid"
+                                        [ValidatorsCaption]="'Kategori Kamar Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- No. Kamar -->
+                            <mol-input-text [label]="'No. Kamar'" formControlName="room_no"
+                                [IsFormControlInvalid]="room_no.invalid"
+                                [ValidatorsCaption]="'No. Kamar Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Keterangan Kamar -->
+                            <mol-input-text [label]="'Label Kamar'" formControlName="room_descr"
+                                [IsFormControlInvalid]="room_descr.invalid"
+                                [ValidatorsCaption]="'Label Kamar Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- No. Lantai -->
+                            <mol-input-text [label]="'No. Lantai'" formControlName="floor_no"
+                                [IsFormControlInvalid]="floor_no.invalid"
+                                [ValidatorsCaption]="'No. Lantai Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Poliklinik -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Poliklinik'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownPoli [dataSource]="DropdownPoliDatasource"
+                                        [fields]="DropdownPoliField" [allowFiltering]="true" formControlName="id_poli"
+                                        [enabled]="inputFieldState == 'normal' || inputFieldState == 'edit'">
+                                    </ejs-dropdownlist>
+
+                                    <atm-validators [IsFormControlTouched]="id_poli.touched"
+                                        [IsFormControlInvalid]="id_poli.invalid"
+                                        [ValidatorsCaption]="'Poliklinik Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Kelas -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kelas'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                                        [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas"
+                                        [enabled]="inputFieldState == 'normal' || inputFieldState == 'edit'">
+                                    </ejs-dropdownlist>
+
+                                    <atm-validators [IsFormControlTouched]="id_kelas.touched"
+                                        [IsFormControlInvalid]="id_kelas.invalid"
+                                        [ValidatorsCaption]="'Kelas Tidak Boleh Kosong'">
+                                    </atm-validators>
+                                </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Gender'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownGender [dataSource]="DropdownGenderDatasource"
+                                        [fields]="DropdownGenderField" [allowFiltering]="true" formControlName="gender"
+                                        [enabled]="inputFieldState == 'normal' || inputFieldState == 'edit'">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Keterangan -->
+                            <mol-input-text [label]="'Keterangan'" formControlName="keterangan"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Is Isolasi -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Is Isolasi'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_isolasi"
+                                            id="is_isolasi_iya" [value]="true" formControlName="is_isolasi">
+                                        <label class="form-check-label" for="is_isolasi_iya">Iya</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_isolasi"
+                                            id="is_isolasi_tidak" [value]="false" formControlName="is_isolasi">
+                                        <label class="form-check-label" for="is_isolasi_tidak">Tidak</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

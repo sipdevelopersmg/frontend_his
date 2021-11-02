@@ -1,0 +1,9 @@
+import * as SETUP_BED_IRNA from './SETUP_BED_IRNA';
+import * as DAFTAR_ANTRIAN_PEMESANAN_BED from './DAFTAR_ANTRIAN_PEMESANAN_BED';
+
+export const IRNA = Object.assign({},
+    {
+        "SETUP_BED_IRNA": SETUP_BED_IRNA,
+        "DAFTAR_ANTRIAN_PEMESANAN_BED": DAFTAR_ANTRIAN_PEMESANAN_BED,
+    }
+)

@@ -125,6 +125,18 @@ export class DashboardDokterService {
                 childSidebarMenu: [],
                 url: "Dokter/vital-sign"
             },
+            {
+                button: [],
+                caption: "Surat Perintah Mondok",
+                fieldgrid: [],
+                icon: "fas fa-file-medical",
+                id_menu_sidebar: 0,
+                id_menu_sidebar_parent: 0,
+                id_top_menu: 0,
+                is_parent: true,
+                childSidebarMenu: [],
+                url: "Dokter/surat-perintah-mondok"
+            },
         ];
 
         localStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenu));

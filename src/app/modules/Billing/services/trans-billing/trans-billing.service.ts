@@ -173,7 +173,7 @@ export class TransBillingService {
             );
     }
 
-    onPrintRincianBiayaBilling(id_register: number): Observable<any> {
-        return this.httpOperationService.defaultGetPrintOnlyPreview(this.API_TRANS_BILLING.GET_PRINT_RINCIAN_BIAYA_BILLING, { ID_REGISTER: id_register }, "RINCIAN BIAYA BILLING");
+    onPrintRincianBiayaBilling(id_register: number): void {
+        this.httpOperationService.defaultGetPrintRequest(this.API_TRANS_BILLING.GET_PRINT_RINCIAN_BIAYA_BILLING, { ID_REGISTER: id_register }, "RINCIAN BIAYA BILLING");
     }
 }

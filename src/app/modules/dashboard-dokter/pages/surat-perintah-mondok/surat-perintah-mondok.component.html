@@ -1,0 +1,45 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <form [formGroup]="FormPerintahMondok">
+        <!-- Nama Pasien -->
+        <div class="row mb-4 pt-2 align-items-center justify-content-center">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center px-0">
+                <img [src]="daftarPasienService.ActivePasien.value.photo_url" alt="photo_pasien" style="height: 150px"
+                    class="shadow-sm rounded">
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 px-0">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1">
+                        <p class="text-biru-tua mb-0" style="font-size: 2rem;">
+                            {{ daftarPasienService.ActivePasien.value.nama_pasien }}
+                        </p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                        <p class="text-biru-muda mb-0" style="font-size: 1rem;">
+                            No. Rekam Medis
+                        </p>
+                        <p class="text-hitam-muda mb-0" style="font-size: 1rem;">
+                            {{ daftarPasienService.ActivePasien.value.no_rekam_medis }}
+                        </p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-biru-muda mb-0" style="font-size: 1rem;">
+                            Tgl Admisi
+                        </p>
+                        <p class="text-hitam-muda mb-0" style="font-size: 1rem;">
+                            {{ daftarPasienService.ActivePasien.value.tgl_admisi | date: 'dd MMMM yyyy' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 px-0">
+                <label for="keterangan_perintah_mondok" class="form-label">Keterangan Perintah Mondok</label>
+                <textarea id="keterangan_perintah_mondok" rows="5" class="form-control"
+                    formControlName="keterangan_perintah_mondok">
+                </textarea>
+            </div>
+        </div>
+    </form>
+</org-card-layout>

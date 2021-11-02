@@ -43,6 +43,12 @@ import { SetupGrupPenunjangComponent } from './pages/setup-data/setup-grup-penun
 import { AdmisiPasienRawatInapComponent } from './pages/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.component';
 import { PelayananPasienRawatInapComponent } from './pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component';
 import { ListPasienRawatInapComponent } from './pages/IRNA/admisi-pasien-rawat-inap/list-pasien-rawat-inap/list-pasien-rawat-inap.component';
+import { SetupKategoriKamarComponent } from './pages/IRNA/setup-bed/setup-kategori-kamar/setup-kategori-kamar.component';
+import { SetupKamarComponent } from './pages/IRNA/setup-bed/setup-kamar/setup-kamar.component';
+import { SetupBedComponent } from './pages/IRNA/setup-bed/setup-bed/setup-bed.component';
+import { SetupStatusBedComponent } from './pages/IRNA/setup-bed/setup-status-bed/setup-status-bed.component';
+import { AntrianPemesananTempatTidurComponent } from './pages/IRNA/daftar-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur.component';
+import { AddAntrianTppriComponent } from './pages/IRNA/daftar-pemesanan-tempat-tidur/add-antrian-tppri/add-antrian-tppri.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -87,6 +93,12 @@ const ngWizardConfig: NgWizardConfig = {
         AdmisiPasienRawatInapComponent,
         PelayananPasienRawatInapComponent,
         ListPasienRawatInapComponent,
+        SetupKategoriKamarComponent,
+        SetupKamarComponent,
+        SetupBedComponent,
+        SetupStatusBedComponent,
+        AntrianPemesananTempatTidurComponent,
+        AddAntrianTppriComponent,
     ],
     imports: [
         CommonModule,

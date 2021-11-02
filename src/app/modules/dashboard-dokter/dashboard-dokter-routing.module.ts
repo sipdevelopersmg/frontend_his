@@ -17,6 +17,7 @@ import { DaftarResepIrnaComponent } from "./pages/resep-irna/daftar-resep-irna/d
 import { InputResepIrnaComponent } from "./pages/resep-irna/input-resep-irna/input-resep-irna.component";
 import { ViewResepIrnaComponent } from "./pages/resep-irna/view-resep-irna/view-resep-irna.component";
 import { ResepComponent } from "./pages/resep/resep.component";
+import { SuratPerintahMondokComponent } from "./pages/surat-perintah-mondok/surat-perintah-mondok.component";
 import { VitalSignComponent } from "./pages/vital-sign/vital-sign.component";
 
 const dashboarDokterRoutes: Routes = [
@@ -59,6 +60,9 @@ const dashboarDokterRoutes: Routes = [
             },
             {
                 path: "vital-sign", component: VitalSignComponent, data: { title: "Vital Sign Pasien" },
+            },
+            {
+                path: "surat-perintah-mondok", component: SuratPerintahMondokComponent, data: { title: "Surat Perintah Mondok" },
             },
         ]
     }

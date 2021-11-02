@@ -1,0 +1,87 @@
+<!-- Modal Add Antrian TPPRI -->
+<button id="btnOpenModalAntrianTppri" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalAntrianTppri" [hidden]="true">
+    Launch Modal Add Antrian TPPRI
+</button>
+
+<div class="modal fade" id="modalAntrianTppri" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby=" modalAntrianTppriLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalAntrianTppriLabel">Add Antrian Pemesanan Tempat Tidur</h5>
+                <button id="btnCloseModalAddAntrianTppri" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormAddAntrianTppri">
+                    <!-- Pilih Pasien -->
+                    <org-input-look-up #LookupPasien [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupPasien"
+                        [idTitle]="'full_name'" (onGetSelectedData)="handleSelectedLookupPasien($event)"
+                        [columns]="Config.LookupPasien.columns" [filter-lookup]="Config.LookupPasien.filter"
+                        [label]="'Pilih Pasien'">
+                    </org-input-look-up>
+
+                    <!-- Kelas Pelayanan -->
+                    <div class="row mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                                [fields]="DropdownKelasFields" [allowFiltering]="true"
+                                formControlName="id_kelas_request">
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+
+                    <!-- Pilih Surat Perintah  -->
+                    <org-input-look-up #LookupSuratPerintah [modal-title]="ModalTitleLookupSuratPerintah"
+                        [lookup-url]="UrlLookupSuratPerintah" [idTitle]="'keterangan_perintah_mondok'"
+                        (onGetSelectedData)="handleSelectedLookupSuratPerintah($event)"
+                        [columns]="Config.LookupSuratPerintah.columns"
+                        [filter-lookup]="Config.LookupSuratPerintah.filter"
+                        [static-filter]="StaticFilterLookupSuratPerintah" [label]="'Surat Perintah Rawat Inap'">
+                    </org-input-look-up>
+
+                    <!-- Tgl. Rencana Masuk -->
+                    <div class="row mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Tgl. Rencana Masuk'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <ejs-datepicker #DatepickerTglRencanaMasuk [format]="'dd/MM/yyyy'"
+                                formControlName="tanggal_rencana_masuk">
+                            </ejs-datepicker>
+                        </div>
+                    </div>
+
+                    <!-- Room Request -->
+                    <org-input-look-up #LookupRoomRequest [modal-title]="'Data Room'" [lookup-url]="UrlLookupRoom"
+                        [idTitle]="'room_descr'" (onGetSelectedData)="handleSelectedLookupRoom($event)"
+                        [columns]="Config.LookupRoom.columns" [filter-lookup]="Config.LookupRoom.filter"
+                        [label]="'Room Request'">
+                    </org-input-look-up>
+
+                    <!-- Bed Request -->
+                    <org-input-look-up *ngIf="id_setup_room_request.value > 0" #LookupBedRequest
+                        [modal-title]="ModalTitleLookupBed" [lookup-url]="UrlLookupBed" [idTitle]="'bed_no'"
+                        (onGetSelectedData)="handleSelectedLookupBed($event)" [columns]="Config.LookupBed.columns"
+                        [filter-lookup]="Config.LookupBed.filter" [static-filter]="StaticFilterLookupBed"
+                        [label]="'Bed Request'">
+                    </org-input-look-up>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitFormAddAntrianTppri(FormAddAntrianTppri.value)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

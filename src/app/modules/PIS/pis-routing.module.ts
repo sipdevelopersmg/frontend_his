@@ -10,6 +10,11 @@ import { EditPasienIRJAComponent } from "./pages/IRJA/pendaftaran-pasien-baru/ed
 import { PendaftaranPasienBaruComponent } from "./pages/IRJA/pendaftaran-pasien-baru/input-pasien/pendaftaran-pasien-baru.component";
 import { AdmisiPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.component";
 import { PelayananPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component";
+import { AntrianPemesananTempatTidurComponent } from "./pages/IRNA/daftar-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur.component";
+import { SetupBedComponent } from "./pages/IRNA/setup-bed/setup-bed/setup-bed.component";
+import { SetupKamarComponent } from "./pages/IRNA/setup-bed/setup-kamar/setup-kamar.component";
+import { SetupKategoriKamarComponent } from "./pages/IRNA/setup-bed/setup-kategori-kamar/setup-kategori-kamar.component";
+import { SetupStatusBedComponent } from "./pages/IRNA/setup-bed/setup-status-bed/setup-status-bed.component";
 import { SetupAsalRujukanComponent } from "./pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component";
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { SetupCutiDokterComponent } from "./pages/setup-data/setup-cuti-dokter/setup-cuti-dokter.component";
@@ -89,9 +94,14 @@ const pisRoutes: Routes = [
     {
         path: "IRNA", component: null, data: { title: "IRNA" },
         children: [
+            { path: "setup-kategori-kamar", component: SetupKategoriKamarComponent, data: { title: "Setup Kategori Kamar Rawat Inap" } },
+            { path: "setup-kamar", component: SetupKamarComponent, data: { title: "Setup Kamar Rawat Inap" } },
+            { path: "setup-bed", component: SetupBedComponent, data: { title: "Setup Bed Rawat Inap" } },
+            { path: "setup-status-bed", component: SetupStatusBedComponent, data: { title: "Setup Status Bed" } },
             { path: "pelayanan-pasien-rawat-inap", component: AdmisiPasienRawatInapComponent, data: { title: "Pelayanan Pasien Rawat Inap" } },
             { path: "admisi-pasien-rawat-inap", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
             { path: "admisi-pasien-rawat-inap/:id/:key", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
+            { path: "antrian-pemesanan-tempat-tidur", component: AntrianPemesananTempatTidurComponent, data: { title: "Antrian Pemesanan Tempat Tidur" } },
         ]
     }
 ]

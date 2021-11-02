@@ -27,7 +27,7 @@ export class ListPasienRawatInapComponent implements OnInit {
 
     GridData: MolGridComponent = null;
     GridPageSettings = { pageSizes: false, pageSize: 12 };
-    GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
+    GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridDatasource: IPasienTeradmisiHariIniModel[] = [];
     GridWrapSettings: object = { wrapMode: 'Content' };
     GridToolbar: any[] = [

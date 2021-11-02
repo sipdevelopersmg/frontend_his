@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DatePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 
@@ -79,6 +79,8 @@ export class MolOffcanvasFilterComponent implements OnInit {
     */
     @Output('handle-pencarian') HandlingPencarian = new EventEmitter<any>();
 
+    @Output('handle-change-filter') HandleChangeFilter = new EventEmitter<any>();
+
     constructor() { }
 
     ngOnInit(): void {
@@ -105,6 +107,8 @@ export class MolOffcanvasFilterComponent implements OnInit {
                 this.FilterConditionDatasource = [
                     { text: 'Contains', value: 'like' }
                 ];
+
+                this.HandleChangeFilter.emit(columnText);
             };
 
             if (!is_date_filter && !is_dropdown_filter) {
@@ -151,8 +155,6 @@ export class MolOffcanvasFilterComponent implements OnInit {
             'searchText': searchText,
             'searchText2': this.FilterState == 'Date' ? searchText : "",
         };
-
-        console.log(itemsEmit);
 
         this.AdvancedFilterArrayEmitting.push(itemsEmit);
 
