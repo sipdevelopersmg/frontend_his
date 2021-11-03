@@ -78,6 +78,7 @@ export class DaftarResepIrnaComponent implements OnInit {
     }
 
     this.resepDokterIrnaService.onInitList();
+    this.handlePencarianFilter([]);
   }
 
   rowDataBound(args: any) {

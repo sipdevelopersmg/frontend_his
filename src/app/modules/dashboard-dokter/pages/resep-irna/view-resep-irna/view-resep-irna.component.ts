@@ -30,7 +30,8 @@ export class ViewResepIrnaComponent implements OnInit {
     { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
     { Id: 'lanjutkan', Captions: 'Lanjutkan Resep', Icons1: 'fa-forward fa-sm' },
     { Id: 'ubah', Captions: 'Ubah Resep', Icons1: 'fa-edit fa-sm' },
-    { Id: 'stop', Captions: 'Hentikan Resep', Icons1: 'fa-stop-circle fa-sm' }
+    { Id: 'stop', Captions: 'Hentikan Resep', Icons1: 'fa-stop-circle fa-sm' },
+    { Id: 'pulang', Captions: 'Resep Pulang', Icons1: 'fa-home fa-sm' },
   ];
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
@@ -178,8 +179,12 @@ export class ViewResepIrnaComponent implements OnInit {
                 );
                 break;
             case "ubah":
-                const id = this.encryptionService.encrypt(JSON.stringify(this.dataHeader.resep_id));
+                const id = this.encryptionService.encrypt(this.dataHeader.resep_id+',ubah');
                 this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id, "GRAHCIS"]);
+                break;
+            case "pulang":
+                const id_resep = this.encryptionService.encrypt(this.dataHeader.resep_id+',pulang');
+                this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id_resep, "GRAHCIS"]);
                 break;
             case "stop":
                 this.resepDokterIrnaService.stopResepRawatInap(this.dataHeader.resep_id).subscribe((result)=>{

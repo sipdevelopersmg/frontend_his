@@ -59,7 +59,7 @@ export class InputResepIrnaComponent implements OnInit {
     public itemsObj: DropDownList;
     isGetFromTemplate:boolean;
 
-    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2;
+    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2+'/I';
     public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRNA.GET_TEMPLATE_RESEP+'/'+2;
     public GridLookUpItem = GridLookUpItem;
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
@@ -189,6 +189,8 @@ export class InputResepIrnaComponent implements OnInit {
 
     private dataUbah:any = null;
     private updateResepDokter:boolean = false;
+    private pulang:boolean = false;
+    private idArry:any[] = [];
   constructor(
     private formBuilder: FormBuilder,
     public resepDokterService: ResepDokterIrnaService,
@@ -401,14 +403,26 @@ export class InputResepIrnaComponent implements OnInit {
   }
 
     ngAfterViewInit(): void {
-        let id:any = null;
         if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined'){
-            id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-            this.ButtonNav = [
-                { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
-                { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
-              ];
-            this.updateResep(id);
+            let idString:string; 
+            idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            this.idArry = idString.split(',');
+            console.log(idString);
+            console.log(this.idArry);
+            if(this.idArry[1]=='pulang'){
+                this.pulang = true;
+                this.ButtonNav = [
+                    { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                    { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
+                ];
+            }else{
+                this.ButtonNav = [
+                    { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                    { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
+                ];
+            }
+            
+            this.updateResep(parseInt(this.idArry[0]));
         }
     }
 
@@ -859,13 +873,23 @@ export class InputResepIrnaComponent implements OnInit {
     }
 
     ubahResep(){
-        this.resepDokterService.ubahResepRawatInap(this.dataUbah).subscribe((result)=>{
-            this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Ubah', result.message)
-            .then(() => {
-                const id = this.encryptionService.encrypt(JSON.stringify(result.data));
-                this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+        if(this.pulang){
+            this.resepDokterService.pulangResepRawatInap(this.dataUbah).subscribe((result)=>{
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Simpan Resep Pulang', result.message)
+                .then(() => {
+                    const id = this.encryptionService.encrypt(JSON.stringify(result.data));
+                    this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+                });
             });
-        });
+        }else{
+            this.resepDokterService.ubahResepRawatInap(this.dataUbah).subscribe((result)=>{
+                this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Ubah', result.message)
+                .then(() => {
+                    const id = this.encryptionService.encrypt(JSON.stringify(result.data));
+                    this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+                });
+            });
+        }
     }
 
     onClickButtonNav(args: any): void {
