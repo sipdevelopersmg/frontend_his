@@ -49,6 +49,7 @@ import { SetupBedComponent } from './pages/IRNA/setup-bed/setup-bed/setup-bed.co
 import { SetupStatusBedComponent } from './pages/IRNA/setup-bed/setup-status-bed/setup-status-bed.component';
 import { AntrianPemesananTempatTidurComponent } from './pages/IRNA/daftar-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur.component';
 import { AddAntrianTppriComponent } from './pages/IRNA/daftar-pemesanan-tempat-tidur/add-antrian-tppri/add-antrian-tppri.component';
+import { CariPasienAntrianTppriComponent } from './pages/IRNA/admisi-pasien-rawat-inap/cari-pasien-antrian-tppri/cari-pasien-antrian-tppri.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -99,6 +100,7 @@ const ngWizardConfig: NgWizardConfig = {
         SetupStatusBedComponent,
         AntrianPemesananTempatTidurComponent,
         AddAntrianTppriComponent,
+        CariPasienAntrianTppriComponent,
     ],
     imports: [
         CommonModule,

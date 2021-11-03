@@ -329,6 +329,6 @@ span.readonly-state > .e-numerictextbox {
 }
 
 .swal-wide {
-  width: 35rem !important;
-  max-width: 35rem !important;
+  width: 45rem !important;
+  max-width: 45rem !important;
 }

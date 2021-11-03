@@ -11,10 +11,11 @@
 
         <!-- Grid Daftar Antrian -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
-                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
-                [allowFiltering]='true' [pageSettings]="GridPageSettings" [toolbar]="GridToolbar"
-                [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)">
+            <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridDatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowTextWrap]="true"
+                [textWrapSettings]="GridTextWrapSettings" [allowFiltering]='true' [pageSettings]="GridPageSettings"
+                [toolbar]="GridToolbar" [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
+                (toolbarClick)="handleToolbarClick($event)">
                 <e-columns>
                     <e-column [width]="50" [field]="'id_antrian_tppri'" [headerText]="'ID'" [visible]="false"
                         [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
@@ -23,32 +24,47 @@
                     <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
                         [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="80" [field]="'no_antrian_per_kelas'" [headerText]="'NO. URUT'" [visible]="true"
+                    <e-column [width]="90" [field]="'no_antrian_per_kelas'" [headerText]="'NO. URUT'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="120" [field]="'kode_antrian_tppri'" [headerText]="'KODE ANTRIAN'"
+                    <e-column [width]="100" [field]="'kode_antrian_tppri'" [headerText]="'KODE ANTRIAN'"
                         [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="120" [field]="'tanggal_antrian_tppri'" [headerText]="'TGL. ANTRIAN'"
+                    <e-column [width]="100" [field]="'tanggal_antrian_tppri'" [headerText]="'TGL. ANTRIAN'"
                         [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
                         [type]="'Date'" [format]="'dd/MM/yyyy'">
                     </e-column>
-                    <e-column [width]="120" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                    <e-column [width]="120" [field]="'tanggal_rencana_masuk'" [headerText]="'TGL. RENCANA MASUK'"
+                        [visible]="true" [headerTextAlign]="'Center'" [allowEditing]="false" [allowSorting]="false"
+                        [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                    </e-column>
+                    <e-column [width]="120" [field]="'tanggal_surat_perintah_mondok'"
+                        [headerText]="'TGL. SP RAWAT INAP'" [headerTextAlign]="'Center'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                        [format]="'dd/MM/yyyy'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
                     <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="80" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                    <e-column [width]="100" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="120" [field]="'umur'" [headerText]="'UMUR'" [visible]="true"
+                    <e-column [width]="150" [field]="'usia'" [headerText]="'UMUR'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="100" [field]="'nama_poli'" [headerText]="'POLI'" [visible]="true"
+                    <e-column [width]="100" [field]="'room_descr'" [headerText]="'ROOM REQUEST'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                     </e-column>
-                    <e-column [width]="200" [field]="'nama_debitur'" [headerText]="'DEBITUR'" [visible]="true"
+                    <e-column [width]="100" [field]="'bed_no'" [headerText]="'BED REQUEST'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                    </e-column>
+                    <e-column [width]="120" [field]="'status_bed_descr'" [headerText]="'STATUS BED'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                    </e-column>
+                    <e-column [width]="120" [field]="'status_approve'" [headerText]="'STATUS APPROVE'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
                     </e-column>
                 </e-columns>

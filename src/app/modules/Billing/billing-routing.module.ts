@@ -15,6 +15,7 @@ import { SetupKelompokTarifComponent } from "./pages/setup-data/setup-kelompok-t
 import { SetupPaymentMethodComponent } from "./pages/setup-data/setup-payment-method/setup-payment-method.component";
 import { SetupPoliComponent } from "./pages/setup-data/setup-poli/setup-poli.component";
 import { SetupTarifPaketComponent } from "./pages/setup-data/setup-tarif-paket/setup-tarif-paket.component";
+import { SetupTarifPemeriksaanComponent } from "./pages/setup-data/setup-tarif-pemeriksaan/setup-tarif-pemeriksaan.component";
 import { SetupTarifComponent } from "./pages/setup-data/setup-tarif/setup-tarif.component";
 import { SetupVoucherPaymentComponent } from "./pages/setup-data/setup-voucher-payment/setup-voucher-payment.component";
 import { InputBillingComponent } from "./pages/transaksi-billing/input-billing/input-billing.component";
@@ -37,6 +38,7 @@ const billingRoutes: Routes = [
             { path: "setup-buka-kasir", component: SetupBukaKasirIrjaComponent, data: { title: 'Setup Buka Kasir' } },
             { path: "setup-setoran-kasir", component: SetupSetoranKasirIrjaComponent, data: { title: 'Setup Setoran Kasir' } },
             { path: "setup-tutup-kasir", component: SetupTutupKasirComponent, data: { title: 'Setup Tutup Kasir' } },
+            { path: "setup-tarif-pemeriksaan", component: SetupTarifPemeriksaanComponent, data: { title: 'Setup Tarif Pemeriksaan' } },
         ]
     },
     { path: "cross-check-tutup-kasir", component: SetupCroscekTutupKasirComponent, data: { title: 'Cross Check Tutup Kasir' } },

@@ -165,6 +165,21 @@
                                 [headerText]="'Is Active'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
                                 [visible]="false" [width]="80">
                             </e-column>
+                            <e-column [editType]="'booleanedit'" [allowEditing]="true" [allowSorting]="false"
+                                [field]="'is_karcis_irja'" [headerText]="'Is Karcis IRJA'" [textAlign]="'Center'"
+                                [type]="'boolean'" [headerTextAlign]="'Center'" [visible]="true" [width]="100"
+                                [displayAsCheckBox]="true">
+                            </e-column>
+                            <e-column [editType]="'booleanedit'" [allowEditing]="true" [allowSorting]="false"
+                                [field]="'is_karcis_irna'" [headerText]="'Is Karcis IRNA'" [textAlign]="'Center'"
+                                [type]="'boolean'" [headerTextAlign]="'Center'" [visible]="true" [width]="100"
+                                [displayAsCheckBox]="true">
+                            </e-column>
+                            <e-column [editType]="'booleanedit'" [allowEditing]="true" [allowSorting]="false"
+                                [field]="'is_karcis_irda'" [headerText]="'Is Karcis IRDA'" [textAlign]="'Center'"
+                                [type]="'boolean'" [headerTextAlign]="'Center'" [visible]="true" [width]="100"
+                                [displayAsCheckBox]="true">
+                            </e-column>
                             <e-column [allowEditing]="false" [allowSorting]="false" [field]="'user_created'"
                                 [headerText]="'User Created'" [textAlign]="'Left'" [headerTextAlign]="'Left'"
                                 [visible]="false" [width]="80">
@@ -325,9 +340,10 @@
 
                     <div class="row mx-0 my-1">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <mol-grid #GridLookupTarif [grid-height]="280" [grid-DataSource]="GridLookupTarifDatasource"
-                                [grid-paging]="true" [gridInitialPage]="GridLookupTarifPageSettings"
-                                [grid-lines]="'Both'" [columns]="GridConfig.LookupTarif.columns"
+                            <mol-grid #GridLookupTarif [grid-height]="'calc(100vh - 29.8rem)'"
+                                [grid-DataSource]="GridLookupTarifDatasource" [grid-paging]="true"
+                                [gridInitialPage]="GridLookupTarifPageSettings" [grid-lines]="'Both'"
+                                [columns]="GridConfig.LookupTarif.columns"
                                 (row-selected)="handleSelectedRowLookupTarif($event)"
                                 (initialized)="InitalizedGridLookupTarif($event)"
                                 (action-complete)="handleActionCompleteLookupTarif($event)">

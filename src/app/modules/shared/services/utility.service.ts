@@ -12,13 +12,16 @@ export class UtilityService {
     constructor(private navigationService: NavigationService) { }
 
     // ** Showing Alert with Timer
-    onShowingCustomAlert(icon: any, title: string, message: string): Promise<any> {
+    onShowingCustomAlert(icon: any, title: string, message: string, customClass?: string): Promise<any> {
         return Swal.fire({
             icon,
             title,
             text: message,
             showCloseButton: false,
             showConfirmButton: true,
+            customClass: {
+                popup: customClass
+            }
         });
     }
 

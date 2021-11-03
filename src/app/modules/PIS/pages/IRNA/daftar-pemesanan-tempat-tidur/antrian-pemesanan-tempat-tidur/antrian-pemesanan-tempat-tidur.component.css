@@ -2,11 +2,15 @@
   min-height: 14px !important;
 }
 
+th.e-headercell > .e-headercelldiv {
+  padding: 0.25rem !important;
+}
+
 th.e-headercell {
   background-color: rgba(0, 0, 0, 0.03);
   color: black;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  padding: 10px 5px !important;
+  padding: 5px 5px !important;
   height: 30px !important;
 }
 

@@ -23,7 +23,8 @@
                 </org-input-look-up>
 
                 <!-- Nama Pasien -->
-                <mol-input-text [id]="'nama_pasien'" formControlName="full_name" [label]="'Nama Pasien'">
+                <mol-input-text [id]="'nama_pasien'" formControlName="full_name" [label]="'Nama Pasien'"
+                    [disabled]="true">
                 </mol-input-text>
 
                 <!-- Tanggal Masuk -->
@@ -50,11 +51,18 @@
                     </div>
                 </div>
 
+                <!-- No. Room -->
+                <org-input-look-up-kode #LookupRoom [modal-title]="'Data Room'" [lookup-url]="urlLookupRoom"
+                    [idKode]="'kode_poli'" [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedRoom($event)"
+                    [columns]="settingGrid.LookupPoli.columns" [filter-lookup]="settingGrid.LookupPoli.filter"
+                    [label]="'No. Room'">
+                </org-input-look-up-kode>
+
                 <!-- No. Bed -->
-                <org-input-look-up-kode *ngIf="DropdownRuangan.value" #LookupKodePoli [modal-title]="'Data Poli'"
-                    [lookup-url]="urlPoli" [idKode]="'kode_poli'" [idTitle]="'nama_poli'"
-                    (onGetSelectedData)="heandleSelectedPoli($event)" [columns]="settingGrid.LookupPoli.columns"
-                    [filter-lookup]="settingGrid.LookupPoli.filter" [label]="'No. Bed'">
+                <org-input-look-up-kode #LookupBed [modal-title]="'Data Bed'" [lookup-url]="urlLookupBed"
+                    [idKode]="'kode_poli'" [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedBed($event)"
+                    [columns]="settingGrid.LookupPoli.columns" [filter-lookup]="settingGrid.LookupPoli.filter"
+                    [label]="'No. Bed'">
                 </org-input-look-up-kode>
 
                 <!-- Nama Dokter -->

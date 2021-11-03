@@ -1,0 +1,100 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Tiket Pemeriksaan</org-tabs-label>
+            <org-tabs-body>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <mol-grid #GridData [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridDatasource"
+                            [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                            [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridSetupTiketPemeriksaanColumns"
+                            (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
+                            (initialized)="InitalizedGrid($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input EDC Payment</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+
+                            <!-- Unit -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Unit'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownRuangan [dataSource]="DropdownRuanganDatasource"
+                                        [fields]="DropdownRuanganField" [allowFiltering]="true"
+                                        formControlName="id_jenis_ruangan">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Kode Tiket Pemeriksaan -->
+                            <mol-input-text [label]="'Kode Tiket Pemeriksaan'" formControlName="kode_tiket_pemeriksaan"
+                                [IsFormControlInvalid]="kode_tiket_pemeriksaan.invalid"
+                                [ValidatorsCaption]="'Kode Tiket Pemeriksaan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Nama Tiket Pemeriksaan -->
+                            <mol-input-text [label]="'Nama Tiket Pemeriksaan'" formControlName="nama_tiket_pemeriksaan"
+                                [IsFormControlInvalid]="nama_tiket_pemeriksaan.invalid"
+                                [ValidatorsCaption]="'Nama Tiket Pemeriksaan Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+
+                            <!-- Kelas -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kelas'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                                        [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas"
+                                        (change)="handleChangeDropdownKelas($event)">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Lookup Tarif Berlaku -->
+                            <org-input-look-up #LookupTarifBerlaku [modal-title]="ModalTitleLookupTarifBerlaku"
+                                [lookup-url]="UrlLookupTarifBerlaku" [idTitle]="'nama_setup_tarif'"
+                                (onGetSelectedData)="handleSelectedTarifBerlaku($event)"
+                                [columns]="GridConfig.LookupTarif.columns"
+                                [filter-lookup]="GridConfig.LookupTarif.filter" [label]="'Pilih Tarif Berlaku'">
+                            </org-input-look-up>
+
+                            <!-- Is Subsidi -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Apakah Subsidi ?'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_subsidi"
+                                            formControlName="is_subsidi" id="is_subsidi_iya" [value]="true">
+                                        <label class="form-check-label" for="is_subsidi_iya">Iya</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_subsidi"
+                                            formControlName="is_subsidi" id="is_subsidi_tidak" [value]="false">
+                                        <label class="form-check-label" for="is_subsidi_tidak">Tidak</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

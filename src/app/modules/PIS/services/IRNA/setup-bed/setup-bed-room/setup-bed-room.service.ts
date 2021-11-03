@@ -55,10 +55,22 @@ export class SetupBedRoomService {
             );
     }
 
-    onPutUpdateStatusBedRoom(id_setup_bed_room: number, is_active: boolean): Observable<PutUpdateStatusBedModel> {
-        return this.httpOperationService.defaultPutRequest(this.API_SETUP_BED.PUT_UPDATE_STATUS_BED_ROOM, {
+    onPutUpdateStatusActiveBedRoom(id_setup_bed_room: number, is_active: boolean): Observable<PutUpdateStatusBedModel> {
+        return this.httpOperationService.defaultPutRequest(this.API_SETUP_BED.PUT_UPDATE_STATUS_ACTIVE_BED_ROOM, {
             id_setup_bed_room: id_setup_bed_room,
             is_active: !is_active
+        }).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+            })
+        );
+    }
+
+    onPutUpdateStatusBedRoom(id_setup_bed_room: number, id_setup_room: number, id_setup_status_bed: number): Observable<PutUpdateStatusBedModel> {
+        return this.httpOperationService.defaultPutRequest(this.API_SETUP_BED.PUT_UPDATE_STATUS_BED, {
+            id_setup_bed_room: id_setup_bed_room,
+            id_setup_room: id_setup_room,
+            id_setup_status_bed: id_setup_status_bed
         }).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

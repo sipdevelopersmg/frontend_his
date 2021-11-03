@@ -334,7 +334,7 @@ export class SetupBedComponent implements OnInit {
     }
 
     UpdateStatus(id_setup_bed_room: number, is_active: boolean): void {
-        this.setupBedRoomService.onPutUpdateStatusBedRoom(id_setup_bed_room, is_active)
+        this.setupBedRoomService.onPutUpdateStatusActiveBedRoom(id_setup_bed_room, is_active)
             .subscribe((result) => {
                 if (result) {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Update Status Data', result.message)

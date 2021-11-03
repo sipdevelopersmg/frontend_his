@@ -36,6 +36,7 @@ import { SetupCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/setup
 import { ModalDetailCrossCheckComponent } from './components/modal-detail-cross-check/modal-detail-cross-check.component';
 import { ModalDetailPendapatanSistemComponent } from './components/modal-detail-pendapatan-sistem/modal-detail-pendapatan-sistem.component';
 import { HistoryCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/history-croscek-tutup-kasir/history-croscek-tutup-kasir.component';
+import { SetupTarifPemeriksaanComponent } from './pages/setup-data/setup-tarif-pemeriksaan/setup-tarif-pemeriksaan.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { HistoryCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/his
         SetupCroscekTutupKasirComponent,
         ModalDetailCrossCheckComponent,
         ModalDetailPendapatanSistemComponent,
-        HistoryCroscekTutupKasirComponent
+        HistoryCroscekTutupKasirComponent,
+        SetupTarifPemeriksaanComponent
     ],
     imports: [
         CommonModule,

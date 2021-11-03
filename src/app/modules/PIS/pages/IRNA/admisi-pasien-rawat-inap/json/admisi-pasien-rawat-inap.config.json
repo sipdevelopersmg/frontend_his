@@ -499,5 +499,102 @@
                 "title": "KETERANGAN"
             }
         ]
+    },
+    "LookupPasienForScan": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_antrian_per_kelas",
+                "headerText": "NO. ANTRIAN",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "tanggal_rencana_masuk",
+                "headerText": "TGL. RENCANA MASUK",
+                "type": "Date",
+                "format": "dd/MM/yyyy",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. RM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "ROOM REQUEST",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "bed_no",
+                "headerText": "BED REQUEST",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            }
+        ],
+        "filter": [
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "MR NO"
+            },
+            {
+                "field": "concat(pasien.nama_depan,'' '',pasien.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
+            },
+            {
+                "field": "sr.room_no",
+                "filter": "like",
+                "title": "NO. ROOM REQUEST"
+            },
+            {
+                "field": "sbr.bed_no",
+                "filter": "like",
+                "title": "NO. BED REQUEST"
+            }
+        ]
     }
 }

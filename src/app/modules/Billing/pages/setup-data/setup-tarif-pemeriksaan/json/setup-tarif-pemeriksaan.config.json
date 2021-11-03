@@ -1,0 +1,153 @@
+{
+    "GridSetupTiketPemeriksaanColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_tiket_pemeriksaan",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "kode_tiket_pemeriksaan",
+            "headerText": "KODE TIKET",
+            "type": "string",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_tiket_pemeriksaan",
+            "headerText": "NAMA TIKET",
+            "type": "string",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "jenis_ruangan",
+            "headerText": "JENIS RUANGAN",
+            "type": "string",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_kelas",
+            "headerText": "KELAS",
+            "type": "string",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "kode_setup_tarif",
+            "headerText": "KODE TARIF",
+            "type": "string",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "nama_setup_tarif",
+            "headerText": "NAMA TARIF",
+            "type": "string",
+            "visible": true,
+            "width": 250
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "editType": "defaultEdit",
+            "field": "is_subsidi",
+            "headerText": "IS SUBSIDI",
+            "displayAsCheckbox": true,
+            "textAlign": "Center",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 100
+        }
+    ],
+    "LookupTarif": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "id_setup_tarif",
+                "headerText": "ID",
+                "type": "string",
+                "visible": false
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "kode_setup_tarif",
+                "headerText": "KODE TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_setup_tarif",
+                "headerText": "NAMA TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 250
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nominal_tarif",
+                "headerText": "NOMINAL",
+                "type": "number",
+                "format": "N2",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "st.kode_setup_tarif",
+                "filter": "like",
+                "title": "KODE TARIF"
+            },
+            {
+                "field": "st.nama_setup_tarif",
+                "filter": "like",
+                "title": "NAMA TARIF"
+            }
+        ]
+    }
+}

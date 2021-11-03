@@ -21,6 +21,8 @@ import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALA
 import * as API_PIS_SETUP_DATA from '../../../../../../api/PIS/SETUP_DATA';
 import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';
 import settingGrid from '../json/admisi-pasien-rawat-inap.config.json';
+import { IKamarModel } from 'src/app/modules/PIS/models/IRNA/setup-kamar.model';
+import { IBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
 
 @Component({
     selector: 'app-pelayanan-pasien-rawat-inap',
@@ -52,8 +54,14 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     @ViewChild('LookupKodeDokter') LookupKodeDokter: OrgInputLookUpKodeComponent;
     urlDokter = "";
 
+    @ViewChild('LookupRoom') LookupRoom: OrgInputLookUpKodeComponent;
+    urlLookupRoom = this.API_PIS_SETUP_DATA.SETUP_ASAL_RUJUKAN.GET_ALL_ASAL_RUJUKAN_FOR_LOOKUP_ADMISI;
+
     @ViewChild('LookupAsalRujukan') LookupAsalRujukan: OrgInputLookUpKodeComponent;
     urlAsalRujukan = this.API_PIS_SETUP_DATA.SETUP_ASAL_RUJUKAN.GET_ALL_ASAL_RUJUKAN_FOR_LOOKUP_ADMISI;
+
+    @ViewChild('LookupBed') LookupBed: OrgInputLookUpKodeComponent;
+    urlLookupBed = this.API_PIS_SETUP_DATA.SETUP_ASAL_RUJUKAN.GET_ALL_ASAL_RUJUKAN_FOR_LOOKUP_ADMISI;
 
     @ViewChild('LookupKotaAsalRujukan') LookupKotaAsalRujukan: OrgInputLookUpKodeComponent;
     urlKotaAsalRujukan = this.API_PIS_SETUP_DATA.SETUP_KOTA.GET_ALL_KOTA_FOR_LOOKUP_ADMISI;
@@ -114,6 +122,8 @@ export class PelayananPasienRawatInapComponent implements OnInit {
 
             if (Person) {
                 setTimeout(() => {
+                    console.log(Person);
+
                     this.heandleSelectedMR(Person);
                 }, 500);
             }
@@ -123,7 +133,7 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     onClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
             case 'Back':
-                this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
+                this.router.navigateByUrl('dashboard/PIS/IRNA/pelayanan-pasien-rawat-inap');
                 break;
             case 'Reset':
                 this.resetForm();
@@ -188,7 +198,7 @@ export class PelayananPasienRawatInapComponent implements OnInit {
 
         this.id_person.setValue(args.id_person);
         this.no_rekam_medis.setValue(args.no_rekam_medis);
-        this.full_name.setValue(args.full_name);
+        this.full_name.setValue(args.full_name || args.nama_pasien);
 
         this.pendaftaranPasienBaruService.onGetLinkFotoPerson(args.id_person, false)
             .subscribe((result) => {
@@ -200,12 +210,16 @@ export class PelayananPasienRawatInapComponent implements OnInit {
         (<HTMLInputElement>document.getElementById('nama_pasien')).focus();
     }
 
-    heandleSelectedPoli(args: PoliModel): void {
+    heandleSelectedRoom(args: IKamarModel): void {
         this.id_poli.setValue(args.id_poli || args[0].id_poli);
 
         this.urlDokter = "";
 
         this.urlDokter = this.API_PIS_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP_ADMISI + this.id_poli.value;
+    }
+
+    heandleSelectedBed(args: IBedModel): void {
+
     }
 
     heandleSelectedDokter(args: any): void {

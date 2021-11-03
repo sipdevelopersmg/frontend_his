@@ -7,6 +7,7 @@ import { MolGridComponent } from 'src/app/modules/shared/components/molecules/gr
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import Swal from 'sweetalert2';
 import { IPasienTeradmisiHariIniModel, IPersonPasienForAdmisiRawatJalanModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
 import { AdmisiPasienRawatJalanService } from '../../../services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
 import * as Config from './json/admisi-pasien-rawat-inap.config.json';
@@ -82,12 +83,11 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
                 this.hanldeOpenModalPencarianPasien();
                 break;
             case 'pelayanan_pasien_irna':
-                this.router.navigateByUrl('dashboard/PIS/IRNA/admisi-pasien-rawat-inap');
+                this.handleOpenModalPencarianPasienTerdaftarPadaTPPRI();
                 break;
             default:
                 break;
         }
-
     }
 
     hanldeOpenModalPencarianPasien(): void {
@@ -97,6 +97,29 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
             this.modalPencarianPasien,
             Object.assign({}, { class: 'modal-lg' })
         );
+    }
+
+    handleOpenModalPencarianPasienTerdaftarPadaTPPRI(): void {
+        Swal.fire({
+            icon: 'question',
+            title: 'Apakah Pasien Pernah Terdaftar di Antrian TPPRI?',
+            text: 'Jikah Sudah, Anda Dapat Melakukan Pencarian Pasien',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Sudah`,
+            denyButtonText: `Belum`,
+            focusDeny: true,
+            customClass: { popup: 'swal-wide' }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.router.navigateByUrl('dashboard/PIS/IRNA/pencarian-pasien-rawat-inap');
+            } else if (result.isDenied) {
+                this.utilityService.onShowingCustomAlert('info', 'Menuju Ke Admisi Pasien Rawat Inap', 'Anda Dapat Melakukan Admisi Rawat Inap', 'swal-wide')
+                    .then(() => {
+                        this.router.navigateByUrl('dashboard/PIS/IRNA/admisi-pasien-rawat-inap');
+                    });
+            }
+        });
     }
 
     InitalizedGridLookupPencarianPasien(component: MolGridComponent): void {

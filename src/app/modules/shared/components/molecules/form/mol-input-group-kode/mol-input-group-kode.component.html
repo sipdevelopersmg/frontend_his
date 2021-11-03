@@ -8,7 +8,7 @@
                 <atm-input [id]="'atm' + id_input" [value]="kodeValue" (keypress)="onKeypressEvent($event)"></atm-input>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <atm-input-group-atom [disableTitle]="disableTitle" [value]="titleValue"
+                <atm-input-group-atom [inputId]="'title' + id_input" [disableTitle]="disableTitle" [value]="titleValue"
                     (clickButton)="handleClickButton($event)">
                 </atm-input-group-atom>
             </div>

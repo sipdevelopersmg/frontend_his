@@ -78,6 +78,9 @@ export class SettingTarifBerlakuComponent implements OnInit {
     modalRef: BsModalRef;
     @ViewChild('modalAddLookupTarif') modalAddLookupTarif: TemplateRef<any>;
 
+    modalRefKonfirmasi: BsModalRef;
+    @ViewChild('modalConfirmationLookupTarif') modalConfirmationLookupTarif: TemplateRef<any>;
+
     GridLookupTarifDatasource: any[];
     GridLookupTarif: MolGridComponent = null;
     GridLookupTarifPageSettings: object = { pageSize: 20, pageSizes: true, pageCount: 4 };
@@ -393,7 +396,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
 
         this.modalRef = this.bsModalService.show(
             this.modalAddLookupTarif,
-            Object.assign({}, { class: 'modal-lg' })
+            Object.assign({}, { class: 'modal-xl' })
         );
 
         this.SelectedFilterLookupTarif = "";

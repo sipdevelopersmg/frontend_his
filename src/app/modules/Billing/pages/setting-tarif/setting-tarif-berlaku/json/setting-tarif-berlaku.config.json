@@ -239,22 +239,24 @@
                 "visible": false
             },
             {
-                "allowEditing": true,
-                "allowSorting": true,
+                "allowEditing": false,
+                "allowSorting": false,
                 "editType": "defaultEdit",
                 "field": "kode_setup_tarif",
                 "headerText": "Kode Setup Tarif",
                 "type": "string",
-                "visible": true
+                "visible": true,
+                "width": 100
             },
             {
-                "allowEditing": true,
-                "allowSorting": true,
+                "allowEditing": false,
+                "allowSorting": false,
                 "editType": "defaultEdit",
                 "field": "nama_setup_tarif",
                 "headerText": "Nama Setup Tarif",
                 "type": "string",
-                "visible": true
+                "visible": true,
+                "width": 250
             }
         ],
         "filter": []
