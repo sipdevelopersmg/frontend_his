@@ -169,7 +169,7 @@ export class ResepDokterIrnaService {
             e.racikans = [];
             return e;
         });
-
+        console.log(this.dataSourceChildGrid);
         this.dataSourceChildGrid.value.forEach((item)=>{
             let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
             
@@ -237,6 +237,40 @@ export class ResepDokterIrnaService {
             resep_baru : Data
         };
         return this.httpOperationService.defaultPutRequest(this.API.UPDATE_TO_UBAH+'/'+0,Body)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+        );
+    }
+
+    pulangResepRawatInap(Data):Observable<any> {
+        let id_item = 0 ;
+        let urut = 0 ;
+        this.dataDetail.map((e,i)=>{
+            e.no_urut = i+1;
+            e.racikans = [];
+            return e;
+        });
+
+        this.dataSourceChildGrid.value.forEach((item)=>{
+            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
+            
+            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
+            id_item =this.dataDetail[index].id_item;
+            urut++
+            item.no_urut = urut
+
+            this.dataDetail[index].racikans.push(item);
+        })
+
+        Data.details = this.dataDetail;
+        Data.jumlah_item = this.jumlah_item;
+        let Body = {
+            resep_id_lama : Data.resep_id,
+            resep_baru : Data
+        };
+        return this.httpOperationService.defaultPutRequest(this.API.BAWA_PULANG+'/'+0,Body)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
