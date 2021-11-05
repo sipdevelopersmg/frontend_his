@@ -8,6 +8,8 @@ import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
 import { TransaksiObatIrnaService } from '../../../services/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.service';
 import { API_BILLING } from 'src/app/api/BILLING';
+import { AdmisiPasienRawatInapService } from 'src/app/modules/PIS/services/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.service';
+import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 @Component({
   selector: 'app-transaksi-obat-irna',
   templateUrl: './transaksi-obat-irna.component.html',
@@ -43,10 +45,14 @@ export class TransaksiObatIrnaComponent implements OnInit {
   public hargajual= (field: string, data1: object) => {
     return  data1['harga_jual_apotek'] * data1['qty_harian'] 
   }
+
+  @ViewChild('GridPasien') GridPasien:MolGridComponent
+
   constructor(
     private formBuilder: FormBuilder,
     private resepDokterIrnaService: ResepDokterIrnaService,
     public transaksiObatIrnaService: TransaksiObatIrnaService,
+    public admisiPasienRawatInapService: AdmisiPasienRawatInapService
     // public setupPoliService: SetupPoliService
   ) { }
 
@@ -75,7 +81,10 @@ export class TransaksiObatIrnaComponent implements OnInit {
   }
   
   heandleSelectedRuangan(args: any): void {
-    // this.id_ruangan.setValue(args.id_ruangan);
+    this.admisiPasienRawatInapService.onGetPasienByPoli(args.item.id_poli).subscribe((result)=>{
+      this.DataSourcePasien = result.data
+      this.GridPasien.Grid.refresh()
+    })
     this.handleClickResep = false;
   }
 
