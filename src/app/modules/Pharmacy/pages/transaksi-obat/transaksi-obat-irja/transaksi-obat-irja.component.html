@@ -1,8 +1,9 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
     <div class="row">
         <!-- GRID OBAT -->
         <div class="col-sm-4">
-            <form [formGroup]="formInput">
+            
                 <!-- Foto Pasien -->
                 <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -15,16 +16,19 @@
                 <mol-input-text [label]="'Dokter'" formControlName="dokter" [inputFieldState]="inputFieldState"></mol-input-text>
                 <mol-input-text [label]="'Pasien'" formControlName="pasien" [inputFieldState]="inputFieldState"></mol-input-text>
                 <mol-input-text [label]="'Umur'" formControlName="umur" [inputFieldState]="inputFieldState"></mol-input-text>
-            </form>
+            
         </div>
         <div class="col-sm-8">
             <div class="card">
                 <div class="card-body p-0">
                     <ejs-grid #GridResepRacikan [dataSource]="dataSource"
-                        height="calc(100vh - 12.5rem)" gridLines="Both" rowHeight="30" [childGrid]="childGrid"
+                        height="calc(100vh - 20rem)" gridLines="Both" rowHeight="30" 
+                        [childGrid]="childGrid"
                         (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                         [allowTextWrap]="true"
-                        [textWrapSettings]="{ wrapMode: 'Both' }">
+                        [textWrapSettings]="{ wrapMode: 'Both' }"
+                        (rowSelected)="handleSelected($event)"
+                        (rowDeselected)="handleSelected($event)">
                         <e-columns>
                             <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'checkbox'"
                                 [textAlign]="'Center'" [headerTextAlign]="'Center'">
@@ -35,10 +39,27 @@
                             <e-column [visible]="true" field='qty_resep' [allowEditing]="true" headerText='Qty' [width]="120"
                                 editType='defaultEdit' [valueAccessor]='quantity' textAlign="right" headerTextAlign="center" >
                             </e-column>
+                            <e-column [visible]="true" field='harga_jual_apotek' [allowEditing]="true" headerText='Harga' [width]="120"
+                                editType='defaultEdit'  textAlign="right" headerTextAlign="center" format="N2">
+                            </e-column>
+                            <e-column [visible]="true" field='harga_jual_apotek' [allowEditing]="true" headerText='Total' [width]="130"
+                                editType='defaultEdit' [valueAccessor]='totalharga' textAlign="right" headerTextAlign="center" format="N2">
+                            </e-column>
                         </e-columns>
                     </ejs-grid>
+                    <div class="row pe-2" >
+                        <div class="col-sm-5">
+                        </div>
+                        <div class="col-sm-7">
+                            <mol-input-numeric [label]="'Total Bayar Resep'" [isFooter]="true"
+                                formControlName="total_bayar_resep"
+                                [inputFieldState]="'detail'" [inputFieldState]="inputFieldState">
+                            </mol-input-numeric>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</form>
 </org-card-layout>

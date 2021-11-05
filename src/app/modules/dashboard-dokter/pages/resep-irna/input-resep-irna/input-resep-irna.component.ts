@@ -400,6 +400,7 @@ export class InputResepIrnaComponent implements OnInit {
     this.setupSatuanAturanPakaiService.onGetAll().subscribe((result)=>{
         this.dataSourceSatuanAturanPakai = result.data;
     })
+    this.resepDokterService.reset();
   }
 
     ngAfterViewInit(): void {
@@ -944,7 +945,7 @@ export class InputResepIrnaComponent implements OnInit {
   get rute_pemberian_obat(): AbstractControl { return this.FormAddObat.get('rute_pemberian_obat'); }
   get jumlah_satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('jumlah_satuan_aturan_pakai'); }
   get id_satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_satuan_aturan_pakai'); }
-    get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai'); }
+  get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai'); }
 //   get jumlah_interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('jumlah_interval_aturan_pakai'); }
 //   get id_interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_interval_aturan_pakai'); }
 //   get interval_aturan_pakai(): AbstractControl { return this.FormAddObat.get('interval_aturan_pakai'); }

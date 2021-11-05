@@ -147,6 +147,7 @@ export class ResepComponent implements OnInit, AfterViewInit {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Iya, Saya Yakin',
+                cancelButtonText: 'Tidak',
                 focusCancel: true,
             }).then((result) => {
                 if (result.isConfirmed) {

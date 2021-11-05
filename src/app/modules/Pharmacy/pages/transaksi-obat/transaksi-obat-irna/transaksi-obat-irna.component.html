@@ -1,8 +1,8 @@
 <org-card-layout>
     <div class="row">
         <div class="col-sm-4">
-            <org-input-look-up-kode #LookupKodeRuangan [lookup-url]="urlRuangan" [idKode]="'id_ruangan'" [modal-title]="'Data Ruangan'"
-                [idTitle]="'nama_ruangan'" (onGetSelectedData)="heandleSelectedRuangan($event)"
+            <org-input-look-up-kode #LookupKodeRuangan [lookup-url]="urlRuangan" [idKode]="'kode_poli'" [modal-title]="'Data Ruangan'"
+                [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedRuangan($event)"
                 [columns]="LookupGridRuangan.columns" [filter-lookup]="LookupGridRuangan.filter"
                 [label]="'Ruangan'">
             </org-input-look-up-kode>
@@ -43,8 +43,8 @@
                     ></mol-grid>
                 </span>
                 <span *ngIf="handleClickResep">
-                    <button type="button" class="app-btn-master me-5 btn btn-primary-outline" (click)="handelClickLihatresep()"><i class="fas fa-arrow-left"></i> Lihat Resep</button>
-                    <button type="button" class="app-btn-master btn btn-primary" (click)="handleClickSimpan()"><i class="fas fa-save"></i> Simpan Transaksi Obat</button>
+                    <button type="button" class="app-btn-master me-5 btn btn-sm btn-primary-outline" (click)="handelClickLihatresep()"><i class="fas fa-arrow-left"></i> Lihat Resep</button>
+                    <button type="button" class="app-btn-master btn btn-sm btn-primary" (click)="handleClickSimpan()"><i class="fas fa-save"></i> Simpan Transaksi Obat</button>
                     <ejs-grid #GridDetailResep [dataSource]="DataSourceDetailResep"
                         height="calc(100vh - 22rem)" gridLines="Both" rowHeight="30" [childGrid]="childGrid"
                         (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
@@ -57,8 +57,15 @@
                             <e-column [visible]="true" field='qty_harian' [allowEditing]="true" headerText='Qty' [width]="130"
                                 editType='defaultEdit' [valueAccessor]='quantity' textAlign="right" headerTextAlign="center" >
                             </e-column>
+                            <e-column [visible]="true" field='harga_jual_apotek' [allowEditing]="true" headerText='Harga' [width]="130"
+                                editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" >
+                            </e-column>
+                            <e-column [visible]="true" field='harga_jual_apotek' [allowEditing]="true" headerText='Total Harga' [width]="130"
+                                editType='defaultEdit' [valueAccessor]='hargajual' textAlign="right" headerTextAlign="center" format="N2" >
+                            </e-column>
                         </e-columns>
                     </ejs-grid>
+                   
                 </span>
             </form>
         </div>

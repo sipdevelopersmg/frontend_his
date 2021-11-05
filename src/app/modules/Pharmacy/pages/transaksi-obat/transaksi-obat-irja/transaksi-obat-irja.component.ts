@@ -47,6 +47,10 @@ export class TransaksiObatIrjaComponent implements OnInit {
         return  data1['qty_resep'] + ' ' +data1['nama_satuan'] 
     }
 
+    public totalharga = (field: string, data1: object) => {
+        return (data1['is_racikan'])? data1['harga_jual_apotek'] : data1['qty_resep'] * data1['harga_jual_apotek'] 
+    }
+
     dataSourceChild:any = [];
     dataSource:any = [];
     dataHeader:any = [];
@@ -70,6 +74,7 @@ export class TransaksiObatIrjaComponent implements OnInit {
             poli: ['', []],
             dokter : ['', []],
             umur : ['', []],
+            total_bayar_resep: [0,[]]
         });
 
 
@@ -101,7 +106,8 @@ export class TransaksiObatIrjaComponent implements OnInit {
                poli:result.data.nama_poli,
                pasien:result.data.nama_pasien,
                dokter: result.data.nama_dokter,
-               umur: result.data.tgl_lahir
+               umur: result.data.tgl_lahir,
+               total_bayar_resep: 0
            })
            this.imageSrc = result.data.nama_foto
        })
@@ -139,6 +145,16 @@ export class TransaksiObatIrjaComponent implements OnInit {
     onDataBound(){
         this.GridResepRacikan.detailRowModule.expandAll();
     }
+
+    handleSelected(args){
+        // this.total_bayar_resep.setValue(0);
+        let tot =0
+        this.GridResepRacikan.getSelectedRecords().map((item)=>{
+            let har = item['is_racikan'] ? item['harga_jual_apotek'] : item['qty_resep'] * item['harga_jual_apotek'];
+            tot +=  har;
+            this.total_bayar_resep.setValue(tot);
+        });
+    }
    
     onClickButtonNav(args: any): void {
         switch (args) {
@@ -159,5 +175,7 @@ export class TransaksiObatIrjaComponent implements OnInit {
                 break;
         }
     }
+
+    get total_bayar_resep (){return this.formInput.get('total_bayar_resep')}
 
 }

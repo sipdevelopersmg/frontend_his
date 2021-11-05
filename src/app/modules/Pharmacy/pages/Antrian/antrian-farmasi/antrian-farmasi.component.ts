@@ -24,7 +24,7 @@ export class AntrianFarmasiComponent implements OnInit {
         private socket:Socket,
     ) {
         this.ButtonNav = [
-            { Id: "MoveItem", Captions: "Move Item", Icons1: "fa-arrows-alt" }
+            // { Id: "MoveItem", Captions: "Move Item", Icons1: "fa-arrows-alt" }
         ]
     }
 

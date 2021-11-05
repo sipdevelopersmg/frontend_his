@@ -48,6 +48,6 @@
     ],
     "columnsChild": [
         { "field": "nama_obat", "headerText": "Nama Obat"},
-        { "field": "qty_racikan", "headerText": "Qty" ,"width":100}
+        { "field": "qty_racikan", "headerText": "Qty" ,"width":50}
     ]
 }

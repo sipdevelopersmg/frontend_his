@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MM} from 'src/app/api/MM'
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import * as LookupGridRuangan from './json/LookupGridRuangan.json'
 import * as GridConfig from './json/gridPasien.config.json'
@@ -8,13 +7,14 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
 import { TransaksiObatIrnaService } from '../../../services/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.service';
+import { API_BILLING } from 'src/app/api/BILLING';
 @Component({
   selector: 'app-transaksi-obat-irna',
   templateUrl: './transaksi-obat-irna.component.html',
   styleUrls: ['./transaksi-obat-irna.component.css']
 })
 export class TransaksiObatIrnaComponent implements OnInit {
-  urlRuangan = MM.SETUP_DATA.SETUP_COA.GET_ALL_BY_PARMS;
+  urlRuangan = API_BILLING.SETUP_DATA.SETUP_POLI.GET_ALL_POLI_FOR_LOOKUP_RAWAT_INAP;
   LookupGridRuangan = LookupGridRuangan;
   GridConfig = GridConfig;
   GridConfigResep = GridConfigResep; 
@@ -37,12 +37,17 @@ export class TransaksiObatIrnaComponent implements OnInit {
   }
 
   public quantity = (field: string, data1: object) => {
-      return  data1['qty_resep'] + ' ' +data1['nama_satuan'] 
+      return  data1['qty_harian'] + ' ' +data1['nama_satuan'] 
+  }
+
+  public hargajual= (field: string, data1: object) => {
+    return  data1['harga_jual_apotek'] * data1['qty_harian'] 
   }
   constructor(
     private formBuilder: FormBuilder,
     private resepDokterIrnaService: ResepDokterIrnaService,
     public transaksiObatIrnaService: TransaksiObatIrnaService,
+    // public setupPoliService: SetupPoliService
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +59,7 @@ export class TransaksiObatIrnaComponent implements OnInit {
       dokter : ['', []],
       nomor_rm : ['', []],
       nomor_registrasi : ['', []],
+      total_bayar_resep: [0]
     });
 
     this.childGrid = {
