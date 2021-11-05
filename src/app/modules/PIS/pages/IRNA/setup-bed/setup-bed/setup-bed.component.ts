@@ -224,10 +224,10 @@ export class SetupBedComponent implements OnInit {
     };
 
     setEditForm(): void {
+        this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
         this.inputFieldState = 'edit';
         this.SetFrom(this.SelectedData);
         this.StatusFormNew = false;
-        this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
         this.ButtonNav = [
             { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
             { Id: 'SaveAndNew', Captions: 'Save', Icons1: 'fa-save' },
@@ -251,6 +251,18 @@ export class SetupBedComponent implements OnInit {
         this.is_view_antrian.setValue(false);
         this.is_sesuai_sk.setValue(false);
         this.is_active.setValue(false);
+
+        let atmroom_no = document.getElementById("atmroom_no") as HTMLInputElement;
+        atmroom_no.value = "";
+
+        let titleroom_no = document.getElementById("titleroom_no") as HTMLInputElement;
+        titleroom_no.value = "";
+
+        let nama_poli = document.getElementById("nama_poli") as HTMLInputElement;
+        nama_poli.value = "";
+
+        let nama_kelas = document.getElementById("nama_kelas") as HTMLInputElement;
+        nama_kelas.value = "";
     }
 
     GetAllData(): void {
@@ -266,12 +278,26 @@ export class SetupBedComponent implements OnInit {
             id_setup_room: Data.id_setup_room,
             id_setup_bed_room: Data.id_setup_bed_room,
             bed_no: Data.bed_no,
-            is_view_antrian: Data.is_view_antrian,
-            is_sesuai_sk: Data.is_sesuai_sk,
-            is_active: Data.is_active,
-        }
+            is_view_antrian: Data.is_view_antrian ? Data.is_view_antrian : false,
+            is_sesuai_sk: Data.is_sesuai_sk ? Data.is_sesuai_sk : false,
+            is_active: Data.is_active ? Data.is_active : false,
+        };
 
         this.FormInputData.setValue(data);
+
+        setTimeout(() => {
+            let atmroom_no = document.getElementById("atmroom_no") as HTMLInputElement;
+            atmroom_no.value = Data.room_no;
+
+            let titleroom_no = document.getElementById("titleroom_no") as HTMLInputElement;
+            titleroom_no.value = Data.room_descr;
+
+            let nama_poli = document.getElementById("nama_poli") as HTMLInputElement;
+            nama_poli.value = Data.nama_poli;
+
+            let nama_kelas = document.getElementById("nama_kelas") as HTMLInputElement;
+            nama_kelas.value = Data.nama_kelas;
+        }, 500);
     }
 
     handleSelectedRoom(args: any): void {

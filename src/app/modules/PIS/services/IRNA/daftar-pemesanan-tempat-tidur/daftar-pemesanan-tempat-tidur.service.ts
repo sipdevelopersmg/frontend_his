@@ -6,7 +6,7 @@ import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Ht
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/PIS/IRNA';
-import { GetAllDaftarPemesananTempatTidurModel, IAntrianTppriModel, PostSaveAntrianTppriModel } from '../../../models/IRNA/daftar-pemesanan-tempat-tidur.model';
+import { GetAllDaftarPemesananTempatTidurByNoRekamMedisModel, GetAllDaftarPemesananTempatTidurModel, IAntrianTppriModel, PostSaveAntrianTppriModel } from '../../../models/IRNA/daftar-pemesanan-tempat-tidur.model';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +31,15 @@ export class DaftarPemesananTempatTidurService {
 
     onPostSaveAntrianPemesananTempatTidur(Data: IAntrianTppriModel): Observable<PostSaveAntrianTppriModel> {
         return this.httpOperationService.defaultPostRequest(this.API_DAFTAR_PEMESANAN_TEMPAT_TIDUR.POST_SAVE_ANTRIAN_TPPRI, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+                })
+            );
+    }
+
+    onGetByNoRekamMedis(NoRekamMedis: string): Observable<GetAllDaftarPemesananTempatTidurByNoRekamMedisModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_DAFTAR_PEMESANAN_TEMPAT_TIDUR.GET_ALL_ANTRIAN_TPPRI_BY_NO_REKAM_MEDIS + NoRekamMedis)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

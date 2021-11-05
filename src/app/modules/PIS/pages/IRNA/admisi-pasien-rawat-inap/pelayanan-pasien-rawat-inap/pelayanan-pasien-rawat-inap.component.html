@@ -51,19 +51,38 @@
                     </div>
                 </div>
 
-                <!-- No. Room -->
-                <org-input-look-up-kode #LookupRoom [modal-title]="'Data Room'" [lookup-url]="urlLookupRoom"
-                    [idKode]="'kode_poli'" [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedRoom($event)"
+                <!-- Poli -->
+                <org-input-look-up-kode #LookupKodePoli [modal-title]="'Data Poli'" [lookup-url]="urlPoli"
+                    [idKode]="'kode_poli'" [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedPoli($event)"
                     [columns]="settingGrid.LookupPoli.columns" [filter-lookup]="settingGrid.LookupPoli.filter"
-                    [label]="'No. Room'">
+                    [label]="'Poli'">
                 </org-input-look-up-kode>
 
+                <!-- No. Room -->
+                <org-input-look-up #LookupRoom [modal-title]="'Data Room'" [lookup-url]="urlLookupRoom"
+                    [idTitle]="'room_no'" (onGetSelectedData)="heandleSelectedRoom($event)"
+                    [columns]="settingGrid.LookupRoom.columns" [filter-lookup]="settingGrid.LookupRoom.filter"
+                    [label]="'No. Room'">
+                </org-input-look-up>
+
                 <!-- No. Bed -->
-                <org-input-look-up-kode #LookupBed [modal-title]="'Data Bed'" [lookup-url]="urlLookupBed"
-                    [idKode]="'kode_poli'" [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedBed($event)"
-                    [columns]="settingGrid.LookupPoli.columns" [filter-lookup]="settingGrid.LookupPoli.filter"
-                    [label]="'No. Bed'">
-                </org-input-look-up-kode>
+                <org-input-look-up #LookupBed [modal-title]="'Data Bed'" [lookup-url]="urlLookupBed"
+                    [idTitle]="'bed_no'" (onGetSelectedData)="heandleSelectedBed($event)"
+                    [columns]="settingGrid.LookupBed.columns" [filter-lookup]="settingGrid.LookupBed.filter"
+                    [static-filter]="LookupBedStaticFilter" [label]="'No. Bed'">
+                </org-input-look-up>
+
+                <!-- Kelas Pelayanan -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                            [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas_rawat">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
 
                 <!-- Nama Dokter -->
                 <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Dokter'" [lookup-url]="urlDokter"
@@ -84,26 +103,14 @@
                     </div>
                 </div>
 
-                <!-- Kelas Pelayanan -->
-                <div class="row mb-2">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                        <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
-                            [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas_rawat">
-                        </ejs-dropdownlist>
-                    </div>
-                </div>
-
                 <!-- Hak Kelas -->
-                <div class="row mb-2">
+                <div class="row mb-2" [hidden]="DropdownDebitur.value == 1">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <atm-label [LabelCaption]="'Hak Kelas'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
-                            [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas_rawat">
+                            [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_hak_kelas">
                         </ejs-dropdownlist>
                     </div>
                 </div>
@@ -176,4 +183,49 @@
             </div>
         </div>
     </form>
+
+    <!-- Modal Different Bed  -->
+    <ng-template #modalDifferentBed>
+        <div class="modal-header px-2 py-2 background-biru-muda">
+            <h5 class="modal-title pull-left text-white">
+                Alasan Bed Request TPPRI Dan Bed Admisi Berbeda
+            </h5>
+            <!-- <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalDifferentBed()">
+                <i class="fas fa-window-close"></i>
+            </button> -->
+        </div>
+        <div class="modal-body pt-0 pb-2 px-2">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form [formGroup]="formDifferentBed">
+                        <div class="row mb-2 align-items-center">
+                            <!-- Alasan Pembatalan -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3 px-0">
+                                <atm-label
+                                    [LabelCaption]="'Mohon Isikan Alasan Bed Request TPPRI dan Bed Admisi Berbeda'">
+                                </atm-label>
+
+                                <textarea rows="3" class="form-control mt-2" formControlName="reason_different_bed">
+                                </textarea>
+
+                                <atm-validators [IsFormControlTouched]="reason_different_bed_reason.touched"
+                                    [IsFormControlInvalid]="reason_different_bed_reason.invalid"
+                                    [ValidatorsCaption]="'Alasan Beda Bed Tidak Boleh Kosong'">
+                                </atm-validators>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 text-end">
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    [disabled]="formDifferentBed.invalid"
+                                    (click)="handleSubmitModalDifferentBed(formDifferentBed)">
+                                    <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </org-card-layout>

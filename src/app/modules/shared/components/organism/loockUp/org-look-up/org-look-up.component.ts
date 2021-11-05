@@ -100,10 +100,9 @@ export class OrgLookUpComponent implements OnInit {
     }
 
     onCloseModal() {
-        this.modalRef.hide();
-
+        this.gridDataSource = [];
         setTimeout(() => {
-            this.gridDataSource = [];
+            this.modalRef.hide();
         }, 200);
     }
 

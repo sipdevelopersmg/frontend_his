@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IPasienTeradmisiHariIniModel } from 'src/app/modules/PIS/models/IRJA/admisi-pasien-rawat-jalan.model';
+import { IHistoryAdmisiPasienRawatInapModel } from 'src/app/modules/PIS/models/IRNA/admisi-pasien-rawat-inap.model';
 import { AdmisiPasienRawatJalanService } from 'src/app/modules/PIS/services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
+import { AdmisiPasienRawatInapService } from 'src/app/modules/PIS/services/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
@@ -23,15 +25,17 @@ export class ListPasienRawatInapComponent implements OnInit {
         { text: 'No. Rekam Medis', value: 'tp.no_rekam_medis' },
         { text: 'Nama Poli', value: 'p.nama_poli' },
         { text: 'Nama Debitur', value: 'sd.nama_debitur' },
+        { text: 'No. Room', value: 'sr.room_no' },
+        { text: 'No. Bed', value: 'sbr.bed_no' },
     ]
 
     GridData: MolGridComponent = null;
     GridPageSettings = { pageSizes: false, pageSize: 12 };
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
-    GridDatasource: IPasienTeradmisiHariIniModel[] = [];
+    GridDatasource: IHistoryAdmisiPasienRawatInapModel[] = [];
     GridWrapSettings: object = { wrapMode: 'Content' };
     GridToolbar: any[] = [
-        { text: 'Batalkan Admisi', tooltipText: 'Batalkan Admisi', prefixIcon: 'fas fa-ban fa-sm', id: 'cancel_admisi' },
+        // { text: 'Batalkan Admisi', tooltipText: 'Batalkan Admisi', prefixIcon: 'fas fa-ban fa-sm', id: 'cancel_admisi' },
         "Search"
     ];
     GridGroupSettings: object = { showDropArea: false, columns: ['nama_poli'] };
@@ -54,6 +58,7 @@ export class ListPasienRawatInapComponent implements OnInit {
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         private bsModalService: BsModalService,
+        private admisiRawatInapService: AdmisiPasienRawatInapService,
         private admisiRawatJalanService: AdmisiPasienRawatJalanService,
     ) { }
 
@@ -67,7 +72,7 @@ export class ListPasienRawatInapComponent implements OnInit {
     }
 
     handlePencarianFilter(args: PostRequestByDynamicFiterModel[]): void {
-        this.admisiRawatJalanService.onGetAllPasienRawatJalanTeradmisiHariIni(args)
+        this.admisiRawatInapService.onGetAllAdmisiPasienRawatInap(args)
             .subscribe(
                 (result) => {
                     this.GridDatasource = result.data;

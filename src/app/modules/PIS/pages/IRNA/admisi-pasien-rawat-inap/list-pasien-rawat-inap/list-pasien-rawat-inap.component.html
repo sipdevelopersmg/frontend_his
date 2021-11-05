@@ -18,10 +18,7 @@
                 <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
                     [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
                 </e-column>
-                <e-column [width]="100" [field]="'no_antrian'" [headerText]="'NO. ANTRIAN'" [visible]="true"
-                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
-                </e-column>
-                <e-column [width]="80" [field]="'tgl_admisi'" [headerText]="'TGL ADMISI'" [visible]="true"
+                <e-column [width]="100" [field]="'tgl_admisi'" [headerText]="'TGL ADMISI'" [visible]="true"
                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
                     [format]="'dd/MM/yyyy'">
                 </e-column>
@@ -34,7 +31,7 @@
                 <e-column [width]="70" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                 </e-column>
-                <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                <e-column [width]="120" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                 </e-column>
                 <e-column [width]="80" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
@@ -50,6 +47,12 @@
                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                 </e-column>
                 <e-column [width]="250" [field]="'nama_debitur'" [headerText]="'DEBITUR'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                </e-column>
+                <e-column [width]="80" [field]="'room_no'" [headerText]="'NO. ROOM'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                </e-column>
+                <e-column [width]="80" [field]="'bed_no'" [headerText]="'NO. BED'" [visible]="true"
                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
                 </e-column>
             </e-columns>

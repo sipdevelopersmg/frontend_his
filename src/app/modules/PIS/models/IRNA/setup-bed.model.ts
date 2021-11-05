@@ -7,6 +7,10 @@ export interface IBedModel {
     is_view_antrian?: boolean;
     is_sesuai_sk?: boolean;
     is_active?: boolean;
+    room_no?: string;
+    room_descr?: string;
+    nama_poli?: string;
+    nama_kelas?: string;
     user_created?: number;
     time_created?: string;
     user_edited?: number;

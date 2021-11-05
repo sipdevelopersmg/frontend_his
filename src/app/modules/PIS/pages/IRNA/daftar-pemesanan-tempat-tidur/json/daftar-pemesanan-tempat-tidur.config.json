@@ -255,7 +255,7 @@
                 "headerText": "NO. BED",
                 "type": "string",
                 "visible": true,
-                "width": 100
+                "width": 80
             },
             {
                 "allowEditing": false,
@@ -265,7 +265,7 @@
                 "headerText": "NO. ROOM",
                 "type": "string",
                 "visible": true,
-                "width": 100
+                "width": 80
             },
             {
                 "allowEditing": false,
@@ -275,7 +275,7 @@
                 "headerText": "LABEL ROOM",
                 "type": "string",
                 "visible": true,
-                "width": 100
+                "width": 90
             },
             {
                 "allowEditing": false,
@@ -285,7 +285,7 @@
                 "headerText": "POLIKLINIK",
                 "type": "string",
                 "visible": true,
-                "width": 150
+                "width": 250
             },
             {
                 "allowEditing": false,
@@ -293,6 +293,36 @@
                 "editType": "defaultEdit",
                 "field": "nama_kelas",
                 "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "status_bed_descr",
+                "headerText": "STATUS BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. MR",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
                 "type": "string",
                 "visible": true,
                 "width": 100
@@ -303,6 +333,21 @@
                 "field": "sbr.bed_no",
                 "filter": "like",
                 "title": "NO. BED"
+            },
+            {
+                "field": "ssb.status_bed_descr",
+                "filter": "like",
+                "title": "STATUS BED"
+            },
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "NO. MR PASIEN"
+            },
+            {
+                "field": "concat(nama_depan,'' '',nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
             }
         ]
     }

@@ -8,6 +8,7 @@ import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/l
 import Swal from 'sweetalert2';
 import { IDaftarPemesananTempatTidurModel } from 'src/app/modules/PIS/models/IRNA/daftar-pemesanan-tempat-tidur.model';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { DaftarPemesananTempatTidurService } from 'src/app/modules/PIS/services/IRNA/daftar-pemesanan-tempat-tidur/daftar-pemesanan-tempat-tidur.service';
 
 @Component({
     selector: 'app-cari-pasien-antrian-tppri',
@@ -28,7 +29,8 @@ export class CariPasienAntrianTppriComponent implements OnInit {
     constructor(
         private router: Router,
         private utilityService: UtilityService,
-        private encryptionService: EncryptionService
+        private encryptionService: EncryptionService,
+        private daftarPemesananTempatTidurService: DaftarPemesananTempatTidurService
     ) { }
 
     ngOnInit(): void {
@@ -48,27 +50,27 @@ export class CariPasienAntrianTppriComponent implements OnInit {
     }
 
     handleClickPencarianNoRekamMedis(NoRekamMedis: string): void {
-        // this.transBillingService.onScanNoRegister(NoRegister)
-        //     .subscribe((result) => {
-        //         if (result.responseResult) {
-        //             Swal.fire({
-        //                 title: 'Data Pasien Ditemukan',
-        //                 text: "Lanjutkan ke Input Transaksi Billing?",
-        //                 icon: 'warning',
-        //                 showCancelButton: true,
-        //                 confirmButtonColor: '#3085d6',
-        //                 cancelButtonColor: '#d33',
-        //                 confirmButtonText: 'Iya, Lanjutkan',
-        //                 cancelButtonText: 'Tidak',
-        //             }).then((result) => {
-        //                 if (result.isConfirmed) {
-        //                     this.onRedirectToInputBillingPasien(NoRegister);
-        //                 }
-        //             });
-        //         } else {
-        //             this.utililtyService.onShowingCustomAlert('warning', 'Oops', 'Data Pasien Tidak Ditemukan');
-        //         }
-        //     })
+        this.daftarPemesananTempatTidurService.onGetByNoRekamMedis(NoRekamMedis)
+            .subscribe((result) => {
+                if (result.responseResult) {
+                    Swal.fire({
+                        title: 'Data Pasien Ditemukan',
+                        text: "Lanjutkan ke Admisi Pasien Rawat Inap?",
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Iya, Lanjutkan',
+                        cancelButtonText: 'Tidak',
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            this.onRedirectToAdmisiPasienRawatInap(result.data);
+                        }
+                    });
+                } else {
+                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Data Pasien Tidak Ditemukan');
+                }
+            })
     }
 
     handleOpenLookupPasien(): void {
@@ -98,6 +100,6 @@ export class CariPasienAntrianTppriComponent implements OnInit {
     onRedirectToAdmisiPasienRawatInap(args: IDaftarPemesananTempatTidurModel): void {
         let data_encrypted = this.encryptionService.encrypt(JSON.stringify(args));
 
-        this.router.navigate(['dashboard/PIS/IRNA/admisi-pasien-rawat-inap', data_encrypted, 'GRAHCIS']);
+        this.router.navigate(['dashboard/PIS/IRNA/admisi-pasien-rawat-inap', data_encrypted, 'TPPRI']);
     }
 }

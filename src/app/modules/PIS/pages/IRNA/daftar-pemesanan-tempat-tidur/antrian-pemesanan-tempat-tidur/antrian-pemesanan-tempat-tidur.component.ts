@@ -53,7 +53,7 @@ export class AntrianPemesananTempatTidurComponent implements OnInit {
             { text: 'No. Bed', value: 'sbr.bed_no' },
             { text: 'Pilih Kelas', value: 'tat.id_kelas_request' },
             { text: 'Pilih Status Bed', value: 'ssb.status_bed_descr' },
-            { text: 'Tgl. Rencana Rawat', value: 'tat.tanggal_rencana_masuk' },
+            { text: 'Tgl. Rencana Masuk', value: 'tat.tanggal_rencana_masuk' },
         ];
 
         this.onSetGridToolbarByDynamicStatusBed();
@@ -108,11 +108,11 @@ export class AntrianPemesananTempatTidurComponent implements OnInit {
         this.FilterDropdownFields = {};
 
         switch (args) {
-            case 'Pilih Status':
+            case 'Pilih Status Bed':
                 this.setupStatusBedService.onGetAllBedStatus()
                     .subscribe((result) => {
                         this.FilterDropdownDatasource = result.data;
-                        this.FilterDropdownFields = { text: 'status_bed', value: 'status_bed' }
+                        this.FilterDropdownFields = { text: 'status_bed_descr', value: 'status_bed_descr' }
                     });
                 break;
             case 'Pilih Kelas':

@@ -37,10 +37,18 @@ export interface IDaftarPemesananTempatTidurModel {
     room_descr?: string
     id_setup_bed_room_request?: number
     bed_no?: string
+    id_poli?: number
+    id_person?: number
 }
 
 export class GetAllDaftarPemesananTempatTidurModel implements HttpResponseModel {
     responseResult: boolean;
     data: IDaftarPemesananTempatTidurModel[];
+    message: string;
+}
+
+export class GetAllDaftarPemesananTempatTidurByNoRekamMedisModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IDaftarPemesananTempatTidurModel;
     message: string;
 }
