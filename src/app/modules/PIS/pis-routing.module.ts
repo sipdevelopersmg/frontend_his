@@ -12,6 +12,7 @@ import { AdmisiPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat
 import { CariPasienAntrianTppriComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/cari-pasien-antrian-tppri/cari-pasien-antrian-tppri.component";
 import { PelayananPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component";
 import { AntrianPemesananTempatTidurComponent } from "./pages/IRNA/daftar-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur.component";
+import { ManagementBedRawatInapComponent } from "./pages/IRNA/management-bed-rawat-inap/management-bed-rawat-inap.component";
 import { SetupBedComponent } from "./pages/IRNA/setup-bed/setup-bed/setup-bed.component";
 import { SetupKamarComponent } from "./pages/IRNA/setup-bed/setup-kamar/setup-kamar.component";
 import { SetupKategoriKamarComponent } from "./pages/IRNA/setup-bed/setup-kategori-kamar/setup-kategori-kamar.component";
@@ -104,6 +105,7 @@ const pisRoutes: Routes = [
             { path: "admisi-pasien-rawat-inap", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
             { path: "admisi-pasien-rawat-inap/:id/:key", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
             { path: "antrian-pemesanan-tempat-tidur", component: AntrianPemesananTempatTidurComponent, data: { title: "Antrian Pemesanan Tempat Tidur" } },
+            { path: "management-bed-rawat-inap/:id/:key", component: ManagementBedRawatInapComponent, data: { title: "Management Bed Rawat Inap" } },
         ]
     }
 ]

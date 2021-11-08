@@ -13,6 +13,7 @@ import * as Config from './json/setup-bed.config.json';
 import * as API_CONFIG from '../../../../../../api/PIS/IRNA';
 import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/setup-poli/setup-poli.service';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
+import { SetupStatusBedService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-status-bed/setup-status-bed.service';
 
 @Component({
     selector: 'app-setup-bed',
@@ -72,6 +73,9 @@ export class SetupBedComponent implements OnInit {
     GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridDataToolbar: any[];
+    GridSelectedData: any;
+
+    SelectedStatusBedRoom: number;
 
     /**
      * Berisi Data Yang selected dari dalam grid
@@ -90,6 +94,7 @@ export class SetupBedComponent implements OnInit {
         private setupRoomService: SetupRoomService,
         private setupPoliService: SetupPoliService,
         private setupBedRoomService: SetupBedRoomService,
+        private setupStatusBedService: SetupStatusBedService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
     ) { }
 
@@ -103,15 +108,41 @@ export class SetupBedComponent implements OnInit {
             is_active: [false, [Validators.required]],
         });
 
-        this.GridDataToolbar = [
-            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-            { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
-            { text: 'Update Status', tooltipText: 'Update Status', prefixIcon: 'fas fa-exchange-alt fa-sm', id: 'update_status' },
-            { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
-            'Search'
-        ];
+        this.onSetGridToolbarByDynamicStatusBed();
 
         this.GetAllData();
+    }
+
+    onSetGridToolbarByDynamicStatusBed(): void {
+        this.setupStatusBedService.onGetAllBedStatus()
+            .subscribe((result) => {
+
+                let is_ready = result.data.filter((item) => { return item.is_ready == true })[0];
+
+                let not_operational = result.data.filter((item) => { return item.is_ready == false && item.is_fill == false && item.is_new == false })[0];
+
+                this.GridDataToolbar = [
+                    { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+                    { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+                    { text: 'Update Status', tooltipText: 'Update Status', prefixIcon: 'fas fa-exchange-alt fa-sm', id: 'update_status' },
+                    { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
+                    {
+                        text: `Update Bed -> ${is_ready.status_bed}`,
+                        tooltipText: `Update Bed -> ${is_ready.status_bed}`,
+                        prefixIcon: 'fas fa-clipboard-check fa-sm',
+                        id: is_ready.id_setup_status_bed,
+                        method: () => { this.onUpdateStatusOk(); }
+                    },
+                    {
+                        text: `Update Bed -> ${not_operational.status_bed}`,
+                        tooltipText: `Update Bed -> ${not_operational.status_bed}`,
+                        prefixIcon: 'fas fa-ban fa-sm',
+                        id: not_operational.id_setup_status_bed,
+                        method: () => { this.onUpdateStatusTo(); }
+                    },
+                    "Search"
+                ];
+            });
     }
 
     handleSelectedTabId(TabId: string): void {
@@ -191,6 +222,8 @@ export class SetupBedComponent implements OnInit {
                 this.setViewForm();
                 break;
             default:
+                this.SelectedStatusBedRoom = args.item.id;
+                args.item.method();
                 break;
         }
     }
@@ -369,6 +402,36 @@ export class SetupBedComponent implements OnInit {
                         });
                 }
             })
+    }
+
+    onUpdateStatusOk(): void {
+        this.setupBedRoomService.onPutUpdateStatusBedRoom(
+            this.SelectedData.id_setup_bed_room,
+            this.SelectedData.id_setup_room,
+            this.SelectedStatusBedRoom
+        ).subscribe((result) => {
+            if (result) {
+                this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Bed Berhasil Ubah Ke OK')
+                    .then(() => {
+                        this.handlePencarianFilter([]);
+                    })
+            }
+        });
+    }
+
+    onUpdateStatusTo(): void {
+        this.setupBedRoomService.onPutUpdateStatusBedRoom(
+            this.SelectedData.id_setup_bed_room,
+            this.SelectedData.id_setup_room,
+            this.SelectedStatusBedRoom
+        ).subscribe((result) => {
+            if (result) {
+                this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Bed Berhasil Ubah Ke TO')
+                    .then(() => {
+                        this.handlePencarianFilter([]);
+                    })
+            }
+        });
     }
 
     get id_setup_room(): AbstractControl { return this.FormInputData.get("id_setup_room"); }

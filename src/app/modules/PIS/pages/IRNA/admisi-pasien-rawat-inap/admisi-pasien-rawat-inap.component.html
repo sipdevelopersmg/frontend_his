@@ -1,5 +1,7 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
-    <app-list-pasien-rawat-inap (onGetDaftarAdmisi)="onGetDaftarAdmisi($event)"></app-list-pasien-rawat-inap>
+    <app-list-pasien-rawat-inap (onGetDaftarAdmisi)="onGetDaftarAdmisi($event)"
+        (onGetSelectedRecords)="handleSelectedRecordListPasienRawatInap($event)">
+    </app-list-pasien-rawat-inap>
 
     <!-- Modal Pencarian Pasien  -->
     <ng-template #modalPencarianPasien>

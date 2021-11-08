@@ -53,6 +53,8 @@ export class ListPasienRawatInapComponent implements OnInit {
 
     @Output('onGetDaftarAdmisi') onGetDaftarAdmisi = new EventEmitter<any>();
 
+    @Output('onGetSelectedRecords') onGetSelectedRecords = new EventEmitter<any>();
+
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
@@ -89,6 +91,8 @@ export class ListPasienRawatInapComponent implements OnInit {
 
     handleSelectedRow(args: any): void {
         this.SelectedData = args.data;
+
+        this.onGetSelectedRecords.emit(this.SelectedData);
     }
 
     handleActionComplete(event: any): void {

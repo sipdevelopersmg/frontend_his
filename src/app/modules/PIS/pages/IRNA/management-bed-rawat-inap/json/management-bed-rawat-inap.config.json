@@ -1,0 +1,380 @@
+{
+    "GridDaftarPermintaanColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_bed_transfer",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_register",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nomor_bed_transfer",
+            "headerText": "NO. BED TRANSFER",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_bed_request",
+            "headerText": "TGL. PERMINTAAN",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_no_asal",
+            "headerText": "ROOM ASAL",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "bed_no_asal",
+            "headerText": "BED ASAL",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_no_tujuan",
+            "headerText": "ROOM TUJUAN",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "bed_no_tujuan",
+            "headerText": "BED TUJUAN",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_kelas_tujuan",
+            "headerText": "KELAS TUJUAN",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "time_approve",
+            "headerText": "TGL. DITERIMA",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "peminta",
+            "headerText": "PEMINTA",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "penerima",
+            "headerText": "PENERIMA",
+            "visible": true,
+            "width": 100
+        }
+    ],
+    "GridDaftarMutasiColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_bed_transfer",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "numericEdit",
+            "field": "id_register",
+            "format": "N",
+            "headerText": "ID",
+            "type": "number",
+            "visible": false,
+            "width": 50
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal_bed_request",
+            "headerText": "TGL. MUTASI",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_no",
+            "headerText": "NO. ROOM",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "bed_no",
+            "headerText": "NO. BED",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_kelas_tujuan",
+            "headerText": "KELAS",
+            "visible": true,
+            "width": 80
+        }
+    ],
+    "LookupRoom": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_descr",
+                "headerText": "LABEL ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "floor_no",
+                "headerText": "LANTAI",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "gender",
+                "headerText": "GENDER",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "is_isolasi",
+                "headerText": "IS ISOLASI",
+                "displayAsCheckbox": true,
+                "visible": true,
+                "width": 70,
+                "textAlign": "Center",
+                "headerTextAlign": "Center"
+            }
+        ],
+        "filter": [
+            {
+                "field": "sr.room_no",
+                "filter": "like",
+                "title": "NO. ROOM"
+            },
+            {
+                "field": "sr.room_descr",
+                "filter": "like",
+                "title": "LABEL ROOM"
+            },
+            {
+                "field": "p.nama_poli",
+                "filter": "like",
+                "title": "POLIKLINIK"
+            },
+            {
+                "field": "kp.nama_kelas",
+                "filter": "like",
+                "title": "KELAS"
+            }
+        ]
+    },
+    "LookupBed": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "bed_no",
+                "headerText": "NO. BED",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_descr",
+                "headerText": "LABEL ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 250
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "status_bed_descr",
+                "headerText": "STATUS BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. MR",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "sbr.bed_no",
+                "filter": "like",
+                "title": "NO. BED"
+            },
+            {
+                "field": "ssb.status_bed_descr",
+                "filter": "like",
+                "title": "STATUS BED"
+            },
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "NO. MR PASIEN"
+            },
+            {
+                "field": "concat(nama_depan,'' '',nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
+            }
+        ]
+    }
+}

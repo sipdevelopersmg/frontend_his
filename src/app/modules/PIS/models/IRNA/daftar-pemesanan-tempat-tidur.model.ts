@@ -39,6 +39,9 @@ export interface IDaftarPemesananTempatTidurModel {
     bed_no?: string
     id_poli?: number
     id_person?: number
+    id_jenis_ruangan?: number
+    kode_poli?: string
+    nama_poli?: string
 }
 
 export class GetAllDaftarPemesananTempatTidurModel implements HttpResponseModel {

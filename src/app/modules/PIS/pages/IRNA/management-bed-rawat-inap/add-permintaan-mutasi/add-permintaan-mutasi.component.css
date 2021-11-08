@@ -1,0 +1,7 @@
+button.btn_lookup_bed_tujuan {
+  padding: 0.1rem 0.8rem;
+  background-color: #00afff;
+  border: 0;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}

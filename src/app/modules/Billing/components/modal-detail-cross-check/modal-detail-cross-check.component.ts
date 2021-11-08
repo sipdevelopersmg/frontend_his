@@ -83,6 +83,8 @@ export class ModalDetailCrossCheckComponent implements OnInit, OnDestroy {
     handleCommandClickVersiSistem(args: any): void {
         let data = args.rowData;
 
+        console.log(args);
+
         this.HeaderPendapatanVersiSistem['id_payment_method'] = data.id_payment_method;
         this.HeaderPendapatanVersiSistem['jenis_payment'] = data.payment_method;
         this.HeaderPendapatanVersiSistem['jumlah_pembayaran'] = formatCurrency(data.jumlah_bayar, 'EN', 'Rp. ');

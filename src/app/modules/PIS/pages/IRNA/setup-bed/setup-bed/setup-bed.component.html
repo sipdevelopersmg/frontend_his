@@ -26,7 +26,7 @@
                             (initialized)="InitalizedGrid($event)" (action-complete)="handleActionComplete($event)">
                         </mol-grid> -->
 
-                        <ejs-grid #GridData [id]="'GridDataBed'" [height]="'calc(100vh - 22rem)'"
+                        <ejs-grid #GridData [id]="'GridDataBed'" [height]="'calc(100vh - 22rem)'" [width]="'100%'"
                             [dataSource]="GridDatasource" [toolbar]="GridDataToolbar" [rowHeight]="30"
                             [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
                             (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)">
@@ -40,7 +40,7 @@
                                 <e-column [width]="80" [field]="'kode_poli'" [headerText]="'KODE POLI'" [visible]="true"
                                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                 </e-column>
-                                <e-column [width]="150" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
+                                <e-column [width]="200" [field]="'nama_poli'" [headerText]="'POLIKLINIK'"
                                     [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                 </e-column>
                                 <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'KELAS'" [visible]="true"
@@ -77,8 +77,12 @@
                                 <e-column [width]="100" [field]="'status_bed_descr'" [headerText]="'STATUS BED'"
                                     [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                 </e-column>
-                                <e-column [width]="90" [field]="'no_register'" [headerText]="'NO. REGISTER'"
+                                <e-column [width]="120" [field]="'status_approve'" [headerText]="'STATUS APPROVE'"
                                     [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                </e-column>
+                                <e-column [width]="90" [field]="'no_register'" [headerText]="'NO. REGISTER'"
+                                    [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                    [textAlign]="'Left'">
                                 </e-column>
                                 <e-column [width]="90" [field]="'no_rekam_medis'" [headerText]="'NO. RM'"
                                     [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
@@ -86,7 +90,7 @@
                                 <e-column [width]="120" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'"
                                     [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                 </e-column>
-                                <e-column [width]="100" [field]="'usia'" [headerText]="'USIA'" [visible]="true"
+                                <e-column [width]="120" [field]="'usia'" [headerText]="'USIA'" [visible]="true"
                                     [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                 </e-column>
                             </e-columns>
@@ -120,7 +124,7 @@
                                 </div>
                             </div>
 
-                            <!-- Kelas Room -->
+                            <!-- Kelas -->
                             <div class="row mb-2 align-items-center">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <atm-label [LabelCaption]="'Kelas'"></atm-label>

@@ -26,7 +26,7 @@ export class AntrianPemesananTempatTidurComponent implements OnInit {
     GridPageSettings = { pageSizes: false, pageSize: 30 };
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridDatasource: any[] = [];
-    GridToolbar: any[] = [];
+    GridToolbar: any[] = ["Search"];
     GridSelectedData: any;
     GridTextWrapSettings: TextWrapSettingsModel;
 
@@ -56,7 +56,7 @@ export class AntrianPemesananTempatTidurComponent implements OnInit {
             { text: 'Tgl. Rencana Masuk', value: 'tat.tanggal_rencana_masuk' },
         ];
 
-        this.onSetGridToolbarByDynamicStatusBed();
+        // this.onSetGridToolbarByDynamicStatusBed();
 
         this.GridTextWrapSettings = { wrapMode: 'Header' };
 

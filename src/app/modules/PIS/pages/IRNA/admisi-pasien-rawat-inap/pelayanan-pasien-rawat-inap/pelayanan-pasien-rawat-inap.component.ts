@@ -56,7 +56,7 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     DropdownRuanganField: object = { text: 'jenis_ruangan', value: 'id_jenis_ruangan' };
 
     @ViewChild('LookupKodePoli') LookupKodePoli: OrgInputLookUpKodeComponent;
-    urlPoli: string;
+    urlPoli: string = "";
 
     @ViewChild('LookupKodeDokter') LookupKodeDokter: OrgInputLookUpKodeComponent;
     urlDokter = this.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP;
@@ -176,6 +176,14 @@ export class PelayananPasienRawatInapComponent implements OnInit {
                             this.imageSrc = result.data;
                         });
 
+                    this.id_jenis_ruangan.setValue(Person.id_jenis_ruangan);
+
+                    let atmkode_poli = document.getElementById("atmkode_poli") as HTMLInputElement;
+                    atmkode_poli.value = Person.kode_poli;
+
+                    let titlekode_poli = document.getElementById("titlekode_poli") as HTMLInputElement;
+                    titlekode_poli.value = Person.nama_poli;
+
                     this.onGetAllDebiturByPersonId(Person.id_person);
 
                     this.no_rekam_medis.setValue(Person.no_rekam_medis);
@@ -271,7 +279,7 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     }
 
     handleChangeDropdownRuangan(JenisRuanganId: number): void {
-        this.urlPoli = this.API_BILLING_SETUP_DATA.SETUP_POLI.GET_ALL_POLI_FOR_LOOKUP_ADMISI + JenisRuanganId;
+        this.urlPoli = this.API_BILLING_SETUP_DATA.SETUP_POLI.GET_ALL_POLI_FOR_LOOKUP_ADMISI_RAWAT_INAP + JenisRuanganId;
     }
 
     heandleSelectedMR(args: any): void {

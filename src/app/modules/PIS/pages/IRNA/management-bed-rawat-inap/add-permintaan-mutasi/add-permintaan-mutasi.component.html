@@ -1,0 +1,134 @@
+<!-- Modal Add Permintaan Mutasi -->
+<button id="btnOpenModalPermintaanMutasi" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalPermintaanMutasi" [hidden]="true">
+    Launch Modal Add Permintaan Mutasi
+</button>
+
+<div class="modal fade" id="modalPermintaanMutasi" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalPermintaanMutasiLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalPermintaanMutasiLabel">Permintaan Mutasi Tempat Tidur</h5>
+                <button id="btnCloseModalPermintaanMutasi" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormPermintaanMutasiBed">
+                    <!-- No. Register -->
+                    <mol-input-text [disabled]="true" [label]="'No. Register Pasien'" [id]="'no_register'"
+                        [inputFieldState]="'detail'">
+                    </mol-input-text>
+
+                    <!-- Nama Pasien -->
+                    <mol-input-text [disabled]="true" [label]="'Nama Pasien'" [id]="'nama_pasien'"
+                        [inputFieldState]="'detail'">
+                    </mol-input-text>
+
+                    <!-- Room Awal -->
+                    <mol-input-text [disabled]="true" [label]="'Room Awal'" [id]="'room_no_awal'"
+                        [inputFieldState]="'detail'">
+                    </mol-input-text>
+
+                    <!-- Bed Awal -->
+                    <div class="row mb-4">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Bed Awal'"></atm-label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <input [id]="'bed_no_awal'" class="form-control form-select-sm see-detail" type="text"
+                                readonly>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label class="form-label font-cabin mb-0">Kelas</label>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input [id]="'nama_kelas_awal'" class="form-control form-select-sm see-detail"
+                                        type="text" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Request -->
+                    <org-input-look-up #LookupRoomRequest [modal-title]="'Data Room'" [lookup-url]="UrlLookupRoom"
+                        [idTitle]="'room_descr'" (onGetSelectedData)="handleSelectedLookupRoom($event)"
+                        [columns]="GridConfig.LookupRoom.columns" [filter-lookup]="GridConfig.LookupRoom.filter"
+                        [label]="'Room Tujuan'">
+                    </org-input-look-up>
+
+                    <!-- Bed Tujuan -->
+                    <div class="row mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Bed Tujuan'"></atm-label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="input-group">
+                                <input formControlName="bed_no_tujuan" type="text" class="form-control form-select-sm"
+                                    readonly aria-describedby="btnInputGroup">
+
+                                <button id="btnInputGroup" class="btn btn-primary rounded btn_lookup_bed_tujuan"
+                                    type="button" (click)="LookupBedRequest.onOpenModal()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                                <org-look-up #LookupBedRequest [modal-title]="ModalTitleLookupBed"
+                                    [modal-title]="ModalTitleLookupBed" [lookup-url]="UrlLookupBed" [idTitle]="'bed_no'"
+                                    (onGetSelectedData)="handleSelectedLookupBed($event)"
+                                    [columns]="GridConfig.LookupBed.columns"
+                                    [filter-lookup]="GridConfig.LookupBed.filter"
+                                    [static-filter]="StaticFilterLookupBed">
+                                </org-look-up>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label class="form-label font-cabin mb-0">Kelas</label>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input formControlName="nama_kelas_tujuan" class="form-control form-select-sm"
+                                        type="text" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tgl. Rencana Masuk -->
+                    <div class="row mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <ejs-datetimepicker #DateTimePickerTglRequest [timeFormat]="'HH:mm'"
+                                [format]="'dd/MM/yyyy HH:mm'" formControlName="tanggal_bed_request">
+                            </ejs-datetimepicker>
+                        </div>
+                    </div>
+
+                    <!-- Keterangan -->
+                    <div class="row mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Keterangan'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <textarea formControlName="keterangan_request" rows="2" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitPermintaanMutasi(FormPermintaanMutasiBed.value)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

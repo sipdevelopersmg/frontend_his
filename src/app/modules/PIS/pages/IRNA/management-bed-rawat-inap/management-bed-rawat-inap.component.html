@@ -1,0 +1,132 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <!-- Informasi Pasien -->
+    <div class="row mb-3">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-2">
+                    <div class="row align-items-center">
+                        <!-- Photo Pasien -->
+                        <div class="col-1 text-center pe-0">
+                            <img [src]="PhotoPasien" alt="photo-pasien"
+                                class="photo_pasien_management_bed rounded shadow-sm">
+                        </div>
+
+                        <div class="col-11 ps-5">
+                            <div class="row">
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Nama Pasien</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ nama_pasien.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">No. Reg</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ no_register.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Gender</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ gender.value | titlecase }}
+                                    </p>
+                                </div>
+
+                                <div class="col-3 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Debitur</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ nama_debitur.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-3 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">No. Room / No. Bed</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ room_no.value }} / {{ bed_no.value }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-2 mb-0 ps-0">
+                                    <p class="text-biru-muda mb-0">Usia</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ umur.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">NO. RM</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ no_rekam_medis.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-0 ps-0">
+                                    <p class="text-biru-muda mb-0">Tgl Admisi</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ tgl_admisi.value | date: 'dd/MM/yyyy' }}
+                                    </p>
+                                </div>
+
+                                <div class="col-6 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Poliklinik</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ nama_poli.value }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
+            <org-tabs-item>
+                <org-tabs-label [Id]="'Daftar_Permintaan'">Daftar Permintaan</org-tabs-label>
+                <org-tabs-body>
+                    <mol-grid #GridDaftarPermintaan [grid-height]="'calc(100vh - 29rem)'"
+                        [grid-DataSource]="GridDaftarPermintaanDatasource" [grid-paging]="false"
+                        [grid-editSettings]="GridDaftarPermintaanEditSettings" [grid-lines]="'Both'"
+                        [grid-toolbar]="GridDaftarPermintaanToolbar" [columns]="GridConfig.GridDaftarPermintaanColumns"
+                        (row-selected)="handleSelectedRowDaftarPermintaan($event)"
+                        (toolbar-click)="handleToolbarClickDaftarPermintaan($event)"
+                        (initialized)="InitalizedGrid($event)">
+                    </mol-grid>
+                </org-tabs-body>
+            </org-tabs-item>
+
+            <org-tabs-item>
+                <org-tabs-label [Id]="'Daftar_Mutasi'">Daftar Mutasi</org-tabs-label>
+                <org-tabs-body>
+                    <mol-grid #GridDaftarMutasi [grid-height]="'calc(100vh - 29rem)'"
+                        [grid-DataSource]="GridDaftarMutasi" [grid-paging]="false"
+                        [grid-editSettings]="GridDaftarMutasiEditSettings" [grid-lines]="'Both'"
+                        [grid-toolbar]="GridDaftarMutasiToolbar" [columns]="GridConfig.GridDaftarMutasiColumns"
+                        (row-selected)="handleSelectedRowDaftarMutasi($event)"
+                        (toolbar-click)="handleToolbarClickDaftarMutasi($event)" (initialized)="InitalizedGrid($event)">
+                    </mol-grid>
+                </org-tabs-body>
+            </org-tabs-item>
+        </org-tabs>
+    </div>
+
+    <app-add-permintaan-mutasi #AddPermintaanMutasi
+        [FormPermintaanMutasiBedAdditionalInfo]="FormPermintaanMutasiBedAdditionalInfo"
+        (onSendFormPermintaanMutasi)="handleSubmitPermintaanMutasi($event)">
+    </app-add-permintaan-mutasi>
+
+    <app-batalkan-permintaan-mutasi-bed #BatalkanPermintaanMutasiBed [TransferBedId]="TransferBedId"
+        (onSendBatalkanRequestMutasi)="handleBatalkanPermintaanMutasiBed($event)">
+    </app-batalkan-permintaan-mutasi-bed>
+
+    <app-approve-permintaan-mutasi-bed #ApprovePermintaanMutasiBed
+        [FormApprovePermintaanMutasiAdditionalInfo]="FormApprovePermintaanMutasiAdditionalInfo"
+        (onSendApproveRequestMutasi)="handleApprovePermintaanMutasiBed($event)">
+    </app-approve-permintaan-mutasi-bed>
+</org-card-layout>

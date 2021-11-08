@@ -58,7 +58,6 @@ export class OrgLookUpComponent implements OnInit {
 
     @Input("SelectedInputId") SelectedInputId: string;
 
-
     @ViewChild('template') template: TemplateRef<any>;
     @ViewChild('grid') grid: MolGridComponent;
 
@@ -194,5 +193,4 @@ export class OrgLookUpComponent implements OnInit {
     ngOnDestroy() {
         this.gridDataSource = [];
     }
-
 }
