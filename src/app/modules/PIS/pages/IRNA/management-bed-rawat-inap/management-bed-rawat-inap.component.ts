@@ -220,7 +220,11 @@ export class ManagementBedRawatInapComponent implements OnInit {
                 }
                 break;
             case 'approve':
-                this.ApprovePermintaanMutasiBed.handleOpenModalApproveRequestMutasi();
+                if (this.GridSelectedData) {
+                    this.ApprovePermintaanMutasiBed.handleOpenModalApproveRequestMutasi();
+                } else {
+                    this.utilityService.onShowingCustomAlert('error', 'Oops', 'Belum Ada Data Permintaan Mutasi Bed yang Dipilih');
+                }
                 break;
             default:
                 break;
