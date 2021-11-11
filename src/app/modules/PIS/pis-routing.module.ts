@@ -13,10 +13,14 @@ import { CariPasienAntrianTppriComponent } from "./pages/IRNA/admisi-pasien-rawa
 import { PelayananPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component";
 import { AntrianPemesananTempatTidurComponent } from "./pages/IRNA/daftar-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur.component";
 import { ManagementBedRawatInapComponent } from "./pages/IRNA/management-bed-rawat-inap/management-bed-rawat-inap.component";
+import { PemasukanRawatInapComponent } from "./pages/IRNA/pemasukan-rawat-inap/pemasukan-rawat-inap.component";
+import { RencanaPulangPasienComponent } from "./pages/IRNA/rencana-pulang-pasien/rencana-pulang-pasien.component";
 import { SetupBedComponent } from "./pages/IRNA/setup-bed/setup-bed/setup-bed.component";
 import { SetupKamarComponent } from "./pages/IRNA/setup-bed/setup-kamar/setup-kamar.component";
 import { SetupKategoriKamarComponent } from "./pages/IRNA/setup-bed/setup-kategori-kamar/setup-kategori-kamar.component";
 import { SetupStatusBedComponent } from "./pages/IRNA/setup-bed/setup-status-bed/setup-status-bed.component";
+import { UpdateStatusBedComponent } from "./pages/IRNA/setup-bed/update-status-bed/update-status-bed.component";
+import { SuratPengantarPembayaranComponent } from "./pages/IRNA/surat-pengantar-pembayaran/surat-pengantar-pembayaran.component";
 import { SetupAsalRujukanComponent } from "./pages/setup-data/setup-asal-rujukan/setup-asal-rujukan.component";
 import { SetupBahasaComponent } from "./pages/setup-data/setup-bahasa/setup-bahasa.component";
 import { SetupCutiDokterComponent } from "./pages/setup-data/setup-cuti-dokter/setup-cuti-dokter.component";
@@ -100,13 +104,16 @@ const pisRoutes: Routes = [
             { path: "setup-kamar", component: SetupKamarComponent, data: { title: "Setup Kamar Rawat Inap" } },
             { path: "setup-bed", component: SetupBedComponent, data: { title: "Setup Bed Rawat Inap" } },
             { path: "setup-status-bed", component: SetupStatusBedComponent, data: { title: "Setup Status Bed" } },
+            { path: "update-status-bed", component: UpdateStatusBedComponent, data: { title: "Update Status Bed" } },
             { path: "pencarian-pasien-rawat-inap", component: CariPasienAntrianTppriComponent, data: { title: "Pencarian Pasien Terdaftar Pada TPPRI" } },
             { path: "pelayanan-pasien-rawat-inap", component: AdmisiPasienRawatInapComponent, data: { title: "Pelayanan Pasien Rawat Inap" } },
             { path: "admisi-pasien-rawat-inap", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
             { path: "admisi-pasien-rawat-inap/:id/:key", component: PelayananPasienRawatInapComponent, data: { title: "Admisi Pasien Rawat Inap" } },
             { path: "antrian-pemesanan-tempat-tidur", component: AntrianPemesananTempatTidurComponent, data: { title: "Antrian Pemesanan Tempat Tidur" } },
             { path: "management-bed-rawat-inap/:id/:key", component: ManagementBedRawatInapComponent, data: { title: "Management Bed Rawat Inap" } },
-        ]
+            { path: "rencana-pulang-pasien/:id/:key", component: RencanaPulangPasienComponent, data: { title: "Rencana Pulang Pasien Rawat Inap" } },
+            { path: "surat-pengantar-pembayaran/:id/:key", component: SuratPengantarPembayaranComponent, data: { title: "Surat Pengantar Pembayaran Rawat Inap" } },
+            { path: "transaksi-pemasukan-rawat-inap", component: PemasukanRawatInapComponent, data: { title: "Transaksi Pemasukan Rawat Inap" }, },]
     }
 ]
 

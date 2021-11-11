@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { GetAllBedModel, GetByIdBedModel, IBedModel, PostSaveBedModel, PutUpdateBedModel, PutUpdateStatusBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
+import { GetAllBedModel, GetByIdBedModel, IBedModel, IPutUpdateStatusBedModel, PostSaveBedModel, PutUpdateBedModel, PutUpdateStatusBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
 import { HttpResponseModel, PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -72,6 +72,22 @@ export class SetupBedRoomService {
             id_setup_room: id_setup_room,
             id_setup_status_bed: id_setup_status_bed
         }).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+            })
+        );
+    }
+
+    onPutUpdateStatusBedRoomToOK(parameter: IPutUpdateStatusBedModel[]): Observable<PutUpdateStatusBedModel> {
+        return this.httpOperationService.defaultPutRequest(this.API_SETUP_BED.PUT_UPDATE_STATUS_BED_KE_OK, parameter).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+            })
+        );
+    }
+
+    onPutUpdateStatusBedRoomToTO(parameter: IPutUpdateStatusBedModel[]): Observable<PutUpdateStatusBedModel> {
+        return this.httpOperationService.defaultPutRequest(this.API_SETUP_BED.PUT_UPDATE_STATUS_BED_KE_TO, parameter).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
             })

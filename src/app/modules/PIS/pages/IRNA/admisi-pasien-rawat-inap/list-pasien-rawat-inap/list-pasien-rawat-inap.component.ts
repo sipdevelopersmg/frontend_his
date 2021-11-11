@@ -27,7 +27,7 @@ export class ListPasienRawatInapComponent implements OnInit {
         { text: 'Nama Debitur', value: 'sd.nama_debitur' },
         { text: 'No. Room', value: 'sr.room_no' },
         { text: 'No. Bed', value: 'sbr.bed_no' },
-    ]
+    ];
 
     GridData: MolGridComponent = null;
     GridPageSettings = { pageSizes: false, pageSize: 12 };

@@ -339,3 +339,44 @@ span.readonly-state > .e-numerictextbox {
     margin-left: -15rem !important;
   }
 }
+
+/** SETUP BED STYLING **/
+.statustemp.e_not_operational_color {
+  color: white !important;
+  background-color: var(--abu-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.statustemp.e_is_ready_color {
+  color: white !important;
+  background-color: var(--hijau-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.statustemp.e_is_fill_color {
+  color: white !important;
+  background-color: var(--kuning-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.statustemp.e_is_new_color {
+  color: white !important;
+  background-color: var(--biru-tua) !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}

@@ -99,3 +99,31 @@ export class GetAllAdmisiPasienRawatInapModel implements HttpResponseModel {
     data: IHistoryAdmisiPasienRawatInapModel[];
     message: string;
 }
+
+export interface IAdmisiPasienByIdRegisterModel {
+    id_register: number
+    id_person: number
+    tgl_admisi: string
+    no_rekam_medis: string
+    no_register: string
+    nama_pasien: string
+    gender: string
+    umur: string
+    id_poli: number
+    nama_poli: string
+    nama_debitur: string
+    id_kelas: number
+    nama_kelas: string
+    id_setup_bed_room: number
+    bed_no: string
+    id_setup_room: number
+    room_no: string
+    room_descr: string
+    room_category: string
+}
+
+export class GetAdmisiPasienRawatInapByIdRegisterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IAdmisiPasienByIdRegisterModel;
+    message: string;
+}

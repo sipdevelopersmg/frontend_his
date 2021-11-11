@@ -64,6 +64,8 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
             { Id: "input_pasien_baru", Icons1: 'fa-user-plus', Captions: '[F3] Pasien Baru' },
             { Id: "pelayanan_pasien_irna", Icons1: 'fa-folder-plus', Captions: '[F5] Pelayanan Pasien' },
             { Id: "management_bed_irna", Icons1: 'fa-procedures', Captions: 'Management Bed' },
+            { Id: "rencana_pulang_pasien", Icons1: 'fa-calendar-alt', Captions: 'Rencana Pulang' },
+            { Id: "surat_pengantar_pembayaran", Icons1: 'fa-envelope-open-text', Captions: 'Surat Pengantar Pembayaran' },
         ];
 
         this.FormPencarianPasien = this.formBuilder.group({
@@ -90,6 +92,13 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
                 break;
             case 'management_bed_irna':
                 this.onNavigateToManagementBedRawatInap(this.SelectedDaftarAdmisiPasien);
+                break;
+            case 'rencana_pulang_pasien':
+                this.onNavigateToRencanaPulangPasien(this.SelectedDaftarAdmisiPasien);
+                break;
+            case 'surat_pengantar_pembayaran':
+                this.onNavigateToSuratPengantarPembayaran(this.SelectedDaftarAdmisiPasien);
+                break;
             default:
                 break;
         }
@@ -241,9 +250,29 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
 
     onNavigateToManagementBedRawatInap(data: IPasienTeradmisiHariIniModel): void {
         if (data) {
-            const Person = this.encryptionService.encrypt(JSON.stringify(data));
+            const id_register = this.encryptionService.encrypt(JSON.stringify(data.id_register));
 
-            this.router.navigate(['dashboard/PIS/IRNA/management-bed-rawat-inap/', Person, "GRAHCIS"]);
+            this.router.navigate(['dashboard/PIS/IRNA/management-bed-rawat-inap/', id_register, "GRAHCIS"]);
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Data Admisi Belum Dipilih');
+        }
+    }
+
+    onNavigateToRencanaPulangPasien(data: IPasienTeradmisiHariIniModel): void {
+        if (data) {
+            const id_register = this.encryptionService.encrypt(JSON.stringify(data.id_register));
+
+            this.router.navigate(['dashboard/PIS/IRNA/rencana-pulang-pasien/', id_register, "GRAHCIS"]);
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Data Admisi Belum Dipilih');
+        }
+    }
+
+    onNavigateToSuratPengantarPembayaran(data: IPasienTeradmisiHariIniModel): void {
+        if (data) {
+            const id_register = this.encryptionService.encrypt(JSON.stringify(data.id_register));
+
+            this.router.navigate(['dashboard/PIS/IRNA/surat-pengantar-pembayaran/', id_register, "GRAHCIS"]);
         } else {
             this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Data Admisi Belum Dipilih');
         }

@@ -1,0 +1,107 @@
+<!-- Modal Add Permintaan Mutasi -->
+<button id="btnOpenModalDetailKematian" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalDetailKematian" [hidden]="true">
+    Launch Modal Add Permintaan Mutasi
+</button>
+
+<div class="modal fade" id="modalDetailKematian" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalDetailKematianLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalDetailKematianLabel">Pasien Meninggal</h5>
+                <button id="btnCloseModalDetailKematian" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormDetailKematian">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- No. MR -->
+                            <mol-input-text [disabled]="true" [label]="'No. MR'" [id]="'no_rekam_medis'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                            <!-- No. MR -->
+                            <mol-input-text [disabled]="true" [label]="'No. Register'" [id]="'no_register'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                            <!-- Nama Dokter -->
+                            <mol-input-text [disabled]="true" [label]="'Nama Dokter'" [id]="'nama_dokter'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                            <!-- No. Room -->
+                            <mol-input-text [disabled]="true" [label]="'No. Room'" [id]="'room_no'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                            <!-- No. Bed -->
+                            <mol-input-text [disabled]="true" [label]="'No. Bed'" [id]="'bed_no'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                            <!-- Tgl Masuk -->
+                            <mol-input-text [disabled]="true" [label]="'Tgl Masuk'" [id]="'tanggal_masuk'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                            <!-- Umur -->
+                            <mol-input-text [disabled]="true" [label]="'Umur'" [id]="'umur'"
+                                [inputFieldState]="'detail'">
+                            </mol-input-text>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Status Meninggal -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Status Meninggal'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownStatusMeninggal
+                                        [dataSource]="DropdownStatusMeninggalDatasource"
+                                        [fields]="DropdownStatusMeninggalFields" formControlName="status">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Tgl. Meninggal -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tgl. Meninggal'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-datetimepicker #DateTimePickerTglMeninggal [timeFormat]="'HH:mm'"
+                                        [format]="'dd/MM/yyyy HH:mm'" formControlName="tanggal_meninggal">
+                                    </ejs-datetimepicker>
+                                </div>
+                            </div>
+
+                            <!-- Keterangan -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Catatan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <textarea formControlName="catatan" rows="4" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitDetailKematian(FormDetailKematian.value)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

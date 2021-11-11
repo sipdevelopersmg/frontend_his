@@ -1,0 +1,111 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <!-- Offcanvas Filter -->
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-offcanvas-single-filter [FilterDropdownDatasource]="FilterDropdownDatasource"
+                [FilterDropdownFields]="FilterDropdownFields" [FilterDropdownColumn]="FilterDropdownColumn"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-single-filter>
+        </div>
+    </div>
+
+    <!-- Grid Data Bed -->
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ejs-grid #GridData [id]="'GridDataBed'" [height]="'calc(100vh - 21rem)'" [width]="'100%'"
+                [dataSource]="GridDatasource" [toolbar]="GridDataToolbar" [rowHeight]="30" [gridLines]="'Both'"
+                [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true' [allowGrouping]="true"
+                [groupSettings]="GridGroupSettings" [pageSettings]="GridPageSettings"
+                (rowSelected)="handleSelectedRow($event)" (rowDeselected)="handleSelectedRow($event)"
+                (toolbarClick)="handleToolbarClick($event)">
+                <e-columns>
+                    <e-column [width]="80" [field]="'Checkbox'" [visible]="true" [textAlign]="'Center'"
+                        [headerTextAlign]="'Center'" [type]="'Checkbox'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'bed_no'" [headerText]="'NO. BED'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'room_no'" [headerText]="'NO. ROOM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'kode_poli'" [headerText]="'KODE POLI'" [visible]="false"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="200" [field]="'nama_poli'" [headerText]="'POLIKLINIK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'nama_kelas'" [headerText]="'KELAS'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="90" [field]="'no_register'" [headerText]="'NO. REGISTER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="90" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="120" [field]="'usia'" [headerText]="'USIA'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [textAlign]="'Center'"
+                        [headerTextAlign]="'Center'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'tgl_masuk'" [headerText]="'TGL. MASUK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [textAlign]="'Left'"
+                        [type]="'DateTime'" [format]="'dd/MM/yyyy HH:mm'">
+                    </e-column>
+                    <e-column field='status_bed_descr' headerText='STATUS BED' width='100' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <!-- Not Operational -->
+                            <div *ngIf="data.is_fill == false && data.is_new == false && data.is_ready == false;"
+                                class="statustemp e_not_operational_color">
+                                <span class="statustxt e_not_operational_color">
+                                    {{ data.status_bed_descr }}
+                                </span>
+                            </div>
+
+                            <!-- Is Ready -->
+                            <div *ngIf="data.is_fill == false && data.is_new == false && data.is_ready == true"
+                                class="statustemp e_is_ready_color">
+                                <span class="statustxt e_is_ready_color">
+                                    {{ data.status_bed_descr }}
+                                </span>
+                            </div>
+
+                            <!-- Is Fill -->
+                            <div *ngIf="data.is_fill == true && data.is_new == false && data.is_ready == false"
+                                class="statustemp e_is_fill_color">
+                                <span class="statustxt e_is_fill_color">
+                                    {{ data.status_bed_descr }}
+                                </span>
+                            </div>
+
+                            <!-- Is New -->
+                            <div *ngIf="data.is_fill == false && data.is_new == true && data.is_ready == false"
+                                class="statustemp e_is_new_color">
+                                <span class="statustxt e_is_new_color">
+                                    {{ data.status_bed_descr }}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+                <ng-template #groupSettingsCaptionTemplate let-data>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p class="text-white mb-0" style="font-size: 15px">
+                                {{ data.headerText }} {{ data.key }} &nbsp; - &nbsp;
+                                <span class="mb-0 text-white">
+                                    {{ data.count }} Bed
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </ng-template>
+            </ejs-grid>
+        </div>
+    </div>
+</org-card-layout>

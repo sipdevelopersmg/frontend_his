@@ -104,20 +104,9 @@ export class AddPermintaanMutasiComponent implements OnInit {
         FormPermintaanMutasiBed.id_register = this.FormPermintaanMutasiBedAdditionalInfo['id_register'];
         FormPermintaanMutasiBed.id_setup_room_asal = this.FormPermintaanMutasiBedAdditionalInfo['id_setup_room'];
         FormPermintaanMutasiBed.id_setup_bed_room_asal = this.FormPermintaanMutasiBedAdditionalInfo['id_setup_bed_room'];
+        FormPermintaanMutasiBed.tanggal_bed_request = this.utilityService.onFormatDate(FormPermintaanMutasiBed.tanggal_bed_request);
 
         this.onSendFormPermintaanMutasi.emit(FormPermintaanMutasiBed);
-
-        // this.managementBedRawatInapService.onPostSaveRequestMutasiBed(FormPermintaanMutasiBed)
-        //     .subscribe((result) => {
-        //         if (result) {
-        //             this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan')
-        //                 .then(() => {
-        //                     this.handleCloseModalPermintaanMutasi();
-
-        //                     this.onGetDaftarPermintaanMutasiBedByIdRegister(FormPermintaanMutasiBed.id_register);
-        //                 });
-        //         }
-        //     })
     }
 
     handleResetFormPermintaanMutasi(): void {
@@ -146,8 +135,9 @@ export class AddPermintaanMutasiComponent implements OnInit {
         let nama_kelas_awal = document.getElementById("nama_kelas_awal") as HTMLInputElement;
         nama_kelas_awal.value = this.FormPermintaanMutasiBedAdditionalInfo['nama_kelas'];
 
-        let inputGrouproom_descr = document.getElementById("inputGrouproom_descr") as HTMLInputElement;
-        inputGrouproom_descr.value = "";
+        this.LookupRoomRequest.resetValue();
+
+        this.LookupBedRequest.resetValue();
     }
 
     get id_setup_room_tujuan(): AbstractControl { return this.FormPermintaanMutasiBed.get("id_setup_room_tujuan"); }

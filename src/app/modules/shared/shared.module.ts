@@ -56,6 +56,7 @@ import { MolTreeGridComponent } from './components/molecules/grid/tree-grid/tree
 import { MolOffcanvasFilterComponent } from './components/molecules/filter/mol-offcanvas-filter/mol-offcanvas-filter.component';
 import { MolInputCheckboxSingleComponent } from './components/molecules/form/mol-input-checkbox-single/mol-input-checkbox-single.component';
 import { MolInputNumericComponent } from './components/molecules/form/mol-input-numeric/mol-input-numeric.component';
+import { MolOffcanvasSingleFilterComponent } from './components/molecules/filter/mol-offcanvas-single-filter/mol-offcanvas-single-filter.component';
 
 import { OrgInputLookUpKodeComponent } from './components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from './components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -126,6 +127,7 @@ import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-loo
         OrgInputLookUpStaticFilterComponent,
         MolInputNumericComponent,
         OrgLookUpHirarkiComponent,
+        MolOffcanvasSingleFilterComponent,
     ],
     imports: [
         CommonModule,
@@ -210,6 +212,7 @@ import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-loo
         MatStepperModule,
         NgxMaterialTimepickerModule,
         DateTimePickerModule,
+        MolOffcanvasSingleFilterComponent,
     ],
     providers: [
         EditService,

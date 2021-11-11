@@ -22,6 +22,8 @@ export const POST_SAVE_BED_ROOM = `${environment.webApiPis}` + "SetupBedRoom/Ins
 export const PUT_UPDATE_BED_ROOM = `${environment.webApiPis}` + "SetupBedRoom/Update";
 export const PUT_UPDATE_STATUS_ACTIVE_BED_ROOM = `${environment.webApiPis}` + "SetupBedRoom/UpdateStatus";
 export const PUT_UPDATE_STATUS_BED = `${environment.webApiPis}` + "SetupBedRoom/UpdateStatusBed";
+export const PUT_UPDATE_STATUS_BED_KE_OK = `${environment.webApiPis}` + "SetupBedRoom/UpdateStatusBedToOK";
+export const PUT_UPDATE_STATUS_BED_KE_TO = `${environment.webApiPis}` + "SetupBedRoom/UpdateStatusBedToTO";
 
 export const GET_ALL_STATUS_BED_ROOM = `${environment.webApiPis}` + "SetupStatusBed/GetAll";
 export const GET_BY_ID_STATUS_BED_ROOM = `${environment.webApiPis}` + "SetupStatusBed/GetById/";

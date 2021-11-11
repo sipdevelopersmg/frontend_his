@@ -15,6 +15,10 @@ import { AddPermintaanMutasiComponent } from './add-permintaan-mutasi/add-permin
 import { BatalkanPermintaanMutasiComponent } from './batalkan-permintaan-mutasi/batalkan-permintaan-mutasi.component';
 import Swal from 'sweetalert2';
 import { ApprovePermintaanMutasiComponent } from './approve-permintaan-mutasi/approve-permintaan-mutasi.component';
+import { IApproveRequestMutasiModel, IBatalkanMutasiModel, IGetDaftarMutasiBedModel } from '../../../models/IRNA/management_bed_rawat_inap.model';
+import { AdmisiPasienRawatInapService } from '../../../services/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.service';
+import { Location } from '@angular/common';
+import { BatalkanMutasiComponent } from './batalkan-mutasi/batalkan-mutasi.component';
 
 @Component({
     selector: 'app-management-bed-rawat-inap',
@@ -42,10 +46,10 @@ export class ManagementBedRawatInapComponent implements OnInit {
     GridSelectedData: any;
 
     GridDaftarMutasi: MolGridComponent = null;
-    GridDaftarMutasiDatasource: any[];
+    GridDaftarMutasiDatasource: IGetDaftarMutasiBedModel[];
     GridDaftarMutasiEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridDaftarMutasiToolbar: any[];
-    GridDaftarMutasiSelectedData: any;
+    GridDaftarMutasiSelectedData: IGetDaftarMutasiBedModel;
 
     API_CONFIG = API_CONFIG;
 
@@ -58,6 +62,9 @@ export class ManagementBedRawatInapComponent implements OnInit {
     @ViewChild('ApprovePermintaanMutasiBed') ApprovePermintaanMutasiBed: ApprovePermintaanMutasiComponent;
     FormApprovePermintaanMutasiAdditionalInfo: any;
 
+    @ViewChild('BatalkanMutasiBed') BatalkanMutasiBed: BatalkanMutasiComponent;
+    FormPembatalanMutasiAdditionalInfo: IBatalkanMutasiModel;
+
     @HostListener("window:resize", ['$event'])
     private onResize(event: any) {
         this.onDetectScreenSize(event.srcElement.innerWidth);
@@ -65,10 +72,12 @@ export class ManagementBedRawatInapComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private location: Location,
         private formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
         private utilityService: UtilityService,
         private encryptionService: EncryptionService,
+        private admisiRawatInapService: AdmisiPasienRawatInapService,
         private pendaftaranPasienBaruService: PendaftaranPasienBaruService,
         private managementBedRawatInapService: ManagementBedRawatInapService,
     ) { }
@@ -111,7 +120,7 @@ export class ManagementBedRawatInapComponent implements OnInit {
                 this.router.navigateByUrl('dashboard/PIS/IRNA/pelayanan-pasien-rawat-inap');
                 break;
             case 'Refresh':
-                this.onGetDaftarPermintaanMutasiBedByIdRegister(this.id_register.value);
+                this.onGetDetailAdmisiPasien();
                 break;
             case 'Permintaan_Mutasi':
                 this.AddPermintaanMutasi.handleOpenModalPermintaanMutasi();
@@ -123,32 +132,39 @@ export class ManagementBedRawatInapComponent implements OnInit {
 
     onGetDetailAdmisiPasien(): void {
         if (this.activatedRoute.snapshot.params['id']) {
-            let Person: IPasienTeradmisiHariIniModel = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params['id']));
+            let id_register = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params['id']));
 
-            this.id_person.setValue(Person['id_person']);
-            this.id_register.setValue(Person['id_register']);
-            this.nama_pasien.setValue(Person.nama_pasien);
-            this.no_rekam_medis.setValue(Person.no_rekam_medis);
-            this.no_register.setValue(Person.no_register);
-            this.gender.setValue(Person.gender);
-            this.umur.setValue(Person.umur);
-            this.tgl_admisi.setValue(Person.tgl_admisi);
-            this.nama_debitur.setValue(Person.nama_debitur);
-            this.id_setup_room.setValue(Person['id_setup_room']);
-            this.room_no.setValue(Person['room_no']);
-            this.id_setup_bed_room.setValue(Person['id_setup_bed_room']);
-            this.bed_no.setValue(Person['bed_no']);
-            this.nama_poli.setValue(Person.nama_poli);
-            this.nama_kelas.setValue(Person['nama_kelas']);
-
-            this.FormPermintaanMutasiBedAdditionalInfo = this.FormManagementBed.value;
-
-            this.pendaftaranPasienBaruService.onGetLinkFotoPerson(Person['id_person'], false)
+            this.admisiRawatInapService.onGetAdmisiPasienRawatInapByIdRegister(id_register)
                 .subscribe((result) => {
-                    this.PhotoPasien = result.data;
+                    if (result) {
+                        this.id_person.setValue(result.data['id_person']);
+                        this.id_register.setValue(result.data['id_register']);
+                        this.nama_pasien.setValue(result.data.nama_pasien);
+                        this.no_rekam_medis.setValue(result.data.no_rekam_medis);
+                        this.no_register.setValue(result.data.no_register);
+                        this.gender.setValue(result.data.gender);
+                        this.umur.setValue(result.data.umur);
+                        this.tgl_admisi.setValue(result.data.tgl_admisi);
+                        this.nama_debitur.setValue(result.data.nama_debitur);
+                        this.id_setup_room.setValue(result.data['id_setup_room']);
+                        this.room_no.setValue(result.data['room_no']);
+                        this.id_setup_bed_room.setValue(result.data['id_setup_bed_room']);
+                        this.bed_no.setValue(result.data['bed_no']);
+                        this.nama_poli.setValue(result.data.nama_poli);
+                        this.nama_kelas.setValue(result.data['nama_kelas']);
+
+                        this.FormPermintaanMutasiBedAdditionalInfo = this.FormManagementBed.value;
+
+                        this.pendaftaranPasienBaruService.onGetLinkFotoPerson(result.data['id_person'], false)
+                            .subscribe((result) => {
+                                this.PhotoPasien = result.data;
+                            });
+                    }
                 });
 
-            this.onGetDaftarPermintaanMutasiBedByIdRegister(this.id_register.value);
+            this.onGetDaftarPermintaanMutasiBedByIdRegister(id_register);
+
+            this.onGetDaftarMutasiBedByIdRegister(id_register);
         }
     }
 
@@ -179,8 +195,15 @@ export class ManagementBedRawatInapComponent implements OnInit {
             });
     }
 
+    onGetDaftarMutasiBedByIdRegister(id_register: number): void {
+        this.managementBedRawatInapService.onGetDaftarMutasiBedByIdRegister(id_register)
+            .subscribe((result) => {
+                this.GridDaftarMutasiDatasource = result.data;
+            });
+    }
+
     handleSelectedTabId(TabId: string): void {
-        console.log(TabId);
+        // console.log(TabId);
     }
 
     InitalizedGrid(component: MolGridComponent) {
@@ -198,11 +221,13 @@ export class ManagementBedRawatInapComponent implements OnInit {
             nomor_bed_transfer: this.GridSelectedData['nomor_bed_transfer'],
             id_register: this.GridSelectedData['id_register'],
             id_bed_transfer: this.GridSelectedData['id_bed_transfer'],
+            id_poli_tujuan: this.GridSelectedData['id_poli_tujuan'],
             id_kelas_tujuan: this.GridSelectedData['id_kelas_tujuan'],
             id_setup_room_asal: this.GridSelectedData['id_setup_room_asal'],
             id_setup_bed_room_asal: this.GridSelectedData['id_setup_bed_room_asal'],
             id_setup_room_tujuan: this.GridSelectedData['id_setup_room_tujuan'],
             id_setup_bed_room_tujuan: this.GridSelectedData['id_setup_bed_room_tujuan'],
+            tanggal_bed_request: this.GridSelectedData['tanggal_bed_request'],
         };
 
         this.FormApprovePermintaanMutasiAdditionalInfo = additional_info;
@@ -233,13 +258,25 @@ export class ManagementBedRawatInapComponent implements OnInit {
 
     handleSelectedRowDaftarMutasi(args: any): void {
         this.GridDaftarMutasiSelectedData = args.data;
+
+        let additional_info: IBatalkanMutasiModel = {
+            id_bed_history: this.GridDaftarMutasiSelectedData.id_bed_history,
+            id_register: this.GridDaftarMutasiSelectedData.id_register,
+            id_kelas_tujuan: this.GridDaftarMutasiSelectedData.id_kelas,
+            id_poli_tujuan: this.GridDaftarMutasiSelectedData.id_poli,
+            id_setup_room_tujuan: this.GridDaftarMutasiSelectedData.id_setup_room,
+            id_setup_bed_room_tujuan: this.GridDaftarMutasiSelectedData.id_setup_bed_room,
+            tgl_masuk_dibatalkan: this.GridDaftarMutasiSelectedData.tgl_masuk_timestamp,
+        };
+
+        this.FormPembatalanMutasiAdditionalInfo = additional_info;
     }
 
     handleToolbarClickDaftarMutasi(args: any): void {
         let id = args.item.id;
 
         if (id == "batalkan_mutasi") {
-
+            this.BatalkanMutasiBed.handleOpenModalPembatalanRequestMutasi();
         };
     }
 
@@ -266,6 +303,7 @@ export class ManagementBedRawatInapComponent implements OnInit {
             showCancelButton: false,
             confirmButtonText: `Yes`,
             denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
         }).then((result) => {
             if (result.isConfirmed) {
                 this.managementBedRawatInapService.onPostCancelRequestMutasiBed(FormPembatalanRequestMutasiBed.id_bed_transfer, FormPembatalanRequestMutasiBed.reason_canceled)
@@ -275,7 +313,7 @@ export class ManagementBedRawatInapComponent implements OnInit {
                                 .then(() => {
                                     this.BatalkanPermintaanMutasiBed.handleCloseModalPembatalanRequestMutasi();
 
-                                    this.onGetDaftarPermintaanMutasiBedByIdRegister(this.id_register.value);
+                                    this.onGetDetailAdmisiPasien();
                                 });
                         }
                     });
@@ -283,8 +321,45 @@ export class ManagementBedRawatInapComponent implements OnInit {
         });
     }
 
-    handleApprovePermintaanMutasiBed(FormApproveMutasiBed: any): void {
-        console.log(FormApproveMutasiBed);
+    handleApprovePermintaanMutasiBed(FormApproveMutasiBed: IApproveRequestMutasiModel): void {
+        this.managementBedRawatInapService.onPostApproveRequestMutasiBed(FormApproveMutasiBed)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Permintaan Mutasi Bed Berhasil Approve')
+                        .then(() => {
+                            this.ApprovePermintaanMutasiBed.handleCloseModalApproveRequestMutasi();
+
+                            this.onGetDetailAdmisiPasien();
+                        });
+                }
+            });
+    }
+
+    handleBatalkanMutasiBed(FormBatalkanMutasi: any): void {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah Anda Yakin?',
+            text: 'Data yang Dibatalkan Tidak Dapat Dikembalikan',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.managementBedRawatInapService.onPostCancelMutasiBed(FormBatalkanMutasi)
+                    .subscribe((result) => {
+                        if (result) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Mutasi Bed Berhasil Dibatalkan')
+                                .then(() => {
+                                    this.BatalkanMutasiBed.handleCloseModalPembatalanMutasi();
+
+                                    this.onGetDetailAdmisiPasien();
+                                });
+                        }
+                    });
+            }
+        });
     }
 
     get id_person(): AbstractControl { return this.FormManagementBed.get("id_person"); }

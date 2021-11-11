@@ -48,3 +48,9 @@ export class PutUpdateStatusBedModel implements HttpResponseModel {
     data: any;
     message: string;
 }
+
+export interface IPutUpdateStatusBedModel {
+    id_setup_bed_room: number
+    id_setup_room: number
+    bed_no: string
+}

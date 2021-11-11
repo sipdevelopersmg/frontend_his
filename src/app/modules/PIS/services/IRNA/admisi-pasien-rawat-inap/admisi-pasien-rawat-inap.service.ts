@@ -7,7 +7,7 @@ import { HttpOperationService } from 'src/app/modules/shared/services/http-opera
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/PIS/IRNA';
 import { PostAdmisiRawatJalanWithPenjaminModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
-import { GetAllAdmisiPasienRawatInapModel, IAdmisiPasienRawatInapModel, IAdmisiPasienRawatInapNonTPPRIModel, PostAdmisiRawatInapNonPenjaminNonTPPRIModel, PostAdmisiRawatInapWithPenjaminNonTPPRIModel, PostAdmisiRawatInapWithPenjaminTPRRIModel, PostAdmisiRawatJalanWithNonPenjaminTPRRIModel, PutUpdateAdmisiRawatInapDifferentBedModel } from '../../../models/IRNA/admisi-pasien-rawat-inap.model';
+import { GetAdmisiPasienRawatInapByIdRegisterModel, GetAllAdmisiPasienRawatInapModel, IAdmisiPasienRawatInapModel, IAdmisiPasienRawatInapNonTPPRIModel, PostAdmisiRawatInapNonPenjaminNonTPPRIModel, PostAdmisiRawatInapWithPenjaminNonTPPRIModel, PostAdmisiRawatInapWithPenjaminTPRRIModel, PostAdmisiRawatJalanWithNonPenjaminTPRRIModel, PutUpdateAdmisiRawatInapDifferentBedModel } from '../../../models/IRNA/admisi-pasien-rawat-inap.model';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +31,10 @@ export class AdmisiPasienRawatInapService {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
+    }
+
+    onGetAdmisiPasienRawatInapByIdRegister(RegisterId: number): Observable<GetAdmisiPasienRawatInapByIdRegisterModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ADMISI_PASIEN_IRNA_BY_ID_REGISTER + RegisterId);
     }
 
     /**
@@ -95,12 +99,12 @@ export class AdmisiPasienRawatInapService {
         );
     }
 
-    onGetPasienByPoli(id_poli): Observable<any>{
-        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_PASIEN_BY_POLI+'/'+id_poli)
-        .pipe(
-            catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-            })
-        );
+    onGetPasienByPoli(id_poli): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_PASIEN_BY_POLI + '/' + id_poli)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }

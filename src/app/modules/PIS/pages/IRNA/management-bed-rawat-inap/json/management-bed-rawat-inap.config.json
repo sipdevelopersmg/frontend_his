@@ -118,7 +118,7 @@
             "allowEditing": true,
             "allowSorting": true,
             "editType": "numericEdit",
-            "field": "id_bed_transfer",
+            "field": "id_bed_history",
             "format": "N",
             "headerText": "ID",
             "type": "number",
@@ -140,7 +140,7 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "tanggal_bed_request",
+            "field": "tgl_masuk",
             "headerText": "TGL. MUTASI",
             "visible": true,
             "width": 100
@@ -167,7 +167,7 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_kelas_tujuan",
+            "field": "nama_kelas",
             "headerText": "KELAS",
             "visible": true,
             "width": 80

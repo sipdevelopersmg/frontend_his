@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/PIS/IRNA';
-import { GetDaftarPermintaanMutasiByIdRegisterModel, IRequestMutasiBedModel, PostCancelRequestMutasiBedModel, PostSaveRequestMutasiBedModel } from '../../../models/IRNA/management_bed_rawat_inap.model';
+import { GetDaftarMutasiByIdRegisterModel, GetDaftarPermintaanMutasiByIdRegisterModel, IApproveRequestMutasiModel, IBatalkanMutasiModel, IRequestMutasiBedModel, PostApproveRequestMutasiBedModel, PostCancelMutasiBedModel, PostCancelRequestMutasiBedModel, PostSaveRequestMutasiBedModel } from '../../../models/IRNA/management_bed_rawat_inap.model';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +21,10 @@ export class ManagementBedRawatInapService {
 
     onGetDaftarPermintaanMutasiBedByIdRegister(RegisterId: number): Observable<GetDaftarPermintaanMutasiByIdRegisterModel> {
         return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ALL_BED_TRANSFER_BY_ID_REGISTER + RegisterId);
+    }
+
+    onGetDaftarMutasiBedByIdRegister(RegisterId: number): Observable<GetDaftarMutasiByIdRegisterModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ALL_HISTORY_BED_TRANSFER_BY_ID_REGISTER + RegisterId);
     }
 
     onPostSaveRequestMutasiBed(parameter: IRequestMutasiBedModel): Observable<PostSaveRequestMutasiBedModel> {
@@ -41,5 +45,22 @@ export class ManagementBedRawatInapService {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
+    }
+
+    onPostApproveRequestMutasiBed(parameter: IApproveRequestMutasiModel): Observable<PostApproveRequestMutasiBedModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_APPROVE_REQUEST_MUTASI, parameter).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
+    onPostCancelMutasiBed(parameter: IBatalkanMutasiModel): Observable<PostCancelMutasiBedModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_CANCEL_MUTASI_BED, parameter)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }

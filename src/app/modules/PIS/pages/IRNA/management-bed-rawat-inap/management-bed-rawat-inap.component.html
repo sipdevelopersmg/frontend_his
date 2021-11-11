@@ -105,7 +105,7 @@
                 <org-tabs-label [Id]="'Daftar_Mutasi'">Daftar Mutasi</org-tabs-label>
                 <org-tabs-body>
                     <mol-grid #GridDaftarMutasi [grid-height]="'calc(100vh - 29rem)'"
-                        [grid-DataSource]="GridDaftarMutasi" [grid-paging]="false"
+                        [grid-DataSource]="GridDaftarMutasiDatasource" [grid-paging]="false"
                         [grid-editSettings]="GridDaftarMutasiEditSettings" [grid-lines]="'Both'"
                         [grid-toolbar]="GridDaftarMutasiToolbar" [columns]="GridConfig.GridDaftarMutasiColumns"
                         (row-selected)="handleSelectedRowDaftarMutasi($event)"
@@ -129,4 +129,9 @@
         [FormApprovePermintaanMutasiAdditionalInfo]="FormApprovePermintaanMutasiAdditionalInfo"
         (onSendApproveRequestMutasi)="handleApprovePermintaanMutasiBed($event)">
     </app-approve-permintaan-mutasi-bed>
+
+    <app-batalkan-mutasi-bed #BatalkanMutasiBed
+        [FormPembatalanMutasiAdditionalInfo]="FormPembatalanMutasiAdditionalInfo"
+        (onSendBatalkanMutasi)="handleBatalkanMutasiBed($event)">
+    </app-batalkan-mutasi-bed>
 </org-card-layout>

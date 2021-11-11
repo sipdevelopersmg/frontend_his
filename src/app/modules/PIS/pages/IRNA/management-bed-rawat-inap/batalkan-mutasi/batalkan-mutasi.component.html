@@ -1,1 +1,39 @@
-<p>batalkan-mutasi works!</p>
+<!-- Modal Batalkan Mutasi -->
+<button id="btnOpenModalPembatalanMutasi" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalBatalkanMutasi" [hidden]="true">
+    Launch Modal Add Batalkan Mutasi
+</button>
+
+<div class="modal fade" id="modalBatalkanMutasi" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalBatalkanMutasiLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalBatalkanMutasiLabel">Pembatalan Permintaan Mutasi Bed</h5>
+                <button id="btnCloseModalPembatalanMutasi" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormPembatalanMutasi">
+                    <!-- Alasan Pembatalan Permintaan Mutasi Bed -->
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="form-label mb-2 font-cabin">Alasan Pembatalan Mutasi Bed</label>
+                            <textarea formControlName="reason_canceled" rows="2" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitFormPembatalanMutasi(FormPembatalanMutasi.value)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

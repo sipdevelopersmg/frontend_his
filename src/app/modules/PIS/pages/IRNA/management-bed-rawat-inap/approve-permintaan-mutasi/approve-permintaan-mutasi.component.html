@@ -16,13 +16,21 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="FormApprovePermintaanMutasi">
-                    <!-- Alasan Approve Permintaan Mutasi Bed -->
+                    <!-- Tanggal Approve -->
                     <div class="row mb-2">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label class="form-label mb-2 font-cabin">Tanggal Approve</label>
-                            <ejs-datetimepicker #DateTimePickerTglRequest [timeFormat]="'HH:mm'"
-                                [format]="'dd/MM/yyyy HH:mm'">
+                            <ejs-datetimepicker #DateTimePickerTglApprove [timeFormat]="'HH:mm'"
+                                [format]="'dd/MM/yyyy HH:mm'" formControlName="tanggal_bed_approve">
                             </ejs-datetimepicker>
+                        </div>
+                    </div>
+
+                    <!-- Keterangan Approve -->
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="form-label mb-2 font-cabin">Keterangan Approve</label>
+                            <textarea formControlName="keterangan_approve" rows="2" class="form-control"></textarea>
                         </div>
                     </div>
                 </form>

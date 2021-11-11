@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { EditSettingsModel, PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { IBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
 import { SetupBedRoomService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-bed-room/setup-bed-room.service';
 import { SetupRoomService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-room/setup-room.service';
@@ -14,6 +14,7 @@ import * as API_CONFIG from '../../../../../../api/PIS/IRNA';
 import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/setup-poli/setup-poli.service';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { SetupStatusBedService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-status-bed/setup-status-bed.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-setup-bed',
@@ -72,8 +73,10 @@ export class SetupBedComponent implements OnInit {
     GridDatasource: any[];
     GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
+    GridPageSettings: PageSettingsModel;
     GridDataToolbar: any[];
     GridSelectedData: any;
+    GridGroupSettings: object = { showDropArea: false, columns: ['nama_poli'] };
 
     SelectedStatusBedRoom: number;
 
@@ -108,7 +111,17 @@ export class SetupBedComponent implements OnInit {
             is_active: [false, [Validators.required]],
         });
 
-        this.onSetGridToolbarByDynamicStatusBed();
+        // this.onSetGridToolbarByDynamicStatusBed();
+
+        this.GridDataToolbar = [
+            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+            { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+            { text: 'Update Status', tooltipText: 'Update Status', prefixIcon: 'fas fa-exchange-alt fa-sm', id: 'update_status' },
+            { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
+            'Search'
+        ];
+
+        this.GridPageSettings = { pageSize: 20, pageSizes: true }
 
         this.GetAllData();
     }
@@ -124,21 +137,21 @@ export class SetupBedComponent implements OnInit {
                 this.GridDataToolbar = [
                     { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
                     { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
-                    { text: 'Update Status', tooltipText: 'Update Status', prefixIcon: 'fas fa-exchange-alt fa-sm', id: 'update_status' },
+                    // { text: 'Update Status', tooltipText: 'Update Status', prefixIcon: 'fas fa-exchange-alt fa-sm', id: 'update_status' },
                     { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
                     {
                         text: `Update Bed -> ${is_ready.status_bed}`,
                         tooltipText: `Update Bed -> ${is_ready.status_bed}`,
                         prefixIcon: 'fas fa-clipboard-check fa-sm',
                         id: is_ready.id_setup_status_bed,
-                        method: () => { this.onUpdateStatusOk(); }
+                        method: () => { this.onUpdateStatusOk(is_ready.status_bed); }
                     },
                     {
                         text: `Update Bed -> ${not_operational.status_bed}`,
                         tooltipText: `Update Bed -> ${not_operational.status_bed}`,
                         prefixIcon: 'fas fa-ban fa-sm',
                         id: not_operational.id_setup_status_bed,
-                        method: () => { this.onUpdateStatusTo(); }
+                        method: () => { this.onUpdateStatusTo(not_operational.status_bed); }
                     },
                     "Search"
                 ];
@@ -404,32 +417,58 @@ export class SetupBedComponent implements OnInit {
             })
     }
 
-    onUpdateStatusOk(): void {
-        this.setupBedRoomService.onPutUpdateStatusBedRoom(
-            this.SelectedData.id_setup_bed_room,
-            this.SelectedData.id_setup_room,
-            this.SelectedStatusBedRoom
-        ).subscribe((result) => {
-            if (result) {
-                this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Bed Berhasil Ubah Ke OK')
-                    .then(() => {
-                        this.handlePencarianFilter([]);
-                    })
+    onUpdateStatusOk(status_bed: string): void {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah Anda Yakin?',
+            text: `Status Bed Akan Diubah Menjadi ${status_bed}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.setupBedRoomService.onPutUpdateStatusBedRoom(
+                    this.SelectedData.id_setup_bed_room,
+                    this.SelectedData.id_setup_room,
+                    this.SelectedStatusBedRoom
+                ).subscribe((result) => {
+                    if (result) {
+                        this.utilityService.onShowingCustomAlert('success', 'Success', `Status Bed Berhasil Ubah Ke ${status_bed}`)
+                            .then(() => {
+                                this.handlePencarianFilter([]);
+                            });
+                    }
+                });
             }
         });
     }
 
-    onUpdateStatusTo(): void {
-        this.setupBedRoomService.onPutUpdateStatusBedRoom(
-            this.SelectedData.id_setup_bed_room,
-            this.SelectedData.id_setup_room,
-            this.SelectedStatusBedRoom
-        ).subscribe((result) => {
-            if (result) {
-                this.utilityService.onShowingCustomAlert('success', 'Success', 'Status Bed Berhasil Ubah Ke TO')
-                    .then(() => {
-                        this.handlePencarianFilter([]);
-                    })
+    onUpdateStatusTo(status_bed: string): void {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah Anda Yakin?',
+            text: `Status Bed Akan Diubah Menjadi ${status_bed}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.setupBedRoomService.onPutUpdateStatusBedRoom(
+                    this.SelectedData.id_setup_bed_room,
+                    this.SelectedData.id_setup_room,
+                    this.SelectedStatusBedRoom
+                ).subscribe((result) => {
+                    if (result) {
+                        this.utilityService.onShowingCustomAlert('success', 'Success', `Status Bed Berhasil Ubah Ke ${status_bed}`)
+                            .then(() => {
+                                this.handlePencarianFilter([]);
+                            });
+                    }
+                });
             }
         });
     }

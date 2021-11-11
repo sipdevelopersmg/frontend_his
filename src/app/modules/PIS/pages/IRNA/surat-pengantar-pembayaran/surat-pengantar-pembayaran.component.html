@@ -1,0 +1,161 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <!-- Informasi Pasien -->
+    <div class="row mb-3">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-2">
+                    <div class="row align-items-center">
+                        <!-- Photo Pasien -->
+                        <div class="col-1 text-center pe-0">
+                            <img [src]="PhotoPasien" alt="photo-pasien"
+                                class="photo_pasien_management_bed rounded shadow-sm">
+                        </div>
+
+                        <div class="col-11 ps-5">
+                            <div class="row">
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Nama Pasien</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ nama_pasien.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">No. Reg</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ no_register.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Gender</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ gender.value | titlecase }}
+                                    </p>
+                                </div>
+
+                                <div class="col-3 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Debitur</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ nama_debitur.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-3 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">No. Room / No. Bed</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ room_no.value }} / {{ bed_no.value }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-2 mb-0 ps-0">
+                                    <p class="text-biru-muda mb-0">Usia</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ umur.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">NO. RM</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ no_rekam_medis.value }}
+                                    </p>
+                                </div>
+
+                                <div class="col-2 mb-0 ps-0">
+                                    <p class="text-biru-muda mb-0">Tgl Admisi</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ tgl_admisi.value | date: 'dd/MM/yyyy' }}
+                                    </p>
+                                </div>
+
+                                <div class="col-6 mb-2 ps-0">
+                                    <p class="text-biru-muda mb-0">Poliklinik</p>
+                                    <p class="text-hitam-muda mb-0">
+                                        {{ nama_poli.value }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form [formGroup]="FormSuratPengantarPembayaran">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <!-- Cara Pulang -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Cara Pulang'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #DropdownCaraPulang [dataSource]="DropdownCaraPulangDatasource"
+                            [fields]="DropdownCaraPulangField" [allowFiltering]="true" formControlName="id_cara_pulang"
+                            (change)="handleChangeDropdownCaraPulang($event)">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+
+                <div class="row mb-2 justify-content-end" *ngIf="CaraPulangMeninggal">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 d-grid gap-2">
+                        <button class="btn btn-primary btn-sm" type="button"
+                            (click)="DetailKematianPasien.handleOpenModalDetailKematian()">
+                            Detail Kematian
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kondisi Pulang -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Kondisi Pulang'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #DropdownKondisiPulang [dataSource]="DropdownKondisiPulangDatasource"
+                            [fields]="DropdownKondisiPulangField" [allowFiltering]="true"
+                            formControlName="id_kondisi_pulang" (change)="handleChangeDropdownKondisiPulang($event)">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+
+                <!-- Dokter Pemberi Ijin Pulang -->
+                <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Dokter'" [lookup-url]="urlDokter"
+                    [idKode]="'kode_dokter'" [idTitle]="'full_name'" (onGetSelectedData)="handleSelectedDokter($event)"
+                    [columns]="settingGrid.LookupDokter.columns" [filter-lookup]="settingGrid.LookupDokter.filter"
+                    [label]="'Dokter Pemberi Ijin Pulang'">
+                </org-input-look-up-kode>
+
+                <!-- Tgl Perintah Pulang -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tgl Perintah Pulang'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-datetimepicker #DateTimePickerTglPerintahPulang [timeFormat]="'HH:mm'"
+                            [format]="'dd/MM/yyyy HH:mm'" formControlName="tanggal_perintah_pulang">
+                        </ejs-datetimepicker>
+                    </div>
+                </div>
+
+                <!-- Keterangan Perintah Pulang -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Keterangan Perintah Pulang'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <textarea formControlName="keterangan_perintah_pulang" rows="2" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <app-detail-info-kematian #DetailKematianPasien [DetailInformasiKematianPasien]="FormInformasiPasien.value"
+        (onSendFormDetailKematian)="handleSubmitDetailKematian($event)">
+    </app-detail-info-kematian>
+</org-card-layout>

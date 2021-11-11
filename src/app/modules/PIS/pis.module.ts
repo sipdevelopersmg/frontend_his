@@ -55,6 +55,11 @@ import { AddPermintaanMutasiComponent } from './pages/IRNA/management-bed-rawat-
 import { ApprovePermintaanMutasiComponent } from './pages/IRNA/management-bed-rawat-inap/approve-permintaan-mutasi/approve-permintaan-mutasi.component';
 import { BatalkanPermintaanMutasiComponent } from './pages/IRNA/management-bed-rawat-inap/batalkan-permintaan-mutasi/batalkan-permintaan-mutasi.component';
 import { BatalkanMutasiComponent } from './pages/IRNA/management-bed-rawat-inap/batalkan-mutasi/batalkan-mutasi.component';
+import { PemasukanRawatInapComponent } from './pages/IRNA/pemasukan-rawat-inap/pemasukan-rawat-inap.component';
+import { UpdateStatusBedComponent } from './pages/IRNA/setup-bed/update-status-bed/update-status-bed.component';
+import { RencanaPulangPasienComponent } from './pages/IRNA/rencana-pulang-pasien/rencana-pulang-pasien.component';
+import { SuratPengantarPembayaranComponent } from './pages/IRNA/surat-pengantar-pembayaran/surat-pengantar-pembayaran.component';
+import { DetailInfoKematianComponent } from './pages/IRNA/surat-pengantar-pembayaran/detail-info-kematian/detail-info-kematian.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -111,6 +116,11 @@ const ngWizardConfig: NgWizardConfig = {
         ApprovePermintaanMutasiComponent,
         BatalkanPermintaanMutasiComponent,
         BatalkanMutasiComponent,
+        PemasukanRawatInapComponent,
+        UpdateStatusBedComponent,
+        RencanaPulangPasienComponent,
+        SuratPengantarPembayaranComponent,
+        DetailInfoKematianComponent,
     ],
     imports: [
         CommonModule,

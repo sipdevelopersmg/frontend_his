@@ -131,10 +131,10 @@ export class UtilityService {
      * @keterangan format month -> MMM = Sep, MMMM = September
      * @keterangan format year  -> yy = 21, yyyy = 2021
     */
-    onFormatDate(date: any, format: string): any {
+    onFormatDate(date: any, format?: string): any {
         moment.locale('id')
 
-        const date_now = moment(date).format(format);
+        let date_now = format ? moment(date).format(format) : moment(date).format();
 
         return date_now;
     }

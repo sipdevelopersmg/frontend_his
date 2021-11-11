@@ -5,7 +5,7 @@
             <org-tabs-label [Id]="'Data'">Data Debitur</org-tabs-label>
             <org-tabs-body>
                 <mol-grid #GridData [grid-height]="'calc(100vh - 20rem)'" [grid-DataSource]="GridDatasource"
-                    [grid-paging]="true" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
+                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
                     [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridDebiturColumns"
                     (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
                     (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
