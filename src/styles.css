@@ -33,6 +33,7 @@ body {
   --hijau-muda: #00ff7a;
   --hijau-tua: #009f4c;
   --kuning-tua: #9f9b00;
+  --merah-muda: #ff5000;
 }
 
 .icon {
@@ -216,6 +217,10 @@ body {
 /* .background-putih-tua {
     background-color: ;
 } */
+
+.text-merah-muda {
+  color: var(--merah-muda) !important;
+}
 
 .e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
   min-height: 14px !important;

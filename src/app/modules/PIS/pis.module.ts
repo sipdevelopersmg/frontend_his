@@ -60,6 +60,7 @@ import { UpdateStatusBedComponent } from './pages/IRNA/setup-bed/update-status-b
 import { RencanaPulangPasienComponent } from './pages/IRNA/rencana-pulang-pasien/rencana-pulang-pasien.component';
 import { SuratPengantarPembayaranComponent } from './pages/IRNA/surat-pengantar-pembayaran/surat-pengantar-pembayaran.component';
 import { DetailInfoKematianComponent } from './pages/IRNA/surat-pengantar-pembayaran/detail-info-kematian/detail-info-kematian.component';
+import { BatalkanPengantarPembayaranComponent } from './pages/IRNA/surat-pengantar-pembayaran/batalkan-pengantar-pembayaran/batalkan-pengantar-pembayaran.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -121,6 +122,7 @@ const ngWizardConfig: NgWizardConfig = {
         RencanaPulangPasienComponent,
         SuratPengantarPembayaranComponent,
         DetailInfoKematianComponent,
+        BatalkanPengantarPembayaranComponent,
     ],
     imports: [
         CommonModule,

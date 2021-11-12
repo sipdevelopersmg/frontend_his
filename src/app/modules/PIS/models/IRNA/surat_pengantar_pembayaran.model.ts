@@ -22,3 +22,79 @@ export class GetAllKondisiPulangModel implements HttpResponseModel {
     data: IKondisiPulangModel[];
     message: string;
 }
+
+export interface IInfoKematianModel {
+    id_register: number
+    tanggal_meninggal: string
+    catatan: string
+    status: string
+}
+
+export class PostSaveInfoKematianModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
+
+export interface IGetInfoKematianModel {
+    id_info_kematian: number
+    id_register: number
+    tanggal_meninggal: string
+    is_belum_ada_48_jam: boolean
+    catatan: string
+    status: string
+    user_inputed: number
+    time_inputed: string
+}
+
+export class GetInfoKematianByIdRegisterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IGetInfoKematianModel;
+    message: string;
+}
+
+export interface IPengantarPembayaranModel {
+    id_register: number
+    id_dokter_pemberi_perintah_pulang: number
+    id_cara_pulang: number
+    id_kondisi_pulang: number
+    id_rencana_pulang: number
+    tanggal_perintah_pulang: string
+    keterangan_perintah_pulang: string
+}
+
+export class PostSavePengantarPembayaranModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
+
+export class PostCancelPengantarPembayaranModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: string;
+    message: string;
+}
+
+export interface IGetPengantarPembayaranModel {
+    id_perintah_pulang: number
+    id_register: number
+    id_dokter_pemberi_perintah_pulang: number
+    id_cara_pulang: number
+    id_kondisi_pulang: number
+    id_rencana_pulang: number
+    tanggal_perintah_pulang: string
+    keterangan_perintah_pulang: string
+    user_inputed: number
+    time_inputed: string
+    user_verified: number
+    time_verified: string
+    user_canceled: number
+    time_canceled: string
+    reason_canceled: any
+}
+
+export class GetPengantarPembayaranByIdRegisterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IGetPengantarPembayaranModel;
+    message: string;
+}

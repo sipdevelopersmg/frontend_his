@@ -132,9 +132,33 @@ export class RencanaPulangPasienComponent implements OnInit {
                             .subscribe((result) => {
                                 this.PhotoPasien = result.data;
                             });
+
+                        this.onGetRencanaPulangPasien(result.data.id_register);
                     }
                 });
         }
+    }
+
+    onGetRencanaPulangPasien(RegisterId: number): void {
+        this.rencanaPulangPasienRawatInapService.onGetRencanaPulangPasienByIdRegister(RegisterId)
+            .subscribe((result) => {
+                if (result) {
+                    if (Object.keys(result.data).length > 0) {
+                        setTimeout(() => {
+                            this.id_dokter_pemberi_ijin_pulang.setValue(result.data.id_dokter_pemberi_ijin_pulang);
+                            this.tanggal_rencana_pulang.setValue(result.data.tanggal_rencana_pulang);
+                            this.keterangan_rencana_pulang.setValue(result.data.keterangan_rencana_pulang);
+
+                            let atmkode_dokter = document.getElementById("atmkode_dokter") as HTMLInputElement;
+                            atmkode_dokter.value = result.data.kode_dokter;
+
+                            let titlekode_dokter = document.getElementById("titlekode_dokter") as HTMLInputElement;
+                            titlekode_dokter.value = result.data.nama_dokter;
+
+                        }, 500);
+                    }
+                }
+            })
     }
 
     handleSelectedDokter(args: any): void {

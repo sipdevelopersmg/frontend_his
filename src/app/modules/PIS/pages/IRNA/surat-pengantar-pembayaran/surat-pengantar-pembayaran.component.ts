@@ -12,7 +12,8 @@ import { ICaraPulangModel, IKondisiPulangModel } from '../../../models/IRNA/sura
 import { PendaftaranPasienBaruService } from '../../../services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { AdmisiPasienRawatInapService } from '../../../services/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.service';
 import { RencanaPulangPasienService } from '../../../services/IRNA/rencana-pulang-pasien/rencana-pulang-pasien.service';
-import { SuratPengantarPembayaranService } from '../../../services/IRNA/surat-pengantar-pembayaran/surat-pengantar-pembayaran.service';
+import SuratPengantarPembayaranService from '../../../services/IRNA/surat-pengantar-pembayaran/surat-pengantar-pembayaran.service';
+import { BatalkanPengantarPembayaranComponent } from './batalkan-pengantar-pembayaran/batalkan-pengantar-pembayaran.component';
 import { DetailInfoKematianComponent } from './detail-info-kematian/detail-info-kematian.component';
 import settingGrid from './json/surat-pengantar-pembayaran.config.json';
 
@@ -48,7 +49,12 @@ export class SuratPengantarPembayaranComponent implements OnInit {
 
     CaraPulangMeninggal: boolean;
 
+    SudahPernahInputSpp: boolean;
+
     @ViewChild("DetailKematianPasien") DetailKematianPasien: DetailInfoKematianComponent;
+
+    @ViewChild("BatalkanPengantarPembayaran") BatalkanPengantarPembayaran: BatalkanPengantarPembayaranComponent;
+    RegisterId: number;
 
     constructor(
         private router: Router,
@@ -74,10 +80,13 @@ export class SuratPengantarPembayaranComponent implements OnInit {
         this.ButtonNav = [
             { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
             { Id: 'Refresh', Captions: 'Refresh', Icons1: 'fa-redo-alt' },
+            { Id: 'Cancel', Captions: 'Cancel', Icons1: 'fa-ban' },
             { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
         ];
 
         this.CaraPulangMeninggal = false;
+
+        this.SudahPernahInputSpp = false;
     }
 
     handleClickButtonNav(ButtonId: string): void {
@@ -87,6 +96,9 @@ export class SuratPengantarPembayaranComponent implements OnInit {
                 break;
             case 'Refresh':
                 this.onGetDetailAdmisiPasien();
+                break;
+            case 'Cancel':
+                this.BatalkanPengantarPembayaran.handleOpenModalPembatalanRequestPengantarPembayaran();
                 break;
             case 'Save':
                 this.onSubmitSuratPengantarPembayaran(this.FormSuratPengantarPembayaran.value);
@@ -133,6 +145,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
             bed_no: ['', []],
             nama_poli: ['', []],
             nama_kelas: ['', []],
+            nama_dokter: ['', []],
         });
     }
 
@@ -155,6 +168,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
             this.admisiRawatInapService.onGetAdmisiPasienRawatInapByIdRegister(id_register)
                 .subscribe((result) => {
                     if (result) {
+
                         this.id_person.setValue(result.data['id_person']);
                         this.id_register.setValue(result.data['id_register']);
                         this.id_register_pengantar_pembayaran.setValue(result.data['id_register']);
@@ -171,6 +185,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
                         this.bed_no.setValue(result.data['bed_no']);
                         this.nama_poli.setValue(result.data.nama_poli);
                         this.nama_kelas.setValue(result.data['nama_kelas']);
+                        this.nama_dokter.setValue(result.data['nama_dokter']);
 
                         this.pendaftaranPasienBaruService.onGetLinkFotoPerson(result.data['id_person'], false)
                             .subscribe((result) => {
@@ -178,6 +193,10 @@ export class SuratPengantarPembayaranComponent implements OnInit {
                             });
 
                         this.onGetRencanaPulangPasien(result.data.id_register);
+
+                        this.onGetPengantarPembayaran(result.data.id_register);
+
+                        this.RegisterId = result.data.id_register;
                     }
                 });
         }
@@ -206,6 +225,20 @@ export class SuratPengantarPembayaranComponent implements OnInit {
             })
     }
 
+    onGetPengantarPembayaran(RegisterId: number): void {
+        this.suratPengantaranPembayaranPasienService.onGetPengantarPembayaranByIdRegister(RegisterId)
+            .subscribe((result) => {
+                if (result.responseResult) {
+                    this.id_cara_pulang.setValue(result.data.id_cara_pulang);
+                    this.id_kondisi_pulang.setValue(result.data.id_kondisi_pulang);
+
+                    this.CaraPulangMeninggal = result.data.id_cara_pulang == 5 ? true : false;
+
+                    this.SudahPernahInputSpp = true;
+                };
+            });
+    }
+
     handleChangeDropdownCaraPulang(args: any): void {
         let data = args.itemData;
 
@@ -221,32 +254,80 @@ export class SuratPengantarPembayaranComponent implements OnInit {
     }
 
     onSubmitSuratPengantarPembayaran(FormSuratPengantarPembayaran: any): void {
-        // Swal.fire({
-        //     icon: 'warning',
-        //     title: 'Apakah Anda Yakin?',
-        //     text: 'Data yang Telah Disimpah Tidak Dapat Diubah',
-        //     showDenyButton: true,
-        //     showCancelButton: false,
-        //     confirmButtonText: `Yes`,
-        //     denyButtonText: `Tidak, Kembali`,
-        //     focusDeny: true
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         this.rencanaPulangPasienRawatInapService.onPostSaveRencanaPulangPasien(FormRencanaPulangPasien)
-        //             .subscribe((result) => {
-        //                 if (result) {
-        //                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan')
-        //                         .then(() => {
-        //                             this.handleClickButtonNav("Back");
-        //                         });
-        //                 }
-        //             });
-        //     }
-        // });
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah Anda Yakin?',
+            text: 'Surat Pengantar Pembayaran Akan Disimpan',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.suratPengantaranPembayaranPasienService.onPostSavePengantarPembayaran(FormSuratPengantarPembayaran)
+                    .subscribe((result) => {
+                        if (result) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan')
+                                .then(() => {
+                                    this.handleClickButtonNav("Back");
+                                });
+                        }
+                    });
+            }
+        });
+    }
+
+    onCancelSuratPengantarPembayaran(FormCancelSuratPengantarPembayaran: any): void {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah Anda Yakin?',
+            text: `Pembatalan Surat Pengantar Pembayaran Akan Disimpan`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.suratPengantaranPembayaranPasienService.onCancelPengantarPembayaran(FormCancelSuratPengantarPembayaran.id_register, FormCancelSuratPengantarPembayaran.reason_canceled)
+                    .subscribe((result) => {
+                        if (result) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Surat Pengantar Pembayaran Berhasil Disimpan')
+                                .then(() => {
+                                    this.BatalkanPengantarPembayaran.handleCloseModalPembatalanPengantarPembayaran();
+
+                                    this.handleClickButtonNav("Back");
+                                });
+                        }
+                    });
+            }
+        });
     }
 
     handleSubmitDetailKematian(FormDetailKematian: any): void {
-        console.log(FormDetailKematian);
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah Anda Yakin?',
+            text: `Data Pasien Meninggal Akan Disimpan`,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Yes`,
+            denyButtonText: `Tidak, Kembali`,
+            focusDeny: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.suratPengantaranPembayaranPasienService.onPostSaveInfoKematian(FormDetailKematian)
+                    .subscribe((result) => {
+                        if (result) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Pasien Meninggal Berhasil Disimpan')
+                                .then(() => {
+                                    this.DetailKematianPasien.handleCloseModalDetailKematian();
+                                });
+                        }
+                    });
+            }
+        });
     }
 
     get id_person(): AbstractControl { return this.FormInformasiPasien.get("id_person"); }
@@ -264,6 +345,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
     get bed_no(): AbstractControl { return this.FormInformasiPasien.get("bed_no"); }
     get nama_poli(): AbstractControl { return this.FormInformasiPasien.get("nama_poli"); }
     get nama_kelas(): AbstractControl { return this.FormInformasiPasien.get("nama_kelas"); }
+    get nama_dokter(): AbstractControl { return this.FormInformasiPasien.get("nama_dokter"); }
 
     get id_register_pengantar_pembayaran(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_register"); }
     get id_dokter_pemberi_ijin_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_dokter_pemberi_ijin_pulang"); }
