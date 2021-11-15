@@ -19,8 +19,8 @@
             "editType": "defaultEdit"
         },
         {
-            "field": "nomor_bet",
-            "headerText": "Bet",
+            "field": "bed_no",
+            "headerText": "Bed",
             "type": "string",
             "format": "",
             "textAlign": "left",

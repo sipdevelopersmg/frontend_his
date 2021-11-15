@@ -60,7 +60,10 @@ export class PenerimaanService {
     onGetById(Id): Observable<any> {
         return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
     }
-    
+
+    getDetailPemesanan(id): Observable<any>{
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_PEMESANAN+'/'+id)
+    }
 
     /**
      * Service Untuk Menampilkan data berdasarkan dinamik filter
@@ -99,6 +102,16 @@ export class PenerimaanService {
     addDataDetail(detail: TrPenerimaanDetailItemInsert[]) {
         this.dataDetail = detail;
         this.sum();
+    }
+
+    add(data:TrPenerimaanDetailItemInsert){
+        console.log(this.dataDetail);
+        let index = this.dataDetail.map((item) => { return item.id_item }).indexOf(data.id_item);
+        data.expired_date =null;
+        data.batch_number = '';
+        data.qty_satuan_besar = 1;
+        data.qty_terima = 1 * data.isi;
+        this.dataDetail.insertToIndex(index,data);
     }
 
     updateFromInline(index: number, data: TrPenerimaanDetailItemInsert, rowData: TrPenerimaanDetailItemInsert) {
@@ -172,7 +185,7 @@ export class PenerimaanService {
         Data.potongan_nominal = 0;
         Data.potongan_prosentase = 0;
         Data.total_uang_muka = 0;
-        Data.total_tagihan = 0;
+        Data.total_tagihan = this.total_transaksi;
 
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
@@ -186,5 +199,26 @@ export class PenerimaanService {
         this.dataDetail = [] ;
         this.total_transaksi = 0 ;
         this.jumlah_item = 0 ; 
+    }
+
+    Validation(id:number): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ penerimaan_id : id })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+    
+    Cancel(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
+                penerimaan_id : id,
+                reason_canceled:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+        );
     }
 }

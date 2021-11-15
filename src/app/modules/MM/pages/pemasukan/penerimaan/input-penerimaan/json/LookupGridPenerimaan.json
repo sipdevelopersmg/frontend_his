@@ -25,7 +25,7 @@
             "field": "nama_supplier",
             "headerText": "Nama Supplier",
             "type": "string",
-            "visible": false
+            "visible": true
         },
         {
             "allowEditing": true,
@@ -43,8 +43,17 @@
             "field": "keterangan",
             "headerText": "Keterangan",
             "type": "string",
-            "visible": false
-          }
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_stockroom",
+            "headerText": "Nama Stockroom",
+            "type": "string",
+            "visible": true
+        }
     ],
     "filter": [
         {

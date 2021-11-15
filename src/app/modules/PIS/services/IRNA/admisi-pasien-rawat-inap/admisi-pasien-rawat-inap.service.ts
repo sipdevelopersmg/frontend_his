@@ -96,7 +96,8 @@ export class AdmisiPasienRawatInapService {
     }
 
     onGetPasienByPoli(id_poli): Observable<any>{
-        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_PASIEN_BY_POLI+'/'+id_poli)
+        
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API_CONFIG.GET_PASIEN_BY_POLI+'/'+id_poli,[])
         .pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

@@ -1,0 +1,103 @@
+{
+  "GridColumns": [
+    {
+      "editType": "defaultEdit",
+      "field":"tanggal",
+      "headerText":"Tanggal",
+      "type":"",
+      "format":"",
+      "textAlign":"left",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"nomor_ref_transaksi",
+      "headerText":"Nomor Transaksi",
+      "type":"",
+      "format":"",
+      "textAlign":"left",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"keterangan",
+      "headerText":"Tipe Transaksi",
+      "type":"",
+      "format":"",
+      "textAlign":"left",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"stok_awal",
+      "headerText":"Stok Awal",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"stok_masuk",
+      "headerText":"Stok Masuk",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"stok_keluar",
+      "headerText":"Stok Keluar",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"stok_akhir",
+      "headerText":"Stock Akhir",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"nominal_awal",
+      "headerText":"Naminal Awal",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"niminal_masuk",
+      "headerText":"Nominal Masuk",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"nominal_keluar",
+      "headerText":"Nominal Keluar",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    },
+    {
+      "editType": "defaultEdit",
+      "field":"nominal_akhir",
+      "headerText":"Nominal Akhir",
+      "type":"",
+      "format":"",
+      "textAlign":"right",
+      "visible": true
+    }       
+  ]  
+}

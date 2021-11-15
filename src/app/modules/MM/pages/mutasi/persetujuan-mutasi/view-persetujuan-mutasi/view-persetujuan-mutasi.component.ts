@@ -6,7 +6,7 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { Location } from '@angular/common';
 import { EditSettingsModel, IEditCell } from '@syncfusion/ej2-grids';
-import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { AddEventArgs, GridComponent, GridModel } from '@syncfusion/ej2-angular-grids';
 import * as GridLoockUpItem from './json/lookupitem.json'
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
@@ -54,6 +54,19 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
   @ViewChild('modalQty') modalQty: TemplateRef<any>;
   @ViewChild('modalSatuan') modalSatuan: TemplateRef<any>;
 
+  //======= Child
+  
+  ChildGrid: GridModel;
+  dataScourceGridChild: any[] = [];
+
+  public itemBatch:any = [];
+
+  public itemsParams: IEditCell;
+  public itemsElem: HTMLElement;
+  public itemsObj: DropDownList;
+  
+//=========
+
   constructor(
     private formBuilder: FormBuilder,
     public persetujuanMutasiService:PersetujuanMutasiService,
@@ -90,7 +103,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
         },
         write: () => {
             this.satuanObj = new DropDownList({
-                value: this.detailSelected.kode_satuan_besar_mutasi,
+                value: '',
                 dataSource: this.datasatuan,
                 fields: { value: 'kode_satuan', text: 'kode_satuan' },
                 enabled: true,
@@ -98,6 +111,87 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
                 floatLabelType: 'Never',
             });
             this.satuanObj.appendTo(this.satuanElem);
+        }
+    }
+
+    this.itemsParams = {
+        create: () => {
+            this.itemsElem = document.createElement('input');
+            return this.itemsElem;
+        },
+        read: () => {
+            return this.itemsObj.text;
+        },
+        destroy: () => {
+            this.itemsObj.destroy();
+        },
+        write: () => {
+            this.itemsObj = new DropDownList({
+                value: '',
+                dataSource: this.itemBatch,
+                fields: { value: 'kode_satuan', text: 'kode_satuan' },
+                enabled: true,
+                placeholder: 'Select a Satuan',
+                floatLabelType: 'Never',
+            });
+            this.itemsObj.appendTo(this.itemsElem);
+        }
+    }
+    
+    let dataSourceChild = this.dataScourceGridChild;
+    let itemBatch = this.itemBatch;
+
+    this.ChildGrid = {
+        dataSource: this.dataScourceGridChild,
+        queryString: "counter",
+        rowHeight: 30,
+        allowResizing: true,
+        allowTextWrap: true,
+        textWrapSettings: { wrapMode: 'Both' },
+        toolbar: ['Add','Edit', 'Delete', 'Update', 'Cancel'],
+        editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true },
+        columns: [
+            { field: "counter", headerText: 'c', width: 100, visible: false },
+            { field: "no_urut", headerText: 'urut', visible: false },
+            { field: "batch_number", headerText: 'Batch Number', editType: 'dropdownedit', edit: this.itemsParams, width: 200 },
+            { field: "expired_date", headerText: 'Expired Date', textAlign: 'Right', width: 80, allowEditing: false },
+            { field: "qty_besar", headerText: 'Banyak', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2'},
+            { field: "satuan", headerText: 'Satuan', editType: 'dropdownedit', edit: this.satuanParams, width: 200 },
+            { field: "isi", headerText: 'Isi', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: false },
+            { field: "qty_mutasi", headerText: 'Qty', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: false },
+            { field: "hpp_satuan", headerText: 'HPP', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: false },
+            { field: "sub_total", headerText: 'Total', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: false },
+        ],
+        rowSelected(args){
+            // SelectedDataRacikanObat = args.data
+            // console.log('row selected',SelectedDataRacikanObat)
+           
+        },
+        actionBegin(args: AddEventArgs) {
+            console.log('begin',args)
+            if (args.requestType === 'add') {
+                const counter = 'counter';
+                // SelectedDataRacikanObat = null;
+            }
+            // if (args.requestType === 'beginEdit'){
+            //     SelectedDataRacikanObat = args.rowData;
+            // }
+        },
+        actionComplete(args) {
+            if (args.requestType === 'save') {
+                if(args.action === 'add'){
+                    dataSourceChild.push(args.data);
+                }
+                if(args.action === 'edit'){
+                    let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
+                    dataSourceChild[index]=args.data;
+                }
+            }
+
+            if (args.requestType === "delete") {
+                let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data[0].counterRacikan);
+                dataSourceChild.splice(index, 1);
+            }
         }
     }
 

@@ -23,8 +23,44 @@
             "allowEditing": true,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "barcode",
-            "headerText": "Barcode",
+            "field": "barcode_batch_number",
+            "headerText": "Barcode Batch Number",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "batch_number",
+            "headerText": "Batch Number",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "expired_date",
+            "headerText": "Expired Date",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_on_hand",
+            "headerText": "Sisa Stok",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "harga_beli_terakhir",
+            "headerText": "Harga Beli",
             "type": "string",
             "visible": true
         }
@@ -36,14 +72,19 @@
             "title": "KODE"
         },
         {
+            "field": "barcode",
+            "filter": "like",
+            "title": "BARCODE"
+        },
+        {
             "field": "nama_item",
             "filter": "like",
             "title": "NAMA"
         },
         {
-            "field": "nama_item",
-            "filter": "barcode",
-            "title": "BARCODE"
+            "field": "barcode_batch_number",
+            "filter": "like",
+            "title": "BARCODE BATCH NUMBER"
         }
     ]
 }

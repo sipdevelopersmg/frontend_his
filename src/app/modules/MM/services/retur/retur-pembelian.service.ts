@@ -105,7 +105,7 @@ export class ReturPembelianService {
       let isi = data.satuan[indexsatuan].isi;
       data.isi = isi;
       data.qty_retur = data.qty_satuan_besar * isi;
-
+      data.sub_total = data.harga_satuan_retur * data.qty_retur;
       this.dataDetail[index] = data;
       this.sum();
   }
@@ -146,25 +146,47 @@ export class ReturPembelianService {
       this.jumlah_item = this.dataDetail.sum('qty_satuan_besar');
   }
 
-  Insert( Data:TrReturPembelianInsert ): Observable<any>{
-      this.dataDetail.map((e,i)=>{
-          return e.no_urut = i+1;
-      });
-      Data.details = this.dataDetail;
-      Data.jumlah_item_retur = this.jumlah_item;
-      Data.total_transaksi_retur = this.total_transaksi;
-    
-      return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
-          .pipe(
-              catchError((error: HttpErrorResponse): any => {
-              this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-              })
-          );
-  }
+    Insert( Data:TrReturPembelianInsert ): Observable<any>{
+        this.dataDetail.map((e,i)=>{
+            return e.no_urut = i+1;
+        });
+        Data.details = this.dataDetail;
+        Data.jumlah_item_retur = this.jumlah_item;
+        Data.total_transaksi_retur = this.total_transaksi;
 
-  Reset(){
-      this.dataDetail = [] ;
-      this.total_transaksi = 0 ;
-      this.jumlah_item = 0 ; 
-  }
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Reset(){
+        this.dataDetail = [] ;
+        this.total_transaksi = 0 ;
+        this.jumlah_item = 0 ; 
+    }
+
+    Validation(id:number): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ retur_pembelian_id : id })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+  
+    Cancel(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
+                retur_pembelian_id : id,
+                reason_canceled:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+        );
+    }
+  
 }

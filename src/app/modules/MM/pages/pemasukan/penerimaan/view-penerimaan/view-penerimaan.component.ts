@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -6,6 +6,9 @@ import { EncryptionService } from 'src/app/modules/shared/services/encryption.se
 import * as configGrid from './json/detailItem.json'
 import { Location } from '@angular/common'
 import { PenerimaanService } from 'src/app/modules/MM/services/pemasukan/penerimaan/penerimaan.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-view-penerimaan',
   templateUrl: './view-penerimaan.component.html',
@@ -18,10 +21,14 @@ export class ViewPenerimaanComponent implements OnInit {
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
     { Id: 'Validasi', Captions: 'Validasi', Icons1: 'fa-check' },
-    { Id: 'Canceled', Captions: 'Canceled', Icons1: 'fa-times', Class:'danger' },
+    { Id: 'Cancel', Captions: 'Cancel', Icons1: 'fa-times' },
   ];
 
   ConfigGrid = configGrid;
+  modalRef: BsModalRef;
+  id:any;
+
+  @ViewChild('modalCanceled') modalCanceled: TemplateRef<any>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +36,8 @@ export class ViewPenerimaanComponent implements OnInit {
     private encryptionService: EncryptionService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-
+    private utilityService:UtilityService,
+    private modalService: BsModalService,
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +72,7 @@ export class ViewPenerimaanComponent implements OnInit {
 
   ngAfterViewInit(): void {
     let pemesanan_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-    console.log(pemesanan_id);
+    this.id = pemesanan_id
     this.onLoadDetailData(pemesanan_id);
   }
 
@@ -104,18 +112,54 @@ export class ViewPenerimaanComponent implements OnInit {
   onClickButtonNav(ButtonId: string): void {
     switch (ButtonId) {
         case 'Back':
-            this.location.back();
-            break;
+          this.location.back();
+          break;
         case 'Validasi':
-            this.onValidation();
-            break;
+            Swal.fire({
+              title: 'Apakah anda yakin ingin validasi data?',
+              text: "",
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Iya Validasi',
+              cancelButtonText: 'Tidak',
+              focusCancel: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.onValidation();
+              }
+            });
+          break;
+        case 'Cancel':
+          this.modalRef = this.modalService.show(
+              this.modalCanceled,
+              Object.assign({}, { class: 'modal-lg' })
+          );
+          break;
         default:
             break;
     }
   }
 
-  onValidation(){
-    console.log(this.formInput.value)
+  onValidation(): void {
+    this.penerimaanService.Validation(this.id).subscribe((result)=>{
+      this.utilityService.onShowingCustomAlert('success', 'Data Penerimaan Berhasil Di Validasi', result.message)
+        .then(() => {
+            this.onLoadDetailData(this.id);
+        });
+    })
+  }
+
+  onCalceled(): void {
+    let reason_canceled = (<HTMLInputElement>document.getElementsByName("reason_canceled")[0]).value;
+    this.penerimaanService.Cancel(this.id,reason_canceled).subscribe((result)=>{
+      this.utilityService.onShowingCustomAlert('success', 'Data Penerimaan Berhasil Di Cancel', result.message)
+        .then(() => {
+            this.onLoadDetailData(this.id);
+            this.modalRef.hide();
+        });
+    })
   }
 
   get tanggal_penerimaan() : AbstractControl { return this.formInput.get('tanggal_penerimaan') }

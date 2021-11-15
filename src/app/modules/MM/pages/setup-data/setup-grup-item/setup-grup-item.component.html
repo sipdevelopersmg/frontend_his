@@ -1,30 +1,68 @@
-<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
-    <form action="" class="p-2">
-        <div class="row mb-2">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                <h6 class="font-cabin mb-0 text-ungu-tua pb-2 border-bottom">Informasi Grup Item</h6>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <!-- Kode Grup -->
-                <mol-input-text [label]="'Kode Grup'"></mol-input-text>
-
-                <!-- Deskripsi -->
-                <mol-input-textarea [label]="'Deskripsi'"></mol-input-textarea>
-
-                <!-- No. Terakhir -->
-                <mol-input-text [label]="'No. Terakhir'"></mol-input-text>
-
-                <!-- Lookup Tipe Item -->
-                <org-input-look-up [label]="'Tipe Item'"></org-input-look-up>
-
-                <!-- Kode COA -->
-                <mol-input-text [label]="'Kode COA'"></mol-input-text>
-
-                <!-- Kontra COA -->
-                <org-input-look-up [label]="'Kontra COA'"></org-input-look-up>
-            </div>
-        </div>
-    </form>
-</org-card-layout>
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Setup Item Group</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Setup Item Group</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <!-- Dropdown Tipe Item -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tipe Item'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalTipeItemDropdown id="marital"
+                                        [dataSource]="setupTipeItemService.dataSource| async"
+                                        [fields]="SetupTipeItemDropdownField" [allowFiltering]="true"
+                                        formControlName="id_tipe_item">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>   
+                            <mol-input-text [label]="'Kode Grup Item'" formControlName="kode_grup_item" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Grup Item'" formControlName="grup_item" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-text [label]="'Last No'" formControlName="last_no" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <org-input-look-up-kode #LookupKodeCoaPersediaan [lookup-url]="urlCoa" [idKode]="'id_coa'" [modal-title]="'Data CoaPersediaan'"
+                                [idTitle]="'deskripsi'" (onGetSelectedData)="heandleSelectedCoaPersediaan($event)"
+                                [columns]="LookupGridCoa.columns" [filter-lookup]="LookupGridCoa.filter"
+                                [label]="'COA Persediaan'">
+                            </org-input-look-up-kode>
+                            <org-input-look-up-kode #LookupKodeCoaPendapatan [lookup-url]="urlCoa" [idKode]="'id_coa'" [modal-title]="'Data CoaPendapatan'"
+                                [idTitle]="'deskripsi'" (onGetSelectedData)="heandleSelectedCoaPendapatan($event)"
+                                [columns]="LookupGridCoa.columns" [filter-lookup]="LookupGridCoa.filter"
+                                [label]="'COA Pendapatan'">
+                            </org-input-look-up-kode>
+                           <org-input-look-up-kode #LookupKodeCoaBiaya [lookup-url]="urlCoa" [idKode]="'id_coa'" [modal-title]="'Data CoaBiaya'"
+                               [idTitle]="'deskripsi'" (onGetSelectedData)="heandleSelectedCoaBiaya($event)"
+                               [columns]="LookupGridCoa.columns" [filter-lookup]="LookupGridCoa.filter"
+                               [label]="'COA Biaya'">
+                           </org-input-look-up-kode>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout> 

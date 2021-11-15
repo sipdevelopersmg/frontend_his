@@ -1,0 +1,34 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "grup_coa",
+            "headerText": "Grup COA",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "deskripsi",
+            "headerText": "COA",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+          "field": "grup_coa",
+          "filter": "like",
+          "title": "GRUP COA"
+        },
+        {
+          "field": "deskripsi",
+          "filter": "like",
+          "title": "COA"
+        }
+    ]
+}

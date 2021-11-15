@@ -107,7 +107,7 @@ const mmRoutes: Routes = [
     {
         path: "retur-pembelian", component: null, data: { title: "Input PO" },
         children: [
-            { path: "daftar-retur-pembelian", component: DaftarReturPembelianComponent, data: { title: "Persetujuan Mutasi" } },
+            { path: "daftar-retur-pembelian", component: DaftarReturPembelianComponent, data: { title: "Daftar Retur Pembelian" } },
             { path: "input-retur-pembelian", component: InputReturPembelianComponent, data: { title: "Input Retur Pembelian" } },
             { path: "view-retur-pembelian/:id/:key", component: ViewReturPembelianComponent, data: { title: "View Retur Pembelian" } },
 

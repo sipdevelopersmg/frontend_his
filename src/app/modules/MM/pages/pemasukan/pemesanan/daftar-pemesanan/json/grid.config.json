@@ -11,7 +11,7 @@
     },
     {
         "field": "nomor_pemesanan",
-        "headerText": "Nomor Pemesanan",
+        "headerText": "No Pemesanan",
         "type": "string",
         "format": "",
         "textAlign": "left",
@@ -20,18 +20,18 @@
     },
     {
         "field": "tanggal_pemesanan",
-        "headerText": "Tanggal Pemesanan",
-        "type": "string",
-        "format": "",
+        "headerText": "Tgl Pemesanan",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
         "textAlign": "left",
         "visible": true,
         "editType": "defaultEdit"
     },
     {
         "field": "tanggal_expired_pemesanan",
-        "headerText": "Tanggal Expired Pemesanan",
-        "type": "string",
-        "format": "",
+        "headerText": "Tgl Exp Pemesanan",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
         "textAlign": "left",
         "visible": true,
         "editType": "defaultEdit"
@@ -195,7 +195,7 @@
         "type": "string",
         "format": "",
         "textAlign": "left",
-        "visible": false,
+        "visible": true,
         "editType": "defaultEdit"
     },
     {

@@ -33,6 +33,7 @@ body {
   --hijau-muda: #00ff7a;
   --hijau-tua: #009f4c;
   --kuning-tua: #9f9b00;
+  --merah-muda: #9f0058;
 }
 
 .icon {
@@ -244,6 +245,21 @@ body {
 
 .e-activecolor-background {
   background-color: #d1eaf6 !important;
+  color: white !important;
+}
+
+.e-validation-background{
+  background-color: #9bd6f1 !important;
+  color: white !important;
+}
+
+.e-canceled-background{
+  background-color: #F6C1CC !important;
+  color: white !important;
+}
+
+.e-closed-background{
+  background-color: #F6EBC1 !important;
   color: white !important;
 }
 

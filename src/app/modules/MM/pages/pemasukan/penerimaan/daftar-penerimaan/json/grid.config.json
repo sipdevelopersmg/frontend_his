@@ -141,7 +141,7 @@
         "type": "string",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -150,7 +150,7 @@
         "type": "string",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -168,7 +168,7 @@
         "type": "string",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -222,7 +222,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -231,7 +231,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -240,7 +240,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -249,7 +249,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -258,7 +258,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -267,7 +267,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -276,7 +276,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -285,7 +285,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -294,7 +294,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -303,7 +303,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
@@ -321,7 +321,7 @@
         "type": "number",
         "format": "",
         "textAlign": "Left",
-        "visible": false,
+        "visible": true,
         "editType": "defaultEdit"
     },
     {
@@ -385,6 +385,15 @@
         "format": "",
         "textAlign": "Left",
         "visible": false,
+        "editType": "defaultEdit"
+    },{
+        
+        "field": "status_transaksi",
+        "headerText": "status",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
         "editType": "defaultEdit"
     }
 ]

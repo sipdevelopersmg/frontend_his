@@ -65,7 +65,7 @@ export class TransaksiObatIrnaComponent implements OnInit {
       dokter : ['', []],
       nomor_rm : ['', []],
       nomor_registrasi : ['', []],
-      total_bayar_resep: [0]
+      total_bayar_resep: [0,[]]
     });
 
     this.childGrid = {
@@ -81,7 +81,8 @@ export class TransaksiObatIrnaComponent implements OnInit {
   }
   
   heandleSelectedRuangan(args: any): void {
-    this.admisiPasienRawatInapService.onGetPasienByPoli(args.item.id_poli).subscribe((result)=>{
+    console.log(args);
+    this.admisiPasienRawatInapService.onGetPasienByPoli(args.id_poli).subscribe((result)=>{
       this.DataSourcePasien = result.data
       this.GridPasien.Grid.refresh()
     })
@@ -100,12 +101,13 @@ export class TransaksiObatIrnaComponent implements OnInit {
     this.currentRegisterId = args.data.id_register;
 
     this.formInput.setValue({
-      nama_pasien     :args.data.nama_pasien,
-      umur            :args.data.umur,
-      bed             :args.data.bed,
-      dokter          :args.data.dokter,
-      nomor_rm        :args.data.nomor_rm,
-      nomor_registrasi:args.data.nomor_registrasi,
+      nama_pasien       : args.data.nama_pasien,
+      umur              : '',//args.data.umur,
+      bed               : args.data.bed_no,
+      dokter            : args.data.nama_dokter,
+      nomor_rm          : args.data.no_rekam_medis,
+      nomor_registrasi  : args.data.no_register,
+      total_bayar_resep : 0,
     });
 
     this.resepDokterIrnaService.onGetByIdRegisterToTrans(this.currentRegisterId).subscribe((result)=>{
@@ -139,6 +141,12 @@ export class TransaksiObatIrnaComponent implements OnInit {
       this.DataSourceDetailResep = result.data.details;
       this.GridDetailResep.refresh();
       this.mapingRacikan(result.data.details);
+      let tot =0
+      this.DataSourceDetailResep.map((item)=>{
+        let har = item['is_racikan'] ? item['harga_jual_apotek'] : item['qty_resep'] * item['harga_jual_apotek'];
+        tot +=  har;
+        this.total_bayar_resep.setValue(tot);
+      });
     })
   }
 
@@ -171,5 +179,7 @@ export class TransaksiObatIrnaComponent implements OnInit {
       })
     })
   }
+
+  get total_bayar_resep (){return this.formInput.get('total_bayar_resep')}
 
 }

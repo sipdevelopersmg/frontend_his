@@ -9,7 +9,6 @@
                     [label]="'Pemesanan'">
                 </org-input-look-up-kode>
                
-                
                 <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="'detail'"></mol-input-text>
                 <mol-datepicker-syncfusion [label]="'Tgl Penerimaan'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_penerimaan">
@@ -73,8 +72,14 @@
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='penerimaanService.dataDetail$ | async'
             [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
-            (rowSelected)="handleSelectdRow($event)">
+            (rowSelected)="handleSelectdRow($event)"
+            (commandClick)="handleCommandClick($event)">
             <e-columns>
+                <e-column [width]="70" [field]="'command'" [headerText]="'ADD'"
+                    [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                    [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                    [commands]="CommandButton">
+                </e-column>
                 <e-column [visible]="false" field='pemesanan_id' [allowEditing]="false" headerText='Kontrak'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>

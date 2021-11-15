@@ -15,6 +15,7 @@ import { RadiologiComponent } from "./pages/radiologi/radiologi.component";
 import { RiwayatPemeriksaanRadComponent } from "./pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component";
 import { DaftarResepIrnaComponent } from "./pages/resep-irna/daftar-resep-irna/daftar-resep-irna.component";
 import { InputResepIrnaComponent } from "./pages/resep-irna/input-resep-irna/input-resep-irna.component";
+import { PulangResepIrnaComponent } from "./pages/resep-irna/pulang-resep-irna/pulang-resep-irna.component";
 import { ViewResepIrnaComponent } from "./pages/resep-irna/view-resep-irna/view-resep-irna.component";
 import { ResepComponent } from "./pages/resep/resep.component";
 import { SuratPerintahMondokComponent } from "./pages/surat-perintah-mondok/surat-perintah-mondok.component";
@@ -53,6 +54,7 @@ const dashboarDokterRoutes: Routes = [
                     { path: "input-resep-irna", component: InputResepIrnaComponent, data: { title: "Form Resep Rawat Inap" } },
                     { path: "view-resep-irna/:id/:key", component: ViewResepIrnaComponent, data: { title: "Detail Resep Rawat Inap" } },
                     { path: "ubah-resep-irna/:id/:key", component: InputResepIrnaComponent, data: { title: "Ubah Resep Rawat Inap" } },
+                    { path: "pulang-resep-irna", component: PulangResepIrnaComponent, data: { title: "Form Resep Rawat Inap" } },
                 ]
             },
             {

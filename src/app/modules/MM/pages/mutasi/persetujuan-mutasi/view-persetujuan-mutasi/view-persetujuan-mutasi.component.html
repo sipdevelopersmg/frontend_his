@@ -15,7 +15,9 @@
         </div>
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='persetujuanMutasiService.dataDetail$ | async'
             [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
-            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
+            (toolbarClick)="onToolbarClick($event)" 
+            (load)="handleLoadGrid($event)"
+            [childGrid]="ChildGrid"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>
                 <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'

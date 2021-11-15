@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
-import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
+import { CommandModel, EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription, combineLatest } from 'rxjs';
 import { MM } from 'src/app/api/MM';
@@ -42,7 +42,7 @@ export class InputPenerimaanComponent implements OnInit {
 
   urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
   urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
-  urlPemesanan = MM.PENERIMAAN.TRANSPEMESANAN.GET_HEADER_BY_PARAMS;
+  urlPemesanan = MM.PENERIMAAN.TRANSPENERIMAAN.GET_PEMESANA;
 
   TrPemesananDetailInsert: TrPemesananDetailInsert;
   @ViewChild('LookupKodePemesanan') LookupKodePemesanan: OrgInputLookUpKodeComponent;
@@ -92,6 +92,9 @@ export class InputPenerimaanComponent implements OnInit {
   TglExpiredParams = { params: { min: new Date() } };
   id_kontrak_from_list:number;
 
+    CommandButton: CommandModel[] = [
+        { buttonOption: { iconCss: 'fas fa-copy fa-sm' } }
+    ];
   constructor(
       private modalService: BsModalService,
       private formBuilder: FormBuilder,
@@ -137,7 +140,7 @@ export class InputPenerimaanComponent implements OnInit {
     //   potongan_nominal: [0, []],
     //   potongan_prosentase: [0, []],
     //   total_uang_muka: [0, []],
-    //   total_tagihan: [0, []],
+        total_tagihan: [0, []],
     });
 
       this.satuanParams = {
@@ -175,7 +178,7 @@ export class InputPenerimaanComponent implements OnInit {
 
       this.GridDetailToolbar = [
         //   { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-          { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }
+          { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
       ];
       this.setupStockroomService.setDataSource();
       this.setupShippingMethodService.setDataSource(); 
@@ -321,6 +324,12 @@ export class InputPenerimaanComponent implements OnInit {
       this.gridDetail.refresh();
   }
 
+  handleCommandClick(args: any){
+      console.log(args);
+      this.penerimaanService.add(args.rowData);
+      this.gridDetail.refresh();
+  }
+
   KeyDownHandler(event: KeyboardEvent) {
 
       if (event.keyCode === 106) {
@@ -359,12 +368,15 @@ export class InputPenerimaanComponent implements OnInit {
     this.pemesananService.getDetail(args.pemesanan_id).subscribe((result)=>{
         let item = result.data
         item.forEach(element => {
-            element.qty_terima = element.qty_pesan;
+            element.qty_satuan_besar = 1;
+            element.qty_terima = element.isi * 1;
             element.sub_total = element.sub_total_pesan ;
             element.satuan = element.satuans;
         });
         this.penerimaanService.addDataDetail(item);
-        this.selectLastRowdetail();
+        setTimeout(()=>{
+            this.selectLastRowdetail();
+        },500)
     });
   }
 

@@ -19,6 +19,7 @@
                         <ejs-dropdownlist #MaritalStokroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource | async"
                             [fields]="MaritalStokroomDropdownField" [allowFiltering]="true"
+                            (change)="handleChangeStockRoom($event)"
                             formControlName="id_stockroom">
                         </ejs-dropdownlist>
                     </div>
@@ -49,8 +50,10 @@
         <!-- Detail -->
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='returPembelianService.dataDetail$ | async'
             [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
-            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
-            (rowSelected)="handleSelectdRow($event)">
+            (toolbarClick)="onToolbarClick($event)" 
+            (load)="handleLoadGrid($event)"
+            (rowSelected)="handleSelectdRow($event)"
+            >
             <e-columns>
                 <e-column [visible]="false" field='penerimaan_id' [allowEditing]="false" headerText='urut'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
@@ -70,11 +73,11 @@
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='batch_number' [allowEditing]="true" headerText='Batch Number'
+                <e-column [visible]="true" field='batch_number' [allowEditing]="false" headerText='Batch Number'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='expired_date' [allowEditing]="true"
-                    headerText='Expired' editType='datepickeredit' textAlign="left" headerTextAlign="center"
+                <e-column [visible]="true" field='expired_date' [allowEditing]="false" headerText='Expired' 
+                    editType='datepickeredit' textAlign="left" headerTextAlign="center"
                     format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams">
                 </e-column>
                 <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
@@ -89,7 +92,7 @@
                 <e-column [visible]="true" field='qty_retur' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="right">
                 </e-column>
-                <e-column [visible]="true" field='harga_satuan_retur' [allowEditing]="false" headerText='Harga Satuan Retur'
+                <e-column [visible]="true" field='harga_satuan_retur' [allowEditing]="true" headerText='Harga Satuan Retur'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='sub_total' [allowEditing]="false" headerText='Sub Total'
@@ -114,7 +117,7 @@
         </div>
     </form>
     <!-- Item -->
-    <org-look-up #LookupItem [lookup-url]="urlItem" (onGetSelectedData)="heandleSelectedItem($event)"
+    <org-look-up #LookupItem [lookup-url]="urlItemStockRoom" (onGetSelectedData)="heandleSelectedItem($event)"
         [columns]="GridLookUpItem.columns" [filter-lookup]="GridLookUpItem.filter" [modal-title]="'Data Item'">
     </org-look-up>
 
