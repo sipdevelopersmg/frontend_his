@@ -95,6 +95,10 @@ export class PersetujuanMutasiService {
         });
     }
 
+    getDetail(id): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id);
+    }
+
     addDataDetail(detail: TrPersetujuanMutasiDetailInsert) {
         this.dataDetail =  [
           ...this.dataDetail,
@@ -158,5 +162,19 @@ export class PersetujuanMutasiService {
         this.dataDetail = [] ;
         this.total_transaksi = 0 ;
         this.jumlah_item = 0 ; 
+    }
+
+    getSatuanDetail(id_item):any[]{
+        let index = this.dataDetail.map((item) => { return item.id_item }).indexOf(id_item);
+        return this.dataDetail[index].satuans;
+    }
+
+    validasiPersetujuan(Data): Observable<any>{
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT_PERSETUJUAN, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }
