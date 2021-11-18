@@ -25,6 +25,7 @@ export class DaftarPersetujuanMutasiComponent implements OnInit {
     'Search'
   ];
 
+
   FilterColumnDatasource: any[] = [
       { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
       { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
@@ -35,7 +36,7 @@ export class DaftarPersetujuanMutasiComponent implements OnInit {
   dataSource:any;
 
   @ViewChild('GridData') GridData: MolGridComponent;
-
+  id:number=0;
   constructor(
     private router: Router,
     private encryptionService: EncryptionService,
@@ -82,4 +83,7 @@ export class DaftarPersetujuanMutasiComponent implements OnInit {
     this.SelectedData = args.data;
     console.log(this.SelectedData)
   }
+
+
+  
 }

@@ -82,4 +82,17 @@ export class DaftarPermintaanMutasiComponent implements OnInit {
     this.SelectedData = args.data;
     console.log(this.SelectedData)
   }
+
+  handleRowDataBound(args: any): void {
+    let status_transaksi = args.data.status_mutasi;
+
+    if (status_transaksi == "APPROVED") {
+      args.row.classList.add('e-validation-background');
+    }
+    
+    if(status_transaksi == "CANCELED"){
+      args.row.classList.add('e-canceled-background');
+    }
+  }
+
 }

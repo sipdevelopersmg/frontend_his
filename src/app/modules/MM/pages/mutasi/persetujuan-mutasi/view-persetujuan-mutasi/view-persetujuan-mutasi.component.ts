@@ -28,6 +28,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
     { Id: 'Validasi', Captions: 'Validasi', Icons1: 'fa-check' },
+    { Id: 'Cancel', Captions: 'Cancel', Icons1: 'fa-times' },
   ];
 
   modalRef: BsModalRef;
@@ -58,6 +59,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
   @ViewChild('LookupItem') LookupItem: OrgLookUpComponent;
   @ViewChild('modalQty') modalQty: TemplateRef<any>;
   @ViewChild('modalSatuan') modalSatuan: TemplateRef<any>;
+  @ViewChild('modalCanceled') modalCanceled: TemplateRef<any>;
 
   private id_stockroom :number=0;
   //======= Child
@@ -73,7 +75,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
   public itemsObj: DropDownList;    
   
 //=========
-
+private id:number=0;
   constructor(
     private formBuilder: FormBuilder,
     public persetujuanMutasiService:PersetujuanMutasiService,
@@ -358,6 +360,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
 
   onLoadDetailData(pemesanan_id){
       this.persetujuanMutasiService.onGetById(pemesanan_id).subscribe((result)=>{
+          this.id = parseInt(pemesanan_id);
           this.formInput.setValue({
             mutasi_id              :parseInt(pemesanan_id),
             nomor_mutasi           :result.data.nomor_mutasi,
@@ -499,9 +502,26 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
         case "Validasi":
             this.onSave() 
             break;
+        case "Cancel":
+            this.modalRef = this.modalService.show(
+                this.modalCanceled,
+                Object.assign({}, { class: 'modal-lg' })
+            );
+            break;
         default:
             break;
     }
+  }
+
+  onCalceled(): void {
+    let reason_canceled = (<HTMLInputElement>document.getElementsByName("reason_canceled")[0]).value;
+    this.persetujuanMutasiService.Cancel(this.id,reason_canceled).subscribe((result)=>{
+      this.utilityService.onShowingCustomAlert('success', 'Data Pemesanan Berhasil Di Cancel', result.message)
+        .then(() => {
+            this.onLoadDetailData(this.id);
+            this.modalRef.hide();
+        });
+    })
   }
   
 }
