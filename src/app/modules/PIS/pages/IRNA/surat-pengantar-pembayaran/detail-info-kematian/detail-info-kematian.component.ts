@@ -74,7 +74,7 @@ export class DetailInfoKematianComponent implements OnInit {
         bed_no.value = this.DetailInformasiKematianPasien['bed_no'];
 
         let tanggal_masuk = document.getElementById("tanggal_masuk") as HTMLInputElement;
-        tanggal_masuk.value = this.DetailInformasiKematianPasien['tgl_admisi'];
+        tanggal_masuk.value = this.utilityService.onFormatDate(this.DetailInformasiKematianPasien['tgl_admisi'], 'dddd, Do MMMM yyyy');
 
         let umur = document.getElementById("umur") as HTMLInputElement;
         umur.value = this.DetailInformasiKematianPasien['umur'];

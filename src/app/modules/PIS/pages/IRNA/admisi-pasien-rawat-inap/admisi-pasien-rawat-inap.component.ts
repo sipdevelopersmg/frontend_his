@@ -272,7 +272,7 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
         if (data) {
             const id_register = this.encryptionService.encrypt(JSON.stringify(data.id_register));
 
-            this.router.navigate(['dashboard/PIS/IRNA/surat-pengantar-pembayaran/', id_register, "GRAHCIS"]);
+            this.router.navigate(['dashboard/PIS/IRNA/surat-pengantar-pembayaran/', id_register, "IRNA"]);
         } else {
             this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Data Admisi Belum Dipilih');
         }

@@ -12,6 +12,7 @@ export class AtmInputGroupComponentAtom implements OnInit {
     @Input('inputId') inputId: string;
     @Input('value') value: any;
     @Input('disableTitle') disableTitle: boolean;
+    @Input('button-shortcut') buttonShortcut: string;
 
     @Output('clickButton') clickButton = new EventEmitter<any>();
 

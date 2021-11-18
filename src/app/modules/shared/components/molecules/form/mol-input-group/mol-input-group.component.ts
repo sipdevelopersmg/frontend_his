@@ -11,6 +11,7 @@ export class MolInputGroupComponent implements OnInit {
     @Input('titleValue') titleValue: string;
     @Input('inputId') inputId: string;
     @Input('disableTitle') disableTitle: boolean;
+    @Input('button-shortcut') buttonShortcut: string;
     @Output('clickButton') clickButton = new EventEmitter<any>();
     @Output('pressEnter') pressEnter = new EventEmitter<any>();
 

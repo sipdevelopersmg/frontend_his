@@ -19,14 +19,14 @@
                 "headerText": "MR NO",
                 "type": "string",
                 "visible": true,
-                "width": 90
+                "width": 70
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
                 "field": "nama_pasien",
-                "headerText": "NAMA",
+                "headerText": "NAMA PASIEN",
                 "type": "string",
                 "visible": true,
                 "width": 200
@@ -35,22 +35,10 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "tgl_admisi",
-                "format": "dd/MM/yyyy",
-                "headerText": "TGL ADMISI",
-                "type": "date",
+                "field": "tgl_masuk",
+                "headerText": "TGL MASUK",
                 "visible": true,
-                "width": 100
-            },
-            {
-                "allowEditing": false,
-                "allowSorting": false,
-                "editType": "defaultEdit",
-                "field": "nama_dokter",
-                "headerText": "DOKTER",
-                "type": "string",
-                "visible": true,
-                "width": 200
+                "width": 90
             },
             {
                 "allowEditing": false,
@@ -60,7 +48,17 @@
                 "headerText": "POLIKLINIK",
                 "type": "string",
                 "visible": true,
-                "width": 150
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 80
             }
         ],
         "filter": [
@@ -77,7 +75,73 @@
             {
                 "field": "concat(per.nama_depan, ' ',per.nama_belakang)",
                 "filter": "like",
-                "title": "NAMA"
+                "title": "NAMA PASIEN"
+            },
+            {
+                "field": "sr.room_no",
+                "filter": "like",
+                "title": "NO. ROOM"
+            },
+            {
+                "field": "sbr.bed_no",
+                "filter": "like",
+                "title": "NO. BED"
+            }
+        ]
+    },
+    "LookupPoli": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_poli",
+                "headerText": "KODE POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "NAMA POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "jenis_ruangan",
+                "headerText": "BUILDING NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "p1.kode_poli",
+                "filter": "like",
+                "title": "KODE POLI"
+            },
+            {
+                "field": "p1.nama_poli",
+                "filter": "like",
+                "title": "NAMA POLI"
             }
         ]
     },
@@ -230,6 +294,18 @@
             "textAlign": "Left",
             "visible": false,
             "editType": "defaultEdit"
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": false,
+            "field": "tgl_transaksi",
+            "headerText": "Tanggal",
+            "textAlign": "Left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "width": 100
         },
         {
             "allowEditing": false,
@@ -409,17 +485,6 @@
             "visible": true,
             "editType": "defaultEdit",
             "width": 50
-        },
-        {
-            "allowEditing": false,
-            "allowSorting": false,
-            "field": "doct_disc",
-            "headerText": "DISC. DOKTER",
-            "textAlign": "Right",
-            "headerTextAlign": "Right",
-            "visible": true,
-            "editType": "defaultEdit",
-            "width": 100
         },
         {
             "allowEditing": false,

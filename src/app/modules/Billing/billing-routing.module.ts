@@ -18,6 +18,7 @@ import { SetupTarifPaketComponent } from "./pages/setup-data/setup-tarif-paket/s
 import { SetupTarifPemeriksaanComponent } from "./pages/setup-data/setup-tarif-pemeriksaan/setup-tarif-pemeriksaan.component";
 import { SetupTarifComponent } from "./pages/setup-data/setup-tarif/setup-tarif.component";
 import { SetupVoucherPaymentComponent } from "./pages/setup-data/setup-voucher-payment/setup-voucher-payment.component";
+import { InputBillingRawatDaruratComponent } from "./pages/transaksi-billing-rawat-darurat/input-billing-rawat-darurat/input-billing-rawat-darurat.component";
 import { InputBillingComponent } from "./pages/transaksi-billing/input-billing/input-billing.component";
 import { ScanningComponent } from "./pages/transaksi-billing/scanning/scanning.component";
 
@@ -46,10 +47,17 @@ const billingRoutes: Routes = [
     { path: "setting-tarif-berlaku", component: SettingTarifBerlakuComponent, data: { title: 'Setting Tarif Berlaku' } },
     { path: "setting-tarif-berlaku-per-poli", component: SettingTarifBerlakuPoliComponent, data: { title: 'Setting Tarif Berlaku Per Poli' } },
     {
-        path: "transaksi-billing", component: null, data: { title: 'Transaksi Billing' },
+        path: "transaksi-billing-rawat-jalan", component: null, data: { title: 'Transaksi Billing' },
         children: [
-            { path: "scan-billing-pasien", component: ScanningComponent, data: { title: 'Billing - Scan No Register' } },
-            { path: "input-billing-pasien/:no_register/:key", component: InputBillingComponent, data: { title: 'Input Billing Pasien' } },
+            { path: "scan-billing-pasien-rawat-jalan", component: ScanningComponent, data: { title: 'Billing Rawat Jalan - Scan No Register' } },
+            { path: "input-billing-pasien/:no_register/:key", component: InputBillingComponent, data: { title: 'Input Billing Pasien Rawat Jalan' } },
+        ]
+    },
+    {
+        path: "transaksi-billing-rawat-darurat", component: null, data: { title: 'Transaksi Billing' },
+        children: [
+            { path: "scan-billing-pasien-rawat-darurat", component: ScanningComponent, data: { title: 'Billing Rawat Darurat - Scan No Register' } },
+            { path: "input-billing-pasien/:no_register/:key", component: InputBillingRawatDaruratComponent, data: { title: 'Input Billing Pasien Rawat Darurat' } },
         ]
     },
 ];

@@ -1,6 +1,6 @@
 <mol-input-group [inputId]="'inputGroup' + idTitle" [label]="label" (pressEnter)="handlePressEnter($event)"
     (clickButton)="onOpenModal(template, modalId)" [titleValue]="titleValue" [disableTitle]="true"
-    [divLabelClass]="divLabelClass" [divInputClass]="divInputClass">
+    [button-shortcut]="buttonShortcut" [divLabelClass]="divLabelClass" [divInputClass]="divInputClass">
 </mol-input-group>
 
 <ng-template #template>

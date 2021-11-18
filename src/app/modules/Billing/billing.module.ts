@@ -37,7 +37,10 @@ import { ModalDetailCrossCheckComponent } from './components/modal-detail-cross-
 import { ModalDetailPendapatanSistemComponent } from './components/modal-detail-pendapatan-sistem/modal-detail-pendapatan-sistem.component';
 import { HistoryCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/history-croscek-tutup-kasir/history-croscek-tutup-kasir.component';
 import { SetupTarifPemeriksaanComponent } from './pages/setup-data/setup-tarif-pemeriksaan/setup-tarif-pemeriksaan.component';
-
+import { InputBillingRawatDaruratComponent } from './pages/transaksi-billing-rawat-darurat/input-billing-rawat-darurat/input-billing-rawat-darurat.component';
+import { HistoryInvoiceIrdaComponent } from './pages/transaksi-billing-rawat-darurat/history-invoice-irda/history-invoice-irda.component';
+import { HistoryPembayaranIrdaComponent } from './pages/transaksi-billing-rawat-darurat/history-pembayaran-irda/history-pembayaran-irda.component';
+import { HistorySemuaPembayaranIrdaComponent } from './pages/transaksi-billing-rawat-darurat/history-semua-pembayaran-irda/history-semua-pembayaran-irda.component';
 
 @NgModule({
     declarations: [
@@ -72,7 +75,11 @@ import { SetupTarifPemeriksaanComponent } from './pages/setup-data/setup-tarif-p
         ModalDetailCrossCheckComponent,
         ModalDetailPendapatanSistemComponent,
         HistoryCroscekTutupKasirComponent,
-        SetupTarifPemeriksaanComponent
+        SetupTarifPemeriksaanComponent,
+        InputBillingRawatDaruratComponent,
+        HistoryInvoiceIrdaComponent,
+        HistoryPembayaranIrdaComponent,
+        HistorySemuaPembayaranIrdaComponent,
     ],
     imports: [
         CommonModule,

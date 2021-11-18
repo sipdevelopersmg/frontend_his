@@ -9,6 +9,7 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
 import Swal from 'sweetalert2';
 import * as API_PIS from '../../../../../api/PIS';
 import { ICaraPulangModel, IKondisiPulangModel } from '../../../models/IRNA/surat_pengantar_pembayaran.model';
+import { AdmisiPasienRawatDaruratService } from '../../../services/IRDA/admisi-pasien-rawat-darurat/admisi-pasien-rawat-darurat.service';
 import { PendaftaranPasienBaruService } from '../../../services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { AdmisiPasienRawatInapService } from '../../../services/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.service';
 import { RencanaPulangPasienService } from '../../../services/IRNA/rencana-pulang-pasien/rencana-pulang-pasien.service';
@@ -23,6 +24,8 @@ import settingGrid from './json/surat-pengantar-pembayaran.config.json';
     styleUrls: ['./surat-pengantar-pembayaran.component.css']
 })
 export class SuratPengantarPembayaranComponent implements OnInit {
+
+    AdmisiState: string;
 
     ButtonNav: ButtonNavModel[];
 
@@ -63,6 +66,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
         private utilityService: UtilityService,
         private encryptionService: EncryptionService,
         private admisiRawatInapService: AdmisiPasienRawatInapService,
+        private admisiRawatDaruratService: AdmisiPasienRawatDaruratService,
         private pendaftaranPasienBaruService: PendaftaranPasienBaruService,
         private rencanaPulangPasienRawatInapService: RencanaPulangPasienService,
         private suratPengantaranPembayaranPasienService: SuratPengantarPembayaranService,
@@ -92,7 +96,8 @@ export class SuratPengantarPembayaranComponent implements OnInit {
     handleClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
             case 'Back':
-                this.router.navigateByUrl('dashboard/PIS/IRNA/pelayanan-pasien-rawat-inap');
+                let url = this.AdmisiState == "IRNA" ? 'dashboard/PIS/IRNA/pelayanan-pasien-rawat-inap' : 'dashboard/PIS/IRDA/pelayanan-pasien-rawat-darurat';
+                this.router.navigateByUrl(url);
                 break;
             case 'Refresh':
                 this.onGetDetailAdmisiPasien();
@@ -152,12 +157,13 @@ export class SuratPengantarPembayaranComponent implements OnInit {
     onSetFormSuratPengantarPembayaranAttributes(): void {
         this.FormSuratPengantarPembayaran = this.formBuilder.group({
             id_register: [0, []],
-            id_dokter_pemberi_ijin_pulang: [0, []],
+            id_dokter_pemberi_perintah_pulang: [0, []],
             id_cara_pulang: [0, []],
             id_kondisi_pulang: [0, []],
             id_rencana_pulang: [0, []],
             tanggal_perintah_pulang: ["", []],
             keterangan_perintah_pulang: ["", []],
+            jenis_rawat: ["", []]
         });
     }
 
@@ -165,41 +171,80 @@ export class SuratPengantarPembayaranComponent implements OnInit {
         if (this.activatedRoute.snapshot.params['id']) {
             let id_register = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params['id']));
 
-            this.admisiRawatInapService.onGetAdmisiPasienRawatInapByIdRegister(id_register)
-                .subscribe((result) => {
-                    if (result) {
+            this.AdmisiState = this.activatedRoute.snapshot.params['key'];
 
-                        this.id_person.setValue(result.data['id_person']);
-                        this.id_register.setValue(result.data['id_register']);
-                        this.id_register_pengantar_pembayaran.setValue(result.data['id_register']);
-                        this.nama_pasien.setValue(result.data.nama_pasien);
-                        this.no_rekam_medis.setValue(result.data.no_rekam_medis);
-                        this.no_register.setValue(result.data.no_register);
-                        this.gender.setValue(result.data.gender);
-                        this.umur.setValue(result.data.umur);
-                        this.tgl_admisi.setValue(result.data.tgl_admisi);
-                        this.nama_debitur.setValue(result.data.nama_debitur);
-                        this.id_setup_room.setValue(result.data['id_setup_room']);
-                        this.room_no.setValue(result.data['room_no']);
-                        this.id_setup_bed_room.setValue(result.data['id_setup_bed_room']);
-                        this.bed_no.setValue(result.data['bed_no']);
-                        this.nama_poli.setValue(result.data.nama_poli);
-                        this.nama_kelas.setValue(result.data['nama_kelas']);
-                        this.nama_dokter.setValue(result.data['nama_dokter']);
+            this.AdmisiState == "IRNA" ? this.onGetAdmisiRawatInapByIdRegister(id_register) : this.onGetAdmisiRawatDaruratByIdRegister(id_register);
 
-                        this.pendaftaranPasienBaruService.onGetLinkFotoPerson(result.data['id_person'], false)
-                            .subscribe((result) => {
-                                this.PhotoPasien = result.data;
-                            });
+            this.onGetPengantarPembayaran(id_register);
 
-                        this.onGetRencanaPulangPasien(result.data.id_register);
-
-                        this.onGetPengantarPembayaran(result.data.id_register);
-
-                        this.RegisterId = result.data.id_register;
-                    }
-                });
+            this.RegisterId = id_register;
         }
+    }
+
+    onGetAdmisiRawatInapByIdRegister(id_register: number): void {
+        this.admisiRawatInapService.onGetAdmisiPasienRawatInapByIdRegister(id_register)
+            .subscribe((result) => {
+                if (result) {
+                    this.id_person.setValue(result.data['id_person']);
+                    this.id_register.setValue(result.data['id_register']);
+                    this.id_register_pengantar_pembayaran.setValue(result.data['id_register']);
+                    this.nama_pasien.setValue(result.data.nama_pasien);
+                    this.no_rekam_medis.setValue(result.data.no_rekam_medis);
+                    this.no_register.setValue(result.data.no_register);
+                    this.gender.setValue(result.data.gender);
+                    this.umur.setValue(result.data.umur);
+                    this.tgl_admisi.setValue(result.data.tgl_admisi);
+                    this.nama_debitur.setValue(result.data.nama_debitur);
+                    this.id_setup_room.setValue(result.data['id_setup_room']);
+                    this.room_no.setValue(result.data['room_no']);
+                    this.id_setup_bed_room.setValue(result.data['id_setup_bed_room']);
+                    this.bed_no.setValue(result.data['bed_no']);
+                    this.nama_poli.setValue(result.data.nama_poli);
+                    this.nama_kelas.setValue(result.data['nama_kelas']);
+                    this.nama_dokter.setValue(result.data['nama_dokter']);
+
+                    this.pendaftaranPasienBaruService.onGetLinkFotoPerson(result.data['id_person'], false)
+                        .subscribe((result) => {
+                            this.PhotoPasien = result.data;
+                        });
+
+                    this.onGetRencanaPulangPasien(result.data.id_register);
+
+                    this.jenis_rawat.setValue("I");
+                }
+            });
+    }
+
+    onGetAdmisiRawatDaruratByIdRegister(id_register: number): void {
+        this.admisiRawatDaruratService.onGetAdmisiPasienRawatDaruratByIdRegister(id_register)
+            .subscribe((result) => {
+                if (result) {
+                    this.id_person.setValue(result.data['id_person']);
+                    this.id_register.setValue(result.data['id_register']);
+                    this.id_register_pengantar_pembayaran.setValue(result.data['id_register']);
+                    this.nama_pasien.setValue(result.data.nama_pasien);
+                    this.no_rekam_medis.setValue(result.data.no_rekam_medis);
+                    this.no_register.setValue(result.data.no_register);
+                    this.gender.setValue(result.data.gender);
+                    this.umur.setValue(result.data.umur);
+                    this.tgl_admisi.setValue(result.data.tgl_admisi);
+                    this.nama_debitur.setValue(result.data.nama_debitur);
+                    this.id_setup_room.setValue(result.data['id_setup_room']);
+                    this.room_no.setValue(result.data['room_no']);
+                    this.id_setup_bed_room.setValue(result.data['id_setup_bed_room']);
+                    this.bed_no.setValue(result.data['bed_no']);
+                    this.nama_poli.setValue(result.data.nama_poli);
+                    this.nama_kelas.setValue(result.data['nama_kelas']);
+                    this.nama_dokter.setValue(result.data['nama_dokter']);
+
+                    this.pendaftaranPasienBaruService.onGetLinkFotoPerson(result.data['id_person'], false)
+                        .subscribe((result) => {
+                            this.PhotoPasien = result.data;
+                        });
+
+                    this.jenis_rawat.setValue("D");
+                }
+            });
     }
 
     onGetRencanaPulangPasien(RegisterId: number): void {
@@ -209,7 +254,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
                     if (Object.keys(result.data).length > 0) {
                         setTimeout(() => {
                             this.id_rencana_pulang.setValue(result.data.id_rencana_pulang);
-                            this.id_dokter_pemberi_ijin_pulang.setValue(result.data.id_dokter_pemberi_ijin_pulang);
+                            this.id_dokter_pemberi_perintah_pulang.setValue(result.data.id_dokter_pemberi_ijin_pulang);
                             this.tanggal_perintah_pulang.setValue(result.data.tanggal_rencana_pulang);
                             this.keterangan_perintah_pulang.setValue(result.data.keterangan_rencana_pulang);
 
@@ -229,12 +274,26 @@ export class SuratPengantarPembayaranComponent implements OnInit {
         this.suratPengantaranPembayaranPasienService.onGetPengantarPembayaranByIdRegister(RegisterId)
             .subscribe((result) => {
                 if (result.responseResult) {
+                    console.log(result.data);
+
                     this.id_cara_pulang.setValue(result.data.id_cara_pulang);
                     this.id_kondisi_pulang.setValue(result.data.id_kondisi_pulang);
 
                     this.CaraPulangMeninggal = result.data.id_cara_pulang == 5 ? true : false;
 
                     this.SudahPernahInputSpp = true;
+
+                    if (this.AdmisiState == "IRDA") {
+                        this.id_dokter_pemberi_perintah_pulang.setValue(result.data.id_dokter_pemberi_perintah_pulang);
+                        this.tanggal_perintah_pulang.setValue(result.data.tanggal_perintah_pulang);
+                        this.keterangan_perintah_pulang.setValue(result.data.keterangan_perintah_pulang);
+
+                        let atmkode_dokter = document.getElementById("atmkode_dokter") as HTMLInputElement;
+                        atmkode_dokter.value = result.data['kode_dokter'];
+
+                        let titlekode_dokter = document.getElementById("titlekode_dokter") as HTMLInputElement;
+                        titlekode_dokter.value = result.data['nama_dokter'];
+                    }
                 };
             });
     }
@@ -250,7 +309,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
     }
 
     handleSelectedDokter(args: any): void {
-        this.id_dokter_pemberi_ijin_pulang.setValue(args.id_dokter || args[0].id_dokter);
+        this.id_dokter_pemberi_perintah_pulang.setValue(args.id_dokter || args[0].id_dokter);
     }
 
     onSubmitSuratPengantarPembayaran(FormSuratPengantarPembayaran: any): void {
@@ -265,7 +324,7 @@ export class SuratPengantarPembayaranComponent implements OnInit {
             focusDeny: true
         }).then((result) => {
             if (result.isConfirmed) {
-                this.suratPengantaranPembayaranPasienService.onPostSavePengantarPembayaran(FormSuratPengantarPembayaran)
+                this.suratPengantaranPembayaranPasienService.onPostSavePengantarPembayaran(FormSuratPengantarPembayaran.jenis_rawat, FormSuratPengantarPembayaran)
                     .subscribe((result) => {
                         if (result) {
                             this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Berhasil Disimpan')
@@ -348,10 +407,11 @@ export class SuratPengantarPembayaranComponent implements OnInit {
     get nama_dokter(): AbstractControl { return this.FormInformasiPasien.get("nama_dokter"); }
 
     get id_register_pengantar_pembayaran(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_register"); }
-    get id_dokter_pemberi_ijin_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_dokter_pemberi_ijin_pulang"); }
+    get id_dokter_pemberi_perintah_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_dokter_pemberi_perintah_pulang"); }
     get id_cara_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_cara_pulang"); }
     get id_kondisi_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_kondisi_pulang"); }
     get id_rencana_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("id_rencana_pulang"); }
     get tanggal_perintah_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("tanggal_perintah_pulang"); }
     get keterangan_perintah_pulang(): AbstractControl { return this.FormSuratPengantarPembayaran.get("keterangan_perintah_pulang"); }
+    get jenis_rawat(): AbstractControl { return this.FormSuratPengantarPembayaran.get("jenis_rawat"); }
 }

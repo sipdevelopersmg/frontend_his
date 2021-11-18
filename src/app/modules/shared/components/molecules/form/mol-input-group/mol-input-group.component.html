@@ -4,7 +4,7 @@
     </div>
     <div [class]="divInputClass">
         <atm-input-group-atom [inputId]="inputId" [disableTitle]="disableTitle" [value]="titleValue"
-            (clickButton)="handleClickButton($event)">
+            [button-shortcut]="buttonShortcut" (clickButton)="handleClickButton($event)">
         </atm-input-group-atom>
     </div>
 </div>

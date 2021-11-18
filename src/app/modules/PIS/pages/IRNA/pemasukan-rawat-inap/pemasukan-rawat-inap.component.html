@@ -5,7 +5,8 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <!-- No. Register -->
                 <org-input-look-up #LookupNoReg [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupNoReg"
-                    [idTitle]="'no_register'" (onGetSelectedData)="handleSelectedLookupPasien($event)"
+                    [idTitle]="'no_register'" [button-id]="'btnLookupNoReg'" [button-shortcut]="'[F8]'"
+                    (onGetSelectedData)="handleSelectedLookupPasien($event)"
                     [columns]="PemasukanConfig.LookupPasien.columns"
                     [filter-lookup]="PemasukanConfig.LookupPasien.filter" [label]="'No. Register'">
                 </org-input-look-up>
@@ -35,20 +36,24 @@
                 </mol-input-text>
 
                 <!-- Poli Tindakan -->
+                <org-input-look-up #LookupPoli [modal-title]="'Data Poliklinik Rawat Inap'" [lookup-url]="UrlLookupPoli"
+                    [idTitle]="'nama_poli'" (onGetSelectedData)="handleSelectedLookupPoli($event)"
+                    [columns]="PemasukanConfig.LookupPoli.columns" [filter-lookup]="PemasukanConfig.LookupPoli.filter"
+                    [label]="'Poli Tindakan'">
+                </org-input-look-up>
+
+                <!-- No. Room / No. Bed -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Poli Tindakan'"></atm-label>
+                        <atm-label [LabelCaption]="'No. Room / No. Bed'"></atm-label>
                     </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                        <ejs-dropdownlist #PoliTindakanDropdown [dataSource]="PoliTindakanDatasource"
-                            [fields]="PoliTindakanFields" [allowFiltering]="true" formControlName="id_poli"
-                            (change)="handleChangePoliTindakan($event)">
-                        </ejs-dropdownlist>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <input type="text" class="form-control form-select-sm" readonly formControlName="room_no">
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <input type="text" class="form-control form-select-sm" readonly formControlName="bed_no">
                     </div>
                 </div>
-
-                <!-- Dokter -->
-                <mol-input-text [label]="'Dokter'" [disabled]="true" formControlName="nama_dokter"></mol-input-text>
             </div>
         </div>
     </form>
@@ -66,14 +71,14 @@
         </div>
 
         <!-- Modal -->
-        <ng-template #modalPemasukanRawatJalan>
+        <ng-template #modalPemasukanRawatInap>
             <div class="modal-header px-2 py-1">
                 <h5 class="modal-title pull-left">
-                    {{ FormPemasukanRawatJalanState == 'Insert' ? 'Add' : 'Edit' }}
-                    Tarif Pemasukan Rawat Jalan Poli {{ SelectedPoli | titlecase }}
+                    {{ FormPemasukanRawatInapState == 'Insert' ? 'Add' : 'Edit' }}
+                    Tarif Pemasukan Rawat Inap Poli
                 </h5>
                 <button type="button" class="btn pull-right" aria-label="Close"
-                    (click)="handleCloseModalPemasukanRawatJalan()">
+                    (click)="handleCloseModalPemasukanRawatInap()">
                     <i class="fas fa-window-close"></i>
                 </button>
             </div>
@@ -81,21 +86,32 @@
                 <form [formGroup]="FormPemasukanRawatInap">
                     <div class="row mx-0 px-0">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Tanggal Tindakan -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                    <ejs-datepicker #DatepickerTanggalTindakan [format]="'dd/MM/yyyy'"
+                                        formControlName="tgl_transaksi" [max]="Today">
+                                    </ejs-datepicker>
+                                </div>
+                            </div>
+
                             <!-- Lookup Tarif Berlaku Poli -->
-                            <org-input-look-up-static-filter #LookupTarifBerlaku [modal-title]="'Data Tarif Berlaku'"
+                            <org-input-look-up #LookupTarifBerlaku [modal-title]="'Data Tarif Berlaku'"
                                 [lookup-url]="UrlLookupTarifBerlaku" [idTitle]="'kode_setup_tarif'"
                                 (onGetSelectedData)="handleSelectedTarifBerlaku($event)"
                                 [columns]="PemasukanConfig.LookupTarifBerlaku.columns"
-                                [ParameterTambahan]="ParamaterTambahanLookupTarifBerlaku"
                                 [filter-lookup]="PemasukanConfig.LookupTarifBerlaku.filter" [label]="'Pilih Tarif'">
-                            </org-input-look-up-static-filter>
+                            </org-input-look-up>
 
                             <!-- Nama Setup Tarif -->
                             <mol-input-text [label]="'Nama Tarif'" formControlName="nama_setup_tarif" [disabled]="true">
                             </mol-input-text>
 
                             <!-- Jasa Dokter -->
-                            <div class="row mb-2 mt-4 align-items-center">
+                            <div class="row mb-2 align-items-center">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <atm-label [LabelCaption]="'Jasa Dokter'"></atm-label>
                                 </div>
@@ -194,20 +210,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Diskon Dokter -->
-                                            <div class="row px-0 mx-0 mb-2 align-items-center">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                    <atm-label [LabelCaption]="'Diskon Dokter'"></atm-label>
-                                                </div>
-                                                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
-                                                    <ejs-numerictextbox #DiscDoctor formControlName="doct_disc"
-                                                        [format]="'N2'" [showSpinButton]="true" [enableRtl]="true"
-                                                        [min]="0" [max]="doct_fee.value"
-                                                        (change)="handleChangeDiscDoctor(DiscDoctor.value)">
-                                                    </ejs-numerictextbox>
-                                                </div>
-                                            </div>
-
                                             <!-- Subtotal Tarif -->
                                             <div class="row px-0 mx-0 mb-0 align-items-center">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -233,11 +235,11 @@
                     (click)="handleCloseModalPemasukanRawatInap()">
                     <i class="fas fa-times fa-sm"></i>&nbsp; Tutup
                 </button>
-                <button *ngIf="FormPemasukanRawatJalanState == 'Insert'" type="button" class="btn btn-primary btn-sm"
+                <button *ngIf="FormPemasukanRawatInapState == 'Insert'" type="button" class="btn btn-primary btn-sm"
                     (click)="handleSimpanModalPemasukanRawatInap(FormPemasukanRawatInap.value)">
                     <i class="fas fa-save fa-sm"></i>&nbsp; Simpan
                 </button>
-                <button *ngIf="FormPemasukanRawatJalanState == 'Edit'" type="button" class="btn btn-warning btn-sm"
+                <button *ngIf="FormPemasukanRawatInapState == 'Edit'" type="button" class="btn btn-warning btn-sm"
                     (click)="handleUpdateModalPemasukanRawatInap(FormPemasukanRawatInap.value)">
                     <i class="fas fa-save fa-sm"></i>&nbsp; Update
                 </button>
@@ -301,16 +303,16 @@
                                 </e-column>
                                 <e-column field='status' headerText='STATUS' width='70' textAlign='Center'>
                                     <ng-template #template let-data>
-                                        <div *ngIf="data.status === 'open';else inactive"
+                                        <div *ngIf="data.status === 'OPEN';else inactive"
                                             class="statustemp e-activecolor">
                                             <span class="statustxt e-activecolor">
-                                                {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                                                {{ data.status === 'OPEN' ? 'OPEN' : 'CLOSED' }}
                                             </span>
                                         </div>
                                         <ng-template #inactive>
                                             <div class="statustemp e-inactivecolor">
                                                 <span class="statustxt e-inactivecolor">
-                                                    {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                                                    {{ data.status === 'OPEN' ? 'OPEN' : 'CLOSED' }}
                                                 </span>
                                             </div>
                                         </ng-template>
@@ -328,7 +330,7 @@
     <ng-template #modalPembatalan>
         <div class="modal-header px-2 py-1">
             <h5 class="modal-title pull-left">
-                Pembatalan Transaksi Pemasukan Rawat Jalan
+                Pembatalan Transaksi Pemasukan Rawat Inap
             </h5>
             <button type="button" class="btn pull-right" aria-label="Close" (click)="handleCloseModalPembatalan()">
                 <i class="fas fa-window-close"></i>
@@ -351,15 +353,17 @@
                                     <!-- Nama Tarif -->
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
                                         <atm-label [LabelCaption]="'Nama Tarif'"></atm-label>
-                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.nama_setup_tarif |
-                                            titlecase}}
+                                        <p class="mb-0 text-biru-muda">
+                                            {{ GridHistorySelectedData.nama_setup_tarif | titlecase }}
                                         </p>
                                     </div>
 
                                     <!-- Qty -->
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
                                         <atm-label [LabelCaption]="'Qty'"></atm-label>
-                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.qty }}</p>
+                                        <p class="mb-0 text-biru-muda">
+                                            {{ GridHistorySelectedData.qty }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +373,8 @@
                                     <!-- Dokter -->
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2">
                                         <atm-label [LabelCaption]="'Dokter'"></atm-label>
-                                        <p class="mb-0 text-biru-muda">{{ GridHistorySelectedData.dokter | titlecase }}
+                                        <p class="mb-0 text-biru-muda">
+                                            {{ GridHistorySelectedData.dokter | titlecase }}
                                         </p>
                                     </div>
 

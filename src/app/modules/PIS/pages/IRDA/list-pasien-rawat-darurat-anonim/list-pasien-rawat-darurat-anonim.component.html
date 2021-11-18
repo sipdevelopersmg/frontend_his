@@ -1,0 +1,43 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <!-- Filter Offcanvas -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+        <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+            (handle-pencarian)="handlePencarianFilter($event)">
+        </mol-offcanvas-filter>
+    </div>
+
+    <!-- Grid Daftar Pasien -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
+            [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+            [allowTextWrap]="true" [textWrapSettings]="GridWrapSettings" [pageSettings]="GridPageSettings"
+            [toolbar]="GridToolbar" [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)">
+            <e-columns>
+                <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
+                    [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'jam_masuk'" [headerText]="'TGL MASUK'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="70" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="70" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="80" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="100" [field]="'nama_dokter'" [headerText]="'NAMA DOKTER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="300" [field]="'keterangan_diagnosa'" [headerText]="'CATATAN PASIEN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+    </div>
+</org-card-layout>

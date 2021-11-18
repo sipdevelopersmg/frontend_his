@@ -10,3 +10,5 @@ export const PUT_UPDATE_TARIF_BERLAKU = `${environment.webApiBilling}` + `tarif/
 export const PUT_UPDATE_STATUS_TARIF_BERLAKU = `${environment.webApiBilling}` + `tarif/TarifBerlaku/UpdateStatusActive`;
 export const PUT_UPDATE_KESELURUHAN_TARIF_BERLAKU = `${environment.webApiBilling}` + `tarif/TarifBerlaku/UpdateTarifByPercentAndKelas`;
 export const GET_ALL_TARIF_BERLAKU_BY_DYNAMIC_FILTER_FOR_TIKET = `${environment.webApiBilling}` + `tarif/TarifBerlaku/GetAllByDynamicForTiket/`;
+export const GET_ALL_TARIF_BERLAKU_FOR_TRANS_IRNA = `${environment.webApiBilling}` + `tarif/TarifBerlaku/GetAllForInputTransIrnaByDynamic`;
+export const GET_ALL_TARIF_BERLAKU_FOR_TRANS_IRDA = `${environment.webApiBilling}` + `tarif/TarifBerlaku/GetAllForInputTransIrdaByDynamic`;

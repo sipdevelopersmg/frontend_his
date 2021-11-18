@@ -38,7 +38,7 @@ export class DaftarPasienComponent implements OnInit {
     GridDatasource: Observable<GetAllPasienIRJAModel[]> = this.daftarPasienRawatJalanService.GridDaftarPasienIrja$;
     private GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-    GridPageSettings = { pageSizes: false, pageSize: 12 };
+    GridPageSettings = { pageSizes: true, pageSize: 20 };
 
     /**
      * Berisi Data Yang selected dari dalam grid

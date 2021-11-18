@@ -1,5 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AdmisiPasienRawatDaruratComponent } from "./pages/IRDA/admisi-pasien-rawat-darurat/admisi-pasien-rawat-darurat.component";
+import { PelayananPasienRawatDaruratComponent } from "./pages/IRDA/admisi-pasien-rawat-darurat/pelayanan-pasien-rawat-darurat/pelayanan-pasien-rawat-darurat.component";
+import { ListPasienRawatDaruratAnonimComponent } from "./pages/IRDA/list-pasien-rawat-darurat-anonim/list-pasien-rawat-darurat-anonim.component";
+import { PemasukanRawatDaruratComponent } from "./pages/IRDA/pemasukan-rawat-darurat/pemasukan-rawat-darurat.component";
+import { UpdatePasienTanpaIdentitasComponent } from "./pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component";
 import { AdmisiPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.component";
 import { PelayananPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan.component";
 import { AntrianPasienRawatJalanComponent } from "./pages/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.component";
@@ -113,7 +118,20 @@ const pisRoutes: Routes = [
             { path: "management-bed-rawat-inap/:id/:key", component: ManagementBedRawatInapComponent, data: { title: "Management Bed Rawat Inap" } },
             { path: "rencana-pulang-pasien/:id/:key", component: RencanaPulangPasienComponent, data: { title: "Rencana Pulang Pasien Rawat Inap" } },
             { path: "surat-pengantar-pembayaran/:id/:key", component: SuratPengantarPembayaranComponent, data: { title: "Surat Pengantar Pembayaran Rawat Inap" } },
-            { path: "transaksi-pemasukan-rawat-inap", component: PemasukanRawatInapComponent, data: { title: "Transaksi Pemasukan Rawat Inap" }, },]
+            { path: "transaksi-pemasukan-rawat-inap", component: PemasukanRawatInapComponent, data: { title: "Transaksi Pemasukan Rawat Inap" }, },
+        ]
+    },
+    {
+        path: "IRDA", component: null, data: { title: "IRDA" },
+        children: [
+            { path: "pelayanan-pasien-rawat-darurat", component: AdmisiPasienRawatDaruratComponent, data: { title: "Pelayanan Pasien Rawat Darurat" } },
+            { path: "admisi-pasien-rawat-darurat", component: PelayananPasienRawatDaruratComponent, data: { title: "Admisi Pasien Rawat Darurat" } },
+            { path: "admisi-pasien-rawat-darurat/:id/:key", component: PelayananPasienRawatDaruratComponent, data: { title: "Admisi Pasien Rawat Darurat" } },
+            { path: "surat-pengantar-pembayaran/:id/:key", component: SuratPengantarPembayaranComponent, data: { title: "Surat Pengantar Pembayaran Rawat Darurat" } },
+            { path: "daftar-pasien-rawat-darurat-tanpa-identitas", component: ListPasienRawatDaruratAnonimComponent, data: { title: "Daftar Pasien Rawat Darurat Tanpa Identitas" } },
+            { path: "update-pasien-rawat-darurat-tanpa-identitas/:data/:key", component: UpdatePasienTanpaIdentitasComponent, data: { title: "Update Pasien Rawat Darurat Tanpa Identitas" } },
+            { path: "transaksi-pemasukan-rawat-darurat", component: PemasukanRawatDaruratComponent, data: { title: "Transaksi Pemasukan Rawat Darurat" } },
+        ]
     }
 ]
 

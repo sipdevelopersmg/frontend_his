@@ -61,6 +61,12 @@ import { RencanaPulangPasienComponent } from './pages/IRNA/rencana-pulang-pasien
 import { SuratPengantarPembayaranComponent } from './pages/IRNA/surat-pengantar-pembayaran/surat-pengantar-pembayaran.component';
 import { DetailInfoKematianComponent } from './pages/IRNA/surat-pengantar-pembayaran/detail-info-kematian/detail-info-kematian.component';
 import { BatalkanPengantarPembayaranComponent } from './pages/IRNA/surat-pengantar-pembayaran/batalkan-pengantar-pembayaran/batalkan-pengantar-pembayaran.component';
+import { AdmisiPasienRawatDaruratComponent } from './pages/IRDA/admisi-pasien-rawat-darurat/admisi-pasien-rawat-darurat.component';
+import { ListPasienRawatDaruratComponent } from './pages/IRDA/admisi-pasien-rawat-darurat/list-pasien-rawat-darurat/list-pasien-rawat-darurat.component';
+import { PelayananPasienRawatDaruratComponent } from './pages/IRDA/admisi-pasien-rawat-darurat/pelayanan-pasien-rawat-darurat/pelayanan-pasien-rawat-darurat.component';
+import { ListPasienRawatDaruratAnonimComponent } from './pages/IRDA/list-pasien-rawat-darurat-anonim/list-pasien-rawat-darurat-anonim.component';
+import { PemasukanRawatDaruratComponent } from './pages/IRDA/pemasukan-rawat-darurat/pemasukan-rawat-darurat.component';
+import { UpdatePasienTanpaIdentitasComponent } from './pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -123,6 +129,12 @@ const ngWizardConfig: NgWizardConfig = {
         SuratPengantarPembayaranComponent,
         DetailInfoKematianComponent,
         BatalkanPengantarPembayaranComponent,
+        AdmisiPasienRawatDaruratComponent,
+        ListPasienRawatDaruratComponent,
+        PelayananPasienRawatDaruratComponent,
+        ListPasienRawatDaruratAnonimComponent,
+        PemasukanRawatDaruratComponent,
+        UpdatePasienTanpaIdentitasComponent,
     ],
     imports: [
         CommonModule,

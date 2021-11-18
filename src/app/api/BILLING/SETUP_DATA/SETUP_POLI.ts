@@ -10,3 +10,4 @@ export const GET_ALL_BY_ID_JENIS_RUANGAN = `${environment.webApiBilling}` + `tar
 export const GET_ALL_POLI_FOR_LOOKUP_ADMISI = `${environment.webApiAdmisi}` + `Admisi/PoliGetAllForLookupAdmisi/`;
 export const GET_ALL_POLI_FOR_LOOKUP_RAWAT_INAP = `${environment.webApiBilling}` + `tarif/Poli/PoliLookup_IRNA`;
 export const GET_ALL_POLI_FOR_LOOKUP_ADMISI_RAWAT_INAP = `${environment.webApiBilling}` + `tarif/Poli/PoliLookup_IRNA_ByJenisRuangan/`;
+export const GET_ALL_POLI_FOR_LOOKUP_ADMISI_RAWAT_DARURAT = `${environment.webApiBilling}` + `tarif/Poli/PoliLookup_IRDA`;

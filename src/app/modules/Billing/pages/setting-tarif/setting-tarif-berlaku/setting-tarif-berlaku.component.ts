@@ -160,6 +160,8 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     cssClass: 'text-end',
                     value: args.rowData[args.column.field],
                     change: function (args) {
+                        console.log(this.GridData);
+
                         let formEle = this.GridData.element.querySelector('form').ej2_instances[0];
 
                         let nominal_tarif_ele = formEle.getInputElement('nominal_tarif');

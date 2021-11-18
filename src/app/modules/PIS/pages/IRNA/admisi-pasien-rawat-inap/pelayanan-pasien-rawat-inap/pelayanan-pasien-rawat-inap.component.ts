@@ -8,7 +8,6 @@ import { SetupJenisRuanganService } from 'src/app/modules/Billing/services/setup
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { IPersonPasienForAdmisiRawatJalanModel } from 'src/app/modules/PIS/models/IRJA/admisi-pasien-rawat-jalan.model';
 import { DebiturModel } from 'src/app/modules/PIS/models/setup-data/setup-debitur.model';
-import { AdmisiPasienRawatJalanService } from 'src/app/modules/PIS/services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
 import { PendaftaranPasienBaruService } from 'src/app/modules/PIS/services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { SetupDebiturService } from 'src/app/modules/PIS/services/setup-data/setup-debitur/setup-debitur.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
@@ -49,7 +48,8 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     API_BILLING_SETUP_DATA = API_BILLING_SETUP_DATA.API_SETUP_DATA;
 
     @ViewChild('LookupMr') LookupMr: OrgInputLookUpComponent;
-    urlRm = this.API_ADMISI.POST_GET_PASIEN_FOR_LOOKUP_ADMISI;
+    urlRm = this.API_ADMISI.POST_GET_PASIEN_FOR_LOOKUP_ADMISI_NON_ANONIM;
+    LookupRmExceptionalData: any;
 
     @ViewChild('DropdownRuangan') DropdownRuangan: DropDownListComponent;
     DropdownRuanganDatasource: JenisRuanganModel[];
@@ -146,7 +146,13 @@ export class PelayananPasienRawatInapComponent implements OnInit {
             }
         } else {
             this.AdmisiRawatInapState = "NON_TPPRI";
-        }
+        };
+
+        this.LookupRmExceptionalData = {
+            field: 'id_person',
+            value_1: -1,
+            value_2: 0
+        };
     }
 
     onGetDetailPersonFromSearching(): void {

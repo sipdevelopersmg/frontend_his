@@ -1,0 +1,63 @@
+{
+    "LookupPasien": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_identitas",
+                "headerText": "NO. IDENTITAS",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. RM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "alamat_lengkap",
+                "headerText": "ALAMAT",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "per.no_identitas",
+                "filter": "like",
+                "title": "NO. IDENTITAS"
+            },
+            {
+                "field": "p.no_rekam_medis",
+                "filter": "like",
+                "title": "MR NO"
+            },
+            {
+                "field": "concat(per.nama_depan, ' ',per.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA"
+            }
+        ]
+    }
+}

@@ -40,8 +40,8 @@ export default class SuratPengantarPembayaranService {
         return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_INFO_KEMATIAN_BY_ID_REGISTER + RegisterId);
     }
 
-    onPostSavePengantarPembayaran(parameter: IPengantarPembayaranModel): Observable<PostSavePengantarPembayaranModel> {
-        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_SAVE_PENGANTAR_PEMBAYARAN, parameter)
+    onPostSavePengantarPembayaran(jenis_rawat: string, parameter: IPengantarPembayaranModel): Observable<PostSavePengantarPembayaranModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.POST_SAVE_PENGANTAR_PEMBAYARAN + `/${jenis_rawat}`, parameter)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);

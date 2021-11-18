@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { map } from 'rxjs/operators';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { MolGridComponent } from '../../../molecules/grid/grid/grid.component';
 import { Columns } from '../../../molecules/grid/grid/grid.model';
@@ -29,6 +30,7 @@ export class OrgInputLookUpComponent implements OnInit {
     @Input('static-filter') staticFilters: any = [];
     @Input('hide-button') isButtonHidden: boolean = false;
     @Input('button-id') buttonLookup: string;
+    @Input('button-shortcut') buttonShortcut: string;
     @Input('columns') columns: Columns[];
     @Input('sourceGrid') sourceGrid: any;
 
@@ -58,6 +60,8 @@ export class OrgInputLookUpComponent implements OnInit {
     @Input('divLabelClass') divLabelClass: string = "col-lg-4";
     @Input('divInputClass') divInputClass: string = "col-lg-8";
 
+    @Input("exceptional-data") ExceptionalData: any;
+
     ngOnInit(): void {
         this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
     }
@@ -85,18 +89,31 @@ export class OrgInputLookUpComponent implements OnInit {
 
     onFetchDataSource(params: any) {
         this.httpOperationService.defaultPostRequest(this.lookupUrl, params)
-            .subscribe((_result) => {
-                this.gridDataSource = _result.data;
+            .pipe(
+                map((result) => {
+                    if (this.ExceptionalData) {
+                        let newArr = result.data.filter((item) => {
+                            return item[this.ExceptionalData.field] !== this.ExceptionalData.value_1 && item[this.ExceptionalData.field] !== this.ExceptionalData.value_2;
+                        });
+
+                        return newArr;
+                    } else {
+                        return result.data;
+                    }
+                })
+            )
+            .subscribe((result) => {
+                this.gridDataSource = result;
 
                 setTimeout(() => {
-                    if (_result.data.length > 0) {
+                    if (result > 0) {
                         this.GridData.Grid.selectedRowIndex = 0;
                     }
                 }, 200);
 
             }, (pesanError) => {
                 console.log(pesanError);
-            })
+            });
     }
 
     onChangeFilters(args: any) {

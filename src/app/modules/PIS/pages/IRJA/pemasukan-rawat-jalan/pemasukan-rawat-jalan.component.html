@@ -301,16 +301,16 @@
                                 </e-column>
                                 <e-column field='status' headerText='STATUS' width='70' textAlign='Center'>
                                     <ng-template #template let-data>
-                                        <div *ngIf="data.status === 'open';else inactive"
+                                        <div *ngIf="data.status === 'OPEN';else inactive"
                                             class="statustemp e-activecolor">
                                             <span class="statustxt e-activecolor">
-                                                {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                                                {{ data.status === 'OPEN' ? 'OPEN' : 'CLOSED' }}
                                             </span>
                                         </div>
                                         <ng-template #inactive>
                                             <div class="statustemp e-inactivecolor">
                                                 <span class="statustxt e-inactivecolor">
-                                                    {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                                                    {{ data.status === 'OPEN' ? 'OPEN' : 'CLOSED' }}
                                                 </span>
                                             </div>
                                         </ng-template>

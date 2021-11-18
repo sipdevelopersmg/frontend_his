@@ -41,7 +41,7 @@
                                     </p>
                                 </div>
 
-                                <div class="col-3 mb-2 ps-0">
+                                <div class="col-3 mb-2 ps-0" *ngIf="AdmisiState == 'IRNA'">
                                     <p class="text-biru-muda mb-0">No. Room / No. Bed</p>
                                     <p class="text-hitam-muda mb-0">
                                         {{ room_no.value }} / {{ bed_no.value }}

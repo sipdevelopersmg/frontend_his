@@ -385,3 +385,8 @@ span.readonly-state > .e-numerictextbox {
   text-align: center;
   border-radius: 15px;
 }
+
+.e-pink-editable-background {
+  background-color: #f6ddd1 !important;
+  color: black !important;
+}
