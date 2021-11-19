@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -6,6 +6,9 @@ import { EncryptionService } from 'src/app/modules/shared/services/encryption.se
 import { ReturIssueService } from '../../../services/retur-issue/retur-issue.service';
 import * as configGrid from './json/detailItem.json'
 import { Location } from '@angular/common'
+import Swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 @Component({
   selector: 'app-view-retur-issue',
   templateUrl: './view-retur-issue.component.html',
@@ -17,16 +20,25 @@ export class ViewReturIssueComponent implements OnInit {
   inputFieldState='detail';
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
+    { Id: 'Validasi', Captions: 'Validasi', Icons1: 'fa-check' },
+    { Id: 'Cancel', Captions: 'Cancel', Icons1: 'fa-times' },
   ];
 
-  ConfigGrid = configGrid;
+  modalRef: BsModalRef;
 
+
+  ConfigGrid = configGrid;
+  @ViewChild('modalCanceled') modalCanceled: TemplateRef<any>;
+  id:number = 0
   constructor(
     private formBuilder: FormBuilder,
     public returIssueService:ReturIssueService,
     private encryptionService: EncryptionService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
+    private modalService: BsModalService,
+    private utilityService:UtilityService,
+
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +62,7 @@ export class ViewReturIssueComponent implements OnInit {
 
   onLoadDetailData(pemesanan_id){
     this.returIssueService.onGetById(pemesanan_id).subscribe((result)=>{
+      this.id = parseInt(pemesanan_id);
         this.formInput.setValue({
           nomor_retur_pemakaian_internal      :result.data.nomor_retur_pemakaian_internal,
           tanggal_retur_pemakaian_internal    :result.data.tanggal_retur_pemakaian_internal,
@@ -69,8 +82,52 @@ export class ViewReturIssueComponent implements OnInit {
         case 'Back':
             this.location.back();
             break;
+        case 'Validasi':
+            Swal.fire({
+              title: 'Apakah anda yakin ingin validasi data?',
+              text: "",
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Iya Validasi',
+              cancelButtonText: 'Tidak',
+              focusCancel: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.onValidation();
+              }
+            });
+          break;
+        case 'Cancel':
+          this.modalRef = this.modalService.show(
+              this.modalCanceled,
+              Object.assign({}, { class: 'modal-lg' })
+          );
+          break;
         default:
             break;
     }
   }
+
+  onValidation(): void {
+    this.returIssueService.Validation(this.id).subscribe((result)=>{
+      this.utilityService.onShowingCustomAlert('success', 'Data Pemesanan Berhasil Di Validasi', result.message)
+        .then(() => {
+            this.onLoadDetailData(this.id);
+        });
+    })
+  }
+
+  onCalceled(): void{
+    let reason_closed = (<HTMLInputElement>document.getElementsByName("reason_closed")[0]).value;
+    this.returIssueService.Cancel(this.id,reason_closed).subscribe((result)=>{
+      this.utilityService.onShowingCustomAlert('success', 'Data Pemesanan Berhasil Di Close', result.message)
+        .then(() => {
+            this.onLoadDetailData(this.id);
+            this.modalRef.hide();
+        });
+    })
+  }
+
 }
