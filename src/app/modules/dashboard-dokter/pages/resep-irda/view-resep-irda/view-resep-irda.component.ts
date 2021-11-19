@@ -165,7 +165,7 @@ export class ViewResepIrdaComponent implements OnInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
                 break;
             case "lanjutkan":
                 this.modalRef = this.modalService.show(
@@ -175,17 +175,17 @@ export class ViewResepIrdaComponent implements OnInit {
                 break;
             case "ubah":
                 const id = this.encryptionService.encrypt(this.dataHeader.resep_id+',ubah');
-                this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id, "GRAHCIS"]);
+                this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id, "GRAHCIS"]);
                 break;
             case "pulang":
                 const id_resep = this.encryptionService.encrypt(this.dataHeader.resep_id+',pulang');
-                this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id_resep, "GRAHCIS"]);
+                this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id_resep, "GRAHCIS"]);
                 break;
             case "stop":
                 this.resepDokterIrnaService.stopResepRawatInap(this.dataHeader.resep_id).subscribe((result)=>{
                     this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Stop', result.message)
                     .then(() => {
-                        this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                        this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
                     });
                 });
                 break;

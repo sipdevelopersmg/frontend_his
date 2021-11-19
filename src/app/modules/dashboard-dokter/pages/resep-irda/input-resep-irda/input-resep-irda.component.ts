@@ -16,7 +16,6 @@ import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
 import { SetupLabelPemakaianObatService } from 'src/app/modules/Pharmacy/services/setup-data/setup-label-pemakaian-obat/setup-label-pemakaian-obat.service';
 import { SetupMetodeRacikanService } from 'src/app/modules/Pharmacy/services/setup-data/setup-metode-racikan/setup-metode-racikan.service';
 import { SetupRutePemberianObatService } from 'src/app/modules/Pharmacy/services/setup-data/setup-rute-pemberian-obat/setup-rute-pemberian-obat.service';
-import { ResepDokterService } from '../../../services/resep-dokter/resep-dokter.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { SetupSatuanAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-satuan-aturan-pakai/setup-satuan-aturan-pakai.service';
 import { SetupIntervalAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-interval-aturan-pakai/setup-interval-aturan-pakai.service';
@@ -28,6 +27,7 @@ import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/rese
 import { Router,ActivatedRoute } from '@angular/router';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
+import { ResepDokterIrdaService } from '../../../services/resep-dokter-irda/resep-dokter-irda.service';
 
 @Component({
   selector: 'app-input-resep-irda',
@@ -192,7 +192,7 @@ export class InputResepIrdaComponent implements OnInit {
     private idArry:any[] = [];
   constructor(
     private formBuilder: FormBuilder,
-    public resepDokterService: ResepDokterIrnaService,
+    public resepDokterIrdaService: ResepDokterIrdaService,
     public setupMetodeRacikanService: SetupMetodeRacikanService,
     public setupRutePemberianObatService:SetupRutePemberianObatService,
     public setupSatuanAturanPakaiService:SetupSatuanAturanPakaiService,
@@ -256,7 +256,7 @@ export class InputResepIrdaComponent implements OnInit {
     let currentQtyResep =this.currentQtyResep;
     let currentIdItem = this.currentIdItem;
     let SelectedDataRacikanObat = this.SelectedDataRacikanObat;
-    this.resepDokterService.dataSelectRacikan.next(SelectedDataRacikanObat);
+    this.resepDokterIrdaService.dataSelectRacikan.next(SelectedDataRacikanObat);
 
     this.itemsParams = {
         create: () => {
@@ -318,7 +318,7 @@ export class InputResepIrdaComponent implements OnInit {
 
     let counterRacikan = this.counterRacikan;
     let dataSourceChild = this.dataScourceGridChild;
-    this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
+    this.resepDokterIrdaService.dataSourceChildGrid.next(dataSourceChild);
     let nav = 'add';
 
     this.ChildGrid = {
@@ -388,7 +388,7 @@ export class InputResepIrdaComponent implements OnInit {
     });
 
     this.setupMetodeRacikanService.setDataSource();
-    this.resepDokterService.setDataObat([]);
+    this.resepDokterIrdaService.setDataObat([]);
     this.setupRutePemberianObatService.setDataSource();
     this.setupIntervalAturanPakaiService.setDataSource();
     
@@ -399,7 +399,7 @@ export class InputResepIrdaComponent implements OnInit {
     this.setupSatuanAturanPakaiService.onGetAll().subscribe((result)=>{
         this.dataSourceSatuanAturanPakai = result.data;
     })
-    this.resepDokterService.reset();
+    this.resepDokterIrdaService.reset();
   }
 
     ngAfterViewInit(): void {
@@ -427,7 +427,7 @@ export class InputResepIrdaComponent implements OnInit {
     }
 
     updateResep(id){
-        this.resepDokterService.onGetById(id).subscribe((result)=>{
+        this.resepDokterIrdaService.onGetById(id).subscribe((result)=>{
             this.dataUbah = result.data;
             this.heandleSelectedTemplateResep(result.data);
             this.updateResepDokter = true;
@@ -610,7 +610,7 @@ export class InputResepIrdaComponent implements OnInit {
         this.nama_racikan.setValue(args.nama_obat);
         this.id_metode_racikan.setValue(args.id_metode_racikan);
         this.jumlah_hari
-        //   this.resepDokterService.addDetail(args);
+        //   this.resepDokterIrdaService.addDetail(args);
       let detail;
       detail = this.GridResepRacikan.childGrid.dataSource;
       args.details.forEach(element => {
@@ -650,7 +650,7 @@ export class InputResepIrdaComponent implements OnInit {
             element.aturan = element.id_tambahan_aturan_pakai;
         }
 
-        this.resepDokterService.addDetail(element); 
+        this.resepDokterIrdaService.addDetail(element); 
         
         element.racikans.forEach(racikan => {
             let counterRacikan = this.counterRacikan++;
@@ -661,7 +661,7 @@ export class InputResepIrdaComponent implements OnInit {
 
     });
 
-    this.resepDokterService.dataSourceChildGrid.next(detail);
+    this.resepDokterIrdaService.dataSourceChildGrid.next(detail);
     this.isGetFromTemplate = true;
     }
 
@@ -674,13 +674,13 @@ export class InputResepIrdaComponent implements OnInit {
           FormAddObat.id_metode_racikan = null;
           FormAddObat.metode_racikan = null;
       }
-      this.resepDokterService.addDetail(FormAddObat);
+      this.resepDokterIrdaService.addDetail(FormAddObat);
       if(this.is_racikan.value && this.DataRacikan.length > 0){
         this.DataRacikan.map((e,i)=>{
             e.counter = this.counter;
             return e;
         });
-        this.resepDokterService.dataSourceChildGrid.next(this.DataRacikan);
+        this.resepDokterIrdaService.dataSourceChildGrid.next(this.DataRacikan);
         this.DataRacikan = []
       }
       this.onResetFormObat();
@@ -721,7 +721,7 @@ export class InputResepIrdaComponent implements OnInit {
 
   // ** Update Data Obat method
   onUpdateDataObat(FormAddObat: any): void {
-      this.resepDokterService.editDetail(this.currentIndex,FormAddObat);
+      this.resepDokterIrdaService.editDetail(this.currentIndex,FormAddObat);
       this.onResetFormObat()
       this.GridResepRacikan.refresh();
       this.FormAddObatState = "input";
@@ -741,7 +741,7 @@ export class InputResepIrdaComponent implements OnInit {
                 this.FormAddObatState = "edit";
                 break;
           case "delete":
-              this.resepDokterService.removeDataDetail(this.currentIndex);
+              this.resepDokterIrdaService.removeDataDetail(this.currentIndex);
               this.GridResepRacikan.refresh();
               break;
           default:
@@ -783,7 +783,7 @@ export class InputResepIrdaComponent implements OnInit {
 
     onActionComplete(args: any): void {
         // let dataSourceParent: any = this.GridResepRacikan.dataSource;
-        // this.resepDokterService.dataSourceParentGrid.next(dataSourceParent);
+        // this.resepDokterIrdaService.dataSourceParentGrid.next(dataSourceParent);
 
         // console.log("Parent", this.GridResepRacikan.dataSource);
         // console.log("Children", this.GridResepRacikan.childGrid.dataSource);
@@ -806,7 +806,7 @@ export class InputResepIrdaComponent implements OnInit {
             tanggal_resep:moment().format()
         }
 
-        let detail = await this.resepDokterService.dataDetail
+        let detail = await this.resepDokterIrdaService.dataDetail
         
         console.log(detail);
 
@@ -862,10 +862,10 @@ export class InputResepIrdaComponent implements OnInit {
     }
 
     methodInsert(Data,is_simpan_template:number,is_simpan_racikan:number){
-        this.resepDokterService.Insert(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
+        this.resepDokterIrdaService.Insert(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
-                    this.resepDokterService.reset();
+                    this.resepDokterIrdaService.reset();
                     this.isGetFromTemplate = false;
                 });
         })
@@ -873,19 +873,19 @@ export class InputResepIrdaComponent implements OnInit {
 
     ubahResep(){
         if(this.pulang){
-            this.resepDokterService.pulangResepRawatInap(this.dataUbah).subscribe((result)=>{
+            this.resepDokterIrdaService.pulangResepRawatInap(this.dataUbah).subscribe((result)=>{
                 this.utilityService.onShowingCustomAlert('success', 'Berhasil Simpan Resep Pulang', result.message)
                 .then(() => {
                     const id = this.encryptionService.encrypt(JSON.stringify(result.data));
-                    this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+                    this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
                 });
             });
         }else{
-            this.resepDokterService.ubahResepRawatInap(this.dataUbah).subscribe((result)=>{
+            this.resepDokterIrdaService.ubahResepRawatInap(this.dataUbah).subscribe((result)=>{
                 this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Ubah', result.message)
                 .then(() => {
                     const id = this.encryptionService.encrypt(JSON.stringify(result.data));
-                    this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+                    this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
                 });
             });
         }
@@ -895,19 +895,19 @@ export class InputResepIrdaComponent implements OnInit {
         switch (args) {
             case "kembali_update":
                 const id = this.encryptionService.encrypt(JSON.stringify(this.dataUbah.resep_id));
-                this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+                this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
                 break;
             case "ubah":
                 this.ubahResep();
                 break;
             case "Kembali":
-                this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
                 break;
             case "Template":
                 this.handelClickTemplateResep();
                 break;
             case "Reset":
-                this.resepDokterService.reset();
+                this.resepDokterIrdaService.reset();
                 this.isGetFromTemplate = false;
                 break;
             case "Simpan":

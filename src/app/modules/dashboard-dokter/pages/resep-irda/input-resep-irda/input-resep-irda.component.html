@@ -213,7 +213,7 @@
                         </p>
                     </div> -->
                     <div class="card-body p-0">
-                        <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
+                        <ejs-grid #GridResepRacikan [dataSource]="resepDokterIrdaService.dataDetail$ | async"
                             height="calc(100vh - 15rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" 
                             [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)"
                             (load)="onLoad($event)" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'

@@ -687,7 +687,7 @@ export class PulangResepIrdaComponent implements OnInit {
             this.Insert();
             break;
         case "Kembali":
-            this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+            this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
             break;
         default:
             break;

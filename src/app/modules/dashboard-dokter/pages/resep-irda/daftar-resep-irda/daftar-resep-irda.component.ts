@@ -4,7 +4,7 @@ import { GridComponent, GridModel } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
-import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/resep-dokter-irna.service';
+import { ResepDokterIrdaService } from '../../../services/resep-dokter-irda/resep-dokter-irda.service';
 import * as GridConfig from './json/grid.config.json'
 
 @Component({
@@ -42,7 +42,7 @@ export class DaftarResepIrdaComponent implements OnInit {
   constructor(
     private router: Router,
     private encryptionService: EncryptionService,
-    public resepDokterIrnaService: ResepDokterIrnaService,
+    public resepDokterIrdaService: ResepDokterIrdaService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -77,7 +77,7 @@ export class DaftarResepIrdaComponent implements OnInit {
       columns: this.GridConfig.columnsChild
     }
 
-    this.resepDokterIrnaService.onInitList();
+    this.resepDokterIrdaService.onInitList();
     this.handlePencarianFilter([]);
   }
 
@@ -98,7 +98,7 @@ export class DaftarResepIrdaComponent implements OnInit {
   }
 
   handlePencarianFilter(args){
-    this.resepDokterIrnaService.onGetAllByResepActiveByRegister(args).subscribe((result)=>{
+    this.resepDokterIrdaService.onGetAllByResepActiveByRegister(args).subscribe((result)=>{
       this.dataSource = result.data;
       this.mapingRacikan(result.data);
       this.GridResepRacikan.refresh();
@@ -125,20 +125,20 @@ export class DaftarResepIrdaComponent implements OnInit {
   handleClickDetail(args){
     console.log(args.items);
     const id = this.encryptionService.encrypt(JSON.stringify(args.items[0].resep_id));
-    this.router.navigate(['Dokter/resep-irna/view-resep-irna', id, "GRAHCIS"]);
+    this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
   }
 
   handleClickButtonNav(args: any): void {
     switch (args) {
       case 'Add':
-        this.router.navigateByUrl('Dokter/resep-irna/input-resep-irna');
+        this.router.navigateByUrl('Dokter/resep-irda/input-resep-irda');
         break;
       case 'Edit':
         const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
-        this.router.navigate(['Dokter/resep-irna/input-resep-irna', pemesanan_id, "GRAHCIS"]);
+        this.router.navigate(['Dokter/resep-irda/input-resep-irda', pemesanan_id, "GRAHCIS"]);
         break;
       case 'pulang':
-        this.router.navigateByUrl('Dokter/resep-irna/pulang-resep-irna');
+        this.router.navigateByUrl('Dokter/resep-irda/pulang-resep-irda');
         break;
       default:
         break;
