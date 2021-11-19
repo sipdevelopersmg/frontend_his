@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { DaftarIssueComponent } from "./pages/issue/daftar-issue/daftar-issue.component";
 import { InputIssueComponent } from "./pages/issue/input-issue/input-issue.component";
 import { ViewIssueComponent } from "./pages/issue/view-issue/view-issue.component";
+import { DaftarIssueValidationComponent } from "./pages/issue_validation/daftar-issue-validation/daftar-issue-validation.component";
+import { ViewIssueValidationComponent } from "./pages/issue_validation/view-issue-validation/view-issue-validation.component";
 import { DaftarPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/daftar-permintaan-mutasi/daftar-permintaan-mutasi.component";
 import { InputPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/input-permintaan-mutasi/input-permintaan-mutasi.component";
 import { ViewPermintaanMutasiComponent } from "./pages/mutasi/permintaan-mutasi/view-permintaan-mutasi/view-permintaan-mutasi.component";
@@ -120,6 +122,13 @@ const mmRoutes: Routes = [
             { path: "input-issue", component: InputIssueComponent, data: { title: "Input Issue" } },
             { path: "view-issue/:id/:key", component: ViewIssueComponent, data: { title: "View Issue" } },
 
+        ],
+    },
+    {
+        path: "issue-validation", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-issue-validation", component: DaftarIssueValidationComponent, data: { title: "Daftar Issue" } },
+            { path: "view-issue-validation/:id/:key", component: ViewIssueValidationComponent, data: { title: "View Issue" } },
         ],
     },
     {

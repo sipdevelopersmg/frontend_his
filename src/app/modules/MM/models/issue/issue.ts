@@ -30,7 +30,7 @@ export interface TrPemakaianInternalDetailInsert {
      keterangan_pemakaian_internal?:string;
  
      /** @format Array of Object */
-     satuan:satuan[];
+     satuans:satuan[];
 }
 
 export interface TrPemakaianInternalInsert {

@@ -13,8 +13,9 @@ import { TrPemakaianInternalDetailInsert, TrPemakaianInternalInsert } from '../.
 })
 export class PemakaianInternalService {
 
-  public API = MM.PEMAKAIAN_INTERNAL.TRANSPEMAKAIANINTERNAL;
+    public API = MM.PEMAKAIAN_INTERNAL.TRANSPEMAKAIANINTERNAL;
     public dataSource = new BehaviorSubject([]);
+    public dataOpenSource = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<TrPemakaianInternalDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
@@ -75,6 +76,20 @@ export class PemakaianInternalService {
 
     /**
      * Service Untuk Menampilkan data berdasarkan dinamik filter
+     * @onGetAll Observable<Model>
+    */
+     onGetAllOpenByParams(req: PostRequestByDynamicFiterModel[]): void {
+        this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_OPEN_BY_PARAMS,req).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        ).subscribe((result)=>{
+            this.dataOpenSource.next(result.data);
+        })
+    }
+
+    /**
+     * Service Untuk Menampilkan data berdasarkan dinamik filter
      * @onGetAll Void
     */
     onGetAllByParamsSource(req: PostRequestByDynamicFiterModel[]): void {
@@ -84,6 +99,7 @@ export class PemakaianInternalService {
             }
         });
     }
+    
     
     /**
      * Service Untuk Menampilkan data detail Item
@@ -104,8 +120,8 @@ export class PemakaianInternalService {
     }
 
     updateFromInline(index: number, data: TrPemakaianInternalDetailInsert, rowData: TrPemakaianInternalDetailInsert) {
-        let indexsatuan = data.satuan.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_pemakaian_internal);
-        let isi = data.satuan[indexsatuan].isi;
+        let indexsatuan = data.satuans.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_pemakaian_internal);
+        let isi = data.satuans[indexsatuan].isi;
         data.isi_pemakaian_internal = isi;
         data.qty_pemakaian_internal = data.qty_satuan_besar_pemakaian_internal * isi;
 
@@ -125,8 +141,8 @@ export class PemakaianInternalService {
 
 
     editSatuan(index: number, satuan: string) {
-        let indexsatuan = this.dataDetail[index].satuan.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_pemakaian_internal);
-        let isi = this.dataDetail[index].satuan[indexsatuan].isi;
+        let indexsatuan = this.dataDetail[index].satuans.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_pemakaian_internal);
+        let isi = this.dataDetail[index].satuans[indexsatuan].isi;
         this.dataDetail[index].kode_satuan_besar_pemakaian_internal = satuan;
         this.dataDetail[index].isi_pemakaian_internal = isi;
         this.dataDetail[index].qty_pemakaian_internal = this.dataDetail[index].qty_satuan_besar_pemakaian_internal * isi;
@@ -158,5 +174,35 @@ export class PemakaianInternalService {
         this.dataDetail = [] ;
         this.total_transaksi = 0 ;
         this.jumlah_item = 0 ; 
+    }
+
+    getSatuanDetail(id_item):any[]{
+        let index = this.dataDetail.map((item) => { return item.id_item }).indexOf(id_item);
+        return this.dataDetail[index].satuans;
+    }
+
+    getDetail(id): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id);
+    }
+
+    validasiPersetujuan(Data): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Cancel(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
+                pemakaian_internal_id : id,
+                reason_canceled:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }
