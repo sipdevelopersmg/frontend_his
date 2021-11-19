@@ -31,6 +31,10 @@ import { DaftarResepIrnaComponent } from './pages/resep-irna/daftar-resep-irna/d
 import { ViewResepIrnaComponent } from './pages/resep-irna/view-resep-irna/view-resep-irna.component';
 import { SuratPerintahMondokComponent } from './pages/surat-perintah-mondok/surat-perintah-mondok.component';
 import { PulangResepIrnaComponent } from './pages/resep-irna/pulang-resep-irna/pulang-resep-irna.component';
+import { DaftarResepIrdaComponent } from './pages/resep-irda/daftar-resep-irda/daftar-resep-irda.component';
+import { InputResepIrdaComponent } from './pages/resep-irda/input-resep-irda/input-resep-irda.component';
+import { ViewResepIrdaComponent } from './pages/resep-irda/view-resep-irda/view-resep-irda.component';
+import { PulangResepIrdaComponent } from './pages/resep-irda/pulang-resep-irda/pulang-resep-irda.component';
 
 @NgModule({
     declarations: [
@@ -59,6 +63,10 @@ import { PulangResepIrnaComponent } from './pages/resep-irna/pulang-resep-irna/p
         ViewResepIrnaComponent,
         SuratPerintahMondokComponent,
         PulangResepIrnaComponent,
+        DaftarResepIrdaComponent,
+        InputResepIrdaComponent,
+        ViewResepIrdaComponent,
+        PulangResepIrdaComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,
