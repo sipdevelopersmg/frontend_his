@@ -23,6 +23,7 @@ export interface IInformasiPasienModel {
     nama_kelas: string;
     total_biaya?: number;
     status_billing?: string;
+    nama_poli?: string;
 }
 
 export interface ITiketModel {

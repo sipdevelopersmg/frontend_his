@@ -1,0 +1,6 @@
+<mol-grid #GridDetailAkomodasi [grid-height]="'calc(100vh - 45rem)'" [grid-DataSource]="GridDetailAkomodasiDatasource"
+    [grid-paging]="false" [grid-editSettings]="GridDetailAkomodasiEditSettings" [grid-lines]="'Both'"
+    [grid-toolbar]="GridDetailAkomodasiToolbar" [columns]="Config.GridDetailAkomodasiColumns"
+    (row-selected)="handleSelectedRow($event)" (initialized)="InitalizedGrid($event)"
+    (toolbar-click)="handleToolbarClick($event)">
+</mol-grid>

@@ -1,0 +1,5 @@
+<mol-grid #GridBedTransfer [grid-height]="'calc(100vh - 45rem)'" [grid-DataSource]="GridBedTransfersource"
+    [grid-paging]="false" [grid-editSettings]="GridBedTransferEditSettings" [grid-lines]="'Both'"
+    [grid-toolbar]="GridBedTransferToolbar" [columns]="Config.GridBedTransferColumns"
+    (row-selected)="handleSelectedRow($event)" (initialized)="InitalizedGrid($event)">
+</mol-grid>

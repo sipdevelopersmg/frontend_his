@@ -20,6 +20,9 @@ export class DashboardDokterService {
     ShowInformasiPasien = new BehaviorSubject(false);
     ShowInformasiPasien$ = this.ShowInformasiPasien.asObservable();
 
+    JenisRawat = new BehaviorSubject("");
+    JenisRawat$ = this.JenisRawat.asObservable();
+
     constructor(
         private navigationService: NavigationService,
         private notificationService: NotificationService,
@@ -146,6 +149,16 @@ export class DashboardDokterService {
 
     onSetSidebarMenuTitle(): void {
         this.navigationService.onSetMainMenuTitle('Dashboard Dokter')
+    }
+
+    onSetJenisRawatForDashboardDokter(): void {
+        let ActivePasien = JSON.parse(localStorage.getItem("ActivePasien"));
+
+        if (ActivePasien) {
+            if (ActivePasien.jenis_rawat) {
+                this.JenisRawat.next(ActivePasien.jenis_rawat);
+            }
+        };
     }
 
     onDestroySidebarMenuWhenNavigateToDaftarPasien(): void {

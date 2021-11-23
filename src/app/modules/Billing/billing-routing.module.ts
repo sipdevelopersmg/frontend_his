@@ -19,6 +19,7 @@ import { SetupTarifPemeriksaanComponent } from "./pages/setup-data/setup-tarif-p
 import { SetupTarifComponent } from "./pages/setup-data/setup-tarif/setup-tarif.component";
 import { SetupVoucherPaymentComponent } from "./pages/setup-data/setup-voucher-payment/setup-voucher-payment.component";
 import { InputBillingRawatDaruratComponent } from "./pages/transaksi-billing-rawat-darurat/input-billing-rawat-darurat/input-billing-rawat-darurat.component";
+import { InputBillingRawatInapComponent } from "./pages/transaksi-billing-rawat-inap/input-billing-rawat-inap/input-billing-rawat-inap.component";
 import { InputBillingComponent } from "./pages/transaksi-billing/input-billing/input-billing.component";
 import { ScanningComponent } from "./pages/transaksi-billing/scanning/scanning.component";
 
@@ -58,6 +59,13 @@ const billingRoutes: Routes = [
         children: [
             { path: "scan-billing-pasien-rawat-darurat", component: ScanningComponent, data: { title: 'Billing Rawat Darurat - Scan No Register' } },
             { path: "input-billing-pasien/:no_register/:key", component: InputBillingRawatDaruratComponent, data: { title: 'Input Billing Pasien Rawat Darurat' } },
+        ]
+    },
+    {
+        path: "transaksi-billing-rawat-inap", component: null, data: { title: 'Transaksi Billing' },
+        children: [
+            { path: "scan-billing-pasien-rawat-inap", component: ScanningComponent, data: { title: 'Billing Rawat Inap - Scan No Register' } },
+            { path: "input-billing-pasien/:no_register/:key", component: InputBillingRawatInapComponent, data: { title: 'Input Billing Pasien Rawat Inap' } },
         ]
     },
 ];

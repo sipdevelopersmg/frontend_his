@@ -1,0 +1,165 @@
+<!-- Modal Info Kunjungan -->
+<button id="btnModalAkomodasiRawatInap" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalAkomodasiRawatInap" [hidden]="true">
+    Launch Modal Akomodasi Rawat Inap
+</button>
+
+<div class="modal fade" id="modalAkomodasiRawatInap" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalAkomodasiRawatInapLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal_akomodasi_rawat_inap">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalAkomodasiRawatInapLabel">Akomodasi Pasien</h5>
+                <button id="btnCloseAkomodasiRawatInap" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
+                    <!-- Akomodasi -->
+                    <org-tabs-item>
+                        <org-tabs-label [Id]="'Akomodasi'">Akomodasi</org-tabs-label>
+                        <org-tabs-body>
+                            <app-list-akomodasi></app-list-akomodasi>
+                        </org-tabs-body>
+                    </org-tabs-item>
+
+                    <!-- Detail Akomodasi -->
+                    <org-tabs-item>
+                        <org-tabs-label [Id]="'Detail_Akomodasi'">Detail Akomodasi</org-tabs-label>
+                        <org-tabs-body>
+                            <app-list-detail-akomodasi
+                                (onSendTogglingModal)="handleGetTogglingModalDetailAkomodasi($event)">
+                            </app-list-detail-akomodasi>
+                        </org-tabs-body>
+                    </org-tabs-item>
+
+                    <!-- Bed Transfer -->
+                    <org-tabs-item>
+                        <org-tabs-label [Id]="'Bed_Transfer'">Bed Transfer</org-tabs-label>
+                        <org-tabs-body>
+                            <app-list-bed-transfer></app-list-bed-transfer>
+                        </org-tabs-body>
+                    </org-tabs-item>
+                </org-tabs>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add Detail Akomodasi -->
+<button id="btnModalAddDetailAkomodasi" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalAddDetailAkomodasi" [hidden]="true">
+    Launch Modal Akomodasi Rawat Inap
+</button>
+
+<div class="modal fade" id="modalAddDetailAkomodasi" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="modalAddDetailAkomodasiLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalAddDetailAkomodasiLabel">Add Detail Akomodasi Pasien</h5>
+                <button id="btnCloseAddDetailAkomodasi" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close" (click)="handleCloseAddDetailAkomodasi()">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormAddDetailAkomodasi">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Tanggal -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-datepicker #DatepickerTanggal [format]="'dd/MM/yyyy'"
+                                        formControlName="tanggal">
+                                    </ejs-datepicker>
+                                </div>
+                            </div>
+
+                            <!-- Qty (Hari) -->
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Qty (Hari)'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-numerictextbox #NumericTextboxQty formControlName="qty" [format]="'N0'"
+                                        [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false">
+                                    </ejs-numerictextbox>
+                                </div>
+                            </div>
+
+                            <!-- Lookup Poli -->
+                            <org-input-look-up-kode #LookupPoli [modal-title]="'Data Poli'" [lookup-url]="UrlLookupPoli"
+                                [idKode]="'kode_poli'" [idTitle]="'nama_poli'"
+                                (onGetSelectedData)="handleSelectedPoli($event)" [columns]="Config.LookupPoli.columns"
+                                [filter-lookup]="Config.LookupPoli.filter" [label]="'Poli'">
+                            </org-input-look-up-kode>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!-- Lookup Tarif -->
+                            <org-input-look-up-kode #LookupTarif [modal-title]="'Data Tarif Per Poli'"
+                                [lookup-url]="UrlLookupTarif" [idKode]="'kode_setup_tarif'"
+                                [idTitle]="'nama_setup_tarif'" (onGetSelectedData)="handleSelectedTarif($event)"
+                                [columns]="Config.LookupTarif.columns" [filter-lookup]="Config.LookupTarif.filter"
+                                [label]="'Tarif Akomodasi'">
+                            </org-input-look-up-kode>
+
+                            <!-- Kelas Pelayanan -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                                        [fields]="DropdownKelasField" [allowFiltering]="true"
+                                        formControlName="id_kelas_rawat" (change)="handleChangeDropdownKelas($event)">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 d-grid gap-2">
+                                    <button class="btn btn-primary btn-sm" type="button"
+                                        (click)="handleAddDataDetailAkomodasi(FormAddDetailAkomodasi.value)">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mol-grid #GridAddDetailAkomodasi [grid-height]="300"
+                                [grid-DataSource]="GridAddDetailAkomodasiDatasource" [grid-paging]="false"
+                                [grid-editSettings]="GridAddDetailAkomodasiEditSettings" [grid-lines]="'Both'"
+                                [grid-toolbar]="GridAddDetailAkomodasiToolbar"
+                                [columns]="Config.GridAddDetailAkomodasiColumns"
+                                (row-selected)="handleSelectedRow($event)" (initialized)="InitalizedGrid($event)"
+                                (toolbar-click)="handleToolbarClick($event)">
+                            </mol-grid>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+                    (click)="handleCloseAddDetailAkomodasi()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitAddDetailAkomodasi(GridAddDetailAkomodasiDatasource)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

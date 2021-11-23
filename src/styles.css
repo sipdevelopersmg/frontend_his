@@ -341,7 +341,7 @@ span.readonly-state > .e-numerictextbox {
 @media (min-width: 1399.98px) {
   .large-modal-content {
     width: 75rem !important;
-    margin-left: -15rem !important;
+    margin-left: -12.6rem !important;
   }
 }
 
@@ -387,6 +387,6 @@ span.readonly-state > .e-numerictextbox {
 }
 
 .e-pink-editable-background {
-  background-color: #f6ddd1 !important;
+  background-color: #ffc0c0 !important;
   color: black !important;
 }

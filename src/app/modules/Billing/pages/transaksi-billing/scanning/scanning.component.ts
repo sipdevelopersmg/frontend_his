@@ -48,6 +48,7 @@ export class ScanningComponent implements OnInit {
                 break;
             case 'scan-billing-pasien-rawat-inap':
                 this.ScanningBillingState = "IRNA";
+                this.UrlLookupDaftarPasien = this.API_TRANS_BILLING.TRANS_BILLING_IRDA.POST_GET_DATA_PASIEN_FOR_LOOKUP;
                 break;
             case 'scan-billing-pasien-rawat-jalan':
                 this.ScanningBillingState = "IRJA";
@@ -101,7 +102,7 @@ export class ScanningComponent implements OnInit {
     }
 
     onScanNoRegisterIRNA(NoRegister: string): void {
-        this.transBillingService.onScanNoRegister(NoRegister)
+        this.transBillingRawatDaruratService.onScanNoRegister(NoRegister)
             .subscribe((result) => {
                 if (result.responseResult) {
                     Swal.fire({
@@ -115,9 +116,9 @@ export class ScanningComponent implements OnInit {
                         cancelButtonText: 'Tidak',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            let url_billing_irna = 'dashboard/Billing/transaksi-billing-rawat-inap/input-billing-pasien';
+                            let url_billing_irda = 'dashboard/Billing/transaksi-billing-rawat-inap/input-billing-pasien';
 
-                            this.onRedirectToInputBillingPasien(NoRegister, url_billing_irna);
+                            this.onRedirectToInputBillingPasien(NoRegister, url_billing_irda);
                         }
                     });
                 } else {

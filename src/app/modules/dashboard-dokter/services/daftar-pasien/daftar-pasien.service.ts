@@ -29,6 +29,8 @@ export class DaftarPasienService {
         this.pendaftaranPasienBaruService.onGetLinkFotoPerson(Data.id_person)
             .subscribe((result) => {
                 Data['photo_url'] = result.data;
+                Data['umur'] = Data['usia'];
+                Data['tgl_admisi'] = Data['jam_masuk'];
             }, (error) => {
                 console.log(error);
             }, () => {
@@ -46,5 +48,9 @@ export class DaftarPasienService {
 
     onGetAllDaftarPasienIRJA(DokterId: number): Observable<GetAllPasienIRJAByDokterModel> {
         return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ALL_PASIEN_IRJA_BY_ID_DOKTER + DokterId);
+    }
+
+    onGetAllDaftarPasienIRNA(DokterId: number): Observable<GetAllPasienIRJAByDokterModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ALL_PASIEN_IRNA_BY_ID_DOKTER + DokterId);
     }
 }

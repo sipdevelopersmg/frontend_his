@@ -39,8 +39,14 @@ import { HistoryCroscekTutupKasirComponent } from './pages/kasir-rawat-jalan/his
 import { SetupTarifPemeriksaanComponent } from './pages/setup-data/setup-tarif-pemeriksaan/setup-tarif-pemeriksaan.component';
 import { InputBillingRawatDaruratComponent } from './pages/transaksi-billing-rawat-darurat/input-billing-rawat-darurat/input-billing-rawat-darurat.component';
 import { HistoryInvoiceIrdaComponent } from './pages/transaksi-billing-rawat-darurat/history-invoice-irda/history-invoice-irda.component';
-import { HistoryPembayaranIrdaComponent } from './pages/transaksi-billing-rawat-darurat/history-pembayaran-irda/history-pembayaran-irda.component';
 import { HistorySemuaPembayaranIrdaComponent } from './pages/transaksi-billing-rawat-darurat/history-semua-pembayaran-irda/history-semua-pembayaran-irda.component';
+import { InfoKunjunganIrdaComponent } from './pages/transaksi-billing-rawat-darurat/info-kunjungan-irda/info-kunjungan-irda.component';
+import { InputBillingRawatInapComponent } from './pages/transaksi-billing-rawat-inap/input-billing-rawat-inap/input-billing-rawat-inap.component';
+import { ListAkomodasiComponent } from './pages/transaksi-billing-rawat-inap/akomodasi-rawat-inap/list-akomodasi/list-akomodasi.component';
+import { ListDetailAkomodasiComponent } from './pages/transaksi-billing-rawat-inap/akomodasi-rawat-inap/list-detail-akomodasi/list-detail-akomodasi.component';
+import { ListBedTransferComponent } from './pages/transaksi-billing-rawat-inap/akomodasi-rawat-inap/list-bed-transfer/list-bed-transfer.component';
+import { AkomodasiRawatInapComponent } from './pages/transaksi-billing-rawat-inap/akomodasi-rawat-inap/akomodasi-rawat-inap/akomodasi-rawat-inap.component';
+import { PembatalanBillingIrdaComponent } from './pages/transaksi-billing-rawat-darurat/pembatalan-billing-irda/pembatalan-billing-irda.component';
 
 @NgModule({
     declarations: [
@@ -78,8 +84,14 @@ import { HistorySemuaPembayaranIrdaComponent } from './pages/transaksi-billing-r
         SetupTarifPemeriksaanComponent,
         InputBillingRawatDaruratComponent,
         HistoryInvoiceIrdaComponent,
-        HistoryPembayaranIrdaComponent,
         HistorySemuaPembayaranIrdaComponent,
+        InfoKunjunganIrdaComponent,
+        InputBillingRawatInapComponent,
+        ListAkomodasiComponent,
+        ListDetailAkomodasiComponent,
+        ListBedTransferComponent,
+        AkomodasiRawatInapComponent,
+        PembatalanBillingIrdaComponent,
     ],
     imports: [
         CommonModule,

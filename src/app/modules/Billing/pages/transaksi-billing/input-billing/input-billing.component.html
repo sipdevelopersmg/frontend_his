@@ -785,24 +785,25 @@
                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                             <div class="card card_billing">
                                 <div class="card-body">
-                                    <app-payment-cash-irja *ngIf="PembayaranState == 'CASH'"
+                                    <app-payment-cash-irja *ngIf="PembayaranState == 'CASH'" [JenisRawatState]="'IRJA'"
                                         (onSendPaymentCash)="onSendPaymentCash($event)">
                                     </app-payment-cash-irja>
 
-                                    <app-payment-qris-irja *ngIf="PembayaranState == 'QR'"
+                                    <app-payment-qris-irja *ngIf="PembayaranState == 'QR'" [JenisRawatState]="'IRJA'"
                                         (onSendPaymentQRIS)="onSendPaymentQRIS($event)">
                                     </app-payment-qris-irja>
 
                                     <app-payment-voucher-irja *ngIf="PembayaranState == 'VOUCHER'"
+                                        [JenisRawatState]="'IRJA'"
                                         (onSendPaymentVoucher)="onSendPaymentVoucher($event)">
                                     </app-payment-voucher-irja>
 
                                     <app-payment-debit-irja *ngIf="PembayaranState == 'DEBIT_CARD'"
-                                        (onSendPaymentDebit)="onSendPaymentDebit($event)">
+                                        [JenisRawatState]="'IRJA'" (onSendPaymentDebit)="onSendPaymentDebit($event)">
                                     </app-payment-debit-irja>
 
                                     <app-payment-credit-irja *ngIf="PembayaranState == 'CREDIT_CARD'"
-                                        (onSendPaymentCredit)="onSendPaymentCredit($event)">
+                                        [JenisRawatState]="'IRJA'" (onSendPaymentCredit)="onSendPaymentCredit($event)">
                                     </app-payment-credit-irja>
                                 </div>
                             </div>

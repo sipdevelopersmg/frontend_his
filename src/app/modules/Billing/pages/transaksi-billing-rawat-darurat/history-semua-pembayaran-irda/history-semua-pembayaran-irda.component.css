@@ -1,0 +1,147 @@
+.div_item_invoice:hover {
+  background-color: var(--biru-muda) !important;
+  color: white !important;
+}
+
+.card_body_daftar_payment {
+  height: 30.5rem;
+  max-height: 30.5rem;
+  overflow-y: auto;
+}
+
+.e-toolbar .e-toolbar-item .e-tbar-btn.e-btn .e-icons.e-btn-icon {
+  min-height: 14px !important;
+}
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 5px !important;
+  height: 30px !important;
+}
+
+span.e-headertext {
+  font-size: 13px !important;
+}
+
+td.e-rowcell {
+  padding: 5px !important;
+}
+
+li.list-group-item-title {
+  border: 0;
+  border-radius: 0;
+  color: white;
+  transition: all 0.1s;
+}
+
+div.div-main-menu-title {
+  height: 3rem;
+  border-radius: 0 !important;
+  align-items: center;
+}
+
+div.items-group-title {
+  display: flex;
+  padding: 5px;
+  border-radius: 0px;
+  transition: all 0.25s;
+}
+
+li.list-group-item-title > div.items-group-title:hover {
+  background-color: #f6f4f7 !important;
+  color: #00afff !important;
+  transition: all 0.25s;
+}
+
+li.list-group-item-title > div.items-group-title::after {
+  background-color: #f6f4f7 !important;
+  color: #00afff !important;
+  transition: all 0.25s;
+}
+
+li.list-group-item {
+  border: 0;
+  background-color: transparent;
+  color: var(--hitam);
+  transition: all 0.1s;
+}
+
+div.items-group {
+  display: flex;
+  padding: 5px;
+  transition: all 0.25s;
+  font-size: 13.5px;
+}
+
+li.list-group-item > div.items-group:hover,
+.is-active {
+  background-color: var(--biru-muda) !important;
+  color: white !important;
+  transition: all 0.25s;
+}
+
+li.list-group-item > div.items-group::after {
+  background-color: var(--biru-muda) !important;
+  color: white !important;
+  transition: all 0.25s;
+}
+
+ul.list-group-child {
+  border: 0;
+  background-color: transparent;
+  color: white;
+  transition: all 0.25s;
+}
+
+div.items-group-child {
+  display: flex;
+  padding: 5px;
+  transition: all 0.25s;
+  font-size: 13.5px;
+}
+
+li.list-group-item > div.items-group-child:hover {
+  background-color: var(--biru-muda) !important;
+  color: #f6f4f7 !important;
+  transition: all 0.25s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.is-hidden {
+  display: none;
+  animation: fadeOut 400ms ease-in-out both;
+}
+
+.is-show {
+  display: block;
+  animation: fadeIn 400ms ease-in-out both;
+}
+
+ul.list-group-child.is-hidden {
+  display: none;
+  animation: fadeOut 400ms ease-in-out both;
+}
+
+.is-selected {
+  background-color: #f6f4f7 !important;
+  transition: all 0.7s !important;
+}

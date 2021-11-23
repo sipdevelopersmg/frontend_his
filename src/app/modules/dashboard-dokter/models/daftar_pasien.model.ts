@@ -17,9 +17,20 @@ export interface IDaftarPasienIRJAModel {
     nama_debitur?: string;
     dpjp?: string;
     photo_url?: string;
+    id_setup_bed_room?: number
+    bed_no?: string
+    id_setup_room?: number
+    room_no?: string
+    room_descr?: string
 }
 
 export class GetAllPasienIRJAByDokterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IDaftarPasienIRJAModel[];
+    message: string;
+}
+
+export class GetAllPasienIRNAByDokterModel implements HttpResponseModel {
     responseResult: boolean;
     data: IDaftarPasienIRJAModel[];
     message: string;

@@ -24,7 +24,7 @@
                         <!-- Umur dan Jenis Kelamin -->
                         <div class="mb-2">
                             <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                {{ daftarPasienService.ActivePasien.value.umur }} /
+                                {{ daftarPasienService.ActivePasien.value.umur}} /
                                 {{ daftarPasienService.ActivePasien.value.gender | titlecase }}
                             </p>
                         </div>
@@ -79,8 +79,10 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <p class="text-hitam-muda mb-0 informasi-pasien-text">
-                                    : &nbsp; {{ daftarPasienService.ActivePasien.value.tgl_admisi | date: 'dd/MM/yyyy
-                                    HH:mm:ss' }}
+                                    : &nbsp;
+                                    {{
+                                    daftarPasienService.ActivePasien.value.tgl_admisi
+                                    }}
                                 </p>
                             </div>
                         </div>

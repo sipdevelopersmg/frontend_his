@@ -1,0 +1,47 @@
+<!-- Modal Info Kunjungan -->
+<button id="btnModalInfoKunjungan" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalInfoKunjungan" [hidden]="true">
+    Launch Modal Info Kunjungan
+</button>
+
+<div class="modal fade" id="modalInfoKunjungan" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby=" modalInfoKunjunganLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalInfoKunjunganLabel">Info Kunjungan Pasien</h5>
+                <button id="btnCloseInfoKunjungan" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormInfoKunjungan">
+                    <mol-input-text [label]="'No. Register'" [disabled]="true" [inputFieldState]="'detail'"
+                        formControlName="no_register">
+                    </mol-input-text>
+
+                    <mol-input-text [label]="'Tgl. Masuk'" [disabled]="true" [inputFieldState]="'detail'"
+                        formControlName="tgl_masuk">
+                    </mol-input-text>
+
+                    <mol-input-text [label]="'Tgl. Pulang'" [disabled]="true" [inputFieldState]="'detail'"
+                        formControlName="tgl_pulang">
+                    </mol-input-text>
+
+                    <mol-input-text [label]="'Tipe Pasien'" [disabled]="true" [inputFieldState]="'detail'"
+                        formControlName="tipe_pasien">
+                    </mol-input-text>
+
+                    <mol-input-text [label]="'Poliklinik'" [disabled]="true" [inputFieldState]="'detail'"
+                        formControlName="nama_poli">
+                    </mol-input-text>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

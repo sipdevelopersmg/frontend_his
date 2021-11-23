@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { IBankPaymentModel } from 'src/app/modules/Billing/models/setup-data/setup-bank-payment.model';
@@ -6,6 +6,7 @@ import { IEdcPaymentModel } from 'src/app/modules/Billing/models/setup-data/setu
 import { SetupBankPaymentService } from 'src/app/modules/Billing/services/setup-data/setup-bank-payment/setup-bank-payment.service';
 import { SetupEdcPaymentService } from 'src/app/modules/Billing/services/setup-data/setup-edc-payment/setup-edc-payment.service';
 import { SetupPaymentMethodService } from 'src/app/modules/Billing/services/setup-data/setup-payment-method/setup-payment-method.service';
+import { TransBillingRawatDaruratService } from 'src/app/modules/Billing/services/trans-billing-rawat-darurat/trans-billing-rawat-darurat.service';
 import { TransBillingService } from 'src/app/modules/Billing/services/trans-billing/trans-billing.service';
 
 @Component({
@@ -25,6 +26,8 @@ export class PaymentDebitIrjaComponent implements OnInit {
     EdcPaymentDatasource: IEdcPaymentModel[] = [];
     EdcPaymentFields: object = { text: 'nama_edc_payment', value: 'id_edc_payment' };
 
+    @Input("JenisRawatState") JenisRawatState: string;
+
     @Output('onSendPaymentDebit') onSendPaymentDebit = new EventEmitter<any>();
 
     constructor(
@@ -33,6 +36,7 @@ export class PaymentDebitIrjaComponent implements OnInit {
         private setupEdcPaymentService: SetupEdcPaymentService,
         private setupBankPaymentService: SetupBankPaymentService,
         private setupPaymentMethodService: SetupPaymentMethodService,
+        private transBillingRawatDaruratService: TransBillingRawatDaruratService,
     ) { }
 
     ngOnInit(): void {
@@ -80,11 +84,49 @@ export class PaymentDebitIrjaComponent implements OnInit {
                 this.jenis_pembayaran.setValue(result.data.payment_method);
             });
 
+        switch (this.JenisRawatState) {
+            case 'IRJA':
+                this.onGetJenisRawatIrjaAdditionalFormAttributes();
+                break;
+            case 'IRNA':
+                this.onGetJenisRawatIrnaAdditionalFormAttributes();
+                break;
+            case 'IRDA':
+                this.onGetJenisRawatIrdaAdditionalFormAttributes();
+                break;
+            default:
+                break;
+        }
+    }
+
+    onGetJenisRawatIrjaAdditionalFormAttributes(): void {
         this.transBillingService.HeaderBilling$
             .subscribe((result) => {
                 if (Object.keys(result).length > 0) {
                     this.belum_lunas.setValue(result['belum_lunas']);
                     this.jumlah_bayar.setValue(result['belum_lunas']);
+                    this.total_belum_lunas.setValue(this.belum_lunas.value - this.koreksi.value);
+                }
+            });
+    }
+
+    onGetJenisRawatIrnaAdditionalFormAttributes(): void {
+        this.transBillingRawatDaruratService.HeaderBilling$
+            .subscribe((result) => {
+                if (Object.keys(result).length > 0) {
+                    this.belum_lunas.setValue(result['total_tagihan']);
+                    this.jumlah_bayar.setValue(result['total_tagihan']);
+                    this.total_belum_lunas.setValue(this.belum_lunas.value - this.koreksi.value);
+                }
+            });
+    }
+
+    onGetJenisRawatIrdaAdditionalFormAttributes(): void {
+        this.transBillingRawatDaruratService.HeaderBilling$
+            .subscribe((result) => {
+                if (Object.keys(result).length > 0) {
+                    this.belum_lunas.setValue(result['total_tagihan']);
+                    this.jumlah_bayar.setValue(result['total_tagihan']);
                     this.total_belum_lunas.setValue(this.belum_lunas.value - this.koreksi.value);
                 }
             });

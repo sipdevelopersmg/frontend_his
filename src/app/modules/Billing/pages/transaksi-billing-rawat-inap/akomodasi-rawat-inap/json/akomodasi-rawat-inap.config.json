@@ -1,0 +1,372 @@
+{
+    "GridAkomodasiColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_edc_payment",
+            "headerText": "KODE ROOM",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "NO. ROOM",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "KELAS",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "TGL. PERAWATAN",
+            "visible": true,
+            "width": 250
+        }
+    ],
+    "GridDetailAkomodasiColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_edc_payment",
+            "headerText": "TANGGAL",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "KODE TARIF",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "NAMA TARIF",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "NO. ROOM",
+            "visible": true,
+            "width": 250
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "KELAS",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "TARIF RS",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "ASS/TTG P",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "SUBSIDI",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "TAGIHAN",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "keterangan",
+            "headerText": "IUR BIAYA",
+            "visible": true,
+            "width": 100
+        }
+    ],
+    "GridBedTransferColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_edc_payment",
+            "headerText": "TANGGAL",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "NO. BED ASAL",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_edc_payment",
+            "headerText": "NO. BED TUJUAN",
+            "visible": true,
+            "width": 100
+        }
+    ],
+    "LookupPoli": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_poli",
+                "headerText": "KODE POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "NAMA POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "jenis_ruangan",
+                "headerText": "BUILDING NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "p1.kode_poli",
+                "filter": "like",
+                "title": "KODE POLI"
+            },
+            {
+                "field": "p1.nama_poli",
+                "filter": "like",
+                "title": "NAMA POLI"
+            }
+        ]
+    },
+    "LookupTarif": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "id_setup_tarif",
+                "headerText": "ID",
+                "type": "string",
+                "visible": false
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_setup_tarif",
+                "headerText": "KODE SETUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_setup_tarif",
+                "headerText": "NAMA SETUP TARIF",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nominal_tarif",
+                "headerText": "SUBTOTAL",
+                "headerTextAlign": "Right",
+                "textAlign": "Right",
+                "format": "N2",
+                "type": "number",
+                "visible": true,
+                "width": 80
+            }
+        ],
+        "filter": [
+            {
+                "field": "st.kode_setup_tarif",
+                "filter": "like",
+                "title": "KODE TARIF"
+            },
+            {
+                "field": "st.nama_setup_tarif",
+                "filter": "like",
+                "title": "NAMA TARIF"
+            }
+        ]
+    },
+    "GridAddDetailAkomodasiColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_setup_tarif",
+            "headerText": "ID TARIF",
+            "visible": false,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_kelas_rawat",
+            "headerText": "ID KELAS RAWAT",
+            "visible": false,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_poli",
+            "headerText": "ID POLI",
+            "visible": false,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "tanggal",
+            "headerText": "TANGGAL",
+            "visible": true,
+            "format": "dd/MM/yyyy",
+            "type": "DateTime",
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_setup_tarif",
+            "headerText": "KODE TARIF",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_setup_tarif",
+            "headerText": "NAMA TARIF",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kelas_rawat",
+            "headerText": "KELAS",
+            "visible": true,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_poli",
+            "headerText": "POLIKLINIK",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nominal_tarif",
+            "headerText": "SUBTOTAL",
+            "format": "N2",
+            "type": "number",
+            "visible": true,
+            "width": 80
+        }
+    ]
+}

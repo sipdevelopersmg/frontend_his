@@ -35,13 +35,37 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'IRNA'">IRNA</org-tabs-label>
             <org-tabs-body>
-                <!-- <mol-grid #GridIRJA [grid-height]="'calc(100vh - 16rem)'" [grid-DataSource]="GridIRNADatasource"
-                    [grid-paging]="false" [grid-editSettings]="GridIRNAEditSettings" [grid-lines]="'Both'"
-                    [grid-toolbar]="GridIRNAToolbar" [columns]="GridConfig.GridDaftarPasienIRNA"
-                    (row-selected)="handleSelectedRowIRNA($event)" (toolbar-click)="handleToolbarClickIRNA($event)"
-                    (initialized)="handleInitializedIRNA($event)" (command-click)="handleClickCommandGridIRNA($event)"
-                    (action-complete)="handleActionCompleteIRNA($event)">
-                </mol-grid> -->
+                <ejs-grid #GridIRNA [id]="'GridIRNA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRNADatasource"
+                    [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                    [allowFiltering]='true' [editSettings]="GridIRNAEditSettings" [toolbar]="GridIRNAToolbar"
+                    (rowSelected)="handleSelectedRowIRNA($event)" (toolbarClick)="handleToolbarClickIRNA($event)">
+                    <e-columns>
+                        <e-column [width]="100" [field]="'jam_masuk'" [headerText]="'TGL. MASUK'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="60" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="250" [field]="'nama_poli'" [headerText]="'POLIKLINIK'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'room_no'" [headerText]="'NO. ROOM'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'bed_no'" [headerText]="'NO. BED'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
             </org-tabs-body>
         </org-tabs-item>
 

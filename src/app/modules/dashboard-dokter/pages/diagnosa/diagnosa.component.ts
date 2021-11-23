@@ -9,6 +9,7 @@ import * as API_PIS_SETUP_DATA from '../../../../api/PIS/SETUP_DATA';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { DiagnosaService } from '../../services/diagnosa/diagnosa.service';
+import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 
 @Component({
     selector: 'app-diagnosa',
@@ -18,6 +19,8 @@ import { DiagnosaService } from '../../services/diagnosa/diagnosa.service';
 export class DiagnosaComponent implements OnInit, AfterViewInit {
 
     Config = Config;
+
+    JenisRawat: string;
 
     API_PIS_SETUP_DATA = API_PIS_SETUP_DATA.API_SETUP_DATA;
 
@@ -45,6 +48,7 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
         private navigationService: NavigationService,
         private diagnosPasienService: DiagnosaService,
         private daftarPasienService: DaftarPasienService,
+        private dashboardDokterService: DashboardDokterService,
     ) { }
 
     ngOnInit(): void {
@@ -65,6 +69,13 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
         });
 
         this.onGetAllDiagnosa();
+
+        this.dashboardDokterService.onSetJenisRawatForDashboardDokter();
+
+        this.dashboardDokterService.JenisRawat$
+            .subscribe((result) => {
+                this.JenisRawat = result;
+            });
     }
 
     ngAfterViewInit(): void {

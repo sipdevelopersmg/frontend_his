@@ -1,0 +1,4 @@
+<mol-grid #GridData [grid-height]="'calc(100vh - 45rem)'" [grid-DataSource]="GridDatasource" [grid-paging]="false"
+    [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'" [columns]="Config.GridAkomodasiColumns"
+    [grid-toolbar]="GridDataToolbar" (row-selected)="handleSelectedRow($event)" (initialized)="InitalizedGrid($event)">
+</mol-grid>
