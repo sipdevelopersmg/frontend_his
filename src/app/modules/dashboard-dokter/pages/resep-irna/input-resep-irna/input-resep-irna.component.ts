@@ -808,8 +808,6 @@ export class InputResepIrnaComponent implements OnInit {
         }
 
         let detail = await this.resepDokterService.dataDetail
-        
-        console.log(detail);
 
         this.newdetail = detail.filter((item)=>{
             return  item.is_racikan && !item.set_racikan_id
@@ -912,7 +910,10 @@ export class InputResepIrnaComponent implements OnInit {
                 this.isGetFromTemplate = false;
                 break;
             case "Simpan":
+                // console.log('childernya',this.dataScourceGridChild)  
+                this.resepDokterService.dataSourceChildGrid.next(this.dataScourceGridChild);  
                 this.Insert();
+                // this.resepDokterService.saveResep();
                 break;
             default:
                 break;

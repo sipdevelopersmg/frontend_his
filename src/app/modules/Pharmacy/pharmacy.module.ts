@@ -15,6 +15,8 @@ import { SetupLabelPemakaianObatComponent } from './pages/setup-data/setup-label
 import { SetupGenerikComponent } from './pages/setup-formularium/setup-formularium/setup-generik/setup-generik.component';
 import { TransaksiObatIrnaComponent } from './pages/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.component';
 import { TransaksiObatIrjaComponent } from './pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component';
+import { RefundObatIrjaComponent } from './pages/refund-obat/refund-obat-irja/refund-obat-irja.component';
+import { RefundObatIrnaComponent } from './pages/refund-obat/refund-obat-irna/refund-obat-irna.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,8 @@ import { TransaksiObatIrjaComponent } from './pages/transaksi-obat/transaksi-oba
         SetupGenerikComponent,
         TransaksiObatIrnaComponent,
         TransaksiObatIrjaComponent,
+        RefundObatIrjaComponent,
+        RefundObatIrnaComponent,
     ],
     imports: [
         CommonModule,

@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AntrianFarmasiComponent } from "./pages/Antrian/antrian-farmasi/antrian-farmasi.component";
+import { RefundObatIrjaComponent } from "./pages/refund-obat/refund-obat-irja/refund-obat-irja.component";
+import { RefundObatIrnaComponent } from "./pages/refund-obat/refund-obat-irna/refund-obat-irna.component";
 import { ResepRacikanComponent } from "./pages/resep-racikan/resep-racikan.component";
 import { SetupCaraPakaiObatComponent } from "./pages/setup-data/setup-cara-pakai-obat/setup-cara-pakai-obat.component";
 import { SetupGrupObatComponent } from "./pages/setup-data/setup-grup-obat/setup-grup-obat.component";
@@ -33,6 +35,13 @@ const pharmacyRoutes: Routes = [
         children: [
             { path: "transaksi-obat-irja/:id/:key", component: TransaksiObatIrjaComponent, data: { title: "Transaksi Obat Rawat Jalan" } },
             { path: "transaksi-obat-irna", component: TransaksiObatIrnaComponent, data: { title: "Transaksi Obat Rawat Inap" } },
+        ]
+    },
+    {
+        path: "refund-obat", component: null, data: { title: "Refund Obat" },
+        children: [
+            { path: "refund-obat-irja", component: RefundObatIrjaComponent, data: { title: "Refund Obat Rawat Jalan" } },
+            { path: "refund-obat-irna", component: RefundObatIrnaComponent, data: { title: "Refund Obat Rawat Inap" } },
         ]
     },
 ]
