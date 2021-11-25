@@ -1,13 +1,18 @@
-<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
     <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
         <!-- Data -->
         <org-tabs-item>
             <org-tabs-label [Id]="'Data'">Data Item</org-tabs-label>
             <org-tabs-body>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                    <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                        (handle-pencarian)="handlePencarianFilter($event)">
+                    </mol-offcanvas-filter>
+                </div>
                 <mol-grid
                     #GridData
                     [grid-height]="300"
-                    [grid-DataSource]="GridDatasource"
+                    [grid-DataSource]="setupItemService.dataSource|async"
                     [grid-paging]="false"
                     [grid-editSettings]="GridDataEditSettings"
                     [grid-lines]="'Both'"
@@ -61,6 +66,96 @@
                             <mol-input-text [label]="'Prosentase Default Profit'" formControlName="prosentase_default_profit" [inputFieldState]="inputFieldState"></mol-input-text>
                             <mol-input-checkbox-single [label]="'Is PPN '" formControlName="is_ppn" id="is_ppn" ></mol-input-checkbox-single>
                         </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- KArtu Stock -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'KartuStok'">Kartu Stock</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormKartuStock" class="p-2">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <mol-input-text [label]="'Kode Item'" formControlName="kode_item" [inputFieldState]="'detail'"></mol-input-text>
+                            <mol-input-text [label]="'Nama Item'" formControlName="nama_item" [inputFieldState]="'detail'"></mol-input-text>
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- Dropdown Stockroom -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Stockroom'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalStockrooomDropdown id="marital"
+                                        [dataSource]="setupStockroomService.dataSource| async"
+                                        [fields]="SetupStockrooomDropdownField" [allowFiltering]="true" 
+                                        (change)="handleChangeStokroom($event)"
+                                    >
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <!-- Tanggal -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <!-- <ejs-daterangepicker #ejDateRangePicker 
+                                        formControlName="daterangepicker" 
+                                        name="daterangepicker" 
+                                        placeholder='Select a range'>
+                                    </ejs-daterangepicker> -->
+                                    <ejs-daterangepicker placeholder='Select a range' (change)="handleChangeTanggal($event)" ></ejs-daterangepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <button type="button" class="btn btn-sm btn-primary me-5" (click)="handleClickTampilkan()">Tampilkan Kartu Stok</button>
+                            <button type="button" class="btn btn-sm btn-primary" (click)="handleClickTampilkanED()">Tampilkan Expired Date</button>
+                        </div>
+                        <span *ngIf="!tampil_ed">
+                            <mol-grid
+                                #GridDataKartuStok
+                                [grid-height]="300"
+                                [grid-DataSource]="GridDataSourceKartuStok"
+                                [grid-paging]="false"
+                                [grid-lines]="'Both'"
+                                [columns]="GridConfigKartuStok.GridColumns"
+                            ></mol-grid>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <mol-input-numeric [label]="'Qty Masuk'" [isFooter]="true"
+                                        [value]="total_masuk" 
+                                        [inputFieldState]="'detail'"></mol-input-numeric>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mol-input-numeric [label]="'Qty Keluar'" [isFooter]="true"
+                                        [value]="total_keluar"
+                                        [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mol-input-numeric [label]="'Nominal Masuk'" [isFooter]="true"
+                                        [value]="total_nominal_masuk" 
+                                        [inputFieldState]="'detail'"></mol-input-numeric>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mol-input-numeric [label]="'Nominal Keluar'" [isFooter]="true"
+                                        [value]="total_nominal_keluar"
+                                        [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+                                </div>
+                            </div>
+                        </span>
+                        <span *ngIf="tampil_ed">
+                            <mol-grid
+                                #GridDataED
+                                [grid-height]="300"
+                                [grid-DataSource]="GridDataSourceED"
+                                [grid-paging]="false"
+                                [grid-lines]="'Both'"
+                                [columns]="GridConfigED.GridColumns"
+                            ></mol-grid>
+                        </span>
                     </div>
                 </form>
             </org-tabs-body>

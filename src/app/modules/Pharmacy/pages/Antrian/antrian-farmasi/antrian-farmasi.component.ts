@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/modules/shared/services/notificatio
     templateUrl: './antrian-farmasi.component.html',
     styleUrls: ['./antrian-farmasi.component.css'],
 })
+
 export class AntrianFarmasiComponent implements OnInit {
 
     Columns: KanbanColumnModel[];

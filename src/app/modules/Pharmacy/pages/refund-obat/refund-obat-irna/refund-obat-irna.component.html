@@ -1,0 +1,148 @@
+
+
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <org-input-look-up #LookupNoRegistrasi [lookup-url]="urlNoRegistrasi" [idTitle]="'no_registrasi'" [modal-title]="'Data No Registrasi'"
+                    (onGetSelectedData)="heandleSelectedNoRegistrasi($event)" [columns]="LookupNoRegistrasi.columns"
+                    [filter-lookup]="LookupNoRegistrasi.filter" [label]="'No Registrasi'">
+                </org-input-look-up>
+                <mol-input-text [label]="'No Rm'" formControlName="no_rm" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Debitur'" formControlName="debitur" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Nama Pasien'" formControlName="nama_pasien" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Tanggal Lahir'" formControlName="tanggal_lahir" [inputFieldState]="inputFieldState"></mol-input-text>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                 <mol-input-text [label]="'Depo Anda'" formControlName="depo" [inputFieldState]="inputFieldState"></mol-input-text>
+                 <mol-input-text [label]="'Usia'" formControlName="usia" [inputFieldState]="inputFieldState"></mol-input-text>
+                 <mol-input-text [label]="'Alamat Pasien'" formControlName="alamat" [inputFieldState]="inputFieldState"></mol-input-text>
+                 <mol-input-text [label]="'Ruang / Bed'" formControlName="ruang" [inputFieldState]="inputFieldState"></mol-input-text>    
+                 <mol-input-text [label]="'Dokter'" formControlName="dokter" [inputFieldState]="inputFieldState"></mol-input-text>   
+            </div>
+        </div>
+    
+        <ejs-grid #gridDetail
+            [editSettings]='GridDataEditSettings' 
+            [dataSource]='dataSourceGrid | async'
+            [gridLines]="'Both'" 
+            [allowResizing]='true' 
+            (actionComplete)="handleActionCompleted($event)"
+            (toolbarClick)="onToolbarClick($event)" 
+            (load)="handleLoadGrid($event)"
+            [childGrid]="ChildGrid"
+            (rowSelected)="handleSelectdRow($event)"
+            (dataBound)="onDataBound()"
+        >
+            <e-columns>
+                <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='no_bill' [allowEditing]="false" headerText='No Bill'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='Depo' [allowEditing]="false" headerText='Depo'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='user_entry' [allowEditing]="false" headerText='User Entry'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='waktu_entry' [allowEditing]="false" headerText='Waktu Entry'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Obat'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Obat'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='qty_jual' [allowEditing]="false" headerText='QTY Jual'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='qty_telah_diretur' [allowEditing]="false" headerText='QTY Telah Diretur'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='qty_retur' [allowEditing]="false" headerText='QTY Akan Di Retur'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <!--  -->
+            </e-columns>
+        </ejs-grid>
+    </form>
+
+    <!-- Modal QTY  -->
+    <ng-template #modalQty>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Qty</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #qtyValueId id="QtyValueId" class="form-control"
+                        (keydown.enter)="handleQtyChange(qtyValueId.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+    <!-- Modal satuan  -->
+    <ng-template #modalSatuan>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Satuan</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <select #satuanValueId id="SatuanValueId" [value]="detailSelected.kode_satuan_besar"
+                        class="form-control" (keydown.enter)="handleSatuanChange(satuanValueId.value)" multiple>
+                        <option *ngFor="let item of datasatuan" [ngValue]="item.kode_satuan">{{item.kode_satuan}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+    
+    <!-- Modal Keterangan Resep Canceled  -->
+    <ng-template #modalCanceled>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Canceled</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+                    <div class="col-sm-4">
+                        <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onCalceled()">Cancel Data</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
+        </div>
+    </ng-template>
+
+</org-card-layout>

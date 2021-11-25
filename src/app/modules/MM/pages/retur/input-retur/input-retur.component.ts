@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
-import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
+import { AddEventArgs, EditSettingsModel, GridComponent, GridModel, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription, combineLatest } from 'rxjs';
 import { MM } from 'src/app/api/MM';
@@ -38,8 +38,10 @@ export class InputReturPembelianComponent implements OnInit {
   Detail: TrReturPembelianDetailInsert[] = [];
 
   urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
-  urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
 
+  urlItem = MM.RETUR.RETUR_PEMBELIAN.GET_LOOKUP_BARANG_ED_BY_ID_STOCKROOM;
+
+  urlItemStockRoom = this.urlItem;
   TrReturPembelianDetailInsert: TrReturPembelianDetailInsert;
 
   ButtonNav: ButtonNavModel[] = [
@@ -136,6 +138,9 @@ export class InputReturPembelianComponent implements OnInit {
           }
       }
 
+
+      
+
       this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
           if (e.keyCode == 112) {
               this.LookupItem.onOpenModal();
@@ -218,8 +223,8 @@ export class InputReturPembelianComponent implements OnInit {
         id_item: $event.id_item,
         kode_item: $event.kode_item,
         nama_item: $event.nama_item,
-        batch_number: '',
-        expired_date: '',
+        batch_number: $event.batch_number,
+        expired_date: $event.expired_date,
         qty_satuan_besar: 1,
         kode_satuan_besar: $event.satuans[0].kode_satuan,
         isi: $event.satuans[0].isi,
@@ -230,6 +235,10 @@ export class InputReturPembelianComponent implements OnInit {
       }
       this.returPembelianService.addDataDetail(item);
       this.selectLastRowdetail();
+  }
+
+  handleChangeStockRoom($event){
+      this.urlItemStockRoom = this.urlItem+'/'+$event.itemData.id_stockroom
   }
 
   handleActionCompleted($event) {

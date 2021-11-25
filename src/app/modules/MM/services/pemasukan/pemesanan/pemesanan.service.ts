@@ -188,4 +188,39 @@ export class PemesananService {
         this.total_transaksi_pesan = 0 ;
         this.jumlah_item_pesan = 0 ; 
     }
+
+    Validation(id:number): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ pemesanan_id : id })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Cancel(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
+                pemesanan_id : id,
+                reason_canceled:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Close(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CLOSE,{ 
+                pemesanan_id : id,
+                reason_closed:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+
 }

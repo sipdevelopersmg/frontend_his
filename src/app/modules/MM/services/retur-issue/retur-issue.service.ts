@@ -140,19 +140,23 @@ export class ReturIssueService {
   }
 
   Insert( Data:TrReturPemakaianInternalInsert ): Observable<any>{
-      this.dataDetail.map((e,i)=>{
-          return e.no_urut = i+1;
-      });
-      Data.details = this.dataDetail;
-      Data.jumlah_item = this.jumlah_item;
-      Data.total_transaksi = this.total_transaksi;
+      
+    this.dataDetail.map((e,i)=>{
+        e.no_urut = i + 1;
+        e.nominal_retur_pemakaian_internal = e.qty_retur_pemakaian_internal*e.hpp_satuan;
+        return e
+    });
 
-      return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
-          .pipe(
-              catchError((error: HttpErrorResponse): any => {
-              this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-              })
-          );
+    Data.details = this.dataDetail;
+    Data.jumlah_item = this.dataDetail.length;
+    Data.total_transaksi = this.dataDetail.sum('nominal_retur_pemakaian_internal');
+
+    return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
+        .pipe(
+            catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
   }
 
   Reset(){
@@ -160,4 +164,26 @@ export class ReturIssueService {
       this.total_transaksi = 0 ;
       this.jumlah_item = 0 ; 
   }
+
+    Validation(id:number): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ retur_pemakaian_internal_id : id })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Cancel(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
+                retur_pemakaian_internal_id : id,
+                reason_canceled:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
 }

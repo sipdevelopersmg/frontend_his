@@ -109,6 +109,15 @@
         "editType": "defaultEdit"
     },
     {
+        "field": "status_transaksi",
+        "headerText": "Status Transaksi",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
         "field": "user_inputed",
         "headerText": "User Inputed",
         "type": "number",

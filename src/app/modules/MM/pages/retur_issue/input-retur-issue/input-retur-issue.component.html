@@ -67,7 +67,7 @@
                 <e-column [visible]="true" field='qty_retur_pemakaian_internal' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='nominal_retur_pemakaian_internal' [allowEditing]="false" headerText='Nominal'
+                <e-column [visible]="false" field='nominal_retur_pemakaian_internal' [allowEditing]="false" headerText='Nominal'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='keterangan_retur_pemakaian_internal' [allowEditing]="true" headerText='Keterangan'
@@ -81,13 +81,11 @@
             </div>
            
             <div class="col-sm-3">
-                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="returIssueService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'" ></mol-input-numeric>
+                
             </div>
             <div class="col-sm-4">
-                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
-                    [value]="returIssueService.total_transaksi" formControlName="total_transaksi"
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="returIssueService.jumlah_item" formControlName="jumlah_item"
                     [inputFieldState]="'detail'" ></mol-input-numeric>
             </div>
         </div>

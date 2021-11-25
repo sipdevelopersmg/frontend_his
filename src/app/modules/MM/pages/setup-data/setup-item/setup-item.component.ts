@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import  * as Config  from './json/grid.config.json';
+import  * as ConfigKartuStok  from './json/grid_kartu_stock.config.json';
+import  * as ConfigED  from './json/grid_ed.config.json';
+
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
@@ -11,6 +14,8 @@ import { SetupItemService } from '../../../services/setup-data/setup-item/setup-
 import {MM} from 'src/app/api/MM'
 import * as LookupGridGrupItem from './json/lookupGrupItem.json'
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
+import { SetupStockroomService } from '../../../services/setup-data/setup-stockroom/setup-stock-room.service';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Component({
   selector: 'app-setup-item',
@@ -21,6 +26,7 @@ export class SetupItemComponent implements OnInit {
   urlGrupItem = MM.SETUP_DATA.SETUP_GROUP_ITEM.GET_ALL_BY_PARMS;
   LookupGridGrupItem = LookupGridGrupItem;
   @ViewChild('LookupKodeGrupItem') LookupKodeGrupItem: OrgInputLookUpKodeComponent;
+  SetupStockrooomDropdownField: object = { text: 'nama_stockroom', value: 'id_stockroom' };
 
   /**
    * Variable untuk Menympan Navigasi halaman
@@ -33,7 +39,7 @@ export class SetupItemComponent implements OnInit {
    * @FormGroup 
   */
   FormInputData: FormGroup;
-
+  FormKartuStock: FormGroup;
   /**
    * Variable untuk menentukan apakah form dalam posisi input data atau edit data
    * @Boolean 
@@ -45,6 +51,8 @@ export class SetupItemComponent implements OnInit {
    * @Json Config
   */
   GridConfig = Config;
+  GridConfigKartuStok = ConfigKartuStok;
+  GridConfigED = ConfigED;
 
   /**
    * Variable untuk menentukan component input 
@@ -61,7 +69,12 @@ export class SetupItemComponent implements OnInit {
   @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
 
   GridDatasource: any[];
+  GridDataSourceKartuStok:any[];
+  GridDataSourceED: any[];
   private GridData: MolGridComponent = null;
+  @ViewChild('GridDataKartuStok') GridDataKartuStok: MolGridComponent;
+  @ViewChild('GridDataED') GridDataED: MolGridComponent;
+
   GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
   GridDataToolbar: any[];
 
@@ -69,14 +82,33 @@ export class SetupItemComponent implements OnInit {
    * Berisi Data Yang selected dari dalam grid
    * @Object Single Object
   */
-  SelectedData: Object;
+  SelectedData: any;
+  total_masuk:number=0;
+  total_keluar:number=0;
+  total_nominal_masuk:number=0;
+  total_nominal_keluar:number=0;
+
+  tampil_ed:boolean = false;
+  id_stockroom_kartu_stok:any = 0;
+  FilterColumnDatasource: any[] = [
+    { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
+    { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+  ];
+
+    public month: number = new Date().getMonth();
+    public fullYear: number = new Date().getFullYear();
+    public startDate: Date;
+    public endDate: Date;
 
   constructor(
     private formBuilder: FormBuilder,
     private utilityService: UtilityService,
-    private setupItemService: SetupItemService
+    public setupItemService: SetupItemService,
+    public setupStockroomService: SetupStockroomService,
+
   ) {
     this.FormInputData = this.formBuilder.group({
+      id_item :[0, [Validators.required]],
       id_grup_item: [0, [Validators.required]],
       id_pabrik: [0, [Validators.required]],
       id_supplier: [0, [Validators.required]],
@@ -95,8 +127,14 @@ export class SetupItemComponent implements OnInit {
       hpp_average: [0, []],
       prosentase_default_profit: [0, []],
       is_ppn: [true, [Validators.required]],
-      user_created: [0, [Validators.required]]
+      // user_created: [0, [Validators.required]],
     });
+
+    this.FormKartuStock = this.formBuilder.group({
+      kode_item: ['', []],
+      nama_item: ['', []],
+    });
+
   }
 
   ngOnInit(): void {
@@ -105,13 +143,18 @@ export class SetupItemComponent implements OnInit {
       { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
       { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
       { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
+      { text: 'Kartu Stok', tooltipText: 'Kartu Stock', prefixIcon: 'fas fa-boxes fa-sm', id: 'kartu_stock' },
       'Search'
     ];
 
     this.GetAllData();
-
+    this.setupStockroomService.setDataSource();
   }
 
+  handlePencarianFilter(args){
+    this.setupItemService.onGetAllByParamsSource(args);
+    this.GridData.Grid.refresh();
+  }
 
   handleSelectedTabId(TabId: string): void {
     this.TabId = TabId;
@@ -152,6 +195,9 @@ export class SetupItemComponent implements OnInit {
       case 'detail':
         this.setViewForm();
         break;
+      case 'kartu_stock':
+        this.setKartuStock();
+        break;
       default:
         break;
     }
@@ -184,6 +230,51 @@ export class SetupItemComponent implements OnInit {
 
   heandleSelectedGrupItem(args: any): void {
     this.id_grup_item.setValue(args.id_grup_item);
+  }
+
+  handleClickTampilkan():void{
+    this.tampil_ed = false;
+    let param:PostRequestByDynamicFiterModel[] = [
+      {
+        columnName:'mksi.id_stockroom',
+        filter:'equal',
+        searchText:this.id_stockroom_kartu_stok,
+        searchText2:''
+      },
+      {
+        columnName:'mksi.tanggal',
+        filter:'between',
+        searchText:this.startDate.toISOString(),
+        searchText2:this.endDate.toISOString()
+      }
+    ]
+    this.setupItemService.onGetKartuStockByIdItem(5416,param).subscribe((result)=>{
+      this.GridDataSourceKartuStok = result.data;
+      this.total_masuk = result.data.sum('stok_masuk');
+      this.total_keluar = result.data.sum('stok_keluar');
+      this.total_nominal_masuk = result.data.sum('nominal_masuk');
+      this.total_nominal_keluar = result.data.sum('nominal_keluar');
+      this.GridDataKartuStok.Grid.refresh();
+    })
+  }
+
+  handleClickTampilkanED():void{
+    this.tampil_ed = true;
+    this.setupItemService.onGetEDItem(this.id_stockroom_kartu_stok,5416).subscribe((result)=>{
+      this.GridDataSourceED = result.data;
+      this.GridDataED.Grid.refresh();
+    })
+  }
+  
+  handleChangeTanggal($args):void{
+    console.log($args);
+    this.startDate = $args.startDate;
+    this.endDate = $args.endDate;
+  }
+
+  handleChangeStokroom($args){
+    console.log($args);
+    this.id_stockroom_kartu_stok = $args.value
   }
 
   /** method setting input new data */
@@ -222,6 +313,19 @@ export class SetupItemComponent implements OnInit {
     ];
   }
 
+  setKartuStock(): void {
+    this.tampil_ed = false;
+    let Data:any = this.SelectedData;
+    this.FormKartuStock.setValue({
+      kode_item:Data.kode_item,
+      nama_item:Data.nama_item,
+    });
+    this.OrgTabsRef.onNavigateTabUsingTabId(2, 'KartuStok');
+    this.ButtonNav = [
+      { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
+    ];
+  }
+
   /** Method untuk mengkosongkan data yang ada di form*/
   ResetFrom(): void {
     this.FormInputData.reset();
@@ -243,7 +347,27 @@ export class SetupItemComponent implements OnInit {
   /** Method Untuk Mengisikan data yang ada di form */
   SetFrom(Data): void {
     this.FormInputData.reset();
-    this.FormInputData.setValue(Data);
+    this.FormInputData.setValue({
+      id_item:Data.id_item,
+      id_grup_item:Data.id_grup_item,
+      id_pabrik:Data.id_pabrik,
+      id_supplier:Data.id_supplier,
+      kode_item:Data.kode_item,
+      barcode:Data.barcode,
+      nama_item:Data.nama_item,
+      kode_satuan:Data.kode_satuan,
+      id_temperatur_item:Data.id_temperatur_item,
+      batas_maksimal_pesan:Data.batas_maksimal_pesan,
+      batas_maksimal_pakai:Data.batas_maksimal_pakai,
+      batas_maksimal_mutasi:Data.batas_maksimal_mutasi,
+      batas_maksimal_jual:Data.batas_maksimal_jual,
+      batas_stok_kritis:Data.batas_stok_kritis,
+      prosentase_stok_kritis:Data.prosentase_stok_kritis,
+      harga_beli_terakhir:Data.harga_beli_terakhir,
+      hpp_average:Data.hpp_average,
+      prosentase_default_profit:Data.prosentase_default_profit,
+      is_ppn:Data.is_ppn,
+    });
   }
 
   /** Method menyimpan | menubah data */
@@ -302,6 +426,8 @@ export class SetupItemComponent implements OnInit {
   }
 
   Cancel(): void {
+    this.ButtonNav = [
+    ];
     this.ResetFrom();
     this.OrgTabsRef.onNavigateTabUsingTabId(0, 'Data');
     this.GetAllData();
@@ -317,6 +443,10 @@ export class SetupItemComponent implements OnInit {
     if (event.keyCode === 40) {
       console.log('Delete Key Has Been Pressed');
     }
+  }
+
+  bro(args: any){
+    console.log(args);
   }
 
   get id_grup_item() { return this.FormInputData.get('id_grup_item') }

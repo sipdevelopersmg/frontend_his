@@ -17,7 +17,8 @@
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource| async"
                             [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
-                            formControlName="id_stockroom_pemberi">
+                            formControlName="id_stockroom_pemberi"
+                            (change)="handleChangeStockroom($event)">
                         </ejs-dropdownlist>
                     </div>
                 </div>
@@ -31,7 +32,8 @@
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource| async"
                             [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
-                            formControlName="id_stockroom_penerima">
+                            formControlName="id_stockroom_penerima"
+                            >
                         </ejs-dropdownlist>
                     </div>
                 </div>

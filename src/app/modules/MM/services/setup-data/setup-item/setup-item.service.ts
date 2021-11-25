@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MM } from 'src/app/api/MM';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { SetupItemModel, ISetupItemModel, ISetActiveItemModel } from '../../../models/setup-data/setup-item/SetupItemModel';
@@ -29,12 +30,50 @@ export class SetupItemService {
       });
     }
 
+
+
     /**
      * Service Untuk Menampilkan Semua data
      * @onGetAll Observable<SetupPabrikModel>
     */
     onGetAll(): Observable<SetupItemModel> {
       return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
+    }
+
+    /**
+     * Service Untuk Menampilkan data berdasarkan dinamik filter
+     * @onGetAll Void
+    */
+    onGetAllByParamsSource(req: PostRequestByDynamicFiterModel[]): void {
+      this.onGetAllByParams(req).subscribe((result) => {
+          if (result) {
+              this.dataSource.next(result.data);
+          }
+      });
+    }
+
+    onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
+      return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_BY_PARMS,req).pipe(
+          catchError((error: HttpErrorResponse): any => {
+              this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+      );
+    }
+
+    onGetKartuStockByIdItem(id_item,req: PostRequestByDynamicFiterModel[]): Observable<any> {
+      return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_KARTU_STOCK_BY_ID_ITEM+'/'+id_item,req).pipe(
+          catchError((error: HttpErrorResponse): any => {
+              this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+      );
+    }
+
+    onGetEDItem(id_stokroom,id_item):Observable<any>{
+      return this.httpOperationService.defaultGetRequest(this.API.GET_ED_ITEM+'/'+id_stokroom+'/'+id_item).pipe(
+        catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+        })
+      );
     }
   
     /**

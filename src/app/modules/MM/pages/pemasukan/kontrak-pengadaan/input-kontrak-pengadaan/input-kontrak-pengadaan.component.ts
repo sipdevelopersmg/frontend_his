@@ -232,9 +232,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
         if ($event.requestType == 'save') {
             console.log($event);
-
-            // this.inputKontrakPengadaanService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
-            // this.gridDetail.refresh();
+            this.inputKontrakPengadaanService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+            this.gridDetail.refresh();
         }
     }
 
@@ -455,6 +454,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
         if (this.formKontrak.valid) {
             this.inputKontrakPengadaanService.Insert(this.formKontrak.value)
             .subscribe((result) => {
+                console.log(result);
                 this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
                     this.ResetFrom();

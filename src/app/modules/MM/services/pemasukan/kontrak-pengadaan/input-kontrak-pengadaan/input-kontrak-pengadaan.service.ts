@@ -169,7 +169,7 @@ export class InputKontrakPengadaanService {
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });
-        Data.detailItem = this.dataDetail;
+        Data.details = this.dataDetail;
         Data.jumlah_item_kontrak = this.jumlahItem;
         Data.total_transaksi_kontrak = this.total;
 

@@ -15,6 +15,7 @@
             [grid-lines]="'Both'"
             [columns]="GridConfig.GridColumns"
             (row-selected)="handleSelectedRow($event)"
+            (row-data-bound)="handleRowDataBound($event)"
             ></mol-grid>
         </div>
     </div>

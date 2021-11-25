@@ -82,5 +82,18 @@ export class DaftarReturIssueComponent implements OnInit {
     console.log(this.SelectedData)
   }
 
+  handleRowDataBound(args: any): void {
+    let status_transaksi = args.data.status_transaksi;
+
+    if (status_transaksi == "VALIDATED") {
+      args.row.classList.add('e-validation-background');
+    }
+    
+    if(status_transaksi == "CANCELED"){
+      args.row.classList.add('e-canceled-background');
+    }
+
+  }
+
 
 }

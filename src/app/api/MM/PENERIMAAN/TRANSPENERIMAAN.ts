@@ -8,4 +8,5 @@ export const GET_DETAIL_BY_ID = `${environment.webApiMM}` +'TransPenerimaan/GetD
 export const INSERT = `${environment.webApiMM}` +'TransPenerimaan/Insert';
 export const VALIDASI = `${environment.webApiMM}` +'TransPenerimaan/UpdateToValidated';
 export const CANCEL = `${environment.webApiMM}` +'TransPenerimaan/UpdateToCanceled';
-export const CLOSE = `${environment.webApiMM}` +'TransPenerimaan/UpdateToClosed';
+export const GET_PEMESANA = `${environment.webApiMM}` +'TransPenerimaan/GetLookupPemesananByParams'; 
+export const GET_DETAIL_PEMESANAN = `${environment.webApiMM}` +'TransPenerimaan/GetLookupPemesananDetailItemByPemesananId';

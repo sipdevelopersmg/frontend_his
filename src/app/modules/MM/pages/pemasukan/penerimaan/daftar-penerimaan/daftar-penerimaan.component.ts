@@ -20,9 +20,9 @@ export class DaftarPenerimaanComponent implements OnInit {
   ];
 
   GridDataToolbar = [
-    { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-    { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
-    { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
+    // { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+    // { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+    // { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
     'Search'
   ];
 
@@ -82,6 +82,18 @@ export class DaftarPenerimaanComponent implements OnInit {
   handleSelectedRow(args: any): void {
     this.SelectedData = args.data;
     console.log(this.SelectedData)
+  }
+
+  handleRowDataBound(args: any): void {
+    let status_transaksi = args.data.status_transaksi;
+
+    if (status_transaksi == "VALIDATED") {
+      args.row.classList.add('e-validation-background');
+    }
+    
+    if(status_transaksi == "CANCELED"){
+      args.row.classList.add('e-canceled-background');
+    }
   }
 
 }

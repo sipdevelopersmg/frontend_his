@@ -6,6 +6,8 @@
                 <mol-datepicker-syncfusion [label]="'Tanggal Pemakaian'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_pemakaian_internal">
                 </mol-datepicker-syncfusion>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <!-- Dropdown Stockroom -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -15,17 +17,11 @@
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource| async"
                             [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
-                            formControlName="id_stockroom">
+                            formControlName="id_stockroom"
+                            (change)="handleChangeStockroom($event)">
                         </ejs-dropdownlist>
                     </div>
-                </div>
-                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima'" [format]="'dd MMMM yyyy HH:mm:ss'"
-                    formControlName="time_serah_terima">
-                </mol-datepicker-syncfusion>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-               <mol-input-text [label]="'PIC Pemberi'" formControlName="pic_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
-               <mol-input-text [label]="'PIC Penerima'" formControlName="pic_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+                </div> 
                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_pemakaian_internal"></mol-input-textarea>
             </div>
         </div>
@@ -59,7 +55,7 @@
                 <e-column [visible]="true" field='qty_pemakaian_internal' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='nominal_pemakaian_internal' [allowEditing]="false" headerText='Nominal'
+                <e-column [visible]="false" field='nominal_pemakaian_internal' [allowEditing]="false" headerText='Nominal'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='keterangan_pemakaian_internal' [allowEditing]="true" headerText='Keterangan'
@@ -73,13 +69,11 @@
             </div>
            
             <div class="col-sm-3">
-                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="pemakaianInternalService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'" ></mol-input-numeric>
+                
             </div>
             <div class="col-sm-4">
-                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
-                    [value]="pemakaianInternalService.total_transaksi" formControlName="total_transaksi"
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="pemakaianInternalService.jumlah_item" formControlName="jumlah_item"
                     [inputFieldState]="'detail'" ></mol-input-numeric>
             </div>
         </div>
