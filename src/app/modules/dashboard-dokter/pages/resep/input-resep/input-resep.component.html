@@ -26,17 +26,10 @@
                                 [dataSource]="resepDokterService.dataObat | async" [fields]="DropdownObatFields"
                                 (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'>
                             </ejs-dropdownlist> -->
-                            <ejs-dropdownlist id='DropdownObat' #Drop 
-                                [allowFiltering]="true" 
-                                [dataSource]='data' 
-                                [fields]='fields' 
-                                [placeholder]='text' 
-                                [query]='query' 
-                                [sortOrder]='sorting'  
-                                [allowFiltering]='true'
-                                (filtering)='onFiltering($event)'
-                                (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'
-                                >
+                            <ejs-dropdownlist id='DropdownObat' #Drop [allowFiltering]="true" [dataSource]='data'
+                                [fields]='fields' [placeholder]='text' [query]='query' [sortOrder]='sorting'
+                                [allowFiltering]='true' (filtering)='onFiltering($event)'
+                                (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'>
                             </ejs-dropdownlist>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
@@ -79,9 +72,7 @@
                     <div class="input-group">
                         <ejs-dropdownlist #MolDropdown [dataSource]="setupMetodeRacikanService.dataSource | async"
                             [fields]="DropdownMetodeRacikanFields" [allowFiltering]="true"
-                            (change)="handleChangeMetodeRacikan($event)"
-                            formControlName="id_metode_racikan"
-                            >
+                            (change)="handleChangeMetodeRacikan($event)" formControlName="id_metode_racikan">
                         </ejs-dropdownlist>
                     </div>
                 </div>
@@ -114,7 +105,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div *ngIf="!is_racikan.value" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pe-1">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -122,8 +113,9 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
                     <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
-                        [dataSource]="dataSourceSatuanAturanPakai" formControlName="id_satuan_aturan_pakai" popupWidth='30rem'
-                        [fields]="DropdownsatuanPakaiFields" (change)="handleChangeSatuanAturan($event)">
+                        [dataSource]="dataSourceSatuanAturanPakai" formControlName="id_satuan_aturan_pakai"
+                        popupWidth='30rem' [fields]="DropdownsatuanPakaiFields"
+                        (change)="handleChangeSatuanAturan($event)">
                     </ejs-combobox>
                 </div>
             </div>
@@ -164,29 +156,18 @@
         </div>
 
         <!-- LookUp Racikan -->
-        <org-look-up-hirarki
-            #LookupRacikan 
-            [lookup-url]="urlRacikan" 
-            (onGetSelectedData)="heandleSelectedRacikan($event)"
-            [columns]="GridLookUpItem.columns" 
-            [columnsChild]="GridLookUpItem.columnsChild"
-            [filter-lookup]="GridLookUpItem.filter" 
-            [queryString]="'set_racikan_id'"
-            [modal-title]="'Data Racikan Dokter'"
-        ></org-look-up-hirarki>
+        <org-look-up-hirarki #LookupRacikan [lookup-url]="urlRacikan"
+            (onGetSelectedData)="heandleSelectedRacikan($event)" [columns]="GridLookUpItem.columns"
+            [columnsChild]="GridLookUpItem.columnsChild" [filter-lookup]="GridLookUpItem.filter"
+            [queryString]="'set_racikan_id'" [modal-title]="'Data Racikan Dokter'"></org-look-up-hirarki>
 
-        <org-look-up-hirarki
-            #LookupTemplateResep 
-            [lookup-url]="urlTemplateResep" 
-            (onGetSelectedData)="heandleSelectedTemplateResep($event)"
-            [columns]="GridlookUpTemplateResep.columns" 
-            [columnsChild]="GridlookUpTemplateResep.columnsChild"
-            [filter-lookup]="GridlookUpTemplateResep.filter" 
-            [modal-title]="'Data Template Resep Dokter'"
-            [queryString]="'resep_id'"
-        ></org-look-up-hirarki>
+        <org-look-up-hirarki #LookupTemplateResep [lookup-url]="urlTemplateResep"
+            (onGetSelectedData)="heandleSelectedTemplateResep($event)" [columns]="GridlookUpTemplateResep.columns"
+            [columnsChild]="GridlookUpTemplateResep.columnsChild" [filter-lookup]="GridlookUpTemplateResep.filter"
+            [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'"></org-look-up-hirarki>
     </div>
 </form>
+
 <!-- Grid Daftar Obat -->
 <div class="row pt-2 mb-2">
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -198,9 +179,9 @@
             </div> -->
             <div class="card-body p-0">
                 <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
-                    height="calc(100vh - 24rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" 
-                    [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)"
-                    (load)="onLoad($event)" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
+                    height="calc(100vh - 24rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
+                    [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)"
+                    [allowResizing]="true" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                     (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
                     <e-columns>
                         <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'

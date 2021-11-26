@@ -3,7 +3,9 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './helpers/animations/animations';
+import { IAuthenticationResponseModel } from './modules/auth/models/authentication.model';
 import { AuthenticationService } from './modules/auth/services/authentication.service';
+import { NavigationService } from './modules/shared/services/navigation.service';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private router: Router,
         private titleService: Title,
         private activatedRoute: ActivatedRoute,
+        private navigationService: NavigationService,
         private authenticationService: AuthenticationService
     ) { }
 
@@ -32,7 +35,16 @@ export class AppComponent implements OnInit, OnDestroy {
                 localStorage.setItem('PageTitle', data.title);
 
                 this.titleService.setTitle(data.title);
-            })
+
+                if (data.title !== 'Sign In Account') {
+                    const userData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+                    this.authenticationService.autoLogout(userData.timeOut * 60 * 1000);
+
+                    // ** Uncomment untuk Pembatasan Menu per Role
+                    // this.handleMenuResctriction(this.router.url);
+                }
+            });
         });
     }
 
@@ -45,14 +57,28 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     prepareRoute(outlet: RouterOutlet): any {
-        return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+        const routeData = this.getChild(this.activatedRoute);
+
+        routeData.data.subscribe((data: any) => {
+            return data.animation;
+        });
     }
 
-    onAutoLogout() {
-        const UserData = JSON.parse(localStorage.getItem('UserData'));
+    handleMenuResctriction(currentUrl: string): void {
+        if (currentUrl !== "Page Not Found") {
+            let restrict = this.navigationService.onSetResctrictionMenuBasedOnRole(currentUrl);
+
+            if (restrict) {
+                this.router.navigateByUrl('dashboard/page-not-found');
+            };
+        }
+    }
+
+    onAutoLogout(): void {
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         if (UserData) {
-            this.authenticationService.autoLogout(3000);
+            this.authenticationService.autoLogout(UserData.timeOut * 60000);
         }
     }
 

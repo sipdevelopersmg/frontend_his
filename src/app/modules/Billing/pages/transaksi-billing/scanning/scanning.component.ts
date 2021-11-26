@@ -39,24 +39,24 @@ export class ScanningComponent implements OnInit {
     }
 
     onCheckJenisRawat(): void {
-        let activated_route = this.activatedRoute.snapshot.url[0].path;
+        const activatedRoute = this.activatedRoute.snapshot.url[0].path;
 
-        switch (activated_route) {
+        switch (activatedRoute) {
             case 'scan-billing-pasien-rawat-darurat':
-                this.ScanningBillingState = "IRDA";
+                this.ScanningBillingState = 'IRDA';
                 this.UrlLookupDaftarPasien = this.API_TRANS_BILLING.TRANS_BILLING_IRDA.POST_GET_DATA_PASIEN_FOR_LOOKUP;
                 break;
             case 'scan-billing-pasien-rawat-inap':
-                this.ScanningBillingState = "IRNA";
+                this.ScanningBillingState = 'IRNA';
                 this.UrlLookupDaftarPasien = this.API_TRANS_BILLING.TRANS_BILLING_IRDA.POST_GET_DATA_PASIEN_FOR_LOOKUP;
                 break;
             case 'scan-billing-pasien-rawat-jalan':
-                this.ScanningBillingState = "IRJA";
+                this.ScanningBillingState = 'IRJA';
                 this.UrlLookupDaftarPasien = this.API_TRANS_BILLING.TRANS_BILLING.POST_GET_DATA_PASIEN_FOR_LOOKUP;
                 break;
             default:
                 break;
-        };
+        }
     }
 
     handleClickPencarianNoRegister(NoRegister: string): void {
@@ -81,7 +81,7 @@ export class ScanningComponent implements OnInit {
                 if (result.responseResult) {
                     Swal.fire({
                         title: 'Data Pasien Ditemukan',
-                        text: "Lanjutkan ke Input Transaksi Billing?",
+                        text: 'Lanjutkan ke Input Transaksi Billing?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -90,9 +90,9 @@ export class ScanningComponent implements OnInit {
                         cancelButtonText: 'Tidak',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            let url_billing_irja = 'dashboard/Billing/transaksi-billing-rawat-jalan/input-billing-pasien';
+                            const urlBillingIrja = 'dashboard/Billing/transaksi-billing-rawat-jalan/input-billing-pasien';
 
-                            this.onRedirectToInputBillingPasien(NoRegister, url_billing_irja);
+                            this.onRedirectToInputBillingPasien(NoRegister, urlBillingIrja);
                         }
                     });
                 } else {
@@ -107,7 +107,7 @@ export class ScanningComponent implements OnInit {
                 if (result.responseResult) {
                     Swal.fire({
                         title: 'Data Pasien Ditemukan',
-                        text: "Lanjutkan ke Input Transaksi Billing?",
+                        text: 'Lanjutkan ke Input Transaksi Billing?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -116,15 +116,15 @@ export class ScanningComponent implements OnInit {
                         cancelButtonText: 'Tidak',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            let url_billing_irda = 'dashboard/Billing/transaksi-billing-rawat-inap/input-billing-pasien';
+                            const urlBillingIrda = 'dashboard/Billing/transaksi-billing-rawat-inap/input-billing-pasien';
 
-                            this.onRedirectToInputBillingPasien(NoRegister, url_billing_irda);
+                            this.onRedirectToInputBillingPasien(NoRegister, urlBillingIrda);
                         }
                     });
                 } else {
                     this.utililtyService.onShowingCustomAlert('warning', 'Oops', 'Data Pasien Tidak Ditemukan');
                 }
-            })
+            });
     }
 
     onScanNoRegisterIRDA(NoRegister: string): void {
@@ -133,7 +133,7 @@ export class ScanningComponent implements OnInit {
                 if (result.responseResult) {
                     Swal.fire({
                         title: 'Data Pasien Ditemukan',
-                        text: "Lanjutkan ke Input Transaksi Billing?",
+                        text: 'Lanjutkan ke Input Transaksi Billing?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -142,15 +142,15 @@ export class ScanningComponent implements OnInit {
                         cancelButtonText: 'Tidak',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            let url_billing_irda = 'dashboard/Billing/transaksi-billing-rawat-darurat/input-billing-pasien';
+                            const urlBillingIrda = 'dashboard/Billing/transaksi-billing-rawat-darurat/input-billing-pasien';
 
-                            this.onRedirectToInputBillingPasien(NoRegister, url_billing_irda);
+                            this.onRedirectToInputBillingPasien(NoRegister, urlBillingIrda);
                         }
                     });
                 } else {
                     this.utililtyService.onShowingCustomAlert('warning', 'Oops', 'Data Pasien Tidak Ditemukan');
                 }
-            })
+            });
     }
 
     handleOpenLookupPasien(): void {
@@ -158,12 +158,12 @@ export class ScanningComponent implements OnInit {
     }
 
     handleSelectedLookupPasien(args: any): void {
-        let no_register = document.getElementById('no_register') as HTMLInputElement;
-        no_register.value = args.no_register;
+        const noRegister = document.getElementById('no_register') as HTMLInputElement;
+        noRegister.value = args.no_register;
 
         Swal.fire({
             title: 'Data Pasien Ditemukan',
-            text: "Lanjutkan ke Input Transaksi Billing?",
+            text: 'Lanjutkan ke Input Transaksi Billing?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -173,7 +173,7 @@ export class ScanningComponent implements OnInit {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                let url = "";
+                let url = '';
 
                 switch (this.ScanningBillingState) {
                     case 'IRJA':
@@ -195,8 +195,8 @@ export class ScanningComponent implements OnInit {
     }
 
     onRedirectToInputBillingPasien(NoRegister: string, Url: string): void {
-        let data_encrypted = this.encryptionService.encrypt(NoRegister);
+        const dataEncrypted = this.encryptionService.encrypt(NoRegister);
 
-        this.router.navigate([Url, data_encrypted, 'GRAHCIS']);
+        this.router.navigate([Url, dataEncrypted, 'GRAHCIS']);
     }
 }

@@ -16,11 +16,11 @@ export interface MainMenuModel {
 }
 
 export interface TopMenuModel {
-    id_menu: number;
-    is_parent: boolean;
-    id_menu_parent: number;
-    icon: string;
-    caption: string;
+    id_menu: number
+    caption: string
+    id_menu_parent: number
+    is_parent: boolean
+    icon: string
 }
 
 export interface SidebarMenuModel {
@@ -31,7 +31,7 @@ export interface SidebarMenuModel {
     icon: string;
     caption: string;
     url: string;
-    childSidebarMenu?: SidebarChildMenuModel[];
+    sidebarChild?: SidebarChildMenuModel[];
     button?: ButtonModel[];
     fieldgrid?: FieldGridModel[];
 }

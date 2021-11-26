@@ -19,7 +19,8 @@
             <li [id]="item.id" class="list-group-item cursor-pointer p-0 mb-1 list-sidebar-item"
                 *ngFor="let item of MenuSidebar">
                 <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}"
-                    (click)="item.sidebarChild?.length >= 1 ? onTogglingHideChildMenu(item.id_menu_sidebar) : onClickSidebarItem(item) ">
+                    (click)="item.sidebarChild?.length >= 1 ? onTogglingHideChildMenu(item.id_menu_sidebar) : onClickSidebarItem(item) "
+                    [hidden]="item.caption == 'Beranda'">
                     <div class="col-1 text-center" [hidden]="SidebarCollapse">
                         <i class="fas fa-angle-right" [hidden]="item.sidebarChild?.length < 1"
                             id="{{item.id_menu_sidebar}}Icon"> </i>

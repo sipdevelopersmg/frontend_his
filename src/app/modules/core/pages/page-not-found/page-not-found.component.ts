@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 
 @Component({
@@ -8,7 +10,10 @@ import { NavigationService } from 'src/app/modules/shared/services/navigation.se
 })
 export class PageNotFoundComponent implements OnInit {
 
-    constructor(private navigationService: NavigationService) { }
+    constructor(
+        private router: Router,
+        public navigationService: NavigationService
+    ) { }
 
     ngOnInit(): void {
     }
@@ -17,7 +22,15 @@ export class PageNotFoundComponent implements OnInit {
         let type = args.type;
 
         if (type == "click") {
-            this.navigationService.backToPreviousPage();
+            this.router.navigateByUrl('dashboard/beranda');
+        }
+    }
+
+    onClickButtonKembaliBeranda(args: any) {
+        let type = args.type;
+
+        if (type == "click") {
+            this.router.navigateByUrl('dashboard/beranda');
         }
     }
 }

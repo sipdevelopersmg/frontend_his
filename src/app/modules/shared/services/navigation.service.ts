@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { ChildMenu, SidebarMenu, MainMenuModel, TopMenuModel, SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
-import { HttpResponseModel } from '../models/Http-Operation/HttpResponseModel';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { MainMenuModel, TopMenuModel, SidebarMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
 import { IAuthenticationResponseModel } from '../../auth/models/authentication.model';
 
 @Injectable({
@@ -38,6 +35,8 @@ export class NavigationService {
     public FieldGridSubject = new BehaviorSubject([]);
 
     public ButtonSidebarMenuState = new BehaviorSubject<any>(false);
+
+    public Restriction = new BehaviorSubject<boolean>(false);
 
     constructor(
         private router: Router,
@@ -112,6 +111,18 @@ export class NavigationService {
             return item.id_top_menu == ChildMenuId;
         });
 
+        sidebarMenuById.push({
+            button: [],
+            caption: "Beranda",
+            fieldgrid: [],
+            icon: "fas fa-home",
+            id_menu_sidebar: 45,
+            id_menu_sidebar_parent: 0,
+            id_top_menu: 23,
+            is_parent: true,
+            url: "beranda",
+        });
+
         localStorage.setItem('ActiveSidebarMenu', JSON.stringify(sidebarMenuById));
 
         this.onSetActiveSidebarMenuSubject(JSON.parse(localStorage.getItem('ActiveSidebarMenu')));
@@ -176,9 +187,7 @@ export class NavigationService {
 
     // ** Digunakan untuk kembali ke Halaman Sebelumnya. Biasa nya digunakan ketika User tiba di Component PageNotFound
     backToPreviousPage(): any {
-        this.history.pop();
-
-        this.router.navigateByUrl('dashboard/beranda');
+        window.history.back();
     }
 
     /** Method Untuk Men set Field Grid Subject value dari component Atm Treeview Menu */
@@ -220,5 +229,37 @@ export class NavigationService {
 
     onSetVisibilitySidebarButton(State: boolean): void {
         this.ButtonSidebarMenuState.next(State);
+    }
+
+    onSetResctrictionMenuBasedOnRole(currentUrl: string): boolean {
+        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+        let prefix = UserData.id_role === 2 || UserData.nama_role === 'dokter' ? '' : '/dashboard/';
+
+        const ActiveSidebarMenu: SidebarMenuModel[] = JSON.parse(localStorage.getItem('ActiveSidebarMenu'));
+
+        let restrict: boolean;
+
+        let allSidebarMenu: any[] = [];
+
+        if (ActiveSidebarMenu) {
+            ActiveSidebarMenu.forEach((item) => {
+                if (item.url === "" && item.sidebarChild) {
+                    allSidebarMenu.push(...item.sidebarChild);
+                };
+
+                if (item.url !== "") {
+                    allSidebarMenu.push(item);
+                };
+            });
+
+            let check = allSidebarMenu.map((item) => { return `${prefix}${item.url}` }).indexOf(currentUrl);
+
+            restrict = check < 0 ? true : false;
+
+            this.Restriction.next(restrict);
+
+            return restrict;
+        }
     }
 }

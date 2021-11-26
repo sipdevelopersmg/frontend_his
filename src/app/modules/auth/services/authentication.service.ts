@@ -50,11 +50,23 @@ export class AuthenticationService {
             })
         ).subscribe((result: AuthenticationResponseModel) => {
             if (result) {
-                this.handlingAuth(result.data);
+                const userData: IAuthenticationResponseModel = {
+                    full_name: result.data.full_name,
+                    id_karyawan: result.data.id_karyawan,
+                    id_role: result.data.id_role,
+                    isAuth: result.data.isAuth,
+                    menuJson: result.data.menuJson,
+                    nama_role: result.data.nama_role,
+                    timeOut: result.data.timeOut,
+                    token: result.data.token,
+                    user_name: result.data.user_name,
+                };
+
+                this.handlingAuth(userData);
 
                 this.utilityService.onShowingCustomAlert('success', 'Success', 'Sign In Berhasil')
                     .then(() => {
-                        if (result.data.id_role == 2 || result.data.nama_role == "dokter") {
+                        if (result.data.id_role === 2 || result.data.nama_role === 'dokter') {
                             this.router.navigateByUrl('Dokter/beranda');
                         } else {
                             this.router.navigateByUrl('dashboard/beranda');
@@ -65,10 +77,8 @@ export class AuthenticationService {
     }
 
     onLogout(): void {
-        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
-
         this.httpOperationService.defaultPutRequestWithoutParams(
-            this.API_AUTHENTICATION.POST_LOGOUT + UserData.id_user
+            this.API_AUTHENTICATION.POST_LOGOUT
         ).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -117,13 +127,12 @@ export class AuthenticationService {
     }
 
     private handlingAuth(UserData: IAuthenticationResponseModel): void {
-        let expiresIn: number;
+        // let expiresIn: number;
 
-        if (UserData.timeOut) { expiresIn = UserData.timeOut * 60 * 1000; }
+        // if (UserData.timeOut) { expiresIn = UserData.timeOut * 60 * 1000; }
 
-        this.autoLogout(expiresIn);
+        // this.autoLogout(expiresIn);
 
-        // sessionStorage.setItem('UserData', JSON.stringify(UserData));
         localStorage.setItem('UserData', JSON.stringify(UserData));
 
         this.currentUserSubject.next(UserData);

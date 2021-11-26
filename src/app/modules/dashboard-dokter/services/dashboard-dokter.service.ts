@@ -41,7 +41,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/daftar-pasien"
             },
             {
@@ -53,7 +53,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/konsul"
             },
             {
@@ -65,7 +65,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/diagnosa"
             },
             {
@@ -77,7 +77,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/resep"
             },
             {
@@ -89,7 +89,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/radiologi/riwayat-pemeriksaan"
             },
             {
@@ -101,7 +101,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/laboratorium/riwayat-pemeriksaan"
             },
             {
@@ -113,7 +113,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/alergi"
             },
             {
@@ -125,7 +125,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/vital-sign"
             },
             {
@@ -137,7 +137,7 @@ export class DashboardDokterService {
                 id_menu_sidebar_parent: 0,
                 id_top_menu: 0,
                 is_parent: true,
-                childSidebarMenu: [],
+                sidebarChild: [],
                 url: "Dokter/surat-perintah-mondok"
             },
         ];

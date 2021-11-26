@@ -11,7 +11,7 @@ import { SetupUserComponent } from "./pages/setup-user/setup-user.component";
 const coreRoutes: Routes = [
     {
         path: "", component: DashboardComponent, children: [
-            { path: "beranda", component: BerandaComponent, data: { title: "Beranda" } },
+            { path: "beranda", component: BerandaComponent, data: { title: "Beranda", animation: 'Beranda' } },
             { path: "setup-user", component: SetupUserComponent, data: { title: "Setup User" } },
             { path: "setup-role", component: SetupRoleComponent, data: { title: "Setup Role" } },
             { path: "setup-role-menu", component: SetupRoleMenuComponent, data: { title: "Setup Roles Menu" } },

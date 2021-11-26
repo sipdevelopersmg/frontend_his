@@ -6,6 +6,7 @@ import { NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { EditSettingsModel } from '@syncfusion/ej2-grids';
 import { KelasPerawatanModel } from 'src/app/modules/Billing/models/setup-data/setup-kelas-perawatan.model';
 import { IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
+// tslint:disable-next-line: max-line-length
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
@@ -64,11 +65,11 @@ export class AkomodasiRawatInapComponent implements OnInit {
             id_poli: [0, [Validators.required]],
             nama_poli: [0, [Validators.required]],
             id_tarif: [0, [Validators.required]],
-            kode_setup_tarif: ["", [Validators.required]],
-            nama_setup_tarif: ["", [Validators.required]],
+            kode_setup_tarif: ['', [Validators.required]],
+            nama_setup_tarif: ['', [Validators.required]],
             nominal_tarif: [0, [Validators.required]],
             id_kelas_rawat: [0, [Validators.required]],
-            kelas_rawat: ["", [Validators.required]],
+            kelas_rawat: ['', [Validators.required]],
         });
 
         this.UrlLookupPoli = this.API_BILLING_SETUP_DATA.SETUP_POLI.GET_ALL_POLI_FOR_LOOKUP_RAWAT_INAP;
@@ -82,7 +83,7 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     handleOpenAkomodasiRawatInap(): void {
-        let btnModalAkomodasiRawatInap = document.getElementById('btnModalAkomodasiRawatInap') as HTMLElement;
+        const btnModalAkomodasiRawatInap = document.getElementById('btnModalAkomodasiRawatInap') as HTMLElement;
         btnModalAkomodasiRawatInap.click();
     }
 
@@ -104,7 +105,7 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     handleCloseAkomodasiRawatInap(): void {
-        let btnCloseAkomodasiRawatInap = document.getElementById('btnCloseAkomodasiRawatInap') as HTMLElement;
+        const btnCloseAkomodasiRawatInap = document.getElementById('btnCloseAkomodasiRawatInap') as HTMLElement;
         btnCloseAkomodasiRawatInap.click();
     }
 
@@ -113,7 +114,7 @@ export class AkomodasiRawatInapComponent implements OnInit {
         this.handleCloseAkomodasiRawatInap();
 
         setTimeout(() => {
-            let btnModalAddDetailAkomodasi = document.getElementById('btnModalAddDetailAkomodasi') as HTMLElement;
+            const btnModalAddDetailAkomodasi = document.getElementById('btnModalAddDetailAkomodasi') as HTMLElement;
             btnModalAddDetailAkomodasi.click();
         }, 500);
     }
@@ -146,16 +147,16 @@ export class AkomodasiRawatInapComponent implements OnInit {
     onResetFormAddDetailAkomodasi(): void {
         this.FormAddDetailAkomodasi.reset();
 
-        this.tanggal.setValue("");
+        this.tanggal.setValue('');
         this.qty.setValue(0);
         this.id_poli.setValue(0);
-        this.nama_poli.setValue("");
+        this.nama_poli.setValue('');
         this.id_tarif.setValue(0);
-        this.kode_setup_tarif.setValue("");
-        this.nama_setup_tarif.setValue("");
+        this.kode_setup_tarif.setValue('');
+        this.nama_setup_tarif.setValue('');
         this.nominal_tarif.setValue(0);
         this.id_kelas_rawat.setValue(0);
-        this.kelas_rawat.setValue("");
+        this.kelas_rawat.setValue('');
 
         this.DatepickerTanggal.value = null;
 
@@ -168,7 +169,7 @@ export class AkomodasiRawatInapComponent implements OnInit {
         this.DropdownKelas.value = null;
     }
 
-    InitalizedGrid(component: MolGridComponent) {
+    InitalizedGrid(component: MolGridComponent): void {
         this.GridAddDetailAkomodasi = component;
     }
 
@@ -177,9 +178,9 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     handleToolbarClick(args: any): void {
-        let id = args.item.id;
+        const id = args.item.id;
 
-        if (id === "delete") {
+        if (id === 'delete') {
             this.GridAddDetailAkomodasiDatasource.splice(this.GridAddDetailAkomodasiSelectedIndex, 1);
 
             this.GridAddDetailAkomodasi.Grid.refresh();

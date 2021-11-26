@@ -4,7 +4,7 @@ import { AuthenticationService } from 'src/app/modules/auth/services/authenticat
 @Component({
     selector: 'app-beranda',
     templateUrl: './beranda.component.html',
-    styleUrls: ['./beranda.component.css']
+    styleUrls: ['./beranda.component.css'],
 })
 export class BerandaComponent implements OnInit {
 

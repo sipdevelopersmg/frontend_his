@@ -1,5 +1,5 @@
-import { MenuJsonModel } from "../../core/models/navigation/menu.model";
-import { HttpResponseModel } from "../../shared/models/Http-Operation/HttpResponseModel";
+import { MenuJsonModel } from '../../core/models/navigation/menu.model';
+import { HttpResponseModel } from '../../shared/models/Http-Operation/HttpResponseModel';
 
 export class AuthenticationResponseModel implements HttpResponseModel {
     data: IAuthenticationResponseModel;
@@ -8,15 +8,16 @@ export class AuthenticationResponseModel implements HttpResponseModel {
 }
 
 export interface IAuthenticationResponseModel {
-    id_role: number;
-    id_user: number;
-    isAuth: boolean;
-    user_name: string;
     full_name: string;
-    nama_role: string;
+    id_karyawan: number;
+    id_role: number;
+    id_user?: number;
+    isAuth: boolean;
     menuJson: MenuJsonModel;
+    nama_role: string;
     timeOut: number;
     token: string;
+    user_name: string;
 }
 
 export interface PostChangePassword {

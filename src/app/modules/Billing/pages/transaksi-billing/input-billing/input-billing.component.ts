@@ -26,7 +26,7 @@ import Swal from 'sweetalert2';
 })
 export class InputBillingComponent implements OnInit, AfterViewInit {
 
-    HeaderRibbon: string = "Input Billing Pasien";
+    HeaderRibbon = 'Input Billing Pasien';
 
     ButtonNav: ButtonNavModel[] = [
         { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
@@ -37,7 +37,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
         { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
         // { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' },
-        // { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting' },
+        // { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting'}
     ];
 
     InformasiPasien: IInformasiPasienModel;
@@ -49,27 +49,27 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     @ViewChild('GridDataTiket') GridDataTiket: GridComponent;
     GridDataTiketSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
-    GridDataTiketContainsNotOpen: boolean = false;
+    GridDataTiketContainsNotOpen = false;
     TotalAmountTiket = new BehaviorSubject(0);
 
     @ViewChild('GridDataTDMK') GridDataTDMK: GridComponent;
     GridDataTDMKSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
-    GridDataTDMKContainsNotOpen: boolean = false;
+    GridDataTDMKContainsNotOpen = false;
     TotalAmountTDMK = new BehaviorSubject(0);
 
     @ViewChild('GridDataTDLAB') GridDataTDLAB: GridComponent;
     GridDataTDLABSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
-    GridDataTDLABContainsNotOpen: boolean = false;
+    GridDataTDLABContainsNotOpen = false;
     TotalAmountTDLAB = new BehaviorSubject(0);
 
     @ViewChild('GridDataTDRAD') GridDataTDRAD: GridComponent;
     GridDataTDRADSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
-    GridDataTDRADContainsNotOpen: boolean = false;
+    GridDataTDRADContainsNotOpen = false;
     TotalAmountTDRAD = new BehaviorSubject(0);
 
     @ViewChild('GridDataResep') GridDataResep: GridComponent;
     GridDataResepSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
-    GridDataResepContainsNotOpen: boolean = false;
+    GridDataResepContainsNotOpen = false;
     GridResepResizeSettings = { mode: 'Auto' };
     ChildResepDatasource: IResepBillingSubDetailModel[] = [];
     ChildGridResep: GridModel = {};
@@ -82,8 +82,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     SelectedHeader: any = {};
 
     // ** Modal Pembayaran
-    ModalPembayaranTitle: string = "Pembayaran Uang Cash";
-    PembayaranState: string = "CASH";
+    ModalPembayaranTitle = 'Pembayaran Uang Cash';
+    PembayaranState = 'CASH';
 
     FormInputInvoice: FormGroup;
 
@@ -96,7 +96,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         { buttonOption: { iconCss: 'fas fa-times fa-sm' } }
     ];
 
-    ModalPembayaranState = "Invoice";
+    ModalPembayaranState = 'Invoice';
 
     TotalTransaksiPembayaran = 0;
     BiayaBankPembayaran = 0;
@@ -116,8 +116,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     @ViewChild('modalPembatalan') modalPembatalan: TemplateRef<any>;
 
     FormPembatalan: FormGroup;
-    FormPembatalanState: string = "Batal_Posting";
-    ModalPembatalanTitle: string = "Posting";
+    FormPembatalanState = 'Batal_Posting';
+    ModalPembatalanTitle = 'Posting';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -151,7 +151,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             id_register: [0, []],
             id_payment: [0, []],
             id_invoice: [0, []],
-            reason_canceled: ["", []],
+            reason_canceled: ['', []],
         });
 
         this.onGetDataPaymentMethod();
@@ -159,30 +159,30 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+            const NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
             this.onGetDataBillingByNoRegister(NoRegister);
         }, 1);
     }
 
     onGetButtonSidebarMenu(): void {
-        let SidebarMenu: SidebarChildMenuModel = JSON.parse(localStorage.getItem('ActiveSidebarMenu'))[0];
+        const SidebarMenu: SidebarChildMenuModel = JSON.parse(localStorage.getItem('ActiveSidebarMenu'))[0];
 
-        let Button = SidebarMenu.button;
+        const Button = SidebarMenu.button;
 
         if (Button.length > 0) {
             Button.forEach((item) => {
-                if (item.caption !== "Batal Payment") {
+                if (item.caption !== 'Batal Payment') {
                     this.ButtonNav.push({
-                        Id: (item.caption).replace(" ", "_"),
+                        Id: (item.caption).replace(' ', '_'),
                         Icons1: item.icon,
                         Icons2: item.icon2,
                         StackIcon: JSON.parse(item.stack_icon),
                         Captions: item.caption
                     });
-                };
+                }
             });
-        };
+        }
     }
 
     onGetDataBillingByNoRegister(RegisterNo: string): void {
@@ -231,18 +231,18 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
                     this.onCountSisaTagihan();
                 }
-            })
+            });
     }
 
     onCountTotalTagihan(tiket: any[], tdmk: any[], tdlab: any[], tdrad: any[], resep: any[]): void {
 
         // ** ===== TIKET =======
-        this.GridDataTiketContainsNotOpen = tiket.some((item) => { return item.status_bayar != "OPEN" });
+        this.GridDataTiketContainsNotOpen = tiket.some((item) => item.status_bayar !== 'OPEN');
 
         let total_tagihan_tiket = 0;
 
         tiket.filter((item) => {
-            if (item.status_bayar == "OPEN") {
+            if (item.status_bayar === 'OPEN') {
                 return total_tagihan_tiket += item.total_amount;
             }
         });
@@ -250,10 +250,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         // ** ===== TDMK ======
         let total_tagihan_tdmk = 0;
 
-        this.GridDataTDMKContainsNotOpen = tdmk.some((item) => { return item.status_bayar != "OPEN" });
+        this.GridDataTDMKContainsNotOpen = tdmk.some((item) => { return item.status_bayar != 'OPEN' });
 
         tdmk.filter((item) => {
-            if (item.status_bayar == "OPEN") {
+            if (item.status_bayar == 'OPEN') {
                 return total_tagihan_tdmk += item.total_amount;
             }
         });
@@ -261,10 +261,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         // ** ===== TDLAB =====
         let total_tagihan_tdlab = 0;
 
-        this.GridDataTDLABContainsNotOpen = tdlab.some((item) => { return item.status_bayar != "OPEN" });
+        this.GridDataTDLABContainsNotOpen = tdlab.some((item) => { return item.status_bayar != 'OPEN' });
 
         tdlab.filter((item) => {
-            if (item.status_bayar == "OPEN") {
+            if (item.status_bayar == 'OPEN') {
                 return total_tagihan_tdlab += item.total_amount;
             }
         });
@@ -272,10 +272,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         // ** ===== TDRAD =====
         let total_tagihan_tdrad = 0;
 
-        this.GridDataTDRADContainsNotOpen = tdrad.some((item) => { return item.status_bayar != "OPEN" });
+        this.GridDataTDRADContainsNotOpen = tdrad.some((item) => { return item.status_bayar != 'OPEN' });
 
         tdrad.filter((item) => {
-            if (item.status_bayar == "OPEN") {
+            if (item.status_bayar == 'OPEN') {
                 return total_tagihan_tdrad += item.total_amount;
             }
         });
@@ -283,10 +283,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         // ** ===== RESEP =====
         let total_tagihan_resep = 0;
 
-        this.GridDataResepContainsNotOpen = resep.some((item) => { return item.status_bayar != "OPEN" });
+        this.GridDataResepContainsNotOpen = resep.some((item) => { return item.status_bayar != 'OPEN' });
 
         resep.filter((item) => {
-            if (item.status_bayar == "OPEN") {
+            if (item.status_bayar == 'OPEN') {
                 return total_tagihan_resep += item.total_amount;
             }
         });
@@ -310,14 +310,14 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 break;
             case 'Restitusi':
                 if (this.deposit_amount.value > 0) {
-                    this.handleOpenModalPembayaran("Restitusi");
+                    this.handleOpenModalPembayaran('Restitusi');
                 } else {
                     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Saldo Deposit Rp. 0');
                 }
                 break;
             case 'Deposit':
-                if (this.InformasiPasien && this.InformasiPasien.status_billing == "OPEN") {
-                    this.handleOpenModalPembayaran("Deposit");
+                if (this.InformasiPasien && this.InformasiPasien.status_billing == 'OPEN') {
+                    this.handleOpenModalPembayaran('Deposit');
                 } else {
                     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Billing Sudah Diposting');
                 }
@@ -336,7 +336,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 break;
             case 'Create_Invoice':
                 if (this.total_amount.value > 0) {
-                    this.handleOpenModalPembayaran("Invoice");
+                    this.handleOpenModalPembayaran('Invoice');
                 } else {
                     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Total Biaya Rp. 0');
                 }
@@ -345,11 +345,11 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 this.handlePostingBillingRawatJalan();
                 break;
             case 'Batal_Posting':
-                if (this.InformasiPasien && this.InformasiPasien.status_billing == "OPEN") {
+                if (this.InformasiPasien && this.InformasiPasien.status_billing == 'OPEN') {
                     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Billing Belum Diposting');
                 } else {
-                    this.ModalPembayaranTitle = "Posting";
-                    this.handleOpenModalPembatalan("Batal_Posting");
+                    this.ModalPembayaranTitle = 'Posting';
+                    this.handleOpenModalPembatalan('Batal_Posting');
                 }
                 break;
             case 'Daftar_Payment':
@@ -393,12 +393,12 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             icon.classList.remove('fa-chevron-down');
             icon.classList.add('fa-chevron-up');
 
-            card_body.removeAttribute("hidden");
+            card_body.removeAttribute('hidden');
         } else {
             icon.classList.remove('fa-chevron-up');
             icon.classList.add('fa-chevron-down');
 
-            card_body.setAttribute("hidden", "true");
+            card_body.setAttribute('hidden', 'true');
         }
     }
 
@@ -423,7 +423,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 case 'TKT':
                     let tiket_contains_open = [];
                     for (let i = 0; i < this.GridDataTiket.dataSource['length']; i++) {
-                        if (this.GridDataTiket.dataSource[i].status_bayar === "OPEN") {
+                        if (this.GridDataTiket.dataSource[i].status_bayar === 'OPEN') {
                             tiket_contains_open.push(i);
                         };
                     };
@@ -432,7 +432,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 case 'TDMK':
                     let tdmk_contains_open = [];
                     for (let i = 0; i < this.GridDataTDMK.dataSource['length']; i++) {
-                        if (this.GridDataTDMK.dataSource[i].status_bayar === "OPEN") {
+                        if (this.GridDataTDMK.dataSource[i].status_bayar === 'OPEN') {
                             tdmk_contains_open.push(i);
                         };
                     };
@@ -441,7 +441,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 case 'TDLAB':
                     let tdlab_contains_open = [];
                     for (let i = 0; i < this.GridDataTDLAB.dataSource['length']; i++) {
-                        if (this.GridDataTDLAB.dataSource[i].status_bayar === "OPEN") {
+                        if (this.GridDataTDLAB.dataSource[i].status_bayar === 'OPEN') {
                             tdlab_contains_open.push(i);
                         };
                     };
@@ -450,7 +450,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 case 'TDRAD':
                     let tdrad_contains_open = [];
                     for (let i = 0; i < this.GridDataTDRAD.dataSource['length']; i++) {
-                        if (this.GridDataTDRAD.dataSource[i].status_bayar === "OPEN") {
+                        if (this.GridDataTDRAD.dataSource[i].status_bayar === 'OPEN') {
                             tdrad_contains_open.push(i);
                         };
                     };
@@ -459,7 +459,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 case 'RESEP':
                     let resep_contains_open = [];
                     for (let i = 0; i < this.GridDataResep.dataSource['length']; i++) {
-                        if (this.GridDataResep.dataSource[i].status_bayar === "OPEN") {
+                        if (this.GridDataResep.dataSource[i].status_bayar === 'OPEN') {
                             resep_contains_open.push(i);
                         };
                     };
@@ -514,7 +514,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataTiket(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar !== "OPEN") {
+        if (status_bayar !== 'OPEN') {
             args.cancel = true;
 
             let removedIndexLength = 0;
@@ -572,7 +572,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataTDMK(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar !== "OPEN") {
+        if (status_bayar !== 'OPEN') {
             args.cancel = true;
 
             let removedIndexLength = 0;
@@ -630,7 +630,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataTDLAB(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar !== "OPEN") {
+        if (status_bayar !== 'OPEN') {
             args.cancel = true;
 
             let removedIndexLength = 0;
@@ -688,7 +688,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataTDRAD(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar !== "OPEN") {
+        if (status_bayar !== 'OPEN') {
             args.cancel = true;
 
             let removedIndexLength = 0;
@@ -746,7 +746,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataResep(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar == "PAID" || status_bayar == "CLOSE") {
+        if (status_bayar == 'PAID' || status_bayar == 'CLOSE') {
             args.cancel = true;
 
             let removedIndexLength = 0;
@@ -829,7 +829,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     // ** ROW DATA BOUND ================
     handleRowDataBound(args: any): void {
-        if (args.data['status_bayar'] !== "OPEN") {
+        if (args.data['status_bayar'] !== 'OPEN') {
             args.row.classList.add('e-disabled');
         };
     }
@@ -912,7 +912,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     onCreateInvoice(): void {
         Swal.fire({
             title: 'Invoice Tanpa Payment Akan Dibuat',
-            text: "Apakah Anda Yakin Ingin Melanjutkan ?",
+            text: 'Apakah Anda Yakin Ingin Melanjutkan ?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -945,7 +945,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                         if (result) {
                             this.utilityService.onShowingCustomAlert('success', 'Success', 'Invoice Berhasil Dibuat')
                                 .then(() => {
-                                    let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                    let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                     this.BillingItem = [];
 
@@ -956,7 +956,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                                     this.handleEmptyBillingHeader();
                                 });
                         } else {
-                            let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                            let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                             this.BillingItem = [];
 
@@ -974,23 +974,23 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     // ** HISTORY PEMBAYARAN ITEM =============
     handleClickHistoryItem(item: any): void {
-        let jenis_transaksi = "";
+        let jenis_transaksi = '';
 
         switch (item.jenis_transaksi) {
             case 'TKT':
-                jenis_transaksi = "tiket";
+                jenis_transaksi = 'tiket';
                 break;
             case 'TDMK':
-                jenis_transaksi = "tdmk";
+                jenis_transaksi = 'tdmk';
                 break;
             case 'TDLAB':
-                jenis_transaksi = "tdlab";
+                jenis_transaksi = 'tdlab';
                 break;
             case 'TDRAD':
-                jenis_transaksi = "tdrad";
+                jenis_transaksi = 'tdrad';
                 break;
             case 'RESEP':
-                jenis_transaksi = "resep";
+                jenis_transaksi = 'resep';
                 break;
             default:
                 break;
@@ -1012,7 +1012,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
         this.ModalPembayaranState = ModalPembayaranState;
 
-        if (ModalPembayaranState == "Invoice") {
+        if (ModalPembayaranState == 'Invoice') {
             let header = {
                 id_register: this.InformasiPasien.id_register,
                 total_amount: this.FormInputInvoice.value.total_amount,
@@ -1029,13 +1029,13 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             this.transBillingService.HeaderBilling.next(header);
         };
 
-        if (ModalPembayaranState == "Existing_Invoice") {
+        if (ModalPembayaranState == 'Existing_Invoice') {
             this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'];
 
             this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'] - this.BiayaBankPembayaran;
         };
 
-        if (ModalPembayaranState == "Restitusi") {
+        if (ModalPembayaranState == 'Restitusi') {
             let header = {
                 id_register: this.InformasiPasien.id_register,
                 total_amount: 0,
@@ -1062,7 +1062,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     handleClickButtonPaymentMethod(item: IPaymentMethodModel): void {
-        this.PembayaranState = (item.payment_method).replace(" ", "_");
+        this.PembayaranState = (item.payment_method).replace(' ', '_');
 
         this.ModalPembayaranTitle = `Pembayaran ${item.payment_method}`;
     }
@@ -1131,7 +1131,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             this.KurangBayarPembayaran = this.GrandTotalTransaksiPembayaran - this.JumlahBayarPembayaran;
         }
 
-        if (this.ModalPembayaranState == "Invoice") {
+        if (this.ModalPembayaranState == 'Invoice') {
 
             // ** Set Header Parameter
             let header = {
@@ -1226,7 +1226,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             }, 250);
 
                             setTimeout(() => {
-                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                 this.BillingItem = [];
 
@@ -1245,7 +1245,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                     }, 250);
 
                     setTimeout(() => {
-                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                         this.BillingItem = [];
 
@@ -1289,7 +1289,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             btnCloseModalPembayaran.click();
 
                             setTimeout(() => {
-                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                 this.BillingItem = [];
 
@@ -1307,7 +1307,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSendPaymentWithExistingInvoice(args: any): void {
         this.SelectedInvoiceRawatJalan = args;
 
-        this.handleOpenModalPembayaran("Existing_Invoice");
+        this.handleOpenModalPembayaran('Existing_Invoice');
     }
 
     handleClickSubmitPaymentWithExisitingInvoice(): void {
@@ -1348,7 +1348,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             }, 250);
 
                             setTimeout(() => {
-                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                 this.BillingItem = [];
 
@@ -1396,7 +1396,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             }, 250);
 
                             setTimeout(() => {
-                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                 this.BillingItem = [];
 
@@ -1414,10 +1414,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     }
 
     handlePostingBillingRawatJalan(): void {
-        if (this.InformasiPasien.status_billing == "OPEN") {
+        if (this.InformasiPasien.status_billing == 'OPEN') {
             Swal.fire({
                 title: 'Billing Pasien Akan Diposting',
-                text: "Apakah Anda Yakin Ingin Melanjutkan ?",
+                text: 'Apakah Anda Yakin Ingin Melanjutkan ?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -1433,14 +1433,14 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                             if (result) {
                                 this.utilityService.onShowingCustomAlert('success', 'Success', `Billing Pasien ${this.InformasiPasien.nama_pasien} Telah Diposting`)
                                     .then(() => {
-                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                         this.BillingItem = [];
 
                                         this.onGetDataBillingByNoRegister(NoRegister);
                                     });
                             } else {
-                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                 this.BillingItem = [];
 
@@ -1504,7 +1504,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                                     setTimeout(() => {
                                         this.BillingItem = [];
 
-                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                         this.onGetDataBillingByNoRegister(NoRegister);
                                     }, 250);
@@ -1528,7 +1528,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                                     setTimeout(() => {
                                         this.BillingItem = [];
 
-                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                         this.onGetDataBillingByNoRegister(NoRegister);
                                     }, 250);
@@ -1553,7 +1553,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                                     setTimeout(() => {
                                         this.BillingItem = [];
 
-                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
 
                                         this.onGetDataBillingByNoRegister(NoRegister);
                                     }, 250);
@@ -1575,7 +1575,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         this.id_register.setValue(this.InformasiPasien.id_register);
         this.id_payment.setValue(0);
         this.id_invoice.setValue(0);
-        this.reason_canceled.setValue("");
+        this.reason_canceled.setValue('');
     }
 
     onSendBatalPayment(args: any): void {
@@ -1585,8 +1585,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         this.HistorySemuaPembayaranRawatJalan.handleCloseHistoryAllPayment();
 
         setTimeout(() => {
-            this.ModalPembatalanTitle = "Payment";
-            this.handleOpenModalPembatalan("Batal_Payment");
+            this.ModalPembatalanTitle = 'Payment';
+            this.handleOpenModalPembatalan('Batal_Payment');
         }, 500);
     }
 
@@ -1605,8 +1605,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         this.HistoryInvoiceRawatJalan.handleCloseHistoryInvoice();
 
         setTimeout(() => {
-            this.ModalPembatalanTitle = "Invoice";
-            this.handleOpenModalPembatalan("Batal_Invoice");
+            this.ModalPembatalanTitle = 'Invoice';
+            this.handleOpenModalPembatalan('Batal_Invoice');
         }, 500);
     }
 

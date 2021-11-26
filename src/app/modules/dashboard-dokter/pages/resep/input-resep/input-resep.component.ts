@@ -30,13 +30,13 @@ export class InputResepComponent implements OnInit {
     @ViewChild('LookupTemplateResep') LookupTemplateResep: OrgLookUpHirarkiComponent;
     @Output('onSetTemplateResep') onSetTemplateResep = new EventEmitter<any>();
 
-    
+
     public itemsParams: IEditCell;
     public itemsElem: HTMLElement;
     public itemsObj: DropDownList;
 
-    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2+'/J';
-    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP+'/'+2;
+    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN + '/' + 2 + '/J';
+    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP + '/' + 2;
     public GridLookUpItem = GridLookUpItem;
 
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
@@ -66,7 +66,7 @@ export class InputResepComponent implements OnInit {
     GridDaftarObatDataSource: any[] = [];
     GridDaftarObatColumns = GridConfig;
     GridDaftarObatHeight: string;
-    private gridDaftarObat: MolGridComponent ;
+    private gridDaftarObat: MolGridComponent;
 
     // ** Selected Data Obat
     SelectedDataObat: TrResepDokterIrjaDetailInsert;
@@ -80,7 +80,7 @@ export class InputResepComponent implements OnInit {
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
     @ViewChild('itemTemplate') itemTemplate: TemplateRef<any>;
 
-    globalListenFunc:Function;
+    globalListenFunc: Function;
     dataSourceLabelPemakaian = [];
     dataSourceTambahanAturanPakai = [];
     dataSourceSatuanAturanPakai = [];
@@ -92,13 +92,13 @@ export class InputResepComponent implements OnInit {
     KandunganElem: HTMLElement;
     KandunganObj: NumericTextBox;
     currentQtyResep: number;
-    currentIdItem:number;
-    currentIndex:number;
+    currentIdItem: number;
+    currentIndex: number;
 
     // SERVER SIDE 
     public IsUserLogin: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
     public data: DataManager = new DataManager({
-        headers:[
+        headers: [
             {
                 Authorization: "Bearer " + this.IsUserLogin.token
             }
@@ -109,25 +109,25 @@ export class InputResepComponent implements OnInit {
     });
 
     public fields: Object = { text: 'nama_obat', value: 'id_item' };
-    public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+    public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
     public text: string = "Select a Obat";
     public sorting: string = 'Ascending';
-    public onFiltering =  (e: FilteringEventArgs) => {
+    public onFiltering = (e: FilteringEventArgs) => {
         // load overall data when search key empty.
         if (e.text === '') {
             e.updateData(this.data);
         } else {
-        //   let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10);
-          // change the type of filtering
-        //   query = (e.text !== '') ? query.where('nama_obat', 'contains', e.text, true) : query;
-          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+            //   let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10);
+            // change the type of filtering
+            //   query = (e.text !== '') ? query.where('nama_obat', 'contains', e.text, true) : query;
+            let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
 
-          e.updateData(this.data, query);
+            e.updateData(this.data, query);
         }
     };
     //=====================
     public dataChild: DataManager = new DataManager({
-        headers:[
+        headers: [
             {
                 Authorization: "Bearer " + this.IsUserLogin.token
             }
@@ -136,15 +136,15 @@ export class InputResepComponent implements OnInit {
         adaptor: new ODataV4Adaptor,
         crossDomain: true,
     });
-    public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+    public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
 
-    
+
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterService: ResepDokterService,
         public setupLabelPemakaianObatService: SetupLabelPemakaianObatService,
         public setupTambahanAturanPakaiService: SetupTambahanAturanPakaiService,
-        public setupSatuanAturanPakaiService:SetupSatuanAturanPakaiService,
+        public setupSatuanAturanPakaiService: SetupSatuanAturanPakaiService,
         public setupMetodeRacikanService: SetupMetodeRacikanService,
         private renderer: Renderer2
     ) {
@@ -154,7 +154,7 @@ export class InputResepComponent implements OnInit {
     ngOnInit(): void {
 
         this.FormAddObat = this.formBuilder.group({
-            counter: [0,[]],
+            counter: [0, []],
             is_racikan: [false, []],
             no_urut: [0, []],
             set_racikan_id: [null, []],
@@ -171,9 +171,9 @@ export class InputResepComponent implements OnInit {
             id_label_pemakaian_obat: [null, []],
             label_pemakaian_obat: ['', []],
 
-            id_satuan_aturan_pakai:[null,[]],
-            satuan_aturan_pakai:[null,[]],
-            
+            id_satuan_aturan_pakai: [null, []],
+            satuan_aturan_pakai: [null, []],
+
             aturan: ['', []],
             ket_aturan: ['', []],
             id_tambahan_aturan_pakai: [null, []],
@@ -186,17 +186,17 @@ export class InputResepComponent implements OnInit {
             'Search'
         ];
 
-        let currentQtyResep =this.currentQtyResep;
+        let currentQtyResep = this.currentQtyResep;
         let currentIdItem = this.currentIdItem;
         let SelectedDataRacikanObat = this.SelectedDataRacikanObat;
         this.resepDokterService.dataSelectRacikan.next(SelectedDataRacikanObat);
         this.itemsParams = {
             create: () => {
-                
-                if(SelectedDataRacikanObat){
+
+                if (SelectedDataRacikanObat) {
                     this.queryChild = new Query().from('Obat')
-                    .select(['nama_obat', 'id_item','kandungan_obat','nama_satuan'])
-                    .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
+                        .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
+                        .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
                 }
 
                 this.itemsElem = document.createElement('input');
@@ -218,31 +218,31 @@ export class InputResepComponent implements OnInit {
                     // floatLabelType: 'Never',
                     allowFiltering: true,
                     popupWidth: '55rem',
-                    filtering: function(e){
+                    filtering: function (e) {
                         if (e.text === '') {
                             e.updateData(this.data);
                         } else {
-                            let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+                            let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
                             e.updateData(this.data, query);
                         }
                     }.bind(this),
                     change: function (args) {
-                        this.setFormGrif(args,currentQtyResep,currentIdItem,SelectedDataRacikanObat);
+                        this.setFormGrif(args, currentQtyResep, currentIdItem, SelectedDataRacikanObat);
                         currentIdItem = args.itemData.id_item;
                     }.bind(this),
                 });
-                
+
                 this.itemsObj.appendTo(this.itemsElem);
 
-                if(SelectedDataRacikanObat){
-                   
+                if (SelectedDataRacikanObat) {
+
                     // this.itemsObj.dataSource = this.data;
                     // console.log('set value',SelectedDataRacikanObat);
                     // console.log('query',this.query);
-                   
-                    setTimeout(()=>{
+
+                    setTimeout(() => {
                         this.itemsObj.value = SelectedDataRacikanObat.id_item;
-                    },500)
+                    }, 500)
 
                 }
             }
@@ -259,7 +259,7 @@ export class InputResepComponent implements OnInit {
             allowResizing: true,
             allowTextWrap: true,
             textWrapSettings: { wrapMode: 'Both' },
-            toolbar: ['Add','Edit', 'Delete', 'Update', 'Cancel'],
+            toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true },
             columns: [
                 { field: "counter", headerText: 'c', width: 100, visible: false },
@@ -272,15 +272,15 @@ export class InputResepComponent implements OnInit {
                 { field: "kandungan", headerText: 'Kandungan', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
                 { field: "qty_resep", headerText: 'qty', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', visible: false },
                 { field: "qty_racikan", headerText: 'QTY', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
-                { field: "keterangan", headerText: 'Keterangan', headerTextAlign: 'Center', textAlign: 'Left', width: 100},
+                { field: "keterangan", headerText: 'Keterangan', headerTextAlign: 'Center', textAlign: 'Left', width: 100 },
             ],
-            rowSelected(args){
+            rowSelected(args) {
                 SelectedDataRacikanObat = args.data
                 // console.log('row selected',SelectedDataRacikanObat)
-               
+
             },
             actionBegin(args: AddEventArgs) {
-                console.log('begin',args)
+                console.log('begin', args)
                 if (args.requestType === 'add') {
                     const counter = 'counter';
                     (args.data as object)[counter] = this.parentDetails.parentKeyFieldValue;
@@ -295,16 +295,16 @@ export class InputResepComponent implements OnInit {
             },
             actionComplete(args) {
                 if (args.requestType === 'save') {
-                    if(args.action === 'add'){
+                    if (args.action === 'add') {
                         args.data.id_item = currentIdItem;
                         dataSourceChild.push(args.data);
                     }
-                    if(args.action === 'edit'){
+                    if (args.action === 'edit') {
                         args.data.id_item = currentIdItem;
                         let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
-                        dataSourceChild[index]=args.data;
+                        dataSourceChild[index] = args.data;
                     }
-                    
+
                 }
 
                 if (args.requestType === "delete") {
@@ -323,7 +323,7 @@ export class InputResepComponent implements OnInit {
             this.dataSourceTambahanAturanPakai = result.data;
         });
 
-        this.setupSatuanAturanPakaiService.onGetAll().subscribe((result)=>{
+        this.setupSatuanAturanPakaiService.onGetAll().subscribe((result) => {
             this.dataSourceSatuanAturanPakai = result.data;
         })
 
@@ -332,47 +332,48 @@ export class InputResepComponent implements OnInit {
 
     }
 
-    onLoad(args:any){
+    onLoad(args: any) {
 
     }
 
-    setFormGrif(args,currentQtyResep,id_item,SelectedDataRacikanObat){
+    setFormGrif(args, currentQtyResep, id_item, SelectedDataRacikanObat) {
         // console.log('function setgrid',SelectedDataRacikanObat);
-        if(SelectedDataRacikanObat){
-            (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=SelectedDataRacikanObat.nama_satuan;
-            (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value=SelectedDataRacikanObat.komposisi;
-            (<HTMLInputElement>document.getElementsByName("seper")[0]).value=SelectedDataRacikanObat.seper;
-            (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value=SelectedDataRacikanObat.kandungan;
-            (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=SelectedDataRacikanObat.qty_racikan;
-        }else{
-            (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=args.itemData.nama_satuan;
-            (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value=args.itemData.kandungan_obat;
-            (<HTMLInputElement>document.getElementsByName("seper")[0]).value='1';
-            (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value=args.itemData.kandungan_obat;
-            (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=currentQtyResep.toString();
+        if (SelectedDataRacikanObat) {
+            (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value = SelectedDataRacikanObat.nama_satuan;
+            (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value = SelectedDataRacikanObat.komposisi;
+            (<HTMLInputElement>document.getElementsByName("seper")[0]).value = SelectedDataRacikanObat.seper;
+            (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value = SelectedDataRacikanObat.kandungan;
+            (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value = SelectedDataRacikanObat.qty_racikan;
+        } else {
+            (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value = args.itemData.nama_satuan;
+            (<HTMLInputElement>document.getElementsByName("komposisi")[0]).value = args.itemData.kandungan_obat;
+            (<HTMLInputElement>document.getElementsByName("seper")[0]).value = '1';
+            (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value = args.itemData.kandungan_obat;
+            (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value = currentQtyResep.toString();
         }
 
         let seper = (<HTMLInputElement>document.getElementsByName("seper")[0])
-        if(seper){
+        if (seper) {
             seper.addEventListener('click', (event) => {
                 seper.select();
             });
             seper.addEventListener('keyup', (event) => {
                 let komposisi = parseInt((<HTMLInputElement>document.getElementsByName("komposisi")[0]).value);
                 let seper = parseInt((<HTMLInputElement>document.getElementsByName("seper")[0]).value);
-                let hasil = komposisi/seper;
-                (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value=hasil.toString();
+                let hasil = komposisi / seper;
+                (<HTMLInputElement>document.getElementsByName("kandungan")[0]).value = hasil.toString();
                 let butuh = currentQtyResep * hasil;
-                let qty = butuh/komposisi;
-                (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=qty.toString();
+                let qty = butuh / komposisi;
+                (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value = qty.toString();
             });
 
-            this.setInputFilter(seper, function(value) {
-                return /^\d*$/.test(value); });
+            this.setInputFilter(seper, function (value) {
+                return /^\d*$/.test(value);
+            });
         }
 
         let kandungan = (<HTMLInputElement>document.getElementsByName("kandungan")[0])
-        if(kandungan){
+        if (kandungan) {
             kandungan.addEventListener('click', (event) => {
                 kandungan.select();
             });
@@ -381,27 +382,29 @@ export class InputResepComponent implements OnInit {
                 let komposisi = parseInt((<HTMLInputElement>document.getElementsByName("komposisi")[0]).value);
                 let butuh = currentQtyResep * kandungan;
                 console.log(butuh)
-                let qty = butuh/komposisi;
-                (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value=qty.toString();
+                let qty = butuh / komposisi;
+                (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value = qty.toString();
                 (<HTMLInputElement>document.getElementsByName("seper")[0]).value = '1';
             });
-            this.setInputFilter(kandungan, function(value) {
-                return /^\d*$/.test(value); });
+            this.setInputFilter(kandungan, function (value) {
+                return /^\d*$/.test(value);
+            });
         }
 
-        let  qty_racikan = (<HTMLInputElement>document.getElementsByName("qty_racikan")[0])
-        if(qty_racikan){
+        let qty_racikan = (<HTMLInputElement>document.getElementsByName("qty_racikan")[0])
+        if (qty_racikan) {
             qty_racikan.addEventListener('click', (event) => {
                 qty_racikan.select();
             });
-            this.setInputFilter(qty_racikan, function(value) {
-                return /^\d*$/.test(value); });
+            this.setInputFilter(qty_racikan, function (value) {
+                return /^\d*$/.test(value);
+            });
         }
     }
 
     setInputFilter(textbox: Element, inputFilter: (value: string) => boolean): void {
-        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-            textbox.addEventListener(event, function(this: (HTMLInputElement | HTMLTextAreaElement) & {oldValue: string; oldSelectionStart: number | null, oldSelectionEnd: number | null}) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+            textbox.addEventListener(event, function (this: (HTMLInputElement | HTMLTextAreaElement) & { oldValue: string; oldSelectionStart: number | null, oldSelectionEnd: number | null }) {
                 if (inputFilter(this.value)) {
                     this.oldValue = this.value;
                     this.oldSelectionStart = this.selectionStart;
@@ -418,7 +421,7 @@ export class InputResepComponent implements OnInit {
             });
         });
     }
-    
+
     rowDataBound(args: any) {
         var is_racikan = args.data.is_racikan;
         if (!is_racikan) {
@@ -482,7 +485,7 @@ export class InputResepComponent implements OnInit {
 
     handleChangeMetodeRacikan(args: any): void {
         this.metode_racikan.setValue(args.itemData.metode_racikan);
-        
+
     }
 
     heandleSelectedRacikan(args: any): void {
@@ -502,36 +505,36 @@ export class InputResepComponent implements OnInit {
         this.resepDokterService.dataSourceChildGrid.next(detail);
     }
 
-    heandleSelectedTemplateResep(args){
+    heandleSelectedTemplateResep(args) {
 
         let detail;
         detail = this.GridResepRacikan.childGrid.dataSource;
 
         args.details.forEach(element => {
             this.counter++;
-            
+
             element.counter = this.counter;
-            
-            if(element.is_racikan){
+
+            if (element.is_racikan) {
                 element.nama_racikan = element.nama_obat
-            }else{
+            } else {
                 element.nama_racikan = ''
             }
-            
-            if(element.id_label_pemakaian_obat==1){
-                element.label = element.ket_label; 
-            }else{
+
+            if (element.id_label_pemakaian_obat == 1) {
+                element.label = element.ket_label;
+            } else {
                 element.label = element.id_label_pemakaian_obat;
             }
-            
-            if(element.id_tambahan_aturan_pakai==1){
+
+            if (element.id_tambahan_aturan_pakai == 1) {
                 element.aturan = element.ket_aturan;
-            }else{
+            } else {
                 element.aturan = element.id_tambahan_aturan_pakai;
             }
 
-            this.resepDokterService.addDetail(element); 
-            
+            this.resepDokterService.addDetail(element);
+
             element.racikans.forEach(racikan => {
                 let counterRacikan = this.counterRacikan++;
                 racikan.counter = this.counter;
@@ -551,14 +554,13 @@ export class InputResepComponent implements OnInit {
         FormAddObat.counter = this.counter;
         if (FormAddObat.is_racikan) {
             FormAddObat.nama_obat = FormAddObat.nama_racikan;
-        }else{
+        } else {
             FormAddObat.id_metode_racikan = null;
             FormAddObat.metode_racikan = null;
         }
         this.resepDokterService.addDetail(FormAddObat);
         this.onResetFormObat();
     }
-    
 
     onResetFormObat(): void {
         this.FormAddObat.reset();
@@ -586,7 +588,7 @@ export class InputResepComponent implements OnInit {
 
     // ** Update Data Obat method
     onUpdateDataObat(FormAddObat: any): void {
-        this.resepDokterService.editDetail(this.currentIndex,FormAddObat);
+        this.resepDokterService.editDetail(this.currentIndex, FormAddObat);
         this.onResetFormObat()
         this.GridResepRacikan.refresh();
         this.FormAddObatState = "input";
@@ -620,30 +622,30 @@ export class InputResepComponent implements OnInit {
         };
     }
 
-    onEditData(){
+    onEditData() {
         let data = this.SelectedDataObat
         this.FormAddObat.setValue({
-             counter            :data.counter,
-             no_urut            :data.no_urut,
-             is_racikan         :data.is_racikan,
-             set_racikan_id     :data.set_racikan_id,
-             id_metode_racikan  :data.id_metode_racikan,
-             metode_racikan     :data.metode_racikan,
-             id_item            :data.id_item,
-             nama_obat          :data.nama_obat,
-             qty_resep          :data.qty_resep,
-             nama_satuan        :data.nama_satuan,
-             label              :data.label,
-             ket_label          :data.ket_label,
-             id_label_pemakaian_obat:data.id_label_pemakaian_obat,
-             label_pemakaian_obat:data.label_pemakaian_obat,
-             aturan             :data.aturan,
-             ket_aturan         :data.ket_aturan,
-             id_tambahan_aturan_pakai:data.id_tambahan_aturan_pakai,
-             label_tambahan_aturan_pakai_obat:data.label_tambahan_aturan_pakai_obat,
-             nama_racikan       :data.nama_racikan,
-             id_satuan_aturan_pakai : data.id_satuan_aturan_pakai,
-             satuan_aturan_pakai : data.satuan_aturan_pakai,
+            counter: data.counter,
+            no_urut: data.no_urut,
+            is_racikan: data.is_racikan,
+            set_racikan_id: data.set_racikan_id,
+            id_metode_racikan: data.id_metode_racikan,
+            metode_racikan: data.metode_racikan,
+            id_item: data.id_item,
+            nama_obat: data.nama_obat,
+            qty_resep: data.qty_resep,
+            nama_satuan: data.nama_satuan,
+            label: data.label,
+            ket_label: data.ket_label,
+            id_label_pemakaian_obat: data.id_label_pemakaian_obat,
+            label_pemakaian_obat: data.label_pemakaian_obat,
+            aturan: data.aturan,
+            ket_aturan: data.ket_aturan,
+            id_tambahan_aturan_pakai: data.id_tambahan_aturan_pakai,
+            label_tambahan_aturan_pakai_obat: data.label_tambahan_aturan_pakai_obat,
+            nama_racikan: data.nama_racikan,
+            id_satuan_aturan_pakai: data.id_satuan_aturan_pakai,
+            satuan_aturan_pakai: data.satuan_aturan_pakai,
         });
     }
 
@@ -674,11 +676,11 @@ export class InputResepComponent implements OnInit {
     get ket_label(): AbstractControl { return this.FormAddObat.get('ket_label'); }
     get id_label_pemakaian_obat(): AbstractControl { return this.FormAddObat.get('id_label_pemakaian_obat'); }
     get label_pemakaian_obat(): AbstractControl { return this.FormAddObat.get('label_pemakaian_obat'); }
-    
+
     get aturan(): AbstractControl { return this.FormAddObat.get('aturan'); }
     get ket_aturan(): AbstractControl { return this.FormAddObat.get('ket_aturan'); }
     get id_tambahan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('id_tambahan_aturan_pakai'); }
     get label_tambahan_aturan_pakai_obat(): AbstractControl { return this.FormAddObat.get('label_tambahan_aturan_pakai_obat'); }
     get nama_racikan(): AbstractControl { return this.FormAddObat.get('nama_racikan'); }
-    get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai')};
+    get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai') };
 }

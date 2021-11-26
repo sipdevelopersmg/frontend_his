@@ -5,6 +5,7 @@ import { SetupBukaKasirIrjaComponent } from "./pages/kasir-rawat-jalan/setup-buk
 import { SetupCroscekTutupKasirComponent } from "./pages/kasir-rawat-jalan/setup-croscek-tutup-kasir/setup-croscek-tutup-kasir.component";
 import { SetupSetoranKasirIrjaComponent } from "./pages/kasir-rawat-jalan/setup-setoran-kasir-irja/setup-setoran-kasir-irja.component";
 import { SetupTutupKasirComponent } from "./pages/kasir-rawat-jalan/setup-tutup-kasir/setup-tutup-kasir.component";
+import { PostingBillingComponent } from "./pages/posting-billing/posting-billing.component";
 import { SettingTarifBerlakuPoliComponent } from "./pages/setting-tarif/setting-tarif-berlaku-poli/setting-tarif-berlaku-poli.component";
 import { SettingTarifBerlakuComponent } from "./pages/setting-tarif/setting-tarif-berlaku/setting-tarif-berlaku.component";
 import { SetupBankPaymentComponent } from "./pages/setup-data/setup-bank-payment/setup-bank-payment.component";
@@ -68,6 +69,8 @@ const billingRoutes: Routes = [
             { path: "input-billing-pasien/:no_register/:key", component: InputBillingRawatInapComponent, data: { title: 'Input Billing Pasien Rawat Inap' } },
         ]
     },
+    { path: "posting-billing", component: PostingBillingComponent, data: { title: 'Posting Billing' } },
+
 ];
 
 @NgModule({

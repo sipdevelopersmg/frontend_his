@@ -4,7 +4,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TreeViewModule } from '@syncfusion/ej2-angular-navigations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { DatePickerModule, DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DatePickerModule, DateRangePickerModule, DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { ComboBoxModule, DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -146,7 +146,8 @@ import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-loo
         FormsModule,
         MatStepperModule,
         NgxMaterialTimepickerModule,
-        DateTimePickerModule
+        DateTimePickerModule,
+        DateRangePickerModule,
     ],
     exports: [
         AtmLabelComponent,
@@ -213,6 +214,7 @@ import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-loo
         NgxMaterialTimepickerModule,
         DateTimePickerModule,
         MolOffcanvasSingleFilterComponent,
+        DateRangePickerModule,
     ],
     providers: [
         EditService,

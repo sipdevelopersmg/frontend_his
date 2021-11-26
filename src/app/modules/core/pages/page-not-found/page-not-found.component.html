@@ -8,7 +8,7 @@
 
         <!-- Text Page Not Found -->
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-start">
-            <div class="mb-2">
+            <div class="mb-3">
                 <h1 class="font-roboto fw-bold text-biru-muda">
                     Oops...
                 </h1>
@@ -16,13 +16,27 @@
 
             <div class="mb-3">
                 <h5 class="font-cabin text-abu-tua">
-                    Halaman Tidak Ditemukan
+                    Halaman Tidak Ditemukan /
                 </h5>
+
+                <h5 class="font-cabin text-abu-tua mb-3">
+                    Anda Tidak Berkenan Membuka Halaman Ini
+                </h5>
+
+                <p class="font-cabin text-black">
+                    Mohon Hubungi Administrator Untuk Info Lebih Lanjut
+                </p>
             </div>
 
             <!-- Button Kembali -->
-            <atm-button-primary [IsButtonBlock]="false" [ButtonPrimaryCaption]="' Kembali'"
-                [ButtonPrimaryIcon]="'fa-undo-alt'" (onClickButtonPrimary)="onClickButtonKembali($event)">
+            <atm-button-primary *ngIf="navigationService.Restriction.value" [IsButtonBlock]="false"
+                [ButtonPrimaryCaption]="' Kembali'" [ButtonPrimaryIcon]="'fa-undo-alt'"
+                (onClickButtonPrimary)="onClickButtonKembali($event)">
+            </atm-button-primary>
+
+            <atm-button-primary *ngIf="!navigationService.Restriction.value" [IsButtonBlock]="false"
+                [ButtonPrimaryCaption]="' Kembali Ke Beranda'" [ButtonPrimaryIcon]="'fa-undo-alt'"
+                (onClickButtonPrimary)="onClickButtonKembaliBeranda($event)">
             </atm-button-primary>
         </div>
     </div>
