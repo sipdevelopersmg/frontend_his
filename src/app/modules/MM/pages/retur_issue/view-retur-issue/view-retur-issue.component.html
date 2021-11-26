@@ -26,16 +26,40 @@
             <div class="col-sm-5">
             </div>
             <div class="col-sm-4">
+                
+            </div>
+            <div class="col-sm-3">
                 <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
                     [value]="returIssueService.jumlah_item" formControlName="jumlah_item"
                     [inputFieldState]="'detail'" ></mol-input-numeric>
             </div>
-            <div class="col-sm-3">
-                <mol-input-numeric [label]="'Nominal'" [isFooter]="true"
-                    [value]="returIssueService.total_transaksi" formControlName="total_transaksi"
-                    [inputFieldState]="'detail'" ></mol-input-numeric>
-            </div>
         </div>
     </form>
+
+    <!-- Modal Keterangan Resep Canceled  -->
+    <ng-template #modalCanceled>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Canceled</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+                    <div class="col-sm-4">
+                        <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onCalceled()">Cancel Data</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
+        </div>
+    </ng-template>
 
 </org-card-layout>

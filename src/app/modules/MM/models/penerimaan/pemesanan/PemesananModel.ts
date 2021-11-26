@@ -28,7 +28,8 @@ export interface TrPemesananDetailInsert {
     /** @format double */
     qty_satuan_besar?: number | null;
     kode_satuan_besar?: string | null;
-
+    nama_satuan_besar?: string | null;
+    
     /** @format double */
     harga_satuan_besar?: number | null;
 

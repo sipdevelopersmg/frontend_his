@@ -66,7 +66,7 @@ export class PersetujuanMutasiService {
      * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS,req).pipe(
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_PERSTUJUAN_BY_PARAMS,req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
@@ -93,6 +93,10 @@ export class PersetujuanMutasiService {
         this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id).subscribe((result) => {
             this.dataDetail = result.data
         });
+    }
+
+    getDetail(id): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id);
     }
 
     addDataDetail(detail: TrPersetujuanMutasiDetailInsert) {
@@ -158,5 +162,31 @@ export class PersetujuanMutasiService {
         this.dataDetail = [] ;
         this.total_transaksi = 0 ;
         this.jumlah_item = 0 ; 
+    }
+
+    getSatuanDetail(id_item):any[]{
+        let index = this.dataDetail.map((item) => { return item.id_item }).indexOf(id_item);
+        return this.dataDetail[index].satuans;
+    }
+
+    validasiPersetujuan(Data): Observable<any>{
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT_PERSETUJUAN, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    Cancel(id:number,reason:string): Observable<any>{
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
+                mutasi_id : id,
+                reason_canceled:reason 
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse):any =>{
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 }

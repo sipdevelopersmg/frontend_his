@@ -7,16 +7,30 @@
                 <mol-datepicker-syncfusion [label]="'Tanggal Mutasi'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_mutasi">
                 </mol-datepicker-syncfusion>
+                <mol-input-text [label]="'PIC Pemberi'" formControlName="pic_pemberi_mutasi" [inputFieldState]="'input'"></mol-input-text>
+                <mol-input-text [label]="'PIC Penerima'" formControlName="pic_penerima_mutasi" [inputFieldState]="'input'"></mol-input-text>   
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <mol-input-text [label]="'Stockroom Pemberi'" formControlName="nama_stockroom_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
                 <mol-input-text [label]="'Stockroom Penerima'" formControlName="nama_stockroom_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Waktu Serah Terima'" [format]="'dd MMMM yyyy'"
+                    formControlName="time_serah_terima">
+                </mol-datepicker-syncfusion>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_mutasi"></mol-input-textarea>
             </div>
         </div>
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='persetujuanMutasiService.dataDetail$ | async'
-            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
-            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
-            (rowSelected)="handleSelectdRow($event)">
+        <ejs-grid #gridDetail [id]="'GridDeail'" 
+            [editSettings]='GridDataEditSettings' 
+            [dataSource]='dataSourceGrid | async'
+            [gridLines]="'Both'" 
+            [allowResizing]='true' 
+            (actionComplete)="handleActionCompleted($event)"
+            (toolbarClick)="onToolbarClick($event)" 
+            (load)="handleLoadGrid($event)"
+            [childGrid]="ChildGrid"
+            (rowSelected)="handleSelectdRow($event)"
+            (dataBound)="onDataBound()"
+        >
             <e-columns>
                 <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
@@ -47,13 +61,13 @@
                     editType='defaultEdit' textAlign="left" headerTextAlign="center" >
                 </e-column>
                 <!-- Persetujuan -->
-                <e-column [visible]="true" field='qty_satuan_besar_mutasi' [allowEditing]="true" headerText='Banyak'
+                <e-column [visible]="false" field='qty_satuan_besar_mutasi' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='kode_satuan_besar_mutasi' [allowEditing]="true" headerText='Satuan'
+                <e-column [visible]="false" field='kode_satuan_besar_mutasi' [allowEditing]="true" headerText='Satuan'
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='isi_mutasi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
+                <e-column [visible]="false" field='isi_mutasi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
                     textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='qty_mutasi' [allowEditing]="false" headerText='QTY'
@@ -75,7 +89,7 @@
             </div>
             <div class="col-sm-3">
                 <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="persetujuanMutasiService.jumlah_item" formControlName="jumlah_item"
+                    [value]="totalJumlahItem.value"
                     [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
             </div>
         </div>
@@ -126,4 +140,30 @@
         </div>
     </ng-template>
     
+    <!-- Modal Keterangan Resep Canceled  -->
+    <ng-template #modalCanceled>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Canceled</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+                    <div class="col-sm-4">
+                        <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onCalceled()">Cancel Data</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
+        </div>
+    </ng-template>
+
 </org-card-layout>

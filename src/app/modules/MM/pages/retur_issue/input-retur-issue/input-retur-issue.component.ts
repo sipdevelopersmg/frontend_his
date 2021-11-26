@@ -204,7 +204,8 @@ export class InputReturIssueComponent implements OnInit {
           kode_satuan_besar_retur_pemakaian_internal: $event.satuans[0].kode_satuan,
           isi_retur_pemakaian_internal: $event.satuans[0].isi,
           qty_retur_pemakaian_internal: $event.satuans[0].isi,
-          nominal_retur_pemakaian_internal: $event.hpp_average,
+          hpp_satuan:$event.hpp_average,
+          nominal_retur_pemakaian_internal: $event.hpp_average * $event.satuans[0].isi,
           satuan: $event.satuans,
       }
       this.returIssueService.addDataDetail(item);

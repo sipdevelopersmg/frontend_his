@@ -9,3 +9,4 @@ export const INSERT = `${environment.webApiMM}` +'TransPemesanan/Insert';
 export const VALIDASI = `${environment.webApiMM}` +'TransPemesanan/UpdateToValidated';
 export const CANCEL = `${environment.webApiMM}` +'TransPemesanan/UpdateToCanceled';
 export const CLOSE = `${environment.webApiMM}` +'TransPemesanan/UpdateToClosed';
+export const GET_LOOKUP_BARANG_PO = `${environment.webApiMM}` +'TransPemesanan/GetLookupBarangBelumPoByIdSupplier';

@@ -101,7 +101,7 @@ export class ResepComponent implements OnInit, AfterViewInit {
         this.data ={
             id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
             id_register:this.daftarPasienService.ActivePasien.value.id_register,
-            id_outlet:1,
+            id_outlet:13,
             id_person:this.daftarPasienService.ActivePasien.value.id_person,
             jenis_rawat:'J',
             nama_template:'',

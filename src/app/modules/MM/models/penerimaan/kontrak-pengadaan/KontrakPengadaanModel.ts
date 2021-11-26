@@ -29,7 +29,7 @@ export interface TrKontrakSpjbInsert {
 
     /** @format int32 */
     user_inputed?: number | null;
-    detailItem?: TrKontrakSpjbDetailItemInsert[] | null;
+    details?: TrKontrakSpjbDetailItemInsert[] | null;
 }
 
 /**

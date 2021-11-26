@@ -13,6 +13,7 @@ import { PemakaianInternalService } from '../../../services/issue/pemakaian-inte
 import { SetupStockroomService } from '../../../services/setup-data/setup-stockroom/setup-stock-room.service';
 import { Location } from '@angular/common'
 import * as GridLoockUpItem from './json/lookupitem.json'
+
 @Component({
   selector: 'app-input-issue',
   templateUrl: './input-issue.component.html',
@@ -27,8 +28,8 @@ export class InputIssueComponent implements OnInit {
 
   Detail: TrPemakaianInternalDetailInsert[] = [];
 
-  urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
-
+  url = MM.PEMAKAIAN_INTERNAL.TRANSPEMAKAIANINTERNAL.GET_ITEM_BY_STOCKROOM;
+  urlItem = this.url;
   TrPemakaianInternalDetailInsert: TrPemakaianInternalDetailInsert;
 
   ButtonNav: ButtonNavModel[] = [
@@ -89,15 +90,15 @@ export class InputIssueComponent implements OnInit {
 
   ngOnInit(): void {
       this.formKontrak = this.formBuilder.group({
-        nomor_pemakaian_internal: ["", Validators.required],
+        nomor_pemakaian_internal: ["", ],
         tanggal_pemakaian_internal: [null, Validators.required],
         id_stockroom: [0, Validators.required],
         keterangan_pemakaian_internal: ['', Validators.required],
-        time_serah_terima:[null, Validators.required],
-        pic_pemberi: ['', Validators.required],
-        pic_penerima: ['', Validators.required],
+        time_serah_terima:[null, ],
+        pic_pemberi: ['', ],
+        pic_penerima: ['', ],
         jumlah_item: [0, Validators.required],
-        total_transaksi: [0, Validators.required],
+        total_transaksi: [0, ],
       });
 
       this.satuanParams = {
@@ -203,7 +204,7 @@ export class InputIssueComponent implements OnInit {
           isi_pemakaian_internal: $event.satuans[0].isi,
           qty_pemakaian_internal: $event.satuans[0].isi,
         //   nominal_mutasi: $event.satuans[0].isi * $event.harga_beli_,
-          satuan: $event.satuans,
+          satuans: $event.satuans,
       }
       this.pemakaianInternalService.addDataDetail(item);
       this.selectLastRowdetail();
@@ -218,6 +219,10 @@ export class InputIssueComponent implements OnInit {
       }
   }
 
+  handleChangeStockroom(args){
+    this.urlItem = this.url+'/'+args.itemData.id_stockroom
+  }
+
   /** untuk identifikasi keyboard down pada grid */
   handleLoadGrid(args: any): void {
       document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
@@ -225,7 +230,7 @@ export class InputIssueComponent implements OnInit {
 
   handleSelectdRow(args: any): void {
       this.currentIndex = args.rowIndex;
-      this.datasatuan = args.data.satuan;
+      this.datasatuan = args.data.satuans;
       this.detailSelected = args.data
       this.satuanVal = args.data.kode_satuan_besar;
   }

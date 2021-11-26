@@ -2,7 +2,7 @@
     <form [formGroup]="formKontrak">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'No Pemesanan'" formControlName="nomor_pemesanan" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'No Pemesanan'"  formControlName="nomor_pemesanan" [inputFieldState]="inputFieldState"></mol-input-text>
                 
                 <mol-datepicker-syncfusion [label]="'Tgl Pemesanan'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_pemesanan">
@@ -71,16 +71,16 @@
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
                     editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="right" headerTextAlign="center">
+                    textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='qty_pesan' [allowEditing]="false" headerText='QTY'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="false" field='harga_satuan' [allowEditing]="false" headerText='Harga Satuan'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
@@ -139,7 +139,7 @@
             <div class="col-sm-3">
                 <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
                     [value]="pemesananService.jumlah_item_pesan" formControlName="jumlah_item_pesan"
-                    [inputFieldState]="'detail'" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
             </div>
         </div>
     </form>

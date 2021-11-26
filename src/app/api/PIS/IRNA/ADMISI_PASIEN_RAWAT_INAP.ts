@@ -14,4 +14,5 @@ export const POST_ADMISI_RAWAT_INAP_WITH_PENJAMIN = `${environment.webApiAdmisi}
 
 export const PUT_UPDATE_DIFFERENT_BED = `${environment.webApiAdmisi}` + "AdmisiIrna/UpdateDifferentBed";
 
-export const GET_PASIEN_BY_POLI = `${environment.webApiAdmisi}` + "AdmisiIrna/getPasienByPoli";
+export const GET_PASIEN_BY_POLI = `${environment.webApiAdmisi}` + "AdmisiIrna/AntrianPasienIRNA_GetAllByDynamicFilter_FARMASI";
+

@@ -1,5 +1,6 @@
 import { environment } from "src/environments/environment";
 
+export const GET_ALL_BY_PARMS = `${environment.webApiMM}` +'SetupGrupCoa/GetAllByParams';
 export const GET_ALL = `${environment.webApiMM}` +'SetupGrupCoa/GetAll';
 export const GET_BY_ID = `${environment.webApiMM}` +'SetupGrupCoa/GetAkunSetupGrupCoaById';
 export const INSERT = `${environment.webApiMM}` +'SetupGrupCoa/Insert';

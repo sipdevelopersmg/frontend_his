@@ -46,7 +46,7 @@
                     <button type="button" class="app-btn-master me-5 btn btn-sm btn-primary-outline" (click)="handelClickLihatresep()"><i class="fas fa-arrow-left"></i> Lihat Resep</button>
                     <button type="button" class="app-btn-master btn btn-sm btn-primary" (click)="handleClickSimpan()"><i class="fas fa-save"></i> Simpan Transaksi Obat</button>
                     <ejs-grid #GridDetailResep [dataSource]="DataSourceDetailResep"
-                        height="calc(100vh - 22rem)" gridLines="Both" rowHeight="30" [childGrid]="childGrid"
+                        height="calc(100vh - 23rem)" gridLines="Both" rowHeight="30" [childGrid]="childGrid"
                         (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                         [allowTextWrap]="true"
                         [textWrapSettings]="{ wrapMode: 'Both' }">
@@ -65,6 +65,16 @@
                             </e-column>
                         </e-columns>
                     </ejs-grid>
+                    <div class="row pe-2" >
+                        <div class="col-sm-5">
+                        </div>
+                        <div class="col-sm-7">
+                            <mol-input-numeric [label]="'Total Bayar Resep'" [isFooter]="true"
+                                formControlName="total_bayar_resep"
+                                [inputFieldState]="'detail'" [inputFieldState]="inputFieldState">
+                            </mol-input-numeric>
+                        </div>
+                    </div>
                 </span>
             </form>
         </div>

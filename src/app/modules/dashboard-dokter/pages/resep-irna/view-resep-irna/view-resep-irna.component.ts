@@ -31,7 +31,6 @@ export class ViewResepIrnaComponent implements OnInit {
     { Id: 'lanjutkan', Captions: 'Lanjutkan Resep', Icons1: 'fa-forward fa-sm' },
     { Id: 'ubah', Captions: 'Ubah Resep', Icons1: 'fa-edit fa-sm' },
     { Id: 'stop', Captions: 'Hentikan Resep', Icons1: 'fa-stop-circle fa-sm' },
-    { Id: 'pulang', Captions: 'Resep Pulang', Icons1: 'fa-home fa-sm' },
   ];
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;

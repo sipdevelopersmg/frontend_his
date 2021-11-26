@@ -1,0 +1,28 @@
+#basic-addon1 {
+    height: 32px;
+    padding-left: 12px;
+    width: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: 0;
+  }
+  
+  #DropdownObat > span {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  #NumericQty > span > input {
+    text-align: right;
+    padding-right: 5px;
+  }
+  
+  div.head {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  
+  .is-racikan{
+    background-color: #f3e6f3;
+  }
+  

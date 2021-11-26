@@ -76,7 +76,7 @@
             "format":"N2",
             "textAlign":"right",
             "headerTextAlign":"Center",
-            "visible": true
+            "visible": false
         },
         {
             "allowEditing": false,

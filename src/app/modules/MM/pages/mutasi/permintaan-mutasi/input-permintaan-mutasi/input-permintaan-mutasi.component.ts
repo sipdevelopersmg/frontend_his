@@ -30,7 +30,9 @@ export class InputPermintaanMutasiComponent implements OnInit {
 
   Detail: TrPermintaanMutasiDetailInsert[] = [];
 
-  urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
+
+  url = MM.MUTASI.PENGAJUAN_MUTASI.GET_ITEM_BY_PARAM;
+  urlItem = MM.MUTASI.PENGAJUAN_MUTASI.GET_ITEM_BY_PARAM;
 
   TrPermintaanMutasiDetailInsert: TrPermintaanMutasiDetailInsert;
 
@@ -190,6 +192,10 @@ export class InputPermintaanMutasiComponent implements OnInit {
           default:
               break;
       }
+  }
+
+  handleChangeStockroom(args){
+    this.urlItem = this.url+'/'+args.itemData.id_stockroom
   }
 
   heandleSelectedItem($event) {

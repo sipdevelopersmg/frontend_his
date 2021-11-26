@@ -15,8 +15,8 @@ import * as GridConfig from './json/grid.config.json'
 export class DaftarResepIrnaComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
-    { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
-    { Id: 'Edit', Captions: 'Lihat Detail', Icons1: 'fa-edit fa-sm' }
+    { Id: 'Add', Captions: 'Buat Resep Baru', Icons1: 'fa-plus fa-sm' },
+    { Id: 'pulang', Captions: 'Resep Pulang', Icons1: 'fa-home fa-sm' },
   ];
 
   GridDataToolbar = [
@@ -137,8 +137,8 @@ export class DaftarResepIrnaComponent implements OnInit {
         const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
         this.router.navigate(['Dokter/resep-irna/input-resep-irna', pemesanan_id, "GRAHCIS"]);
         break;
-      case 'Delete':
-        // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);
+      case 'pulang':
+        this.router.navigateByUrl('Dokter/resep-irna/pulang-resep-irna');
         break;
       default:
         break;

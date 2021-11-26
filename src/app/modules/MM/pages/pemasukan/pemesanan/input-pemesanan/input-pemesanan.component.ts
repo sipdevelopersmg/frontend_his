@@ -31,9 +31,10 @@ export class InputPemesananComponent implements OnInit {
   GridLookUpItem = GridLoockUpItem;
 
   Detail: TrPemesananDetailInsert[] = [];
-
+  //urlItem = null;
   urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
-  urlItem = MM.SETUP_DATA.SETUP_ITEM.GET_ALL_BY_PARMS;
+  lookupBarangPo = MM.PENERIMAAN.TRANSPEMESANAN.GET_LOOKUP_BARANG_PO; 
+  urlItem = this.lookupBarangPo;
 
   TrPemesananDetailInsert: TrPemesananDetailInsert;
 
@@ -209,33 +210,35 @@ export class InputPemesananComponent implements OnInit {
 
   heandleSelectedSupplier($event) {
       this.id_supplier.setValue($event.id_supplier);
+      this.urlItem = this.lookupBarangPo+'/'+$event.id_supplier;
   }
 
   heandleSelectedItem($event) {
       let item: TrPemesananDetailInsert = {
-          kontrak_id: null,
-          kontrak_detail_item_id: null,
-          set_harga_order_id: null,
-          set_harga_order_detail_id: null,
+          kontrak_id: $event.kontrak_id,
+          kontrak_detail_item_id: $event.kontrak_detail_item_id,
+          set_harga_order_id: $event.set_harga_order_id,
+          set_harga_order_detail_id: $event.set_harga_order_detail_id,
           no_urut: 0,
           id_item: $event.id_item,
           kode_item: $event.kode_item,
           nama_item: $event.nama_item,
           qty_satuan_besar: 1,
           kode_satuan_besar: $event.satuans[0].kode_satuan,
-          harga_satuan_besar: $event.harga_beli_terakhir,
+          nama_satuan_besar: $event.satuans[0].nama_satuan,
+          harga_satuan_besar: $event.harga_satuan,
           isi: $event.satuans[0].isi,
           qty_pesan: $event.satuans[0].isi,
-          harga_satuan: $event.harga_beli_terakhir,
+          harga_satuan: $event.harga_satuan,
           disc_prosentase_1: 0,
           disc_nominal_1: 0,
           disc_prosentase_2: 0,
           disc_nominal_2: 0,
-          harga_satuan_brutto: $event.harga_beli_terakhir,
+          harga_satuan_brutto: $event.harga_satuan,
           tax_prosentase: 0,
           tax_nominal: 0,
-          harga_satuan_netto: $event.harga_beli_terakhir,
-          sub_total_pesan: $event.satuans[0].isi * $event.harga_beli_terakhir,
+          harga_satuan_netto: $event.harga_satuan,
+          sub_total_pesan: $event.satuans[0].isi * $event.harga_satuan,
           satuan: $event.satuans,
       }
       this.pemesananService.addDataDetail(item);

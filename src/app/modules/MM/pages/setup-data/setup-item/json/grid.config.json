@@ -6,7 +6,8 @@
       "headerText":"Id Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -14,7 +15,8 @@
       "headerText":"Id Grup Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -22,7 +24,8 @@
       "headerText":"Kode Grup Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -30,7 +33,8 @@
       "headerText":"Grup Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": true
     },
     {
       "editType": "defaultEdit",
@@ -38,7 +42,8 @@
       "headerText":"Id Pabrik",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -46,7 +51,8 @@
       "headerText":"Kode Pabrik",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -54,7 +60,8 @@
       "headerText":"Nama Pabrik",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -62,7 +69,8 @@
       "headerText":"Alamat Pabrik",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -70,7 +78,8 @@
       "headerText":"Id Supplier",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -78,7 +87,8 @@
       "headerText":"Kode Supplier",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -86,7 +96,8 @@
       "headerText":"Nama Supplier",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -94,7 +105,8 @@
       "headerText":"Alamat Supplier",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -102,7 +114,8 @@
       "headerText":"Kode Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": true
     },
     {
       "editType": "defaultEdit",
@@ -110,7 +123,8 @@
       "headerText":"Barcode",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": true
     },
     {
       "editType": "defaultEdit",
@@ -118,7 +132,8 @@
       "headerText":"Nama Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": true
     },
     {
       "editType": "defaultEdit",
@@ -126,7 +141,8 @@
       "headerText":"Kode Satuan",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -134,7 +150,8 @@
       "headerText":"Nama Satuan",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": true
     },
     {
       "editType": "defaultEdit",
@@ -142,7 +159,8 @@
       "headerText":"Id Temperatur Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -150,7 +168,8 @@
       "headerText":"Temperatur Item",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -158,7 +177,8 @@
       "headerText":"Batas Maksimal Pesan",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -166,7 +186,8 @@
       "headerText":"Batas Maksimal Pakai",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -174,7 +195,8 @@
       "headerText":"Batas Maksimal Mutasi",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -182,7 +204,8 @@
       "headerText":"Batas Maksimal Jual",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -190,7 +213,8 @@
       "headerText":"Batas Stok Kritis",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -198,7 +222,8 @@
       "headerText":"Prosentase Stok Kritis",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -206,7 +231,8 @@
       "headerText":"Harga Beli Terakhir",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -214,7 +240,8 @@
       "headerText":"Hpp Average",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -222,7 +249,8 @@
       "headerText":"Prosentase Default Profit",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -230,7 +258,8 @@
       "headerText":"Is Ppn",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -238,7 +267,8 @@
       "headerText":"Is Active",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -246,7 +276,8 @@
       "headerText":"User Created",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -254,7 +285,8 @@
       "headerText":"Time Created",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -262,7 +294,8 @@
       "headerText":"User Deactived",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -270,7 +303,8 @@
       "headerText":"Time Deactived",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     },
     {
       "editType": "defaultEdit",
@@ -278,7 +312,8 @@
       "headerText":"Satuans",
       "type":"",
       "format":"",
-      "textAlign":"left"
+      "textAlign":"left",
+      "visible": false
     }
   ]  
 }

@@ -13,8 +13,13 @@ import { RiwayatPemeriksaanLabComponent } from "./pages/laboratorium/riwayat-pem
 import { InputOrderBaruRadComponent } from "./pages/radiologi/input-order-baru/input-order-baru.component";
 import { RadiologiComponent } from "./pages/radiologi/radiologi.component";
 import { RiwayatPemeriksaanRadComponent } from "./pages/radiologi/riwayat-pemeriksaan/riwayat-pemeriksaan.component";
+import { DaftarResepIrdaComponent } from "./pages/resep-irda/daftar-resep-irda/daftar-resep-irda.component";
+import { InputResepIrdaComponent } from "./pages/resep-irda/input-resep-irda/input-resep-irda.component";
+import { PulangResepIrdaComponent } from "./pages/resep-irda/pulang-resep-irda/pulang-resep-irda.component";
+import { ViewResepIrdaComponent } from "./pages/resep-irda/view-resep-irda/view-resep-irda.component";
 import { DaftarResepIrnaComponent } from "./pages/resep-irna/daftar-resep-irna/daftar-resep-irna.component";
 import { InputResepIrnaComponent } from "./pages/resep-irna/input-resep-irna/input-resep-irna.component";
+import { PulangResepIrnaComponent } from "./pages/resep-irna/pulang-resep-irna/pulang-resep-irna.component";
 import { ViewResepIrnaComponent } from "./pages/resep-irna/view-resep-irna/view-resep-irna.component";
 import { ResepComponent } from "./pages/resep/resep.component";
 import { SuratPerintahMondokComponent } from "./pages/surat-perintah-mondok/surat-perintah-mondok.component";
@@ -53,6 +58,17 @@ const dashboarDokterRoutes: Routes = [
                     { path: "input-resep-irna", component: InputResepIrnaComponent, data: { title: "Form Resep Rawat Inap" } },
                     { path: "view-resep-irna/:id/:key", component: ViewResepIrnaComponent, data: { title: "Detail Resep Rawat Inap" } },
                     { path: "ubah-resep-irna/:id/:key", component: InputResepIrnaComponent, data: { title: "Ubah Resep Rawat Inap" } },
+                    { path: "pulang-resep-irna", component: PulangResepIrnaComponent, data: { title: "Form Resep Rawat Inap" } },
+                ]
+            },
+            {
+                path: "resep-irda", component: null, data: { title: "Resep Irda" },
+                children: [
+                    { path: "daftar-resep-irda", component: DaftarResepIrdaComponent, data: { title: "Daftar Resep Active" } },
+                    { path: "input-resep-irda", component: InputResepIrdaComponent, data: { title: "Form Resep Rawat Inap" } },
+                    { path: "view-resep-irda/:id/:key", component: ViewResepIrdaComponent, data: { title: "Detail Resep Rawat Inap" } },
+                    { path: "ubah-resep-irda/:id/:key", component: InputResepIrdaComponent, data: { title: "Ubah Resep Rawat Inap" } },
+                    { path: "pulang-resep-irda", component: PulangResepIrdaComponent, data: { title: "Form Resep Rawat Inap" } },
                 ]
             },
             {

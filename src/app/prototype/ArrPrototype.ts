@@ -21,8 +21,13 @@ Array.prototype.sum = function(prop){
 }
 
 /** menyelipkan data di array index yg sudah di tentukan */
-Array.prototype.insertToIndex = function ( index, item ) {
-    this.splice( index, 0, item );
+Array.prototype.insertToIndex = function ( index ) {
+    // this.splice( index, 0, item );
+    index = Math.min(index, this.length);
+    arguments.length > 1
+        && this.splice.apply(this, [index, 0].concat([].pop.call(arguments)))
+        && this.insertToIndex.apply(this, arguments);
+    return this;
 };
 
 /** mengurutkan data yang sudah di tentukan */

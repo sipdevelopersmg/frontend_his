@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { PHARMACY } from 'src/app/api/PHARMACY';
+import { BAWA_PULANG } from 'src/app/api/PHARMACY/RESEP-DOKTER/RESEP_DOKTER_IRNA';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -15,7 +16,7 @@ import { DaftarPasienService } from '../daftar-pasien/daftar-pasien.service';
 export class ResepDokterService {
 
     private API = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA;
-
+    private API_PULANG_IRNA = BAWA_PULANG
     public dataHistoryResep = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<TrResepDokterIrjaDetailInsert[]>([]);
@@ -163,6 +164,44 @@ export class ResepDokterService {
         Data.jumlah_item = this.jumlah_item;
         // console.log(Data);
         return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA+'/'+is_simpan_template+'/'+is_simpan_racikan, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+
+    Pulang(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
+        let id_item = 0 ;
+        let urut = 0 ;
+        this.dataDetail.map((e,i)=>{
+            e.no_urut = i+1;
+            e.racikans = [];
+            return e;
+        });
+
+        this.dataSourceChildGrid.value.forEach((item)=>{
+            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
+            
+            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
+            id_item =this.dataDetail[index].id_item;
+            urut++
+            item.no_urut = urut
+
+            this.dataDetail[index].racikans.push(item);
+        })
+
+        Data.details = this.dataDetail;
+        Data.jumlah_item = this.jumlah_item;
+        // console.log(Data);
+
+        let param = {
+            id_register : Data.id_register,
+            resep_baru : Data
+        }
+
+        return this.httpOperationService.defaultPutRequest(this.API_PULANG_IRNA+'/'+is_simpan_racikan, param)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

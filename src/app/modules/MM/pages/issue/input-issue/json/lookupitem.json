@@ -27,7 +27,18 @@
             "headerText": "Barcode",
             "type": "string",
             "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_on_hand",
+            "headerText": "Sisa Stok",
+            "textAlign": "Left",
+            "type": "string",
+            "visible": true
         }
+        
     ],
     "filter": [
         {

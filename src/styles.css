@@ -252,6 +252,21 @@ body {
   color: white !important;
 }
 
+.e-validation-background{
+  background-color: #9bd6f1 !important;
+  color: white !important;
+}
+
+.e-canceled-background{
+  background-color: #F6C1CC !important;
+  color: white !important;
+}
+
+.e-closed-background{
+  background-color: #F6EBC1 !important;
+  color: white !important;
+}
+
 .statustemp.e-activecolor {
   color: white !important;
   background-color: var(--biru-muda) !important;

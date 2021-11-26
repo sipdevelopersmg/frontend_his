@@ -30,6 +30,7 @@ export class ResepDokterIrnaService {
     get dataDetailRacikan(): TrResepDokterIrjaDetailRacikanInsert[] {
         return this._dataDetailRacikan.getValue();
     }
+    
     set dataDetailRacikan(val: TrResepDokterIrjaDetailRacikanInsert[]) {
         this._dataDetailRacikan.next(val);
     }
@@ -158,7 +159,10 @@ export class ResepDokterIrnaService {
 
     saveResep(){
         console.log('parent',this.dataDetail)
-        console.log('child',this.dataSourceChildGrid.value)
+        this.dataSourceChildGrid.subscribe((res)=>{
+            console.log(res);
+        })
+        // console.log('child',this.dataSourceChildGrid.value)
     }
 
     Insert(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
@@ -169,7 +173,7 @@ export class ResepDokterIrnaService {
             e.racikans = [];
             return e;
         });
-        console.log(this.dataSourceChildGrid);
+        console.log(this.dataSourceChildGrid.value);
         this.dataSourceChildGrid.value.forEach((item)=>{
             let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
             
