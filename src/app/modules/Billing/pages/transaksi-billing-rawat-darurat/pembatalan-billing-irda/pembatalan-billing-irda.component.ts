@@ -14,6 +14,8 @@ export class PembatalanBillingIrdaComponent implements OnInit {
 
     @Input('InformasiPasien') InformasiPasien: IInformasiPasienModel;
 
+    @Input('InformasiReproses') InformasiReproses: any;
+
     @Input('FormPembatalanState') FormPembatalanState: string;
 
     FormPembatalan: FormGroup;
@@ -49,6 +51,12 @@ export class PembatalanBillingIrdaComponent implements OnInit {
             case 'Batal_Pulang':
                 this.ModalPembatalanTitle = "Pembatalan Pasien Pulang";
                 break;
+            case 'Reproses':
+                this.ModalPembatalanTitle = "Alasan Reproses";
+                break;
+            case 'Batal_Payment':
+                this.ModalPembatalanTitle = "Pembatalan Pelunasan Pasien";
+                break;
             default:
                 break;
         }
@@ -57,7 +65,20 @@ export class PembatalanBillingIrdaComponent implements OnInit {
     }
 
     handleSubmitModalPembatalanPulang(FormPembatalan: any): void {
-        this.onSendFormPembatalan.emit(FormPembatalan);
+        switch (this.FormPembatalanState) {
+            case 'Batal_Pulang':
+                this.onSendFormPembatalan.emit(FormPembatalan);
+                break;
+            case 'Reproses':
+                this.InformasiReproses.reason_reproses = FormPembatalan.reason_canceled;
+                this.onSendFormPembatalan.emit(this.InformasiReproses);
+                break;
+            case 'Batal_Payment':
+                this.onSendFormPembatalan.emit(FormPembatalan);
+                break;
+            default:
+                break;
+        }
     }
 
     handleClosePembatalan(): void {

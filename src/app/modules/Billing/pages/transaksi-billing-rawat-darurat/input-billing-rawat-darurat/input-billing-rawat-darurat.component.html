@@ -964,7 +964,8 @@
     <app-info-kunjungan-irda #InfoKunjungan [InformasiPasien]="InformasiPasien"></app-info-kunjungan-irda>
 
     <app-pembatalan-billing-irda #PembatalanBilling [InformasiPasien]="InformasiPasien"
-        [FormPembatalanState]="FormPembatalanState" (onSendFormPembatalan)="onSendPembatalan($event)">
+        [InformasiReproses]="InformasiReproses" [FormPembatalanState]="FormPembatalanState"
+        (onSendFormPembatalan)="onSendPembatalan($event)">
     </app-pembatalan-billing-irda>
 
 </org-card-layout>

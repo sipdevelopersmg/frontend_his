@@ -6,7 +6,8 @@
                 <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'kode_supplier'"
                     [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
                     [columns]="GridLookUpSupplier.columns" [filter-lookup]="GridLookUpSupplier.filter"
-                    [label]="'Supplier'" [modal-title]="'Data Supplier'"></org-input-look-up-kode>
+                    [label]="'Supplier'" [modal-title]="'Data Supplier'">
+                </org-input-look-up-kode>
 
                 <mol-input-text [label]="'No SPBBJ'" formControlName="nomor_kontrak_spjb"></mol-input-text>
 
@@ -96,8 +97,9 @@
             </div>
             <div class="col-sm-4">
                 <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
-                    [value]="inputKontrakPengadaanService.total" [id]="'total_transaksi_kontrak'" formControlName="total_transaksi_kontrak"
-                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+                    [value]="inputKontrakPengadaanService.total" [id]="'total_transaksi_kontrak'"
+                    formControlName="total_transaksi_kontrak" [inputFieldState]="'detail'" [inputFieldState]="'detail'">
+                </mol-input-numeric>
             </div>
         </div>
     </form>
