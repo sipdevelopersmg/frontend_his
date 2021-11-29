@@ -5,6 +5,10 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { GridComponent, EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { SetupDebiturService } from 'src/app/modules/PIS/services/setup-data/setup-debitur/setup-debitur.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import Swal from 'sweetalert2';
+import { PostingBillingService } from '../../services/posting-billing/posting-billing.service';
 
 @Component({
     selector: 'app-posting-billing',
@@ -35,9 +39,15 @@ export class PostingBillingComponent implements OnInit {
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridDataToolbar: any[];
 
+    FormPembatalan: FormGroup;
+
+    FormPembatalanPostingInfo: any[];
+
     constructor(
         private formBuilder: FormBuilder,
+        private utilityService: UtilityService,
         private setupDebiturService: SetupDebiturService,
+        public postingBillingService: PostingBillingService,
     ) { }
 
     ngOnInit(): void {
@@ -59,49 +69,20 @@ export class PostingBillingComponent implements OnInit {
 
         this.DropdownDebiturFields = { text: 'nama_debitur', value: 'id_debitur' };
 
-        this.GridDatasource = [
-            {
-                no_register: 'A1',
-                nama_pasien: 'TES 1',
-                tgl_pulang: new Date(),
-                tipe: 'IRDA',
-                no_invoice: '',
-                debitur: 'TANGGUNGAN PRIBADI',
-                total_biaya: 50000,
-                charge_amount: 50000,
-                restitusi: 0,
-                tunai: 50000,
-                deposit: 0,
-                doc_disc: 0,
-                claim_amount: 0,
-                subsidi: 0,
-                status_billing: 'POSTED',
-            },
-            {
-                no_register: 'A2',
-                nama_pasien: 'TES 2',
-                tgl_pulang: new Date(),
-                tipe: 'IRDA',
-                no_invoice: '',
-                debitur: 'PT. PERTAMINA',
-                total_biaya: 150000,
-                charge_amount: 150000,
-                restitusi: 0,
-                tunai: 0,
-                deposit: 0,
-                doc_disc: 0,
-                claim_amount: 150000,
-                subsidi: 0,
-                status_billing: 'OPEN',
-            },
-        ]
+        this.postingBillingService.onGetAllDataForPostingBilling([], "D");
+
+        this.FormPembatalan = this.formBuilder.group({
+            reason_canceled: ["", []],
+        });
     }
 
     handleClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
             case 'Posting':
+                this.BillingState === 'IRDA' ? this.handleSavePostingBillingIRDA() : this.handleSavePostingBillingIRNA();
                 break;
             case 'Batal_Posting':
+                this.handleOpenPembatalan();
                 break;
             default:
                 break;
@@ -121,22 +102,170 @@ export class PostingBillingComponent implements OnInit {
     onGetAllDebitur(): void {
         this.setupDebiturService.onGetAll()
             .subscribe((result) => {
-                console.log(result);
+                this.DropdownDebiturDatasource = result.data;
             });
     }
 
-    handleSelectedRow(args: any): void {
-        let selected_data = this.GridData.getSelectedRecords();
+    handleChangeTipePasien(args: any): void {
+        let itemData = args.itemData;
 
-        console.log(selected_data);
+        this.BillingState = itemData.text;
+    }
+
+    handlePencarianDataPostingBilling(FormPostingBilling: any): void {
+        let parameter: PostRequestByDynamicFiterModel[] = [];
+
+        if (FormPostingBilling.tanggal) {
+            parameter.push({
+                columnName: 'tp.time_pulang::date',
+                filter: 'between',
+                searchText: this.utilityService.onFormatDate(FormPostingBilling.tanggal[0]),
+                searchText2: this.utilityService.onFormatDate(FormPostingBilling.tanggal[1])
+            });
+        };
+
+        if (FormPostingBilling.id_debitur) {
+            parameter.push({
+                columnName: 'tp.id_debitur',
+                filter: 'equal',
+                searchText: FormPostingBilling.id_debitur.toString(),
+                searchText2: ""
+            });
+        };
+
+        this.postingBillingService.onGetAllDataForPostingBilling(parameter, FormPostingBilling.tipe_pasien);
+    }
+
+    handleSelectedRow(args: any): void {
+        // let selected_data = this.GridData.getSelectedRecords();
+
+        // console.log(selected_data);
     }
 
     handleRowDataBound(args: any): void {
-        let status_billing = args.data.status_billing;
+        let status = args.data.status;
 
-        if (status_billing == "POSTED") {
+        if (status == "POSTED") {
             args.row.classList.add('e-canceled-background');
         }
+    }
+
+    // ** IRDA
+    handleSavePostingBillingIRDA(): void {
+        let selected_data = [];
+
+        this.GridData.getSelectedRecords().forEach((item) => {
+            selected_data.push({
+                id_register: item['id_register'],
+                id_debitur: item['id_debitur'],
+            })
+        });
+
+        let parameter = {
+            'items': selected_data,
+            'tgl_jatuh_tempo': this.utilityService.onFormatDate(this.tgl_jatuh_tempo.value)
+        };
+
+        this.postingBillingService.onSavePostingBillingIRDA(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', `${selected_data.length} Data Berhasil Diposting`)
+                        .then(() => {
+                            this.postingBillingService.onGetAllDataForPostingBilling([], this.tipe_pasien.value);
+                            this.GridData.refresh();
+                        });
+                }
+            });
+
+    }
+
+    handleBatalPostingBillingIRDA(): void {
+        let selected_data = [];
+
+        this.GridData.getSelectedRecords().forEach((item) => {
+            selected_data.push({
+                id_register: item['id_register']
+            })
+        });
+
+        let parameter = {
+            'items': selected_data,
+            'reason_canceled': this.reason_canceled.value
+        };
+
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Data Posting Akan Dibatalkan",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, Saya Yakin',
+            focusCancel: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.postingBillingService.onBatalPostingBillingIRDA(parameter)
+                    .subscribe((result) => {
+                        if (result.responseResult) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Posting Berhasil Dibatalkan')
+                                .then(() => {
+                                    this.handleClosePembatalan();
+                                    this.postingBillingService.onGetAllDataForPostingBilling([], this.tipe_pasien.value);
+                                    this.GridData.refresh();
+                                });
+                        }
+                    });
+            }
+        });
+    }
+
+    // ** IRNA
+    handleSavePostingBillingIRNA(): void {
+        let selected_data = [];
+
+        this.GridData.getSelectedRecords().forEach((item) => {
+            selected_data.push({
+                id_register: item['id_register'],
+                id_debitur: item['id_debitur'],
+            })
+        });
+
+        let parameter = {
+            'items': selected_data,
+            'tgl_jatuh_tempo': this.utilityService.onFormatDate(this.tgl_jatuh_tempo.value)
+        };
+
+        console.log(parameter);
+    }
+
+    handleBatalPostingBillingIRNA(): void {
+
+    }
+
+    // ** PEMBATALAN
+    handleOpenPembatalan(): void {
+        let btnModalPembatalan = document.getElementById('btnModalPembatalan') as HTMLElement;
+        btnModalPembatalan.click();
+    }
+
+    handleSubmitModalPembatalanPosting(FormPembatalan: any): void {
+        switch (this.BillingState) {
+            case 'IRDA':
+                this.handleBatalPostingBillingIRDA();
+                break;
+            case 'IRNA':
+                this.handleBatalPostingBillingIRNA();
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleClosePembatalan(): void {
+        let btnClosePembatalan = document.getElementById('btnClosePembatalan') as HTMLElement;
+        btnClosePembatalan.click();
+
+        this.reason_canceled.setValue("");
     }
 
     get tanggal(): AbstractControl { return this.FormPostingBilling.get('tanggal'); }
@@ -144,4 +273,6 @@ export class PostingBillingComponent implements OnInit {
     get id_debitur(): AbstractControl { return this.FormPostingBilling.get('id_debitur'); }
     get debitur(): AbstractControl { return this.FormPostingBilling.get('debitur'); }
     get tgl_jatuh_tempo(): AbstractControl { return this.FormPostingBilling.get('tgl_jatuh_tempo'); }
+
+    get reason_canceled(): AbstractControl { return this.FormPembatalan.get("reason_canceled"); }
 }
