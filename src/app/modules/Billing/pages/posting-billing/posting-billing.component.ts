@@ -135,7 +135,7 @@ export class PostingBillingComponent implements OnInit {
         let status_billing = args.data.status_billing;
 
         if (status_billing == "POSTED") {
-            args.row.classList.add('e-activecolor-background');
+            args.row.classList.add('e-canceled-background');
         }
     }
 

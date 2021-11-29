@@ -39,7 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
                 if (data.title !== 'Sign In Account') {
                     const userData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
-                    this.authenticationService.autoLogout(userData.timeOut * 60 * 1000);
+                    // ** Uncomment untuk Auto Logout per Role
+                    // this.authenticationService.autoLogout(userData.timeOut * 60 * 1000);
 
                     // ** Uncomment untuk Pembatasan Menu per Role
                     // this.handleMenuResctriction(this.router.url);

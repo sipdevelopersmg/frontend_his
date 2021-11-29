@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild, Renderer2
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as GridLoockUpSupplier from "./json/lookupsupplier.json";
 import * as GridLoockUpItem from "./json/lookupitem.json";
@@ -18,12 +17,13 @@ import { combineLatest, Subscription } from 'rxjs';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
 import { Location } from '@angular/common'
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 
 @Component({
     selector: 'app-input-kontrak-pengadaan',
     templateUrl: './input-kontrak-pengadaan.component.html',
     styleUrls: ['./input-kontrak-pengadaan.component.css'],
-
 })
 
 export class InputKontrakPengadaanComponent implements OnInit {
@@ -80,21 +80,20 @@ export class InputKontrakPengadaanComponent implements OnInit {
     detailSelected: TrKontrakSpjbDetailItemInsert;
     globalListenFunc: Function;
 
-
     TglExpiredParams = { params: { min: new Date() } };
-    utilityService: any;
 
-    id_kontrak_from_list:number;
+    id_kontrak_from_list: number;
 
     constructor(
-        private modalService: BsModalService,
-        private formBuilder: FormBuilder,
-        public inputKontrakPengadaanService: InputKontrakPengadaanService,
-        private changeDetection: ChangeDetectorRef,
-        private renderer: Renderer2,
         private location: Location,
+        private renderer: Renderer2,
+        private formBuilder: FormBuilder,
+        private modalService: BsModalService,
+        private activatedRoute: ActivatedRoute,
+        private utilityService: UtilityService,
+        private changeDetection: ChangeDetectorRef,
         private encryptionService: EncryptionService,
-        private activatedRoute: ActivatedRoute
+        public inputKontrakPengadaanService: InputKontrakPengadaanService,
     ) { }
 
     ngOnInit(): void {
@@ -110,7 +109,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
             keterangan: ["", Validators.required],
             total_transaksi_kontrak: [0, Validators.required],
             jumlah_item_kontrak: [0, Validators.required],
-            user_inputed: [1,[]],
+            user_inputed: [1, []],
         });
 
         this.satuanParams = {
@@ -148,34 +147,37 @@ export class InputKontrakPengadaanComponent implements OnInit {
             { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
             { text: '| [*]=Ubah Banyak | [/]=Ganti Harga | [-]=Sub Total | [+]=Satuan |', }
         ];
-        
-        this.ResetFrom()
     }
 
     ngAfterViewInit(): void {
-        let kontrak_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-        console.log(kontrak_id);
-        this.onLoadDetailData(kontrak_id);
+        if (Object.keys(this.activatedRoute.snapshot.params).length > 0) {
+            let kontrak_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            this.onLoadDetailData(kontrak_id);
+        }
+
+        setTimeout(() => {
+            this.ResetFrom();
+        }, 1);
     }
 
-    onLoadDetailData(kontrak_id){
-        this.inputKontrakPengadaanService.onGetById(kontrak_id).subscribe((result)=>{
+    onLoadDetailData(kontrak_id) {
+        this.inputKontrakPengadaanService.onGetById(kontrak_id).subscribe((result) => {
             this.formKontrak.setValue({
-                id_supplier         :result.data.id_supplier,
-                nomor_kontrak_spjb  :result.data.nomor_kontrak_spjb,
-                nomor_kontrak       :result.data.nomor_kontrak,
-                tanggal_ttd_kontrak :result.data.tanggal_ttd_kontrak,
-                tanggal_berlaku_kontrak:result.data.tanggal_berlaku_kontrak,
-                tanggal_berakhir_kontrak:result.data.tanggal_berakhir_kontrak,
-                judul_kontrak       :result.data.judul_kontrak,
-                tahun_anggaran      :result.data.tahun_anggaran,
-                keterangan          :result.data.keterangan,
-                total_transaksi_kontrak:result.data.total_transaksi_kontrak,
-                jumlah_item_kontrak :result.data.jumlah_item_kontrak,
-                user_inputed :1,
+                id_supplier: result.data.id_supplier,
+                nomor_kontrak_spjb: result.data.nomor_kontrak_spjb,
+                nomor_kontrak: result.data.nomor_kontrak,
+                tanggal_ttd_kontrak: result.data.tanggal_ttd_kontrak,
+                tanggal_berlaku_kontrak: result.data.tanggal_berlaku_kontrak,
+                tanggal_berakhir_kontrak: result.data.tanggal_berakhir_kontrak,
+                judul_kontrak: result.data.judul_kontrak,
+                tahun_anggaran: result.data.tahun_anggaran,
+                keterangan: result.data.keterangan,
+                total_transaksi_kontrak: result.data.total_transaksi_kontrak,
+                jumlah_item_kontrak: result.data.jumlah_item_kontrak,
+                user_inputed: 1,
             })
         });
-        
+
     }
 
     onClickButtonNav(ButtonId: string): void {
@@ -325,7 +327,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
                 this.gridDetail.selectedRowIndex = this.currentIndex;
-                this.gridDetail.selectRows([this.currentIndex]); 
+                this.gridDetail.selectRows([this.currentIndex]);
                 this.unsubscribe();
             })
         );
@@ -358,7 +360,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
                 this.gridDetail.selectedRowIndex = this.currentIndex;
-                this.gridDetail.selectRows([this.currentIndex]); 
+                this.gridDetail.selectRows([this.currentIndex]);
                 this.unsubscribe();
             })
         );
@@ -390,7 +392,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
             this.modalService.onHidden.subscribe((reason: string | any) => {
                 console.log(reason, 'subTotal hidden')
                 this.gridDetail.selectedRowIndex = this.currentIndex;
-                this.gridDetail.selectRows([this.currentIndex]); 
+                this.gridDetail.selectRows([this.currentIndex]);
                 this.unsubscribe();
             })
         );
@@ -422,7 +424,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
         this.subscriptions.push(
             this.modalService.onHidden.subscribe((reason: string | any) => {
                 this.gridDetail.selectedRowIndex = this.currentIndex;
-                this.gridDetail.selectRows([this.currentIndex]); 
+                this.gridDetail.selectRows([this.currentIndex]);
                 this.unsubscribe();
             })
         );
@@ -450,17 +452,17 @@ export class InputKontrakPengadaanComponent implements OnInit {
         }, 150)
     }
 
-    onSave(){
+    onSave() {
         if (this.formKontrak.valid) {
             this.inputKontrakPengadaanService.Insert(this.formKontrak.value)
-            .subscribe((result) => {
-                console.log(result);
-                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-                .then(() => {
-                    this.ResetFrom();
+                .subscribe((result) => {
+                    console.log(result);
+                    this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                        .then(() => {
+                            this.ResetFrom();
+                        });
                 });
-            });
-        }else{
+        } else {
             alert('isi semua data');
         }
     }

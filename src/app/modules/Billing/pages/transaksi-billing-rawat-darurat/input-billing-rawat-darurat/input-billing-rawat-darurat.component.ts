@@ -199,12 +199,12 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
 
     @ViewChild('InfoKunjungan') InfoKunjungan: InfoKunjunganIrdaComponent;
 
+    InformasiReproses: any;
+
     constructor(
         private formBuilder: FormBuilder,
-        private bsModalService: BsModalService,
         private activatedRoute: ActivatedRoute,
         private utilityService: UtilityService,
-        private navigationService: NavigationService,
         private encryptionService: EncryptionService,
         private transBillingService: TransBillingService,
         private setupPaymentMethodService: SetupPaymentMethodService,
@@ -315,14 +315,19 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
             case 'Create_Invoice':
                 this.handleOpenModalPembayaran("Invoice");
                 break;
+            case 'Batal_Payment':
+                this.PembatalanBilling.handleOpenPembatalan();
+                this.FormPembatalanState = "Batal_Payment";
+                break;
             case 'Pulang':
                 this.handleSavePulang();
                 break;
             case 'Reproses':
-                this.handleSaveReproses();
+                this.onFillFormForSaveReproses();
                 break;
             case 'Batal_Pulang':
                 this.PembatalanBilling.handleOpenPembatalan();
+                this.FormPembatalanState = "Batal_Pulang";
                 break;
             case 'Info_Kunjungan':
                 this.InfoKunjungan.handleOpenInfoKunjungan();
@@ -418,9 +423,9 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
                 if (result.data.informasi_pasien.status_billing === "CLOSED" && is_paid) {
                     this.ButtonNav = [
                         { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
-                        // { Id: 'Create_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: '[F5] Pelunasan' },
+                        { Id: 'Batal_Payment', Icons1: 'fa-file-invoice fa-sm', Icons2: 'fa-ban fa-sm', StackIcon: true, Captions: 'Batal Payment' },
                         { Id: 'Batal_Pulang', Icons1: 'fa-home fa-sm', Icons2: 'fa-ban fa-sm', StackIcon: true, Captions: 'Batal Pulang' },
-                        { Id: 'Reproses', Icons1: 'fa-recycle fa-sm', Captions: 'Reproses' },
+                        // { Id: 'Reproses', Icons1: 'fa-recycle fa-sm', Captions: 'Reproses' },
                         { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
                         { Id: 'Info_Kunjungan', Icons1: 'fa-info fa-sm', Captions: 'Info Kunjungan' },
                     ];
@@ -1708,6 +1713,12 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
             case 'Batal_Pulang':
                 this.handleBatalPulang(FormPembatalan);
                 break;
+            case 'Reproses':
+                this.handleSaveReproses(FormPembatalan);
+                break;
+            case 'Batal_Payment':
+                this.handleBatalPayment(FormPembatalan);
+                break;
             default:
                 break;
         }
@@ -1988,7 +1999,34 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     }
 
     handleBatalPayment(data: any): void {
-        console.log(data);
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Payment Billing Rawat Darurat Akan Dibatalkan",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, Saya Yakin',
+            focusCancel: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.transBillingRawatDaruratService.onBatalPelunasan(data.id_register, data.reason_canceled)
+                    .subscribe((result) => {
+                        if (result.responseResult) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Payment Billing Rawat Darurat Berhasil Dibatalkan')
+                                .then(() => {
+                                    let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                    this.BillingItem = [];
+
+                                    this.PembatalanBilling.handleClosePembatalan();
+
+                                    this.onGetDataBillingByNoRegister(NoRegister);
+                                });
+                        }
+                    });
+            }
+        });
     }
 
     handleEmptyBillingHeader(): void {
@@ -2013,7 +2051,7 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     }
 
     // ** REPROSES
-    handleSaveReproses(): void {
+    onFillFormForSaveReproses(): void {
         if (this.AllGridEditedData.length > 0) {
             let detail = this.AllGridEditedData.map((item) => {
                 return {
@@ -2038,35 +2076,45 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
                 item_transaksi: detail
             };
 
-            Swal.fire({
-                title: 'Apakah Anda Yakin?',
-                text: "Billing Rawat Darurat Akan Direproses",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Iya, Saya Yakin',
-                focusCancel: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.transBillingRawatDaruratService.onSaveReproses(header)
-                        .subscribe((result) => {
-                            if (result.responseResult) {
-                                this.utilityService.onShowingCustomAlert('success', 'Success', 'Billing Rawat Darurat Berhasil Direproses')
-                                    .then(() => {
-                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+            this.FormPembatalanState = "Reproses";
 
-                                        this.BillingItem = [];
+            this.InformasiReproses = header;
 
-                                        this.onGetDataBillingByNoRegister(NoRegister);
-                                    });
-                            }
-                        });
-                }
-            });
+            this.PembatalanBilling.handleOpenPembatalan();
         } else {
             this.utilityService.onShowingCustomAlert('warning', 'Peringatan', 'Tidak Ada Data Yg Diubah');
         }
+    }
+
+    handleSaveReproses(data: any): void {
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Billing Rawat Darurat Akan Direproses",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, Saya Yakin',
+            focusCancel: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.transBillingRawatDaruratService.onSaveReproses(data)
+                    .subscribe((result) => {
+                        if (result.responseResult) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Billing Rawat Darurat Berhasil Direproses')
+                                .then(() => {
+                                    let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+
+                                    this.BillingItem = [];
+
+                                    this.PembatalanBilling.handleClosePembatalan();
+
+                                    this.onGetDataBillingByNoRegister(NoRegister);
+                                });
+                        }
+                    });
+            }
+        });
     }
 
     get id_register(): AbstractControl { return this.FormInputInvoice.get('id_register'); }

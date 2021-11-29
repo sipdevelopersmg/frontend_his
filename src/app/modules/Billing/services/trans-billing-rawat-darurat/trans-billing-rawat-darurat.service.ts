@@ -90,6 +90,19 @@ export class TransBillingRawatDaruratService {
             );
     }
 
+    onBatalPelunasan(id_register: number, reason_canceled: string): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_BATAL_PELUNASAN_BILLING_IRDA,
+            {
+                id_register: id_register,
+                reason_canceled: reason_canceled,
+            }
+        ).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
     onSaveReproses(parameter: IPostSaveReprosesBillingRawatDaruratModel): Observable<PostSaveReprosesBillingRawatDaruratModel> {
         return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_SAVE_REPROSES_BILLING_IRDA, parameter)
             .pipe(

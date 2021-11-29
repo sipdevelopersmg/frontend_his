@@ -16,26 +16,18 @@ import 'src/app/prototype/ArrPrototype';
 export class InputKontrakPengadaanService {
 
     public API = PENERIMAAN.TRANSKONTRAKSPJB;
-    
-    private readonly _dataSource = new BehaviorSubject([]);
-    readonly dataSource$ = this._dataSource.asObservable();
 
-    private readonly _dataDetail = new BehaviorSubject<TrKontrakSpjbDetailItemInsert[]>([]);
+    dataSource = new BehaviorSubject([]);
+
+    public _dataDetail = new BehaviorSubject<TrKontrakSpjbDetailItemInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
     get dataDetail(): TrKontrakSpjbDetailItemInsert[] {
         return this._dataDetail.getValue();
     }
+
     set dataDetail(val: TrKontrakSpjbDetailItemInsert[]) {
         this._dataDetail.next(val);
-    }
-
-    get dataSource():any {
-        return this._dataSource.getValue();
-    }
-
-    set dataSource(val:any){
-        this._dataSource.next(val);
     }
 
     public total: Number = 0;
@@ -53,9 +45,9 @@ export class InputKontrakPengadaanService {
     onGetAll(): Observable<any> {
         return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
     }
-    
-    onInitList(): void{
-        this.dataSource = [];
+
+    onInitList(): void {
+        this.dataSource.next([]);
     }
 
     /**
@@ -63,20 +55,21 @@ export class InputKontrakPengadaanService {
      * @onGetAll Observable<SetupPabrikModel>
     */
     onGetById(Id): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
+        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID + '/' + Id);
     }
-    
+
 
     /**
      * Service Untuk Menampilkan data berdasarkan dinamik filter
      * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_BY_PARAMS,req).pipe(
-            catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-            })
-        );
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_BY_PARAMS, req)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
     }
 
     /**
@@ -84,19 +77,30 @@ export class InputKontrakPengadaanService {
      * @onGetAll Void
     */
     onGetAllByParamsSource(req: PostRequestByDynamicFiterModel[]): void {
-         this.onGetAllByParams(req).subscribe((result) => {
-            if (result) {
-                this.dataSource = result.data;
-            }
-        });
+        // this.onGetAllByParams(req).subscribe((result) => {
+        //     this.dataSource.next(result.data);
+
+        //     console.log(result);
+
+        //     console.log(this.dataSource.value);
+        // });
+
+        this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_BY_PARAMS, req)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            ).subscribe((result) => {
+                this.dataSource.next(result.data);
+            })
     }
-    
+
     /**
      * Service Untuk Menampilkan data detail Item
      * @setDetail Void
     */
-    setDetail(id): void{
-        this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id).subscribe((result) => {
+    setDetail(id): void {
+        this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID + '/' + id).subscribe((result) => {
             this.dataDetail = result.data
         });
     }
@@ -165,9 +169,9 @@ export class InputKontrakPengadaanService {
         this.jumlahItem = this.dataDetail.sum('qty_kontrak_satuan_besar');
     }
 
-    Insert( Data:TrKontrakSpjbInsert ): Observable<any>{
-        this.dataDetail.map((e,i)=>{
-            return e.no_urut = i+1;
+    Insert(Data: TrKontrakSpjbInsert): Observable<any> {
+        this.dataDetail.map((e, i) => {
+            return e.no_urut = i + 1;
         });
         Data.details = this.dataDetail;
         Data.jumlah_item_kontrak = this.jumlahItem;
@@ -176,15 +180,15 @@ export class InputKontrakPengadaanService {
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
 
-    Reset(){
-        this.dataDetail = [] ;
-        this.total = 0 ;
-        this.jumlahItem = 0 ; 
+    Reset() {
+        this.dataDetail = [];
+        this.total = 0;
+        this.jumlahItem = 0;
     }
 
 }
