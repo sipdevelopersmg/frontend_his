@@ -1,66 +1,71 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
-    <!-- Pencarian -->
-    <div class="row mb-2">
-        <!-- Tanggal -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+    <form [formGroup]="FormPostingBilling">
+        <!-- Pencarian -->
+        <div class="row mb-2">
+            <!-- Tanggal -->
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-daterangepicker #DatepickerFilterTanggal [maxDays]="30" formControlName="tanggal">
+                        </ejs-daterangepicker>
+                    </div>
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <ejs-daterangepicker #DatepickerFilterTanggal [maxDays]="30"></ejs-daterangepicker>
+            </div>
+
+            <!-- Debitur -->
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Debitur'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
+                            [fields]="DropdownDebiturFields" formControlName="id_debitur">
+                        </ejs-dropdownlist>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Debitur -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <atm-label [LabelCaption]="'Debitur'"></atm-label>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
-                        [fields]="DropdownDebiturFields">
-                    </ejs-dropdownlist>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <!-- Tgl Jatuh Tempo -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <atm-label [LabelCaption]="'Tgl Jatuh Tempo'"></atm-label>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <ejs-datepicker [format]="'dd/MM/yyyy'"></ejs-datepicker>
+        <div class="row mb-3">
+            <!-- Tgl Jatuh Tempo -->
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tgl Jatuh Tempo'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-datepicker [format]="'dd/MM/yyyy'" formControlName="tgl_jatuh_tempo"></ejs-datepicker>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Tipe Pasien -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <atm-label [LabelCaption]="'Tipe Pasien'"></atm-label>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <ejs-dropdownlist #DropdownTipePasien [dataSource]="DropdownTipePasienDatasource"
-                        [fields]="DropdownTipePasienFields">
-                    </ejs-dropdownlist>
+            <!-- Tipe Pasien -->
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tipe Pasien'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #DropdownTipePasien [dataSource]="DropdownTipePasienDatasource"
+                            [fields]="DropdownTipePasienFields" formControlName="tipe_pasien"
+                            (change)="handleChangeTipePasien($event)">
+                        </ejs-dropdownlist>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-45">
-            <button type="button" class="btn btn-primary btn-sm">
-                <i class="fas fa-search fa-sm"></i>&nbsp; Cari
-            </button>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-45">
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handlePencarianDataPostingBilling(FormPostingBilling.value)">
+                    <i class="fas fa-search fa-sm"></i>&nbsp; Cari
+                </button>
+            </div>
         </div>
-    </div>
+    </form>
 
     <!-- Grid -->
     <div class="row">
@@ -70,7 +75,8 @@
                     <p class="text-biru-muda mb-0">Riwayat Transaksi Billing</p>
                 </div>
                 <div class="card-body p-0">
-                    <ejs-grid #GridData [id]="'GridDataBukaKasir'" [dataSource]="GridDatasource" [rowHeight]="30"
+                    <ejs-grid #GridData [id]="'GridDataBukaKasir'"
+                        [dataSource]="postingBillingService.DataForPostingBilling | async" [rowHeight]="30"
                         [height]="'calc(100vh - 21rem)'" [gridLines]="'Both'" [allowPaging]="false"
                         [allowResizing]="true" [allowFiltering]='true' [toolbar]="GridDataToolbar"
                         (rowDeselected)="handleSelectedRow($event)" (rowSelected)="handleSelectedRow($event)"
@@ -85,58 +91,99 @@
                             <e-column [width]="120" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'"
                                 [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                             </e-column>
-                            <e-column [width]="120" [field]="'tgl_pulang'" [headerText]="'TGL. PULANG'" [visible]="true"
-                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
-                                [format]="'dd/MM/yyyy HH:mm:ss'">
+                            <e-column [width]="150" [field]="'tgl_pulang'" [headerText]="'TGL. PULANG'" [visible]="true"
+                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                             </e-column>
-                            <e-column [width]="80" [field]="'tipe'" [headerText]="'TIPE'" [visible]="true"
+                            <e-column [width]="80" [field]="'tipe'" [headerText]="'TIPE'" [visible]="false"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                             </e-column>
                             <e-column [width]="150" [field]="'no_invoice'" [headerText]="'NO. INVOICE PIUTANG'"
-                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                [visible]="false" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                             </e-column>
-                            <e-column [width]="200" [field]="'debitur'" [headerText]="'DEBITUR'" [visible]="true"
+                            <e-column [width]="200" [field]="'nama_debitur'" [headerText]="'DEBITUR'" [visible]="true"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
                                 [headerTextAlign]="'Left'">
                             </e-column>
-                            <e-column [width]="90" [field]="'total_biaya'" [headerText]="'TOTAL BIAYA'" [visible]="true"
-                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                            <e-column [width]="120" [field]="'total_amount'" [headerText]="'TOTAL BIAYA'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
                             <e-column [width]="120" [field]="'charge_amount'" [headerText]="'TOTAL TAGIHAN'"
                                 [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
-                            <e-column [width]="90" [field]="'restitusi'" [headerText]="'RESTITUSI'" [visible]="true"
+                            <e-column [width]="90" [field]="'restitusi'" [headerText]="'RESTITUSI'" [visible]="false"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
-                            <e-column [width]="120" [field]="'tunai'" [headerText]="'TUNAI'" [visible]="true"
+                            <e-column [width]="120" [field]="'paid_amount'" [headerText]="'TUNAI'" [visible]="true"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
-                            <e-column [width]="120" [field]="'deposit'" [headerText]="'UANG MUKA'" [visible]="true"
-                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
-                                [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
-                            </e-column>
-                            <e-column [width]="120" [field]="'doc_disc'" [headerText]="'DISKON DOKTER'" [visible]="true"
-                                [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                            <e-column [width]="120" [field]="'deposit_amount'" [headerText]="'UANG MUKA'"
+                                [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
                             <e-column [width]="120" [field]="'claim_amount'" [headerText]="'KLAIM'" [visible]="true"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
-                            <e-column [width]="120" [field]="'subsidi'" [headerText]="'SUBSIDI'" [visible]="true"
+                            <e-column [width]="120" [field]="'subsidi_amount'" [headerText]="'SUBSIDI'" [visible]="true"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
                                 [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
                             </e-column>
-                            <e-column [width]="100" [field]="'status_billing'" [headerText]="'STATUS'" [visible]="true"
+                            <e-column [width]="100" [field]="'status'" [headerText]="'STATUS'" [visible]="true"
                                 [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'"
                                 [headerTextAlign]="'Center'">
                             </e-column>
                         </e-columns>
                     </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pembatalan -->
+    <button id="btnModalPembatalan" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalPembatalan" [hidden]="true">
+        Launch Modal Pembatalan
+    </button>
+
+    <div class="modal fade" id="modalPembatalan" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-labelledby=" modalPembatalanLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                    <h5 class="modal-title" id="modalPembatalanLabel">
+                        Alasan Pembatalan Posting
+                    </h5>
+                    <button id="btnClosePembatalan" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="FormPembatalan">
+                        <div class="row mb-2 align-items-center">
+                            <!-- Alasan Pembatalan -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <atm-label [LabelCaption]="'Mohon Isikan Alasan Pembatalan Posting'">
+                                </atm-label>
+
+                                <textarea rows="3" class="form-control mt-2" formControlName="reason_canceled">
+                                </textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                        Close
+                    </button>
+
+                    <button class="btn btn-primary btn-sm" type="button"
+                        (click)="handleSubmitModalPembatalanPosting(FormPembatalan.value)">
+                        <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan
+                    </button>
                 </div>
             </div>
         </div>
