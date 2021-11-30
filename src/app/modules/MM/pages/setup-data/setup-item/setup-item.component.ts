@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import  * as Config  from './json/grid.config.json';
 import  * as ConfigKartuStok  from './json/grid_kartu_stock.config.json';
@@ -16,6 +16,14 @@ import * as LookupGridGrupItem from './json/lookupGrupItem.json'
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { SetupStockroomService } from '../../../services/setup-data/setup-stockroom/setup-stock-room.service';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { SetupPabrikService } from '../../../services/setup-data/setup-pabrik/setup-pabrik.service';
+import * as LookupGridSupplier from './json/lookupsupplier.json'
+import { SetupGrupObatService } from 'src/app/modules/Pharmacy/services/setup-data/setup-grup-obat/setup-grup-obat.service';
+import { SetupCaraPakaiObatService } from 'src/app/modules/Pharmacy/services/setup-data/setup-cara-pakai-obat/setup-cara-pakai-obat.service';
+import { SetupRutePemberianObatService } from 'src/app/modules/Pharmacy/services/setup-data/setup-rute-pemberian-obat/setup-rute-pemberian-obat.service';
+import { SetupRestriksiObatService } from 'src/app/modules/Pharmacy/services/formularium/setup-restriksi-obat/setup-restriksi-obat.service';
+import { SetupPeresepanMaksimalService } from 'src/app/modules/Pharmacy/services/setup-data/setup-peresepan-maksimal/setup-peresepan-maksimal.service';
+import { SetupSatuanService } from '../../../services/setup-data/setup-satuan/setup-satuan.service';
 
 @Component({
   selector: 'app-setup-item',
@@ -27,6 +35,13 @@ export class SetupItemComponent implements OnInit {
   LookupGridGrupItem = LookupGridGrupItem;
   @ViewChild('LookupKodeGrupItem') LookupKodeGrupItem: OrgInputLookUpKodeComponent;
   SetupStockrooomDropdownField: object = { text: 'nama_stockroom', value: 'id_stockroom' };
+  MaritalSetupPabrikDropdownField: object = { text: 'nama_pabrik', value: 'id_pabrik' };
+  MaritalGrupObatDropdownField: object = { text: 'nama_grup_obat', value: 'id_grup_obat' };
+  MaritalCaraPakaiObatDropdownField: object = { text: 'cara_pakai_obat', value: 'id_cara_pakai_obat' };
+  MaritalRutePemberianObatDropdownField: object = { text: 'nama_rute_pemberian_obat', value: 'id_rute_pemberian_obat' };
+  SetupRestriksiObatDropdownField: object = { text: 'nama_restriksi', value: 'id_restriksi_obat' };
+  MaritalPeresepanMaksimalDropdownField: object = { text: 'peresepan_maksimal', value: 'id_peresepan_maksimal' };
+  MaritalSatuanDropdownField: object = { text: 'nama_satuan', value: 'kode_satuan' };
 
   /**
    * Variable untuk Menympan Navigasi halaman
@@ -100,11 +115,23 @@ export class SetupItemComponent implements OnInit {
     public startDate: Date;
     public endDate: Date;
 
+    urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
+    LookupGridSupplier = LookupGridSupplier;
+    @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
+    FormSatuans: FormArray;
+
   constructor(
     private formBuilder: FormBuilder,
     private utilityService: UtilityService,
     public setupItemService: SetupItemService,
     public setupStockroomService: SetupStockroomService,
+    public setupPabrikService: SetupPabrikService,
+    public setupGrupObatService: SetupGrupObatService,
+    public setupCaraPakaiObatService: SetupCaraPakaiObatService,
+    public setupRutePemberianObatService: SetupRutePemberianObatService,
+    public setupRestriksiObatService: SetupRestriksiObatService,
+    public setupPeresepanMaksimalService: SetupPeresepanMaksimalService,
+    public setupSatuanService: SetupSatuanService,
 
   ) {
     this.FormInputData = this.formBuilder.group({
@@ -127,8 +154,29 @@ export class SetupItemComponent implements OnInit {
       hpp_average: [0, []],
       prosentase_default_profit: [0, []],
       is_ppn: [true, [Validators.required]],
-      // user_created: [0, [Validators.required]],
+
+      is_obat: [true, []],
+      id_grup_obat: [0, []],
+      id_cara_pakai_obat: [0, []],
+      id_rute_pemberian_obat: [0, []],
+      id_restriksi_obat: [0, []],
+      id_peresepan_maksimal: [0, []],
+      kandungan_obat: [0, []],
+      is_fornas: [true, []],
+
+      harga_netto_apotek: [0, []],
+      prosentase_profit: [0, []],
+      prosentase_ppn: [0, []],
+      harga_jual_apotek: [0, []],
+      tanggal_berlaku: [null, []],
+      
+      satuans: this.formBuilder.array([
+
+      ]),
     });
+
+    this.FormSatuans = this.FormInputData.get('satuans') as FormArray;
+    this.FormSatuans.push(this.NewSatuans());
 
     this.FormKartuStock = this.formBuilder.group({
       kode_item: ['', []],
@@ -141,7 +189,7 @@ export class SetupItemComponent implements OnInit {
 
     this.GridDataToolbar = [
       { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-      { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+      // { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
       { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
       { text: 'Kartu Stok', tooltipText: 'Kartu Stock', prefixIcon: 'fas fa-boxes fa-sm', id: 'kartu_stock' },
       'Search'
@@ -149,6 +197,33 @@ export class SetupItemComponent implements OnInit {
 
     this.GetAllData();
     this.setupStockroomService.setDataSource();
+    this.setupPabrikService.setDataSource();
+    this.setupGrupObatService.setDataSource();
+    this.setupCaraPakaiObatService.setDataSource();
+    this.setupRutePemberianObatService.setDataSource();
+    this.setupRestriksiObatService.setDataSource();
+    this.setupPeresepanMaksimalService.setDataSource();
+    this.setupSatuanService.setDataSource();
+  }
+
+  NewSatuans(): FormGroup {
+    return this.formBuilder.group({
+        kode_satuan   : ["",[]],
+        isi           : [0, []],
+        is_satuan_beli: [false, []]
+    });
+  }
+
+  handleClickTambahSatuan():void{
+    this.FormSatuans.push(this.NewSatuans());
+  }
+
+  handleHapusSatuan(index):void{
+    this.FormSatuans.removeAt(index);
+  }
+
+  heandleSelectedSupplier(args: any): void {
+    this.id_supplier.setValue(args.id_supplier);
   }
 
   handlePencarianFilter(args){
@@ -307,10 +382,10 @@ export class SetupItemComponent implements OnInit {
   setViewForm(): void {
     this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
     this.inputFieldState = 'detail';
-    this.SetFrom(this.SelectedData);
     this.ButtonNav = [
       { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
     ];
+    this.SetFrom(this.SelectedData);
   }
 
   setKartuStock(): void {
@@ -330,6 +405,7 @@ export class SetupItemComponent implements OnInit {
   ResetFrom(): void {
     this.FormInputData.reset();
     this.LookupKodeGrupItem.resetValue();
+    this.LookupKodeSupplier.resetValue();
   }
 
   /** Method Untuk Mereload Data Grid */
@@ -347,15 +423,22 @@ export class SetupItemComponent implements OnInit {
   /** Method Untuk Mengisikan data yang ada di form */
   SetFrom(Data): void {
     this.FormInputData.reset();
+
+    this.LookupKodeSupplier.kodeValue = Data.kode_supplier;
+    this.LookupKodeSupplier.titleValue = Data.nama_supplier;
+
+    this.LookupKodeGrupItem.kodeValue = Data.kode_grup_item;
+    this.LookupKodeGrupItem.titleValue = Data.grup_item;
+    
     this.FormInputData.setValue({
-      id_item:Data.id_item,
-      id_grup_item:Data.id_grup_item,
-      id_pabrik:Data.id_pabrik,
-      id_supplier:Data.id_supplier,
-      kode_item:Data.kode_item,
-      barcode:Data.barcode,
-      nama_item:Data.nama_item,
-      kode_satuan:Data.kode_satuan,
+      id_item       :Data.id_item,
+      id_grup_item  :Data.id_grup_item,
+      id_pabrik     :Data.id_pabrik,
+      id_supplier   :Data.id_supplier,
+      kode_item     :Data.kode_item,
+      barcode       :Data.barcode,
+      nama_item     :Data.nama_item,
+      kode_satuan   :Data.kode_satuan,
       id_temperatur_item:Data.id_temperatur_item,
       batas_maksimal_pesan:Data.batas_maksimal_pesan,
       batas_maksimal_pakai:Data.batas_maksimal_pakai,
@@ -364,15 +447,52 @@ export class SetupItemComponent implements OnInit {
       batas_stok_kritis:Data.batas_stok_kritis,
       prosentase_stok_kritis:Data.prosentase_stok_kritis,
       harga_beli_terakhir:Data.harga_beli_terakhir,
-      hpp_average:Data.hpp_average,
+      hpp_average   :Data.hpp_average,
       prosentase_default_profit:Data.prosentase_default_profit,
-      is_ppn:Data.is_ppn,
+      is_ppn        :Data.is_ppn,
+      is_obat       :Data.is_ppn,
+      id_grup_obat  : 0,
+      id_cara_pakai_obat: 0,
+      id_rute_pemberian_obat: 0,
+      id_restriksi_obat: 0,
+      id_peresepan_maksimal: 0,
+      kandungan_obat: 0,
+      is_fornas     : 0,
+      harga_netto_apotek: 0,
+      prosentase_profit: 0,
+      prosentase_ppn: 0,
+      harga_jual_apotek: 0,
+      tanggal_berlaku: null,
+      satuans :[],
     });
+
+
   }
 
   /** Method menyimpan | menubah data */
   SaveAndNew(): void {
     const Data = this.FormInputData.value;
+    console.log(Data);
+    if(Data.is_obat){
+      Data.obat = {
+        "id_grup_obat": Data.id_grup_obat,
+        "id_cara_pakai_obat": Data.id_cara_pakai_obat,
+        "id_rute_pemberian_obat": Data.id_rute_pemberian_obat,
+        "id_restriksi_obat": Data.id_restriksi_obat,
+        "id_peresepan_maksimal": Data.id_peresepan_maksimal,
+        "kandungan_obat": Data.kandungan_obat,
+        "is_fornas": Data.is_fornas,
+        "details": [
+          {
+            "harga_netto_apotek": Data.harga_netto_apotek,
+            "prosentase_profit": Data.prosentase_profit,
+            "prosentase_ppn": Data.prosentase_ppn,
+            "harga_jual_apotek": Data.harga_jual_apotek,
+            "tgl_berlaku": Data.tanggal_berlaku
+          }
+        ]
+      }
+    }
     if (this.inputFieldState=='normal') {
       this.setupItemService.onPostSave(Data)
         .subscribe((result: SetupItemModel) => {
@@ -467,5 +587,11 @@ export class SetupItemComponent implements OnInit {
   get hpp_average() { return this.FormInputData.get('hpp_average') }
   get prosentase_default_profit() { return this.FormInputData.get('prosentase_default_profit') }
   get is_ppn() { return this.FormInputData.get('is_ppn') }
+  get is_obat() { return this.FormInputData.get('is_obat') }
   get user_created() { return this.FormInputData.get('user_created') }
+
+  get satuans(): FormArray {
+    return this.FormInputData.get("satuans") as FormArray
+  }
+
 }

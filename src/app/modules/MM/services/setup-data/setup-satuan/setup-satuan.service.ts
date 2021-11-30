@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { API } from 'src/app/api';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
@@ -15,10 +15,22 @@ import { MM } from 'src/app/api/MM';
 export class SetupSatuanService {
 
     API = MM.SETUP_DATA.SETUP_SATUAN
+    public dataSource = new BehaviorSubject([]); 
 
     constructor(
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService) { }
+
+            /**
+     * Service Untuk Mengisi dataScource 
+     * @setDataSource Void
+    */
+    setDataSource():void{
+        this.onGetAll().subscribe((result) => {
+            this.dataSource.next(result.data);
+        });
+    }
+        
 
     /**
      * Service Untuk Menampilkan Semua data

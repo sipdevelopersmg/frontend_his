@@ -10,6 +10,15 @@
         "editType": "defaultEdit"
     },
     {
+        "field": "nama_supplier",
+        "headerText": "Supplier",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
         "field": "id_supplier",
         "headerText": "Id Supplier",
         "type": "number",
@@ -51,14 +60,14 @@
         "type": "Date",
         "format": "",
         "textAlign": "left",
-        "visible": true,
+        "visible": false,
         "editType": "defaultEdit"
     },
     {
         "field": "tanggal_berlaku_kontrak",
         "headerText": "Tanggal Berlaku Kontrak",
         "type": "Date",
-        "format": "",
+        "format": "dd/MM/yyyy",
         "textAlign": "left",
         "visible": true,
         "editType": "defaultEdit"
@@ -67,7 +76,7 @@
         "field": "tanggal_berakhir_kontrak",
         "headerText": "Tanggal Berakhir Kontrak",
         "type": "Date",
-        "format": "",
+        "format": "dd/MM/yyyy",
         "textAlign": "left",
         "visible": true,
         "editType": "defaultEdit"
