@@ -66,13 +66,17 @@ export class HistorySemuaPembayaranComponent implements OnInit {
         let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
         if (Button.length > 0 || (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
-            Button.forEach((item) => {
-                if (item.caption == "Batal Payment") {
-                    this.GridDetailInvoiceToolbar = [
-                        { text: 'Batalkan Payment', tooltipText: 'Batalkan Payment', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_payment' },
-                    ];
-                }
-            });
+            // Button.forEach((item) => {
+            //     if (item.caption == "Batal Payment") {
+            //         this.GridDetailInvoiceToolbar = [
+            //             { text: 'Batalkan Payment', tooltipText: 'Batalkan Payment', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_payment' },
+            //         ];
+            //     }
+            // });
+
+            this.GridDetailInvoiceToolbar = [
+                { text: 'Batalkan Payment', tooltipText: 'Batalkan Payment', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_payment' },
+            ];
         } else {
             this.GridDetailInvoiceToolbar = [];
         }
@@ -85,6 +89,9 @@ export class HistorySemuaPembayaranComponent implements OnInit {
 
         this.GridDetailInvoiceDatasource = [];
         this.GridDetailInvoice.refresh();
+
+        this.GridDetailInvoiceResepDatasource = [];
+        this.GridDetailInvoiceResep.refresh();
 
         this.onGetButtonSidebarMenu();
 
@@ -162,8 +169,6 @@ export class HistorySemuaPembayaranComponent implements OnInit {
     }
 
     handleClickDetailItem(item: any): void {
-        console.log(item);
-
         this.GridDetailInvoiceDatasource = item.item_invoice;
         this.GridDetailInvoice.refresh();
 

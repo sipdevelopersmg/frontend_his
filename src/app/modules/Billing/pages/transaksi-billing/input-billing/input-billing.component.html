@@ -486,15 +486,14 @@
                                             [headerText]="'PENJUALAN OBAT DETAIL ID'" [visible]="false"
                                             [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="120" [field]="'time_inputed_penjualan_obat'"
-                                            [headerText]="'WAKTU PENJUALAN OBAT'" [visible]="true"
-                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
-                                            [type]="'DateTime'" [format]="'dd/MM/yyyy HH:mm:ss'">
+                                        <e-column [width]="120" [field]="'tgl_transaksi'" [headerText]="'TGL. ORDER'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
                                         </e-column>
-                                        <e-column [width]="120" [field]="'tgl_transaksi'"
-                                            [headerText]="'TGL. TRANSAKSI'" [visible]="true" [allowEditing]="false"
-                                            [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
-                                            [format]="'dd/MM/yyyy'">
+                                        <e-column [width]="120" [field]="'time_inputed_penjualan_obat'"
+                                            [headerText]="'TGL. PENJUALAN OBAT'" [visible]="true" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                                            [format]="'dd/MM/yyyy HH:mm:ss'">
                                         </e-column>
                                         <e-column [width]="100" [field]="'kode_outlet'" [headerText]="'KODE OUTLET'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
@@ -629,7 +628,7 @@
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modalSaldoKlaim"
                                     (click)="handleGetSaldoKlaim(InformasiPasien.id_register)"
-                                    [disabled]="InformasiPasien && InformasiPasien.status_billing == 'CLOSEDD'">
+                                    [disabled]="InformasiPasien && InformasiPasien.status_billing == 'CLOSED'">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -729,7 +728,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
                                 <p
                                     [class]="InformasiPasien.status_billing == 'OPEN' ? 'text-success mb-0 fw-bold' : 'text-danger mb-0 fw-bold'">
-                                    {{ InformasiPasien.status_billing == 'OPEN' ? 'OPEN' : 'CLOSEDD' }}
+                                    {{ InformasiPasien.status_billing == 'OPEN' ? 'OPEN' : 'CLOSED' }}
                                 </p>
                             </div>
                         </div>

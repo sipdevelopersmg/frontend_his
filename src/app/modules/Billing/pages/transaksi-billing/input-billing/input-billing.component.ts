@@ -29,17 +29,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     HeaderRibbon = 'Input Billing Pasien';
 
-    ButtonNav: ButtonNavModel[] = [
-        { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
-        { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
-        { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
-        { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
-        { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
-        { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
-        { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
-        { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' },
-        // { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting'}
-    ];
+    ButtonNav: ButtonNavModel[] = [];
 
     InformasiPasien: IInformasiPasienModel;
 
@@ -132,8 +122,6 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit(): void {
-        this.onGetButtonSidebarMenu();
-
         this.FormInputInvoice = this.formBuilder.group({
             total_amount: [0, []],
             total_tagihan: [0, []],
@@ -174,7 +162,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
         let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
-        if (Button.length > 0 || (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
+        if (Button.length < 1 && (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
             // Button.forEach((item) => {
             //     if (item.caption !== 'Batal Payment') {
             //         this.ButtonNav.push({
@@ -187,9 +175,21 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             //     }
             // });
 
-            this.ButtonNav.push(
-                { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting' }
-            );
+            this.ButtonNav.push({
+                Id: 'Batal_Posting',
+                Icons1: 'fa-file-import fa-sm',
+                Icons2: 'fa-ban fa-sm text-danger',
+                StackIcon: true,
+                Captions: 'Batal Posting'
+            });
+        }
+
+        if (Button.length < 1 && (UserData.id_role === 4 || UserData.nama_role === "kasir")) {
+            this.ButtonNav.push({
+                Id: 'Posting',
+                Icons1: 'fa-file-import fa-sm',
+                Captions: 'Posting'
+            });
         }
     }
 
@@ -221,6 +221,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                     this.BillingItem.push({ ...result.data.resep });
                 }
 
+                this.onCheckBillingItemStatusBayar(this.BillingItem);
+
                 this.handleGetSaldoKlaim(this.InformasiPasien.id_register);
 
                 this.onGetSaldoDeposit(this.InformasiPasien.id_register);
@@ -229,6 +231,95 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
                 this.HeaderRibbon = `Input Billing Pasien ${this.InformasiPasien.nama_pasien}`;
             });
+    }
+
+    onCheckBillingItemStatusBayar(BillingItem: any[]): void {
+        let all_detail = [];
+
+        BillingItem.forEach((item) => {
+            all_detail.push(...item.detail);
+        });
+
+        let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+        let is_open = all_detail.some((item) => { return item.status_bayar === "OPEN" })
+
+        let is_closed = all_detail.some((item) => { return item.status_bayar === "CLOSED" });
+
+        let is_paid = all_detail.some((item) => { return item.status_bayar === "PAID" });
+
+        // if (this.InformasiPasien.status_billing === "OPEN") {
+        //     if (is_open) {
+        //         this.ButtonNav = [
+        //             { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+        //             { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+        //             { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+        //             { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
+        //             { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
+        //             { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
+        //             { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
+        //         ];
+        //     };
+
+        //     if (is_closed) {
+        //         this.ButtonNav = [
+        //             { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+        //             { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+        //             { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+        //             { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
+        //             { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
+        //             { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
+        //         ];
+        //     };
+
+        //     if (is_paid && (UserData.id_role === 4 || UserData.nama_role === "kasir")) {
+        //         if (UserData.id_role === 4 || UserData.nama_role === "kasir") {
+        //             this.ButtonNav = [
+        //                 { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+        //                 { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+        //                 { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+        //                 { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
+        //                 { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
+        //                 { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
+        //                 { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' }
+        //             ];
+        //         };
+
+        //         if (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir") {
+        //             this.ButtonNav = [
+        //                 { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+        //                 { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+        //                 { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+        //                 { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
+        //                 { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
+        //                 { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
+        //             ];
+        //         };
+        //     };
+        // }
+
+        this.ButtonNav = [
+            { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+            { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+            { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+            { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
+            { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
+            { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
+            { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
+            { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' }
+        ];
+
+        if (this.InformasiPasien.status_billing === "CLOSED" && (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
+            this.ButtonNav = [
+                { Id: 'Baru', Icons1: 'fa-copy fa-sm', Captions: '[F3] Baru' },
+                { Id: 'Restitusi', Icons1: 'fa-exchange-alt fa-sm', Captions: 'Restitusi' },
+                { Id: 'Deposit', Icons1: 'fa-hand-holding-usd fa-sm', Captions: 'Deposit' },
+                { Id: 'Daftar_Invoice', Icons1: 'fa-file-invoice fa-sm', Captions: 'Input Payment' },
+                { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
+                { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
+                { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting' }
+            ];
+        };
     }
 
     onGetSaldoDeposit(RegisterId: number): void {
@@ -315,6 +406,9 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         switch (ButtonId) {
             case 'Baru':
                 this.handleClearSelectionAllGrid();
+                const NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params['no_register']);
+                this.BillingItem = [];
+                this.onGetDataBillingByNoRegister(NoRegister);
                 break;
             case 'Restitusi':
                 if (this.deposit_amount.value > 0) {
@@ -754,7 +848,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataResep(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar == 'PAID' || status_bayar == 'CLOSE') {
+        if (status_bayar !== 'PAID') {
             args.cancel = true;
 
             let removedIndexLength = 0;

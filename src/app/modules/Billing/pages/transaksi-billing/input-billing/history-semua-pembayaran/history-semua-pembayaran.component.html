@@ -34,7 +34,7 @@
                                                     *ngFor="let item of DaftarInvoice">
                                                     <div class="items-group mx-0 px-2" data-bs-toggle="tooltip"
                                                         title="{{ item.nomor_payment }}"
-                                                        (click)="item.item_payment?.length >= 1 ? onTogglingHideChildMenu(item.id_payment) : handleClickDetailItem(item) ">
+                                                        (click)="onTogglingHideChildMenu(item.id_payment)">
                                                         <div class="col-1 text-center">
                                                             <i class="fas fa-angle-right"
                                                                 [hidden]="item.item_payment?.length < 1"
@@ -52,7 +52,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <ul class="list-group list-group-child is-hidden"
+                                                    <ul class="list-group list-group-child"
                                                         id="{{ item.id_payment }}ChildMenu">
                                                         <li class="list-group-item cursor-pointer p-0 mb-1"
                                                             *ngFor="let childItem of item.item_payment"

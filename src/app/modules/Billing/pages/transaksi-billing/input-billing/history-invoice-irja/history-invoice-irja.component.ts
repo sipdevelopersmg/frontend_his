@@ -61,14 +61,22 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
         let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
-        if (Button.length > 0 || (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
-            Button.forEach((item) => {
-                if (item.caption == "Batal Payment") {
-                    this.GridDetailInvoiceToolbar = [
-                        { text: 'Batalkan Invoice', tooltipText: 'Batalkan Invoice', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_invoice' },
-                    ];
-                }
-            });
+        let UserRoleElligble = false;
+
+        UserData.id_role == 5 || UserData.id_role == 4 ? UserRoleElligble = true : UserRoleElligble = false;
+
+        if (Button.length > 0 || UserRoleElligble) {
+            // Button.forEach((item) => {
+            //     if (item.caption == "Batal Payment") {
+            //         this.GridDetailInvoiceToolbar = [
+            //             { text: 'Batalkan Invoice', tooltipText: 'Batalkan Invoice', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_invoice' },
+            //         ];
+            //     }
+            // });
+
+            this.GridDetailInvoiceToolbar = [
+                { text: 'Batalkan Invoice', tooltipText: 'Batalkan Invoice', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_invoice' },
+            ];
         } else {
             this.GridDetailInvoiceToolbar = [];
         }
@@ -81,6 +89,9 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
         this.GridDetailInvoiceDatasource = [];
         this.GridDetailInvoice.refresh();
+
+        this.GridDetailInvoiceResepDatasource = [];
+        this.GridDetailInvoiceResep.refresh();
 
         this.onGetButtonSidebarMenu();
 
@@ -102,7 +113,6 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     }
 
     handleClickDetailItemInvoice(item: any): void {
-
         item.charge_amount = item.total_amount;
 
         this.NomorInvoiceTerpilih = item.nomor_invoice;
@@ -140,7 +150,17 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     }
 
     handleChangeCheckboxItemInvoice(item: any): void {
-        this.SelectedInvoice.push(item);
+        let checkbox = document.getElementById(`check${item.id_invoice}`) as HTMLInputElement;
+
+        let exist = this.SelectedInvoice.map((data) => { return data.id_invoice }).indexOf(item.id_invoice);
+
+        if (checkbox.checked && exist < 0) {
+            this.SelectedInvoice.push(item);
+        };
+
+        if (!checkbox.checked) {
+            this.SelectedInvoice.splice(exist, 1);
+        };
     }
 
     handleSelectedRowDetailInvoice(args: any): void {
@@ -162,12 +182,7 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
             item.invoice_item.filter((child_item) => { return item_transaksi.push(child_item.id_transaksi) });
 
-            item_invoice.push(
-                {
-                    id_invoice: item.id_invoice,
-                    item_transaksi: item_transaksi
-                }
-            );
+            item_invoice.push({ id_invoice: item.id_invoice, item_transaksi: item_transaksi });
 
             total_amount += item.total_amount;
             claim_amount += item.claim_amount;
@@ -198,6 +213,8 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
             this.SelectedInvoice = [];
 
             this.GridDetailInvoiceDatasource = [];
+
+            this.GridDetailInvoiceResepDatasource = [];
         }, 500);
     }
 
