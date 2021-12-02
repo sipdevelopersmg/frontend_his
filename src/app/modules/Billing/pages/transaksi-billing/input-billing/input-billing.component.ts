@@ -822,15 +822,17 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
         let selected_records = this.GridDataResep.getSelectedRecords();
 
-        selected_records.forEach((item) => {
-            total_amount += item['total_amount'];
-        });
+        if (selected_records.length > 0) {
+            selected_records.forEach((item) => {
+                total_amount += item['total_amount'];
+            });
 
-        this.TotalAmountResep.next(total_amount);
+            this.TotalAmountResep.next(total_amount);
 
-        setTimeout(() => {
-            this.onCountTotalBiaya();
-        }, 1000);
+            setTimeout(() => {
+                this.onCountTotalBiaya();
+            }, 1000);
+        }
     }
 
     // ** ROW DATA BOUND ================
