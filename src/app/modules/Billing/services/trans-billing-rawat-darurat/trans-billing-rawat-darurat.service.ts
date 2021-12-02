@@ -7,7 +7,7 @@ import { HttpOperationService } from 'src/app/modules/shared/services/http-opera
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../api/BILLING';
 import { IPostSavePelunasanBillingRawatDaruratModel, IPostSavePulangBillingRawatDaruratModel, IPostSaveReprosesBillingRawatDaruratModel, PostSavePelunasanBillingRawatDaruratModel, PostSavePulangBillingRawatDaruratModel, PostSaveReprosesBillingRawatDaruratModel } from '../../models/trans-billing-rawat-darurat/trans-billing-rawat-darurat.model';
-import { GetDataBillingModel, IDataBillingModel, IResepBillingSubDetailModel } from '../../models/trans-billing/trans-billing.model';
+import { GetDataBillingModel, IDataBillingModel } from '../../models/trans-billing/trans-billing.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class TransBillingRawatDaruratService {
 
     API_TRANS_BILLING = API_CONFIG.API_BILLING.TRANS_BILLING_IRDA;
 
-    ResepChildDatasource = new BehaviorSubject<IResepBillingSubDetailModel[]>([]);
+    ResepChildDatasource = new BehaviorSubject<any[]>([]);
     ResepChildDatasource$ = this.ResepChildDatasource.asObservable();
 
     HeaderBilling = new BehaviorSubject({});
@@ -39,13 +39,13 @@ export class TransBillingRawatDaruratService {
                 tap((result) => {
                     let result_data: IDataBillingModel = result.data;
 
-                    let resep_child: IResepBillingSubDetailModel[] = [];
+                    // let resep_child: IResepBillingSubDetailModel[] = [];
 
-                    result_data.resep ? result_data.resep.detail.forEach((item) => { resep_child.push(...item.details) }) : resep_child = [];
+                    // result_data.resep ? result_data.resep.detail.forEach((item) => { resep_child.push(...item.details) }) : resep_child = [];
 
-                    setTimeout(() => {
-                        this.ResepChildDatasource.next(resep_child);
-                    }, 1000);
+                    // setTimeout(() => {
+                    //     this.ResepChildDatasource.next(resep_child);
+                    // }, 1000);
                 })
             )
     }

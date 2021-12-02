@@ -14,7 +14,7 @@ import { EncryptionService } from 'src/app/modules/shared/services/encryption.se
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { IPaymentMethodModel } from '../../../models/setup-data/setup-payment-method.model';
-import { IInformasiPasienModel, IResepBillingSubDetailModel } from '../../../models/trans-billing/trans-billing.model';
+import { IInformasiPasienModel } from '../../../models/trans-billing/trans-billing.model';
 import { SetupPaymentMethodService } from '../../../services/setup-data/setup-payment-method/setup-payment-method.service';
 import { TransBillingRawatDaruratService } from '../../../services/trans-billing-rawat-darurat/trans-billing-rawat-darurat.service';
 import { TransBillingRawatInapService } from '../../../services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
@@ -144,7 +144,7 @@ export class InputBillingRawatInapComponent implements OnInit, AfterViewInit {
     GridDataResepSelectionSettings: SelectionSettingsModel = { type: 'Single' };
     GridDataResepContainsNotOpen: boolean = false;
     GridResepResizeSettings = { mode: 'Auto' };
-    ChildResepDatasource: IResepBillingSubDetailModel[] = [];
+    ChildResepDatasource: any[] = [];
     ChildGridResep: GridModel = {};
     GridDataResepEditSettings: EditSettingsModel = { allowEditing: true, allowEditOnDblClick: true };
 

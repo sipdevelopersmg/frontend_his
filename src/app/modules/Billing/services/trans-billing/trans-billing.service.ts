@@ -6,7 +6,7 @@ import { HttpResponseModel } from 'src/app/modules/shared/models/Http-Operation/
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../api/BILLING';
-import { GetDataBillingModel, IDataBillingModel, IResepBillingSubDetailModel } from '../../models/trans-billing/trans-billing.model';
+import { GetDataBillingModel, IDataBillingModel } from '../../models/trans-billing/trans-billing.model';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,7 @@ export class TransBillingService {
 
     API_TRANS_BILLING = API_CONFIG.API_BILLING.TRANS_BILLING;
 
-    ResepChildDatasource = new BehaviorSubject<IResepBillingSubDetailModel[]>([]);
+    ResepChildDatasource = new BehaviorSubject<any[]>([]);
     ResepChildDatasource$ = this.ResepChildDatasource.asObservable();
 
     HeaderBilling = new BehaviorSubject({});
@@ -42,15 +42,15 @@ export class TransBillingService {
                 tap((result) => {
                     let result_data: IDataBillingModel = result.data;
 
-                    let resep_child: IResepBillingSubDetailModel[] = [];
+                    // let resep_child: IResepBillingSubDetailModel[] = [];
 
-                    result_data.resep.detail.forEach((item) => {
-                        resep_child.push(...item.details);
-                    });
+                    // result_data.resep.detail.forEach((item) => {
+                    //     resep_child.push(...item.details);
+                    // });
 
-                    setTimeout(() => {
-                        this.ResepChildDatasource.next(resep_child);
-                    }, 1000);
+                    // setTimeout(() => {
+                    //     this.ResepChildDatasource.next(resep_child);
+                    // }, 1000);
                 })
             )
     }

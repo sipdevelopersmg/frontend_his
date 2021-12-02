@@ -105,28 +105,29 @@ export interface IResepBillingModel {
 }
 
 export interface IResepBillingDetailModel {
-    penjualan_obat_id: number;
-    tanggal_penjualan_obat: string;
-    nomor_penjualan_obat: string;
-    nama_outlet: string;
-    nomor_resep: string;
-    nama_dokter: string;
-    sub_total: number;
-    biaya_kirim: number;
-    biaya_lain: number;
-    potongan: number;
-    total_transaksi: number;
-    status_bill: string;
-    details: IResepBillingSubDetailModel[];
-}
-
-export interface IResepBillingSubDetailModel {
-    penjualan_obat_id?: number;
-    no_urut?: number;
-    nama_obat?: string;
-    qty_jual?: number;
-    harga_satuan?: number;
-    sub_total?: number;
+    id_transaksi_obat: number
+    id_register: number
+    penjualan_obat_id: number
+    penjualan_obat_detail_id: number
+    time_inputed_penjualan_obat: string
+    tgl_transaksi: string
+    kode_outlet: string
+    nama_outlet: string
+    id_obat: number
+    kode_obat: string
+    nama_obat: string
+    qty: number
+    qty_charge: number
+    qty_claim: number
+    qty_return: number
+    qty_subsidi: number
+    unit_amount: number
+    total_amount: number
+    charge_amount: number
+    comp_fee: number
+    subsidi: number
+    iur_biaya: number
+    status_bayar: string
 }
 
 export class GetDataBillingModel implements HttpResponseModel {
