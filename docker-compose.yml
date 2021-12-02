@@ -1,12 +1,12 @@
 version: "3.8"
 
 services:
-  frontend_app:
+  frontend_app_testing:
     build:
       context: .
       dockerfile: Frontend.Dockerfile
-    image: his/frontend:${BUILD_DATE}.${BUILD_VERSION}
-    container_name: frontend_app_testing
+    image: his/frontend_app_testing:${BUILD_DATE}.${BUILD_VERSION}
+    container_name: frontend_app_testing_testing
     ports:
       - "80:80"
     networks:
