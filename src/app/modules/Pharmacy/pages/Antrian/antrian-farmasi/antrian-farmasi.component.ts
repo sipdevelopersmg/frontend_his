@@ -24,20 +24,31 @@ export class AntrianFarmasiComponent implements OnInit {
         public resepDokterService:ResepDokterService,
         private socket:Socket,
     ) {
-        this.ButtonNav = [
-            // { Id: "MoveItem", Captions: "Move Item", Icons1: "fa-arrows-alt" }
-        ]
+       
     }
 
     ngOnInit(): void {
         this.resepDokterService.onGetAntrian();
         this.onSocketAntrian();
         this.onSocketPembayaran();
+        this.onSocketResep();
+        this.ButtonNav = [
+            { Id: 'buatResep', Captions: 'Buat Resep', Icons1: 'fa-file-prescription' },
+        ];
+    }
+
+    onSocketResep(): any {
+        return this.socket.fromEvent('resep-callback')
+            .subscribe((_result) => {
+                console.log(_result)
+                this.resepDokterService.onGetAntrian();
+            });
     }
 
     onSocketAntrian(): any {
         return this.socket.fromEvent('antrian-callback')
             .subscribe((_result) => {
+                console.log(_result)
                 this.resepDokterService.onGetAntrian();
             });
     }
@@ -45,14 +56,15 @@ export class AntrianFarmasiComponent implements OnInit {
     onSocketPembayaran(): any {
         return this.socket.fromEvent('pembayaran-callback')
             .subscribe((_result) => {
+                console.log(_result)
                 this.resepDokterService.onGetAntrian();
             });
     }
 
     onClickButtonNav(args: any) {
         switch (args) {
-            case "MoveItem":
-                this.onTransferItemUsingDataDetailId("Data", "SiapDiracik", "DETS-1");
+            case "buatResep":
+                
                 break;
             default:
                 break;
@@ -100,5 +112,11 @@ export class AntrianFarmasiComponent implements OnInit {
             item = {} as KanbanCardModel;
         }
         
+    }
+
+    handePindahAntrian(noRegister){
+        this.resepDokterService.generadeNoAntrian(noRegister).subscribe((result)=>{
+            this.resepDokterService.onGetAntrian();
+        });
     }
 }

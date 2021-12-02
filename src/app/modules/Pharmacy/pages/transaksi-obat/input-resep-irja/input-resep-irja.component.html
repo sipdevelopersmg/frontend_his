@@ -1,0 +1,304 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <!-- Field Pencarian -->
+    <form [formGroup]="FormAddObat">
+        <div class="card">
+            <div class="card-body p-2">
+                <div class="row">
+                    <div class="col-sm-5">               
+                        <!-- Dropdown Depo Farmasi -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Depo Farmasi'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #MaritalOutletDropdown id="marital"
+                                    [dataSource]="setupOutletService.dataSource| async"
+                                    [fields]="SetupOutletDropdownField" [allowFiltering]="true"
+                                    formControlName="id_outlet" (change)="handleChangeOutlet($event)">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <org-input-look-up-kode #LookupPasien 
+                            [modal-title]="'Daftar Pasien'"
+                            [idKode]="'no_rekam_medis'"
+                            [idTitle]="'nama_pasien'" 
+                            [label]="'Pasien'"
+                            [lookup-url]="UrlLookupDaftarPasien"
+                            [filter-lookup]="Config.LookupPasien.filter"
+                            [columns]="Config.LookupPasien.columns"
+                            (onGetSelectedData)="handleSelectedLookupPasien($event)">
+                        </org-input-look-up-kode>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2 mb-2">
+            <!-- Is Racikan -->
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="DropdownObat" class="form-label">Racik</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <input class="form-check-input" type="checkbox" formControlName="is_racikan">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nama Obat -->
+            <div *ngIf="!is_racikan.value" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="DropdownObat" class="form-label">Nama Obat</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pe-0">
+                                <!-- <ejs-dropdownlist id="DropdownObat" [allowFiltering]="true"
+                                    [dataSource]="resepDokterService.dataObat | async" [fields]="DropdownObatFields"
+                                    (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'>
+                                </ejs-dropdownlist> -->
+                                <ejs-dropdownlist id='DropdownObat' #Drop [allowFiltering]="true" [dataSource]='data'
+                                    [fields]='fields' [placeholder]='text' [query]='query' [sortOrder]='sorting'
+                                    [allowFiltering]='true' (filtering)='onFiltering($event)'
+                                    (change)="handleChangeObat($event)" formControlName="id_item" popupWidth='55rem'>
+                                </ejs-dropdownlist>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 px-0">
+                                <span class="input-group-text bg-primary text-white" id="basic-addon1">
+                                    {{ nama_satuan.value }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nama Racikan -->
+            <div *ngIf="is_racikan.value" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="DropdownObat" class="form-label">Nama Racikan Obat</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-select-sm" formControlName="nama_racikan"
+                                (change)="handleChangeNamaRacikan()">
+                            <button id="btnInputGroup" class="btn btn-primary" type="button"
+                                style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
+                                (click)="handelClickRacikan($event)">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meode Racikan -->
+            <div *ngIf="is_racikan.value" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="DropdownObat" class="form-label">Kemasan Racikan</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="input-group">
+                            <ejs-dropdownlist #MolDropdown [dataSource]="setupMetodeRacikanService.dataSource | async"
+                                [fields]="DropdownMetodeRacikanFields" [allowFiltering]="true"
+                                (change)="handleChangeMetodeRacikan($event)" formControlName="id_metode_racikan">
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pe-1">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="NumericQty" class="form-label">Qty</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <ejs-numerictextbox [format]="'N0'" id="NumericQty" [showSpinButton]="false"
+                            [showClearButton]="false" formControlName="qty_resep" [ste]>
+                        </ejs-numerictextbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-1">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="NumericQty" class="form-label">Label Obat</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                        <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                            [dataSource]="dataSourceLabelPemakaian" formControlName="label" popupWidth='30rem'
+                            [fields]="DropdownLabelFields" (change)="handleChangeLabel($event)">
+                        </ejs-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!is_racikan.value" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 pe-1">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="NumericQty" class="form-label">Satuan</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                        <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                            [dataSource]="dataSourceSatuanAturanPakai" formControlName="id_satuan_aturan_pakai"
+                            popupWidth='30rem' [fields]="DropdownsatuanPakaiFields"
+                            (change)="handleChangeSatuanAturan($event)">
+                        </ejs-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pe-1">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="NumericQty" class="form-label">Aturan Tambahan</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                        <ejs-combobox id="DropdownTambahanAturanPakai" [allowFiltering]="true"
+                            [dataSource]="dataSourceTambahanAturanPakai" formControlName="aturan" popupWidth='25rem'
+                            [fields]="DropdownAturanFields" (change)="handleChangeAturan($event)">
+                        </ejs-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ps-4">
+                <div class="row align-content-center h-100 mb-2" [class]="width >= 1023 && width <= 1200 ? 'pt-1' : 'pt-4'">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState != 'input'">
+                        <button class="btn btn-primary btn-sm" type="button" [disabled]="FormAddObat.invalid"
+                            (click)="handleAddObat(FormAddObat.value)">
+                            <i class="fas fa-plus-circle fa-sm"></i>
+                            <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Obat</span>
+                        </button>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" [hidden]="FormAddObatState == 'input'">
+                        <button class="btn btn-warning btn-sm" type="button" [disabled]="FormAddObat.invalid"
+                            (click)="onUpdateDataObat(FormAddObat.value)">
+                            <i class="fas fa-edit fa-sm"></i>
+                            <span [hidden]="width >= 1023 && width <= 1200 ">&nbsp;Edit</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LookUp Racikan -->
+            <org-look-up-hirarki #LookupRacikan [lookup-url]="urlRacikan"
+                (onGetSelectedData)="heandleSelectedRacikan($event)" [columns]="GridLookUpItem.columns"
+                [columnsChild]="GridLookUpItem.columnsChild" [filter-lookup]="GridLookUpItem.filter"
+                [queryString]="'set_racikan_id'" [modal-title]="'Data Racikan Dokter'"></org-look-up-hirarki>
+
+            <org-look-up-hirarki #LookupTemplateResep [lookup-url]="urlTemplateResep"
+                (onGetSelectedData)="heandleSelectedTemplateResep($event)" [columns]="GridlookUpTemplateResep.columns"
+                [columnsChild]="GridlookUpTemplateResep.columnsChild" [filter-lookup]="GridlookUpTemplateResep.filter"
+                [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'"></org-look-up-hirarki>
+        </div>
+    </form>
+
+    <!-- Grid Daftar Obat -->
+    <div class="row pt-2 mb-2">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div class="card">
+                <!-- <div class="card-header px-2">
+                    <p class="mb-0 text-biru-muda">
+                        Daftar Obat
+                    </p>
+                </div> -->
+                <div class="card-body p-0">
+                    <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
+                        height="calc(100vh - 27rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
+                        [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)"
+                        [allowResizing]="true" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
+                        (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
+                        <e-columns>
+                            <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="false" field='is_racikan' [allowEditing]="false" headerText='is_racikan'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="false" field='set_racikan_id' [allowEditing]="false"
+                                headerText='set_racikan_id' editType='defaultEdit' textAlign="left"
+                                headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="false" field='id_metode_racikan' [allowEditing]="false"
+                                headerText='id_metode_racikan' editType='defaultEdit' textAlign="left"
+                                headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="false" field='id_label_pemakaian_obat' [allowEditing]="false"
+                                headerText='id_label_pemakaian_obat' editType='defaultEdit' textAlign="left"
+                                headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="false" field='id_tambahan_aturan_pakai' [allowEditing]="false"
+                                headerText='id_tambahan_aturan_pakai' editType='defaultEdit' textAlign="left"
+                                headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='nama_obat' [allowEditing]="false" headerText='Nama Obat'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='nama_satuan' [allowEditing]="false" headerText='Satuan'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='metode_racikan' [allowEditing]="false"
+                                headerText='Kemasan Racikan' editType='defaultEdit' textAlign="left"
+                                headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='qty_resep' [allowEditing]="true" headerText='Qty'
+                                editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                            </e-column>
+                            <e-column [visible]="true" field='ket_label' [allowEditing]="false" headerText='Pemakaian'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='ket_aturan' [allowEditing]="false" headerText='Aturan'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Keterangan Template Resep  -->
+    <ng-template #modalTemplateResep>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Simpan Template Resep Dokter</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+                    <h2>Apakah Dokter Ingin Menyimapan Resep Ini Sebagai Template Resep?</h2>
+                    <p>Template resep di gunakan untuk membuat resep dengan data resep yg sudah ada</p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="mb-2 row">
+                        <div class="col-sm-4">
+                            <label for="nama_resep"><strong>Nama Template Resep</strong></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control form-control-sm" name="nama_resep">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="handleClickSimpanTemplateResepDokter()">Simpan Template Resep</button>
+            <button type="button" class="btn btn-danger" (click)="handleClickAbaikan()">Tidak</button>
+        </div>
+    </ng-template>
+
+</org-card-layout>

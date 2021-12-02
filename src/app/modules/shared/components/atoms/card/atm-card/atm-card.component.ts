@@ -30,10 +30,13 @@ export class AtmCardComponent implements OnInit {
 
     @Output("onMarkedResepSudahDilayani") onMarkedResepSudahDilayani = new EventEmitter();
 
+    @Output("onPindahKeAntrian") onPindahKeAntrian = new EventEmitter();
+    
     constructor(private utilityService: UtilityService) { }
 
     ngOnInit(): void {
         this.onGenerateCustomColor();
+        console.log(this.Status);
     }
 
     onClickCardButton(NamaPasien: string, Waktu: string, Status: string, NamaDokter: string, KodeResep: string, DetailResep: KanbanDetailResep[]) {
@@ -69,6 +72,10 @@ export class AtmCardComponent implements OnInit {
 
     onMarkResepAsComplete(Id: string) {
         this.onMarkedResepAsComplete.emit(Id);
+    }
+
+    onResepPindahKeAntrian(NoRegister){
+        this.onPindahKeAntrian.emit(NoRegister);
     }
 
     onMarkResepSudahDilayani(Id: string) {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { KanbanColumnModel } from 'src/app/modules/shared/models/KanbanCardModel.model';
 
@@ -10,6 +10,7 @@ import { KanbanColumnModel } from 'src/app/modules/shared/models/KanbanCardModel
 export class MolKanbanV1Component implements OnInit {
 
     @Input("Columns") Columns: KanbanColumnModel[];
+    @Output("onPindahKeAntrian") onPindahKeAntrian = new EventEmitter();
 
     ConnectedTo: Object[] = [];
 
@@ -23,5 +24,9 @@ export class MolKanbanV1Component implements OnInit {
 
     onFilterPencarianGlobal(FilterPencarianGlobal: string) {
         this.FilterPencarianGlobal.next(FilterPencarianGlobal);
+    }
+
+    PindahKeAntrian(noRegister){
+        this.onPindahKeAntrian.emit(noRegister);
     }
 }

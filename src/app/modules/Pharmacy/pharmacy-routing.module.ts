@@ -11,7 +11,9 @@ import { SetupOutletComponent } from "./pages/setup-data/setup-outlet/setup-outl
 import { SetupRutePemberianObatComponent } from "./pages/setup-data/setup-rute-pemberian-obat/setup-rute-pemberian-obat.component";
 import { SetupTipeOutletComponent } from "./pages/setup-data/setup-tipe-outlet/setup-tipe-outlet.component";
 import { SetupFormulariumComponent } from "./pages/setup-formularium/setup-formularium/setup-formularium.component";
+import { InputResepIrjaComponent } from "./pages/transaksi-obat/input-resep-irja/input-resep-irja.component";
 import { TransaksiObatIrjaComponent } from "./pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component";
+import { ViewResepIrjaComponent } from "./pages/transaksi-obat/transaksi-obat-irja/view-resep-irja/view-resep-irja.component";
 import { TransaksiObatIrnaComponent } from "./pages/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.component";
 
 const pharmacyRoutes: Routes = [
@@ -19,6 +21,7 @@ const pharmacyRoutes: Routes = [
     { path: "antrian-farmasi", component: AntrianFarmasiComponent, data: { title: "Antrian Pharmacy" } },
     { path: "setup-formularium", component: SetupFormulariumComponent, data: { title: "Setup Formularium" } },
     { path: "resep-racikan", component: ResepRacikanComponent, data: { title: "Resep Racikan" } },
+    
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
@@ -33,8 +36,10 @@ const pharmacyRoutes: Routes = [
     {
         path: "transaksi-obat", component: null, data: { title: "Transaksi Obat" },
         children: [
+            { path: "view-obat-irja/:id/:key", component: ViewResepIrjaComponent, data: { title: "View Resep Rawat Jalan" } },
             { path: "transaksi-obat-irja/:id/:key", component: TransaksiObatIrjaComponent, data: { title: "Transaksi Obat Rawat Jalan" } },
             { path: "transaksi-obat-irna", component: TransaksiObatIrnaComponent, data: { title: "Transaksi Obat Rawat Inap" } },
+            { path: "input-resep-irja", component: InputResepIrjaComponent, data: { title: "Input Resep Irja" } },
         ]
     },
     {

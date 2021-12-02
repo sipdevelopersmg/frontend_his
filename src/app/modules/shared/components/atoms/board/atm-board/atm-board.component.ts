@@ -24,6 +24,8 @@ export class AtmBoardComponent implements OnInit {
     @Input("ConnectedTo") ConnectedTo: Object[];
 
     @Output("onClickedCard") onClickedCard = new EventEmitter();
+
+    @Output("PindahKeAntrian") PindahKeAntrian = new EventEmitter();
     
     HideBoard: boolean = false;
 
@@ -96,6 +98,10 @@ export class AtmBoardComponent implements OnInit {
     onMarkResepSudahDilayani(Id: string, CardBodyData: KanbanCardModel[]) {
         const id = this.encryptionService.encrypt(JSON.stringify(Id));
         this.router.navigate(['dashboard/Pharmacy/transaksi-obat/transaksi-obat-irja', id, "GRAHCIS"]);
+    }
+
+    onPindahKeAntrian(NoRegister: string) {
+        this.PindahKeAntrian.emit(NoRegister);
     }
 
     onChangeSearchFilter() {
