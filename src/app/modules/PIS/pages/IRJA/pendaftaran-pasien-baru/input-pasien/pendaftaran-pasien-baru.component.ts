@@ -335,7 +335,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                 "id_bahasa": [0, []],
                 "id_last_education": [0, []],
                 "id_job_type": [0, []],
-                "user_created": [this.UserData.id_user, [Validators.required]],
+                "user_created": [0, [Validators.required]],
             }),
             "alamat_person": this.formBuilder.array([
 
@@ -415,7 +415,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             "rw": ["", []],
             "kelurahan": ["", []],
             "kode_wilayah": ["", Validators.required],
-            "user_created": [this.UserData.id_user, []],
+            "user_created": [0, []],
             "is_default": [false, Validators.required]
         });
     }
@@ -427,7 +427,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             "office_phone": ["", Validators.required],
             "email": ["", []],
             "keterangan": ["", []],
-            "user_created": [this.UserData.id_user, []],
+            "user_created": [0, []],
             "is_default": [false, Validators.required]
         });
     }
@@ -764,7 +764,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
         this.DebiturDropdown.value = null;
 
-        this.user_created.setValue(this.UserData.id_user);
+        this.user_created.setValue(0);
 
         if (this.FormAlamats.length > 0) {
             for (let i = 0; i < this.FormAlamats.length; i++) {

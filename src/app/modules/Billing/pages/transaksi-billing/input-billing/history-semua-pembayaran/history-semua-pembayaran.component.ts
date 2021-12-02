@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
 import { TransBillingService } from 'src/app/modules/Billing/services/trans-billing/trans-billing.service';
 import { SidebarChildMenuModel } from 'src/app/modules/core/models/navigation/menu.model';
@@ -20,6 +21,9 @@ export class HistorySemuaPembayaranComponent implements OnInit {
     @ViewChild('GridDetailInvoice') GridDetailInvoice: GridComponent;
     GridDetailInvoiceDatasource: any[] = [];
     GridDetailInvoiceToolbar: any[] = [];
+
+    @ViewChild('GridDetailInvoiceResep') GridDetailInvoiceResep: GridComponent;
+    GridDetailInvoiceResepDatasource: any[] = [];
 
     FormHistoryInvoice: FormGroup;
 
@@ -46,6 +50,7 @@ export class HistorySemuaPembayaranComponent implements OnInit {
             total_amount: [0, []],
             deposit_amount: [0, []],
             invoice_item: [[], []],
+            charge_amount: [0, []],
         });
 
         this.GridDetailInvoiceToolbar = [
@@ -58,11 +63,13 @@ export class HistorySemuaPembayaranComponent implements OnInit {
 
         let Button = SidebarMenu.button;
 
-        if (Button.length > 0) {
+        let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+        if (Button.length > 0 || (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
             Button.forEach((item) => {
                 if (item.caption == "Batal Payment") {
                     this.GridDetailInvoiceToolbar = [
-                        { text: 'Batalkan Invoice', tooltipText: 'Batalkan Invoice', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_invoice' },
+                        { text: 'Batalkan Payment', tooltipText: 'Batalkan Payment', prefixIcon: 'fas fa-ban fa-sm', id: 'batal_payment' },
                     ];
                 }
             });
@@ -155,8 +162,13 @@ export class HistorySemuaPembayaranComponent implements OnInit {
     }
 
     handleClickDetailItem(item: any): void {
+        console.log(item);
+
         this.GridDetailInvoiceDatasource = item.item_invoice;
         this.GridDetailInvoice.refresh();
+
+        this.GridDetailInvoiceResepDatasource = item.item_resep_invoice;
+        this.GridDetailInvoiceResep.refresh();
 
         this.NomorInvoiceTerpilih = item.nomor_invoice;
 
@@ -169,6 +181,7 @@ export class HistorySemuaPembayaranComponent implements OnInit {
         this.claim_amount.setValue(item.claim_amount);
         this.total_amount.setValue(item.total_amount);
         this.deposit_amount.setValue(item.deposit_amount);
+        this.charge_amount.setValue(item.charge_amount);
     }
 
     handleToolbarClick(args: any): void {
@@ -197,4 +210,5 @@ export class HistorySemuaPembayaranComponent implements OnInit {
     get claim_amount(): AbstractControl { return this.FormHistoryInvoice.get('claim_amount'); }
     get total_amount(): AbstractControl { return this.FormHistoryInvoice.get('total_amount'); }
     get deposit_amount(): AbstractControl { return this.FormHistoryInvoice.get('deposit_amount'); }
+    get charge_amount(): AbstractControl { return this.FormHistoryInvoice.get('charge_amount'); }
 }

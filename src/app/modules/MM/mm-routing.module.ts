@@ -69,27 +69,27 @@ const mmRoutes: Routes = [
         ],
     },
     {
-        path: "pemesanan", component: null, data: {title:"Input PO"},
-        children:[
+        path: "pemesanan", component: null, data: { title: "Input PO" },
+        children: [
             { path: "input-pemesanan", component: InputPemesananComponent, data: { title: "Input Pemesanan" } },
             { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "Daftar Pemesanan" } },
             { path: "view-pemesanan/:id/:key", component: ViewPemesananComponent, data: { title: "View Pemesanan" } },
         ],
     },
     {
-        path: "penerimaan", component: null, data: {title:"Input Penerimaan"},
-        children:[
+        path: "penerimaan", component: null, data: { title: "Input Penerimaan" },
+        children: [
             { path: "input-penerimaan", component: InputPenerimaanComponent, data: { title: "Input Penerimaan" } },
             { path: "daftar-penerimaan", component: DaftarPenerimaanComponent, data: { title: "Daftar Penerimaan" } },
             { path: "view-penerimaan/:id/:key", component: ViewPenerimaanComponent, data: { title: "View Penerimaan" } },
         ],
     },
     {
-        path: "setharga-order", component: null, data: {title:"Input PO"},
-        children:[
+        path: "setharga-order", component: null, data: { title: "Input PO" },
+        children: [
             { path: "input-setharga-order", component: SetHargaOrderComponent, data: { title: "Set Harga Order" } },
         ],
-        
+
     },
     {
         path: "permintaan-mutasi", component: null, data: { title: "Input PO" },

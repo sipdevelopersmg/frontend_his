@@ -2,7 +2,7 @@ import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angu
 import { BehaviorSubject } from 'rxjs';
 import { CommandModel, EditSettingsModel, GridComponent, GridModel, IEditCell, QueryCellInfoEventArgs, SelectionSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { IInformasiPasienModel, IResepBillingSubDetailModel } from '../../../models/trans-billing/trans-billing.model';
+import { IInformasiPasienModel } from '../../../models/trans-billing/trans-billing.model';
 import { HistoryPembayaranComponent } from '../../transaksi-billing/input-billing/history-pembayaran/history-pembayaran.component';
 import { IPaymentMethodModel } from '../../../models/setup-data/setup-payment-method.model';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -137,7 +137,7 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     GridDataResepSelectionSettings: SelectionSettingsModel = { type: 'Single' };
     GridDataResepContainsNotOpen: boolean = false;
     GridResepResizeSettings = { mode: 'Auto' };
-    ChildResepDatasource: IResepBillingSubDetailModel[] = [];
+    ChildResepDatasource: any[] = [];
     ChildGridResep: GridModel = {};
     GridDataResepEditSettings: EditSettingsModel = { allowEditing: true, allowEditOnDblClick: true };
 

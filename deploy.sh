@@ -5,7 +5,7 @@ echo "############# starting deployment... ##############"
 BUILD_DATE=$(sed -n 's/^BUILD_DATE=\(.*\)/\1/p' < /var/jenkins_home/envstore/frontend.env)
 BUILD_VERSION=$(sed -n 's/^BUILD_VERSION=\(.*\)/\1/p' < /var/jenkins_home/envstore/frontend.env)
 
-IMAGE_NAME=his/pis_api:$BUILD_DATE.$BUILD_VERSION
+IMAGE_NAME=his/frontend:$BUILD_DATE.$BUILD_VERSION
 
 echo "1. building new image : $IMAGE_NAME"
 

@@ -90,7 +90,7 @@
                                     <div class="row">
                                         <!-- Grid Detail Invoice -->
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                                            <ejs-grid #GridDetailInvoice [id]="'GridDetailInvoice'" [height]="'17.3rem'"
+                                            <ejs-grid #GridDetailInvoice [id]="'GridDetailInvoice'" [height]="'15rem'"
                                                 [dataSource]="GridDetailInvoiceDatasource"
                                                 [toolbar]="GridDetailInvoiceToolbar" [rowHeight]="30"
                                                 [gridLines]="'Both'" [allowPaging]="false" [allowResizing]="true"
@@ -118,6 +118,63 @@
                                                     </e-column>
                                                     <e-column [width]="250" [field]="'nama_setup_tarif'"
                                                         [headerText]="'NAMA TARIF'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'"
+                                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                        [type]="'number'" [format]="'N2'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'unit_amount'"
+                                                        [headerText]="'HARGA'" [visible]="true" [allowEditing]="false"
+                                                        [allowSorting]="false" [textAlign]="'Right'"
+                                                        [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'total_amount'"
+                                                        [headerText]="'SUBTOTAL'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                        [type]="'number'" [format]="'N2'">
+                                                    </e-column>
+                                                </e-columns>
+                                            </ejs-grid>
+                                        </div>
+
+                                        <!-- Grid Detail Invoice -->
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <ejs-grid #GridDetailInvoiceResep [id]="'GridDetailInvoiceResep'"
+                                                [height]="'10rem'" [dataSource]="GridDetailInvoiceResepDatasource"
+                                                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
+                                                [allowResizing]="true" [allowFiltering]='true'>
+                                                <e-columns>
+                                                    <e-column [width]="100" [field]="'id_invoice'"
+                                                        [headerText]="'ID DETAIL'" [visible]="false"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'id_invoice_obat'"
+                                                        [headerText]="'ID DETAIL'" [visible]="false"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="90" [field]="'tgl_invoice'"
+                                                        [headerText]="'TGL ORDER'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'nomor_invoice'"
+                                                        [headerText]="'NO. INVOICE'" [visible]="false"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="100" [field]="'kode_obat'"
+                                                        [headerText]="'KODE OBAT'" [visible]="true"
+                                                        [allowEditing]="false" [allowSorting]="false"
+                                                        [textAlign]="'Left'">
+                                                    </e-column>
+                                                    <e-column [width]="250" [field]="'nama_obat'"
+                                                        [headerText]="'NAMA OBAT'" [visible]="true"
                                                         [allowEditing]="false" [allowSorting]="false"
                                                         [textAlign]="'Left'">
                                                     </e-column>

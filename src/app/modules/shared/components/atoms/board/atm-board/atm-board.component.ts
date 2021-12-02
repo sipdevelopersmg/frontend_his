@@ -24,7 +24,7 @@ export class AtmBoardComponent implements OnInit {
     @Input("ConnectedTo") ConnectedTo: Object[];
 
     @Output("onClickedCard") onClickedCard = new EventEmitter();
-    
+
     HideBoard: boolean = false;
 
     Search: string;
@@ -35,8 +35,8 @@ export class AtmBoardComponent implements OnInit {
         private router: Router,
         private encryptionService: EncryptionService,
         public resepDokterService: ResepDokterService,
-        public transaksiObatIrjaService:TransaksiObatIrjaService,
-        private utilityService:UtilityService,
+        public transaksiObatIrjaService: TransaksiObatIrjaService,
+        private utilityService: UtilityService,
 
     ) { }
 
@@ -85,11 +85,11 @@ export class AtmBoardComponent implements OnInit {
     }
 
     onMarkResepAsComplete(Id: number, CardBodyData: KanbanCardModel[]) {
-        this.transaksiObatIrjaService.obatDiserahakan(Id).subscribe((result)=>{
+        this.transaksiObatIrjaService.obatDiserahakan(Id).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Data Berhasil Diserahkan', result.message)
-            .then(() => {
-                this.resepDokterService.onGetAntrian();
-            });
+                .then(() => {
+                    this.resepDokterService.onGetAntrian();
+                });
         });
     }
 

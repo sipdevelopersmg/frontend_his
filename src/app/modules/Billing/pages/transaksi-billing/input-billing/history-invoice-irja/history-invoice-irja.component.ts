@@ -21,6 +21,9 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     GridDetailInvoiceDatasource: any[] = [];
     GridDetailInvoiceToolbar: any[] = [];
 
+    @ViewChild('GridDetailInvoiceResep') GridDetailInvoiceResep: GridComponent;
+    GridDetailInvoiceResepDatasource: any[] = [];
+
     FormHistoryInvoice: FormGroup;
 
     SelectedInvoice: any[] = [];
@@ -44,8 +47,10 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
             paid_amount: [0, []],
             claim_amount: [0, []],
             total_amount: [0, []],
+            charge_amount: [0, []],
             deposit_amount: [0, []],
             invoice_item: [[], []],
+            invoice_resep_item: [[], []]
         });
     }
 
@@ -54,7 +59,9 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
 
         let Button = SidebarMenu.button;
 
-        if (Button.length > 0) {
+        let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+        if (Button.length > 0 || (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
             Button.forEach((item) => {
                 if (item.caption == "Batal Payment") {
                     this.GridDetailInvoiceToolbar = [
@@ -95,14 +102,20 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     }
 
     handleClickDetailItemInvoice(item: any): void {
+
+        item.charge_amount = item.total_amount;
+
         this.NomorInvoiceTerpilih = item.nomor_invoice;
 
         this.FormHistoryInvoice.setValue(item);
 
         this.GridDetailInvoiceDatasource = [];
         this.GridDetailInvoiceDatasource = item.invoice_item;
-
         this.GridDetailInvoice.refresh();
+
+        this.GridDetailInvoiceResepDatasource = [];
+        this.GridDetailInvoiceResepDatasource = item.invoice_resep_item;
+        this.GridDetailInvoiceResep.refresh();
     }
 
     handleToolbarClickDetailInvoice(args: any): void {
@@ -142,6 +155,7 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
         let deposit_amount = 0;
         let paid_amount = 0;
         let belum_lunas = 0;
+        let charge_amount = 0;
 
         this.SelectedInvoice.filter((item) => {
             let item_transaksi = [];
@@ -159,7 +173,8 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
             claim_amount += item.claim_amount;
             deposit_amount += item.deposit_amount;
             paid_amount += item.paid_amount;
-            belum_lunas += item.paid_amount;
+            belum_lunas += item.total_amount;
+            charge_amount += item.total_amount;
         });
 
         let header = {
@@ -169,6 +184,7 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
             deposit_amount: deposit_amount,
             paid_amount: paid_amount,
             belum_lunas: belum_lunas,
+            charge_amount: charge_amount,
         };
 
         this.transBillingService.HeaderBilling.next(header);
@@ -192,6 +208,7 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     get paid_amount(): AbstractControl { return this.FormHistoryInvoice.get('paid_amount'); }
     get claim_amount(): AbstractControl { return this.FormHistoryInvoice.get('claim_amount'); }
     get total_amount(): AbstractControl { return this.FormHistoryInvoice.get('total_amount'); }
+    get charge_amount(): AbstractControl { return this.FormHistoryInvoice.get('charge_amount'); }
     get deposit_amount(): AbstractControl { return this.FormHistoryInvoice.get('deposit_amount'); }
 
 }

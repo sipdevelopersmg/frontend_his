@@ -7,7 +7,7 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { IPaymentMethodModel } from '../../../models/setup-data/setup-payment-method.model';
-import { IInformasiPasienModel, IResepBillingSubDetailModel } from '../../../models/trans-billing/trans-billing.model';
+import { IInformasiPasienModel } from '../../../models/trans-billing/trans-billing.model';
 import { SetupPaymentMethodService } from '../../../services/setup-data/setup-payment-method/setup-payment-method.service';
 import { TransBillingService } from '../../../services/trans-billing/trans-billing.service';
 import { HistoryInvoiceIrjaComponent } from './history-invoice-irja/history-invoice-irja.component';
@@ -17,6 +17,7 @@ import { SidebarChildMenuModel } from 'src/app/modules/core/models/navigation/me
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HistorySemuaPembayaranComponent } from './history-semua-pembayaran/history-semua-pembayaran.component';
 import Swal from 'sweetalert2';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 
 @Component({
     selector: 'app-input-billing',
@@ -36,7 +37,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         { Id: 'Daftar_Payment', Icons1: 'fa-book fa-sm', Captions: 'Daftar Payment' },
         { Id: 'Create_Invoice', Icons1: 'fa-user-check fa-sm', Captions: '[F5] Buat Invoice' },
         { Id: 'Cetak_Rincian_Biaya', Icons1: 'fa-print fa-sm', Captions: 'Print Rincian Biaya' },
-        // { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' },
+        { Id: 'Posting', Icons1: 'fa-file-import fa-sm', Captions: 'Posting' },
         // { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting'}
     ];
 
@@ -71,7 +72,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     GridDataResepSelectionSettings: SelectionSettingsModel = { type: 'Multiple' };
     GridDataResepContainsNotOpen = false;
     GridResepResizeSettings = { mode: 'Auto' };
-    ChildResepDatasource: IResepBillingSubDetailModel[] = [];
+    ChildResepDatasource: any[] = [];
     ChildGridResep: GridModel = {};
     TotalAmountResep = new BehaviorSubject(0);
 
@@ -139,6 +140,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             claim_amount: [0, []],
             deposit_amount: [0, []],
             paid_amount: [0, []],
+            charge_amount: [0, []],
         });
 
         this.FormInputKlaimDebitur = this.formBuilder.group({
@@ -170,18 +172,24 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
         const Button = SidebarMenu.button;
 
-        if (Button.length > 0) {
-            Button.forEach((item) => {
-                if (item.caption !== 'Batal Payment') {
-                    this.ButtonNav.push({
-                        Id: (item.caption).replace(' ', '_'),
-                        Icons1: item.icon,
-                        Icons2: item.icon2,
-                        StackIcon: JSON.parse(item.stack_icon),
-                        Captions: item.caption
-                    });
-                }
-            });
+        let UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
+
+        if (Button.length > 0 || (UserData.id_role === 5 || UserData.nama_role === "pengawas kasir")) {
+            // Button.forEach((item) => {
+            //     if (item.caption !== 'Batal Payment') {
+            //         this.ButtonNav.push({
+            //             Id: (item.caption).replace(' ', '_'),
+            //             Icons1: item.icon,
+            //             Icons2: item.icon2,
+            //             StackIcon: JSON.parse(item.stack_icon),
+            //             Captions: item.caption
+            //         });
+            //     }
+            // });
+
+            this.ButtonNav.push(
+                { Id: 'Batal_Posting', Icons1: 'fa-file-import fa-sm', Icons2: 'fa-ban fa-sm text-danger', StackIcon: true, Captions: 'Batal Posting' }
+            );
         }
     }
 
@@ -329,7 +337,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                     claim_amount: this.FormInputInvoice.value.claim_amount,
                     deposit_amount: this.FormInputInvoice.value.deposit_amount,
                     paid_amount: 0,
-                    belum_lunas: 0
+                    belum_lunas: 0,
+                    charge_amount: 0,
                 };
                 this.transBillingService.HeaderBilling.next(header);
                 this.HistoryInvoiceRawatJalan.handleOpenHistoryInvoice();
@@ -507,7 +516,6 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             this.onCountTotalDataResep();
         }, 500);
 
-        console.log()
     }
 
     // ** TIKET ==============
@@ -754,8 +762,6 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             if (args.row.length >= 0) {
                 args.rowIndexes.filter((rowIndex) => {
                     if (this.GridDataResep.getRowByIndex(rowIndex).classList.contains('e-disabled')) {
-                        console.log(rowIndex);
-
                         args.rowIndexes.splice(rowIndex + removedIndexLength, 1);
                         removedIndexLength--;
                     }
@@ -817,7 +823,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         let selected_records = this.GridDataResep.getSelectedRecords();
 
         selected_records.forEach((item) => {
-            total_amount += item['total_transaksi'];
+            total_amount += item['total_amount'];
         });
 
         this.TotalAmountResep.next(total_amount);
@@ -903,8 +909,10 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     onCountSisaTagihan(): void {
         if (this.total_amount.value < (this.claim_amount.value + this.deposit_amount.value)) {
             this.paid_amount.setValue(0);
+            this.charge_amount.setValue(0);
         } else {
             this.paid_amount.setValue(this.total_amount.value - (this.claim_amount.value + this.deposit_amount.value));
+            this.charge_amount.setValue(this.total_amount.value - (this.claim_amount.value + this.deposit_amount.value));
         }
     }
 
@@ -929,7 +937,8 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                     total_amount: this.FormInputInvoice.value.total_amount,
                     claim_amount: this.FormInputInvoice.value.claim_amount,
                     deposit_amount: this.FormInputInvoice.value.deposit_amount,
-                    paid_amount: this.FormInputInvoice.value.paid_amount
+                    paid_amount: this.FormInputInvoice.value.paid_amount,
+                    charge_amount: this.FormInputInvoice.value.charge_amount,
                 };
 
                 let trans_detail = [
@@ -937,10 +946,19 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                     ...this.GridDataTDMK.getSelectedRecords(),
                     ...this.GridDataTDLAB.getSelectedRecords(),
                     ...this.GridDataTDRAD.getSelectedRecords(),
+                ];
+
+                let resep_detail = [
                     ...this.GridDataResep.getSelectedRecords(),
                 ];
 
-                this.transBillingService.onPostSaveInvoiceWithoutPayment({ trans_header: trans_header, trans_detail: trans_detail })
+                let parameter = {
+                    trans_header: trans_header,
+                    trans_detail: trans_detail,
+                    resep_detail: resep_detail,
+                }
+
+                this.transBillingService.onPostSaveInvoiceWithoutPayment(parameter)
                     .subscribe((result) => {
                         if (result) {
                             this.utilityService.onShowingCustomAlert('success', 'Success', 'Invoice Berhasil Dibuat')
@@ -966,8 +984,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
                             this.handleEmptyBillingHeader();
                         }
-                    })
-
+                    });
             }
         });
     }
@@ -1020,19 +1037,24 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 deposit_amount: this.FormInputInvoice.value.deposit_amount,
                 paid_amount: this.FormInputInvoice.value.paid_amount,
                 belum_lunas: this.FormInputInvoice.value.paid_amount,
+                charge_amount: this.FormInputInvoice.value.charge_amount,
             };
 
-            this.TotalTransaksiPembayaran = header.paid_amount;
+            // this.TotalTransaksiPembayaran = header.paid_amount;
+            this.TotalTransaksiPembayaran = header.charge_amount;
 
-            this.GrandTotalTransaksiPembayaran = header.paid_amount - this.BiayaBankPembayaran;
+            // this.GrandTotalTransaksiPembayaran = header.paid_amount - this.BiayaBankPembayaran;
+            this.GrandTotalTransaksiPembayaran = header.charge_amount - this.BiayaBankPembayaran;
 
             this.transBillingService.HeaderBilling.next(header);
         };
 
         if (ModalPembayaranState == 'Existing_Invoice') {
-            this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'];
+            // this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'];
+            this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['charge_amount'];
 
-            this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'] - this.BiayaBankPembayaran;
+            // this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'] - this.BiayaBankPembayaran;
+            this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['charge_amount'] - this.BiayaBankPembayaran;
         };
 
         if (ModalPembayaranState == 'Restitusi') {
@@ -1043,6 +1065,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 deposit_amount: 0,
                 paid_amount: this.deposit_amount.value,
                 belum_lunas: this.deposit_amount.value,
+                charge_amount: this.deposit_amount.value,
             };
 
             this.transBillingService.HeaderBilling.next(header);
@@ -1141,6 +1164,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 deposit_amount: this.FormInputInvoice.value.deposit_amount,
                 paid_amount: this.FormInputInvoice.value.paid_amount,
                 belum_lunas: this.KurangBayarPembayaran,
+                charge_amount: this.FormInputInvoice.value.charge_amount,
             };
 
             // ** Insert Into HeaderBilling BehaviorSubject
@@ -1189,23 +1213,30 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     handleClickSubmitPembayaran(): void {
         let trans_header = this.transBillingService.HeaderBilling.value;
+
         let trans_detail = [
             ...this.GridDataTiket.getSelectedRecords(),
             ...this.GridDataTDMK.getSelectedRecords(),
             ...this.GridDataTDLAB.getSelectedRecords(),
             ...this.GridDataTDRAD.getSelectedRecords(),
-            ...this.GridDataResep.getSelectedRecords(),
         ];
+
+        let resep_detail = [
+            ...this.GridDataResep.getSelectedRecords()
+        ];
+
         let payment = {
-            jumlah_payment: trans_header['paid_amount'],
+            jumlah_payment: trans_header['charge_amount'],
             keterangan: (<HTMLInputElement>document.getElementById('keterangan')).value,
             pembayar: (<HTMLInputElement>document.getElementById('pembayar')).value,
         };
+
         let payment_detail = this.GridDataPembayaranDatasource;
 
         let parameter = {
             trans_header: trans_header,
             trans_detail: trans_detail,
+            resep_detail: resep_detail,
             payment: payment,
             payment_detail: payment_detail,
         };
@@ -1256,7 +1287,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                         this.handleEmptyBillingHeader();
                     }, 500);
                 }
-            })
+            });
     }
 
     handleClickSubmitDeposit(): void {
@@ -1462,6 +1493,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             deposit_amount: 0,
             paid_amount: 0,
             belum_lunas: 0,
+            charge_amount: 0,
         };
 
         this.transBillingService.HeaderBilling.next(header);
@@ -1627,6 +1659,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     get claim_amount(): AbstractControl { return this.FormInputInvoice.get('claim_amount'); }
     get deposit_amount(): AbstractControl { return this.FormInputInvoice.get('deposit_amount'); }
     get paid_amount(): AbstractControl { return this.FormInputInvoice.get('paid_amount'); }
+    get charge_amount(): AbstractControl { return this.FormInputInvoice.get('charge_amount'); }
 
     get jumlah_klaim(): AbstractControl { return this.FormInputKlaimDebitur.get('jumlah_klaim'); }
     get saldo_klaim_sisa(): AbstractControl { return this.FormInputKlaimDebitur.get('saldo_klaim_sisa'); }

@@ -232,9 +232,9 @@
                                                     class="statustemp e-activecolor">
                                                     <span class="statustxt e-activecolor">OPEN</span>
                                                 </div>
-                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                <div *ngIf="data.status_bayar === 'CLOSED';"
                                                     class="statustemp e-warningcolor">
-                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                    <span class="statustxt e-warningcolor">CLOSED</span>
                                                 </div>
                                                 <div *ngIf="data.status_bayar === 'PAID';"
                                                     class="statustemp e-postedcolor">
@@ -303,9 +303,9 @@
                                                     class="statustemp e-activecolor">
                                                     <span class="statustxt e-activecolor">OPEN</span>
                                                 </div>
-                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                <div *ngIf="data.status_bayar === 'CLOSED';"
                                                     class="statustemp e-warningcolor">
-                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                    <span class="statustxt e-warningcolor">CLOSED</span>
                                                 </div>
                                                 <div *ngIf="data.status_bayar === 'PAID';"
                                                     class="statustemp e-postedcolor">
@@ -374,9 +374,9 @@
                                                     class="statustemp e-activecolor">
                                                     <span class="statustxt e-activecolor">OPEN</span>
                                                 </div>
-                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                <div *ngIf="data.status_bayar === 'CLOSED';"
                                                     class="statustemp e-warningcolor">
-                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                    <span class="statustxt e-warningcolor">CLOSED</span>
                                                 </div>
                                                 <div *ngIf="data.status_bayar === 'PAID';"
                                                     class="statustemp e-postedcolor">
@@ -445,9 +445,9 @@
                                                     class="statustemp e-activecolor">
                                                     <span class="statustxt e-activecolor">OPEN</span>
                                                 </div>
-                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                <div *ngIf="data.status_bayar === 'CLOSED';"
                                                     class="statustemp e-warningcolor">
-                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                    <span class="statustxt e-warningcolor">CLOSED</span>
                                                 </div>
                                                 <div *ngIf="data.status_bayar === 'PAID';"
                                                     class="statustemp e-postedcolor">
@@ -462,46 +462,68 @@
                                 <ejs-grid *ngIf="item.jenis_transaksi == 'RESEP'" #GridDataResep [id]="'GridDataResep'"
                                     [width]="'100%'" [dataSource]="item.detail" [rowHeight]="30" [gridLines]="'Both'"
                                     [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
-                                    [resizeSettings]="GridResepResizeSettings" [childGrid]='ChildGridResep'
+                                    [resizeSettings]="GridResepResizeSettings"
                                     [selectionSettings]="GridDataResepSelectionSettings"
-                                    (load)="handleLoadDataResep($event)"
                                     (rowSelecting)="GridDataResepContainsNotOpen ? handleSelectingRowDataResep($event) : null"
                                     (rowSelected)="handleSelectedRowDataResep($event, item)"
                                     (rowDeselected)="handleDeselectedRowDataResep($event, item)"
                                     (rowDataBound)="handleRowDataBound($event)"
                                     (dataBound)="handleDataBoundDataResep()">
                                     <e-columns>
-                                        <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'Checkbox'"
-                                            [textAlign]="'Center'" [headerTextAlign]="'Center'">
+                                        <e-column [width]="80" [field]="'id_transaksi_obat'"
+                                            [headerText]="'ID TRANSAKSI OBAT'" [visible]="false" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="80" [field]="'id_register'" [headerText]="'ID REGISTER'"
+                                            [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
                                         </e-column>
                                         <e-column [width]="80" [field]="'penjualan_obat_id'"
                                             [headerText]="'PENJUALAN OBAT ID'" [visible]="false" [allowEditing]="false"
                                             [allowSorting]="false" [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="150" [field]="'nomor_penjualan_obat'"
-                                            [headerText]="'NO. PENJUALAN OBAT'" [visible]="true" [allowEditing]="false"
-                                            [allowSorting]="false" [textAlign]="'Left'">
+                                        <e-column [width]="80" [field]="'penjualan_obat_detail_id'"
+                                            [headerText]="'PENJUALAN OBAT DETAIL ID'" [visible]="false"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="80" [field]="'nomor_resep'" [headerText]="'NO. RESEP'"
+                                        <e-column [width]="120" [field]="'time_inputed_penjualan_obat'"
+                                            [headerText]="'WAKTU PENJUALAN OBAT'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                                            [type]="'DateTime'" [format]="'dd/MM/yyyy HH:mm:ss'">
+                                        </e-column>
+                                        <e-column [width]="120" [field]="'tgl_transaksi'"
+                                            [headerText]="'TGL. TRANSAKSI'" [visible]="true" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                                            [format]="'dd/MM/yyyy'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'kode_outlet'" [headerText]="'KODE OUTLET'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="100" [field]="'nama_dokter'" [headerText]="'NAMA DOKTER'"
+                                        <e-column [width]="120" [field]="'nama_outlet'" [headerText]="'NAMA OUTLET'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'">
                                         </e-column>
-                                        <e-column [width]="80" [field]="'sub_total'" [headerText]="'SUBTOTAL'"
+                                        <e-column [width]="100" [field]="'kode_obat'" [headerText]="'KODE OBAT'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="150" [field]="'nama_obat'" [headerText]="'NAMA OBAT'"
+                                            [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                            [textAlign]="'Left'">
+                                        </e-column>
+                                        <e-column [width]="80" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'"
+                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
+                                        </e-column>
+                                        <e-column [width]="100" [field]="'unit_amount'" [headerText]="'HARGA'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
                                             [textAlign]="'Left'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
                                             [format]="'N2'">
                                         </e-column>
-                                        <e-column [width]="80" [field]="'potongan'" [headerText]="'POTONGAN'"
+                                        <e-column [width]="100" [field]="'total_amount'" [headerText]="'SUBTOTAL'"
                                             [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                            [textAlign]="'Right'" [headerTextAlign]="'Right'" [format]="'N2'">
-                                        </e-column>
-                                        <e-column [width]="100" [field]="'total_transaksi'"
-                                            [headerText]="'TOTAL TRANSAKSI'" [visible]="true" [allowEditing]="false"
-                                            [allowSorting]="false" [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                            [textAlign]="'Left'" [textAlign]="'Right'" [headerTextAlign]="'Right'"
                                             [format]="'N2'">
                                         </e-column>
                                         <e-column field='status_bayar' headerText='STATUS' width='80' textAlign='Center'
@@ -511,9 +533,9 @@
                                                     class="statustemp e-activecolor">
                                                     <span class="statustxt e-activecolor">OPEN</span>
                                                 </div>
-                                                <div *ngIf="data.status_bayar === 'CLOSE';"
+                                                <div *ngIf="data.status_bayar === 'CLOSED';"
                                                     class="statustemp e-warningcolor">
-                                                    <span class="statustxt e-warningcolor">CLOSE</span>
+                                                    <span class="statustxt e-warningcolor">CLOSED</span>
                                                 </div>
                                                 <div *ngIf="data.status_bayar === 'PAID';"
                                                     class="statustemp e-postedcolor">
@@ -607,7 +629,7 @@
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modalSaldoKlaim"
                                     (click)="handleGetSaldoKlaim(InformasiPasien.id_register)"
-                                    [disabled]="InformasiPasien && InformasiPasien.status_billing == 'CLOSED'">
+                                    [disabled]="InformasiPasien && InformasiPasien.status_billing == 'CLOSEDD'">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -707,7 +729,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
                                 <p
                                     [class]="InformasiPasien.status_billing == 'OPEN' ? 'text-success mb-0 fw-bold' : 'text-danger mb-0 fw-bold'">
-                                    {{ InformasiPasien.status_billing == 'OPEN' ? 'OPEN' : 'CLOSED' }}
+                                    {{ InformasiPasien.status_billing == 'OPEN' ? 'OPEN' : 'CLOSEDD' }}
                                 </p>
                             </div>
                         </div>
