@@ -25,7 +25,9 @@
                             [NamaDokter]="item.NamaDokter" [KodeResep]="item.KodeResep" [DetailResep]="item.DetailResep"
                             [Status]="item.Status" (onClickedCardButton)="onClickCard($event)"
                             (onMarkedResepAsComplete)="onMarkResepAsComplete($event, CardBodyData)"
-                            (onMarkedResepSudahDilayani)="onMarkResepSudahDilayani($event, CardBodyData)">
+                            (onMarkedResepSudahDilayani)="onMarkResepSudahDilayani($event, CardBodyData)"
+                            (onPindahKeAntrian)="onPindahKeAntrian($event, CardBodyData)"
+                            >
                         </atm-card>
                     </div>
                 </div>

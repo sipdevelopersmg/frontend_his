@@ -1,28 +1,26 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
-import utilityHelper from 'src/app/helpers/utility/utilityHelper';
-import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
+import { TransaksiObatIrjaService } from 'src/app/modules/Pharmacy/services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { TransaksiObatIrjaService } from '../../../services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
-import * as GridConfig from './json/grid.config.json'
+import * as GridConfig from '../json/grid.config.json'
 @Component({
-  selector: 'app-transaksi-obat-irja',
-  templateUrl: './transaksi-obat-irja.component.html',
-  styleUrls: ['./transaksi-obat-irja.component.css']
+  selector: 'app-view-resep-irja',
+  templateUrl: './view-resep-irja.component.html',
+  styleUrls: ['./view-resep-irja.component.css']
 })
-export class TransaksiObatIrjaComponent implements OnInit {
+export class ViewResepIrjaComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
     { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
-    { Id: 'simpan', Captions: 'Simpan Penjualan Resep', Icons1: 'fa-save fa-sm' },
+    // { Id: 'simpan', Captions: 'Simpan Penjualan Resep', Icons1: 'fa-save fa-sm' },
   ];
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;

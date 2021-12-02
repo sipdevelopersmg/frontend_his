@@ -30,9 +30,11 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
         { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
     ];
 
-    GridData: MolGridComponent = null;
     GridConfig = GridConfig;
     SelectedData: any;
+    dataSource:any;
+
+    @ViewChild('GridData') GridData: MolGridComponent;
 
     constructor(
         private router: Router,

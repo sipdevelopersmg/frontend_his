@@ -17,6 +17,8 @@ import { TransaksiObatIrnaComponent } from './pages/transaksi-obat/transaksi-oba
 import { TransaksiObatIrjaComponent } from './pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component';
 import { RefundObatIrjaComponent } from './pages/refund-obat/refund-obat-irja/refund-obat-irja.component';
 import { RefundObatIrnaComponent } from './pages/refund-obat/refund-obat-irna/refund-obat-irna.component';
+import { ViewResepIrjaComponent } from './pages/transaksi-obat/transaksi-obat-irja/view-resep-irja/view-resep-irja.component';
+import { InputResepIrjaComponent } from './pages/transaksi-obat/input-resep-irja/input-resep-irja.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +36,8 @@ import { RefundObatIrnaComponent } from './pages/refund-obat/refund-obat-irna/re
         TransaksiObatIrjaComponent,
         RefundObatIrjaComponent,
         RefundObatIrnaComponent,
+        ViewResepIrjaComponent,
+        InputResepIrjaComponent,
     ],
     imports: [
         CommonModule,

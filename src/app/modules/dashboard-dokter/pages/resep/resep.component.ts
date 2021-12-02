@@ -39,6 +39,7 @@ export class ResepComponent implements OnInit, AfterViewInit {
     baru:any = 0;
     data:any = null;
     nama_resep:string = '';
+    idOutlet:number;
     constructor(
         private resepDokterService: ResepDokterService,
         private utilityService: UtilityService,
@@ -97,11 +98,16 @@ export class ResepComponent implements OnInit, AfterViewInit {
         this.isGetFromTemplate =true;
     }
 
+    setIdOutlet(id){
+        console.log(id);
+        this.idOutlet = id;
+    }
+
     async onGetGridResepDatasource() {
         this.data ={
             id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
             id_register:this.daftarPasienService.ActivePasien.value.id_register,
-            id_outlet:13,
+            id_outlet:this.idOutlet,
             id_person:this.daftarPasienService.ActivePasien.value.id_person,
             jenis_rawat:'J',
             nama_template:'',

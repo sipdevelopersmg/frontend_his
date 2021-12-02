@@ -19,6 +19,24 @@
         "editType": "defaultEdit"
     },
     {
+        "field": "kode_supplier",
+        "headerText": "Kode Supplier",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_supplier",
+        "headerText": "Nama Supplier",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
         "field": "tanggal_pemesanan",
         "headerText": "Tgl Pemesanan",
         "type": "Date",
@@ -73,24 +91,6 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "kode_supplier",
-        "headerText": "Kode Supplier",
-        "type": "string",
-        "format": "",
-        "textAlign": "left",
-        "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
-        "field": "nama_supplier",
-        "headerText": "Nama Supplier",
-        "type": "string",
-        "format": "",
-        "textAlign": "left",
-        "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
         "field": "alamat_supplier",
         "headerText": "Alamat Supplier",
         "type": "string",
@@ -112,8 +112,8 @@
         "field": "jumlah_item_pesan",
         "headerText": "Jumlah Item Pesan",
         "type": "number",
-        "format": "",
-        "textAlign": "left",
+        "format": "N2",
+        "textAlign": "Right",
         "visible": true,
         "editType": "defaultEdit"
     },

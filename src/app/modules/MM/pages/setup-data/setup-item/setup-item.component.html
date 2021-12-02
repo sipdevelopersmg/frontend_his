@@ -38,6 +38,24 @@
                                 [columns]="LookupGridGrupItem.columns" [filter-lookup]="LookupGridGrupItem.filter"
                                 [label]="'Grup Item'">
                             </org-input-look-up-kode>
+                            <!-- Dropdown Pabrik -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Pabrik'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalSetupPabrikDropdown id="marital"
+                                        [dataSource]="setupPabrikService.dataSource| async"
+                                        [fields]="MaritalSetupPabrikDropdownField" [allowFiltering]="true"
+                                        formControlName="id_pabrik">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'id_supplier'" [modal-title]="'Data Supplier'"
+                                [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
+                                [columns]="LookupGridSupplier.columns" [filter-lookup]="LookupGridSupplier.filter"
+                                [label]="'Supplier'">
+                            </org-input-look-up-kode> 
                             <mol-input-text 
                                 [label]="'Kode Item'" 
                                 formControlName="kode_item"
@@ -55,17 +73,138 @@
                                 [ValidatorsCaption]="'Nama Item Tidak Boleh Kosong'"
                                 [inputFieldState]="inputFieldState">
                             </mol-input-text>
-                            <mol-input-text [label]="'Batas Maksimal Pesan'" formControlName="batas_maksimal_pesan" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Batas Maksimal Pakai'" formControlName="batas_maksimal_pakai" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Batas Maksimal Mutasi'" formControlName="batas_maksimal_mutasi" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Batas Maksimal Jual'" formControlName="batas_maksimal_jual" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Batas Stok Kritis'" formControlName="batas_stok_kritis" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Prosentase Stok Kritis'" formControlName="prosentase_stok_kritis" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Harga Beli Terakhir'" formControlName="harga_beli_terakhir" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'HPP Average'" formControlName="hpp_average" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Prosentase Default Profit'" formControlName="prosentase_default_profit" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-checkbox-single [label]="'Is PPN '" formControlName="is_ppn" id="is_ppn" ></mol-input-checkbox-single>
+                            <mol-input-numeric [label]="'Batas Maksimal Pesan'" formControlName="batas_maksimal_pesan" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Batas Maksimal Pakai'" formControlName="batas_maksimal_pakai" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Batas Maksimal Mutasi'" formControlName="batas_maksimal_mutasi" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Batas Maksimal Jual'" formControlName="batas_maksimal_jual" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Batas Stok Kritis'" formControlName="batas_stok_kritis" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Prosentase Stok Kritis'" formControlName="prosentase_stok_kritis" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <!-- Input Satuans -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row pt-2" formArrayName="satuans">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3"
+                                            *ngFor="let item of FormInputData.get('satuans')['controls']; let i = index"
+                                            [formGroupName]="i">
+                                            <span *ngIf ="i!=0" (click)="handleHapusSatuan(i)" class="badge bg-danger pb-0" style="cursor: pointer;">Hapus Satuan</span>
+                                            <!-- Dropdown Satuan -->
+                                            <div class="row mb-2">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <atm-label [LabelCaption]="'Satuan / Isi'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                    <ejs-dropdownlist #MaritalSatuanDropdown id="marital"
+                                                        [dataSource]="setupSatuanService.dataSource| async"
+                                                        [fields]="MaritalSatuanDropdownField" [allowFiltering]="true"
+                                                        formControlName="kode_satuan">
+                                                    </ejs-dropdownlist>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <ejs-numerictextbox formControlName="isi" [format]="'N2'" [showSpinButton]="false" style="text-align: right;padding-right: 5px;"></ejs-numerictextbox>
+                                                </div>
+                                            </div>
+                                            <mol-input-checkbox-single [label]="'Is Satuan Beli'" formControlName="is_satuan_beli" id="is_satuan_beli" ></mol-input-checkbox-single>
+                                            <hr/>
+                                        </div>
+                                        <button class="btn btn-primary btn-sm px-2" type="button"
+                                            (click)="handleClickTambahSatuan()">
+                                            <i class="fas fa-plus-circle fa-sm"></i> Tambah Satuan
+                                        </button>
+                                    </div>
+                                </div>    
+                            </div>
                         </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-numeric [label]="'Harga Beli Terakhir'" formControlName="harga_beli_terakhir" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'HPP Average'" formControlName="hpp_average" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Prosentase Default Profit'" formControlName="prosentase_default_profit" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                            <mol-input-checkbox-single [label]="'Is PPN '" formControlName="is_ppn" id="is_ppn" ></mol-input-checkbox-single>
+                            <mol-input-checkbox-single [label]="'Is Obat'" formControlName="is_obat" id="is_obat" ></mol-input-checkbox-single>
+                            <span *ngIf ="is_obat.value">
+                                <!-- Dropdown Setup Grup Obat -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Setup Grup Obat'"></atm-label>
+                                     </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalGrupObatDropdown id="marital"
+                                            [dataSource]="setupGrupObatService.dataSource| async"
+                                            [fields]="MaritalGrupObatDropdownField" [allowFiltering]="true"
+                                            formControlName="id_grup_obat">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                                
+                                <!-- Dropdown Cara Pakai Obat -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Cara Pakai Obat'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalCaraPakaiObatDropdown id="marital"
+                                            [dataSource]="setupCaraPakaiObatService.dataSource| async"
+                                            [fields]="MaritalCaraPakaiObatDropdownField" [allowFiltering]="true"
+                                            formControlName="id_cara_pakai_obat">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                                
+                                <!-- Dropdown Rute Pemberian Obat -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Rute Pemberian Obat'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalRutePemberianObatDropdown id="marital"
+                                            [dataSource]="setupRutePemberianObatService.dataSource| async"
+                                            [fields]="MaritalRutePemberianObatDropdownField" [allowFiltering]="true"
+                                            formControlName="id_rute_pemberian_obat">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+
+                                <!-- Dropdown RestriksiObat -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Restriksi Obat'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalRestriksiObatDropdown id="marital"
+                                            [dataSource]="setupRestriksiObatService.dataSource| async"
+                                            [fields]="SetupRestriksiObatDropdownField" [allowFiltering]="true"
+                                            formControlName="id_restriksi_obat">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                                 
+                                <!-- Dropdown Perespan Maksimal -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Perespan Maksimal'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalPeresepanMaksimalDropdown id="marital"
+                                            [dataSource]="setupPeresepanMaksimalService.dataSource| async"
+                                            [fields]="MaritalPeresepanMaksimalDropdownField" [allowFiltering]="true"
+                                            formControlName="id_peresepan_maksimal">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                                <mol-input-numeric [label]="'Kandungan'" formControlName="kandungan_obat" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                                <mol-input-checkbox-single [label]="'is Fornas'" formControlName="is_fornas" id="is_fornas" ></mol-input-checkbox-single>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <mol-input-numeric [label]="'Harga Netto Apotek'" formControlName="harga_netto_apotek" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                                        <mol-input-numeric [label]="'Prosentase Profit'" formControlName="prosentase_profit" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                                        <mol-input-numeric [label]="'Prosentase PPN'" formControlName="prosentase_ppn" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                                        <mol-input-numeric [label]="'Harga Jual Apotek'" formControlName="harga_jual_apotek" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                                        <mol-datepicker-syncfusion [label]="'Tanggal Berlaku'" [format]="'dd MMMM yyyy'"
+                                            formControlName="tanggal_berlaku">
+                                        </mol-datepicker-syncfusion>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>  
                     </div>
                 </form>
             </org-tabs-body>

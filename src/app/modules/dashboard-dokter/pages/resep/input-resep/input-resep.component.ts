@@ -16,20 +16,21 @@ import * as GridLookUpItem from './json/lookupitem.json';
 import * as GridlookUpTemplateResep from './json/lookuptemplateresep.json'
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
-import { EmitType } from '@syncfusion/ej2-base';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { SetupSatuanAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-satuan-aturan-pakai/setup-satuan-aturan-pakai.service';
+import { SetupOutletService } from 'src/app/modules/Pharmacy/services/setup-data/setup-outlet/setup-outlet.service';
 
 @Component({
     selector: 'app-input-resep',
     templateUrl: './input-resep.component.html',
     styleUrls: ['./input-resep.component.css']
 })
+
 export class InputResepComponent implements OnInit {
     @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
     @ViewChild('LookupTemplateResep') LookupTemplateResep: OrgLookUpHirarkiComponent;
     @Output('onSetTemplateResep') onSetTemplateResep = new EventEmitter<any>();
-
+    @Output('setIdOutlet') setIdOutlet = new EventEmitter<any>();
 
     public itemsParams: IEditCell;
     public itemsElem: HTMLElement;
@@ -44,6 +45,7 @@ export class InputResepComponent implements OnInit {
     DropdownLabelFields: object = { text: "nama_label_pemakaian_obat", value: "id_label_pemakaian_obat" };
     DropdownAturanFields: object = { text: "tambahan_aturan_pakai", value: "id_tambahan_aturan_pakai" };
     DropdownsatuanPakaiFields: object = { text: "satuan_aturan_pakai", value: "id_satuan_aturan_pakai" };
+    SetupOutletDropdownField: object = { text: 'nama_outlet', value: 'id_outlet' };
 
     // ** Form Add Obat Properties
     FormAddObat: FormGroup;
@@ -146,6 +148,7 @@ export class InputResepComponent implements OnInit {
         public setupTambahanAturanPakaiService: SetupTambahanAturanPakaiService,
         public setupSatuanAturanPakaiService: SetupSatuanAturanPakaiService,
         public setupMetodeRacikanService: SetupMetodeRacikanService,
+        public setupOutletService: SetupOutletService,
         private renderer: Renderer2
     ) {
 
@@ -178,6 +181,7 @@ export class InputResepComponent implements OnInit {
             ket_aturan: ['', []],
             id_tambahan_aturan_pakai: [null, []],
             label_tambahan_aturan_pakai_obat: ['', []],
+            id_outlet:[0,[]]
         });
 
         this.GridDaftarObatToolbar = [
@@ -328,12 +332,17 @@ export class InputResepComponent implements OnInit {
         })
 
         this.setupMetodeRacikanService.setDataSource();
-        this.resepDokterService.setDataObat([]);
+        // this.resepDokterService.setDataObat([]);
+        this.setupOutletService.setDataSource();
 
     }
 
     onLoad(args: any) {
 
+    }
+
+    handleChangeOutlet(args){
+        this.setIdOutlet.emit(args.value);
     }
 
     setFormGrif(args, currentQtyResep, id_item, SelectedDataRacikanObat) {

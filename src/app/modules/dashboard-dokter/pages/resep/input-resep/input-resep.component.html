@@ -1,5 +1,26 @@
 <!-- Field Pencarian -->
 <form [formGroup]="FormAddObat">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body p-2">
+                    <!-- Dropdown Depo Farmasi -->
+                    <div class="row mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <atm-label [LabelCaption]="'Depo Farmasi'"></atm-label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <ejs-dropdownlist #MaritalOutletDropdown id="marital"
+                                [dataSource]="setupOutletService.dataSource| async"
+                                [fields]="SetupOutletDropdownField" [allowFiltering]="true"
+                                formControlName="id_outlet" (change)="handleChangeOutlet($event)">
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row pt-2 mb-2">
         <!-- Is Racikan -->
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
@@ -179,7 +200,7 @@
             </div> -->
             <div class="card-body p-0">
                 <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
-                    height="calc(100vh - 24rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
+                    height="calc(100vh - 27rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
                     [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)"
                     [allowResizing]="true" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                     (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">

@@ -2,7 +2,7 @@
     <form [formGroup]="formKontrak">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'No Pemesanan'"  formControlName="nomor_pemesanan" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text style="display: none;" [label]="'No Pemesanan'"  formControlName="nomor_pemesanan" [inputFieldState]="inputFieldState"></mol-input-text>
                 
                 <mol-datepicker-syncfusion [label]="'Tgl Pemesanan'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_pemesanan">

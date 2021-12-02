@@ -56,6 +56,14 @@ export class ResepDokterService {
         public daftarPasienService: DaftarPasienService
     ) { }
 
+    generadeNoAntrian(NoRegister): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GENERADE_NO_ANTRIAN+"/"+NoRegister).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
+
     /**
       * Service Untuk Mengisi dataScource
       * @setDataSource Void
