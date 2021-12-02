@@ -26,6 +26,10 @@ import { NavigationService } from 'src/app/modules/shared/services/navigation.se
 import Swal from 'sweetalert2';
 import * as Config from './json/transaksi-billing.config.json';
 import * as API_CONFIG from '../../../../../api/BILLING';
+import moment from 'moment';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common'
+
 
 @Component({
   selector: 'app-input-resep-irja',
@@ -34,11 +38,11 @@ import * as API_CONFIG from '../../../../../api/BILLING';
 })
 export class InputResepIrjaComponent implements OnInit {
 
-    API_TRANS_BILLING = API_CONFIG.API_BILLING;
+  API_TRANS_BILLING = API_CONFIG.API_BILLING;
 
   Config = Config;
   
-  UrlLookupDaftarPasien: string =this.API_TRANS_BILLING.TRANS_BILLING.POST_GET_DATA_PASIEN_FOR_LOOKUP;
+  UrlLookupDaftarPasien: string =PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.ADMISI_PASIEN_IRJA;
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
   @ViewChild('LookupTemplateResep') LookupTemplateResep: OrgLookUpHirarkiComponent;
@@ -152,6 +156,7 @@ export class InputResepIrjaComponent implements OnInit {
   public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
 
   ButtonNav: ButtonNavModel[] = [
+    { Id: "Kembali", Icons1: "fa-chevron-left", Captions: "Kembali" },
     { Id: "Template", Icons1: "fas fa-tags fa-sm", Captions: "Template Resep" },
     { Id: "Reset", Icons1: "fas fa-undo fa-sm", Captions: "Reset" },
     { Id: "Simpan", Icons1: "fas fa-save fa-sm", Captions: "Simpan" },
@@ -167,6 +172,11 @@ export class InputResepIrjaComponent implements OnInit {
   baru:any = 0;
   nama_resep:string = '';
   idOutlet:number;
+  idDokter:number;
+  idRegister:number;
+  idPasien:number;
+  idPerson:number;
+  no_register:string;
   dataHeader: any;
 
   constructor(
@@ -181,14 +191,16 @@ export class InputResepIrjaComponent implements OnInit {
       private utilityService: UtilityService,
       private navigationService: NavigationService,
       private modalService: BsModalService,
-      private renderer: Renderer2
+      private router:Router,
+      private renderer: Renderer2,
+      private location: Location
   ) {
 
   }
 
   ngOnInit(): void {
-
-      this.FormAddObat = this.formBuilder.group({
+    this.currentTanggal = moment().format()
+    this.FormAddObat = this.formBuilder.group({
           counter: [0, []],
           is_racikan: [false, []],
           no_urut: [0, []],
@@ -214,7 +226,7 @@ export class InputResepIrjaComponent implements OnInit {
           id_tambahan_aturan_pakai: [null, []],
           label_tambahan_aturan_pakai_obat: ['', []],
           id_outlet:[0,[]]
-      });
+    });
 
       this.GridDaftarObatToolbar = [
           { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
@@ -476,7 +488,11 @@ export class InputResepIrjaComponent implements OnInit {
   }
 
   handleSelectedLookupPasien(args){
-    console.log(args);
+    this.idDokter = args.id_dokter;
+    this.idPasien = args.id_pasien;
+    this.idRegister = args.id_register;
+    this.idPerson = args.id_person;
+    this.no_register = args.no_register;
   }
 
   handleChangeOutlet(args){
@@ -723,6 +739,9 @@ export class InputResepIrjaComponent implements OnInit {
         case "Simpan":
             this.onGetGridResepDatasource();
             break;
+        case "Kembali":
+            this.location.back();
+            break;
         default:
             break;
     }
@@ -733,12 +752,13 @@ export class InputResepIrjaComponent implements OnInit {
   }
 
   async onGetGridResepDatasource() {
+
     this.dataHeader ={
-        id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
-        id_register:this.daftarPasienService.ActivePasien.value.id_register,
-        id_outlet:this.idOutlet,
-        id_person:this.daftarPasienService.ActivePasien.value.id_person,
-        jenis_rawat:'J',
+        id_dokter   :this.idDokter,
+        id_register :this.idRegister,
+        id_outlet   :this.idOutlet,
+        id_person   :this.idPerson,
+        jenis_rawat :'J',
         nama_template:'',
         tanggal_resep:this.currentTanggal
     }
@@ -799,11 +819,16 @@ export class InputResepIrjaComponent implements OnInit {
 
   methodInsert(Data,is_simpan_template:number,is_simpan_racikan:number){
     this.resepDokterService.Insert(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
-        this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-            .then(() => {
-                this.resepDokterService.reset();
-                this.isGetFromTemplate = false;
+        if(result.responseResult){
+            this.resepDokterService.generadeNoAntrian(this.no_register).subscribe((result)=>{
+                if(result.responseResult){
+                    this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                    .then(() => {
+                        this.location.back();
+                    });
+                }
             });
+        }
     })
   }
 

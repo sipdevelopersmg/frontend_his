@@ -109,7 +109,7 @@ export class ResepDokterService {
             })
         )
         .subscribe((result)=>{
-            console.log(result.data);
+            // console.log('TEST DATA LOAD BARU',result.data);
             this.dataAntrianIrja.next(result.data);
         })
     }
