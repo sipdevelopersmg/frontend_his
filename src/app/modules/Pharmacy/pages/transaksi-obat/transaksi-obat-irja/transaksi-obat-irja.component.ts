@@ -73,6 +73,7 @@ export class TransaksiObatIrjaComponent implements OnInit {
     ngOnInit(): void {
 
         this.formInput = this.formBuilder.group({
+            outlet: ['',[]],
             pasien: ['', []],
             poli: ['', []],
             dokter : ['', []],
@@ -107,11 +108,12 @@ export class TransaksiObatIrjaComponent implements OnInit {
            this.mapingRacikan(result.data.details);
         //    let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
            this.formInput.setValue({
-               poli:result.data.nama_poli,
-               pasien:result.data.nama_pasien,
-               dokter: result.data.nama_dokter,
-               umur: result.data.tgl_lahir,
-               total_bayar_resep: 0
+                outlet:result.data.nama_outlet,
+                poli:result.data.nama_poli,
+                pasien:result.data.nama_pasien,
+                dokter: result.data.nama_dokter,
+                umur: result.data.tgl_lahir,
+                total_bayar_resep: 0
            })
 
            this.pendaftaranPasienBaruService.onGetLinkFotoPerson(this.dataHeader.id_person, false)
