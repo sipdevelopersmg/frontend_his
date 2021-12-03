@@ -35,3 +35,9 @@ export class GetAllPasienIRNAByDokterModel implements HttpResponseModel {
     data: IDaftarPasienIRJAModel[];
     message: string;
 }
+
+export class GetAllPasienIRDAByDokterModel implements HttpResponseModel {
+    responseResult: boolean;
+    data: IDaftarPasienIRJAModel[];
+    message: string;
+}

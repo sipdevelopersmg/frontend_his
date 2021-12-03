@@ -5,7 +5,7 @@ import { SetupDokterService } from 'src/app/modules/PIS/services/setup-data/setu
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import *  as API_CONFIG from '../../../../api/DASHBOARD-DOKTER';
-import { GetAllPasienIRJAByDokterModel, IDaftarPasienIRJAModel } from '../../models/daftar_pasien.model';
+import { GetAllPasienIRDAByDokterModel, GetAllPasienIRJAByDokterModel, IDaftarPasienIRJAModel } from '../../models/daftar_pasien.model';
 
 @Injectable({
     providedIn: 'root'
@@ -52,5 +52,9 @@ export class DaftarPasienService {
 
     onGetAllDaftarPasienIRNA(DokterId: number): Observable<GetAllPasienIRJAByDokterModel> {
         return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ALL_PASIEN_IRNA_BY_ID_DOKTER + DokterId);
+    }
+
+    onGetAllDaftarPasienIRDA(DokterId: number): Observable<GetAllPasienIRDAByDokterModel> {
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ALL_PASIEN_IRDA_BY_ID_DOKTER + DokterId);
     }
 }

@@ -29,7 +29,6 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     GridIRJAEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridIRJAToolbar: any[] = [
         { text: 'Visit', tooltipText: 'Visit', prefixIcon: 'fas fa-user-check fa-sm', id: 'visit' },
-        { text: 'Riwayat Pemeriksaan', tooltipText: 'Riwayat Pemeriksaan', prefixIcon: 'fas fa-clipboard-list fa-sm', id: 'riwayat_pemeriksaan' },
         "Search"
     ];
     GridIRJACommands = [
@@ -46,18 +45,21 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
 
     @ViewChild('GridIRNA') GridIRNA: GridComponent;
     GridIRNADatasource: any[];
-    GridIRNAEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
+    GridIRNAEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridIRNAToolbar: any[] = [
         { text: 'Visit', tooltipText: 'Visit', prefixIcon: 'fas fa-user-check fa-sm', id: 'visit' },
-        { text: 'Riwayat Pemeriksaan', tooltipText: 'Riwayat Pemeriksaan', prefixIcon: 'fas fa-clipboard-list fa-sm', id: 'riwayat_pemeriksaan' },
         "Search"
     ];
     GridIRNASelectedRow: any;
 
-    GridIRDA: MolGridComponent = null;
+    @ViewChild('GridIRDA') GridIRDA: GridComponent;
     GridIRDADatasource: any[];
-    GridIRDAEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-    GridIRDAToolbar: any[];
+    GridIRDAEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
+    GridIRDAToolbar: any[] = [
+        { text: 'Visit', tooltipText: 'Visit', prefixIcon: 'fas fa-user-check fa-sm', id: 'visit' },
+        "Search"
+    ];
+    GridIRDASelectedRow: any;
 
     JenisRawat: string;
 
@@ -95,6 +97,8 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
                 this.onGetPasienIRJAByDokterId(this.DokterId);
 
                 this.onGetPasienIRNAByDokterId(this.DokterId);
+
+                this.onGetPasienIRDAByDokterId(this.DokterId);
             });
     }
 
@@ -109,6 +113,13 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
         this.daftarPasienService.onGetAllDaftarPasienIRNA(DokterId)
             .subscribe((result) => {
                 this.GridIRNADatasource = result.data;
+            })
+    }
+
+    onGetPasienIRDAByDokterId(DokterId: number): void {
+        this.daftarPasienService.onGetAllDaftarPasienIRDA(DokterId)
+            .subscribe((result) => {
+                this.GridIRDADatasource = result.data;
             })
     }
 
@@ -157,6 +168,24 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
             case 'visit':
                 this.daftarPasienService.ActivePasien.next({});
                 this.daftarPasienService.onSetActivePasien(this.GridIRNASelectedRow);
+                this.router.navigateByUrl('Dokter/asesmen-awal');
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleSelectedRowIRDA(args: any): void {
+        this.GridIRDASelectedRow = args.data;
+
+        this.GridIRDASelectedRow.jenis_rawat = this.JenisRawat;
+    }
+
+    handleToolbarClickIRDA(args: any): void {
+        switch (args.item.id) {
+            case 'visit':
+                this.daftarPasienService.ActivePasien.next({});
+                this.daftarPasienService.onSetActivePasien(this.GridIRDASelectedRow);
                 this.router.navigateByUrl('Dokter/asesmen-awal');
                 break;
             default:

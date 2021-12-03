@@ -73,7 +73,32 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'IRDA'">IRDA</org-tabs-label>
             <org-tabs-body>
-
+                <ejs-grid #GridIRDA [id]="'GridIRDA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRDADatasource"
+                    [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                    [allowFiltering]='true' [editSettings]="GridIRDAEditSettings" [toolbar]="GridIRDAToolbar"
+                    (rowSelected)="handleSelectedRowIRDA($event)" (toolbarClick)="handleToolbarClickIRDA($event)">
+                    <e-columns>
+                        <e-column [width]="100" [field]="'tgl_admisi'" [headerText]="'TGL. MASUK'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                            [format]="'dd/MM/yyyy HH:mm:ss'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="60" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                        <e-column [width]="250" [field]="'nama_poli'" [headerText]="'POLIKLINIK'" [visible]="true"
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
             </org-tabs-body>
         </org-tabs-item>
 
