@@ -26,7 +26,7 @@
                             id="{{item.id_menu_sidebar}}Icon"> </i>
                     </div>
                     <div class="col-2 text-center" [class]="SidebarCollapse ? 'col-12' : 'col-2'">
-                        <i class="fas {{ item.icon }}"></i>
+                        <i class="{{ item.icon }}"></i>
                     </div>
                     <div class="col-9" [class]="SidebarCollapse ? 'is-hidden' : 'is-show' ">
                         <span class="font-cabin mb-2">{{ item.caption }}</span>
@@ -40,7 +40,7 @@
                         <div class="items-group-child mx-0 px-0" data-bs-toggle="tooltip"
                             title="{{ childItem.caption }}">
                             <div class="col-3 text-end">
-                                <i class="fas {{ childItem.icon }}"></i>
+                                <i class="{{ childItem.icon }}"></i>
                             </div>
                             <div class="col-9 ps-3">
                                 <span class="font-cabin mb-2">{{ childItem.caption }}</span>

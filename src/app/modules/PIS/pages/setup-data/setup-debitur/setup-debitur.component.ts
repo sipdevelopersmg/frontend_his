@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { EditSettingsModel } from '@syncfusion/ej2-grids';
+import { EditSettingsModel, PageSettingsModel } from '@syncfusion/ej2-grids';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
@@ -58,6 +58,7 @@ export class SetupDebiturComponent implements OnInit {
     GridDatasource: any[] = [];
     private GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
+    GridDataPageSettings: PageSettingsModel = { pageSizes: true, pageSize: 24 };
     GridDataToolbar: any[];
 
     /**

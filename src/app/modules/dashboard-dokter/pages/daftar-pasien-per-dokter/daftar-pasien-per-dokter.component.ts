@@ -5,6 +5,7 @@ import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authen
 import { SetupDokterService } from 'src/app/modules/PIS/services/setup-data/setup-dokter/setup-dokter.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
 import { DashboardDokterService } from '../../services/dashboard-dokter.service';
 import * as Config from './json/GridPasienPerDokter.config.json';
@@ -65,6 +66,7 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
 
     constructor(
         private router: Router,
+        private utilityService: UtilityService,
         private dokterService: SetupDokterService,
         private navigationService: NavigationService,
         private daftarPasienService: DaftarPasienService,
@@ -134,14 +136,18 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleToolbarClickIRJA(args: any): void {
-        switch (args.item.id) {
-            case 'visit':
-                this.daftarPasienService.ActivePasien.next({});
-                this.daftarPasienService.onSetActivePasien(this.GridIRJASelectedRow);
-                this.router.navigateByUrl('Dokter/asesmen-awal');
-                break;
-            default:
-                break;
+        if (this.GridIRJASelectedRow) {
+            switch (args.item.id) {
+                case 'visit':
+                    this.daftarPasienService.ActivePasien.next({});
+                    this.daftarPasienService.onSetActivePasien(this.GridIRJASelectedRow);
+                    this.router.navigateByUrl('Dokter/asesmen-awal');
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Tidak Ada Data Pasien Yang Dipilih');
         }
     }
 
@@ -164,14 +170,18 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleToolbarClickIRNA(args: any): void {
-        switch (args.item.id) {
-            case 'visit':
-                this.daftarPasienService.ActivePasien.next({});
-                this.daftarPasienService.onSetActivePasien(this.GridIRNASelectedRow);
-                this.router.navigateByUrl('Dokter/asesmen-awal');
-                break;
-            default:
-                break;
+        if (this.GridIRNASelectedRow) {
+            switch (args.item.id) {
+                case 'visit':
+                    this.daftarPasienService.ActivePasien.next({});
+                    this.daftarPasienService.onSetActivePasien(this.GridIRNASelectedRow);
+                    this.router.navigateByUrl('Dokter/asesmen-awal');
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Tidak Ada Data Pasien Yang Dipilih');
         }
     }
 
@@ -182,14 +192,18 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleToolbarClickIRDA(args: any): void {
-        switch (args.item.id) {
-            case 'visit':
-                this.daftarPasienService.ActivePasien.next({});
-                this.daftarPasienService.onSetActivePasien(this.GridIRDASelectedRow);
-                this.router.navigateByUrl('Dokter/asesmen-awal');
-                break;
-            default:
-                break;
+        if (this.GridIRDASelectedRow) {
+            switch (args.item.id) {
+                case 'visit':
+                    this.daftarPasienService.ActivePasien.next({});
+                    this.daftarPasienService.onSetActivePasien(this.GridIRDASelectedRow);
+                    this.router.navigateByUrl('Dokter/asesmen-awal');
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Tidak Ada Data Pasien Yang Dipilih');
         }
     }
 }

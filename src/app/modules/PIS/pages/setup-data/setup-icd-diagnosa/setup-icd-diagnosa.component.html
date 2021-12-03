@@ -7,8 +7,9 @@
                 <ejs-grid #GridData [id]="'GridDaftarTarif'" [height]="'calc(100vh - 19rem)'"
                     [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
                     [toolbar]="GridDataToolbar" [allowResizing]="true" [allowFiltering]='true'
-                    [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
-                    (actionComplete)="handleActionComplete($event)" (toolbarClick)="handleToolbarClick($event)">
+                    [pageSettings]="GridDataPageSettings" [editSettings]="GridDataEditSettings"
+                    (rowSelected)="handleSelectedRow($event)" (actionComplete)="handleActionComplete($event)"
+                    (toolbarClick)="handleToolbarClick($event)">
                     <e-columns>
                         <e-column [width]="50" [field]="'id_icd'" [headerText]="'ID'" [visible]="false"
                             [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"

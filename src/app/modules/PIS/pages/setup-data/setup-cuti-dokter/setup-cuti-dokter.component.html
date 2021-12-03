@@ -11,11 +11,12 @@
                         </mol-offcanvas-filter>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 22rem)'"
-                            [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
-                            [toolbar]="GridDataToolbar" [allowResizing]="true" [allowFiltering]='true'
-                            [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
-                            (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+                        <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 19rem)'"
+                            [dataSource]="GridDatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                            [pageSettings]="GridDataPageSettings" [toolbar]="GridDataToolbar" [allowResizing]="true"
+                            [allowFiltering]='true' [editSettings]="GridDataEditSettings"
+                            (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)"
+                            (actionComplete)="handleActionComplete($event)">
                             <e-columns>
                                 <e-column [width]="50" [field]="'id_dokter'" [headerText]="'ID'" [visible]="false"
                                     [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"

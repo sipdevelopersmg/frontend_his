@@ -93,8 +93,8 @@ section#content-section {
 
 @media only screen and (min-width: 1366.98px) {
   section#sidebar-section {
-    width: 15%;
-    max-width: 15%;
+    width: 20%;
+    max-width: 20%;
     height: calc(100vh - 8.5em);
     max-height: calc(100vh - 8.5em);
     z-index: 2;
@@ -108,8 +108,8 @@ section#content-section {
   }
 
   section#content-section {
-    width: 85%;
-    max-width: 85%;
+    width: 80%;
+    max-width: 80%;
     height: calc(100vh - 8.5em);
     max-height: calc(100vh - 8.5em);
     transition: all 0.7s;

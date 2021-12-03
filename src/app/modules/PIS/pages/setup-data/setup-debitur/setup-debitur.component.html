@@ -4,12 +4,13 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'Data'">Data Debitur</org-tabs-label>
             <org-tabs-body>
-                <mol-grid #GridData [grid-height]="'calc(100vh - 20rem)'" [grid-DataSource]="GridDatasource"
-                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
-                    [grid-toolbar]="GridDataToolbar" [columns]="GridConfig.GridDebiturColumns"
-                    (row-selected)="handleSelectedRow($event)" (toolbar-click)="handleToolbarClick($event)"
-                    (load-grid)="handleLoadGrid($event)" (initialized)="InitalizedGrid($event)"
-                    (command-click)="handleClickCommandGrid($event)" (action-complete)="handleActionComplete($event)">
+                <mol-grid #GridData [grid-height]="'calc(100vh - 19rem)'" [grid-DataSource]="GridDatasource"
+                    [grid-paging]="true" [grid-initial-page]="GridDataPageSettings"
+                    [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'" [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridDebiturColumns" (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)" (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)" (command-click)="handleClickCommandGrid($event)"
+                    (action-complete)="handleActionComplete($event)">
                 </mol-grid>
             </org-tabs-body>
         </org-tabs-item>

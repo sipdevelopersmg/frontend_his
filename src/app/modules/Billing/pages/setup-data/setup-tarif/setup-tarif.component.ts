@@ -233,7 +233,8 @@ export class SetupTarifComponent implements OnInit {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Setup Tarif Berhasil Disimpan')
                         .then(() => {
                             this.handleCloseModalTarif();
-                            this.GetAllData();
+                            // this.GetAllData();
+                            this.GetAllByGrupTarifId(parseInt(this.SelectedGrupTarif.id));
                         })
                 }
             })
@@ -250,7 +251,8 @@ export class SetupTarifComponent implements OnInit {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Setup Tarif Berhasil Diupdate')
                         .then(() => {
                             this.handleCloseModalTarif();
-                            this.GetAllData();
+                            // this.GetAllData();
+                            this.GetAllByGrupTarifId(parseInt(this.SelectedGrupTarif.id));
                         })
                 }
             })
