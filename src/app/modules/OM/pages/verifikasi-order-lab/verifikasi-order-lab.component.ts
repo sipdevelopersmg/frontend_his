@@ -27,12 +27,21 @@ export class VerifikasiOrderLabComponent implements OnInit {
     ButtonNav: ButtonNavModel[];
 
     FilterColumnDatasource: any[] = [
+        { text: 'Pilih Jenis Rawat', value: "jenis_rawat" },
         { text: 'No. Order', value: "otop.nomor_order_penunjang" },
         { text: 'Tgl. Order', value: 'otop.tanggal_order_penunjang' },
         { text: 'Nama Pasien', value: "concat(p.nama_depan, ' ',p.nama_belakang)" },
         { text: 'No. Register', value: 'tp.no_register' },
         { text: 'No. Rekam Medis', value: 'tp.no_rekam_medis' },
     ];
+
+    JenisRawatDatasource: any[] = [
+        { text: 'Rawat Jalan', value: 'J' },
+        { text: 'Rawat Inap', value: 'I' },
+        { text: 'Rawat Darurat', value: 'D' },
+    ];
+
+    JenisRawatFields = { text: 'text', value: 'value' };
 
     GridDatasource: any[] = [];
     @ViewChild('GridData') public GridData: GridComponent;
@@ -154,11 +163,25 @@ export class VerifikasiOrderLabComponent implements OnInit {
     }
 
     handlePencarianFilter(args?: any): void {
-        let parameter = {
-            kode_grup_penunjang: "LAB",
-            jenis_rawat: "J",
-            filters: args.length > 0 ? [...args] : []
-        };
+        let indexJenisRawat = args.map((item) => { return item.columnName }).indexOf('jenis_rawat');
+
+        let parameter = {};
+
+        if (indexJenisRawat > -1) {
+            let filters = args.filter((item) => { return item.columnName !== 'jenis_rawat' });
+
+            parameter = {
+                kode_grup_penunjang: "LAB",
+                jenis_rawat: args[indexJenisRawat].searchText,
+                filters: filters
+            };
+        } else {
+            parameter = {
+                kode_grup_penunjang: "LAB",
+                jenis_rawat: "J",
+                filters: args.length > 0 ? [...args] : []
+            };
+        }
 
         this.verifikasiOrderLabService.onGetListOrderForVerifikasi(parameter)
             .subscribe((result) => {

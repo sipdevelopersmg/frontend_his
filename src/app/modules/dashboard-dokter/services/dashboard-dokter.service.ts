@@ -31,6 +31,24 @@ export class DashboardDokterService {
     ) { }
 
     onSetSidebarMenuForDashboardDokter(): void {
+        this.onSetJenisRawatForDashboardDokter();
+
+        let urlResep = "";
+
+        switch (this.JenisRawat.value) {
+            case 'IRJA':
+                urlResep = 'Dokter/resep';
+                break;
+            case 'IRNA':
+                urlResep = 'Dokter/resep-irna/daftar-resep-irna';
+                break;
+            case 'IRDA':
+                urlResep = 'Dokter/resep-irda/daftar-resep-irda';
+                break;
+        };
+
+        console.log(urlResep);
+
         const sidebarMenu: SidebarMenuModel[] = [
             {
                 button: [],
@@ -78,7 +96,7 @@ export class DashboardDokterService {
                 id_top_menu: 0,
                 is_parent: true,
                 sidebarChild: [],
-                url: "Dokter/resep"
+                url: urlResep
             },
             {
                 button: [],

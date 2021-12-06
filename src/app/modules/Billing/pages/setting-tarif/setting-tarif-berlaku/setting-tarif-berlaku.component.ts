@@ -452,7 +452,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
     }
 
     handleSelectedRowLookupTarif(args: RowSelectEventArgs): void {
-        // console.log(this.GridLookupTarif.Grid.getSelectedRecords());
+        console.log(this.GridLookupTarif.Grid.getSelectedRecords());
     }
 
     handleActionCompleteLookupTarif(args: any): void {
@@ -533,7 +533,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                             this.TglBerlakuDatepicker.setDisabledState(false);
                         })
                 }
-            })
+            });
     }
 
     handleClearSettingTarifBerlaku(): void {
