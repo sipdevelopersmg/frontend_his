@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
-import { environment } from 'src/environments/environment';
+import { environment, webApiDemo, webApiUrl } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 
@@ -12,7 +12,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const WebApiUrl = httpRequest.url.startsWith(`${environment.webApiUrl}`);
+        const WebApiUrl = httpRequest.url.startsWith(`${webApiDemo}` || `${webApiUrl}`);
 
         const WebApiLaporan = httpRequest.url.startsWith(`${environment.webApiLaporan}`);
 

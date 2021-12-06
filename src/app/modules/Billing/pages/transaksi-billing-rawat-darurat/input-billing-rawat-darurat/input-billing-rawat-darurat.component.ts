@@ -7,9 +7,7 @@ import { HistoryPembayaranComponent } from '../../transaksi-billing/input-billin
 import { IPaymentMethodModel } from '../../../models/setup-data/setup-payment-method.model';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
-import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { SetupPaymentMethodService } from '../../../services/setup-data/setup-payment-method/setup-payment-method.service';
 import { TransBillingService } from '../../../services/trans-billing/trans-billing.service';
