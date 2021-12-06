@@ -179,6 +179,7 @@ export class SetupItemComponent implements OnInit {
     this.FormSatuans.push(this.NewSatuans());
 
     this.FormKartuStock = this.formBuilder.group({
+      id_item: ['', []],
       kode_item: ['', []],
       nama_item: ['', []],
     });
@@ -323,7 +324,7 @@ export class SetupItemComponent implements OnInit {
         searchText2:this.endDate.toISOString()
       }
     ]
-    this.setupItemService.onGetKartuStockByIdItem(5416,param).subscribe((result)=>{
+    this.setupItemService.onGetKartuStockByIdItem(this.SelectedData.id_item,param).subscribe((result)=>{
       this.GridDataSourceKartuStok = result.data;
       this.total_masuk = result.data.sum('stok_masuk');
       this.total_keluar = result.data.sum('stok_keluar');
@@ -335,7 +336,7 @@ export class SetupItemComponent implements OnInit {
 
   handleClickTampilkanED():void{
     this.tampil_ed = true;
-    this.setupItemService.onGetEDItem(this.id_stockroom_kartu_stok,5416).subscribe((result)=>{
+    this.setupItemService.onGetEDItem(this.id_stockroom_kartu_stok,this.SelectedData.id_item).subscribe((result)=>{
       this.GridDataSourceED = result.data;
       this.GridDataED.Grid.refresh();
     })
@@ -392,13 +393,16 @@ export class SetupItemComponent implements OnInit {
     this.tampil_ed = false;
     let Data:any = this.SelectedData;
     this.FormKartuStock.setValue({
-      kode_item:Data.kode_item,
-      nama_item:Data.nama_item,
+      id_item   :Data.id_item,
+      kode_item :Data.kode_item,
+      nama_item :Data.nama_item,
     });
     this.OrgTabsRef.onNavigateTabUsingTabId(2, 'KartuStok');
     this.ButtonNav = [
       { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
     ];
+    this.GridDataSourceKartuStok = [];
+    this.GridDataKartuStok.Grid.refresh();
   }
 
   /** Method untuk mengkosongkan data yang ada di form*/
@@ -568,7 +572,8 @@ export class SetupItemComponent implements OnInit {
   bro(args: any){
     console.log(args);
   }
-
+  
+  get id_item() { return this.FormInputData.get('id_item') }
   get id_grup_item() { return this.FormInputData.get('id_grup_item') }
   get id_pabrik() { return this.FormInputData.get('id_pabrik') }
   get id_supplier() { return this.FormInputData.get('id_supplier') }

@@ -7,6 +7,7 @@ import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.ser
 import utilityHelper from 'src/app/helpers/utility/utilityHelper';
 import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
+import { PendaftaranPasienBaruService } from 'src/app/modules/PIS/services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
@@ -64,12 +65,15 @@ export class TransaksiObatIrjaComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private utilityService:UtilityService,
         private utilityHelperService:UtilityHelperService,
+        private pendaftaranPasienBaruService:PendaftaranPasienBaruService,
         private formBuilder: FormBuilder,
+
     ) { }
 
     ngOnInit(): void {
 
         this.formInput = this.formBuilder.group({
+            outlet: ['',[]],
             pasien: ['', []],
             poli: ['', []],
             dokter : ['', []],
@@ -98,18 +102,24 @@ export class TransaksiObatIrjaComponent implements OnInit {
     onLoadDetailData(id) {
        this.resepDokterService.onGetById(id).subscribe((result)=>{
            this.dataHeader = result.data;
+           console.log('header',this.dataHeader);
            this.dataSource = result.data.details;
            this.GridResepRacikan.refresh();
            this.mapingRacikan(result.data.details);
         //    let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
            this.formInput.setValue({
-               poli:result.data.nama_poli,
-               pasien:result.data.nama_pasien,
-               dokter: result.data.nama_dokter,
-               umur: result.data.tgl_lahir,
-               total_bayar_resep: 0
+                outlet:result.data.nama_outlet,
+                poli:result.data.nama_poli,
+                pasien:result.data.nama_pasien,
+                dokter: result.data.nama_dokter,
+                umur: result.data.tgl_lahir,
+                total_bayar_resep: 0
            })
-           this.imageSrc = result.data.nama_foto
+
+           this.pendaftaranPasienBaruService.onGetLinkFotoPerson(this.dataHeader.id_person, false)
+            .subscribe((result) => {
+                this.imageSrc = result.data;
+            });           
        })
     }
 

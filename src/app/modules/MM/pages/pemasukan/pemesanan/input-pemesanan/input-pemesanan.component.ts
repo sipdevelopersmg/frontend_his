@@ -99,12 +99,12 @@ export class InputPemesananComponent implements OnInit {
 
   ngOnInit(): void {
       this.formKontrak = this.formBuilder.group({
-          nomor_pemesanan: ["", Validators.required],
+          nomor_pemesanan: [""],
           tanggal_pemesanan: [null, Validators.required],
           tanggal_expired_pemesanan: [null, Validators.required],
           id_stockroom: [0, Validators.required],
           id_supplier: ["", Validators.required],
-          keterangan: ["", Validators.required],
+          keterangan: [""],
        
           sub_total_1: [0, Validators.required],
           total_disc: [0, Validators.required],

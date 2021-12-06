@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
@@ -23,6 +24,8 @@ export class AntrianFarmasiComponent implements OnInit {
     constructor(
         public resepDokterService:ResepDokterService,
         private socket:Socket,
+        private router:Router,
+
     ) {
        
     }
@@ -64,7 +67,7 @@ export class AntrianFarmasiComponent implements OnInit {
     onClickButtonNav(args: any) {
         switch (args) {
             case "buatResep":
-                
+                this.router.navigate(['dashboard/Pharmacy/transaksi-obat/input-resep-irja']);
                 break;
             default:
                 break;

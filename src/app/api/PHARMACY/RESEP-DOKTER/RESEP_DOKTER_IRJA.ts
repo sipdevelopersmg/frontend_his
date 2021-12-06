@@ -11,3 +11,4 @@ export const GET_ANTRIAN = `${environment.webApiPHARMACY}` +'TransResepDokterIrj
 export const UPDATETOANTRIAN = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/UpdateToAntrian';  
 export const GET_BY_ID = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/GetById';
 export const GENERADE_NO_ANTRIAN = `${environment.webApiPHARMACY}` +'TransResepDokterIrja/GenerateNoAntrian';
+export const ADMISI_PASIEN_IRJA = `${environment.webApiAdmisi}` +'Admisi/AdmisiPasienIrjaGetAllByDynamicFilterForFarmasi';
