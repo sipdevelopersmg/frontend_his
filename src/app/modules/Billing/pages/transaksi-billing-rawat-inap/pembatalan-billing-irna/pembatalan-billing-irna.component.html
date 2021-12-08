@@ -1,0 +1,64 @@
+<!-- Modal Info Kunjungan -->
+<button id="btnModalPembatalan" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalPembatalan" [hidden]="true">
+    Launch Modal Info Kunjungan
+</button>
+
+<div class="modal fade" id="modalPembatalan" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby=" modalPembatalanLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalPembatalanLabel">
+                    {{ ModalPembatalanTitle }}
+                </h5>
+                <button id="btnClosePembatalan" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormPembatalan">
+                    <div class="row mb-2 align-items-center">
+                        <!-- Alasan Pembatalan -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <atm-label *ngIf="FormPembatalanState === 'Batal_Pulang'"
+                                [LabelCaption]="'Mohon Isikan Alasan Pembatalan'">
+                            </atm-label>
+
+                            <atm-label *ngIf="FormPembatalanState === 'Reproses'"
+                                [LabelCaption]="'Mohon Isikan Alasan Reproses'">
+                            </atm-label>
+
+                            <atm-label *ngIf="FormPembatalanState === 'Batal_Payment'"
+                                [LabelCaption]="'Mohon Isikan Alasan Pembatalan Payment'">
+                            </atm-label>
+
+                            <textarea rows="3" class="form-control mt-2" formControlName="reason_canceled">
+                            </textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+
+                <button *ngIf="FormPembatalanState === 'Batal_Pulang'" class="btn btn-primary btn-sm" type="button"
+                    (click)="handleSubmitModalPembatalanPulang(FormPembatalan.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan
+                </button>
+
+                <button *ngIf="FormPembatalanState === 'Reproses'" class="btn btn-primary btn-sm" type="button"
+                    (click)="handleSubmitModalPembatalanPulang(FormPembatalan.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Save Reproses
+                </button>
+
+                <button *ngIf="FormPembatalanState === 'Batal_Payment'" class="btn btn-primary btn-sm" type="button"
+                    (click)="handleSubmitModalPembatalanPulang(FormPembatalan.value)">
+                    <i class="fas fa-save fa-sm"></i>&nbsp; Save Pembatalan Payment
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

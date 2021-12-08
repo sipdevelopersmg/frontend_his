@@ -20,7 +20,8 @@
                     <org-tabs-item>
                         <org-tabs-label [Id]="'Akomodasi'">Akomodasi</org-tabs-label>
                         <org-tabs-body>
-                            <app-list-akomodasi></app-list-akomodasi>
+                            <app-list-akomodasi [ListAkomodasiDatasource]="ListAkomodasiDatasource">
+                            </app-list-akomodasi>
                         </org-tabs-body>
                     </org-tabs-item>
 
@@ -28,7 +29,7 @@
                     <org-tabs-item>
                         <org-tabs-label [Id]="'Detail_Akomodasi'">Detail Akomodasi</org-tabs-label>
                         <org-tabs-body>
-                            <app-list-detail-akomodasi
+                            <app-list-detail-akomodasi [ListAkomodasiDetailDatasource]="ListAkomodasiDetailDatasource"
                                 (onSendTogglingModal)="handleGetTogglingModalDetailAkomodasi($event)">
                             </app-list-detail-akomodasi>
                         </org-tabs-body>

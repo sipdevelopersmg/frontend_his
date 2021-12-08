@@ -48,6 +48,7 @@ import { ListBedTransferComponent } from './pages/transaksi-billing-rawat-inap/a
 import { AkomodasiRawatInapComponent } from './pages/transaksi-billing-rawat-inap/akomodasi-rawat-inap/akomodasi-rawat-inap/akomodasi-rawat-inap.component';
 import { PembatalanBillingIrdaComponent } from './pages/transaksi-billing-rawat-darurat/pembatalan-billing-irda/pembatalan-billing-irda.component';
 import { PostingBillingComponent } from './pages/posting-billing/posting-billing.component';
+import { PembatalanBillingIrnaComponent } from './pages/transaksi-billing-rawat-inap/pembatalan-billing-irna/pembatalan-billing-irna.component';
 
 @NgModule({
     declarations: [
@@ -94,6 +95,7 @@ import { PostingBillingComponent } from './pages/posting-billing/posting-billing
         AkomodasiRawatInapComponent,
         PembatalanBillingIrdaComponent,
         PostingBillingComponent,
+        PembatalanBillingIrnaComponent,
     ],
     imports: [
         CommonModule,

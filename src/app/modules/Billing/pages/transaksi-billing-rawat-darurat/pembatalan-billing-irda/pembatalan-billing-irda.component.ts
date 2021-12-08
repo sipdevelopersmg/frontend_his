@@ -26,8 +26,6 @@ export class PembatalanBillingIrdaComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private utilityService: UtilityService,
-        private transBillingRawatDaruratService: TransBillingRawatDaruratService,
     ) { }
 
     ngOnInit(): void {

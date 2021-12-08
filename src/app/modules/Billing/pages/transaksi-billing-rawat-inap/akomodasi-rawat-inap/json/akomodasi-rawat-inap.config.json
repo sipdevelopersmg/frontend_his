@@ -4,8 +4,17 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "kode_edc_payment",
-            "headerText": "KODE ROOM",
+            "field": "nama_poli",
+            "headerText": "POLIKLINIK",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "room_no",
+            "headerText": "NO. ROOM",
             "visible": true,
             "width": 100
         },
@@ -13,25 +22,25 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_edc_payment",
-            "headerText": "NO. ROOM",
+            "field": "bed_no",
+            "headerText": "NO. BED",
             "visible": true,
-            "width": 120
+            "width": 100
         },
         {
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_edc_payment",
+            "field": "nama_kelas",
             "headerText": "KELAS",
             "visible": true,
-            "width": 80
+            "width": 100
         },
         {
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "tgl_perawatan",
             "headerText": "TGL. PERAWATAN",
             "visible": true,
             "width": 250
@@ -39,19 +48,28 @@
     ],
     "GridDetailAkomodasiColumns": [
         {
-            "allowEditing": false,
-            "allowSorting": true,
-            "editType": "defaultEdit",
-            "field": "kode_edc_payment",
-            "headerText": "TANGGAL",
-            "visible": true,
-            "width": 80
+            "width": 50,
+            "type": "Checkbox",
+            "field": "Checkbox",
+            "headerTextAlign": "Center",
+            "textAlign": "Center"
         },
         {
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_edc_payment",
+            "field": "tanggal_akomodasi",
+            "headerText": "TANGGAL",
+            "format": "dd/MM/yyyy",
+            "type": "Date",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_setup_tarif",
             "headerText": "KODE TARIF",
             "visible": true,
             "width": 120
@@ -60,7 +78,7 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_edc_payment",
+            "field": "nama_setup_tarif",
             "headerText": "NAMA TARIF",
             "visible": true,
             "width": 150
@@ -69,17 +87,38 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "room_no",
             "headerText": "NO. ROOM",
             "visible": true,
-            "width": 250
+            "width": 100
         },
         {
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "bed_no",
+            "headerText": "NO. BED",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_kelas",
             "headerText": "KELAS",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty",
+            "headerText": "QTY",
+            "headerTextAlign": "Right",
+            "format": "N2",
+            "textAlign": "Right",
             "visible": true,
             "width": 80
         },
@@ -87,17 +126,11 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
-            "headerText": "TARIF RS",
-            "visible": true,
-            "width": 100
-        },
-        {
-            "allowEditing": false,
-            "allowSorting": true,
-            "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "comp_fee",
             "headerText": "ASS/TTG P",
+            "headerTextAlign": "Right",
+            "format": "N2",
+            "textAlign": "Right",
             "visible": true,
             "width": 100
         },
@@ -105,8 +138,11 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "subsidi",
             "headerText": "SUBSIDI",
+            "headerTextAlign": "Right",
+            "format": "N2",
+            "textAlign": "Right",
             "visible": true,
             "width": 100
         },
@@ -114,8 +150,11 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "tagihan",
             "headerText": "TAGIHAN",
+            "headerTextAlign": "Right",
+            "format": "N2",
+            "textAlign": "Right",
             "visible": true,
             "width": 100
         },
@@ -123,8 +162,23 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "keterangan",
+            "field": "iur_biaya",
             "headerText": "IUR BIAYA",
+            "headerTextAlign": "Right",
+            "format": "N2",
+            "textAlign": "Right",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "total_amount",
+            "headerText": "SUBTOTAL",
+            "headerTextAlign": "Right",
+            "format": "N2",
+            "textAlign": "Right",
             "visible": true,
             "width": 100
         }

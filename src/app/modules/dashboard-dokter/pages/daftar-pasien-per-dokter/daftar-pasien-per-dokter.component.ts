@@ -130,9 +130,11 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleSelectedRowIRJA(args: any): void {
+        args.data.jenis_rawat = 'IRJA';
+
         this.GridIRJASelectedRow = args.data;
 
-        this.GridIRJASelectedRow.jenis_rawat = this.JenisRawat;
+        this.JenisRawat = 'IRJA';
     }
 
     handleToolbarClickIRJA(args: any): void {

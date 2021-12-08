@@ -5,7 +5,7 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { EditSettingsModel } from '@syncfusion/ej2-grids';
 import { KelasPerawatanModel } from 'src/app/modules/Billing/models/setup-data/setup-kelas-perawatan.model';
-import { IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
+import { AkomodasiDetailModel, GetDataAkomodasiPasienModel, IAkomodasiBillingModel, IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
 // tslint:disable-next-line: max-line-length
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
@@ -23,6 +23,8 @@ export class AkomodasiRawatInapComponent implements OnInit {
 
     @Input('InformasiPasien') InformasiPasien: IInformasiPasienModel;
 
+    @Input('InformasiAkomodasi') InformasiAkomodasi: GetDataAkomodasiPasienModel;
+
     @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
 
     Config = Config;
@@ -30,6 +32,12 @@ export class AkomodasiRawatInapComponent implements OnInit {
     API_BILLING_SETUP_DATA = API_BILLING.API_BILLING.SETUP_DATA;
 
     API_BILLING_SETTING_TARIF = API_BILLING.API_BILLING.SETTING_HARGA_TARIF;
+
+    // ** List Akomodasi Datasource
+    ListAkomodasiDatasource: IAkomodasiBillingModel[];
+
+    // ** List Akomodasi Detail Datasource
+    ListAkomodasiDetailDatasource: AkomodasiDetailModel[];
 
     FormAddDetailAkomodasi: FormGroup;
 
@@ -85,6 +93,19 @@ export class AkomodasiRawatInapComponent implements OnInit {
     handleOpenAkomodasiRawatInap(): void {
         const btnModalAkomodasiRawatInap = document.getElementById('btnModalAkomodasiRawatInap') as HTMLElement;
         btnModalAkomodasiRawatInap.click();
+
+        setTimeout(() => {
+            console.log(this.InformasiAkomodasi);
+            this.onSetListDatasource(this.InformasiAkomodasi);
+        }, 250);
+    }
+
+    onSetListDatasource(InformasiAkomodasi: GetDataAkomodasiPasienModel): void {
+        this.ListAkomodasiDatasource = [];
+        this.ListAkomodasiDatasource = InformasiAkomodasi.akomodasi;
+
+        this.ListAkomodasiDetailDatasource = [];
+        this.ListAkomodasiDetailDatasource = InformasiAkomodasi.akomodasi_detail.detail;
     }
 
     handleSelectedTabId(TabId: any): void {

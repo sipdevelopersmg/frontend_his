@@ -173,7 +173,7 @@ export class SetupUserComponent implements OnInit {
         // ** Get User Data from Session Storage
         const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
 
-        FormSetupUser.user_created = UserData.id_user;
+        FormSetupUser.user_created = 2;
 
         // ** Eksekusi Function di Setup User Service
         this.setupUserService.onInsertUser(FormSetupUser)

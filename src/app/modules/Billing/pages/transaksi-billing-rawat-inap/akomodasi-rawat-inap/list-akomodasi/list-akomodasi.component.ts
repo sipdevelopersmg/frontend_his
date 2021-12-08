@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import * as Config from '../json/akomodasi-rawat-inap.config.json';
@@ -13,7 +13,7 @@ export class ListAkomodasiComponent implements OnInit {
     Config = Config;
 
     private GridData: MolGridComponent = null;
-    GridDatasource: any[];
+    @Input('ListAkomodasiDatasource') GridDatasource: any[];
     GridDataToolbar: any[];
     GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
     GridSelectedData: any;

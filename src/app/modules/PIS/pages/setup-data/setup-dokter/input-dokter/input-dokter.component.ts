@@ -368,7 +368,7 @@ export class InputDokterComponent implements OnInit {
                 "id_bahasa": [0, []],
                 "id_last_education": [0, []],
                 "id_job_type": [0, []],
-                "user_created": [this.UserData.id_user, [Validators.required]],
+                "user_created": [0, [Validators.required]],
             }),
             "alamat_person": this.formBuilder.array([
 
@@ -384,7 +384,7 @@ export class InputDokterComponent implements OnInit {
                 "tgl_exp_str": [Date, Validators.required],
                 "id_smf": [0, []],
                 "id_status_dokter": [0, []],
-                "user_created": [this.UserData.id_user, []],
+                "user_created": [0, []],
             })
         });
 
@@ -405,7 +405,7 @@ export class InputDokterComponent implements OnInit {
             "rw": ["", []],
             "kelurahan": ["", []],
             "kode_wilayah": ["", Validators.required],
-            "user_created": [this.UserData.id_user, []],
+            "user_created": [0, []],
             "is_default": [false, Validators.required]
         });
     }
@@ -417,7 +417,7 @@ export class InputDokterComponent implements OnInit {
             "office_phone": ["", Validators.required],
             "email": ["", []],
             "keterangan": ["", []],
-            "user_created": [this.UserData.id_user, []],
+            "user_created": [0, []],
             "is_default": [false, Validators.required]
         });
     }
@@ -739,7 +739,7 @@ export class InputDokterComponent implements OnInit {
         this.KotaDropdown.value = null;
         this.KecamatanDropdown.value = null;
 
-        this.user_created.setValue(this.UserData.id_user);
+        this.user_created.setValue(0);
 
         if (this.FormAlamats.length > 0) {
             for (let i = 0; i < this.FormAlamats.length; i++) {
@@ -773,7 +773,7 @@ export class InputDokterComponent implements OnInit {
         this.id_status_dokter.setValue(0);
         this.StatusDokter.value = null;
 
-        this.user_created_dokter.setValue(this.UserData.id_user);
+        this.user_created_dokter.setValue(0);
     }
 
     onSubmitFormPersonSudahAda(): void {

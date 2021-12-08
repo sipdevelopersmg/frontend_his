@@ -7,6 +7,9 @@ export interface IDataBillingModel {
     tdlab?: ITdLabModel;
     tdrad?: ITdRadModel;
     resep?: IResepBillingModel;
+    akomodasi?: IAkomodasiBillingModel[];
+    akomodasi_detail?: IAkomodasiDetailBillingModel;
+    riwayat_kunjungan_pasien?: any[];
 }
 
 export interface IInformasiPasienModel {
@@ -24,6 +27,8 @@ export interface IInformasiPasienModel {
     total_biaya?: number;
     status_billing?: string;
     nama_poli?: string;
+    nama_dokter?: string;
+    bed_no?: string;
 }
 
 export interface ITiketModel {
@@ -130,8 +135,66 @@ export interface IResepBillingDetailModel {
     status_bayar: string
 }
 
+export interface IAkomodasiBillingModel {
+    id_transaksi_akomodasi: number
+    id_register: number
+    id_bed_history: number
+    id_poli: number
+    kode_poli: string
+    nama_poli: string
+    id_setup_room: number
+    room_no: string
+    room_descr: string
+    id_setup_bed_room: number
+    bed_no: string
+    id_kelas_pelayanan: number
+    nama_kelas: string
+    tgl_perawatan: string
+}
+
+export interface IAkomodasiDetailBillingModel {
+    jenis_transaksi: string
+    total: number
+    detail: AkomodasiDetailModel[]
+}
+
+export interface AkomodasiDetailModel {
+    id_transaksi_akomodasi_ekstrak: number
+    id_transaksi_akomodasi: number
+    id_register: number
+    tanggal_akomodasi: string
+    kode_setup_tarif: string
+    nama_setup_tarif: string
+    id_setup_room: number
+    room_no: string
+    room_descr: string
+    id_setup_bed_room: number
+    bed_no: string
+    id_kelas: number
+    nama_kelas: string
+    hospital_fee: number
+    anas_fee: number
+    medical_fee: number
+    add_fee: number
+    comp_fee: number
+    cito_fee: number
+    qty: number
+    unit_amount: number
+    total_amount: number
+    tagihan: number
+    iur_biaya: number
+    subsidi: number
+    charge_amount: number
+    status_bayar: string
+}
+
 export class GetDataBillingModel implements HttpResponseModel {
     responseResult: boolean;
     data: IDataBillingModel;
     message: string;
+}
+
+export interface GetDataAkomodasiPasienModel {
+    akomodasi: IAkomodasiBillingModel[];
+    akomodasi_detail: IAkomodasiDetailBillingModel;
 }

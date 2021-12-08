@@ -43,6 +43,8 @@ export class VerifikasiOrderLabComponent implements OnInit {
 
     JenisRawatFields = { text: 'text', value: 'value' };
 
+    CurrentFilter: any;
+
     GridDatasource: any[] = [];
     @ViewChild('GridData') public GridData: GridComponent;
     GridToolbar: any[] = ["Search"];
@@ -181,7 +183,9 @@ export class VerifikasiOrderLabComponent implements OnInit {
                 jenis_rawat: "J",
                 filters: args.length > 0 ? [...args] : []
             };
-        }
+        };
+
+        this.CurrentFilter = parameter;
 
         this.verifikasiOrderLabService.onGetListOrderForVerifikasi(parameter)
             .subscribe((result) => {
@@ -449,7 +453,10 @@ export class VerifikasiOrderLabComponent implements OnInit {
                                 btnCloseModal.click();
 
                                 setTimeout(() => {
-                                    this.handlePencarianFilter([]);
+                                    this.verifikasiOrderLabService.onGetListOrderForVerifikasi(this.CurrentFilter)
+                                        .subscribe((result) => {
+                                            this.GridDatasource = result.data;
+                                        });
                                 }, 500);
                             })
                     }
@@ -504,7 +511,10 @@ export class VerifikasiOrderLabComponent implements OnInit {
                                     btnCloseModal.click();
 
                                     setTimeout(() => {
-                                        this.handlePencarianFilter([]);
+                                        this.verifikasiOrderLabService.onGetListOrderForVerifikasi(this.CurrentFilter)
+                                            .subscribe((result) => {
+                                                this.GridDatasource = result.data;
+                                            });
                                     }, 500);
 
                                 })

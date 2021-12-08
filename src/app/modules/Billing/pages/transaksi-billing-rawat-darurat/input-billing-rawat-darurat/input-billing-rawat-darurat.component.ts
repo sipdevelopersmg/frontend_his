@@ -354,10 +354,18 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
             });
     }
 
-    handleChangeDropdownCaraPulang(args: any): void {
+    handleChangeCaraPulang(args: any): void {
         let data = args.itemData;
 
+        this.id_cara_pulang.setValue(data.id_cara_pulang);
+
         this.CaraPulangMeninggal = data.cara_pulang == "MENINGGAL" ? true : false;
+    }
+
+    handleChangeKondisiPulang(args: any): void {
+        let data = args.itemData;
+
+        this.id_kondisi_pulang.setValue(data.id_kondisi_pulang);
     }
 
     onGetDataBillingByNoRegister(RegisterNo: string): void {
@@ -386,6 +394,13 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
                 }
 
                 if (result.data.resep) {
+                    result.data.resep.detail.filter((item) => {
+                        item.tgl_transaksi = this.utilityService.onFormatDate(item.tgl_transaksi, 'Do/MM/yyyy');
+                        item.time_inputed_penjualan_obat = this.utilityService.onFormatDate(item.time_inputed_penjualan_obat, 'Do/MM/yyyy HH:mm:ss');
+
+                        return item;
+                    });
+
                     this.BillingItem.push({ ...result.data.resep });
                 }
 
@@ -1262,7 +1277,7 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
 
         if (requestType == "save") {
             if (args.data !== args.previousData) {
-                this.onAllGridEditedEventMethod(args.data);
+                this.onAllGridEditedEventMethod(args.data, true);
             }
         };
     }
@@ -1450,6 +1465,7 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     }
 
     onAllGridEditedEventMethod(data: any, is_resep?: boolean): void {
+
         if (this.AllGridEditedData.length > 0) {
             let current_data = 0;
 
@@ -1466,7 +1482,9 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
             } else {
                 this.AllGridEditedData.push(data);
             }
-        } else {
+        }
+
+        if (this.AllGridEditedData.length < 1) {
             this.AllGridEditedData.push(data);
         };
 
@@ -1569,7 +1587,14 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
 
                     detail_item.iur_biaya = 0;
                 }
-                this.onAllGridEditedEventMethod(detail_item);
+
+                if (detail_item.id_transaksi) {
+                    this.onAllGridEditedEventMethod(detail_item);
+                };
+
+                if (detail_item.id_transaksi_obat) {
+                    this.onAllGridEditedEventMethod(detail_item, true);
+                };
 
                 return detail_item;
             });
@@ -1588,7 +1613,7 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
 
         this.GridDataTDRAD.refresh();
 
-        // this.GridDataResep.refresh();
+        this.GridDataResep.refresh();
 
         this.onSumTotalBiayaFromAllGrid(this.BillingItem);
     }
@@ -1634,33 +1659,17 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     // ** SAVE PULANG
     handleSavePulang(): void {
         if (this.AllGridEditedData.length > 0) {
-            let detail = this.AllGridEditedData.map((item) => {
-                if (item.id_transaksi) {
-                    return {
-                        id_transaksi: item.id_transaksi,
-                        qty: item.qty,
-                        comp_fee: item.comp_fee,
-                        iur_biaya: item.iur_biaya,
-                        subsidi: item.subsidi,
-                        tagihan: item.tagihan,
-                        unit_amount: item.unit_amount,
-                        total_amount: item.total_amount,
-                    };
-                };
-            });
+            let detail = [];
 
-            let detail_obat = this.AllGridEditedData.map((item) => {
+            let detail_obat = [];
+
+            this.AllGridEditedData.forEach((item) => {
+                if (item.id_transaksi) {
+                    detail.push(item);
+                };
+
                 if (item.id_transaksi_obat) {
-                    return {
-                        id_transaksi: item.id_transaksi,
-                        qty: item.qty,
-                        comp_fee: item.comp_fee,
-                        iur_biaya: item.iur_biaya,
-                        subsidi: item.subsidi,
-                        tagihan: item.tagihan,
-                        unit_amount: item.unit_amount,
-                        total_amount: item.total_amount,
-                    };
+                    detail_obat.push(item);
                 };
             });
 
@@ -1677,34 +1686,32 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
                 item_transaksi_obat: detail_obat
             };
 
-            console.log(header);
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Pasien Akan Dipulangkan",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, Saya Yakin',
+                focusCancel: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.transBillingRawatDaruratService.onSavePulang(header)
+                        .subscribe((result) => {
+                            if (result.responseResult) {
+                                this.utilityService.onShowingCustomAlert('success', 'Success', 'Pasien Berhasil Dipulangkan')
+                                    .then(() => {
+                                        let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
 
-            // Swal.fire({
-            //     title: 'Apakah Anda Yakin?',
-            //     text: "Pasien Akan Dipulangkan",
-            //     icon: 'warning',
-            //     showCancelButton: true,
-            //     confirmButtonColor: '#3085d6',
-            //     cancelButtonColor: '#d33',
-            //     confirmButtonText: 'Iya, Saya Yakin',
-            //     focusCancel: true,
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         this.transBillingRawatDaruratService.onSavePulang(header)
-            //             .subscribe((result) => {
-            //                 if (result.responseResult) {
-            //                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Pasien Berhasil Dipulangkan')
-            //                         .then(() => {
-            //                             let NoRegister = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["no_register"]);
+                                        this.BillingItem = [];
 
-            //                             this.BillingItem = [];
-
-            //                             this.onGetDataBillingByNoRegister(NoRegister);
-            //                         });
-            //                 }
-            //             });
-            //     }
-            // });
+                                        this.onGetDataBillingByNoRegister(NoRegister);
+                                    });
+                            }
+                        });
+                }
+            });
         } else {
             this.utilityService.onShowingCustomAlert('warning', 'Peringatan', 'Tidak Ada Data Yg Diubah');
         }
@@ -2056,16 +2063,17 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     // ** REPROSES
     onFillFormForSaveReproses(): void {
         if (this.AllGridEditedData.length > 0) {
-            let detail = this.AllGridEditedData.map((item) => {
-                return {
-                    id_transaksi: item.id_transaksi,
-                    qty: item.qty,
-                    comp_fee: item.comp_fee,
-                    iur_biaya: item.iur_biaya,
-                    subsidi: item.subsidi,
-                    tagihan: item.tagihan,
-                    unit_amount: item.unit_amount,
-                    total_amount: item.total_amount,
+            let detail = [];
+
+            let detail_obat = [];
+
+            this.AllGridEditedData.forEach((item) => {
+                if (item.id_transaksi) {
+                    detail.push(item);
+                };
+
+                if (item.id_transaksi_obat) {
+                    detail_obat.push(item);
                 };
             });
 
@@ -2076,7 +2084,8 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
                 iur_amount: this.iur_amount.value,
                 subsidi_amount: this.subsidi_amount.value,
                 claim_amount: this.claim_amount.value,
-                item_transaksi: detail
+                item_transaksi: detail,
+                item_transaksi_obat: detail_obat
             };
 
             this.FormPembatalanState = "Reproses";

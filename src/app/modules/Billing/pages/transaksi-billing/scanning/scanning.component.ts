@@ -8,6 +8,7 @@ import { TransBillingRawatDaruratService } from '../../../services/trans-billing
 import * as Config from '../json/transaksi-billing.config.json';
 import * as API_CONFIG from '../../../../../api/BILLING';
 import Swal from 'sweetalert2';
+import { TransBillingRawatInapService } from '../../../services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
 
 @Component({
     selector: 'app-scanning',
@@ -31,6 +32,7 @@ export class ScanningComponent implements OnInit {
         private utililtyService: UtilityService,
         private encryptionService: EncryptionService,
         private transBillingService: TransBillingService,
+        private transBillingRawatInapService: TransBillingRawatInapService,
         private transBillingRawatDaruratService: TransBillingRawatDaruratService
     ) { }
 
@@ -48,7 +50,7 @@ export class ScanningComponent implements OnInit {
                 break;
             case 'scan-billing-pasien-rawat-inap':
                 this.ScanningBillingState = 'IRNA';
-                this.UrlLookupDaftarPasien = this.API_TRANS_BILLING.TRANS_BILLING_IRDA.POST_GET_DATA_PASIEN_FOR_LOOKUP;
+                this.UrlLookupDaftarPasien = this.API_TRANS_BILLING.TRANS_BILLING_IRNA.POST_GET_DATA_PASIEN_FOR_LOOKUP;
                 break;
             case 'scan-billing-pasien-rawat-jalan':
                 this.ScanningBillingState = 'IRJA';
@@ -102,7 +104,7 @@ export class ScanningComponent implements OnInit {
     }
 
     onScanNoRegisterIRNA(NoRegister: string): void {
-        this.transBillingRawatDaruratService.onScanNoRegister(NoRegister)
+        this.transBillingRawatInapService.onScanNoRegister(NoRegister)
             .subscribe((result) => {
                 if (result.responseResult) {
                     Swal.fire({

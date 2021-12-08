@@ -47,8 +47,6 @@ export class DashboardDokterService {
                 break;
         };
 
-        console.log(urlResep);
-
         const sidebarMenu: SidebarMenuModel[] = [
             {
                 button: [],
