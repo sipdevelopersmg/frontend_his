@@ -42,7 +42,7 @@ export class DaftarResepIrdaComponent implements OnInit {
   constructor(
     private router: Router,
     private encryptionService: EncryptionService,
-    public resepDokterIrdaService: ResepDokterIrdaService,
+    public resepDokterIrdaService: ResepDokterIrdaService
   ) { }
 
   ngAfterViewInit(): void {
@@ -50,12 +50,8 @@ export class DaftarResepIrdaComponent implements OnInit {
   }
 
   public keterangan = (field: string, data1: object) => {
-    console.log('keterangan',data1);
-        return  data1['nama_obat'] +' '+
-            data1['nama_rute_pemberian_obat'] + ', sehari ' + 
-            data1['qty_harian'] +' '+ data1['nama_satuan']+', '+ data1['jumlah_satuan_aturan_pakai']+' '+ data1['nama_satuan']+
-            ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['nama_interval_aturan_pakai']+' sekali, '+
-            data1['label_tambahan_aturan_pakai_obat'];
+        return  data1['nama_rute_pemberian_obat'] + ', sehari ' + 
+        data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
   }
 
   public quantity = (field: string, data1: object) => {
@@ -123,9 +119,13 @@ export class DaftarResepIrdaComponent implements OnInit {
   }
   
   handleClickDetail(args){
-    console.log(args.items);
-    const id = this.encryptionService.encrypt(JSON.stringify(args.items[0].resep_id));
-    this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
+    console.log(args);
+    let item = this.dataSource.filter(x => x.nomor_resep === args.key);
+    console.log('item klik',item)
+    if(item.length){
+      const id = this.encryptionService.encrypt(JSON.stringify(args.items[0].resep_id));
+      this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
+    }
   }
 
   handleClickButtonNav(args: any): void {

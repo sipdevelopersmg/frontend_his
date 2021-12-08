@@ -69,7 +69,7 @@ export class ResepComponent implements OnInit, AfterViewInit {
                 this.isGetFromTemplate =false;
                 break;
             case "Simpan":
-                this.onGetGridResepDatasource();
+                this.Insert();
                 break;
             default:
                 break;
@@ -103,7 +103,11 @@ export class ResepComponent implements OnInit, AfterViewInit {
         this.idOutlet = id;
     }
 
-    async onGetGridResepDatasource() {
+    async Insert() {
+        if(!this.idOutlet){
+            this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi','')
+            return false;
+        }
         this.data ={
             id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
             id_register:this.daftarPasienService.ActivePasien.value.id_register,

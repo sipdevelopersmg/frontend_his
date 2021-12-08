@@ -26,3 +26,16 @@
     background-color: #f3e6f3;
   }
   
+
+.e-grid .e-detailheadercell,
+td.e-detailcell.e-lastrowcell {
+  background-color: var(--biru-muda) !important;
+}
+
+div.e-gridcontent
+  tr.e-detailrow
+  td.e-detailcell
+  div.e-headercontent
+  th.e-headercell {
+  background-color: var(--biru-muda) !important;
+}

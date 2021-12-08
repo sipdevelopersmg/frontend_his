@@ -65,10 +65,10 @@ const dashboarDokterRoutes: Routes = [
                 path: "resep-irda", component: null, data: { title: "Resep Irda" },
                 children: [
                     { path: "daftar-resep-irda", component: DaftarResepIrdaComponent, data: { title: "Daftar Resep Active" } },
-                    { path: "input-resep-irda", component: InputResepIrdaComponent, data: { title: "Form Resep Rawat Inap" } },
-                    { path: "view-resep-irda/:id/:key", component: ViewResepIrdaComponent, data: { title: "Detail Resep Rawat Inap" } },
-                    { path: "ubah-resep-irda/:id/:key", component: InputResepIrdaComponent, data: { title: "Ubah Resep Rawat Inap" } },
-                    { path: "pulang-resep-irda", component: PulangResepIrdaComponent, data: { title: "Form Resep Rawat Inap" } },
+                    { path: "input-resep-irda", component: InputResepIrdaComponent, data: { title: "Form Resep Rawat Darurat" } },
+                    { path: "view-resep-irda/:id/:key", component: ViewResepIrdaComponent, data: { title: "Detail Resep Rawat Darurat" } },
+                    { path: "ubah-resep-irda/:id/:key", component: InputResepIrdaComponent, data: { title: "Ubah Resep Rawat Darurat" } },
+                    { path: "pulang-resep-irda", component: PulangResepIrdaComponent, data: { title: "Form Resep Rawat Darurat" } },
                 ]
             },
             {

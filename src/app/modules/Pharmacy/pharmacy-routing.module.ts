@@ -12,6 +12,7 @@ import { SetupRutePemberianObatComponent } from "./pages/setup-data/setup-rute-p
 import { SetupTipeOutletComponent } from "./pages/setup-data/setup-tipe-outlet/setup-tipe-outlet.component";
 import { SetupFormulariumComponent } from "./pages/setup-formularium/setup-formularium/setup-formularium.component";
 import { InputResepIrjaComponent } from "./pages/transaksi-obat/input-resep-irja/input-resep-irja.component";
+import { TransaksiObatIrdaComponent } from "./pages/transaksi-obat/transaksi-obat-irda/transaksi-obat-irda.component";
 import { TransaksiObatIrjaComponent } from "./pages/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.component";
 import { ViewResepIrjaComponent } from "./pages/transaksi-obat/transaksi-obat-irja/view-resep-irja/view-resep-irja.component";
 import { TransaksiObatIrnaComponent } from "./pages/transaksi-obat/transaksi-obat-irna/transaksi-obat-irna.component";
@@ -39,6 +40,7 @@ const pharmacyRoutes: Routes = [
             { path: "view-obat-irja/:id/:key", component: ViewResepIrjaComponent, data: { title: "View Resep Rawat Jalan" } },
             { path: "transaksi-obat-irja/:id/:key", component: TransaksiObatIrjaComponent, data: { title: "Transaksi Obat Rawat Jalan" } },
             { path: "transaksi-obat-irna", component: TransaksiObatIrnaComponent, data: { title: "Transaksi Obat Rawat Inap" } },
+            { path: "transaksi-obat-irda", component: TransaksiObatIrdaComponent, data: { title: "Transaksi Obat Rawat Darurat" } },
             { path: "input-resep-irja", component: InputResepIrjaComponent, data: { title: "Input Resep Irja" } },
         ]
     },

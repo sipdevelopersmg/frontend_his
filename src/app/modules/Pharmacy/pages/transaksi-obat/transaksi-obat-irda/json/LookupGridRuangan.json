@@ -1,0 +1,43 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_poli",
+            "headerText": "Id",
+            "type": "string",
+            "visible": false
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_poli",
+            "headerText": "Kode Ruangan",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_poli",
+            "headerText": "Nama Ruangan",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "kode_poli",
+            "filter": "like",
+            "title": "Kode Ruangan"
+        },
+        {
+            "field": "nama_ruangan",
+            "filter": "like",
+            "title": "Nama Ruangan"
+        }
+    ]
+}

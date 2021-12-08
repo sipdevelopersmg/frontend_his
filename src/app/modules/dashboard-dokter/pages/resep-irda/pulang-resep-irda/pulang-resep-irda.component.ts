@@ -348,7 +348,7 @@ export class PulangResepIrdaComponent implements OnInit {
       })
 
       this.setupMetodeRacikanService.setDataSource();
-      this.resepDokterIrdaService.setDataObat([]);
+    //   this.resepDokterIrdaService.setDataObat([]);
 
   }
 

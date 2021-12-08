@@ -89,7 +89,12 @@ export class TransaksiObatIrjaComponent implements OnInit {
             allowResizing: true,
             allowTextWrap: true,
             textWrapSettings: { wrapMode: 'Both' },
-            columns: this.GridConfig.columnsChild
+            columns: [
+                { "field": "nama_obat", "headerText": "Nama Obat"},
+                { "field": "qty_racikan", "headerText": "Qty" ,"width":50},
+                { "field": "harga_jual_apotek", "headerText": "Harga", "textAlign":"Right", "format": "N2","width":70},
+                { "field": "total_harga", "headerText": "Total Harga", "textAlign":"Right", "format": "N2","width":70}
+            ]
         }
     }
 
@@ -126,6 +131,9 @@ export class TransaksiObatIrjaComponent implements OnInit {
     mapingRacikan(details){
         this.dataSourceChild = [];
         details.map((item) => {
+            item.racikans.map((e)=>{
+                return e.total_harga = e.qty_racikan * e.harga_jual_apotek;
+            })
             this.dataSourceChild.push(...item.racikans);
         });
         
@@ -136,7 +144,12 @@ export class TransaksiObatIrjaComponent implements OnInit {
             allowResizing: true,
             allowTextWrap: true,
             textWrapSettings: { wrapMode: 'Both' },
-            columns: this.GridConfig.columnsChild
+            columns: [
+                { "field": "nama_obat", "headerText": "Nama Obat"},
+                { "field": "qty_racikan", "headerText": "Qty" ,"width":50},
+                { "field": "harga_jual_apotek", "headerText": "Harga", "textAlign":"Right", "format": "N2","width":70},
+                { "field": "total_harga", "headerText": "Total Harga", "textAlign":"Right", "format": "N2","width":70}
+            ]
         }
     }
 
