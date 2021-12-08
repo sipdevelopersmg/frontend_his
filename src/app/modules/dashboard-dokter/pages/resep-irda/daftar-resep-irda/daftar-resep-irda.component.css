@@ -23,3 +23,16 @@
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
   }
   
+
+.e-grid .e-detailheadercell,
+td.e-detailcell.e-lastrowcell {
+  background-color: var(--biru-muda) !important;
+}
+
+div.e-gridcontent
+  tr.e-detailrow
+  td.e-detailcell
+  div.e-headercontent
+  th.e-headercell {
+  background-color: var(--biru-muda) !important;
+}

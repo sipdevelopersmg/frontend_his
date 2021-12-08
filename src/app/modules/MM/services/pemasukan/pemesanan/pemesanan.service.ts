@@ -91,7 +91,11 @@ export class PemesananService {
     */
     setDetail(id): void{
         this.getDetail(id).subscribe((result) => {
-            this.dataDetail = result.data
+            let data = result.data;
+                data.map((item,index)=>{
+                    return item.qty_sisa = item.qty_pesan - item.qty_terima;
+                })
+            this.dataDetail = data
         });
     }
 
@@ -159,8 +163,7 @@ export class PemesananService {
         this.sub_total_1 = this.dataDetail.sum('sub_total_pesan');
         this.sub_total_2 = this.dataDetail.sum('sub_total_pesan');
         this.total_transaksi_pesan = this.dataDetail.sum('sub_total_pesan');
-
-        this.jumlah_item_pesan = this.dataDetail.sum('qty_satuan_besar');
+        this.jumlah_item_pesan = this.dataDetail.sum('qty_pesan');
     }
 
     Insert( Data:TrPemesananInsert ): Observable<any>{
