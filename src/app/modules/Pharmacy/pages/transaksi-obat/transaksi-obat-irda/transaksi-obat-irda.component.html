@@ -1,0 +1,82 @@
+<org-card-layout>
+    <div class="row">
+        <div class="col-sm-4">
+            <!-- <org-input-look-up-kode #LookupKodeRuangan [lookup-url]="urlRuangan" [idKode]="'kode_poli'" [modal-title]="'Data Ruangan'"
+                [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedRuangan($event)"
+                [columns]="LookupGridRuangan.columns" [filter-lookup]="LookupGridRuangan.filter"
+                [label]="'Ruangan'">
+            </org-input-look-up-kode> -->
+            <!-- this.LookupKodeRuangan.resetValue(); -->
+            <mol-grid
+                #GridPasien
+                [grid-height]="'calc(100vh - 13rem)'"
+                [grid-DataSource]="DataSourcePasien"
+                [grid-paging]="false"
+                [grid-lines]="'Both'"
+                [columns]="GridConfig.GridColumns"
+                (row-selected)="handleSelectedRow($event)"
+            ></mol-grid>
+        </div>
+        <div class="col-sm-8">
+            <form [formGroup]="formInput">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <mol-input-text [label]="'No Rm'" formControlName="nomor_rm" [inputFieldState]="inputFieldState"></mol-input-text>  
+                        <mol-input-text [label]="'Pasien'" formControlName="nama_pasien" [inputFieldState]="inputFieldState"></mol-input-text>
+                        <mol-input-text [label]="'Umur'" formControlName="umur" [inputFieldState]="inputFieldState"></mol-input-text>
+                        <!-- <mol-input-text [label]="'Bed'" formControlName="bed" [inputFieldState]="inputFieldState"></mol-input-text> -->
+                    </div>
+                    <div class="col-sm-6">
+                        <mol-input-text [label]="'Dokter'" formControlName="dokter" [inputFieldState]="inputFieldState"></mol-input-text> 
+                        <mol-input-text [label]="'No Reg'" formControlName="nomor_registrasi" [inputFieldState]="inputFieldState"></mol-input-text>
+                    </div>
+                </div>
+                <span *ngIf="!handleClickResep">
+                    <mol-grid
+                        #GridResep
+                        [grid-height]="'calc(100vh - 20rem)'"
+                        [grid-DataSource]="transaksiObatIrdaService.dataResep | async"
+                        [grid-paging]="false"
+                        [grid-lines]="'Both'"
+                        [columns]="GridConfigResep.GridColumns"
+                        (row-selected)="handleSelectedRowResep($event)"
+                    ></mol-grid>
+                </span>
+                <span *ngIf="handleClickResep">
+                    <button type="button" class="app-btn-master me-5 btn btn-sm btn-primary-outline" (click)="handelClickLihatresep()"><i class="fas fa-arrow-left"></i> Daftar Resep</button>
+                    <button type="button" class="app-btn-master btn btn-sm btn-primary" (click)="handleClickSimpan()"><i class="fas fa-save"></i> Simpan Transaksi Obat</button>
+                    <ejs-grid #GridDetailResep [dataSource]="DataSourceDetailResep"
+                        height="calc(100vh - 24rem)" gridLines="Both" rowHeight="30" [childGrid]="childGrid"
+                        (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
+                        [allowTextWrap]="true"
+                        [textWrapSettings]="{ wrapMode: 'Both' }">
+                        <e-columns>
+                            <e-column [visible]="true" field='rute_pemberian_obat' [allowEditing]="false" headerText='Resep'
+                                editType='defaultEdit' [valueAccessor]='keterangan' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='qty_harian' [allowEditing]="true" headerText='Qty' [width]="130"
+                                editType='defaultEdit' [valueAccessor]='quantity' textAlign="right" headerTextAlign="center" >
+                            </e-column>
+                            <e-column [visible]="true" field='harga_jual_apotek' [allowEditing]="true" headerText='Harga' [width]="130"
+                                editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" >
+                            </e-column>
+                            <e-column [visible]="true" field='harga_jual_apotek' [allowEditing]="true" headerText='Total Harga' [width]="130"
+                                editType='defaultEdit' [valueAccessor]='hargajual' textAlign="right" headerTextAlign="center" format="N2" >
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                    <div class="row pe-2" >
+                        <div class="col-sm-5">
+                        </div>
+                        <div class="col-sm-7">
+                            <mol-input-numeric [label]="'Total Bayar Resep'" [isFooter]="true"
+                                formControlName="total_bayar_resep"
+                                [inputFieldState]="'detail'" [inputFieldState]="inputFieldState">
+                            </mol-input-numeric>
+                        </div>
+                    </div>
+                </span>
+            </form>
+        </div>
+    </div>
+</org-card-layout>

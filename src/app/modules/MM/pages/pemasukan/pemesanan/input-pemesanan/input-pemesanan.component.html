@@ -68,16 +68,16 @@
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="300">
                 </e-column>
                 <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
-                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center" [width]="200">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="right" headerTextAlign="center" format="N2">
+                    textAlign="right" headerTextAlign="center" format="N2" [width]="100">
                 </e-column>
                 <e-column [visible]="true" field='qty_pesan' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">

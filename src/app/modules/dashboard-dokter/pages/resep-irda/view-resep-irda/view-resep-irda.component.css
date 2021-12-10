@@ -26,3 +26,17 @@ span.e-headertext {
 td.e-rowcell {
     padding: 5px !important;
 }
+
+
+.e-grid .e-detailheadercell,
+td.e-detailcell.e-lastrowcell {
+  background-color: var(--biru-muda) !important;
+}
+
+div.e-gridcontent
+  tr.e-detailrow
+  td.e-detailcell
+  div.e-headercontent
+  th.e-headercell {
+  background-color: var(--biru-muda) !important;
+}

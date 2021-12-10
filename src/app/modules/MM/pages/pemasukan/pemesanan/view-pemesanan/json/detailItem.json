@@ -92,7 +92,29 @@
         {
             "allowEditing": false,
             "field":"qty_pesan",
-            "headerText":"Qty",
+            "headerText":"Qty Pesan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"qty_terima",
+            "headerText":"Qty Terima",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"qty_sisa",
+            "headerText":"Qty Sisa",
             "editType": "defaultEdit",
             "type":"",
             "format":"N2",

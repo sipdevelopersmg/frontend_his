@@ -65,7 +65,7 @@ export class ResepDokterIrdaService {
      * @onGetAll Void
     */
     onGetAllByResepActiveByRegister(req: PostRequestByDynamicFiterModel[]):  Observable<any> {
-      let id_person = 1; //this.daftarPasienService.ActivePasien.value.id_register;
+      let id_person = this.daftarPasienService.ActivePasien.value.id_register;
       return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_AKTIF_BY_REGISTER+"/"+id_person, req).pipe(
           catchError((error: HttpErrorResponse): any => {
               this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -168,7 +168,7 @@ export class ResepDokterIrdaService {
             e.racikans = [];
             return e;
         });
-        console.log(this.dataSourceChildGrid);
+        console.log(this.dataSourceChildGrid.value);
         this.dataSourceChildGrid.value.forEach((item)=>{
             let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
             
@@ -200,8 +200,8 @@ export class ResepDokterIrdaService {
         this.dataDetail = []
     }
 
-    stopResepRawatInap(id_resep:number):Observable<any> {
-        return this.httpOperationService.defaultPutRequestWithoutParams(this.API.UPDATE_TO_STOP+'/'+ id_resep)
+    stopResepRawatInap(data):Observable<any> {
+        return this.httpOperationService.defaultPutRequest(this.API.UPDATE_TO_STOP,data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

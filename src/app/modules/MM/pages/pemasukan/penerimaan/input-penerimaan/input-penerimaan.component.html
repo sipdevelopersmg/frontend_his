@@ -71,6 +71,7 @@
         <!-- Detail -->
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='penerimaanService.dataDetail$ | async'
             [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
+            [allowResizing]="true"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)"
             (commandClick)="handleCommandClick($event)">

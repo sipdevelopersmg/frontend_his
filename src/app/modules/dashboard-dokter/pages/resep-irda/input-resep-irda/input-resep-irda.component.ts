@@ -28,6 +28,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
 import { ResepDokterIrdaService } from '../../../services/resep-dokter-irda/resep-dokter-irda.service';
+import { SetupOutletService } from 'src/app/modules/Pharmacy/services/setup-data/setup-outlet/setup-outlet.service';
 
 @Component({
   selector: 'app-input-resep-irda',
@@ -58,8 +59,8 @@ export class InputResepIrdaComponent implements OnInit {
     public itemsObj: DropDownList;
     isGetFromTemplate:boolean;
 
-    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2+'/I';
-    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRNA.GET_TEMPLATE_RESEP+'/'+2;
+    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2+'/D';
+    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRDA.GET_TEMPLATE_RESEP;
     public GridLookUpItem = GridLookUpItem;
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
 
@@ -68,6 +69,7 @@ export class InputResepIrdaComponent implements OnInit {
     DropdownRuteFields: object = { text: "nama_rute_pemberian_obat", value: "id_rute_pemberian_obat" };
     DropdownPemakaianFields: object = { text: "interval_aturan_pakai", value: "id_interval_aturan_pakai" };
     DropdownLabelFields: object = { text: "nama_label_pemakaian_obat", value: "id_label_pemakaian_obat" };
+    SetupOutletDropdownField: object = { text: 'nama_outlet', value: 'id_outlet' };
 
     // ** Form Add Obat Properties
     FormAddObat: FormGroup;
@@ -176,8 +178,7 @@ export class InputResepIrdaComponent implements OnInit {
         // return data1['rute_pemberian_obat'] + ',sehari ' + 
         //        data1['qty_harian'] +' '+ data1['nama_satuan']+', '+ data1['jumlah_satuan_aturan_pakai']+' '+ data1['nama_satuan']+
         //        ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['interval_aturan_pakai']+' sekali';
-        return  data1['nama_obat'] +' '+
-                data1['rute_pemberian_obat'] + ', sehari ' + 
+        return  data1['rute_pemberian_obat'] + ', sehari ' + 
                 data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
     }
 
@@ -190,6 +191,7 @@ export class InputResepIrdaComponent implements OnInit {
     private updateResepDokter:boolean = false;
     private pulang:boolean = false;
     private idArry:any[] = [];
+    private setIdOutlet:any ;
   constructor(
     private formBuilder: FormBuilder,
     public resepDokterIrdaService: ResepDokterIrdaService,
@@ -204,7 +206,8 @@ export class InputResepIrdaComponent implements OnInit {
     private router: Router,
     private encryptionService:EncryptionService,
     private activatedRoute:ActivatedRoute,
-    public daftarPasienService: DaftarPasienService
+    public daftarPasienService: DaftarPasienService,
+    public setupOutletService: SetupOutletService,
   ) { }
 
   ngOnInit(): void {
@@ -244,7 +247,6 @@ export class InputResepIrdaComponent implements OnInit {
         ket_aturan: ['', []],
         id_tambahan_aturan_pakai: [null, []],
         label_tambahan_aturan_pakai_obat: ['', []],
-
     });
 
     this.GridDaftarObatToolbar = [
@@ -388,7 +390,7 @@ export class InputResepIrdaComponent implements OnInit {
     });
 
     this.setupMetodeRacikanService.setDataSource();
-    this.resepDokterIrdaService.setDataObat([]);
+    // this.resepDokterIrdaService.setDataObat([]);
     this.setupRutePemberianObatService.setDataSource();
     this.setupIntervalAturanPakaiService.setDataSource();
     
@@ -424,6 +426,8 @@ export class InputResepIrdaComponent implements OnInit {
             
             this.updateResep(parseInt(this.idArry[0]));
         }
+        this.setupOutletService.setDataSource();
+        this.urlTemplateResep = this.urlTemplateResep+'/'+this.daftarPasienService.ActivePasien.value.id_dokter;
     }
 
     updateResep(id){
@@ -434,6 +438,7 @@ export class InputResepIrdaComponent implements OnInit {
         })
     }
 
+
   handleClickTambahObat(){
     this.inputObat = true;
     this.tanggal_mulai_text.setValue(this.utilityService.onFormatDate(this.tanggal_mulai.value,'Do MMMM yyyy'));
@@ -442,6 +447,10 @@ export class InputResepIrdaComponent implements OnInit {
 
   onLoad(args:any){
 
+  }
+
+  handleChangeOutlet(args){
+    this.setIdOutlet=args.value;
   }
 
   setFormGrif(args,currentQtyResep,id_item,SelectedDataRacikanObat){
@@ -797,11 +806,11 @@ export class InputResepIrdaComponent implements OnInit {
     
     async Insert() {
         this.data_header ={
-            id_dokter:2,//this.daftarPasienService.ActivePasien.value.id_dokter,
-            id_register:1,//this.daftarPasienService.ActivePasien.value.id_register,
-            id_outlet:1,
-            id_person:1,//this.daftarPasienService.ActivePasien.value.id_person,
-            jenis_rawat:'I',
+            id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
+            id_register:this.daftarPasienService.ActivePasien.value.id_register,
+            id_outlet:this.setIdOutlet,
+            id_person:this.daftarPasienService.ActivePasien.value.id_person,
+            jenis_rawat:'D',
             nama_template:'',
             tanggal_resep:moment().format()
         }
@@ -911,6 +920,7 @@ export class InputResepIrdaComponent implements OnInit {
                 this.isGetFromTemplate = false;
                 break;
             case "Simpan":
+                this.resepDokterIrdaService.dataSourceChildGrid.next(this.dataScourceGridChild);  
                 this.Insert();
                 break;
             default:
