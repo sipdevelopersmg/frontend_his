@@ -29,6 +29,7 @@ export interface IInformasiPasienModel {
     nama_poli?: string;
     nama_dokter?: string;
     bed_no?: string;
+    tgl_keluar?: any
 }
 
 export interface ITiketModel {

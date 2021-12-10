@@ -6,9 +6,9 @@ export const webApiDemo = "http://159.223.89.0";
 
 export const webApiUrl = "http://174.138.22.139";
 
-export const mode = 'Development';
+export const modeDevelopment = false;
 
-export const webApi = mode === 'Development' ? webApiUrl : webApiDemo;
+export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 
 export const environment = {
 
@@ -52,6 +52,11 @@ export const environment = {
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /billing 
     */
     webApiLaporan: `${webApi}:8080/jasperserver/rest_v2/reports/`,
+
+    /** 
+     * @webApiSocket http://174.138.22.139:3000
+    */
+    webApiSocket: `${webApi}:3000`,
 };
 
 /*

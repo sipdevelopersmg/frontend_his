@@ -2,3 +2,19 @@
   max-width: calc(100vw - 15rem);
   margin: 1.75rem auto;
 }
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 5px !important;
+  height: 30px !important;
+}
+
+span.e-headertext {
+  font-size: 13px !important;
+}
+
+td.e-rowcell {
+  padding: 5px !important;
+}

@@ -9,8 +9,10 @@ import { AppComponent } from './app.component';
 import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
 import { CommandColumnService, EditService } from '@syncfusion/ej2-angular-grids';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+
 const config: SocketIoConfig = {
-    url: 'http://174.138.22.139:3000', options: {
+    url: `${environment.webApiSocket}`, options: {
         "force new connection": true,
         "reconnectionAttempts": "Infinity",
         "timeout": 10000,

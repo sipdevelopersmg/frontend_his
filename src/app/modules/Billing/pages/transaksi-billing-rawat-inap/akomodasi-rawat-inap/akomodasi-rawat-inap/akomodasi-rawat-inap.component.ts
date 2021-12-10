@@ -2,15 +2,18 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { DatePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
-import { EditSettingsModel } from '@syncfusion/ej2-grids';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { NumericTextBox, NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
+import { EditSettingsModel, IEditCell, SelectionSettingsModel } from '@syncfusion/ej2-grids';
+import { BehaviorSubject } from 'rxjs';
 import { KelasPerawatanModel } from 'src/app/modules/Billing/models/setup-data/setup-kelas-perawatan.model';
 import { AkomodasiDetailModel, GetDataAkomodasiPasienModel, IAkomodasiBillingModel, IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
-// tslint:disable-next-line: max-line-length
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
+import { TransBillingRawatInapService } from 'src/app/modules/Billing/services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import * as API_BILLING from '../../../../../../api/BILLING';
 import * as Config from '../json/akomodasi-rawat-inap.config.json';
 
@@ -37,8 +40,6 @@ export class AkomodasiRawatInapComponent implements OnInit {
     ListAkomodasiDatasource: IAkomodasiBillingModel[];
 
     // ** List Akomodasi Detail Datasource
-    ListAkomodasiDetailDatasource: AkomodasiDetailModel[];
-
     FormAddDetailAkomodasi: FormGroup;
 
     @ViewChild('DatepickerTanggal') DatepickerTanggal: DatePickerComponent;
@@ -61,9 +62,36 @@ export class AkomodasiRawatInapComponent implements OnInit {
     GridAddDetailAkomodasiEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridAddDetailAkomodasiSelectedIndex: number;
 
+    @ViewChild('GridDetailAkomodasi') GridDetailAkomodasi: GridComponent;
+    @Input('ListAkomodasiDetailDatasource') ListAkomodasiDetailDatasource: AkomodasiDetailModel[];
+    GridDetailAkomodasiToolbar: any[];
+    GridDetailAkomodasiEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
+    GridDetailAkomodasiSelectedData: any;
+    GridDetailAkomodasiSelectionSettings: SelectionSettingsModel = { type: 'Single' };
+
+    AsuransiDetailAkomodasiParams: IEditCell;
+    AsuransiDetailAkomodasiElem: HTMLElement;
+    AsuransiDetailAkomodasiObj: NumericTextBox;
+
+    SubsidiDetailAkomodasiParams: IEditCell;
+    SubsidiDetailAkomodasiElem: HTMLElement;
+    SubsidiDetailAkomodasiObj: NumericTextBox;
+
+    IurBiayaDetailAkomodasiParams: IEditCell;
+    IurBiayaDetailAkomodasiElem: HTMLElement;
+    IurBiayaDetailAkomodasiObj: NumericTextBox;
+
+    TotalAmountDetailAkomodasi = new BehaviorSubject(0);
+
+    AkomodasiRawatInapEditedData: AkomodasiDetailModel[] = [];
+
+    @Output('onSendCloseModalAkomodasi') onSendCloseModalAkomodasi = new EventEmitter<string>();
+
     constructor(
         private formBuilder: FormBuilder,
+        private utilityService: UtilityService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
+        private transBillingRawatInapService: TransBillingRawatInapService,
     ) { }
 
     ngOnInit(): void {
@@ -88,6 +116,15 @@ export class AkomodasiRawatInapComponent implements OnInit {
         ];
 
         this.onGetAllKelasPelayanan();
+
+        this.GridDetailAkomodasiToolbar = [
+            { text: 'Extract Data', tooltipText: 'Extract Data', prefixIcon: 'fas fa-cog fa-sm', id: 'extract_data' },
+            { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+            { text: 'Delete', tooltipText: 'Delete', prefixIcon: 'fas fa-trash-alt fa-sm', id: 'delete' },
+            'Search'
+        ];
+
+        this.handleSetGridDetailAkomodasiParams();
     }
 
     handleOpenAkomodasiRawatInap(): void {
@@ -95,7 +132,6 @@ export class AkomodasiRawatInapComponent implements OnInit {
         btnModalAkomodasiRawatInap.click();
 
         setTimeout(() => {
-            console.log(this.InformasiAkomodasi);
             this.onSetListDatasource(this.InformasiAkomodasi);
         }, 250);
     }
@@ -109,8 +145,281 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     handleSelectedTabId(TabId: any): void {
-        console.log(TabId);
+
     }
+
+    // ** Start of Grid Detail Akomodasi Section =====
+    handleToolbarClickDetailAkomodasi(args: any): void {
+        let id = args.item.id;
+
+        switch (id) {
+            case "extract_data":
+                this.onExtractDataDetailAkomodasi(this.InformasiPasien.id_register);
+                break;
+            case "add":
+                this.handleOpenAddDetailAkomodasi();
+                break;
+            case "delete":
+                this.onDeleteDetailAkomodasi();
+                break;
+            default:
+                break;
+        }
+    }
+
+    onExtractDataDetailAkomodasi(RegisterId: number): void {
+        this.transBillingRawatInapService.onEkstrakBed(RegisterId)
+            .subscribe((result) => {
+                if (result.responseResult) {
+                    this.onRenewInformasiAkomodasiAfterEkstrak();
+                }
+            });
+    }
+
+    onRenewInformasiAkomodasiAfterEkstrak(): void {
+        this.transBillingRawatInapService.onGetAll(this.InformasiPasien.no_register)
+            .subscribe((result) => {
+                let informasi_akomodasi = {
+                    akomodasi: result.data.akomodasi,
+                    akomodasi_detail: result.data.akomodasi_detail
+                };
+
+                this.InformasiAkomodasi = informasi_akomodasi;
+            });
+    }
+
+    onSubmitAddDetailAkomodasi(): void {
+
+    }
+
+    onDeleteDetailAkomodasi(): void {
+
+    }
+
+    handleSelectedRowDetailAkomodasi(args: any): void {
+        // console.log(args);
+    }
+
+    handleRecordDoubleClickDetailAkomodasi(args: any): void {
+        let asuransi_column_index = this.GridDetailAkomodasi.columns.map((item) => { return item.field }).indexOf('comp_fee');
+
+        let subsidi_column_index = this.GridDetailAkomodasi.columns.map((item) => { return item.field }).indexOf('subsidi');
+
+        let iur_biaya_column_index = this.GridDetailAkomodasi.columns.map((item) => { return item.field }).indexOf('iur_biaya');
+
+        let clicked_column = args.column.field;
+
+        // ** Cek apabila yg di double click field = comp_fee
+        if (clicked_column === "comp_fee") {
+            this.GridDetailAkomodasi.columns[asuransi_column_index]['allowEditing'] = true;
+            this.GridDetailAkomodasi.columns[subsidi_column_index]['allowEditing'] = false;
+            this.GridDetailAkomodasi.columns[iur_biaya_column_index]['allowEditing'] = false;
+
+            setTimeout(() => {
+                this.AsuransiDetailAkomodasiObj.enabled = true;
+                this.SubsidiDetailAkomodasiObj.enabled = false;
+                this.IurBiayaDetailAkomodasiObj.enabled = false;
+            }, 250);
+        };
+
+        // ** Cek apabila yg di double click field = subsidi
+        if (clicked_column === "subsidi") {
+            this.GridDetailAkomodasi.columns[asuransi_column_index]['allowEditing'] = false;
+            this.GridDetailAkomodasi.columns[subsidi_column_index]['allowEditing'] = true;
+            this.GridDetailAkomodasi.columns[iur_biaya_column_index]['allowEditing'] = false;
+
+            setTimeout(() => {
+                this.AsuransiDetailAkomodasiObj.enabled = false;
+                this.SubsidiDetailAkomodasiObj.enabled = true;
+                this.IurBiayaDetailAkomodasiObj.enabled = false;
+            }, 250);
+        };
+
+        // ** Cek apabila yg di double click field = iur_biaya
+        if (clicked_column === "iur_biaya") {
+            this.GridDetailAkomodasi.columns[asuransi_column_index]['allowEditing'] = false;
+            this.GridDetailAkomodasi.columns[subsidi_column_index]['allowEditing'] = false;
+            this.GridDetailAkomodasi.columns[iur_biaya_column_index]['allowEditing'] = true;
+
+            setTimeout(() => {
+                this.AsuransiDetailAkomodasiObj.enabled = false;
+                this.SubsidiDetailAkomodasiObj.enabled = false;
+                this.IurBiayaDetailAkomodasiObj.enabled = true;
+            }, 250);
+        };
+
+        // ** Cek apabila yg di double click field != comp_fee, subsidi dan iur_biaya
+        if (clicked_column !== "comp_fee" && clicked_column !== "subsidi" && clicked_column !== "iur_biaya") {
+            this.GridDetailAkomodasi.columns[asuransi_column_index]['allowEditing'] = false;
+            this.GridDetailAkomodasi.columns[subsidi_column_index]['allowEditing'] = false;
+            this.GridDetailAkomodasi.columns[iur_biaya_column_index]['allowEditing'] = false;
+
+            setTimeout(() => {
+                this.AsuransiDetailAkomodasiObj.enabled = false;
+                this.AsuransiDetailAkomodasiObj.enabled = false;
+                this.AsuransiDetailAkomodasiObj.enabled = false;
+            }, 100);
+        }
+    }
+
+    handleQueryCellInfo(args: any): void {
+        if (args.column.field === "comp_fee" || args.column.field === "subsidi" || args.column.field === "iur_biaya") {
+            args.cell.classList.add("e-pink-editable-background");
+        }
+    }
+
+    handleSetGridDetailAkomodasiParams(): void {
+        this.AsuransiDetailAkomodasiParams = {
+            create: () => {
+                this.AsuransiDetailAkomodasiElem = document.createElement('input');
+                return this.AsuransiDetailAkomodasiElem;
+            },
+            read: () => {
+                return this.AsuransiDetailAkomodasiObj.value;
+            },
+            destroy: () => {
+                this.AsuransiDetailAkomodasiObj.destroy();
+            },
+            write: args => {
+                this.AsuransiDetailAkomodasiObj = new NumericTextBox({
+                    showSpinButton: false,
+                    cssClass: 'text-end',
+                    min: 0,
+                    format: 'N2',
+                    value: args.rowData[args.column.field],
+                    change: function (args) {
+                        let formEle = this.GridDetailAkomodasi.element.querySelector('form').ej2_instances[0];
+
+                        let total_amount_ele = formEle.getInputElement('total_amount');
+
+                        this.SubsidiDetailAkomodasiObj.value = total_amount_ele.value - this.AsuransiDetailAkomodasiObj.value;
+
+                        let tagihan_ele = formEle.getInputElement('tagihan');
+
+                        tagihan_ele.value = this.onCountTotalTagihanPerBarisGridDetailAkomodasi(total_amount_ele.value, tagihan_ele.value);
+                    }.bind(this)
+                });
+                this.AsuransiDetailAkomodasiObj.appendTo(this.AsuransiDetailAkomodasiElem);
+            }
+        };
+
+        this.SubsidiDetailAkomodasiParams = {
+            create: () => {
+                this.SubsidiDetailAkomodasiElem = document.createElement('input');
+                return this.SubsidiDetailAkomodasiElem;
+            },
+            read: () => {
+                return this.SubsidiDetailAkomodasiObj.value;
+            },
+            destroy: () => {
+                this.SubsidiDetailAkomodasiObj.destroy();
+            },
+            write: args => {
+                this.SubsidiDetailAkomodasiObj = new NumericTextBox({
+                    showSpinButton: false,
+                    cssClass: 'text-end',
+                    min: 0,
+                    value: args.rowData[args.column.field],
+                    format: 'N2',
+                    change: function (args: any) {
+                        let formEle = this.GridDetailAkomodasi.element.querySelector('form').ej2_instances[0];
+
+                        let total_amount_ele = formEle.getInputElement('total_amount');
+
+                        let tagihan_ele = formEle.getInputElement('tagihan');
+
+                        tagihan_ele.value = this.onCountTotalTagihanPerBarisGridDetailAkomodasi(total_amount_ele.value, tagihan_ele.value);
+                    }.bind(this),
+
+                });
+                this.SubsidiDetailAkomodasiObj.appendTo(this.SubsidiDetailAkomodasiElem);
+            }
+        };
+
+        this.IurBiayaDetailAkomodasiParams = {
+            create: () => {
+                this.IurBiayaDetailAkomodasiElem = document.createElement('input');
+                return this.IurBiayaDetailAkomodasiElem;
+            },
+            read: () => {
+                return this.IurBiayaDetailAkomodasiObj.value;
+            },
+            destroy: () => {
+                this.IurBiayaDetailAkomodasiObj.destroy();
+            },
+            write: args => {
+                this.IurBiayaDetailAkomodasiObj = new NumericTextBox({
+                    showSpinButton: false,
+                    cssClass: 'text-end',
+                    min: 0,
+                    value: args.rowData[args.column.field],
+                    format: 'N2',
+                    change: function (args: any) {
+                        let formEle = this.GridDetailAkomodasi.element.querySelector('form').ej2_instances[0];
+
+                        let total_amount_ele = formEle.getInputElement('total_amount');
+
+                        let tagihan_ele = formEle.getInputElement('tagihan');
+
+                        tagihan_ele.value = this.IurBiayaDetailAkomodasiObj.value;
+
+                        this.SubsidiDetailAkomodasiObj.value = total_amount_ele.value - tagihan_ele.value - this.AsuransiDetailAkomodasiObj.value;
+                    }.bind(this),
+
+                });
+                this.IurBiayaDetailAkomodasiObj.appendTo(this.IurBiayaDetailAkomodasiElem);
+            }
+        };
+    }
+
+    handleActionCompletedDetailAkomodasi(args: any): void {
+        let requestType = args.requestType;
+
+        if (requestType == "save") {
+            if (args.data !== args.previousData) {
+                this.onEditedGridDetailAkomodasi(args.data);
+            }
+        };
+    }
+
+    onCountTotalTagihanPerBarisGridDetailAkomodasi(total_amount: any, tagihan: any): void {
+        let total_asuransi_plus_subsidi = this.AsuransiDetailAkomodasiObj.value + this.SubsidiDetailAkomodasiObj.value;
+
+        if (total_asuransi_plus_subsidi > total_amount) {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Ass/Ttg P + Subsidi Tidak Boleh > Jml Tarif');
+        } else {
+            tagihan = total_amount - total_asuransi_plus_subsidi;
+
+            if (this.IurBiayaDetailAkomodasiObj.value > 0) {
+                this.IurBiayaDetailAkomodasiObj.value = tagihan;
+            }
+        };
+
+        return tagihan;
+    }
+
+    onEditedGridDetailAkomodasi(data: AkomodasiDetailModel): void {
+        if (this.AkomodasiRawatInapEditedData.length > 0) {
+            let current_data_index = 0;
+
+            current_data_index = this.AkomodasiRawatInapEditedData.map((item) => { return item.id_transaksi_akomodasi_ekstrak }).indexOf(data.id_transaksi_akomodasi_ekstrak);
+
+            if (current_data_index > -1) {
+                this.AkomodasiRawatInapEditedData.splice(current_data_index, 1);
+                this.AkomodasiRawatInapEditedData.push(data);
+            } else {
+                this.AkomodasiRawatInapEditedData.push(data);
+            };
+
+            this.transBillingRawatInapService.DetailAkomodasiBillingEdited.next(this.AkomodasiRawatInapEditedData);
+        };
+
+        if (this.AkomodasiRawatInapEditedData.length < 1) {
+            this.AkomodasiRawatInapEditedData.push(data);
+            this.transBillingRawatInapService.DetailAkomodasiBillingEdited.next(this.AkomodasiRawatInapEditedData);
+        };
+    }
+    // ** End of Grid Detail Akomodasi Section =====
 
     onGetAllKelasPelayanan(): void {
         this.setupKelasPerawatanService.onGetAll()
@@ -125,14 +434,20 @@ export class AkomodasiRawatInapComponent implements OnInit {
         }
     }
 
-    handleCloseAkomodasiRawatInap(): void {
-        const btnCloseAkomodasiRawatInap = document.getElementById('btnCloseAkomodasiRawatInap') as HTMLElement;
-        btnCloseAkomodasiRawatInap.click();
+    handleCloseAkomodasiRawatInap(need_hit: boolean): void {
+        if (need_hit) {
+            const btnCloseAkomodasiRawatInap = document.getElementById('btnCloseAkomodasiRawatInap') as HTMLElement;
+            btnCloseAkomodasiRawatInap.click();
+        } else {
+            setTimeout(() => {
+                this.onSendCloseModalAkomodasi.emit('DetailAkomodasiBillingEdited');
+            }, 250);
+        }
     }
 
     // ** MODAL ADD DETAIL AKOMODASI
     handleOpenAddDetailAkomodasi(): void {
-        this.handleCloseAkomodasiRawatInap();
+        this.handleCloseAkomodasiRawatInap(true);
 
         setTimeout(() => {
             const btnModalAddDetailAkomodasi = document.getElementById('btnModalAddDetailAkomodasi') as HTMLElement;

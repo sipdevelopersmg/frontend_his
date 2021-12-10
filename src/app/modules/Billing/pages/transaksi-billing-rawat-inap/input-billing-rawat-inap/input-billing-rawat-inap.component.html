@@ -37,7 +37,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <p class="p_informasi_pasien mb-0">Tgl. Keluar</p>
                                     <p class="p_informasi_pasien_value mb-2">
-                                        {{ InformasiPasien ? (InformasiPasien.tgl_admisi | date: 'dd MMMM yyyy') : "" }}
+                                        {{ InformasiPasien ? (InformasiPasien.tgl_keluar | date: 'dd MMMM yyyy') : "" }}
                                     </p>
                                 </div>
                             </div>
@@ -185,7 +185,8 @@
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                     style="height: calc(100vh - 28rem); overflow-y: auto;">
-                    <div class="row mb-3" *ngFor="let item of BillingItem" [hidden]="item.detail?.length < 1">
+                    <div class="row mb-3" *ngFor="let item of BillingItem"
+                        [hidden]="item.detail?.length < 1 || item.jenis_transaksi === 'AKOMODASI'">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="card shadow-sm border-0">
                                 <div class="card-header p-2 border">
@@ -653,6 +654,19 @@
                             </div>
                         </div>
 
+                        <!-- Saldo Deposit -->
+                        <div class="row align-items-center mb-2">
+                            <div [class]="RincianTotalCaptionCssClass">
+                                <p class="text-hitam-muda mb-0">Saldo Deposit</p>
+                            </div>
+                            <div [class]="RincianTotalInputCssClass">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="deposit_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div>
+
                         <!-- Total Tagihan -->
                         <div class="row align-items-center mb-2">
                             <div [class]="RincianTotalCaptionCssClass">
@@ -702,16 +716,9 @@
                     <h5 *ngIf="ModalPembayaranState == 'Deposit'" class="modal-title" id="modalPembayaranLabel">
                         Deposit
                     </h5>
-                    <h5 *ngIf="ModalPembayaranState == 'Existing_Invoice'" class="modal-title"
-                        id="modalPembayaranLabel">
-                        {{ ModalPembayaranTitle }}
-                    </h5>
                     <h5 *ngIf="ModalPembayaranState == 'Restitusi'" class="modal-title" id="modalPembayaranLabel">
                         Restitusi
                     </h5>
-                    <button *ngIf="ModalPembayaranState == 'Invoice'" type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close" (click)="handleCloseModalPembayaran()">
-                    </button>
                     <button id="btnCloseModalPembayaran" type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close">
                     </button>
@@ -994,7 +1001,7 @@
     <app-info-kunjungan-irda #InfoKunjungan [InformasiPasien]="InformasiPasien"></app-info-kunjungan-irda> -->
 
     <app-akomodasi-rawat-inap #AkomodasiRawatInap [InformasiPasien]="InformasiPasien"
-        [InformasiAkomodasi]="AkomodasiItem">
+        [InformasiAkomodasi]="AkomodasiItem" (onSendCloseModalAkomodasi)="onGetDetailAkomodasiBillingEdited($event)">
     </app-akomodasi-rawat-inap>
 
     <app-pembatalan-billing-irna #PembatalanBilling [InformasiPasien]="InformasiPasien"

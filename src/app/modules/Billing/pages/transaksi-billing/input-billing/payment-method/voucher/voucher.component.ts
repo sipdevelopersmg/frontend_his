@@ -5,6 +5,7 @@ import { IVoucherPaymentModel } from 'src/app/modules/Billing/models/setup-data/
 import { SetupPaymentMethodService } from 'src/app/modules/Billing/services/setup-data/setup-payment-method/setup-payment-method.service';
 import { SetupVoucherPaymentService } from 'src/app/modules/Billing/services/setup-data/setup-voucher-payment/setup-voucher-payment.service';
 import { TransBillingRawatDaruratService } from 'src/app/modules/Billing/services/trans-billing-rawat-darurat/trans-billing-rawat-darurat.service';
+import { TransBillingRawatInapService } from 'src/app/modules/Billing/services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
 import { TransBillingService } from 'src/app/modules/Billing/services/trans-billing/trans-billing.service';
 
 @Component({
@@ -30,6 +31,7 @@ export class VoucherComponent implements OnInit {
         private transBillingService: TransBillingService,
         private setupPaymentMethodService: SetupPaymentMethodService,
         private setupVoucherPaymentService: SetupVoucherPaymentService,
+        private transBillingRawatInapService: TransBillingRawatInapService,
         private transBillingRawatDaruratService: TransBillingRawatDaruratService,
     ) { }
 
@@ -99,7 +101,7 @@ export class VoucherComponent implements OnInit {
     }
 
     onGetJenisRawatIrnaAdditionalFormAttributes(): void {
-        this.transBillingRawatDaruratService.HeaderBilling$
+        this.transBillingRawatInapService.HeaderBilling$
             .subscribe((result) => {
                 if (Object.keys(result).length > 0) {
                     this.belum_lunas.setValue(result['total_tagihan']);

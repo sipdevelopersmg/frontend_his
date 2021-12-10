@@ -52,4 +52,22 @@ export class PostingBillingService {
                 })
             );
     }
+
+    onSavePostingBillingIRNA(parameter: ISavePostingBillingModel): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_SAVE_POSTING_BILLING_IRNA, parameter)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onBatalPostingBillingIRNA(parameter: ISaveBatalPostingBillingModel): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_BATAL_POSTING_BILLING_IRNA, parameter)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
 }

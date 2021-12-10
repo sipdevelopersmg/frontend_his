@@ -71,7 +71,8 @@
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
-                            [fields]="DropdownDebiturField" [allowFiltering]="true" formControlName="id_debitur">
+                            [fields]="DropdownDebiturField" [allowFiltering]="true" formControlName="id_debitur"
+                            (change)="handleChangeDropdownDebitur($event)">
                         </ejs-dropdownlist>
                     </div>
                 </div>

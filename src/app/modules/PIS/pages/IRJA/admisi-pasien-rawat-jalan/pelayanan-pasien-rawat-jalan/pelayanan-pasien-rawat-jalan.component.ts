@@ -231,6 +231,14 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
         }
     }
 
+    handleChangeDropdownDebitur(args: any): void {
+        let data = args.itemData;
+
+        if (data.id_debitur !== 1) {
+            this.no_peserta.setValue(data.no_member);
+        }
+    }
+
     handleSelectedAsalRujukan(args: any): void {
         this.id_asal_rujukan.setValue(args.id_asal_rujukan || args[0].id_asal_rujukan);
     }

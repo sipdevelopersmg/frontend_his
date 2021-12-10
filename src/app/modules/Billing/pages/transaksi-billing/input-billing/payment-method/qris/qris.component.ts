@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { SetupPaymentMethodService } from 'src/app/modules/Billing/services/setup-data/setup-payment-method/setup-payment-method.service';
 import { TransBillingRawatDaruratService } from 'src/app/modules/Billing/services/trans-billing-rawat-darurat/trans-billing-rawat-darurat.service';
+import { TransBillingRawatInapService } from 'src/app/modules/Billing/services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
 import { TransBillingService } from 'src/app/modules/Billing/services/trans-billing/trans-billing.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class QrisComponent implements OnInit {
         private formBuilder: FormBuilder,
         private transBillingService: TransBillingService,
         private setupPaymentMethodService: SetupPaymentMethodService,
+        private transBillingRawatInapService: TransBillingRawatInapService,
         private transBillingRawatDaruratService: TransBillingRawatDaruratService,
     ) { }
 
@@ -85,7 +87,7 @@ export class QrisComponent implements OnInit {
     }
 
     onGetJenisRawatIrnaAdditionalFormAttributes(): void {
-        this.transBillingRawatDaruratService.HeaderBilling$
+        this.transBillingRawatInapService.HeaderBilling$
             .subscribe((result) => {
                 if (Object.keys(result).length > 0) {
                     this.belum_lunas.setValue(result['total_tagihan']);

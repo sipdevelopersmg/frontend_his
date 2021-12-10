@@ -11,7 +11,7 @@
             <div class="modal-header py-2 px-3 background-biru-muda text-white">
                 <h5 class="modal-title" id="modalAkomodasiRawatInapLabel">Akomodasi Pasien</h5>
                 <button id="btnCloseAkomodasiRawatInap" type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close">
+                    aria-label="Close" (click)="handleCloseAkomodasiRawatInap(false)">
                 </button>
             </div>
             <div class="modal-body">
@@ -29,9 +29,80 @@
                     <org-tabs-item>
                         <org-tabs-label [Id]="'Detail_Akomodasi'">Detail Akomodasi</org-tabs-label>
                         <org-tabs-body>
-                            <app-list-detail-akomodasi [ListAkomodasiDetailDatasource]="ListAkomodasiDetailDatasource"
-                                (onSendTogglingModal)="handleGetTogglingModalDetailAkomodasi($event)">
-                            </app-list-detail-akomodasi>
+                            <ejs-grid #GridDetailAkomodasi [dataSource]="ListAkomodasiDetailDatasource"
+                                [height]="'calc(100vh - 45rem)'" [rowHeight]="30" [gridLines]="'Both'"
+                                [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                [selectionSettings]="GridDetailAkomodasiSelectionSettings"
+                                [editSettings]="GridDetailAkomodasiEditSettings" [toolbar]="GridDetailAkomodasiToolbar"
+                                (toolbarClick)="handleToolbarClickDetailAkomodasi($event)"
+                                (rowSelected)="handleSelectedRowDetailAkomodasi($event)"
+                                (recordDoubleClick)="handleRecordDoubleClickDetailAkomodasi($event)"
+                                (queryCellInfo)="handleQueryCellInfo($event)"
+                                (actionComplete)="handleActionCompletedDetailAkomodasi($event)">
+                                <e-columns>
+                                    <e-column [width]="100" [field]="'Checkbox'" [headerText]="'Checkbox'"
+                                        [visible]="true" [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                                        [type]="'Checkbox'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'tanggal_akomodasi'" [headerText]="'TANGGAL'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'" [type]="'DateTime'" [format]="'dd/MM/yyy'">
+                                    </e-column>
+                                    <e-column [width]="120" [field]="'kode_setup_tarif'" [headerText]="'KODE TIKET'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="200" [field]="'nama_setup_tarif'" [headerText]="'NAMA TARIF'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'room_no'" [headerText]="'NO. ROOM'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'bed_no'" [headerText]="'NO. BED'" [visible]="true"
+                                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="70" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Left'">
+                                    </e-column>
+                                    <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'" [visible]="true"
+                                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'"
+                                        [headerTextAlign]="'Right'" [type]="'number'" [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'unit_amount'" [headerText]="'HARGA'"
+                                        [visible]="false" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'total_amount'" [headerText]="'SUBTOTAL'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'comp_fee'" [headerText]="'ASS/TTG P'"
+                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'" [edit]="AsuransiDetailAkomodasiParams">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'subsidi'" [headerText]="'SUBSIDI'"
+                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'" [edit]="SubsidiDetailAkomodasiParams">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'tagihan'" [headerText]="'TAGIHAN'"
+                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'">
+                                    </e-column>
+                                    <e-column [width]="100" [field]="'iur_biaya'" [headerText]="'IUR BIAYA'"
+                                        [visible]="true" [allowEditing]="true" [allowSorting]="false"
+                                        [textAlign]="'Right'" [headerTextAlign]="'Right'" [type]="'number'"
+                                        [format]="'N2'" [edit]="IurBiayaDetailAkomodasiParams">
+                                    </e-column>
+                                </e-columns>
+                            </ejs-grid>
                         </org-tabs-body>
                     </org-tabs-item>
 
@@ -45,7 +116,8 @@
                 </org-tabs>
             </div>
             <div class="modal-footer py-2 px-3 background-abu-muda text-white">
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+                    (click)="handleCloseAkomodasiRawatInap(false)">
                     Close
                 </button>
             </div>

@@ -79,7 +79,11 @@ export class PostingBillingComponent implements OnInit {
     handleClickButtonNav(ButtonId: string): void {
         switch (ButtonId) {
             case 'Posting':
-                this.BillingState === 'IRDA' ? this.handleSavePostingBillingIRDA() : this.handleSavePostingBillingIRNA();
+                if (this.tgl_jatuh_tempo.value == '') {
+                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Tgl. Jatuh Tempo Tidak Boleh Kosong');
+                } else {
+                    this.BillingState === 'IRDA' ? this.handleSavePostingBillingIRDA() : this.handleSavePostingBillingIRNA();
+                }
                 break;
             case 'Batal_Posting':
                 this.handleOpenPembatalan();
@@ -235,11 +239,57 @@ export class PostingBillingComponent implements OnInit {
             'tgl_jatuh_tempo': this.utilityService.onFormatDate(this.tgl_jatuh_tempo.value)
         };
 
-        console.log(parameter);
+        this.postingBillingService.onSavePostingBillingIRNA(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', `${selected_data.length} Data Berhasil Diposting`)
+                        .then(() => {
+                            this.postingBillingService.onGetAllDataForPostingBilling([], this.tipe_pasien.value);
+                            this.GridData.refresh();
+                        });
+                }
+            });
+
     }
 
     handleBatalPostingBillingIRNA(): void {
+        let selected_data = [];
 
+        this.GridData.getSelectedRecords().forEach((item) => {
+            selected_data.push({
+                id_register: item['id_register']
+            })
+        });
+
+        let parameter = {
+            'items': selected_data,
+            'reason_canceled': this.reason_canceled.value
+        };
+
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Data Posting Akan Dibatalkan",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, Saya Yakin',
+            focusCancel: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.postingBillingService.onBatalPostingBillingIRNA(parameter)
+                    .subscribe((result) => {
+                        if (result.responseResult) {
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Data Posting Berhasil Dibatalkan')
+                                .then(() => {
+                                    this.handleClosePembatalan();
+                                    this.postingBillingService.onGetAllDataForPostingBilling([], this.tipe_pasien.value);
+                                    this.GridData.refresh();
+                                });
+                        }
+                    });
+            }
+        });
     }
 
     // ** PEMBATALAN

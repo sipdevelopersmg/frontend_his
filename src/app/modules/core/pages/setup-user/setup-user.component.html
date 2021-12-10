@@ -7,97 +7,124 @@
             </ejs-contextmenu>
 
             <!-- Grid Setup User -->
-            <mol-grid #gridSetupUser [grid-id]="'GridSetupUser'" [grid-height]="400" [grid-lines]="'Both'"
-                [grid-editSettings]="GridSetupUserEditSettings" [grid-toolbar]="GridSetupUserToolbar"
-                [columns]="GridAntrianColums.GridHeader.columns" [grid-DataSource]="GridSetupUserDataSource"
-                [grid-ContextMenuItems]="GridSetupUserContextMenuItems" (toolbar-click)="onToolbarClick($event)"
-                (row-selected)="onRowSelected($event)">
+            <mol-grid #gridSetupUser [grid-id]="'GridSetupUser'" [grid-height]="'calc(100vh - 15rem)'"
+                [grid-lines]="'Both'" [grid-editSettings]="GridSetupUserEditSettings"
+                [grid-toolbar]="GridSetupUserToolbar" [columns]="GridAntrianColums.GridHeader.columns"
+                [grid-DataSource]="GridSetupUserDataSource" [grid-ContextMenuItems]="GridSetupUserContextMenuItems"
+                [grid-grouping]="true" [grid-group-settings]="GridSetupUserGroupingSettings"
+                (toolbar-click)="onToolbarClick($event)" (row-selected)="onRowSelected($event)">
             </mol-grid>
 
-            <!-- Modal Dialog Add / Edit Grid Setup User -->
-            <ng-template #modalDialogSetupUser>
-                <form [formGroup]="FormSetupUser">
-                    <div class="modal-header px-2 py-1 background-biru-muda text-white">
-                        <h5 class="modal-title pull-left">{{ ModalDialogSetupUserTitle }}</h5>
-                        <button type="button" class="btn pull-right text-white" aria-label="Close"
-                            (click)="modalRef.hide()">
-                            <i class="fas fa-window-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Username -->
-                        <mol-input-text [label]="'Username'" formControlName="user_name"
-                            [IsFormControlInvalid]="user_name.invalid"
-                            [ValidatorsCaption]="'Username Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
-                        </mol-input-text>
+            <!-- Modal Input Data User -->
+            <button id="btnModalAddUser" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#modalAddUser" [hidden]="true">
+                Launch Modal Input Data User
+            </button>
 
-                        <!-- Nama Lengkap -->
-                        <mol-input-text [label]="'Nama Lengkap'" formControlName="full_name"
-                            [IsFormControlInvalid]="full_name.invalid"
-                            [ValidatorsCaption]="'Nama Lengkap Tidak Boleh Kosong'" [inputFieldState]="inputFieldState">
-                        </mol-input-text>
+            <div class="modal fade" id="modalAddUser" data-bs-backdrop="static" data-bs-keyboard="false"
+                aria-labelledby=" modalAddUserLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content border-0">
+                        <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                            <h5 class="modal-title" id="modalAddUserLabel">Input Data User</h5>
+                            <button id="btnCloseAddUser" type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="FormSetupUser">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <!-- Username -->
+                                        <mol-input-text [label]="'Username'" formControlName="user_name"
+                                            [IsFormControlInvalid]="user_name.invalid"
+                                            [ValidatorsCaption]="'Username Tidak Boleh Kosong'"
+                                            [inputFieldState]="inputFieldState">
+                                        </mol-input-text>
 
-                        <!-- Password -->
-                        <div class="row mb-2">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Password'"></atm-label>
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <div class="input-group mb-0">
-                                    <input type="password" class="form-control form-select-sm" id="password"
-                                        aria-label="password" aria-describedby="see-password"
-                                        formControlName="password">
-                                    <span class="input-group-text cursor-pointer" id="see-password"
-                                        (click)="onTogglingSeePassword('password')">
-                                        <i id='passwordIcon' class="fas fa-eye fa-sm"></i>
-                                    </span>
+                                        <!-- Nama Lengkap -->
+                                        <mol-input-text [label]="'Nama Lengkap'" formControlName="full_name"
+                                            [IsFormControlInvalid]="full_name.invalid"
+                                            [ValidatorsCaption]="'Nama Lengkap Tidak Boleh Kosong'"
+                                            [inputFieldState]="inputFieldState">
+                                        </mol-input-text>
+
+                                        <!-- Password -->
+                                        <div class="row mb-2">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                <atm-label [LabelCaption]="'Password'"></atm-label>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <div class="input-group mb-0">
+                                                    <input type="password" class="form-control form-select-sm"
+                                                        id="password" aria-label="password"
+                                                        aria-describedby="see-password" formControlName="password">
+                                                    <span class="input-group-text cursor-pointer" id="see-password"
+                                                        (click)="onTogglingSeePassword('password')">
+                                                        <i id='passwordIcon' class="fas fa-eye fa-sm"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Password Confirmation -->
+                                        <div class="row mb-2">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                <atm-label [LabelCaption]="'Konfirmasi Password'"></atm-label>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <div class="input-group mb-0">
+                                                    <input type="password" class="form-control form-select-sm"
+                                                        id="confirmation_password" aria-label="confirmation_password"
+                                                        aria-describedby="see-password">
+                                                    <span class="input-group-text cursor-pointer" id="see-password"
+                                                        (click)="onTogglingSeePassword('confirmation_password')">
+                                                        <i id='confirmation_passwordIcon' class="fas fa-eye fa-sm"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Role -->
+                                        <div class="row mb-2">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                <atm-label [LabelCaption]="'Role'"></atm-label>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <ejs-dropdownlist [dataSource]="DropdownRoleDatasource"
+                                                    [fields]="DropdownRoleFields" [allowFiltering]="true"
+                                                    formControlName="id_role"
+                                                    (change)="handleChangeDropdownRole($event)">
+                                                </ejs-dropdownlist>
+                                            </div>
+                                        </div>
+
+                                        <!-- Nama Dokter -->
+                                        <org-input-look-up-kode *ngIf="DropdownRoleIsDokter" #LookupDokter
+                                            [modal-title]="'Data Dokter'" [lookup-url]="UrlLookupDokter"
+                                            [idKode]="'kode_dokter'" [idTitle]="'full_name'"
+                                            (onGetSelectedData)="handleSelectedDokter($event)"
+                                            [columns]="GridAntrianColums.LookupDokter.columns"
+                                            [filter-lookup]="GridAntrianColums.LookupDokter.filter"
+                                            [label]="'Pilih Dokter'">
+                                        </org-input-look-up-kode>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-
-                        <!-- Password Confirmation -->
-                        <div class="row mb-2">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Konfirmasi Password'"></atm-label>
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <div class="input-group mb-0">
-                                    <input type="password" class="form-control form-select-sm"
-                                        id="confirmation_password" aria-label="confirmation_password"
-                                        aria-describedby="see-password">
-                                    <span class="input-group-text cursor-pointer" id="see-password"
-                                        (click)="onTogglingSeePassword('confirmation_password')">
-                                        <i id='confirmation_passwordIcon' class="fas fa-eye fa-sm"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Role -->
-                        <div class="row mb-2">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Role'"></atm-label>
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                <ejs-dropdownlist [dataSource]="DropdownRoleDatasource" [fields]="DropdownRoleFields"
-                                    [allowFiltering]="true" formControlName="id_role">
-                                </ejs-dropdownlist>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer p-2 background-abu-muda">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
-                                <button class="btn btn-primary btn-sm" type="button"
-                                    (click)="onSubmitFormSetupUser(FormSetupUser.value)">
-                                    Simpan
-                                </button>
-                            </div>
+                        <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                            <button id="btnCloseModal" type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button class="btn btn-primary btn-sm" type="button"
+                                (click)="onSubmitFormSetupUser(FormSetupUser.value)">
+                                Simpan
+                            </button>
                         </div>
                     </div>
-                </form>
-            </ng-template>
+                </div>
+            </div>
         </div>
     </div>
 </org-card-layout>

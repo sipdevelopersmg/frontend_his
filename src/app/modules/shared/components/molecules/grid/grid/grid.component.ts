@@ -34,8 +34,10 @@ export class MolGridComponent implements OnInit, AfterViewInit {
     @Input('grid-DataSource') gridDataSource: any = [];
     @Input('grid-ContextMenuItems') gridContextMenuItems: ContextMenuItem[];
     @Input('grid-selectionSettings') gridSelectionSettings: any;
+    @Input('grid-grouping') gridGrouping: boolean;
+    @Input('grid-group-settings') gridGroupSettings: any;
 
-    @Input('childGrid') childGrid:GridModel;
+    @Input('childGrid') childGrid: GridModel;
 
     @Input('columns') columns: Columns[];
     @Input('urlGetColumns') urlGetColumns: string;

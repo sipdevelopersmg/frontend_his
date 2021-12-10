@@ -6,13 +6,14 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import Swal from 'sweetalert2';
 import { GetSetupUserModel } from '../../models/setup-user/setup-user.model';
 import { SetupRoleService } from '../../services/setup-role/setup-role.service';
 import { SetupUserService } from '../../services/setup-user/setup-user.service';
-
 import GridSetupUser from './json/GridSetupUser.json';
+import * as API from '../../../../api/PIS/SETUP_DATA/SETUP_DOKTER';
 
 @Component({
     selector: 'app-setup-user',
@@ -20,6 +21,8 @@ import GridSetupUser from './json/GridSetupUser.json';
     styleUrls: ['./setup-user.component.css']
 })
 export class SetupUserComponent implements OnInit {
+
+    API = API;
 
     // ** Grid Setup User Properties
     @ViewChild('gridSetupUser', { static: true }) gridSetupUser: MolGridComponent;
@@ -35,20 +38,20 @@ export class SetupUserComponent implements OnInit {
             iconCss: 'fas fa-redo-alt'
         }
     ];
+    GridSetupUserGroupingSettings: object = { showDropArea: false, columns: ['nama_role'] };
 
     SelectedUserData: GetSetupUserModel;
-
-    // ** Modal Dialog Add / Edit Setup User Properties
-    modalRef: BsModalRef;
-    ModalDialogSetupUserTitle: string;
-    @ViewChild('modalDialogSetupUser') modalDialogSetupUser: TemplateRef<any>;
 
     // ** Form Add / Edit Setup User
     FormSetupUser: FormGroup;
 
+    @ViewChild('LookupDokter') LookupDokter: OrgInputLookUpKodeComponent;
+    UrlLookupDokter = this.API.POST_GET_ALL_DOKTER_FOR_LOOKUP;
+
     // ** Dropdown Role Properties
     DropdownRoleDatasource: any;
     DropdownRoleFields: object = { text: 'nama_role', value: 'id_role' };
+    DropdownRoleIsDokter: boolean = false;
 
     // ** Input Field State
     inputFieldState = 'normal';
@@ -84,7 +87,7 @@ export class SetupUserComponent implements OnInit {
             user_name: ['', []],
             password: ['', []],
             full_name: ['', []],
-            user_created: [0, []]
+            id_karyawan: [0, []]
         });
 
         this.onGetAllActiveUser();
@@ -103,12 +106,8 @@ export class SetupUserComponent implements OnInit {
         const action = args.item.id;
 
         if (action === 'add') {
-            this.ModalDialogSetupUserTitle = "Input Data User";
-
-            this.modalRef = this.modalService.show(
-                this.modalDialogSetupUser,
-                Object.assign({}, { class: 'modal-lg' })
-            );
+            let btnModalAddUser = document.getElementById('btnModalAddUser') as HTMLElement;
+            btnModalAddUser.click();
         }
 
     }
@@ -168,13 +167,17 @@ export class SetupUserComponent implements OnInit {
             });
     }
 
+    handleChangeDropdownRole(args: any): void {
+        let itemData = args.itemData;
+
+        this.DropdownRoleIsDokter = itemData.id_role === 2 || itemData.nama_role === 'dokter' ? true : false;
+    }
+
+    handleSelectedDokter(args: any): void {
+        this.id_karyawan.setValue(args.id_dokter);
+    }
+
     onSubmitFormSetupUser(FormSetupUser: any) {
-
-        // ** Get User Data from Session Storage
-        const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem('UserData'));
-
-        FormSetupUser.user_created = 2;
-
         // ** Eksekusi Function di Setup User Service
         this.setupUserService.onInsertUser(FormSetupUser)
             .subscribe((result) => {
@@ -184,7 +187,8 @@ export class SetupUserComponent implements OnInit {
                         .then(() => {
                             this.onClearFormSetupUser();
 
-                            this.modalRef.hide();
+                            let btnCloseModal = document.getElementById('btnCloseModal') as HTMLElement;
+                            btnCloseModal.click();
 
                             this.onGetAllActiveUser();
                         });
@@ -201,11 +205,12 @@ export class SetupUserComponent implements OnInit {
         this.password.setValue('');
         this.full_name.setValue('');
         (<HTMLInputElement>document.getElementById('confirmation_password')).value = '';
+        this.id_karyawan.setValue(0);
     }
 
     get id_role() { return this.FormSetupUser.get('id_role'); }
     get user_name() { return this.FormSetupUser.get('user_name'); }
     get password() { return this.FormSetupUser.get('password'); }
     get full_name() { return this.FormSetupUser.get('full_name'); }
-    get user_created() { return this.FormSetupUser.get('user_created'); }
+    get id_karyawan() { return this.FormSetupUser.get('id_karyawan'); }
 }

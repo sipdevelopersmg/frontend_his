@@ -340,7 +340,13 @@ export class SetupDokterService {
         return this.httpOperationService.defaultGetRequest(this.API_DOKTER.GET_ALL_DOKTER)
             .pipe(
                 map((result) => {
-                    return result.data.filter((item: any) => { return item.full_name == Name })[0];
+                    console.log(Name);
+
+                    let cek = result.data.filter((item: any) => { return item.full_name == Name })[0];
+
+                    console.log(cek);
+
+                    return result;
                 }),
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

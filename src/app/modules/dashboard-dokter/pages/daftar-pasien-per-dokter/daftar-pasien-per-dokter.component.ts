@@ -62,7 +62,7 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     ];
     GridIRDASelectedRow: any;
 
-    JenisRawat: string;
+    JenisRawat: string = 'IRJA';
 
     constructor(
         private router: Router,
@@ -74,6 +74,10 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit(): void {
+        this.dashboardDokterService.JenisRawat.next(this.JenisRawat);
+
+        this.dashboardDokterService.onSetJenisRawatForDashboardDokter();
+
         this.dokterService.onGetAllDokter();
 
         this.onGetDokterId();
@@ -90,18 +94,25 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     onGetDokterId(): void {
         const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem("UserData"));
 
-        const full_name = UserData.full_name.replace('dr. ', '');
+        // !! Need fixing here
+        // const full_name = UserData.full_name.replace('dr. ', '');
 
-        this.dokterService.onGetDokterByDokterName(full_name)
-            .subscribe((result) => {
-                this.DokterId = result['id_dokter'];
+        // this.dokterService.onGetDokterByDokterName(full_name)
+        //     .subscribe((result) => {
+        //         this.DokterId = result['id_dokter'];
 
-                this.onGetPasienIRJAByDokterId(this.DokterId);
+        //         this.onGetPasienIRJAByDokterId(this.DokterId);
 
-                this.onGetPasienIRNAByDokterId(this.DokterId);
+        //         this.onGetPasienIRNAByDokterId(this.DokterId);
 
-                this.onGetPasienIRDAByDokterId(this.DokterId);
-            });
+        //         this.onGetPasienIRDAByDokterId(this.DokterId);
+        //     });
+
+        this.onGetPasienIRJAByDokterId(UserData.id_karyawan);
+
+        this.onGetPasienIRNAByDokterId(UserData.id_karyawan);
+
+        this.onGetPasienIRDAByDokterId(UserData.id_karyawan);
     }
 
     onGetPasienIRJAByDokterId(DokterId: number): void {
@@ -127,14 +138,12 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
 
     handleSelectedTabId(args: any): void {
         this.JenisRawat = args;
+
+        this.dashboardDokterService.JenisRawat.next(this.JenisRawat);
     }
 
     handleSelectedRowIRJA(args: any): void {
-        args.data.jenis_rawat = 'IRJA';
-
         this.GridIRJASelectedRow = args.data;
-
-        this.JenisRawat = 'IRJA';
     }
 
     handleToolbarClickIRJA(args: any): void {
@@ -167,8 +176,6 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
 
     handleSelectedRowIRNA(args: any): void {
         this.GridIRNASelectedRow = args.data;
-
-        this.GridIRNASelectedRow.jenis_rawat = this.JenisRawat;
     }
 
     handleToolbarClickIRNA(args: any): void {
@@ -189,8 +196,6 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
 
     handleSelectedRowIRDA(args: any): void {
         this.GridIRDASelectedRow = args.data;
-
-        this.GridIRDASelectedRow.jenis_rawat = this.JenisRawat;
     }
 
     handleToolbarClickIRDA(args: any): void {

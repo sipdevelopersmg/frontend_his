@@ -50,6 +50,8 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     BillingItem: any[] = [];
     SelectedBillingItem: any;
 
+    BillingItemForPulang: any[] = [];
+
     // ** ====== GRID DATA TIKET ======
     @ViewChild('GridDataTiket') GridDataTiket: GridComponent;
     GridDataTiketSelectionSettings: SelectionSettingsModel = { type: 'Single' };
@@ -1465,7 +1467,6 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     }
 
     onAllGridEditedEventMethod(data: any, is_resep?: boolean): void {
-
         if (this.AllGridEditedData.length > 0) {
             let current_data = 0;
 
@@ -1488,15 +1489,41 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
             this.AllGridEditedData.push(data);
         };
 
-        this.onSumTotalAsuransiFromAllGrid(this.AllGridEditedData);
+        this.onCompareBillingItemForSummarize(this.BillingItem, this.AllGridEditedData);
+    }
 
-        this.onSumTotalAsuransiFromAllGrid(this.AllGridEditedData);
+    onCompareBillingItemForSummarize(BillingItem: any[], AllGridEditedData: any[]) {
+        let all_detail = [];
 
-        this.onSumTotalSubsidiFromAllGrid(this.AllGridEditedData);
+        BillingItem.forEach((item) => {
+            all_detail.push(...item.detail);
+        });
 
-        this.onSumTotalTagihanFromAllGrid(this.AllGridEditedData);
+        AllGridEditedData.forEach((item) => {
+            // ** id_transaksi
+            if (item.id_transaksi) {
+                let index = all_detail.map((all) => { return all.id_transaksi }).indexOf(item.id_transaksi);
 
-        this.onSumTotalIurBiayaFromAllGrid(this.AllGridEditedData);
+                all_detail[index] = item;
+            };
+
+            // ** resep
+            if (item.id_transaksi_obat) {
+                let index = all_detail.map((all) => { return all.id_transaksi_obat }).indexOf(item.id_transaksi_obat);
+
+                all_detail[index] = item;
+            };
+        });
+
+        this.BillingItemForPulang = all_detail;
+
+        this.onSumTotalAsuransiFromAllGrid(all_detail);
+
+        this.onSumTotalSubsidiFromAllGrid(all_detail);
+
+        this.onSumTotalTagihanFromAllGrid(all_detail);
+
+        this.onSumTotalIurBiayaFromAllGrid(all_detail);
     }
 
     onSumTotalBiayaFromAllGrid(data: any[]): void {
@@ -1513,8 +1540,6 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
         });
 
         this.total_amount.setValue(total_amount);
-
-        this.onSumTotalAsuransiFromAllGrid(all_detail);
 
         this.onSumTotalAsuransiFromAllGrid(all_detail);
 
@@ -1658,12 +1683,12 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
 
     // ** SAVE PULANG
     handleSavePulang(): void {
-        if (this.AllGridEditedData.length > 0) {
+        if (this.BillingItemForPulang.length > 0) {
             let detail = [];
 
             let detail_obat = [];
 
-            this.AllGridEditedData.forEach((item) => {
+            this.BillingItemForPulang.forEach((item) => {
                 if (item.id_transaksi) {
                     detail.push(item);
                 };
@@ -1749,7 +1774,7 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
                 this.transBillingRawatDaruratService.onBatalPulang(FormPembatalan.id_register, FormPembatalan.reason_canceled)
                     .subscribe((result) => {
                         if (result.responseResult) {
-                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pasien Berhasil Dipulangkan')
+                            this.utilityService.onShowingCustomAlert('success', 'Success', 'Pasien Batal Dipulangkan')
                                 .then(() => {
                                     this.PembatalanBilling.handleClosePembatalan();
 

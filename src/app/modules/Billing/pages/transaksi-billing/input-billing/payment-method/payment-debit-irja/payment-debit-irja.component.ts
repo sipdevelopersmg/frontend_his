@@ -7,6 +7,7 @@ import { SetupBankPaymentService } from 'src/app/modules/Billing/services/setup-
 import { SetupEdcPaymentService } from 'src/app/modules/Billing/services/setup-data/setup-edc-payment/setup-edc-payment.service';
 import { SetupPaymentMethodService } from 'src/app/modules/Billing/services/setup-data/setup-payment-method/setup-payment-method.service';
 import { TransBillingRawatDaruratService } from 'src/app/modules/Billing/services/trans-billing-rawat-darurat/trans-billing-rawat-darurat.service';
+import { TransBillingRawatInapService } from 'src/app/modules/Billing/services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
 import { TransBillingService } from 'src/app/modules/Billing/services/trans-billing/trans-billing.service';
 
 @Component({
@@ -36,6 +37,7 @@ export class PaymentDebitIrjaComponent implements OnInit {
         private setupEdcPaymentService: SetupEdcPaymentService,
         private setupBankPaymentService: SetupBankPaymentService,
         private setupPaymentMethodService: SetupPaymentMethodService,
+        private transBillingRawatInapService: TransBillingRawatInapService,
         private transBillingRawatDaruratService: TransBillingRawatDaruratService,
     ) { }
 
@@ -122,7 +124,7 @@ export class PaymentDebitIrjaComponent implements OnInit {
     }
 
     onGetJenisRawatIrdaAdditionalFormAttributes(): void {
-        this.transBillingRawatDaruratService.HeaderBilling$
+        this.transBillingRawatInapService.HeaderBilling$
             .subscribe((result) => {
                 if (Object.keys(result).length > 0) {
                     this.belum_lunas.setValue(result['total_tagihan']);
