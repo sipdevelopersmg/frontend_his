@@ -1,35 +1,26 @@
 {
     "GridColumns": [
         {
-            "field": "no_bill",
+            "field": "nomor_penjualan_obat",
             "headerText": "No Bill",
             "type": "string",
             "format": "",
             "textAlign": "left",
-            "visible": true,
+            "visible": false,
             "editType": "defaultEdit"
         },
         {
-            "field": "tanggal_bill",
+            "field": "tanggal_penjualan_obat",
             "headerText": "Tgl Bill",
             "type": "string",
             "format": "",
             "textAlign": "left",
-            "visible": true,
+            "visible": false,
             "editType": "defaultEdit"
         },
         {
-            "field": "depo",
+            "field": "nama_outlet",
             "headerText": "Depo",
-            "type": "string",
-            "format": "",
-            "textAlign": "left",
-            "visible": true,
-            "editType": "defaultEdit"
-        },
-        {
-            "field": "pasien",
-            "headerText": "Pasien",
             "type": "string",
             "format": "",
             "textAlign": "left",
@@ -55,7 +46,7 @@
             "editType": "defaultEdit"
         },
         {
-            "field": "tanggal_masuk",
+            "field": "tgl_masuk",
             "headerText": "Tgl Masuk",
             "type": "string",
             "format": "",

@@ -51,8 +51,8 @@ export class InputResepIrjaComponent implements OnInit {
   public itemsElem: HTMLElement;
   public itemsObj: DropDownList;
 
-  public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN + '/' + 2 + '/J';
-  public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP + '/' + 2;
+  public urlRacikan = '';
+  public urlTemplateResep = '';
   public GridLookUpItem = GridLookUpItem;
 
   public GridlookUpTemplateResep = GridlookUpTemplateResep;
@@ -378,7 +378,8 @@ export class InputResepIrjaComponent implements OnInit {
       this.setupMetodeRacikanService.setDataSource();
       // this.resepDokterService.setDataObat([]);
       this.setupOutletService.setDataSource();
-
+    //   this.urlTemplateResep = this.urlTemplateResep+'/'+this.daftarPasienService.ActivePasien.value.id_dokter;
+    //   this.urlRacikan = this.urlRacikan + '/' + this.daftarPasienService.ActivePasien.value.id_dokter + '/J';
   }
 
   onLoad(args: any) {
@@ -493,6 +494,8 @@ export class InputResepIrjaComponent implements OnInit {
     this.idRegister = args.id_register;
     this.idPerson = args.id_person;
     this.no_register = args.no_register;
+    this.urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP +'/'+args.id_dokter
+    this.urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN + '/' + args.id_dokter + '/J';
   }
 
   handleChangeOutlet(args){
@@ -542,7 +545,11 @@ export class InputResepIrjaComponent implements OnInit {
   }
 
   handelClickTemplateResep(): void {
-      this.LookupTemplateResep.onOpenModal();
+      if(this.idRegister){
+        this.LookupTemplateResep.onOpenModal();
+      }else{
+        this.utilityService.onShowingCustomAlert('warning', 'Isi Data Pasien Terlebih Dahulu','')
+      }
   }
 
   handleChangeMetodeRacikan(args: any): void {
