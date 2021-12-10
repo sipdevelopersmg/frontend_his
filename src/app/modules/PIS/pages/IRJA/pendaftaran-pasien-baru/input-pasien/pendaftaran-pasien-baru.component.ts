@@ -552,13 +552,13 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             }
         } else {
             this.SelectedCheckboxAlamatsIndex.splice(this.SelectedCheckboxAlamatsIndex.indexOf(CheckboxId), 1);
-        }
+        };
 
         for (let i = 0; i < this.SelectedCheckboxAlamatsIndex.length; i++) {
             (<HTMLInputElement>document.getElementById('CheckboxIsDefault' + this.SelectedCheckboxAlamatsIndex[i])).checked = this.SelectedCheckboxAlamatsIndex[i] === CheckboxId ? true : false;
 
             this.FormAlamats.value[i].is_default = (<HTMLInputElement>document.getElementById('CheckboxIsDefault' + this.SelectedCheckboxAlamatsIndex[i])).checked;
-        }
+        };
     }
 
     handleChangeCheckboxKontakPersonIsDefault(CheckboxId: number): void {

@@ -31,9 +31,13 @@
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+.CardBoardHeight {
+  height: calc(100vh - 10rem);
+  max-height: calc(100vh - 10rem);
+}
+
 .BoardHeight {
-  height: calc(100vh - 16rem);
-  max-height: calc(100vh - 16rem);
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }

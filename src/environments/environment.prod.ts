@@ -1,9 +1,9 @@
 
-export const webApiDemo = "http://159.223.89.0";
+export const webApiDemo = "http://128.199.133.137";
 
 export const webApiUrl = "http://174.138.22.139";
 
-export const modeDevelopment = false;
+export const modeDevelopment = true;
 
 export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 
