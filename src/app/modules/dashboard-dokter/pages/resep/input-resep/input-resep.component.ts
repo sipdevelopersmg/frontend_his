@@ -19,6 +19,7 @@ import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
 import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { SetupSatuanAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-satuan-aturan-pakai/setup-satuan-aturan-pakai.service';
 import { SetupOutletService } from 'src/app/modules/Pharmacy/services/setup-data/setup-outlet/setup-outlet.service';
+import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
 
 @Component({
     selector: 'app-input-resep',
@@ -36,8 +37,8 @@ export class InputResepComponent implements OnInit {
     public itemsElem: HTMLElement;
     public itemsObj: DropDownList;
 
-    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN + '/' + 2 + '/J';
-    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP + '/' + 2;
+    public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN; // + '/' + 2 + '/J';
+    public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP;// + '/' + 2;
     public GridLookUpItem = GridLookUpItem;
 
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
@@ -149,7 +150,9 @@ export class InputResepComponent implements OnInit {
         public setupSatuanAturanPakaiService: SetupSatuanAturanPakaiService,
         public setupMetodeRacikanService: SetupMetodeRacikanService,
         public setupOutletService: SetupOutletService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        public daftarPasienService: DaftarPasienService,
+
     ) {
 
     }
@@ -334,7 +337,8 @@ export class InputResepComponent implements OnInit {
         this.setupMetodeRacikanService.setDataSource();
         // this.resepDokterService.setDataObat([]);
         this.setupOutletService.setDataSource();
-
+        this.urlTemplateResep = this.urlTemplateResep+'/'+this.daftarPasienService.ActivePasien.value.id_dokter;
+        this.urlRacikan = this.urlRacikan + '/' + this.daftarPasienService.ActivePasien.value.id_dokter + '/J';
     }
 
     onLoad(args: any) {

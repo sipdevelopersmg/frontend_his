@@ -18,7 +18,7 @@
         <mol-grid
             #GridResep
             [grid-height]="'6rem'"
-            [grid-DataSource]=""
+            [grid-DataSource]=" refundObatIrjaService.dataTransaksiObat | async "
             [grid-paging]="false"
             [grid-lines]="'Both'"
             [columns]="GridConfig.GridColumns"
@@ -26,12 +26,11 @@
         ></mol-grid>
         <div class="row mb-2 mt-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'No. Bill'" formControlName="no_bill" [inputFieldState]="inputFieldState"></mol-input-text>
                 <mol-input-text [label]="'Nama Pasien'" formControlName="nama_pasien" [inputFieldState]="inputFieldState"></mol-input-text>   
+                <mol-input-text [label]="'No. Register'" formControlName="no_register" [inputFieldState]="inputFieldState"></mol-input-text>   
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <mol-input-text [label]="'No. RM'" formControlName="no_rm" [inputFieldState]="inputFieldState"></mol-input-text>
-                <mol-input-text [label]="'No. Register'" formControlName="no_register" [inputFieldState]="inputFieldState"></mol-input-text>   
             </div>
         </div>
         <ejs-grid #gridDetail
@@ -45,6 +44,7 @@
             [childGrid]="ChildGrid"
             (rowSelected)="handleSelectdRow($event)"
             (dataBound)="onDataBound()"
+            [height]="'calc(100vh - 31rem)'"
         >
             <e-columns>
                 <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'
@@ -54,19 +54,19 @@
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Obat'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="100">
                 </e-column>
-                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Obat'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                <e-column [visible]="true" field='nama_obat' [allowEditing]="false" headerText='Nama Obat'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="300">
                 </e-column>
                 <e-column [visible]="true" field='qty_jual' [allowEditing]="false" headerText='QTY Jual'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" width="100">
                 </e-column>
-                <e-column [visible]="true" field='qty_telah_diretur' [allowEditing]="false" headerText='QTY Telah Diretur'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                <e-column [visible]="true" field='qty_returned' [allowEditing]="false" headerText='QTY Telah Diretur'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" width="100">
                 </e-column>
                 <e-column [visible]="true" field='qty_retur' [allowEditing]="false" headerText='QTY Akan Di Retur'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" width="100">
                 </e-column>
                 <!--  -->
             </e-columns>
