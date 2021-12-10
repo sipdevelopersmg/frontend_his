@@ -149,7 +149,7 @@ export class ResepDokterService {
     }
 
     Insert(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
-        let id_item = 0 ;
+        let nama_obat = '' ;
         let urut = 0 ;
         this.dataDetail.map((e,i)=>{
             e.no_urut = i+1;
@@ -160,17 +160,20 @@ export class ResepDokterService {
         this.dataSourceChildGrid.value.forEach((item)=>{
             let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
             
-            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
-            id_item =this.dataDetail[index].id_item;
+            urut = (this.dataDetail[index].nama_obat != nama_obat)? 0 : urut;
+            nama_obat =this.dataDetail[index].nama_obat;
             urut++
             item.no_urut = urut
 
             this.dataDetail[index].racikans.push(item);
-        })
+        });
 
         Data.details = this.dataDetail;
         Data.jumlah_item = this.jumlah_item;
-        // console.log(Data);
+
+        console.log('Data', Data);
+        console.log('this.dataSourceChildGrid.value', this.dataSourceChildGrid.value);
+        
         return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA+'/'+is_simpan_template+'/'+is_simpan_racikan, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {

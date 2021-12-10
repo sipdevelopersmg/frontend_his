@@ -14,7 +14,7 @@
                                 <ejs-dropdownlist #MaritalOutletDropdown id="marital"
                                     [dataSource]="setupOutletService.dataSource| async"
                                     [fields]="SetupOutletDropdownField" [allowFiltering]="true"
-                                    formControlName="id_outlet" (change)="handleChangeOutlet($event)">
+                                    (change)="handleChangeOutlet($event)">
                                 </ejs-dropdownlist>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DropDownList, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
 import { AddEventArgs,IEditCell, EditSettingsModel, GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
@@ -36,7 +36,7 @@ import { Location } from '@angular/common'
   templateUrl: './input-resep-irja.component.html',
   styleUrls: ['./input-resep-irja.component.css']
 })
-export class InputResepIrjaComponent implements OnInit {
+export class InputResepIrjaComponent implements OnInit, OnDestroy {
 
   API_TRANS_BILLING = API_CONFIG.API_BILLING;
 
@@ -224,8 +224,7 @@ export class InputResepIrjaComponent implements OnInit {
           aturan: ['', []],
           ket_aturan: ['', []],
           id_tambahan_aturan_pakai: [null, []],
-          label_tambahan_aturan_pakai_obat: ['', []],
-          id_outlet:[0,[]]
+          label_tambahan_aturan_pakai_obat: ['', []]
     });
 
       this.GridDaftarObatToolbar = [
@@ -277,6 +276,7 @@ export class InputResepIrjaComponent implements OnInit {
                   change: function (args) {
                       this.setFormGrif(args, currentQtyResep, currentIdItem, SelectedDataRacikanObat);
                       currentIdItem = args.itemData.id_item;
+                      console.log(args.itemData.id_item);
                   }.bind(this),
               });
 
@@ -352,7 +352,6 @@ export class InputResepIrjaComponent implements OnInit {
                       let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
                       dataSourceChild[index] = args.data;
                   }
-
               }
 
               if (args.requestType === "delete") {
@@ -380,7 +379,8 @@ export class InputResepIrjaComponent implements OnInit {
       this.setupOutletService.setDataSource();
     //   this.urlTemplateResep = this.urlTemplateResep+'/'+this.daftarPasienService.ActivePasien.value.id_dokter;
     //   this.urlRacikan = this.urlRacikan + '/' + this.daftarPasienService.ActivePasien.value.id_dokter + '/J';
-  }
+    
+    }
 
   onLoad(args: any) {
 
@@ -541,7 +541,11 @@ export class InputResepIrjaComponent implements OnInit {
   }
 
   handelClickRacikan(): void {
+    if(this.idRegister){
       this.LookupRacikan.onOpenModal();
+    }else{
+        this.utilityService.onShowingCustomAlert('warning', 'Isi Data Pasien Terlebih Dahulu','')
+    }
   }
 
   handelClickTemplateResep(): void {
@@ -561,6 +565,14 @@ export class InputResepIrjaComponent implements OnInit {
       this.counter++;
       args.counter = this.counter;
       args.is_racikan = true;
+      args.is_racikan = true;
+      args.no_urut = 0;
+      args.id_item = null;
+      args.nama_satuan = null;
+      args.label = null
+      args.nama_racikan = args.nama_obat;
+      args.label = args.ket_label;
+      args.aturan = args.ket_aturan;
       this.resepDokterService.addDetail(args);
       let detail;
       detail = this.GridResepRacikan.childGrid.dataSource;
@@ -719,11 +731,11 @@ export class InputResepIrjaComponent implements OnInit {
   }
 
   onActionComplete(args: any): void {
-      // let dataSourceParent: any = this.GridResepRacikan.dataSource;
-      // this.resepDokterService.dataSourceParentGrid.next(dataSourceParent);
+    //   let dataSourceParent: any = this.GridResepRacikan.dataSource;
+    //   this.resepDokterService.dataSourceParentGrid.next(dataSourceParent);
 
-      // console.log("Parent", this.GridResepRacikan.dataSource);
-      // console.log("Children", this.GridResepRacikan.childGrid.dataSource);
+    //   console.log("Parent", this.GridResepRacikan.dataSource);
+    //   console.log("Children", this.GridResepRacikan.childGrid.dataSource);
   }
 
   // ** Grid Daftar Obat method
@@ -824,19 +836,24 @@ export class InputResepIrjaComponent implements OnInit {
     }
   }
 
-  methodInsert(Data,is_simpan_template:number,is_simpan_racikan:number){
-    this.resepDokterService.Insert(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
+  methodInsert(Data,is_simpan_template:number,is_simpan_racikan:number){  
+    this.resepDokterService.Insert(Data,is_simpan_template,is_simpan_racikan)
+    .subscribe((result)=>{
         if(result.responseResult){
             this.resepDokterService.generadeNoAntrian(this.no_register).subscribe((result)=>{
                 if(result.responseResult){
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                     .then(() => {
+                        this.resepDokterService.reset();
+                        this.isGetFromTemplate =false;
                         this.location.back();
                     });
                 }
             });
         }
     })
+
+    // this.location.back();
   }
 
 //================================================
@@ -862,4 +879,8 @@ export class InputResepIrjaComponent implements OnInit {
   get nama_racikan(): AbstractControl { return this.FormAddObat.get('nama_racikan'); }
   get satuan_aturan_pakai(): AbstractControl { return this.FormAddObat.get('satuan_aturan_pakai') };
 
+
+  ngOnDestroy(): void {
+    this.resepDokterService.reset();
+  }
 }

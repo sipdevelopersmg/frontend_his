@@ -152,7 +152,6 @@ export class InputResepComponent implements OnInit {
         public setupOutletService: SetupOutletService,
         private renderer: Renderer2,
         public daftarPasienService: DaftarPasienService,
-
     ) {
 
     }
@@ -183,8 +182,7 @@ export class InputResepComponent implements OnInit {
             aturan: ['', []],
             ket_aturan: ['', []],
             id_tambahan_aturan_pakai: [null, []],
-            label_tambahan_aturan_pakai_obat: ['', []],
-            id_outlet:[0,[]]
+            label_tambahan_aturan_pakai_obat: ['', []]
         });
 
         this.GridDaftarObatToolbar = [
@@ -505,6 +503,13 @@ export class InputResepComponent implements OnInit {
         this.counter++;
         args.counter = this.counter;
         args.is_racikan = true;
+        args.no_urut = 0;
+        args.id_item = null;
+        args.nama_satuan = null;
+        args.label = null
+        args.nama_racikan = args.nama_obat;
+        args.label = args.ket_label;
+        args.aturan = args.ket_aturan;
         this.resepDokterService.addDetail(args);
         let detail;
         detail = this.GridResepRacikan.childGrid.dataSource;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { NavigationService } from 'src/app/modules/shared/services/navigation.service';
 import { ResepDokterService } from '../../services/resep-dokter/resep-dokter.service';
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { InputResepComponent } from './input-resep/input-resep.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-resep',
@@ -16,7 +17,7 @@ import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.
     providers: [BsModalService]
 })
 
-export class ResepComponent implements OnInit, AfterViewInit {
+export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**
     * Variable Button Nav
@@ -45,8 +46,8 @@ export class ResepComponent implements OnInit, AfterViewInit {
         private utilityService: UtilityService,
         private navigationService: NavigationService,
         private modalService: BsModalService,
-        public daftarPasienService: DaftarPasienService
-
+        public daftarPasienService: DaftarPasienService,
+        private router: Router,
     ) { }
 
     ngOnInit(): void { 
@@ -176,9 +177,22 @@ export class ResepComponent implements OnInit, AfterViewInit {
         this.resepDokterService.Insert(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
-                    this.resepDokterService.reset();
+                    // this.resepDokterService.reset();
                     this.isGetFromTemplate = false;
+                    this.reloadCurrentRoute();
                 });
         })
     }
+
+    reloadCurrentRoute() {
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate([currentUrl]);
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.resepDokterService.reset();
+    }
+
 }
