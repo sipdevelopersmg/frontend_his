@@ -227,7 +227,7 @@ export class ManagementBedRawatInapComponent implements OnInit {
             id_setup_bed_room_asal: this.GridSelectedData['id_setup_bed_room_asal'],
             id_setup_room_tujuan: this.GridSelectedData['id_setup_room_tujuan'],
             id_setup_bed_room_tujuan: this.GridSelectedData['id_setup_bed_room_tujuan'],
-            tanggal_bed_request: this.GridSelectedData['tanggal_bed_request'],
+            tanggal_bed_request: this.GridSelectedData['tanggal_bed_request_datetime'],
         };
 
         this.FormApprovePermintaanMutasiAdditionalInfo = additional_info;

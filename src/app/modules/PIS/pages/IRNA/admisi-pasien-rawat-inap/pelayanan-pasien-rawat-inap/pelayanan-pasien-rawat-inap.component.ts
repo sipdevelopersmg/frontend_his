@@ -330,6 +330,14 @@ export class PelayananPasienRawatInapComponent implements OnInit {
         this.id_poli.setValue(args.id_poli || args[0].id_poli);
     }
 
+    handleChangeDropdownDebitur(args: any): void {
+        let data = args.itemData;
+
+        if (data.id_debitur !== 1) {
+            this.no_peserta.setValue(data.no_member);
+        };
+    }
+
     heandleSelectedDokter(args: any): void {
         this.id_dokter.setValue(args.id_dokter || args[0].id_dokter);
 

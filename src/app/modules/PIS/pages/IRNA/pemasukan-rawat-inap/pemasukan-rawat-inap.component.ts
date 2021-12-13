@@ -468,7 +468,7 @@ export class PemasukanRawatInapComponent implements OnInit {
 
         this.GridDatasource.forEach((item) => {
             grid_datasource.push({
-                'tgl_transaksi': item.tgl_transaksi,
+                'tgl_transaksi': this.utilityService.onFixingDatepickerSyncfusion(item.tgl_transaksi),
                 'id_doct_anas': item.id_doct_anas,
                 'id_dokter': item.id_dokter,
                 'id_kelas_pelayanan': item.id_kelas_pelayanan,

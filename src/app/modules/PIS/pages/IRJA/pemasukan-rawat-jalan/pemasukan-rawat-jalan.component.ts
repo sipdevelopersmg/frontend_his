@@ -1,19 +1,19 @@
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
-import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
-import { PemasukanRawatJalanService } from '../../../services/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.service';
-import { OrgInputLookUpStaticFilterComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
-import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import * as Config from './json/pemasukan-rawat-jalan.config.json';
-import * as API_CONFIG from '../../../../../api/PIS/IRJA/index';
-import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import Swal from 'sweetalert2';
 import { BehaviorSubject } from 'rxjs';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import * as API_CONFIG from '../../../../../api/PIS/IRJA/index';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import * as Config from './json/pemasukan-rawat-jalan.config.json';
+import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
+import { PemasukanRawatJalanService } from '../../../services/IRJA/pemasukan-rawat-jalan/pemasukan-rawat-jalan.service';
+import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
+import { OrgInputLookUpStaticFilterComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
 
 @Component({
     selector: 'app-pemasukan-rawat-jalan',

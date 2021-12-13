@@ -185,6 +185,11 @@ export class AkomodasiRawatInapComponent implements OnInit {
                 };
 
                 this.InformasiAkomodasi = informasi_akomodasi;
+
+                this.ListAkomodasiDetailDatasource = [];
+                this.ListAkomodasiDetailDatasource = this.InformasiAkomodasi.akomodasi_detail.detail;
+
+                this.GridDetailAkomodasi.refresh();
             });
     }
 
@@ -193,7 +198,13 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     onDeleteDetailAkomodasi(): void {
+        let grid_selected_row_index: number[] = this.GridDetailAkomodasi.getSelectedRowIndexes();
 
+        grid_selected_row_index.forEach((item) => {
+            this.ListAkomodasiDetailDatasource.splice(item, 1);
+        });
+
+        this.GridDetailAkomodasi.refresh();
     }
 
     handleSelectedRowDetailAkomodasi(args: any): void {

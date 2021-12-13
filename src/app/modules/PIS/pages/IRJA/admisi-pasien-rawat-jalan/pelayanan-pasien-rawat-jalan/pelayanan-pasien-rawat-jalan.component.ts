@@ -72,6 +72,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     @ViewChild('DropdownDebitur') DropdownDebitur: DropDownListComponent;
     DropdownDebiturDatasource: DebiturModel[];
     DropdownDebiturField: object = { text: 'nama_debitur', value: 'id_debitur' };
+    DebiturNotTanggunganPribadi = false;
 
     @ViewChild('DropdownKelas') DropdownKelas: DropDownListComponent;
     DropdownKelasDatasource: KelasPerawatanModel[];
@@ -146,19 +147,19 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
 
     onSetAttributeFormAdmisiPasien(): void {
         this.formAdmisiPasien = this.formBuilder.group({
-            id_person: [0, []],
-            full_name: ["", []],
-            no_rekam_medis: ["", []],
-            id_jenis_ruangan: [0, []],
-            id_poli: [0, []],
-            id_jadwal_dokter: [0, []],
-            id_dokter: [0, []],
-            id_debitur: [0, []],
+            id_person: [0, [Validators.required]],
+            full_name: ["", [Validators.required]],
+            no_rekam_medis: ["", [Validators.required]],
+            id_jenis_ruangan: [0, [Validators.required, Validators.min(1)]],
+            id_poli: [0, [Validators.required, Validators.min(1)]],
+            id_jadwal_dokter: [0, [Validators.required, Validators.min(1)]],
+            id_dokter: [0, [Validators.required, Validators.min(1)]],
+            id_debitur: [0, [Validators.required, Validators.min(1)]],
             id_asal_rujukan: [0, []],
             kode_wilayah_asal_rujukan: ["", []],
-            id_kelas_rawat: [0, []],
+            id_kelas_rawat: [0, [Validators.required, Validators.min(1)]],
             no_peserta: ["", []],
-            id_icd_masuk: [0, []],
+            id_icd_masuk: [0, [Validators.required, Validators.min(1)]],
             keterangan_diagnosa: ["", []],
             keluhan: ["", []],
         });
@@ -236,6 +237,9 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
 
         if (data.id_debitur !== 1) {
             this.no_peserta.setValue(data.no_member);
+            this.DebiturNotTanggunganPribadi = true;
+        } else {
+            this.DebiturNotTanggunganPribadi = false;
         }
     }
 
@@ -303,35 +307,41 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
             "keluhan": data.keluhan
         };
 
-        this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanTanpaPenjamin(parameter)
-            .subscribe((result) => {
-                if (result) {
-                    this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
-                        .then(() => {
-                            this.resetForm();
+        let formValidator = this.utilityService.onValidateForm(this.formAdmisiPasien);
 
-                            setTimeout(() => {
-                                this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
-                            }, 250);
-                        });
-                }
-            });
+        if (formValidator.length > 0) {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', `${formValidator[0]} Tidak Boleh Kosong`);
+        } else {
+            this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanTanpaPenjamin(parameter)
+                .subscribe((result) => {
+                    if (result) {
+                        this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
+                            .then(() => {
+                                this.resetForm();
+
+                                setTimeout(() => {
+                                    this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
+                                }, 250);
+                            });
+                    }
+                });
+        }
     }
 
     onSaveWithPenjamin(data: any) {
-        this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanDenganPenjamin(data)
-            .subscribe((result) => {
-                if (result) {
-                    this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
-                        .then(() => {
-                            this.resetForm();
+        // this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanDenganPenjamin(data)
+        //     .subscribe((result) => {
+        //         if (result) {
+        //             this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
+        //                 .then(() => {
+        //                     this.resetForm();
 
-                            setTimeout(() => {
-                                this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
-                            }, 250);
-                        });
-                }
-            });
+        //                     setTimeout(() => {
+        //                         this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
+        //                     }, 250);
+        //                 });
+        //         }
+        //     });
     }
 
     get id_person(): AbstractControl { return this.formAdmisiPasien.get('id_person'); }

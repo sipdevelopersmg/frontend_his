@@ -3,6 +3,7 @@ import { NavigationService } from './navigation.service';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import 'moment/locale/id';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root'
@@ -139,11 +140,39 @@ export class UtilityService {
         return date_now;
     }
 
+    onFormatStringToDate(data: string, format?: string): any {
+        moment.locale('id');
+
+        let date = format ? moment(data).format(format) : moment(data).toDate();
+
+        return date;
+    }
+
     onFixingDatepickerSyncfusion(date: any): any {
         let current_date = new Date(date);
 
         current_date = new Date(date.setDate(current_date.getDate() + 1));
 
         return current_date.toISOString();
+    }
+
+    onValidateForm(form: FormGroup): any {
+        let formControls = form.controls;
+
+        let formControlInvalid = [];
+
+        for (let key in formControls) {
+            if (formControls.hasOwnProperty(key)) {
+                if (formControls[key].invalid) {
+                    formControlInvalid.push(key);
+                }
+            }
+        }
+
+        let newArr = formControlInvalid.map((item: string) => {
+            return item.replace(/[_]/g, ' ').toUpperCase();
+        });
+
+        return newArr;
     }
 }

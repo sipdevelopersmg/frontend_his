@@ -15,6 +15,7 @@ export class AtmValidatorsComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+
     }
 
 }

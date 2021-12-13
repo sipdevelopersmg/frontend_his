@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateTimePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { IApproveRequestMutasiModel } from 'src/app/modules/PIS/models/IRNA/management_bed_rawat_inap.model';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
@@ -40,9 +40,9 @@ export class ApprovePermintaanMutasiComponent implements OnInit {
             id_setup_bed_room_tujuan: [0, []],
             id_poli_tujuan: [0, []],
             id_kelas_tujuan: [0, []],
-            tanggal_bed_approve: ["", []],
-            keterangan_approve: ["", []],
-            tanggal_bed_request: ["", []],
+            tanggal_bed_approve: ['', [Validators.required]],
+            keterangan_approve: ['', [Validators.required]],
+            tanggal_bed_request: ['', []],
         });
     }
 
@@ -73,15 +73,12 @@ export class ApprovePermintaanMutasiComponent implements OnInit {
     }
 
     handleSubmitFormApproveRequestMutasi(FormApprovePermintaanMutasi: IApproveRequestMutasiModel): void {
+        let tanggal_bed_request = this.utilityService.onFormatDate(FormApprovePermintaanMutasi['tanggal_bed_request'])
+
         let tanggal_bed_approve = this.utilityService.onFormatDate(FormApprovePermintaanMutasi.tanggal_bed_approve);
-
-        let tanggal_bed_request = this.utilityService.onFormatDate(FormApprovePermintaanMutasi['tanggal_bed_request']);
-
-        let compare_date_bed_approve = tanggal_bed_approve > tanggal_bed_request;
-
         FormApprovePermintaanMutasi.tanggal_bed_approve = tanggal_bed_approve;
 
-        if (compare_date_bed_approve) {
+        if (tanggal_bed_approve > tanggal_bed_request) {
             this.onSendApproveRequestMutasi.emit(FormApprovePermintaanMutasi);
         } else {
             this.utilityService.onShowingCustomAlert('error', 'Oops', 'Tgl Bed Approve Tidak Boleh < Tgl Bed Request');
