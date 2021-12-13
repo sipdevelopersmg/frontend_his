@@ -8,4 +8,6 @@ export const INSERT = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatI
 export const UPDATE_TO_VALIDATED = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/UpdateToValidated';
 export const UPDATE_TO_CANCELED = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/UpdateToCanceled';
 export const GET_DETAIL_PENJUALAN_BY_HEADER_ID = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/GetDetailPenjualanByHeaderId';
-export const GET_DETAIL_BY_ID = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/GetDetailById';
+export const GET_DETAIL_BY_ID = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/GetDetailRefundByHeaderId';
+export const VALIDASI = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/UpdateToValidated';
+export const CANCEL = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrja/UpdateToCanceled';

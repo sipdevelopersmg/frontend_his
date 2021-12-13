@@ -15,15 +15,21 @@ import { TrPersetujuanMutasiDetailInsert } from 'src/app/modules/MM/models/mutas
 import { SetupItemService } from 'src/app/modules/MM/services/setup-data/setup-item/setup-item.service';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { RefundObatIrjaService } from '../../../services/refund-obat/refund-obat-irja/refund-obat-irja.service';
+import { SetupStockroomService } from 'src/app/modules/MM/services/setup-data/setup-stockroom/setup-stock-room.service';
+import { SetupOutletService } from '../../../services/setup-data/setup-outlet/setup-outlet.service';
 @Component({
   selector: 'app-refund-obat-irja',
   templateUrl: './refund-obat-irja.component.html',
   styleUrls: ['./refund-obat-irja.component.css']
 })
 export class RefundObatIrjaComponent implements OnInit {
+    SetupOutletDropdownField: object = { text: 'nama_outlet', value: 'id_outlet' };
+
+
   formInput: FormGroup;
   inputFieldState='detail';
   ButtonNav: ButtonNavModel[] = [
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
     { Id: 'Reset', Captions: 'Reset', Icons1: 'fas fa-undo fa-sm' },
     { Id: 'simpan', Captions: 'simpan', Icons1: 'fa-save' },
   ];
@@ -76,17 +82,18 @@ private id:number=0;
   constructor(
     private formBuilder: FormBuilder,
     public refundObatIrjaService:RefundObatIrjaService,
-    private encryptionService: EncryptionService,
-    private activatedRoute: ActivatedRoute,
     private location: Location,
     private renderer: Renderer2,
     private modalService: BsModalService,
     private changeDetection: ChangeDetectorRef,
     private utilityService:UtilityService,
-    private setupItemService:SetupItemService
+    private setupItemService:SetupItemService,
+    public setupOutletService: SetupOutletService,
+
   ) { }
 
   ngOnInit(): void {
+
     this.formInput = this.formBuilder.group({
         penjualan_obat_id: [0, ],
         id_outlet_terima_retur:[0,],
@@ -95,7 +102,8 @@ private id:number=0;
         no_bill: ['',],
         nama_pasien:['',],
         no_rm:['',],
-        no_register:['',]
+        no_register:['',],
+        keterangan_retur_penjualan_obat:['',]
     });
 
     let id_item = this.id_item;
@@ -273,280 +281,281 @@ private id:number=0;
         // { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
         { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
     ];
-    
-  }
+    this.setupOutletService.setDataSource();
+}
 
     onDataBound(){
         this.gridDetail.detailRowModule.expandAll();
     }
 
-  setFormGrif(args):void{
-    (<HTMLInputElement>document.getElementsByName("expired_date")[0]).value=args.itemData.expired_date;
-    (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=args.itemData.nama_satuan;
-    (<HTMLInputElement>document.getElementsByName("hpp_satuan")[0]).value=args.itemData.harga_satuan_netto;
-  }
+    setFormGrif(args):void{
+        (<HTMLInputElement>document.getElementsByName("expired_date")[0]).value=args.itemData.expired_date;
+        (<HTMLInputElement>document.getElementsByName("nama_satuan")[0]).value=args.itemData.nama_satuan;
+        (<HTMLInputElement>document.getElementsByName("hpp_satuan")[0]).value=args.itemData.harga_satuan_netto;
+    }
 
-  handleClickRefesh(){
-    this.refundObatIrjaService.onGetDataTransaksiObat([
-        {
-            columnName: "tpo.tanggal_penjualan_obat",
-            filter: "equal",
-            searchText: "",
-            searchText2: this.utilityService.onFormatDate(this.tanggal_transaksi.value,'yyyy-MM-DD')
+    handleClickRefesh(){
+        if(this.depo.value==''){
+            this.utilityService.onShowingCustomAlert('warning','Validasi','Depo belum di pilih')
+            return false;
         }
-    ]);
-  }
-
-  /** untuk identifikasi keyboard down pada grid */
-  handleLoadGrid(args: any): void {
-    document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
-  }
-
-  handleSelectedPasien(args: any): void {
-    console.log(args.data);
-    this.formInput.setValue({
-        id_outlet_terima_retur  : args.data.id_outlet,
-        penjualan_obat_id       : args.data.penjualan_obat_id,
-        tanggal_transaksi       : this.tanggal_transaksi.value,
-        depo                    : args.data.nama_outlet,
-        no_bill                 : args.data.nomor_penjualan_obat,
-        nama_pasien             : args.data.nama_pasien,
-        no_rm                   : '',
-        no_register             : args.data.no_register     
-    });
-    this.refundObatIrjaService.getDetail(args.data.penjualan_obat_id).subscribe((result)=>{
-        this.dataSourceGrid.next(result.data);
-    });
-  }
-
-  handleSelectdRow(args: any): void {
-    this.currentIndex = args.rowIndex;
-    this.datasatuan = args.data.satuans;
-    this.detailSelected = args.data
-    this.satuanVal = args.data.kode_satuan_besar;
-  }
-
-  handleActionCompleted($event) {
-
-    if ($event.requestType == 'save') {
-        console.log($event);
-        this.refundObatIrjaService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
-        this.gridDetail.refresh();
+        if(this.tanggal_transaksi.value==null){
+            this.utilityService.onShowingCustomAlert('warning','Validasi','Tanggal transaksi penjualan belum di pilih')
+            return false;
+        }
+        this.refundObatIrjaService.onGetDataTransaksiObat([
+            {
+                columnName: "tpo.tanggal_penjualan_obat",
+                filter: "equal",
+                searchText: "",
+                searchText2: this.utilityService.onFormatDate(this.tanggal_transaksi.value,'yyyy-MM-DD')
+            },
+            {
+                columnName: "tpo.id_outlet",
+                filter: "equal",
+                searchText: this.depo.value,
+                searchText2: ""
+            }
+        ]);
     }
-    // console.log('complate parent',this.gridDetail.childGrid.dataSource);
-  }
 
-  KeyDownHandler(event: KeyboardEvent) {
-
-      if (event.keyCode === 106) {
-          this.onOpenQty()
-      };
-
-      if (event.keyCode === 46) {
-          this.refundObatIrjaService.removeDataDetail(this.currentIndex);
-          this.gridDetail.refresh();
-          setTimeout(() => {
-              if (this.currentIndex != 0) {
-                  this.gridDetail.selectedRowIndex = 0;
-              }
-          }, 100)
-      };
-
-    //   if (event.keyCode === 111) {
-    //       this.onOpenHarga()
-    //   }
-
-    //   if (event.keyCode === 109) {
-    //       this.onOpenSubtotal()
-    //   }
-
-      if (event.keyCode === 107) {
-          this.onOpenSatuan()
-      }
-
-  }
-
-  onToolbarClick(args: any): void {
-    const item = args.item.id;
-    switch (item) {
-        case 'add':
-            this.LookupItem.onOpenModal();
-            break;
-        default:
-            break;
+    /** untuk identifikasi keyboard down pada grid */
+    handleLoadGrid(args: any): void {
+        document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
     }
-  }
 
-  onLoadDetailData(id){
-      this.refundObatIrjaService.onGetById(id).subscribe((result)=>{
-          this.id = parseInt(id);
-          this.formInput.setValue({
-            pemakaian_internal_id   :parseInt(id),
-            pic_pemberi             : '',
-            pic_penerima            : '',
-            time_serah_terima       : new Date(),
-            total_transaksi         : 0,
-          })
-          this.id_stockroom = result.data.id_stockroom;
-          this.refundObatIrjaService.getDetail(id).subscribe((result)=>{
-            result.data.map((e,i)=>{
-                return e.qty = 0;
-            });
+    handleSelectedPasien(args: any): void {
+        console.log(args.data);
+        this.formInput.setValue({
+            id_outlet_terima_retur  : args.data.id_outlet,
+            penjualan_obat_id       : args.data.penjualan_obat_id,
+            tanggal_transaksi       : this.tanggal_transaksi.value,
+            depo                    : this.depo.value,
+            no_bill                 : args.data.nomor_penjualan_obat,
+            nama_pasien             : args.data.nama_pasien,
+            no_rm                   : args.data.no_rekam_medis,
+            no_register             : args.data.no_register,
+            keterangan_retur_penjualan_obat: ''     
+        });
+        this.refundObatIrjaService.getDetail(args.data.penjualan_obat_id).subscribe((result)=>{
             this.dataSourceGrid.next(result.data);
-          })
-            //this.persetujuanMutasiService.setDetail(pemesanan_id);
-      });
-  }
-
-  onOpenQty() {
-
-      const _combine = combineLatest(
-          this.modalService.onShow,
-          this.modalService.onHidden
-      ).subscribe(() => this.changeDetection.markForCheck());
-
-      this.subscriptions.push(
-          this.modalService.onShown.subscribe(() => {
-              setTimeout(() => {
-                  (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
-              }, 100)
-          })
-      );
-
-      this.subscriptions.push(
-          this.modalService.onHidden.subscribe((reason: string | any) => {
-              this.gridDetail.selectedRowIndex = this.currentIndex;
-              this.gridDetail.selectRows([this.currentIndex]); 
-              this.unsubscribe();
-          })
-      );
-
-      this.subscriptions.push(_combine);
-
-      this.modalRef = this.modalService.show(
-          this.modalQty,
-          Object.assign({}, { class: 'modal-lg' })
-      );
-
-  }
-  
-
-  onOpenSatuan() {
-      const _combine = combineLatest(
-          this.modalService.onShown,
-          this.modalService.onHidden
-      ).subscribe(() => this.changeDetection.markForCheck());
-
-      this.subscriptions.push(
-          this.modalService.onShown.subscribe(() => {
-              setTimeout(() => {
-                  (<HTMLInputElement>document.getElementById("SatuanValueId")).focus();
-              }, 100)
-          })
-      );
-
-      this.subscriptions.push(
-          this.modalService.onHidden.subscribe((reason: string | any) => {
-              this.gridDetail.selectedRowIndex = this.currentIndex;
-              this.gridDetail.selectRows([this.currentIndex]); 
-              this.unsubscribe();
-          })
-      );
-
-      this.subscriptions.push(_combine);
-
-      this.modalRef = this.modalService.show(
-          this.modalSatuan,
-          Object.assign({}, { class: 'modal-lg' })
-      );
-
-  }
-
-  unsubscribe() {
-      this.subscriptions.forEach((subscription: Subscription) => {
-          subscription.unsubscribe();
-      });
-      this.subscriptions = [];
-  }
-
-  selectLastRowdetail() {
-      setTimeout(() => {
-          let last = this.gridDetail.dataSource as any[];
-          this.gridDetail.selectedRowIndex = last.length - 1;
-      }, 150)
-  }
-
-  onSave(){
-      if (this.formInput.valid) {
-        let data = this.formInput.value;
-        this.dataScourceGridChild.map((e,i)=>{
-            e.sub_total = e.qty_retur_penjualan_obat * e.harga_satuan_retur;
-            e.no_urut = i+1;
-            return e;
         });
-        data.jumlah_item_retur = this.dataScourceGridChild.sum('qty_retur_penjualan_obat');
-        data.total_transaksi_retur = this.dataScourceGridChild.sum('sub_total');
-        data.nomor_retur_penjualan_obat = '23135';
-        data.tanggal_retur_penjualan_obat = '2021-12-10';
-        console.log('data header',data);
-        console.log('data detail',this.dataScourceGridChild);
-        data.details = this.dataScourceGridChild;
-        console.log('data',data);
-        this.refundObatIrjaService.Insert(data).subscribe((result)=>{
-            console.log(result);
-            this.utilityService.onShowingCustomAlert('success', 'Berhasil Refund Obat', result.message)
-            .then(() => {    
-                this.onReset();
-            });
-        });
-      }else{
-          alert('isi semua data');
-      }
-  }
-
-  onReset(){
-      this.formInput.reset();
-      this.dataScourceGridChild = [];
-      this.dataSourceGrid.next([]);
-      this.ChildGrid.dataSource = [];
-  }
-
-  onClickButtonNav(ButtonId: string): void {
-    switch (ButtonId) {
-        case 'Reset':
-            this.onReset();
-            break;
-        case "simpan":
-            // this.dataScourceGridChild;
-            this.onSave(); 
-            break;
-        case "Cancel":
-            this.modalRef = this.modalService.show(
-                this.modalCanceled,
-                Object.assign({}, { class: 'modal-lg' })
-            );
-            break;
-        default:
-            break;
     }
-  }
 
-//   onCalceled(): void {
-//     let reason_canceled = (<HTMLInputElement>document.getElementsByName("reason_canceled")[0]).value;
-//     this.refundObatIrjaService.Cancel(this.id,reason_canceled).subscribe((result)=>{
-//       this.utilityService.onShowingCustomAlert('success', 'Data Pemesanan Berhasil Di Cancel', result.message)
-//         .then(() => {
-//             this.onLoadDetailData(this.id);
-//             this.modalRef.hide();
-//         });
-//     })
-//   }
+    handleSelectdRow(args: any): void {
+        this.currentIndex = args.rowIndex;
+        this.datasatuan = args.data.satuans;
+        this.detailSelected = args.data
+        this.satuanVal = args.data.kode_satuan_besar;
+    }
 
-  get tanggal_transaksi(): AbstractControl { return this.formInput.get('tanggal_transaksi'); };
-  get depo(): AbstractControl { return this.formInput.get('depo'); };
-  get no_bill(): AbstractControl { return this.formInput.get('no_bill'); };
-  get nama_pasien(): AbstractControl { return this.formInput.get('nama_pasien'); };
-  get no_rm(): AbstractControl { return this.formInput.get('no_rm'); };
-  get no_register(): AbstractControl { return this.formInput.get('no_register'); };
+    handleActionCompleted($event) {
+
+        if ($event.requestType == 'save') {
+            console.log($event);
+            this.refundObatIrjaService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+            this.gridDetail.refresh();
+        }
+        // console.log('complate parent',this.gridDetail.childGrid.dataSource);
+    }
+
+    KeyDownHandler(event: KeyboardEvent) {
+
+        if (event.keyCode === 106) {
+            this.onOpenQty()
+        };
+
+        if (event.keyCode === 46) {
+            this.refundObatIrjaService.removeDataDetail(this.currentIndex);
+            this.gridDetail.refresh();
+            setTimeout(() => {
+                if (this.currentIndex != 0) {
+                    this.gridDetail.selectedRowIndex = 0;
+                }
+            }, 100)
+        };
+
+        //   if (event.keyCode === 111) {
+        //       this.onOpenHarga()
+        //   }
+
+        //   if (event.keyCode === 109) {
+        //       this.onOpenSubtotal()
+        //   }
+
+        if (event.keyCode === 107) {
+            this.onOpenSatuan()
+        }
+
+    }
+
+    onToolbarClick(args: any): void {
+        const item = args.item.id;
+        switch (item) {
+            case 'add':
+                this.LookupItem.onOpenModal();
+                break;
+            default:
+                break;
+        }
+    }
+
+    onLoadDetailData(id){
+        this.refundObatIrjaService.onGetById(id).subscribe((result)=>{
+            this.id = parseInt(id);
+            this.formInput.setValue({
+                pemakaian_internal_id   :parseInt(id),
+                pic_pemberi             : '',
+                pic_penerima            : '',
+                time_serah_terima       : new Date(),
+                total_transaksi         : 0,
+            })
+            this.id_stockroom = result.data.id_stockroom;
+            this.refundObatIrjaService.getDetail(id).subscribe((result)=>{
+                result.data.map((e,i)=>{
+                    return e.qty = 0;
+                });
+                this.dataSourceGrid.next(result.data);
+            })
+                //this.persetujuanMutasiService.setDetail(pemesanan_id);
+        });
+    }
+
+    onOpenQty() {
+
+        const _combine = combineLatest(
+            this.modalService.onShow,
+            this.modalService.onHidden
+        ).subscribe(() => this.changeDetection.markForCheck());
+
+        this.subscriptions.push(
+            this.modalService.onShown.subscribe(() => {
+                setTimeout(() => {
+                    (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                }, 100)
+            })
+        );
+
+        this.subscriptions.push(
+            this.modalService.onHidden.subscribe((reason: string | any) => {
+                this.gridDetail.selectedRowIndex = this.currentIndex;
+                this.gridDetail.selectRows([this.currentIndex]); 
+                this.unsubscribe();
+            })
+        );
+
+        this.subscriptions.push(_combine);
+
+        this.modalRef = this.modalService.show(
+            this.modalQty,
+            Object.assign({}, { class: 'modal-lg' })
+        );
+
+    }
+    
+
+    onOpenSatuan() {
+        const _combine = combineLatest(
+            this.modalService.onShown,
+            this.modalService.onHidden
+        ).subscribe(() => this.changeDetection.markForCheck());
+
+        this.subscriptions.push(
+            this.modalService.onShown.subscribe(() => {
+                setTimeout(() => {
+                    (<HTMLInputElement>document.getElementById("SatuanValueId")).focus();
+                }, 100)
+            })
+        );
+
+        this.subscriptions.push(
+            this.modalService.onHidden.subscribe((reason: string | any) => {
+                this.gridDetail.selectedRowIndex = this.currentIndex;
+                this.gridDetail.selectRows([this.currentIndex]); 
+                this.unsubscribe();
+            })
+        );
+
+        this.subscriptions.push(_combine);
+
+        this.modalRef = this.modalService.show(
+            this.modalSatuan,
+            Object.assign({}, { class: 'modal-lg' })
+        );
+
+    }
+
+    unsubscribe() {
+        this.subscriptions.forEach((subscription: Subscription) => {
+            subscription.unsubscribe();
+        });
+        this.subscriptions = [];
+    }
+
+    selectLastRowdetail() {
+        setTimeout(() => {
+            let last = this.gridDetail.dataSource as any[];
+            this.gridDetail.selectedRowIndex = last.length - 1;
+        }, 150)
+    }
+
+    onSave(){
+        if (this.formInput.valid) {
+            let data = this.formInput.value;
+            this.dataScourceGridChild.map((e,i)=>{
+                e.sub_total = e.qty_retur_penjualan_obat * e.harga_satuan_retur;
+                e.no_urut = i+1;
+                return e;
+            });
+            data.jumlah_item_retur = this.dataScourceGridChild.sum('qty_retur_penjualan_obat');
+            data.total_transaksi_retur = this.dataScourceGridChild.sum('sub_total');
+            data.nomor_retur_penjualan_obat = '23135';
+            data.tanggal_retur_penjualan_obat = '2021-12-10';
+            console.log('data header',data);
+            console.log('data detail',this.dataScourceGridChild);
+            data.details = this.dataScourceGridChild;
+            console.log('data',data);
+            this.refundObatIrjaService.Insert(data).subscribe((result)=>{
+                console.log(result);
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Refund Obat', result.message)
+                .then(() => {    
+                    this.onReset();
+                });
+            });
+        }else{
+            alert('isi semua data');
+        }
+    }
+
+    onReset(){
+        this.formInput.reset();
+        this.dataScourceGridChild = [];
+        this.dataSourceGrid.next([]);
+        this.ChildGrid.dataSource = [];
+    }
+
+    onClickButtonNav(ButtonId: string): void {
+        switch (ButtonId) {
+            case 'Back':
+                this.location.back();
+                break;
+            case 'Reset':
+                this.onReset();
+                break;
+            case "simpan":
+                // this.dataScourceGridChild;
+                this.onSave(); 
+                break;
+            default:
+                break;
+        }
+    }
+
+    get tanggal_transaksi(): AbstractControl { return this.formInput.get('tanggal_transaksi'); };
+    get depo(): AbstractControl { return this.formInput.get('depo'); };
+    get no_bill(): AbstractControl { return this.formInput.get('no_bill'); };
+    get nama_pasien(): AbstractControl { return this.formInput.get('nama_pasien'); };
+    get no_rm(): AbstractControl { return this.formInput.get('no_rm'); };
+    get no_register(): AbstractControl { return this.formInput.get('no_register'); };
 
 }

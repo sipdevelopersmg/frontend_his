@@ -2,6 +2,22 @@
     
     <form [formGroup]="formInput">
         <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+               <!-- Dropdown Depo -->
+               <div class="row mb-2">
+                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                       <atm-label [LabelCaption]="'Depo'"></atm-label>
+                   </div>
+                   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                       <ejs-dropdownlist #MaritalOutletDropdown id="marital"
+                           [dataSource]="setupOutletService.dataSource| async"
+                           [fields]="SetupOutletDropdownField" [allowFiltering]="true"
+                           formControlName="depo">
+                       </ejs-dropdownlist>
+                   </div>
+               </div>
+                
+            </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
                 <mol-datepicker-syncfusion [label]="'Tanggal'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_transaksi">
@@ -9,9 +25,6 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 mb-2">
                 <button type="button" class="btn btn-sm btn-primary" (click)="handleClickRefesh()">Refresh</button>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'Depo'" formControlName="depo" [inputFieldState]="'detail'"></mol-input-text>   
             </div>
         </div>
         
@@ -31,6 +44,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <mol-input-text [label]="'No. RM'" formControlName="no_rm" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_retur_penjualan_obat"></mol-input-textarea>
             </div>
         </div>
         <ejs-grid #gridDetail
