@@ -9,3 +9,5 @@ export const UPDATE_TO_VALIDATED = `${environment.webApiPHARMACY}` +'TransReturP
 export const UPDATE_TO_CANCELED = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrna/UpdateToCanceled';
 export const GET_DETAIL_PENJUALAN_BY_HEADER_ID = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrna/GetDetailPenjualanByHeaderId';
 export const GET_DETAIL_BY_ID = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrna/GetDetailById';
+export const VALIDASI = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrna/UpdateToValidated';
+export const CANCEL = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrna/UpdateToCanceled';

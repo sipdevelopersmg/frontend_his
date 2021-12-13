@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AntrianFarmasiComponent } from "./pages/Antrian/antrian-farmasi/antrian-farmasi.component";
+import { RefundObatIrjaDaftarComponent } from "./pages/refund-obat/refund-obat-irja-daftar/refund-obat-irja-daftar.component";
+import { RefundObatIrjaDetailComponent } from "./pages/refund-obat/refund-obat-irja-detail/refund-obat-irja-detail.component";
 import { RefundObatIrjaComponent } from "./pages/refund-obat/refund-obat-irja/refund-obat-irja.component";
 import { RefundObatIrnaComponent } from "./pages/refund-obat/refund-obat-irna/refund-obat-irna.component";
 import { ResepRacikanComponent } from "./pages/resep-racikan/resep-racikan.component";
@@ -47,8 +49,10 @@ const pharmacyRoutes: Routes = [
     {
         path: "refund-obat", component: null, data: { title: "Refund Obat" },
         children: [
-            { path: "refund-obat-irja", component: RefundObatIrjaComponent, data: { title: "Refund Obat Rawat Jalan" } },
-            { path: "refund-obat-irna", component: RefundObatIrnaComponent, data: { title: "Refund Obat Rawat Inap" } },
+            { path: "refund-obat-irja", component: RefundObatIrjaComponent, data: { title: "Input Retur Penjualan Obat Rawat Jalan" } },
+            { path: "refund-obat-irja-daftar", component: RefundObatIrjaDaftarComponent, data: { title: "Daftar Retur Penjualan Obat Rawat Jalan" } },
+            { path: "refund-obat-irja-detail/:id/:key", component: RefundObatIrjaDetailComponent, data: { title: "Detail Retur Penjualan Obat Rawat Jalan" } },
+            { path: "refund-obat-irna", component: RefundObatIrnaComponent, data: { title: "Input Retur Penjualan Obat Rawat Inap" } },
         ]
     },
 ]

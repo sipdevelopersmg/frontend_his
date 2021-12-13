@@ -28,7 +28,7 @@
             "editType": "defaultEdit"
         },
         {
-            "field": "no_rm",
+            "field": "no_rekam_medis",
             "headerText": "No Rm",
             "type": "string",
             "format": "",

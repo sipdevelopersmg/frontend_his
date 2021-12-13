@@ -1,0 +1,97 @@
+{
+    "TrDetail":
+    [
+        {
+            "allowEditing": false,
+            "field":"retur_penjualan_obat_detail_id",
+            "headerText":"Id",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"no_urut",
+            "headerText":"No Urut",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"id_item",
+            "headerText":"Id Item",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"kode_item",
+            "headerText":"Kode Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width":170
+        },
+        {
+            "allowEditing": false,
+            "field":"nama_item",
+            "headerText":"Nama Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"batch_number",
+            "headerText":"Batch",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width":180
+        },
+        {
+            "allowEditing": false,
+            "field":"expired_date",
+            "headerText":"Expired",
+            "editType": "defaultEdit",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width":200
+        },
+        {
+            "allowEditing": true,
+            "field":"qty_retur_penjualan_obat",
+            "headerText":"Banyak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width":200
+        }
+    ]
+}
