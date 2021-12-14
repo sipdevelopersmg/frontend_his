@@ -2,13 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const webApiDemo = "http://128.199.133.137";
+export const webApiDemo = "http://128.199.133.137:8888";
 
-export const webApiUrl = "http://174.138.22.139";
+export const webApiUrl = "http://174.138.22.139:8888";
+
+export const webApiHostname = "http://gateway_api:80";
 
 export const modeDevelopment = true;
 
-export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
+export const webApi = modeDevelopment ? webApiHostname : webApiDemo;
 
 export const environment = {
 
@@ -21,37 +23,37 @@ export const environment = {
      * @webApiMM http://174.138.22.139:8888/api/pharmm/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /pharmm 
     */
-    webApiMM: `${webApi}:8888/api/pharmm/`,
+    webApiMM: `${webApi}/api/pharmm/`,
 
     /** 
      * @webApiPHARMACY http://174.138.22.139:8888/api/farmasi/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /farmasi 
     */
-    webApiPHARMACY: `${webApi}:8888/api/farmasi/`,
+    webApiPHARMACY: `${webApi}/api/farmasi/`,
 
     /** 
      * @webApiPis http://174.138.22.139:8888/api/pis/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /pis 
     */
-    webApiPis: `${webApi}:8888/api/pis/`,
+    webApiPis: `${webApi}/api/pis/`,
 
     /** 
      * @webApiBilling http://174.138.22.139:8888/api/billing/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /billing 
     */
-    webApiBilling: `${webApi}:8888/api/billing/`,
+    webApiBilling: `${webApi}/api/billing/`,
 
     /** 
      * @webApiAdmisi http://174.138.22.139:8888/api/admisi/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /admisi 
     */
-    webApiAdmisi: `${webApi}:8888/api/admisi/`,
+    webApiAdmisi: `${webApi}/api/admisi/`,
 
     /** 
      * @webApiLaporan http://174.138.22.139:8888/api/billing/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /billing 
     */
-    webApiLaporan: `${webApi}:8080/jasperserver/rest_v2/reports/`,
+    webApiLaporan: `${webApi}/jasperserver/rest_v2/reports/`,
 
     /** 
      * @webApiSocket http://174.138.22.139:3000

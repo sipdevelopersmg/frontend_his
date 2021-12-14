@@ -11,9 +11,12 @@ services:
       - "80:80"
     networks:
       - api-network
+      - gateway-network
     volumes:
       - /home/frontend-compose/volume/frontend_his_data:/usr/share/nginx/html
 
 networks:
   api-network:
+    external: true
+  gateway-network:
     external: true
