@@ -28,27 +28,9 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "id_stockroom_pemberi",
-        "headerText": "Id Stockroom Pemberi",
-        "type": "number",
-        "format": "",
-        "textAlign": "Left",
-        "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
         "field": "nama_stockroom_pemberi",
         "headerText": "Nama Stockroom Pemberi",
         "type": "string",
-        "format": "",
-        "textAlign": "Left",
-        "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
-        "field": "id_stockroom_penerima",
-        "headerText": "Id Stockroom Penerima",
-        "type": "number",
         "format": "",
         "textAlign": "Left",
         "visible": true,
@@ -72,7 +54,6 @@
         "visible": true,
         "editType": "defaultEdit"
     },
-    
     {
         "field": "jumlah_item",
         "headerText": "Jumlah Item",

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
 import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
@@ -87,17 +87,16 @@ export class InputPermintaanMutasiComponent implements OnInit {
         private location: Location,
         public setupStockroomService: SetupStockroomService,
         private utilityService: UtilityService
-
     ) { }
 
     ngOnInit(): void {
         this.formKontrak = this.formBuilder.group({
-            nomor_mutasi: ["", Validators.required],
+            nomor_mutasi: [""],
             tanggal_mutasi: [null, Validators.required],
             id_stockroom_pemberi: [0, Validators.required],
             id_stockroom_penerima: [0, Validators.required],
-            total_transaksi: [0, Validators.required],
-            jumlah_item: [0, Validators.required],
+            total_transaksi: [0],
+            jumlah_item: [0],
         });
 
         this.satuanParams = {
@@ -127,7 +126,13 @@ export class InputPermintaanMutasiComponent implements OnInit {
 
         this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
             if (e.keyCode == 112) {
-                this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom_pemberi.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('Stockroom Pemberi Belum di Isi')
+                    }
+                }
                 e.preventDefault();
             }
         });
@@ -144,6 +149,11 @@ export class InputPermintaanMutasiComponent implements OnInit {
         // let kontrak_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
         // console.log(kontrak_id);
         // this.onLoadDetailData(kontrak_id);
+        setTimeout(() => {
+            this.permintaanMutasiService.setDetail([]);
+            this.gridDetail.dataSource = [];
+            this.gridDetail.refresh();
+        }, 1);
     }
 
     onLoadDetailData(kontrak_id) {
@@ -186,7 +196,11 @@ export class InputPermintaanMutasiComponent implements OnInit {
         const item = args.item.id;
         switch (item) {
             case 'add':
-                this.LookupItem.onOpenModal();
+                if(this.id_stockroom_pemberi.value!=0){
+                    this.LookupItem.onOpenModal();
+                }else{
+                    this.utilityService.alertError('Stockroom Pemberi Belum di Isi')
+                }
                 break;
             default:
                 break;
@@ -223,6 +237,22 @@ export class InputPermintaanMutasiComponent implements OnInit {
         }
     }
 
+    hanldeActionBegin($event){
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let banyak = (<HTMLInputElement>document.getElementsByName("qty_satuan_besar_permintaan")[0])
+                if (banyak) {
+                    banyak.addEventListener('click', (event) => {
+                        banyak.select();
+                    });
+                    this.utilityService.setInputNumericElement(banyak, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+    }
+
     /** untuk identifikasi keyboard down pada grid */
     handleLoadGrid(args: any): void {
         document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
@@ -237,13 +267,17 @@ export class InputPermintaanMutasiComponent implements OnInit {
 
     handleQtyChange(args: any) {
         let banyak: number = parseInt(args);
-        this.permintaanMutasiService.editBanyak(this.currentIndex, banyak);
+        if(banyak > 0){
+            this.permintaanMutasiService.editBanyak(this.currentIndex, banyak);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
     }
 
     handleSatuanChange(args: any) {
-        this.permintaanMutasiService.editSatuan(this.currentIndex, args);
+        if(args != ''){
+            this.permintaanMutasiService.editSatuan(this.currentIndex, args);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
 
@@ -290,6 +324,16 @@ export class InputPermintaanMutasiComponent implements OnInit {
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
                     (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                    (<HTMLInputElement>document.getElementById("QtyValueId")).select();
+                    let banyak = (<HTMLInputElement>document.getElementById("QtyValueId"))
+                    if (banyak) {
+                        banyak.addEventListener('click', (event) => {
+                            banyak.select();
+                        });
+                        this.utilityService.setInputNumericElement(banyak, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
                 }, 100)
             })
         );
@@ -432,7 +476,7 @@ export class InputPermintaanMutasiComponent implements OnInit {
                         });
                 });
         } else {
-            alert('isi semua data');
+            this.utilityService.alertError('Lengkapi Data (*)');
         }
     }
 
@@ -440,4 +484,7 @@ export class InputPermintaanMutasiComponent implements OnInit {
         this.permintaanMutasiService.Reset();
         this.formKontrak.reset();
     }
+
+    get id_stockroom_pemberi(): AbstractControl { return this.formKontrak.get('id_stockroom_pemberi'); }
+
 }

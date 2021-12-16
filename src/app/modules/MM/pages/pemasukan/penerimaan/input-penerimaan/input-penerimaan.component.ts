@@ -115,7 +115,7 @@ export class InputPenerimaanComponent implements OnInit {
 
   ngOnInit(): void {
     this.formInput = this.formBuilder.group({
-      nomor_penerimaan: ['', [Validators.required]],
+      nomor_penerimaan: ['', []],
       tanggal_penerimaan: [null, [Validators.required]],
       kode_jenis_penerimaan: ['', [Validators.required]],
       id_stockroom: [0, [Validators.required]],
@@ -127,13 +127,13 @@ export class InputPenerimaanComponent implements OnInit {
       id_shipping_method: [0, [Validators.required]],
       id_payment_term: [0, [Validators.required]],
       tanggal_jatuh_tempo_bayar: [null, [Validators.required]],
-      keterangan: ['', [Validators.required]],
+      keterangan: ['', []],
       jumlah_item: [0, [Validators.required]],
-      sub_total_1: [0, [Validators.required]],
+      sub_total_1: [0, []],
       total_disc: [0, []],
-      sub_total_2: [0, [Validators.required]],
+      sub_total_2: [0, []],
       total_tax: [0, []],
-      total_transaksi: [0, [Validators.required]],
+      total_transaksi: [0],
     //   biaya_kirim: [0, []],
     //   biaya_asuransi: [0, []],
     //   biaya_lain: [0, []],
@@ -276,13 +276,37 @@ export class InputPenerimaanComponent implements OnInit {
 
   handleActionCompleted($event) {
 
-      if ($event.requestType == 'save') {
-          console.log($event);
+    if ($event.requestType == 'save') {
 
           this.penerimaanService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
           this.gridDetail.refresh();
-      }
+    }
+
+    if($event.requestType=="refresh" && $event.rows ){
+        $event.rows.forEach(element => {
+            if(!element.data.validasi){
+                document.querySelector(`[data-uid="${element.uid}"]`).classList.add('e-canceled-background');
+            }
+        });
+    }
   }
+
+    handleActionBegin($event){
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let banyak = (<HTMLInputElement>document.getElementsByName("qty_satuan_besar")[0])
+                if (banyak) {
+                    banyak.addEventListener('click', (event) => {
+                        banyak.select();
+                    });
+                    this.utilityService.setInputNumericElement(banyak, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+        
+    }
 
   /** untuk identifikasi keyboard down pada grid */
   handleLoadGrid(args: any): void {
@@ -297,14 +321,19 @@ export class InputPenerimaanComponent implements OnInit {
   }
 
   handleQtyChange(args: any) {
+      
       let banyak: number = parseInt(args);
-      this.penerimaanService.editBanyak(this.currentIndex, banyak);
+      if(banyak > 0){
+          this.penerimaanService.editBanyak(this.currentIndex, banyak);
+      }
       this.modalRef.hide();
       this.gridDetail.refresh();
   }
 
   handleSatuanChange(args: any) {
-      this.penerimaanService.editSatuan(this.currentIndex, args);
+      if(args != '' ){
+          this.penerimaanService.editSatuan(this.currentIndex, args);
+      }
       this.modalRef.hide();
       this.gridDetail.refresh();
 
@@ -312,14 +341,20 @@ export class InputPenerimaanComponent implements OnInit {
 
   handleHargaChange(args: any) {
       let harga: number = parseInt(args);
-      this.penerimaanService.editHarga(this.currentIndex, harga);
+      if(harga > 0){
+
+          this.penerimaanService.editHarga(this.currentIndex, harga);
+      }
       this.modalRef.hide();
       this.gridDetail.refresh();
   }
 
   handleSubtotalChange(args: any) {
       let subtotal: number = parseInt(args);
-      this.penerimaanService.editSubtotal(this.currentIndex, subtotal);
+      if(subtotal > 0){
+
+          this.penerimaanService.editSubtotal(this.currentIndex, subtotal);
+      }
       this.modalRef.hide();
       this.gridDetail.refresh();
   }
@@ -372,7 +407,10 @@ export class InputPenerimaanComponent implements OnInit {
             element.qty_terima = element.isi * 1;
             element.sub_total = element.sub_total_pesan ;
             element.satuan = element.satuans;
+            element.validasi = false;
+            element.message = 'lengkapi data'
         });
+        
         this.penerimaanService.addDataDetail(item);
         setTimeout(()=>{
             this.selectLastRowdetail();
@@ -391,6 +429,16 @@ export class InputPenerimaanComponent implements OnInit {
           this.modalService.onShown.subscribe(() => {
               setTimeout(() => {
                   (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                  (<HTMLInputElement>document.getElementById("QtyValueId")).select();
+                    let banyak = (<HTMLInputElement>document.getElementById("QtyValueId"))
+                    if (banyak) {
+                        banyak.addEventListener('click', (event) => {
+                            banyak.select();
+                        });
+                        this.utilityService.setInputNumericElement(banyak, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
               }, 100)
           })
       );
@@ -524,17 +572,19 @@ export class InputPenerimaanComponent implements OnInit {
   }
 
   onSave(){
-    //   if (this.formInput.valid) {
-          this.penerimaanService.Insert(this.formInput.value)
-          .subscribe((result) => {
-              this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-              .then(() => {
-                  this.ResetFrom();
-              });
-          });
-    //   }else{
-    //       alert('isi semua data');
-    //   }
+    if(this.utilityService.validasiDataDetail(this.penerimaanService.dataDetail,'cek di tabel item yang berwarna merah!')){
+        if (this.formInput.valid) {
+            this.penerimaanService.Insert(this.formInput.value)
+            .subscribe((result) => {
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                .then(() => {
+                    this.ResetFrom();
+                });
+            });
+        }else{
+        this.utilityService.alertError('Lengkapi Data (*)');
+        }
+    }
   }
 
   ResetFrom() {

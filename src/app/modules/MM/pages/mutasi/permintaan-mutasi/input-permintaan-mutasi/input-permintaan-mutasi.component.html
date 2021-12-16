@@ -3,12 +3,12 @@
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <!-- No. Permintaan -->
-                <mol-input-text [label]="'Nomor Permintaan'" formControlName="nomor_mutasi"
+                <mol-input-text style="display: none;" [label]="'Nomor Permintaan'" formControlName="nomor_mutasi"
                     [inputFieldState]="inputFieldState">
                 </mol-input-text>
 
                 <!-- Tgl. Mutasi -->
-                <mol-datepicker-syncfusion [label]="'Tanggal Mutasi'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tanggal Mutasi*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_mutasi">
                 </mol-datepicker-syncfusion>
             </div>
@@ -16,7 +16,7 @@
                 <!-- Dropdown Stockroom Pemberi-->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Stockroom Pemberi'"></atm-label>
+                        <atm-label [LabelCaption]="'Stockroom Pemberi*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
@@ -30,7 +30,7 @@
                 <!-- Dropdown Stockroom Penerima-->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Stockroom Penerima'"></atm-label>
+                        <atm-label [LabelCaption]="'Stockroom Penerima*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
@@ -47,7 +47,9 @@
         <!-- Grid -->
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [height]="'calc(100vh - 24rem)'"
             [dataSource]='permintaanMutasiService.dataDetail$ | async' [gridLines]="'Both'" [allowResizing]="true"
-            [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
+            [toolbar]='GridDetailToolbar' [allowResizing]='true' 
+            (actionComplete)="handleActionCompleted($event)"
+            (actionBegin)="hanldeActionBegin($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>

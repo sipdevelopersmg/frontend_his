@@ -120,7 +120,7 @@ export class ViewReturIssueComponent implements OnInit {
   }
 
   onCalceled(): void{
-    let reason_closed = (<HTMLInputElement>document.getElementsByName("reason_closed")[0]).value;
+    let reason_closed = (<HTMLInputElement>document.getElementsByName("reason_canceled")[0]).value;
     this.returIssueService.Cancel(this.id,reason_closed).subscribe((result)=>{
       this.utilityService.onShowingCustomAlert('success', 'Data Pemesanan Berhasil Di Close', result.message)
         .then(() => {

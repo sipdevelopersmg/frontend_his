@@ -63,8 +63,8 @@ export class ViewPermintaanMutasiComponent implements OnInit {
         this.permintaanMutasiService.onGetById(pemesanan_id).subscribe((result) => {
             this.id = parseInt(pemesanan_id);
             this.formInput.setValue({
-                nomor_mutasi: result.data.nomor_mutasi,
-                tanggal_mutasi: result.data.tanggal_mutasi,
+                nomor_mutasi: result.data.nomor_permintaan_mutasi,
+                tanggal_mutasi: result.data.tanggal_permintaan_mutasi,
                 nama_stockroom_pemberi: result.data.nama_stockroom_pemberi,
                 nama_stockroom_penerima: result.data.nama_stockroom_penerima,
                 total_transaksi: result.data.total_transaksi,

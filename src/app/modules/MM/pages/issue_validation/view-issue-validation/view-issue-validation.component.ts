@@ -478,6 +478,7 @@ private id:number=0;
             .subscribe((result) => {
                 this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
+                    this.location.back();
                     // this.ResetFrom();
                 });
             });
@@ -514,6 +515,7 @@ private id:number=0;
         .then(() => {
             this.onLoadDetailData(this.id);
             this.modalRef.hide();
+            this.location.back();
         });
     })
   }

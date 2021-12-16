@@ -74,6 +74,7 @@ export interface TrKontrakSpjbDetailItemInsert {
     satuan:satuan[];
 
     validasi:boolean;
+    message:string;
 }
 
 interface satuan{

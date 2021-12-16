@@ -25,8 +25,11 @@ export class DaftarReturIssueComponent implements OnInit {
   ];
 
   FilterColumnDatasource: any[] = [
-      { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-      { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+      { text: 'No. Retur Pemakaian', value: 'trpi.nomor_kontrak' },
+      { text: 'Stockroom', value: 'mss.nama_stockroom' },
+      { text: 'PIC Pemberi', value: 'trpi.pic_pemberi' },
+      { text: 'PIC Penerima', value: 'trpi.pic_penerima' },
+      { text: 'Status Transaksi', value: 'trpi.status_transaksi' },
   ];
 
   GridConfig = configGrid;
@@ -43,6 +46,7 @@ export class DaftarReturIssueComponent implements OnInit {
 
   ngAfterViewInit(): void {
     // this.GridData.Grid.refresh();
+    this.handlePencarianFilter([])
   }
 
   ngOnInit(): void {

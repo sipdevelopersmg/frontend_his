@@ -149,20 +149,24 @@ export class InputKontrakPengadaanService {
         this.dataDetail[index].qty_kontrak_satuan_besar = banyak;
         this.dataDetail[index].qty_kontrak = banyak * this.dataDetail[index].isi;
         this.dataDetail[index].sub_total_kontrak = banyak * this.dataDetail[index].isi * this.dataDetail[index].harga_satuan;
+        this.sum();
     }
 
     editExpired(index: number, expired: string) {
         this.dataDetail[index].tanggal_maksimal_expired_date = expired;
+        this.sum();
     }
 
     editHarga(index: number, harga: number) {
         this.dataDetail[index].harga_satuan = harga;
         this.dataDetail[index].sub_total_kontrak = harga * this.dataDetail[index].qty_kontrak;
+        this.sum();
     }
 
     editSubtotal(index: number, subtotal: number) {
         this.dataDetail[index].sub_total_kontrak = subtotal;
         this.dataDetail[index].harga_satuan = subtotal / this.dataDetail[index].qty_kontrak
+        this.sum();
     }
 
     editSatuan(index: number, satuan: string) {
@@ -172,7 +176,7 @@ export class InputKontrakPengadaanService {
         this.dataDetail[index].isi = isi;
         this.dataDetail[index].qty_kontrak = this.dataDetail[index].qty_kontrak_satuan_besar * isi;
         this.dataDetail[index].sub_total_kontrak = this.dataDetail[index].qty_kontrak * this.dataDetail[index].harga_satuan;
-
+        this.sum();
     }
 
     sum(): void {

@@ -10,8 +10,8 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "nomor_mutasi",
-        "headerText": "Nomor Mutasi",
+        "field": "nomor_permintaan_mutasi",
+        "headerText": "Nomor Permintaan Mutasi",
         "type": "string",
         "format": "",
         "textAlign": "Left",
@@ -19,18 +19,9 @@
         "editType": "defaultEdit"
     },
     {
-        "field": "tanggal_mutasi",
-        "headerText": "Tanggal Mutasi",
+        "field": "tanggal_permintaan_mutasi",
+        "headerText": "Tanggal Permintaan Mutasi",
         "type": "string",
-        "format": "",
-        "textAlign": "Left",
-        "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
-        "field": "id_stockroom_pemberi",
-        "headerText": "Id Stockroom Pemberi",
-        "type": "number",
         "format": "",
         "textAlign": "Left",
         "visible": true,
@@ -40,15 +31,6 @@
         "field": "nama_stockroom_pemberi",
         "headerText": "Nama Stockroom Pemberi",
         "type": "string",
-        "format": "",
-        "textAlign": "Left",
-        "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
-        "field": "id_stockroom_penerima",
-        "headerText": "Id Stockroom Penerima",
-        "type": "number",
         "format": "",
         "textAlign": "Left",
         "visible": true,

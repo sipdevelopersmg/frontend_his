@@ -26,8 +26,10 @@ export class DaftarPersetujuanMutasiComponent implements OnInit {
     ];
 
     FilterColumnDatasource: any[] = [
-        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+        { text: 'No. Mutasi', value: 'tm.nomor_mutas' },
+        { text: 'Stockroom Pemberi', value: 'mss_pemberi.nama_stockroom' },
+        { text: 'Stockroom Penerima', value: 'mss_penerima.nama_stockroom' },
+        { text: 'Status Mutasi', value: 'tm.status_mutasi' },
     ];
 
     GridConfig = GridConfig;
@@ -52,7 +54,7 @@ export class DaftarPersetujuanMutasiComponent implements OnInit {
         setTimeout(() => {
             this.handlePencarianFilter([]);
         }, 1);
-    }
+    }   
 
     handlePencarianFilter(args: any) {
         this.persetujuanMutasiService.onGetAllByParamsSource(args);

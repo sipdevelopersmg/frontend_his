@@ -71,6 +71,8 @@ export interface TrPemesananDetailInsert {
 
     /** @format Array of Object */
     satuan:satuan[];
+    validasi:boolean;
+    message:string;
 }
 
 export interface TrPemesananInsert {

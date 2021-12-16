@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
 import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -93,7 +93,7 @@ export class InputIssueComponent implements OnInit {
         nomor_pemakaian_internal: ["", ],
         tanggal_pemakaian_internal: [null, Validators.required],
         id_stockroom: [0, Validators.required],
-        keterangan_pemakaian_internal: ['', Validators.required],
+        keterangan_pemakaian_internal: [''],
         time_serah_terima:[null, ],
         pic_pemberi: ['', ],
         pic_penerima: ['', ],
@@ -127,7 +127,13 @@ export class InputIssueComponent implements OnInit {
 
       this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
           if (e.keyCode == 112) {
-              this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('stockroom belum di pillih')
+                    }
+                }
               e.preventDefault();
           }
       });
@@ -144,6 +150,11 @@ export class InputIssueComponent implements OnInit {
       // let kontrak_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
       // console.log(kontrak_id);
       // this.onLoadDetailData(kontrak_id);
+      setTimeout(() => {
+        this.pemakaianInternalService.setDetail([]);
+        this.gridDetail.dataSource = [];
+        this.gridDetail.refresh();
+    }, 1);
   }
 
   onLoadDetailData(kontrak_id){
@@ -186,7 +197,13 @@ export class InputIssueComponent implements OnInit {
       const item = args.item.id;
       switch (item) {
           case 'add':
-              this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('stockroom belum di pillih')
+                    }
+                }
               break;
           default:
               break;
@@ -219,6 +236,23 @@ export class InputIssueComponent implements OnInit {
       }
   }
 
+  handleActionBegin($event){
+    console.log($event);
+    if($event.requestType=="beginEdit"){
+        setTimeout(()=>{
+            let banyak = (<HTMLInputElement>document.getElementsByName("qty_satuan_besar_pemakaian_internal")[0])
+            if (banyak) {
+                banyak.addEventListener('click', (event) => {
+                    banyak.select();
+                });
+                this.utilityService.setInputNumericElement(banyak, function (value) {
+                    return /^\d*$/.test(value);
+                });
+            }
+        },50)
+    }
+  }
+
   handleChangeStockroom(args){
     this.urlItem = this.url+'/'+args.itemData.id_stockroom
   }
@@ -237,7 +271,9 @@ export class InputIssueComponent implements OnInit {
 
   handleQtyChange(args: any) {
       let banyak: number = parseInt(args);
-      this.pemakaianInternalService.editBanyak(this.currentIndex, banyak);
+      if(banyak > 0){
+          this.pemakaianInternalService.editBanyak(this.currentIndex, banyak);
+      }
       this.modalRef.hide();
       this.gridDetail.refresh();
   }
@@ -290,6 +326,16 @@ export class InputIssueComponent implements OnInit {
           this.modalService.onShown.subscribe(() => {
               setTimeout(() => {
                   (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                  (<HTMLInputElement>document.getElementById("QtyValueId")).select();
+                    let banyak = (<HTMLInputElement>document.getElementById("QtyValueId"))
+                    if (banyak) {
+                        banyak.addEventListener('click', (event) => {
+                            banyak.select();
+                        });
+                        this.utilityService.setInputNumericElement(banyak, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
               }, 100)
           })
       );
@@ -432,13 +478,14 @@ export class InputIssueComponent implements OnInit {
               });
           });
       }else{
-          alert('isi semua data');
-      }
+        this.utilityService.alertError('Lengkapi Data (*)');
+    }
   }
 
   ResetFrom() {
       this.pemakaianInternalService.Reset();
       this.formKontrak.reset();
   }
+  get id_stockroom(): AbstractControl { return this.formKontrak.get('id_stockroom') }
 
 }

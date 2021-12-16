@@ -12,8 +12,8 @@
     {
         "field": "tanggal_pemakaian_internal",
         "headerText": "Tanggal Pemakaina Internal",
-        "type": "string",
-        "format": "",
+        "type": "DateTime",
+        "format": "dd/MM/yyyy",
         "textAlign": "Left",
         "visible": true,
         "editType": "defaultEdit"
@@ -41,8 +41,8 @@
         "field": "jumlah_item",
         "headerText": "Jumlah Item",
         "type": "number",
-        "format": "",
-        "textAlign": "Left",
+            "format": "N2",
+            "textAlign": "Right",
         "visible": true,
         "editType": "defaultEdit"
     },

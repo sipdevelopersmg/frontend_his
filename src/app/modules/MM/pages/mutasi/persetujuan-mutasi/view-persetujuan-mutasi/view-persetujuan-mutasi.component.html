@@ -4,7 +4,7 @@
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <!-- No. Mutasi -->
-                <mol-input-text [label]="'Nomor Mutasi'" formControlName="nomor_mutasi"
+                <mol-input-text style="display: none;" [label]="'Nomor Mutasi'" formControlName="nomor_mutasi"
                     [inputFieldState]="inputFieldState">
                 </mol-input-text>
 
@@ -22,6 +22,11 @@
                 <mol-input-text [label]="'PIC Penerima'" formControlName="pic_penerima_mutasi"
                     [inputFieldState]="'input'">
                 </mol-input-text>
+
+                <!-- Waktu Serah Terima -->
+                <mol-datepicker-syncfusion [label]="'Waktu Serah Terima'" [format]="'dd MMMM yyyy'"
+                    formControlName="time_serah_terima">
+                </mol-datepicker-syncfusion>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
@@ -34,11 +39,6 @@
                 <mol-input-text [label]="'Stockroom Penerima'" formControlName="nama_stockroom_penerima"
                     [inputFieldState]="inputFieldState">
                 </mol-input-text>
-
-                <!-- Waktu Serah Terima -->
-                <mol-datepicker-syncfusion [label]="'Waktu Serah Terima'" [format]="'dd MMMM yyyy'"
-                    formControlName="time_serah_terima">
-                </mol-datepicker-syncfusion>
 
                 <!-- Keterangan -->
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_mutasi"></mol-input-textarea>

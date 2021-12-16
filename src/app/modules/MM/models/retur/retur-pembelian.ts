@@ -42,6 +42,8 @@ export interface TrReturPembelianDetailInsert {
  
      /** @format Array of Object */
      satuan:satuan[];
+     validasi:boolean;
+     message:string;
 }
 
 export interface TrReturPembelianInsert {
