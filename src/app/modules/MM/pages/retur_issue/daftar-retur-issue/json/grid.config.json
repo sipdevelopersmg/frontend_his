@@ -21,8 +21,8 @@
     {
         "field": "tanggal_retur_pemakaian_internal",
         "headerText": "Tanggal Retur Pemakaian",
-        "type": "string",
-        "format": "",
+        "type": "DateTime",
+            "format": "dd/MM/yyyy",
         "textAlign": "Left",
         "visible": true,
         "editType": "defaultEdit"
@@ -83,7 +83,7 @@
     },
     {
         "field": "status_transaksi",
-        "headerText": "Status Mutasi",
+        "headerText": "Status Transaksi",
         "type": "string",
         "format": "",
         "textAlign": "Left",
@@ -95,8 +95,8 @@
         "field": "jumlah_item",
         "headerText": "Jumlah Item",
         "type": "number",
-        "format": "",
-        "textAlign": "Left",
+        "format": "N2",
+        "textAlign": "Right",
         "visible": true,
         "editType": "defaultEdit"
     },

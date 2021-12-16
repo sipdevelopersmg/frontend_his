@@ -23,12 +23,15 @@ export class DaftarPenerimaanComponent implements OnInit {
         // { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
         // { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
         // { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
-        'Search'
+        // 'Search'
     ];
 
     FilterColumnDatasource: any[] = [
-        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+        { text: 'No. Penerimaan', value: 'tp.namor_penerimaan' },
+        { text: 'Jenis Penerimaan', value: 'msjp.jenis_penerimaan' },
+        { text: 'Nama Stockroom', value: 'mss.nama_stockroom' },
+        { text: 'No Pemesanan', value: 'po.nomor_pemesanan' },
+        { text: 'Status', value: 'tp.status_transaksi' },
     ];
 
     GridConfig = GridConfig;

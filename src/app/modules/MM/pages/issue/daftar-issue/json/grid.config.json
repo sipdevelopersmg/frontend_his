@@ -21,8 +21,8 @@
     {
         "field": "tanggal_pemakaian_internal",
         "headerText": "Tanggal Pemakaian",
-        "type": "string",
-        "format": "",
+        "type": "DateTime",
+        "format": "dd/MM/yyyy",
         "textAlign": "Left",
         "visible": true,
         "editType": "defaultEdit"
@@ -75,15 +75,15 @@
     {
         "field": "time_serah_terima",
         "headerText": "Waktu Serah Terima",
-        "type": "string",
-        "format": "",
+        "type": "DateTime",
+        "format": "dd/MM/yyyy",
         "textAlign": "Left",
         "visible": true,
         "editType": "defaultEdit"
     },
     {
         "field": "status_transaksi",
-        "headerText": "Status Mutasi",
+        "headerText": "Status Transaksi",
         "type": "string",
         "format": "",
         "textAlign": "Left",
@@ -95,8 +95,8 @@
         "field": "jumlah_item",
         "headerText": "Jumlah Item",
         "type": "number",
-        "format": "",
-        "textAlign": "Left",
+        "format": "N2",
+        "textAlign": "Right",
         "visible": true,
         "editType": "defaultEdit"
     },

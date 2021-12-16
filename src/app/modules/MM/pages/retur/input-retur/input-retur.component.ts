@@ -111,13 +111,13 @@ export class InputReturPembelianComponent implements OnInit {
         this.onDetectScreenSize(window.innerWidth);
 
         this.formInput = this.formBuilder.group({
-            nomor_retur_pembelian: ['', [Validators.required]],
+            nomor_retur_pembelian: ['', []],
             tanggal_retur_pembelian: [null, [Validators.required]],
             tanggal_jatuh_tempo_pelunasan_retur: [null, [Validators.required]],
             id_stockroom: [0, [Validators.required]],
             id_mekanisme_retur: [0, [Validators.required]],
             id_supplier: [0, [Validators.required]],
-            keterangan: ['', [Validators.required]],
+            keterangan: ['', []],
             jumlah_item_retur: [0, [Validators.required]],
             total_transaksi_retur: [0, [Validators.required]],
         });
@@ -148,7 +148,13 @@ export class InputReturPembelianComponent implements OnInit {
 
         this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
             if (e.keyCode == 112) {
-                this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('stockroom belum di pillih')
+                    }
+                }
                 e.preventDefault();
             }
         });
@@ -213,7 +219,13 @@ export class InputReturPembelianComponent implements OnInit {
         const item = args.item.id;
         switch (item) {
             case 'add':
-                this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('stockroom belum di pillih')
+                    }
+                }
                 break;
             default:
                 break;
@@ -241,6 +253,8 @@ export class InputReturPembelianComponent implements OnInit {
             harga_satuan_retur: $event.harga_beli_terakhir,
             sub_total: $event.satuans[0].isi * $event.harga_beli_terakhir,
             satuan: $event.satuans,
+            validasi:true,
+            message:''
         }
         this.returPembelianService.addDataDetail(item);
         this.selectLastRowdetail();
@@ -253,11 +267,44 @@ export class InputReturPembelianComponent implements OnInit {
     handleActionCompleted($event) {
 
         if ($event.requestType == 'save') {
-            console.log($event);
-
             this.returPembelianService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
             this.gridDetail.refresh();
         }
+        // if($event.requestType=="refresh" && $event.rows ){
+        //     $event.rows.forEach(element => {
+        //         if(!element.data.validasi){
+        //             document.querySelector(`[data-uid="${element.uid}"]`).classList.add('e-canceled-background');
+        //         }
+        //     });
+        // }
+    }
+
+    handleActionBegin($event){
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let banyak = (<HTMLInputElement>document.getElementsByName("qty_satuan_besar")[0])
+                
+                if (banyak) {
+                    banyak.addEventListener('click', (event) => {
+                        banyak.select();
+                    });
+                    this.utilityService.setInputNumericElement(banyak, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+                let el = (<HTMLInputElement>document.getElementsByName("harga_satuan_retur")[0])
+                console.log(el)
+                if (el) {
+                    el.addEventListener('click', (event) => {
+                        el.select();
+                    });
+                    this.utilityService.setInputNumericElement(el, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+        
     }
 
     /** untuk identifikasi keyboard down pada grid */
@@ -274,13 +321,17 @@ export class InputReturPembelianComponent implements OnInit {
 
     handleQtyChange(args: any) {
         let banyak: number = parseInt(args);
-        this.returPembelianService.editBanyak(this.currentIndex, banyak);
+        if(banyak > 0){
+            this.returPembelianService.editBanyak(this.currentIndex, banyak);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
     }
 
     handleSatuanChange(args: any) {
-        this.returPembelianService.editSatuan(this.currentIndex, args);
+        if(args != ''){
+            this.returPembelianService.editSatuan(this.currentIndex, args);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
 
@@ -288,7 +339,9 @@ export class InputReturPembelianComponent implements OnInit {
 
     handleHargaChange(args: any) {
         let harga: number = parseInt(args);
-        this.returPembelianService.editHarga(this.currentIndex, harga);
+        if(harga){
+            this.returPembelianService.editHarga(this.currentIndex, harga);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
     }
@@ -341,6 +394,16 @@ export class InputReturPembelianComponent implements OnInit {
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
                     (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                    (<HTMLInputElement>document.getElementById("QtyValueId")).select();
+                    let banyak = (<HTMLInputElement>document.getElementById("QtyValueId"))
+                    if (banyak) {
+                        banyak.addEventListener('click', (event) => {
+                            banyak.select();
+                        });
+                        this.utilityService.setInputNumericElement(banyak, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
                 }, 100)
             })
         );
@@ -374,6 +437,16 @@ export class InputReturPembelianComponent implements OnInit {
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
                     (<HTMLInputElement>document.getElementById("HargaValueId")).focus();
+                    (<HTMLInputElement>document.getElementById("HargaValueId")).select();
+                    let element = (<HTMLInputElement>document.getElementById("HargaValueId"))
+                    if (element) {
+                        element.addEventListener('click', (event) => {
+                            element.select();
+                        });
+                        this.utilityService.setInputNumericElement(element, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
                 }, 100)
             })
         );

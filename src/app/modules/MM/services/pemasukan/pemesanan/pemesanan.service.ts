@@ -136,16 +136,19 @@ export class PemesananService {
         this.dataDetail[index].qty_satuan_besar = banyak;
         this.dataDetail[index].qty_pesan = banyak * this.dataDetail[index].isi;
         this.dataDetail[index].sub_total_pesan = banyak * this.dataDetail[index].isi * this.dataDetail[index].harga_satuan;
+        this.sum();
     }
 
     editHarga(index: number, harga: number) {
         this.dataDetail[index].harga_satuan = harga;
         this.dataDetail[index].sub_total_pesan = harga * this.dataDetail[index].qty_pesan;
+        this.sum();
     }
 
     editSubtotal(index: number, subtotal: number) {
         this.dataDetail[index].sub_total_pesan = subtotal;
         this.dataDetail[index].harga_satuan = subtotal / this.dataDetail[index].qty_pesan
+        this.sum();
     }
 
     editSatuan(index: number, satuan: string) {
@@ -155,7 +158,7 @@ export class PemesananService {
         this.dataDetail[index].isi = isi;
         this.dataDetail[index].qty_pesan = this.dataDetail[index].qty_satuan_besar * isi;
         this.dataDetail[index].sub_total_pesan = this.dataDetail[index].qty_pesan * this.dataDetail[index].harga_satuan;
-
+        this.sum();
     }
 
     sum(): void {

@@ -53,6 +53,9 @@ export class OrgLookUpComponent implements OnInit {
     titleValue: string = '';
 
     currentData: any;
+
+    isModalOpen:boolean;
+
     @Output('onGetSelectedData') onGetSelectedData = new EventEmitter<any>();
     @Output('onOpenModal') openModal = new EventEmitter<any>();
 
@@ -76,10 +79,18 @@ export class OrgLookUpComponent implements OnInit {
         ).subscribe(() => this.changeDetection.markForCheck());
 
         this.subscriptions.push(this.modalService.onShown.subscribe(() => {
+            this.isModalOpen = true;
             setTimeout(() => {
                 (<HTMLInputElement>document.getElementById("searchValueId")).focus();
             }, 100)
         }));
+        
+        this.subscriptions.push(
+            this.modalService.onHidden.subscribe((reason: string | any) => {
+                this.isModalOpen = false;
+                this.unsubscribe();
+            })
+        );
 
         this.subscriptions.push(_combine);
 
@@ -87,8 +98,7 @@ export class OrgLookUpComponent implements OnInit {
             this.template,
             Object.assign({}, { class: 'modal-lg' })
         );
-
-        this.unsubscribe();
+        
     }
 
     unsubscribe() {

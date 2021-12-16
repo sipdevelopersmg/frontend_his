@@ -6,46 +6,43 @@
                 <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'kode_supplier'"
                     [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
                     [columns]="GridLookUpSupplier.columns" [filter-lookup]="GridLookUpSupplier.filter"
-                    [label]="'Supplier'" [modal-title]="'Data Supplier'">
+                    [label]="'Supplier*'" [modal-title]="'Data Supplier'">
                 </org-input-look-up-kode>
 
                 <!-- No. SPBBJ -->
-                <mol-input-text [label]="'No SPBBJ'" formControlName="nomor_kontrak_spjb"></mol-input-text>
+                <mol-input-text [label]="'No SPBBJ*'" formControlName="nomor_kontrak_spjb"></mol-input-text>
 
                 <!-- No. Kontrak -->
-                <mol-input-text [label]="'Nomor Kontrak'" formControlName="nomor_kontrak"></mol-input-text>
+                <mol-input-text [label]="'Nomor Kontrak*'" formControlName="nomor_kontrak"></mol-input-text>
 
                 <!-- TGL. TTD -->
-                <mol-datepicker-syncfusion [label]="'Tgl TTD'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl TTD*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_ttd_kontrak">
                 </mol-datepicker-syncfusion>
 
                 <!-- Judul Kontrak -->
-                <mol-input-text [label]="'Judul Kontrak'" formControlName="judul_kontrak"></mol-input-text>
+                <mol-input-text [label]="'Judul Kontrak*'" formControlName="judul_kontrak"></mol-input-text>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <!-- Tgl. Berlaku Kontrak -->
-                <mol-datepicker-syncfusion [label]="'Tgl Berlaku Kontrak'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl Berlaku Kontrak*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_berlaku_kontrak">
                 </mol-datepicker-syncfusion>
 
                 <!-- Tgl. Berakhir Kontrak -->
-                <mol-datepicker-syncfusion [label]="'Tgl Berakhir Kontrak'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl Berakhir Kontrak*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_berakhir_kontrak">
                 </mol-datepicker-syncfusion>
 
                 <!-- Tahun Anggaran -->
-                <mol-input-text [label]="'Tahun Anggaran'" formControlName="tahun_anggaran"></mol-input-text>
+                <mol-input-text [label]="'Tahun Anggaran*'" formControlName="tahun_anggaran"></mol-input-text>
 
                 <!-- Keterangan -->
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
 
             </div>
         </div>
-        <ng-template #templateToolbar let-data>
-            <a>halooo jhon</a>
-        </ng-template>
-
+        
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
                 [allowResizing]='true'
             [dataSource]='inputKontrakPengadaanService.dataDetail$ | async' [gridLines]="'Both'"

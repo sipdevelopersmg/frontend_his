@@ -124,9 +124,27 @@ export class PenerimaanService {
         } else {
             data.sub_total = data.qty_terima * data.harga_satuan;
         }
-
+        data = this.validasi_detail(data);
         this.dataDetail[index] = data;
         this.sum();
+    }
+
+    validasi_detail(data: TrPenerimaanDetailItemInsert){
+        let message='';
+        if(data.batch_number){
+            data.validasi = true;
+            if(data.expired_date){
+                data.validasi = true;
+            }else{
+                data.validasi = false;
+                message += ", expired date belum di isi"
+            }
+        }else{
+            data.validasi = false;
+            message += 'bach number belum di isi'
+        }
+        data.message = message;
+        return data;
     }
 
     removeDataDetail(index: number) {
@@ -138,16 +156,19 @@ export class PenerimaanService {
         this.dataDetail[index].qty_satuan_besar = banyak;
         this.dataDetail[index].qty_terima = banyak * this.dataDetail[index].isi;
         this.dataDetail[index].sub_total = banyak * this.dataDetail[index].isi * this.dataDetail[index].harga_satuan;
+        this.sum();
     }
 
     editHarga(index: number, harga: number) {
         this.dataDetail[index].harga_satuan = harga;
         this.dataDetail[index].sub_total = harga * this.dataDetail[index].qty_terima;
+        this.sum();
     }
 
     editSubtotal(index: number, subtotal: number) {
         this.dataDetail[index].sub_total = subtotal;
         this.dataDetail[index].harga_satuan = subtotal / this.dataDetail[index].qty_terima
+        this.sum();
     }
 
     editSatuan(index: number, satuan: string) {
@@ -157,6 +178,7 @@ export class PenerimaanService {
         this.dataDetail[index].isi = isi;
         this.dataDetail[index].qty_terima = this.dataDetail[index].qty_satuan_besar * isi;
         this.dataDetail[index].sub_total = this.dataDetail[index].qty_terima * this.dataDetail[index].harga_satuan;
+        this.sum();
     }
 
     sum(): void {

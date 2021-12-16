@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
 import { EditSettingsModel, GridComponent, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -91,15 +91,15 @@ export class InputReturIssueComponent implements OnInit {
 
   ngOnInit(): void {
       this.formKontrak = this.formBuilder.group({
-        nomor_retur_pemakaian_internal: ["", Validators.required],
+        nomor_retur_pemakaian_internal: ["", ],
         tanggal_retur_pemakaian_internal: [null, Validators.required],
         id_stockroom: [0, Validators.required],
-        keterangan_retur_pemakaian_internal: ['', Validators.required],
+        keterangan_retur_pemakaian_internal: ['',],
         time_serah_terima:[null, Validators.required],
         pic_pemberi: ['', Validators.required],
         pic_penerima: ['', Validators.required],
         jumlah_item: [0, Validators.required],
-        total_transaksi: [0, Validators.required],
+        total_transaksi: [0, ],
       });
 
       this.satuanParams = {
@@ -128,10 +128,16 @@ export class InputReturIssueComponent implements OnInit {
 
       this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
           if (e.keyCode == 112) {
-              this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('stockroom belum di pillih')
+                    }
+                }
               e.preventDefault();
           }
-      });
+      });   
 
       this.GridDetailToolbar = [
           { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
@@ -187,7 +193,13 @@ export class InputReturIssueComponent implements OnInit {
       const item = args.item.id;
       switch (item) {
           case 'add':
-              this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_stockroom.value!=0){
+                        this.LookupItem.onOpenModal();
+                    }else{
+                        this.utilityService.alertError('stockroom belum di pillih')
+                    }
+                }
               break;
           default:
               break;
@@ -220,6 +232,24 @@ export class InputReturIssueComponent implements OnInit {
           this.gridDetail.refresh();
       }
   }
+
+
+    handleActionBegin($event){
+        console.log($event);
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let banyak = (<HTMLInputElement>document.getElementsByName("qty_satuan_besar_retur_pemakaian_internal")[0])
+                if (banyak) {
+                    banyak.addEventListener('click', (event) => {
+                        banyak.select();
+                    });
+                    this.utilityService.setInputNumericElement(banyak, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+    }
 
   /** untuk identifikasi keyboard down pada grid */
   handleLoadGrid(args: any): void {
@@ -294,6 +324,15 @@ export class InputReturIssueComponent implements OnInit {
           this.modalService.onShown.subscribe(() => {
               setTimeout(() => {
                   (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                  let HargaValueId = (<HTMLInputElement>document.getElementById("HargaValueId"))
+                  if (HargaValueId) {
+                      HargaValueId.addEventListener('click', (event) => {
+                          HargaValueId.select();
+                      });
+                      this.utilityService.setInputNumericElement(HargaValueId, function (value) {
+                          return /^\d*$/.test(value);
+                      });
+                  }
               }, 100)
           })
       );
@@ -327,6 +366,15 @@ export class InputReturIssueComponent implements OnInit {
           this.modalService.onShown.subscribe(() => {
               setTimeout(() => {
                   (<HTMLInputElement>document.getElementById("HargaValueId")).focus();
+                  let HargaValueId = (<HTMLInputElement>document.getElementById("HargaValueId"))
+                    if (HargaValueId) {
+                        HargaValueId.addEventListener('click', (event) => {
+                            HargaValueId.select();
+                        });
+                        this.utilityService.setInputNumericElement(HargaValueId, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
               }, 100)
           })
       );
@@ -358,6 +406,15 @@ export class InputReturIssueComponent implements OnInit {
           this.modalService.onShown.subscribe(() => {
               setTimeout(() => {
                   (<HTMLInputElement>document.getElementById("SubtotalValueId")).focus();
+                  let HargaValueId = (<HTMLInputElement>document.getElementById("SubtotalValueId"))
+                    if (HargaValueId) {
+                        HargaValueId.addEventListener('click', (event) => {
+                            HargaValueId.select();
+                        });
+                        this.utilityService.setInputNumericElement(HargaValueId, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
               }, 100)
           })
       );
@@ -391,6 +448,7 @@ export class InputReturIssueComponent implements OnInit {
           this.modalService.onShown.subscribe(() => {
               setTimeout(() => {
                   (<HTMLInputElement>document.getElementById("SatuanValueId")).focus();
+                 
               }, 100)
           })
       );
@@ -436,13 +494,14 @@ export class InputReturIssueComponent implements OnInit {
               });
           });
       }else{
-          alert('isi semua data');
-      }
+        this.utilityService.alertError('Lengkapi Data (*)');
+    }
   }
 
   ResetFrom() {
       this.returIssueService.Reset();
       this.formKontrak.reset();
   }
+  get id_stockroom(): AbstractControl { return this.formKontrak.get('id_stockroom') }
 
 }

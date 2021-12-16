@@ -104,11 +104,11 @@ export class InputPemesananComponent implements OnInit {
             id_stockroom: [0, Validators.required],
             id_supplier: ["", Validators.required],
             keterangan: [""],
-            sub_total_1: [0, Validators.required],
-            total_disc: [0, Validators.required],
-            sub_total_2: [0, Validators.required],
-            total_tax: [0, Validators.required],
-            total_transaksi_pesan: [0, Validators.required],
+            sub_total_1: [0],
+            total_disc: [0],
+            sub_total_2: [0],
+            total_tax: [0],
+            total_transaksi_pesan: [0],
             jumlah_item_pesan: [0, Validators.required],
             user_inputed: [1, []],
         });
@@ -139,7 +139,14 @@ export class InputPemesananComponent implements OnInit {
 
         this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
             if (e.keyCode == 112) {
-                this.LookupItem.onOpenModal();
+                if(!this.LookupItem.isModalOpen){
+                    if(this.id_supplier.value==''){
+                        this.utilityService.alertError('supllier belum di pillih');
+                    }else{
+                        this.LookupItem.onOpenModal();
+                    }
+                    
+                }
                 e.preventDefault();
             }
         });
@@ -203,7 +210,11 @@ export class InputPemesananComponent implements OnInit {
         const item = args.item.id;
         switch (item) {
             case 'add':
-                this.LookupItem.onOpenModal();
+                if(this.id_supplier.value==''){
+                    this.utilityService.alertError('supllier belum di pillih');
+                }else{
+                    this.LookupItem.onOpenModal();
+                }
                 break;
             default:
                 break;
@@ -242,6 +253,12 @@ export class InputPemesananComponent implements OnInit {
             harga_satuan_netto: $event.harga_satuan,
             sub_total_pesan: $event.satuans[0].isi * $event.harga_satuan,
             satuan: $event.satuans,
+            validasi:true,
+            message:''
+        }
+        if($event.harga_satuan==0){
+            item.validasi = false,
+            item.message = 'harga belum di setting'
         }
         this.pemesananService.addDataDetail(item);
         this.selectLastRowdetail();
@@ -253,6 +270,31 @@ export class InputPemesananComponent implements OnInit {
             console.log($event);
             this.pemesananService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
             this.gridDetail.refresh();
+        }
+
+        if($event.requestType=="refresh" && $event.rows ){
+            $event.rows.forEach(element => {
+                if(!element.data.validasi){
+                    document.querySelector(`[data-uid="${element.uid}"]`).classList.add('e-canceled-background');
+                }
+            });
+        }
+    }
+
+    handleActionBegin($event){
+        console.log($event);
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let banyak = (<HTMLInputElement>document.getElementsByName("qty_satuan_besar")[0])
+                if (banyak) {
+                    banyak.addEventListener('click', (event) => {
+                        banyak.select();
+                    });
+                    this.utilityService.setInputNumericElement(banyak, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
         }
     }
 
@@ -270,28 +312,35 @@ export class InputPemesananComponent implements OnInit {
 
     handleQtyChange(args: any) {
         let banyak: number = parseInt(args);
-        this.pemesananService.editBanyak(this.currentIndex, banyak);
+        if(banyak > 0){
+            this.pemesananService.editBanyak(this.currentIndex, banyak);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
     }
 
     handleSatuanChange(args: any) {
-        this.pemesananService.editSatuan(this.currentIndex, args);
+        if(args != ''){
+            this.pemesananService.editSatuan(this.currentIndex, args);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
-
     }
 
     handleHargaChange(args: any) {
         let harga: number = parseInt(args);
-        this.pemesananService.editHarga(this.currentIndex, harga);
+        if(harga > 0){
+            this.pemesananService.editHarga(this.currentIndex, harga);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
     }
 
     handleSubtotalChange(args: any) {
         let subtotal: number = parseInt(args);
-        this.pemesananService.editSubtotal(this.currentIndex, subtotal);
+        if(subtotal > 0){
+            this.pemesananService.editSubtotal(this.currentIndex, subtotal);
+        }
         this.modalRef.hide();
         this.gridDetail.refresh();
     }
@@ -337,6 +386,16 @@ export class InputPemesananComponent implements OnInit {
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
                     (<HTMLInputElement>document.getElementById("QtyValueId")).focus();
+                    (<HTMLInputElement>document.getElementById("QtyValueId")).select();
+                    let banyak = (<HTMLInputElement>document.getElementById("QtyValueId"))
+                    if (banyak) {
+                        banyak.addEventListener('click', (event) => {
+                            banyak.select();
+                        });
+                        this.utilityService.setInputNumericElement(banyak, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
                 }, 100)
             })
         );
@@ -370,6 +429,16 @@ export class InputPemesananComponent implements OnInit {
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
                     (<HTMLInputElement>document.getElementById("HargaValueId")).focus();
+                    (<HTMLInputElement>document.getElementById("HargaValueId")).select();
+                    let element = (<HTMLInputElement>document.getElementById("HargaValueId"))
+                    if (element) {
+                        element.addEventListener('click', (event) => {
+                            element.select();
+                        });
+                        this.utilityService.setInputNumericElement(element, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
                 }, 100)
             })
         );
@@ -401,6 +470,16 @@ export class InputPemesananComponent implements OnInit {
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
                     (<HTMLInputElement>document.getElementById("SubtotalValueId")).focus();
+                    (<HTMLInputElement>document.getElementById("SubtotalValueId")).select();
+                    let element = (<HTMLInputElement>document.getElementById("SubtotalValueId"))
+                    if (element) {
+                        element.addEventListener('click', (event) => {
+                            element.select();
+                        });
+                        this.utilityService.setInputNumericElement(element, function (value) {
+                            return /^\d*$/.test(value);
+                        });
+                    }
                 }, 100)
             })
         );
@@ -470,16 +549,18 @@ export class InputPemesananComponent implements OnInit {
     }
 
     onSave() {
-        if (this.formKontrak.valid) {
-            this.pemesananService.Insert(this.formKontrak.value)
-                .subscribe((result) => {
-                    this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-                        .then(() => {
-                            this.ResetFrom();
-                        });
-                });
-        } else {
-            alert('isi semua data');
+        if(this.utilityService.validasiDataDetail(this.pemesananService.dataDetail,'cek di tabel item yang berwarna merah!')){
+            if (this.formKontrak.valid) {
+                this.pemesananService.Insert(this.formKontrak.value)
+                    .subscribe((result) => {
+                        this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                            .then(() => {
+                                this.ResetFrom();
+                            });
+                    });
+            } else {
+                this.utilityService.alertError('Lengkapi Data (*)');
+            }
         }
     }
 

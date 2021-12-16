@@ -106,9 +106,28 @@ export class ReturPembelianService {
       data.isi = isi;
       data.qty_retur = data.qty_satuan_besar * isi;
       data.sub_total = data.harga_satuan_retur * data.qty_retur;
+      data = this.validasi_detail(data);
       this.dataDetail[index] = data;
       this.sum();
   }
+
+  validasi_detail(data: TrReturPembelianDetailInsert){
+    let message = ''
+    if(data.expired_date){
+        data.validasi = true;
+        if(data.batch_number){
+            data.validasi = true;
+        }else{
+            data.validasi = false;
+            message = ', bach number belum di isi'
+        }
+    }else{
+        data.validasi = false;
+        message = 'expired date belum di isi';
+    }
+    data.message;
+    return data;
+}
 
   removeDataDetail(index: number) {
       this.dataDetail.splice(index, 1);
@@ -119,16 +138,19 @@ export class ReturPembelianService {
       this.dataDetail[index].qty_satuan_besar = banyak;
       this.dataDetail[index].qty_retur = banyak * this.dataDetail[index].isi;
       this.dataDetail[index].sub_total = banyak * this.dataDetail[index].isi * this.dataDetail[index].harga_satuan_retur;
-  }
+      this.sum();
+    }
 
   editHarga(index: number, harga: number) {
       this.dataDetail[index].harga_satuan_retur = harga;
       this.dataDetail[index].sub_total = harga * this.dataDetail[index].qty_retur;
+      this.sum();
   }
 
   editSubtotal(index: number, subtotal: number) {
       this.dataDetail[index].sub_total = subtotal;
       this.dataDetail[index].harga_satuan_retur = subtotal / this.dataDetail[index].qty_retur
+      this.sum();
   }
 
   editSatuan(index: number, satuan: string) {
@@ -138,7 +160,8 @@ export class ReturPembelianService {
       this.dataDetail[index].isi = isi;
       this.dataDetail[index].qty_retur = this.dataDetail[index].qty_satuan_besar * isi;
       this.dataDetail[index].sub_total = this.dataDetail[index].qty_retur * this.dataDetail[index].harga_satuan_retur;
-  }
+      this.sum();
+    }
 
   sum(): void {
 

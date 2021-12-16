@@ -25,8 +25,11 @@ export class DaftarPemesananComponent implements OnInit {
     ];
 
     FilterColumnDatasource: any[] = [
-        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+        { text: 'Status Transaksi', value: 'tp.status_transaksi' },
+        { text: 'No. Pemesanan', value: 'tp.nomor_pemesanan' },
+        { text: 'Kode Supplier', value: 'sup.kode_supplier' },
+        { text: 'Nama Supplier', value: 'sup.nama_supplier' },
+        { text: 'Nama Stockroom', value: 'mss.nama_stockroom' },
     ];
 
     GridConfig = GridConfig;

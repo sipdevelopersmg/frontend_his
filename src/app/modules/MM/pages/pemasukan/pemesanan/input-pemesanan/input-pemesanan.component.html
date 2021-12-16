@@ -6,18 +6,18 @@
                     [inputFieldState]="inputFieldState">
                 </mol-input-text>
 
-                <mol-datepicker-syncfusion [label]="'Tgl Pemesanan'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl Pemesanan*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_pemesanan">
                 </mol-datepicker-syncfusion>
 
-                <mol-datepicker-syncfusion [label]="'Expired Pemesanan'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Expired Pemesanan*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_expired_pemesanan">
                 </mol-datepicker-syncfusion>
 
                 <!-- Dropdown Stockrom -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Stockrom'"></atm-label>
+                        <atm-label [LabelCaption]="'Stockrom*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
@@ -32,7 +32,7 @@
                 <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'kode_supplier'"
                     [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
                     [columns]="GridLookUpSupplier.columns" [filter-lookup]="GridLookUpSupplier.filter"
-                    [label]="'Supplier'" [modal-title]="'Data Supplier'">
+                    [label]="'Supplier*'" [modal-title]="'Data Supplier'">
                 </org-input-look-up-kode>
 
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
@@ -41,7 +41,9 @@
 
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
             [dataSource]='pemesananService.dataDetail$ | async' [gridLines]="'Both'" [toolbar]='GridDetailToolbar'
-            [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
+            [allowResizing]='true' 
+            (actionComplete)="handleActionCompleted($event)"
+            (actionBegin) = "handleActionBegin($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>

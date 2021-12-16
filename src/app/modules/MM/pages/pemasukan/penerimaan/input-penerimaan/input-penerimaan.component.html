@@ -7,27 +7,27 @@
                 <org-input-look-up-kode #LookupKodePemesanan [lookup-url]="urlPemesanan" [idKode]="'nomor_pemesanan'"
                     [modal-title]="'Data Pemesanan'" [idTitle]="'nama_supplier'"
                     (onGetSelectedData)="heandleSelectedPemesanan($event)" [columns]="LookupGridPenerimaan.columns"
-                    [filter-lookup]="LookupGridPenerimaan.filter" [label]="'Pemesanan'">
+                    [filter-lookup]="LookupGridPenerimaan.filter" [label]="'Pemesanan*'">
                 </org-input-look-up-kode>
 
                 <!-- Stockroom -->
-                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="'detail'">
+                <mol-input-text [label]="'Stockroom*'" formControlName="nama_stockroom" [inputFieldState]="'detail'">
                 </mol-input-text>
 
                 <!-- Tgl Penerimaan -->
-                <mol-datepicker-syncfusion [label]="'Tgl Penerimaan'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl Penerimaan*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_penerimaan">
                 </mol-datepicker-syncfusion>
 
                 <!-- No. Penerimaan -->
-                <mol-input-text [label]="'No Penerimaan'" formControlName="nomor_penerimaan"
+                <mol-input-text style="display:none" [label]="'No Penerimaan'" formControlName="nomor_penerimaan"
                     [inputFieldState]="inputFieldState">
                 </mol-input-text>
 
                 <!-- Dropdown Jenis Penerimaan -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Jenis Penerimaan'"></atm-label>
+                        <atm-label [LabelCaption]="'Jenis Penerimaan*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalJenisPenerimaanDropdown id="marital"
@@ -39,21 +39,21 @@
                 </div>
 
                 <!-- No. Surat Jalan -->
-                <mol-input-text [label]="'No Surat Jalan'" formControlName="nomor_surat_jalan_supplier"
+                <mol-input-text [label]="'No Surat Jalan*'" formControlName="nomor_surat_jalan_supplier"
                     [inputFieldState]="inputFieldState">
                 </mol-input-text>
 
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                 <!-- Tgl Surat Jalan -->
-                <mol-datepicker-syncfusion [label]="'Tgl Surat Jalan'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl Surat Jalan*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_surat_jalan_supplier">
                 </mol-datepicker-syncfusion>
 
                 <!-- Dropdown Shipping Method -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Shipping Method'"></atm-label>
+                        <atm-label [LabelCaption]="'Shipping Method*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalShippingMethodDropdown id="marital"
@@ -67,7 +67,7 @@
                 <!-- Dropdown Payment Term -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Payment Term'"></atm-label>
+                        <atm-label [LabelCaption]="'Payment Term*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalPaymentTermDropdown id="marital"
@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- Tgl Jatuh Tempo -->
-                <mol-datepicker-syncfusion [label]="'Tgl Jatuh Tempo'" [format]="'dd MMMM yyyy'"
+                <mol-datepicker-syncfusion [label]="'Tgl Jatuh Tempo*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_jatuh_tempo_bayar">
                 </mol-datepicker-syncfusion>
 

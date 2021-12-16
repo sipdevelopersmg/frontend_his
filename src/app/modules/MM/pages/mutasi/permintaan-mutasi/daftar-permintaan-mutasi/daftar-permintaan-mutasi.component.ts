@@ -26,8 +26,10 @@ export class DaftarPermintaanMutasiComponent implements OnInit {
     ];
 
     FilterColumnDatasource: any[] = [
-        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+        { text: 'No Permintaan Mutasi', value: 'tm.nomor_permintaan_mutasi' },
+        { text: 'Stocroom Pemberi', value: 'mss_pemberi.nama_stockroom' },
+        { text: 'Stocroom Penerima', value: 'mss_penerima.nama_stockroom' },
+        { text: 'Status Mutasi', value: 'tm.status_mutasi' },
     ];
 
     GridConfig = GridConfig;

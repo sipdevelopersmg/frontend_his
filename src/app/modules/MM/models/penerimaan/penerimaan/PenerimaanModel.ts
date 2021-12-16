@@ -68,6 +68,8 @@ export interface TrPenerimaanDetailItemInsert {
 
     /** @format Array of Object */
     satuan:satuan[];
+    validasi:boolean;
+    message:string;
 }
 
 export interface TrPenerimaanInsert {

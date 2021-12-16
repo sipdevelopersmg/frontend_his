@@ -25,8 +25,10 @@ export class DaftarReturPembelianComponent implements OnInit {
     ];
 
     FilterColumnDatasource: any[] = [
-        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+        { text: 'No. Retur', value: 'trp.nomor_retur_pembelian' },
+        { text: 'Stockroom', value: 'mss.nama_stockroom' },
+        { text: 'Supplier', value: 'sup.nama_supplier' },
+        { text: 'Status Retur', value: 'trp.status_transaksi' },
     ];
 
     GridConfig = GridConfig;

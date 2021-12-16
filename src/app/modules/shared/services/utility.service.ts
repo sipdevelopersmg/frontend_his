@@ -196,7 +196,41 @@ export class UtilityService {
         });
     }
 
-    
+    validasiDataDetail(data:any[],message:string=''):boolean{
 
+        let data_error = data.filter(function (el) {
+            return el.validasi == false;
+        });
+        // console.log('data',data);
+        // console.log('error',data_error);
+        let htmlSelection = '';
+        if(data_error.length>0){
+
+            htmlSelection = '<div class="text-danger"><ul>';
+            data_error.forEach((value:any,index)=>{
+                htmlSelection +=`<li>${value.nama_item} (${(value.message)?value.message:''})</li>`;
+            })
+            htmlSelection += `</ul><br/><h3>${message}</h3></div>`;
+
+            Swal.fire({
+                icon    : 'error',
+                title   : 'Validasi Data',
+                html    : htmlSelection,
+            }).then(()=>{
+                return false;
+            })
+        }else{
+            return true;
+            // return (data_error.length==0)?false:true;
+        }
+        
+    }
+
+    alertError(message:string){
+        return Swal.fire({
+            icon    : 'error',
+            title   : message,
+        })
+    }
 
 }

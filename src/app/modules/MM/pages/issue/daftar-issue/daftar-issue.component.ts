@@ -26,8 +26,11 @@ export class DaftarIssueComponent implements OnInit {
   ];
 
   FilterColumnDatasource: any[] = [
-      { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-      { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+      { text: 'Nomor Pemakaian', value: 'tpi.nomor_pemakaian_internal' },
+      { text: 'Stockroom', value: 'mss.nama_stockroom' },
+      { text: 'PIC Pemberi', value: 'tpi.pic_pemberi' },
+      { text: 'PIC Penerima', value: 'tpi.pic_penerima' },
+      { text: 'Status', value: 'tpi.judul_kontrak' },
   ];
 
   GridConfig = GridConfig;
@@ -48,6 +51,7 @@ export class DaftarIssueComponent implements OnInit {
 
   ngOnInit(): void {
     this.pemakaianInternalService.onInitList();
+    this.handlePencarianFilter([]);
   }
 
   handlePencarianFilter(args){

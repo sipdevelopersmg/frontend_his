@@ -2,14 +2,14 @@
     <form [formGroup]="formKontrak">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'Nomor Pemakian'" formControlName="nomor_retur_pemakaian_internal" [inputFieldState]="inputFieldState"></mol-input-text>
-                <mol-datepicker-syncfusion [label]="'Tanggal Pemakaian'" [format]="'dd MMMM yyyy'"
+                <mol-input-text style="display: none;" [label]="'Nomor Retur Pemakian'" formControlName="nomor_retur_pemakaian_internal" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Retur Pemakaian*'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_retur_pemakaian_internal">
                 </mol-datepicker-syncfusion>
                 <!-- Dropdown Stockroom -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Stockroom'"></atm-label>
+                        <atm-label [LabelCaption]="'Stockroom*'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
@@ -20,19 +20,21 @@
                         </ejs-dropdownlist>
                     </div>
                 </div>
-                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima'" [format]="'dd MMMM yyyy HH:mm:ss'"
+                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima*'" [format]="'dd MMMM yyyy HH:mm:ss'"
                     formControlName="time_serah_terima">
                 </mol-datepicker-syncfusion>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-               <mol-input-text [label]="'PIC Pemberi'" formControlName="pic_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
-               <mol-input-text [label]="'PIC Penerima'" formControlName="pic_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+               <mol-input-text [label]="'PIC Pemberi*'" formControlName="pic_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
+               <mol-input-text [label]="'PIC Penerima*'" formControlName="pic_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_retur_pemakaian_internal"></mol-input-textarea>
             </div>
         </div>
 
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='returIssueService.dataDetail$ | async'
-            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
+            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' 
+            (actionComplete)="handleActionCompleted($event)"
+            (actionBegin)="handleActionBegin($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>
