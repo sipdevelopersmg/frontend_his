@@ -92,10 +92,11 @@ export class RefundObatIrjaDaftarComponent implements OnInit {
     if(status_transaksi == "CANCELED"){
       args.row.classList.add('e-canceled-background');
     }
-
+    
     if(status_transaksi == "CLOSED"){
       args.row.classList.add('e-closed-background');
     }
+
   }
 
 

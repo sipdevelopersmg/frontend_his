@@ -125,8 +125,19 @@ export class InputKontrakPengadaanService {
             data.sub_total_kontrak = data.qty_kontrak * data.harga_satuan;
         }
 
+        data = this.validasi_detail(data);
+
         this.dataDetail[index] = data;
         this.sum();
+    }
+
+    validasi_detail(data: TrKontrakSpjbDetailItemInsert){
+        if(data.tanggal_maksimal_expired_date){
+            data.validasi = true;
+        }else{
+            data.validasi = false;
+        }
+        return data;
     }
 
     removeDataDetail(index: number) {

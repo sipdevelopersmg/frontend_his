@@ -1,31 +1,14 @@
 {
   "GridColumns": [
     {
-        "field": "kontrak_id",
-        "headerText": "Kontrak Id",
-        "type": "number",
-        "format": "",
-        "textAlign": "left",
-        "visible": false,
-        "editType": "defaultEdit"
-    },
-    {
         "field": "nama_supplier",
         "headerText": "Supplier",
         "type": "string",
         "format": "",
         "textAlign": "left",
         "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
-        "field": "id_supplier",
-        "headerText": "Id Supplier",
-        "type": "number",
-        "format": "",
-        "textAlign": "left",
-        "visible": false,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":200
     },
     {
         "field": "nomor_kontrak_spjb",
@@ -34,7 +17,8 @@
         "format": "",
         "textAlign": "left",
         "visible": true,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":150
     },
     {
         "field": "nomor_kontrak",
@@ -43,7 +27,8 @@
         "format": "",
         "textAlign": "left",
         "visible": true,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":150
     },
     {
         "field": "judul_kontrak",
@@ -52,43 +37,38 @@
         "format": "",
         "textAlign": "left",
         "visible": true,
-        "editType": "defaultEdit"
-    },
-    {
-        "field": "tanggal_ttd_kontrak",
-        "headerText": "Tanggal Ttd Kontrak",
-        "type": "Date",
-        "format": "",
-        "textAlign": "left",
-        "visible": false,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":200
     },
     {
         "field": "tanggal_berlaku_kontrak",
-        "headerText": "Tanggal Berlaku Kontrak",
+        "headerText": "Tgl Berlaku Kontrak",
         "type": "Date",
         "format": "dd/MM/yyyy",
         "textAlign": "left",
         "visible": true,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":150
     },
     {
         "field": "tanggal_berakhir_kontrak",
-        "headerText": "Tanggal Berakhir Kontrak",
+        "headerText": "Tgl Berakhir Kontrak",
         "type": "Date",
         "format": "dd/MM/yyyy",
         "textAlign": "left",
         "visible": true,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":150
     },
     {
         "field": "jumlah_item_kontrak",
-        "headerText": "Jumlah Item Kontrak",
+        "headerText": "Jml Item Kontrak",
         "type": "number",
         "format": "N2",
         "textAlign": "Right",
         "visible": true,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":130
     },
     {
         "field": "total_transaksi_kontrak",
@@ -97,7 +77,8 @@
         "format": "N2",
         "textAlign": "Right",
         "visible": true,
-        "editType": "defaultEdit"
+        "editType": "defaultEdit",
+        "width":170
     },
     {
         "field": "tahun_anggaran",
