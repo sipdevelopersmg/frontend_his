@@ -3,13 +3,18 @@
         <!-- Header -->
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'Nomor Retur'" formControlName="nomor_retur_pembelian" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Nomor Retur'" formControlName="nomor_retur_pembelian"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
                 <mol-datepicker-syncfusion [label]="'Tanggal Retur Pembelian'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_retur_pembelian">
                 </mol-datepicker-syncfusion>
+
                 <mol-datepicker-syncfusion [label]="'Tanggal Jatuh Tempo'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_jatuh_tempo_pelunasan_retur">
                 </mol-datepicker-syncfusion>
+
                 <!-- Dropdown Stockroom -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -19,41 +24,41 @@
                         <ejs-dropdownlist #MaritalStokroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource | async"
                             [fields]="MaritalStokroomDropdownField" [allowFiltering]="true"
-                            (change)="handleChangeStockRoom($event)"
-                            formControlName="id_stockroom">
+                            (change)="handleChangeStockRoom($event)" formControlName="id_stockroom">
                         </ejs-dropdownlist>
                     </div>
                 </div>
-                 <!-- Dropdown Mekanisme Retur -->
-                 <div class="row mb-2">
-                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                         <atm-label [LabelCaption]="'Mekanisme Retur'"></atm-label>
-                     </div>
-                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                         <ejs-dropdownlist #MaritalMekanismeReturDropdown id="marital"
-                             [dataSource]="setupMekanismeReturService.dataSource| async"
-                             [fields]="MaritalMekanismeReturDropdownField" [allowFiltering]="true"
-                             formControlName="id_mekanisme_retur">
-                         </ejs-dropdownlist>
-                     </div>
-                 </div>
+
+                <!-- Dropdown Mekanisme Retur -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Mekanisme Retur'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalMekanismeReturDropdown id="marital"
+                            [dataSource]="setupMekanismeReturService.dataSource| async"
+                            [fields]="MaritalMekanismeReturDropdownField" [allowFiltering]="true"
+                            formControlName="id_mekanisme_retur">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'id_supplier'" [modal-title]="'Data Supplier'"
-                    [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
-                    [columns]="LookupGridSupplier.columns" [filter-lookup]="LookupGridSupplier.filter"
-                    [label]="'Supplier'">
+                <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'id_supplier'"
+                    [modal-title]="'Data Supplier'" [idTitle]="'nama_supplier'"
+                    (onGetSelectedData)="heandleSelectedSupplier($event)" [columns]="LookupGridSupplier.columns"
+                    [filter-lookup]="LookupGridSupplier.filter" [label]="'Supplier'">
                 </org-input-look-up-kode>
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
             </div>
         </div>
+
         <!-- Detail -->
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='returPembelianService.dataDetail$ | async'
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
+            [height]="screenWidth >= 1920 ? 250 : 150" [dataSource]='returPembelianService.dataDetail$ | async'
             [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
-            (toolbarClick)="onToolbarClick($event)" 
-            (load)="handleLoadGrid($event)"
-            (rowSelected)="handleSelectdRow($event)"
-            >
+            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
+            (rowSelected)="handleSelectdRow($event)">
             <e-columns>
                 <e-column [visible]="false" field='penerimaan_id' [allowEditing]="false" headerText='urut'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
@@ -65,57 +70,64 @@
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="100">
                 </e-column>
                 <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="150">
                 </e-column>
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="200">
                 </e-column>
                 <e-column [visible]="true" field='batch_number' [allowEditing]="false" headerText='Batch Number'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="100">
                 </e-column>
-                <e-column [visible]="true" field='expired_date' [allowEditing]="false" headerText='Expired' 
-                    editType='datepickeredit' textAlign="left" headerTextAlign="center"
-                    format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams">
+                <e-column [visible]="true" field='expired_date' [allowEditing]="false" headerText='Expired'
+                    editType='datepickeredit' textAlign="left" headerTextAlign="center" format="dd MMMM yyyy"
+                    type="Date" [edit]="TglExpiredParams" [width]="100">
                 </e-column>
                 <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" [type]="'Number'" [format]="'N2'"
+                    [width]="80">
                 </e-column>
                 <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
-                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center"
+                    [width]="80">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="right" headerTextAlign="right">
+                    textAlign="right" headerTextAlign="right" [type]="'Number'" [format]="'N2'" [width]="80">
                 </e-column>
-                <e-column [visible]="true" field='qty_retur' [allowEditing]="false" headerText='QTY'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="right">
+                <e-column [visible]="true" field='qty_retur' [allowEditing]="false" headerText='Qty'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="right" [type]="'Number'" [format]="'N2'"
+                    [width]="80">
                 </e-column>
-                <e-column [visible]="true" field='harga_satuan_retur' [allowEditing]="true" headerText='Harga Satuan Retur'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                <e-column [visible]="true" field='harga_satuan_retur' [allowEditing]="true"
+                    headerText='Harga Satuan Retur' editType='defaultEdit' textAlign="right" headerTextAlign="center"
+                    format="N2" [width]="120">
                 </e-column>
                 <e-column [visible]="true" field='sub_total' [allowEditing]="false" headerText='Sub Total'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" [width]="120">
                 </e-column>
             </e-columns>
         </ejs-grid>
+
         <!-- Footer -->
         <div class="row">
             <div class="col-sm-5">
             </div>
             <div class="col-sm-3">
-                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="returPembelianService.jumlah_item" formControlName="jumlah_item_retur"
-                    [inputFieldState]="'detail'"></mol-input-numeric> 
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true" [value]="returPembelianService.jumlah_item"
+                    formControlName="jumlah_item_retur" [inputFieldState]="'detail'">
+                </mol-input-numeric>
             </div>
             <div class="col-sm-4">
                 <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
                     [value]="returPembelianService.total_transaksi" formControlName="total_transaksi_retur"
-                    [inputFieldState]="'detail'"></mol-input-numeric>              
+                    [inputFieldState]="'detail'">
+                </mol-input-numeric>
             </div>
         </div>
     </form>
+
     <!-- Item -->
     <org-look-up #LookupItem [lookup-url]="urlItemStockRoom" (onGetSelectedData)="heandleSelectedItem($event)"
         [columns]="GridLookUpItem.columns" [filter-lookup]="GridLookUpItem.filter" [modal-title]="'Data Item'">
@@ -207,5 +219,4 @@
             <button type="button" class="btn btn-primary">Oke</button>
         </div>
     </ng-template>
-
 </org-card-layout>

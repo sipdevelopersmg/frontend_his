@@ -7,83 +7,81 @@ import { EncryptionService } from 'src/app/modules/shared/services/encryption.se
 import * as GridConfig from './json/grid.config.json'
 
 @Component({
-  selector: 'app-daftar-persetujuan-mutasi',
-  templateUrl: './daftar-persetujuan-mutasi.component.html',
-  styleUrls: ['./daftar-persetujuan-mutasi.component.css']
+    selector: 'app-daftar-persetujuan-mutasi',
+    templateUrl: './daftar-persetujuan-mutasi.component.html',
+    styleUrls: ['./daftar-persetujuan-mutasi.component.css']
 })
 export class DaftarPersetujuanMutasiComponent implements OnInit {
 
-  ButtonNav: ButtonNavModel[] = [
-    // { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
-    { Id: 'Edit', Captions: 'Lihat Detail', Icons1: 'fa-edit fa-sm' }
-  ];
+    ButtonNav: ButtonNavModel[] = [
+        // { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
+        { Id: 'Edit', Captions: 'Lihat Detail', Icons1: 'fa-edit fa-sm' }
+    ];
 
-  GridDataToolbar = [
-    { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
-    { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
-    { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
-    'Search'
-  ];
+    GridDataToolbar = [
+        { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
+        { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
+        { text: 'Detail', tooltipText: 'Detail', prefixIcon: 'fas fa-info-circle fa-sm', id: 'detail' },
+        'Search'
+    ];
 
+    FilterColumnDatasource: any[] = [
+        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
+        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+    ];
 
-  FilterColumnDatasource: any[] = [
-      { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-      { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
-  ];
+    GridConfig = GridConfig;
+    SelectedData: any;
+    dataSource: any;
 
-  GridConfig = GridConfig;
-  SelectedData
-  dataSource:any;
+    GridData: MolGridComponent = null;
 
-  @ViewChild('GridData') GridData: MolGridComponent;
-  id:number=0;
-  constructor(
-    private router: Router,
-    private encryptionService: EncryptionService,
-    public persetujuanMutasiService: PersetujuanMutasiService,
-  ) { }
+    id: number = 0;
 
-  ngAfterViewInit(): void {
-    // this.GridData.Grid.refresh();
-  }
+    constructor(
+        private router: Router,
+        private encryptionService: EncryptionService,
+        public persetujuanMutasiService: PersetujuanMutasiService,
+    ) { }
 
-  ngOnInit(): void {
-    this.persetujuanMutasiService.onInitList();
-  }
-
-  handlePencarianFilter(args){
-    this.persetujuanMutasiService.onGetAllByParamsSource(args);
-    // setTimeout(()=>{
-      this.GridData.Grid.refresh();
-    // },500)
-  }
-
-  handleinitialized(component: MolGridComponent){
-    this.GridData = component
-  }
-
-  handleClickButtonNav(args: any): void {
-    switch (args) {
-      case 'Add':
-        this.router.navigateByUrl('dashboard/MM/persetujuan-mutasi/input-persetujuan-mutasi');
-        break;
-      case 'Edit':
-        const mutasi_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.mutasi_id));
-        this.router.navigate(['dashboard/MM/persetujuan-mutasi/proses-persetujuan-mutasi', mutasi_id, "GRAHCIS"]);
-        break;
-      case 'Delete':
-        // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);
-        break;
-      default:
-        break;
+    ngOnInit(): void {
+        this.persetujuanMutasiService.onInitList();
     }
-  }
 
-  handleSelectedRow(args: any): void {
-    this.SelectedData = args.data;
-    console.log(this.SelectedData)
-  }
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.handlePencarianFilter([]);
+        }, 1);
+    }
 
+    handlePencarianFilter(args: any) {
+        this.persetujuanMutasiService.onGetAllByParamsSource(args);
+        this.GridData.Grid.refresh();
+    }
 
-  
+    handleinitialized(component: MolGridComponent) {
+        this.GridData = component
+    }
+
+    handleClickButtonNav(args: any): void {
+        switch (args) {
+            case 'Add':
+                this.router.navigateByUrl('dashboard/MM/persetujuan-mutasi/input-persetujuan-mutasi');
+                break;
+            case 'Edit':
+                const mutasi_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.mutasi_id));
+                this.router.navigate(['dashboard/MM/persetujuan-mutasi/proses-persetujuan-mutasi', mutasi_id, "GRAHCIS"]);
+                break;
+            case 'Delete':
+                // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleSelectedRow(args: any): void {
+        this.SelectedData = args.data;
+        console.log(this.SelectedData)
+    }
 }

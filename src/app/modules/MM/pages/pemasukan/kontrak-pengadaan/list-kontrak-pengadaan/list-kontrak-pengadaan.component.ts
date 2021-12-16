@@ -32,7 +32,7 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
 
     GridConfig = GridConfig;
     SelectedData: any;
-    dataSource:any;
+    dataSource: any;
 
     @ViewChild('GridData') GridData: MolGridComponent;
 

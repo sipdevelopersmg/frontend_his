@@ -2,36 +2,42 @@
     <form [formGroup]="formKontrak">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-
+                <!-- Kode Supplier -->
                 <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier" [idKode]="'kode_supplier'"
                     [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedSupplier($event)"
                     [columns]="GridLookUpSupplier.columns" [filter-lookup]="GridLookUpSupplier.filter"
                     [label]="'Supplier'" [modal-title]="'Data Supplier'">
                 </org-input-look-up-kode>
 
+                <!-- No. SPBBJ -->
                 <mol-input-text [label]="'No SPBBJ'" formControlName="nomor_kontrak_spjb"></mol-input-text>
 
+                <!-- No. Kontrak -->
                 <mol-input-text [label]="'Nomor Kontrak'" formControlName="nomor_kontrak"></mol-input-text>
 
+                <!-- TGL. TTD -->
                 <mol-datepicker-syncfusion [label]="'Tgl TTD'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_ttd_kontrak">
                 </mol-datepicker-syncfusion>
 
+                <!-- Judul Kontrak -->
                 <mol-input-text [label]="'Judul Kontrak'" formControlName="judul_kontrak"></mol-input-text>
-
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-
+                <!-- Tgl. Berlaku Kontrak -->
                 <mol-datepicker-syncfusion [label]="'Tgl Berlaku Kontrak'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_berlaku_kontrak">
                 </mol-datepicker-syncfusion>
 
+                <!-- Tgl. Berakhir Kontrak -->
                 <mol-datepicker-syncfusion [label]="'Tgl Berakhir Kontrak'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_berakhir_kontrak">
                 </mol-datepicker-syncfusion>
 
+                <!-- Tahun Anggaran -->
                 <mol-input-text [label]="'Tahun Anggaran'" formControlName="tahun_anggaran"></mol-input-text>
 
+                <!-- Keterangan -->
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
 
             </div>
@@ -40,9 +46,9 @@
             <a>halooo jhon</a>
         </ng-template>
 
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
-            [dataSource]='inputKontrakPengadaanService.dataDetail$ | async' [gridLines]="'Both'"
-            [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [allowResizing]="true"
+            [height]="screenWidth >= 1920 ? 250 : 150" [dataSource]='inputKontrakPengadaanService.dataDetail$ | async'
+            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>
@@ -56,33 +62,33 @@
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
                 <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="100">
                 </e-column>
                 <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="200">
                 </e-column>
                 <!-- editType Diubah ke datapickeredit dan setting edit parameter ke TglExpiredParams -->
                 <e-column [visible]="true" field='tanggal_maksimal_expired_date' [allowEditing]="true"
                     headerText='Max Expired' editType='datepickeredit' textAlign="left" headerTextAlign="center"
-                    format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams">
+                    format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams" width="150">
                 </e-column>
                 <e-column [visible]="true" field='qty_kontrak_satuan_besar' [allowEditing]="true" headerText='Banyak'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" width="100">
                 </e-column>
                 <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
-                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center" width="100">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="right" headerTextAlign="center">
+                    textAlign="right" headerTextAlign="center" width="80">
                 </e-column>
-                <e-column [visible]="true" field='qty_kontrak' [allowEditing]="false" headerText='QTY'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
+                <e-column [visible]="true" field='qty_kontrak' [allowEditing]="false" headerText='Qty'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" width="80">
                 </e-column>
                 <e-column [visible]="true" field='harga_satuan' [allowEditing]="true" headerText='Harga Satuan'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" width="100">
                 </e-column>
                 <e-column [visible]="true" field='sub_total_kontrak' [allowEditing]="true" headerText='Sub Total'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" width="120">
                 </e-column>
             </e-columns>
         </ejs-grid>
@@ -194,5 +200,4 @@
             <button type="button" class="btn btn-primary">Oke</button>
         </div>
     </ng-template>
-
 </org-card-layout>

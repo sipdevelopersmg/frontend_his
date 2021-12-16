@@ -3,17 +3,27 @@
         <!-- Header -->
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <org-input-look-up-kode #LookupKodePemesanan [lookup-url]="urlPemesanan" [idKode]="'nomor_pemesanan'" [modal-title]="'Data Pemesanan'"
-                    [idTitle]="'nama_supplier'" (onGetSelectedData)="heandleSelectedPemesanan($event)"
-                    [columns]="LookupGridPenerimaan.columns" [filter-lookup]="LookupGridPenerimaan.filter"
-                    [label]="'Pemesanan'">
+                <!-- Pemesanan -->
+                <org-input-look-up-kode #LookupKodePemesanan [lookup-url]="urlPemesanan" [idKode]="'nomor_pemesanan'"
+                    [modal-title]="'Data Pemesanan'" [idTitle]="'nama_supplier'"
+                    (onGetSelectedData)="heandleSelectedPemesanan($event)" [columns]="LookupGridPenerimaan.columns"
+                    [filter-lookup]="LookupGridPenerimaan.filter" [label]="'Pemesanan'">
                 </org-input-look-up-kode>
-               
-                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="'detail'"></mol-input-text>
+
+                <!-- Stockroom -->
+                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="'detail'">
+                </mol-input-text>
+
+                <!-- Tgl Penerimaan -->
                 <mol-datepicker-syncfusion [label]="'Tgl Penerimaan'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_penerimaan">
                 </mol-datepicker-syncfusion>
-                <mol-input-text [label]="'No Penerimaan'" formControlName="nomor_penerimaan" [inputFieldState]="inputFieldState"></mol-input-text>
+
+                <!-- No. Penerimaan -->
+                <mol-input-text [label]="'No Penerimaan'" formControlName="nomor_penerimaan"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
                 <!-- Dropdown Jenis Penerimaan -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -27,13 +37,19 @@
                         </ejs-dropdownlist>
                     </div>
                 </div>
-                <mol-input-text [label]="'No Surat Jalan'" formControlName="nomor_surat_jalan_supplier" [inputFieldState]="inputFieldState"></mol-input-text>
-               
+
+                <!-- No. Surat Jalan -->
+                <mol-input-text [label]="'No Surat Jalan'" formControlName="nomor_surat_jalan_supplier"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- Tgl Surat Jalan -->
                 <mol-datepicker-syncfusion [label]="'Tgl Surat Jalan'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_surat_jalan_supplier">
-                </mol-datepicker-syncfusion> 
+                </mol-datepicker-syncfusion>
+
                 <!-- Dropdown Shipping Method -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -62,23 +78,25 @@
                     </div>
                 </div>
 
+                <!-- Tgl Jatuh Tempo -->
                 <mol-datepicker-syncfusion [label]="'Tgl Jatuh Tempo'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_jatuh_tempo_bayar">
                 </mol-datepicker-syncfusion>
+
+                <!-- Keterangan -->
                 <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
             </div>
         </div>
+
         <!-- Detail -->
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='penerimaanService.dataDetail$ | async'
-            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' (actionComplete)="handleActionCompleted($event)"
-            [allowResizing]="true"
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
+            [dataSource]='penerimaanService.dataDetail$ | async' [gridLines]="'Both'" [toolbar]='GridDetailToolbar'
+            (actionComplete)="handleActionCompleted($event)" [allowResizing]="true"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
-            (rowSelected)="handleSelectdRow($event)"
-            (commandClick)="handleCommandClick($event)">
+            (rowSelected)="handleSelectdRow($event)" (commandClick)="handleCommandClick($event)">
             <e-columns>
-                <e-column [width]="70" [field]="'command'" [headerText]="'ADD'"
-                    [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                    [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                <e-column [width]="70" [field]="'command'" [headerText]="'ADD'" [visible]="true" [allowEditing]="false"
+                    [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
                     [commands]="CommandButton">
                 </e-column>
                 <e-column [visible]="false" field='pemesanan_id' [allowEditing]="false" headerText='Kontrak'
@@ -105,9 +123,9 @@
                 <e-column [visible]="true" field='batch_number' [allowEditing]="true" headerText='Batch Number'
                     editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='expired_date' [allowEditing]="true"
-                    headerText='Expired' editType='datepickeredit' textAlign="left" headerTextAlign="center"
-                    format="dd MMMM yyyy" type="Date" [edit]="TglExpiredParams">
+                <e-column [visible]="true" field='expired_date' [allowEditing]="true" headerText='Expired'
+                    editType='datepickeredit' textAlign="left" headerTextAlign="center" format="dd MMMM yyyy"
+                    type="Date" [edit]="TglExpiredParams">
                 </e-column>
                 <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center">
@@ -136,8 +154,9 @@
                 <e-column [visible]="false" field='disc_nominal_2' [allowEditing]="true" headerText='D2'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="false" field='harga_satuan_brutto' [allowEditing]="false" headerText='harga satuan bruto'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                <e-column [visible]="false" field='harga_satuan_brutto' [allowEditing]="false"
+                    headerText='harga satuan bruto' editType='defaultEdit' textAlign="right" headerTextAlign="center"
+                    format="N2">
                 </e-column>
                 <e-column [visible]="false" field='tax_prosentase' [allowEditing]="true" headerText='tax'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
@@ -145,14 +164,16 @@
                 <e-column [visible]="false" field='tax_nominal' [allowEditing]="true" headerText='tax'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="false" field='harga_satuan_netto' [allowEditing]="false" headerText='harga satuan netto'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                <e-column [visible]="false" field='harga_satuan_netto' [allowEditing]="false"
+                    headerText='harga satuan netto' editType='defaultEdit' textAlign="right" headerTextAlign="center"
+                    format="N2">
                 </e-column>
                 <e-column [visible]="false" field='sub_total' [allowEditing]="false" headerText='Sub Total'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
             </e-columns>
         </ejs-grid>
+
         <!-- Footer -->
         <div class="row">
             <div class="col-sm-5">
@@ -160,12 +181,12 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-4">
-                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="penerimaanService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'"></mol-input-numeric>              
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true" [value]="penerimaanService.jumlah_item"
+                    formControlName="jumlah_item" [inputFieldState]="'detail'"></mol-input-numeric>
             </div>
         </div>
     </form>
+
     <!-- Item -->
     <org-look-up #LookupItem [lookup-url]="urlItem" (onGetSelectedData)="heandleSelectedItem($event)"
         [columns]="GridLookUpItem.columns" [filter-lookup]="GridLookUpItem.filter" [modal-title]="'Data Item'">
@@ -257,5 +278,4 @@
             <button type="button" class="btn btn-primary">Oke</button>
         </div>
     </ng-template>
-
 </org-card-layout>

@@ -1,82 +1,89 @@
 {
-    "TrDetail":
-    [
+    "TrDetail": [
         {
             "allowEditing": false,
-            "field":"kode_item",
-            "headerText":"Kode Obat",
+            "field": "kode_item",
+            "headerText": "Kode Obat",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"",
-            "textAlign":"left",
-            "headerTextAlign":"Center",
-            "visible": true
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 150
         },
         {
             "allowEditing": false,
-            "field":"nama_item",
-            "headerText":"Nama Obat",
+            "field": "nama_item",
+            "headerText": "Nama Obat",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"",
-            "textAlign":"left",
-            "headerTextAlign":"Center",
-            "visible": true
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 250
         },
         {
             "allowEditing": false,
-            "field":"qty_satuan_besar_permintaan",
-            "headerText":"Banyak",
+            "field": "qty_satuan_besar_permintaan",
+            "headerText": "Banyak",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"N2",
-            "textAlign":"right",
-            "headerTextAlign":"Center",
-            "visible": true
+            "type": "",
+            "format": "N2",
+            "textAlign": "right",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 100
         },
         {
             "allowEditing": false,
-            "editParams":"satuanParams",
-            "field":"kode_satuan_besar_permintaan",
-            "headerText":"Satuan",
+            "editParams": "satuanParams",
+            "field": "kode_satuan_besar_permintaan",
+            "headerText": "Satuan",
             "editType": "dropdownedit",
-            "type":"",
-            "format":"",
-            "textAlign":"left",
-            "headerTextAlign":"Center",
-            "visible": true
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 100
         },
         {
             "allowEditing": false,
-            "field":"isi_permintaan",
-            "headerText":"Isi",
+            "field": "isi_permintaan",
+            "headerText": "Isi",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"N2",
-            "textAlign":"right",
-            "visible": true
+            "type": "",
+            "format": "N2",
+            "textAlign": "right",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 100
         },
         {
             "allowEditing": false,
-            "field":"qty_permintaan",
-            "headerText":"Qty",
+            "field": "qty_permintaan",
+            "headerText": "Qty",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"N2",
-            "textAlign":"right",
-            "headerTextAlign":"Center",
-            "visible": true
+            "type": "",
+            "format": "N2",
+            "textAlign": "right",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 100
         },
         {
             "allowEditing": false,
-            "field":"keterangan_permintaan",
-            "headerText":"Keterangan",
+            "field": "keterangan_permintaan",
+            "headerText": "Keterangan",
             "editType": "defaultEdit",
-            "type":"",
-            "format":"",
-            "textAlign":"left",
-            "headerTextAlign":"Center",
-            "visible": true
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "headerTextAlign": "Center",
+            "visible": true,
+            "width": 200
         }
     ]
 }

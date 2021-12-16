@@ -15,7 +15,8 @@
             "editType": "defaultEdit",
             "field": "tanggal_pemesanan",
             "headerText": "Tanggal Pemesanan",
-            "type": "string",
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
             "visible": true
         },
         {
@@ -57,14 +58,14 @@
     ],
     "filter": [
         {
-          "field": "tp.nomor_pemesanan",
-          "filter": "like",
-          "title": "Nomor Pemesanan"
+            "field": "tp.nomor_pemesanan",
+            "filter": "like",
+            "title": "Nomor Pemesanan"
         },
         {
-          "field": "sup.nama_supplier",
-          "filter": "like",
-          "title": "Nama Supplier"
+            "field": "sup.nama_supplier",
+            "filter": "like",
+            "title": "Nama Supplier"
         }
     ]
 }

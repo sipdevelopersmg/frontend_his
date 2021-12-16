@@ -1,31 +1,41 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
-    
     <form [formGroup]="formInput">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'Nomor Mutasi'" formControlName="nomor_mutasi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <!-- No. Mutasi -->
+                <mol-input-text [label]="'Nomor Mutasi'" formControlName="nomor_mutasi"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
+                <!-- Tgl. Mutasi -->
                 <mol-datepicker-syncfusion [label]="'Tanggal Mutasi'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_mutasi">
                 </mol-datepicker-syncfusion>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'Stockroom Pemberi'" formControlName="nama_stockroom_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
-                <mol-input-text [label]="'Stockroom Penerima'" formControlName="nama_stockroom_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+                <!-- Stockroom Pemberi -->
+                <mol-input-text [label]="'Stockroom Pemberi'" formControlName="nama_stockroom_pemberi"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
+                <!-- Stockroom Penerima -->
+                <mol-input-text [label]="'Stockroom Penerima'" formControlName="nama_stockroom_penerima"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
             </div>
         </div>
-        <mol-grid 
-        [grid-DataSource]="permintaanMutasiService.dataDetail$| async"
-        [columns]="ConfigGrid.TrDetail"
-        ></mol-grid>
-        <div class="row">
-            <div class="col-sm-5">
-            </div>
-            <div class="col-sm-4">
-            </div>
-            <div class="col-sm-3">
-                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
-                    [value]="permintaanMutasiService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+
+        <!-- Grid -->
+        <mol-grid [grid-DataSource]="permintaanMutasiService.dataDetail$| async" [grid-height]="'calc(100vh - 21rem)'"
+            [columns]="ConfigGrid.TrDetail" [grid-lines]="'Both'">
+        </mol-grid>
+
+        <!-- Footer -->
+        <div class="row justify-content-end">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true" formControlName="jumlah_item"
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'">
+                </mol-input-numeric>
             </div>
         </div>
     </form>
@@ -41,12 +51,12 @@
         <div class="modal-body p-10">
             <div class="row mx-0 my-1">
                 <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
-                    <div class="col-sm-4">
-                        <label for="reason_canceled"><strong>Reason Cancel</strong></label>
-                    </div>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control form-control-sm" name="reason_canceled">
-                    </div>
+                <div class="col-sm-4">
+                    <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                </div>
                 <!-- </div> -->
             </div>
         </div>
@@ -55,5 +65,4 @@
             <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
         </div>
     </ng-template>
-
 </org-card-layout>

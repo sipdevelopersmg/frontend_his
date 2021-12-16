@@ -2,7 +2,12 @@
     <form [formGroup]="formKontrak">
         <div class="row mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
-                <mol-input-text [label]="'Nomor Permintaan'" formControlName="nomor_mutasi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <!-- No. Permintaan -->
+                <mol-input-text [label]="'Nomor Permintaan'" formControlName="nomor_mutasi"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
+                <!-- Tgl. Mutasi -->
                 <mol-datepicker-syncfusion [label]="'Tanggal Mutasi'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_mutasi">
                 </mol-datepicker-syncfusion>
@@ -17,8 +22,7 @@
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource| async"
                             [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
-                            formControlName="id_stockroom_pemberi"
-                            (change)="handleChangeStockroom($event)">
+                            formControlName="id_stockroom_pemberi" (change)="handleChangeStockroom($event)">
                         </ejs-dropdownlist>
                     </div>
                 </div>
@@ -32,17 +36,18 @@
                         <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
                             [dataSource]="setupStockroomService.dataSource| async"
                             [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
-                            formControlName="id_stockroom_penerima"
-                            >
+                            formControlName="id_stockroom_penerima">
                         </ejs-dropdownlist>
                     </div>
                 </div>
-                 
+
             </div>
         </div>
 
-        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [dataSource]='permintaanMutasiService.dataDetail$ | async'
-            [gridLines]="'Both'" [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
+        <!-- Grid -->
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings' [height]="'calc(100vh - 24rem)'"
+            [dataSource]='permintaanMutasiService.dataDetail$ | async' [gridLines]="'Both'" [allowResizing]="true"
+            [toolbar]='GridDetailToolbar' [allowResizing]='true' (actionComplete)="handleActionCompleted($event)"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)">
             <e-columns>
@@ -61,31 +66,29 @@
                 <e-column [visible]="true" field='qty_satuan_besar_permintaan' [allowEditing]="true" headerText='Banyak'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
-                <e-column [visible]="true" field='kode_satuan_besar_permintaan' [allowEditing]="true" headerText='Satuan'
-                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                <e-column [visible]="true" field='kode_satuan_besar_permintaan' [allowEditing]="true"
+                    headerText='Satuan' editType='dropdownedit' [edit]='satuanParams' textAlign="left"
+                    headerTextAlign="center">
                 </e-column>
-                <e-column [visible]="true" field='isi_permintaan' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="right" headerTextAlign="center" format="N2">
+                <e-column [visible]="true" field='isi_permintaan' [allowEditing]="false" headerText='Isi'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='qty_permintaan' [allowEditing]="false" headerText='QTY'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
                 </e-column>
                 <e-column [visible]="true" field='keterangan_permintaan' [allowEditing]="true" headerText='Keterangan'
-                    editType='defaultEdit' textAlign="left" headerTextAlign="center" >
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
                 </e-column>
             </e-columns>
         </ejs-grid>
 
-        <div class="row">
-            <div class="col-sm-5">
-            </div>
-           
-            <div class="col-sm-4">
-            </div>
+        <!-- Jumlah Item -->
+        <div class="row justify-content-end">
             <div class="col-sm-3">
                 <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
                     [value]="permintaanMutasiService.jumlah_item" formControlName="jumlah_item"
-                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'">
+                </mol-input-numeric>
             </div>
         </div>
     </form>
@@ -138,5 +141,4 @@
             <button type="button" class="btn btn-primary">Oke</button>
         </div>
     </ng-template>
-
 </org-card-layout>

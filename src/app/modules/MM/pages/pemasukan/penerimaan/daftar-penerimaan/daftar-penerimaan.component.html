@@ -7,17 +7,12 @@
             </mol-offcanvas-filter>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <mol-grid
-            #GridData
-            [grid-height]="'calc(100vh - 19rem)'"
-            [grid-DataSource]="penerimaanService.dataSource | async"
-            [grid-paging]="true"
-            [grid-lines]="'Both'"
-            [columns]="GridConfig.GridColumns"
-            (row-selected)="handleSelectedRow($event)"
-            (row-data-bound)="handleRowDataBound($event)"
-            [grid-toolbar]="GridDataToolbar"
-            ></mol-grid>
+            <mol-grid #GridData [grid-height]="'calc(100vh - 21rem)'"
+                [grid-DataSource]="penerimaanService.dataSource | async" [grid-paging]="true" [grid-lines]="'Both'"
+                [columns]="GridConfig.GridColumns" (row-selected)="handleSelectedRow($event)"
+                (initialized)="handleinitialized($event)" (row-data-bound)="handleRowDataBound($event)"
+                [grid-toolbar]="GridDataToolbar">
+            </mol-grid>
         </div>
     </div>
 </org-card-layout>

@@ -6,10 +6,10 @@ import { PENERIMAAN } from 'src/app/api/MM/PENERIMAAN';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { TrPemesananDetailInsert,TrPemesananInsert } from '../../../models/penerimaan/pemesanan/PemesananModel';
+import { TrPemesananDetailInsert, TrPemesananInsert } from '../../../models/penerimaan/pemesanan/PemesananModel';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PemesananService {
 
@@ -47,8 +47,8 @@ export class PemesananService {
     onGetAll(): Observable<any> {
         return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
     }
-    
-    onInitList(): void{
+
+    onInitList(): void {
         this.dataSource.next([]);
     }
 
@@ -57,16 +57,16 @@ export class PemesananService {
      * @onGetAll Observable<SetupPabrikModel>
     */
     onGetById(Id): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
+        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID + '/' + Id);
     }
-    
+
 
     /**
      * Service Untuk Menampilkan data berdasarkan dinamik filter
      * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS,req).pipe(
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
@@ -78,29 +78,29 @@ export class PemesananService {
      * @onGetAll Void
     */
     onGetAllByParamsSource(req: PostRequestByDynamicFiterModel[]): void {
-         this.onGetAllByParams(req).subscribe((result) => {
+        this.onGetAllByParams(req).subscribe((result) => {
             if (result) {
                 this.dataSource.next(result.data);
             }
         });
     }
-    
+
     /**
      * Service Untuk Menampilkan data detail Item
      * @setDetail Void
     */
-    setDetail(id): void{
+    setDetail(id): void {
         this.getDetail(id).subscribe((result) => {
             let data = result.data;
-                data.map((item,index)=>{
-                    return item.qty_sisa = item.qty_pesan - item.qty_terima;
-                })
+            data.map((item, index) => {
+                return item.qty_sisa = item.qty_pesan - item.qty_terima;
+            })
             this.dataDetail = data
         });
     }
 
-    getDetail(id): Observable<any>{
-        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id)
+    getDetail(id): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID + '/' + id)
     }
 
     addDataDetail(detail: TrPemesananDetailInsert) {
@@ -120,7 +120,7 @@ export class PemesananService {
         // if (data.sub_total_pesan != rowData.sub_total_pesan) {
         //     data.harga_satuan = data.sub_total_pesan / data.qty_pesan;
         // } else {
-            data.sub_total_pesan = data.qty_pesan * data.harga_satuan;
+        data.sub_total_pesan = data.qty_pesan * data.harga_satuan;
         // }
 
         this.dataDetail[index] = data;
@@ -166,9 +166,9 @@ export class PemesananService {
         this.jumlah_item_pesan = this.dataDetail.sum('qty_pesan');
     }
 
-    Insert( Data:TrPemesananInsert ): Observable<any>{
-        this.dataDetail.map((e,i)=>{
-            return e.no_urut = i+1;
+    Insert(Data: TrPemesananInsert): Observable<any> {
+        this.dataDetail.map((e, i) => {
+            return e.no_urut = i + 1;
         });
         Data.details = this.dataDetail;
         Data.sub_total_1 = this.sub_total_1;
@@ -181,49 +181,47 @@ export class PemesananService {
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-                })
-            );
-    }
-
-    Reset(){
-        this.dataDetail = [] ;
-        this.total_transaksi_pesan = 0 ;
-        this.jumlah_item_pesan = 0 ; 
-    }
-
-    Validation(id:number): Observable<any>{
-        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ pemesanan_id : id })
-            .pipe(
-                catchError((error: HttpErrorResponse):any =>{
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
 
-    Cancel(id:number,reason:string): Observable<any>{
-        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
-                pemesanan_id : id,
-                reason_canceled:reason 
-            })
+    Reset() {
+        this.dataDetail = [];
+        this.total_transaksi_pesan = 0;
+        this.jumlah_item_pesan = 0;
+    }
+
+    Validation(id: number): Observable<any> {
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI, { pemesanan_id: id })
             .pipe(
-                catchError((error: HttpErrorResponse):any =>{
+                catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
 
-    Close(id:number,reason:string): Observable<any>{
-        return this.httpOperationService.defaultPutRequest(this.API.CLOSE,{ 
-                pemesanan_id : id,
-                reason_closed:reason 
-            })
+    Cancel(id: number, reason: string): Observable<any> {
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL, {
+            pemesanan_id: id,
+            reason_canceled: reason
+        })
             .pipe(
-                catchError((error: HttpErrorResponse):any =>{
+                catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
 
-
+    Close(id: number, reason: string): Observable<any> {
+        return this.httpOperationService.defaultPutRequest(this.API.CLOSE, {
+            pemesanan_id: id,
+            reason_closed: reason
+        })
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
 }

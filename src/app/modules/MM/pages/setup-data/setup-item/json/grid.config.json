@@ -1,319 +1,324 @@
 {
-  "GridColumns": [
-    {
-      "editType": "defaultEdit",
-      "field":"id_item",
-      "headerText":"Id Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"id_grup_item",
-      "headerText":"Id Grup Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"kode_grup_item",
-      "headerText":"Kode Grup Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"grup_item",
-      "headerText":"Grup Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"id_pabrik",
-      "headerText":"Id Pabrik",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"kode_pabrik",
-      "headerText":"Kode Pabrik",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"nama_pabrik",
-      "headerText":"Nama Pabrik",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"alamat_pabrik",
-      "headerText":"Alamat Pabrik",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"id_supplier",
-      "headerText":"Id Supplier",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"kode_supplier",
-      "headerText":"Kode Supplier",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"nama_supplier",
-      "headerText":"Nama Supplier",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"alamat_supplier",
-      "headerText":"Alamat Supplier",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"kode_item",
-      "headerText":"Kode Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"barcode",
-      "headerText":"Barcode",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"nama_item",
-      "headerText":"Nama Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"kode_satuan",
-      "headerText":"Kode Satuan",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"nama_satuan",
-      "headerText":"Nama Satuan",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"id_temperatur_item",
-      "headerText":"Id Temperatur Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"temperatur_item",
-      "headerText":"Temperatur Item",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"batas_maksimal_pesan",
-      "headerText":"Batas Maksimal Pesan",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"batas_maksimal_pakai",
-      "headerText":"Batas Maksimal Pakai",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"batas_maksimal_mutasi",
-      "headerText":"Batas Maksimal Mutasi",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"batas_maksimal_jual",
-      "headerText":"Batas Maksimal Jual",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"batas_stok_kritis",
-      "headerText":"Batas Stok Kritis",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"prosentase_stok_kritis",
-      "headerText":"Prosentase Stok Kritis",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"harga_beli_terakhir",
-      "headerText":"Harga Beli Terakhir",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"hpp_average",
-      "headerText":"Hpp Average",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"prosentase_default_profit",
-      "headerText":"Prosentase Default Profit",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"is_ppn",
-      "headerText":"Is Ppn",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"is_active",
-      "headerText":"Is Active",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"user_created",
-      "headerText":"User Created",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"time_created",
-      "headerText":"Time Created",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"user_deactived",
-      "headerText":"User Deactived",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"time_deactived",
-      "headerText":"Time Deactived",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"satuans",
-      "headerText":"Satuans",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": false
-    }
-  ]  
+    "GridColumns": [
+        {
+            "editType": "defaultEdit",
+            "field": "id_item",
+            "headerText": "Id Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "id_grup_item",
+            "headerText": "Id Grup Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "kode_grup_item",
+            "headerText": "Kode Grup Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "grup_item",
+            "headerText": "Grup Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 200
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "id_pabrik",
+            "headerText": "Id Pabrik",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "kode_pabrik",
+            "headerText": "Kode Pabrik",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "nama_pabrik",
+            "headerText": "Nama Pabrik",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "alamat_pabrik",
+            "headerText": "Alamat Pabrik",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "id_supplier",
+            "headerText": "Id Supplier",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "kode_supplier",
+            "headerText": "Kode Supplier",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "nama_supplier",
+            "headerText": "Nama Supplier",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "alamat_supplier",
+            "headerText": "Alamat Supplier",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "kode_item",
+            "headerText": "Kode Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "barcode",
+            "headerText": "Barcode",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "nama_item",
+            "headerText": "Nama Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 300
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "kode_satuan",
+            "headerText": "Kode Satuan",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "nama_satuan",
+            "headerText": "Nama Satuan",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "id_temperatur_item",
+            "headerText": "Id Temperatur Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "temperatur_item",
+            "headerText": "Temperatur Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "batas_maksimal_pesan",
+            "headerText": "Batas Maksimal Pesan",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "batas_maksimal_pakai",
+            "headerText": "Batas Maksimal Pakai",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "batas_maksimal_mutasi",
+            "headerText": "Batas Maksimal Mutasi",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "batas_maksimal_jual",
+            "headerText": "Batas Maksimal Jual",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "batas_stok_kritis",
+            "headerText": "Batas Stok Kritis",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "prosentase_stok_kritis",
+            "headerText": "Prosentase Stok Kritis",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "harga_beli_terakhir",
+            "headerText": "Harga Beli Terakhir",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "hpp_average",
+            "headerText": "Hpp Average",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "prosentase_default_profit",
+            "headerText": "Prosentase Default Profit",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "is_ppn",
+            "headerText": "Is Ppn",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "is_active",
+            "headerText": "Is Active",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "user_created",
+            "headerText": "User Created",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "time_created",
+            "headerText": "Time Created",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "user_deactived",
+            "headerText": "User Deactived",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "time_deactived",
+            "headerText": "Time Deactived",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "satuans",
+            "headerText": "Satuans",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        }
+    ]
 }

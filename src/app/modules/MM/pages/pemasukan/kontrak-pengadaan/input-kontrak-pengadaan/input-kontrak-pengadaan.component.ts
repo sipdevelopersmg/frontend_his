@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild, Renderer2, HostListener } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -84,6 +84,8 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     id_kontrak_from_list: number;
 
+    screenWidth: any;
+
     constructor(
         private location: Location,
         private renderer: Renderer2,
@@ -96,7 +98,14 @@ export class InputKontrakPengadaanComponent implements OnInit {
         public inputKontrakPengadaanService: InputKontrakPengadaanService,
     ) { }
 
+    @HostListener("window:resize", ['$event'])
+    private onResize(event: any) {
+        this.onDetectScreenSize(event.srcElement.innerWidth);
+    }
+
     ngOnInit(): void {
+        this.onDetectScreenSize(window.innerWidth);
+
         this.formKontrak = this.formBuilder.group({
             id_supplier: ["", Validators.required],
             nomor_kontrak_spjb: ["", Validators.required],
@@ -158,6 +167,10 @@ export class InputKontrakPengadaanComponent implements OnInit {
         setTimeout(() => {
             this.ResetFrom();
         }, 1);
+    }
+
+    onDetectScreenSize(screenWidth: any): void {
+        this.screenWidth = screenWidth;
     }
 
     onLoadDetailData(kontrak_id) {

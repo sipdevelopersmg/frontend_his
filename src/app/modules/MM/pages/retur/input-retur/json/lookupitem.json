@@ -7,9 +7,9 @@
             "field": "kode_item",
             "headerText": "Kode",
             "type": "string",
-            "visible": true
+            "visible": true,
+            "width": 100
         },
-        
         {
             "allowEditing": true,
             "allowSorting": true,
@@ -17,7 +17,8 @@
             "field": "nama_item",
             "headerText": "Nama Barang",
             "type": "string",
-            "visible": true
+            "visible": true,
+            "width": 200
         },
         {
             "allowEditing": true,
@@ -26,7 +27,8 @@
             "field": "barcode_batch_number",
             "headerText": "Barcode Batch Number",
             "type": "string",
-            "visible": true
+            "visible": true,
+            "width": 150
         },
         {
             "allowEditing": true,
@@ -35,7 +37,8 @@
             "field": "batch_number",
             "headerText": "Batch Number",
             "type": "string",
-            "visible": true
+            "visible": true,
+            "width": 150
         },
         {
             "allowEditing": true,
@@ -43,8 +46,10 @@
             "editType": "defaultEdit",
             "field": "expired_date",
             "headerText": "Expired Date",
-            "type": "string",
-            "visible": true
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
+            "visible": true,
+            "width": 150
         },
         {
             "allowEditing": true,
@@ -52,8 +57,12 @@
             "editType": "defaultEdit",
             "field": "qty_on_hand",
             "headerText": "Sisa Stok",
-            "type": "string",
-            "visible": true
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 100
         },
         {
             "allowEditing": true,
@@ -61,8 +70,12 @@
             "editType": "defaultEdit",
             "field": "harga_beli_terakhir",
             "headerText": "Harga Beli",
-            "type": "string",
-            "visible": true
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 120
         }
     ],
     "filter": [

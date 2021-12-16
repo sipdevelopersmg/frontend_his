@@ -9,7 +9,7 @@ import { NotificationService } from 'src/app/modules/shared/services/notificatio
 import { TrPermintaanMutasiDetailInsert, TrPermintaanMutasiInsert } from '../../../models/mutasi/permintaan-mutasi';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PermintaanMutasiService {
 
@@ -47,8 +47,8 @@ export class PermintaanMutasiService {
     // onGetAll(): Observable<any> {
     //     return this.httpOperationService.defaultGetRequest(this.API.GET_ALL);
     // }
-    
-    onInitList(): void{
+
+    onInitList(): void {
         this.dataSource.next([]);
     }
 
@@ -57,16 +57,16 @@ export class PermintaanMutasiService {
      * @onGetAll Observable<SetupPabrikModel>
     */
     onGetById(Id): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
+        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID + '/' + Id);
     }
-    
+
 
     /**
      * Service Untuk Menampilkan data berdasarkan dinamik filter
      * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS,req).pipe(
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
@@ -78,27 +78,27 @@ export class PermintaanMutasiService {
      * @onGetAll Void
     */
     onGetAllByParamsSource(req: PostRequestByDynamicFiterModel[]): void {
-         this.onGetAllByParams(req).subscribe((result) => {
+        this.onGetAllByParams(req).subscribe((result) => {
             if (result) {
                 this.dataSource.next(result.data);
             }
         });
     }
-    
+
     /**
      * Service Untuk Menampilkan data detail Item
      * @setDetail Void
     */
-    setDetail(id): void{
-        this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id).subscribe((result) => {
+    setDetail(id): void {
+        this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID + '/' + id).subscribe((result) => {
             this.dataDetail = result.data
         });
     }
 
     addDataDetail(detail: TrPermintaanMutasiDetailInsert) {
-        this.dataDetail =  [
-          ...this.dataDetail,
-          detail
+        this.dataDetail = [
+            ...this.dataDetail,
+            detail
         ];
         this.sum();
     }
@@ -133,14 +133,13 @@ export class PermintaanMutasiService {
     }
 
     sum(): void {
-
         this.total_transaksi = 0;
         this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_permintaan');
     }
 
-    Insert( Data:TrPermintaanMutasiInsert ): Observable<any>{
-        this.dataDetail.map((e,i)=>{
-            return e.no_urut = i+1;
+    Insert(Data: TrPermintaanMutasiInsert): Observable<any> {
+        this.dataDetail.map((e, i) => {
+            return e.no_urut = i + 1;
         });
         Data.details = this.dataDetail;
         Data.jumlah_item = this.jumlah_item;
@@ -149,14 +148,14 @@ export class PermintaanMutasiService {
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
 
-    Reset(){
-        this.dataDetail = [] ;
-        this.total_transaksi = 0 ;
-        this.jumlah_item = 0 ; 
+    Reset() {
+        this.dataDetail = [];
+        this.total_transaksi = 0;
+        this.jumlah_item = 0;
     }
 }
