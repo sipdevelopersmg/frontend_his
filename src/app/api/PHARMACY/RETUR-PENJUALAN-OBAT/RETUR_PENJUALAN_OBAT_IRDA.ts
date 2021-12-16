@@ -11,3 +11,4 @@ export const GET_DETAIL_PENJUALAN_BY_HEADER_ID = `${environment.webApiPHARMACY}`
 export const GET_DETAIL_BY_ID = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrda/GetDetailById';
 export const VALIDASI = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrda/UpdateToValidated';
 export const CANCEL = `${environment.webApiPHARMACY}` +'TransReturPenjualanObatIrda/UpdateToCanceled';
+export const GET_PASIEN_IRDA = `${environment.webApiAdmisi}` +'AdmisiIrda/AdmisiPasienIrdaGetAllByDynamicFilterForFarmasi';

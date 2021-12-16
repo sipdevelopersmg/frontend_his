@@ -26,7 +26,9 @@ export class ListKontrakPengadaanComponent implements OnInit, AfterViewInit {
     ];
 
     FilterColumnDatasource: any[] = [
+        { text: 'No. Kontrak SPJB', value: 'tks.nomor_kontrak_spjb' },
         { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
+        { text: 'Supplier', value: 'sup.nama_supplier' },
         { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
     ];
 

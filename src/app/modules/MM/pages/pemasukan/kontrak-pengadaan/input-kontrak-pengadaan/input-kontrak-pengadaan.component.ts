@@ -104,6 +104,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.onDetectScreenSize(window.innerWidth);
 
         this.formKontrak = this.formBuilder.group({
@@ -238,17 +239,78 @@ export class InputKontrakPengadaanComponent implements OnInit {
             qty_kontrak_satuan_besar: 1,
             sub_total_kontrak: $event.satuans[0].isi * $event.harga_beli_terakhir,
             satuan: $event.satuans,
+            validasi: false
         }
         this.inputKontrakPengadaanService.addDataDetail(item);
         this.selectLastRowdetail();
     }
 
     handleActionCompleted($event) {
-
+        console.log($event);
         if ($event.requestType == 'save') {
             console.log($event);
             this.inputKontrakPengadaanService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
             this.gridDetail.refresh();
+        }
+
+        if($event.requestType=="refresh" && $event.rows ){
+            $event.rows.forEach(element => {
+                if(!element.data.validasi){
+                    document.querySelector(`[data-uid="${element.uid}"]`).classList.add('e-canceled-background');
+                }
+            });
+        }
+        
+    }
+
+    handleActionBegin($event){
+        console.log($event);
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let banyak = (<HTMLInputElement>document.getElementsByName("qty_kontrak_satuan_besar")[0])
+                if (banyak) {
+                    banyak.addEventListener('click', (event) => {
+                        banyak.select();
+                    });
+                    this.utilityService.setInputNumericElement(banyak, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let harga_satuan = (<HTMLInputElement>document.getElementsByName("harga_satuan")[0])
+                if (harga_satuan) {
+                    harga_satuan.addEventListener('click', (event) => {
+                        harga_satuan.select();
+                    });
+                    this.utilityService.setInputNumericElement(harga_satuan, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let sub_total = (<HTMLInputElement>document.getElementsByName("sub_total_kontrak")[0])
+                if (sub_total) {
+                    sub_total.addEventListener('click', (event) => {
+                        sub_total.select();
+                    });
+                    this.utilityService.setInputNumericElement(sub_total, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+    }
+
+    handleRowDataBound(args: any): void {
+        console.log(args);
+        let validasi = args.data.validasi;
+        if (!validasi) {
+          args.row.classList.add('e-canceled-background');
         }
     }
 

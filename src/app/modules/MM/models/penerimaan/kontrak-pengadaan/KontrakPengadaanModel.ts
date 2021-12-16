@@ -72,6 +72,8 @@ export interface TrKontrakSpjbDetailItemInsert {
     
     /** @format Array of Object */
     satuan:satuan[];
+
+    validasi:boolean;
 }
 
 interface satuan{
