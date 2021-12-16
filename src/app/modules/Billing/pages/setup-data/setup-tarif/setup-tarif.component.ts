@@ -217,7 +217,7 @@ export class SetupTarifComponent implements OnInit {
             .subscribe((result) => {
                 this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Status Tarif', result.message)
                     .then(() => {
-                        this.GetAllData();
+                        this.GetAllByGrupTarifId(parseInt(this.SelectedGrupTarif.id))
                     });
             })
     }

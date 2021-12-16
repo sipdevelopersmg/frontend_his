@@ -355,17 +355,37 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
         this.FormAlamats = this.FormPendaftaranPasienBaruIrja.get('alamat_person') as FormArray;
         this.FormAlamats.push(this.NewAlamat());
+        this.SelectedCheckboxAlamatsIndex.push(0);
 
         this.FormKontaks = this.FormPendaftaranPasienBaruIrja.get('kontak_person') as FormArray;
         this.FormKontaks.push(this.NewKontak());
+        this.SelectedCheckboxKontaksIndex.push(0);
 
         this.FormDebiturs = this.FormPendaftaranPasienBaruIrja.get('debitur_pasien') as FormArray;
         this.FormDebiturs.push(this.NewDebitur());
+        this.SelectedCheckboxDebitursIndex.push(0);
     }
 
     /** @stepChanged Function untuk melihat ketika Step di Wizard berganti */
     stepChanged(args: StepChangedArgs): void {
+
+        // ** Alamat
+        if (args.step.index == 2) {
+            let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
+            CheckboxIsDefault.disabled = true;
+        };
+
+        // ** Kontak Person
+        if (args.step.index == 3) {
+            let CheckboxKontakPersonIsDefault = document.getElementById('CheckboxKontakPersonIsDefault0') as HTMLInputElement;
+            CheckboxKontakPersonIsDefault.disabled = true;
+        };
+
+        // ** Debitur Person
         if (args.step.index == 4) {
+            let CheckboxDebiturIsDefault = document.getElementById('CheckboxDebiturIsDefault0') as HTMLInputElement;
+            CheckboxDebiturIsDefault.disabled = true;
+
             this.FormState == "Insert" ?
                 this.ButtonNav = [
                     { Id: 'Save', Captions: 'Simpan', 'Icons1': 'fa-save' }
@@ -373,12 +393,17 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                 this.ButtonNav = [
                     { Id: 'SavePersonSudahAda', Captions: 'Simpan', 'Icons1': 'fa-save' }
                 ];
-        } else if (args.step.index == 5) {
+        };
+
+        // ** Upload Photo
+        if (args.step.index == 5) {
             this.ButtonNav = [
                 { Id: 'Upload', Captions: 'Upload', 'Icons1': 'fa-file-upload' },
                 { Id: 'Cancel', Captions: 'Cancel', 'Icons1': 'fa-redo-alt' },
             ];
-        } else {
+        }
+
+        if (args.step.index < 2 && args.step.index > 5) {
             this.ButtonNav = [];
         }
     }
@@ -416,30 +441,30 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             "kelurahan": ["", []],
             "kode_wilayah": ["", Validators.required],
             "user_created": [0, []],
-            "is_default": [false, Validators.required]
+            "is_default": [true, Validators.required]
         });
     }
 
     NewKontak(): FormGroup {
         return this.formBuilder.group({
             "hand_phone": ["", Validators.required],
-            "home_phone": ["", Validators.required],
-            "office_phone": ["", Validators.required],
-            "email": ["", []],
+            "home_phone": ["",],
+            "office_phone": ["",],
+            "email": ["", [Validators.email]],
             "keterangan": ["", []],
             "user_created": [0, []],
-            "is_default": [false, Validators.required]
+            "is_default": [true, Validators.required]
         });
     }
 
     NewDebitur(): FormGroup {
         return this.formBuilder.group({
-            "id_debitur": [0, []],
+            "id_debitur": [0, [Validators.required, Validators.min(1)]],
             "no_member": ["", Validators.required],
-            "tgl_aktif_member": ["", Validators.required],
-            "tgl_expired_member": ["", Validators.required],
+            "tgl_aktif_member": ["",],
+            "tgl_expired_member": ["",],
             "keterangan": ["", Validators.required],
-            "is_default": [false, Validators.required]
+            "is_default": [true, Validators.required]
         });
     }
 
@@ -605,15 +630,51 @@ export class PendaftaranPasienBaruComponent implements OnInit {
         switch (Kategori) {
             case "Alamat":
                 this.FormAlamats = this.FormPendaftaranPasienBaruIrja.get('alamat_person') as FormArray;
-                this.FormAlamats.push(this.NewAlamat());
+                this.FormAlamats.push(
+                    this.formBuilder.group({
+                        "alamat_lengkap": ["", Validators.required],
+                        "kode_pos": ["", []],
+                        "rt": ["", []],
+                        "rw": ["", []],
+                        "kelurahan": ["", []],
+                        "kode_wilayah": ["", Validators.required],
+                        "user_created": [0, []],
+                        "is_default": [false, Validators.required]
+                    })
+                );
+                let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
+                CheckboxIsDefault.disabled = false;
                 break;
             case "Kontak":
                 this.FormKontaks = this.FormPendaftaranPasienBaruIrja.get('kontak_person') as FormArray;
-                this.FormKontaks.push(this.NewKontak());
+                this.FormKontaks.push(
+                    this.formBuilder.group({
+                        "hand_phone": ["", Validators.required],
+                        "home_phone": ["", []],
+                        "office_phone": ["", []],
+                        "email": ["", [Validators.email]],
+                        "keterangan": ["", []],
+                        "user_created": [0, []],
+                        "is_default": [false, Validators.required]
+                    })
+                );
+                let CheckboxKontakPersonIsDefault = document.getElementById('CheckboxKontakPersonIsDefault0') as HTMLInputElement;
+                CheckboxKontakPersonIsDefault.disabled = false;
                 break;
             case "Debitur":
                 this.FormDebiturs = this.FormPendaftaranPasienBaruIrja.get('debitur_pasien') as FormArray;
-                this.FormDebiturs.push(this.NewDebitur());
+                this.FormDebiturs.push(
+                    this.formBuilder.group({
+                        "id_debitur": [0, [Validators.required]],
+                        "no_member": ["", Validators.required],
+                        "tgl_aktif_member": ["", []],
+                        "tgl_expired_member": ["", []],
+                        "keterangan": ["", Validators.required],
+                        "is_default": [false, Validators.required]
+                    })
+                );
+                let CheckboxDebiturIsDefault = document.getElementById('CheckboxDebiturIsDefault0') as HTMLInputElement;
+                CheckboxDebiturIsDefault.disabled = false;
                 break;
             default:
                 break;
@@ -624,25 +685,28 @@ export class PendaftaranPasienBaruComponent implements OnInit {
         switch (Kategori) {
             case "Alamat":
                 this.FormAlamats = this.FormPendaftaranPasienBaruIrja.get('alamat_person') as FormArray;
-
                 if (this.FormAlamats.length > 1) {
                     this.FormAlamats.removeAt(this.FormAlamats.length - 1);
                     this.SelectedCheckboxAlamatsIndex.pop();
-                }
+                };
+                let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
+                CheckboxIsDefault.disabled = true;
                 break;
             case "Kontak":
                 this.FormKontaks = this.FormPendaftaranPasienBaruIrja.get('kontak_person') as FormArray;
-
                 if (this.FormKontaks.length > 1) {
                     this.FormKontaks.removeAt(this.FormKontaks.length - 1);
                 }
+                let CheckboxKontakPersonIsDefault = document.getElementById('CheckboxKontakPersonIsDefault0') as HTMLInputElement;
+                CheckboxKontakPersonIsDefault.disabled = true;
                 break;
             case "Debitur":
                 this.FormDebiturs = this.FormPendaftaranPasienBaruIrja.get('debitur_pasien') as FormArray;
-
                 if (this.FormDebiturs.length > 1) {
                     this.FormDebiturs.removeAt(this.FormDebiturs.length - 1);
                 }
+                let CheckboxDebiturIsDefault = document.getElementById('CheckboxDebiturIsDefault0') as HTMLInputElement;
+                CheckboxDebiturIsDefault.disabled = true;
                 break;
             default:
                 break;

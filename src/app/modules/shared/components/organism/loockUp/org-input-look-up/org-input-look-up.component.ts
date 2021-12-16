@@ -80,11 +80,12 @@ export class OrgInputLookUpComponent implements OnInit {
     }
 
     onCloseModal() {
-        setTimeout(() => {
-            this.gridDataSource = [];
-        }, 200);
+        this.gridDataSource = [];
+        this.GridData.Grid.refresh();
 
-        this.modalRef.hide();
+        setTimeout(() => {
+            this.modalRef.hide();
+        }, 200);
     }
 
     onFetchDataSource(params: any) {
@@ -169,15 +170,14 @@ export class OrgInputLookUpComponent implements OnInit {
         }
     }
 
+    onDoubleClicked(args: any) {
+        this.onKeyPressedUtility(args);
+    }
+
     onKeyPressedUtility(data: any) {
-        // (<HTMLInputElement>document.getElementById(this.SelectedInputId)).value = data[this.SelectedInputId];
         this.titleValue = data[this.idTitle];
         this.onGetSelectedData.emit(data);
         this.onCloseModal();
-    }
-
-    onDoubleClicked(args: any) {
-        this.onKeyPressedUtility(args);
     }
 
     handlePressEnter($event) {

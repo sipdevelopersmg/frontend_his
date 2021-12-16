@@ -13,3 +13,5 @@ export const POST_SAVE_PELUNASAN = `${environment.webApiBilling}` + `tarif/Trans
 export const POST_BATAL_PELUNASAN = `${environment.webApiBilling}` + `tarif/TransBillingIRNA/BatalPaymentIRNA`;
 export const POST_REPROSES = `${environment.webApiBilling}` + `tarif/TransBillingIRNA/ReprosesIRNA`;
 export const PUT_EKSTRAK_BED = `${environment.webApiBilling}` + `tarif/TransDetailAkomodasiInapEkstrak/EkstrakBed/`;
+export const POST_SAVE_AKOMODASI_MANUAL = `${environment.webApiBilling}` + `tarif/TransBillingIRNA/BillAddAkomodasiManual`;
+export const PUT_DELETE_AKOMODASI_MANUAL = `${environment.webApiBilling}` + `tarif/TransBillingIRNA/BillDeleteAkomodasiManual`;

@@ -715,7 +715,7 @@
                         </div>
 
                         <!-- Saldo Deposit -->
-                        <div class="row align-items-center mb-4">
+                        <div class="row align-items-center mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <p class="text-hitam-muda mb-0">Saldo Deposit</p>
                             </div>
@@ -723,6 +723,19 @@
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
                                     [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
                                     [showClearButton]="false" [readonly]="true" formControlName="deposit_amount">
+                                </ejs-numerictextbox>
+                            </div>
+                        </div>
+
+                        <!-- Total Payment -->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <p class="text-hitam-muda mb-0 fw-bold">Total Payment</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-0">
+                                <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
+                                    [cssClass]="'readonly-state rounded border-0'" [showSpinButton]="false"
+                                    [showClearButton]="false" [readonly]="true" formControlName="total_payment">
                                 </ejs-numerictextbox>
                             </div>
                         </div>

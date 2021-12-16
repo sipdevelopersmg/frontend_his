@@ -268,6 +268,165 @@
             }
         ]
     },
+    "LookupRoom": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_descr",
+                "headerText": "LABEL ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "floor_no",
+                "headerText": "LANTAI",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "gender",
+                "headerText": "GENDER",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "is_isolasi",
+                "headerText": "IS ISOLASI",
+                "displayAsCheckbox": true,
+                "visible": true,
+                "width": 70,
+                "textAlign": "Center",
+                "headerTextAlign": "Center"
+            }
+        ],
+        "filter": [
+            {
+                "field": "sr.room_no",
+                "filter": "like",
+                "title": "NO. ROOM"
+            },
+            {
+                "field": "sr.room_descr",
+                "filter": "like",
+                "title": "LABEL ROOM"
+            },
+            {
+                "field": "p.nama_poli",
+                "filter": "like",
+                "title": "POLIKLINIK"
+            },
+            {
+                "field": "kp.nama_kelas",
+                "filter": "like",
+                "title": "KELAS"
+            }
+        ]
+    },
+    "LookupBed": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "bed_no",
+                "headerText": "NO. BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_descr",
+                "headerText": "LABEL ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "sbr.bed_no",
+                "filter": "like",
+                "title": "NO. BED"
+            }
+        ]
+    },
     "LookupTarif": {
         "columns": [
             {
@@ -350,6 +509,33 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
+            "field": "id_poli",
+            "headerText": "ID POLI",
+            "visible": false,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_setup_room",
+            "headerText": "ID SETUP ROOM",
+            "visible": false,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "id_setup_bed_room",
+            "headerText": "ID SETUP BED ROOM",
+            "visible": false,
+            "width": 80
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
             "field": "id_kelas_rawat",
             "headerText": "ID KELAS RAWAT",
             "visible": false,
@@ -359,8 +545,8 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "id_poli",
-            "headerText": "ID POLI",
+            "field": "qty",
+            "headerText": "QTY",
             "visible": false,
             "width": 80
         },
@@ -379,17 +565,8 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "kode_setup_tarif",
-            "headerText": "KODE TARIF",
-            "visible": true,
-            "width": 100
-        },
-        {
-            "allowEditing": false,
-            "allowSorting": true,
-            "editType": "defaultEdit",
-            "field": "nama_setup_tarif",
-            "headerText": "NAMA TARIF",
+            "field": "nama_poli",
+            "headerText": "POLIKLINIK",
             "visible": true,
             "width": 150
         },
@@ -406,19 +583,17 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nama_poli",
-            "headerText": "POLIKLINIK",
+            "field": "room_no",
+            "headerText": "NO. ROOM",
             "visible": true,
-            "width": 150
+            "width": 80
         },
         {
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nominal_tarif",
-            "headerText": "SUBTOTAL",
-            "format": "N2",
-            "type": "number",
+            "field": "bed_no",
+            "headerText": "NO. BED",
             "visible": true,
             "width": 80
         }

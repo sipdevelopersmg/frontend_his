@@ -43,6 +43,8 @@ export class AtmInputComponent implements ControlValueAccessor {
 
     @Input('disabled') disabled = false;
 
+    @Input('type') type = "text";
+
     get value() { return this._value; }
 
     set value(val) {

@@ -10,11 +10,14 @@ import { KelasPerawatanModel } from 'src/app/modules/Billing/models/setup-data/s
 import { AkomodasiDetailModel, GetDataAkomodasiPasienModel, IAkomodasiBillingModel, IInformasiPasienModel } from 'src/app/modules/Billing/models/trans-billing/trans-billing.model';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { TransBillingRawatInapService } from 'src/app/modules/Billing/services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
+import { IBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
+import { IKamarModel } from 'src/app/modules/PIS/models/IRNA/setup-kamar.model';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import * as API_BILLING from '../../../../../../api/BILLING';
+import * as API_PIS from '../../../../../../api/PIS';
 import * as Config from '../json/akomodasi-rawat-inap.config.json';
 
 @Component({
@@ -36,6 +39,8 @@ export class AkomodasiRawatInapComponent implements OnInit {
 
     API_BILLING_SETTING_TARIF = API_BILLING.API_BILLING.SETTING_HARGA_TARIF;
 
+    API_PIS = API_PIS.API_PIS;
+
     // ** List Akomodasi Datasource
     ListAkomodasiDatasource: IAkomodasiBillingModel[];
 
@@ -48,6 +53,14 @@ export class AkomodasiRawatInapComponent implements OnInit {
 
     @ViewChild('LookupPoli') LookupPoli: OrgInputLookUpKodeComponent;
     UrlLookupPoli: string;
+
+    @ViewChild('LookupRoom') LookupRoom: OrgInputLookUpKodeComponent;
+    UrlLookupRoom = this.API_PIS.IRNA.IRNA.SETUP_BED_IRNA.GET_ALL_ROOM_BY_DYNAMIC_FILTER;
+    LookupRoomStaticFilter: any[];
+
+    @ViewChild('LookupBed') LookupBed: OrgInputLookUpKodeComponent;
+    UrlLookupBed = this.API_PIS.IRNA.IRNA.SETUP_BED_IRNA.GET_ALL_BED_ROOM_BY_DYNAMIC_FILTER;
+    LookupBedStaticFilter: any[];
 
     @ViewChild('DropdownKelas') DropdownKelas: DropDownListComponent;
     DropdownKelasDatasource: KelasPerawatanModel[];
@@ -99,12 +112,12 @@ export class AkomodasiRawatInapComponent implements OnInit {
             tanggal: ['', [Validators.required]],
             qty: ['', [Validators.required]],
             id_poli: [0, [Validators.required]],
-            nama_poli: [0, [Validators.required]],
-            id_tarif: [0, [Validators.required]],
-            kode_setup_tarif: ['', [Validators.required]],
-            nama_setup_tarif: ['', [Validators.required]],
-            nominal_tarif: [0, [Validators.required]],
-            id_kelas_rawat: [0, [Validators.required]],
+            nama_poli: ["", [Validators.required]],
+            id_setup_room: [0, [Validators.required]],
+            room_no: ["", [Validators.required]],
+            id_setup_bed_room: [0, [Validators.required]],
+            bed_no: ["", [Validators.required]],
+            id_kelas: [0, [Validators.required]],
             kelas_rawat: ['', [Validators.required]],
         });
 
@@ -193,18 +206,26 @@ export class AkomodasiRawatInapComponent implements OnInit {
             });
     }
 
-    onSubmitAddDetailAkomodasi(): void {
-
-    }
-
     onDeleteDetailAkomodasi(): void {
-        let grid_selected_row_index: number[] = this.GridDetailAkomodasi.getSelectedRowIndexes();
+        let grid_selected_records = this.GridDetailAkomodasi.getSelectedRecords();
 
-        grid_selected_row_index.forEach((item) => {
-            this.ListAkomodasiDetailDatasource.splice(item, 1);
+        let selected_akomodasi_ekstrak = [];
+
+        grid_selected_records.forEach((item) => {
+            selected_akomodasi_ekstrak.push(item['id_transaksi_akomodasi_ekstrak']);
         });
 
-        this.GridDetailAkomodasi.refresh();
+        this.transBillingRawatInapService.onDeleteAkomodasiManual(selected_akomodasi_ekstrak)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Detail Akomodasi Berhasil Dihapus')
+                        .then(() => {
+                            this.handleCloseAkomodasiRawatInap(true);
+
+                            this.onRenewInformasiAkomodasiAfterEkstrak();
+                        });
+                }
+            });
     }
 
     handleSelectedRowDetailAkomodasi(args: any): void {
@@ -470,13 +491,32 @@ export class AkomodasiRawatInapComponent implements OnInit {
         this.id_poli.setValue(args.id_poli);
         this.nama_poli.setValue(args.nama_poli);
         this.UrlLookupTarif = this.API_BILLING_SETTING_TARIF.SETTING_TARIF_BERLAKU.GET_ALL_TARIF_BERLAKU_FOR_TRANS_IRNA;
+        this.LookupRoomStaticFilter = [
+            {
+                "columnName": "p.nama_poli",
+                "filter": "like",
+                "searchText": args.nama_poli,
+                "searchText2": ""
+            }
+        ];
     }
 
-    handleSelectedTarif(args: any): void {
-        this.id_tarif.setValue(args.id_setup_tarif);
-        this.kode_setup_tarif.setValue(args.kode_setup_tarif);
-        this.nama_setup_tarif.setValue(args.nama_setup_tarif);
-        this.nominal_tarif.setValue(args.nominal_tarif);
+    handleSelectedRoom(args: IKamarModel): void {
+        this.id_setup_room.setValue(args.id_setup_room);
+        this.room_no.setValue(args.room_no);
+        this.LookupBedStaticFilter = [
+            {
+                "columnName": "sr.room_no",
+                "filter": "like",
+                "searchText": args.room_no,
+                "searchText2": ""
+            }
+        ];
+    }
+
+    handleSelectedBed(args: IBedModel): void {
+        this.id_setup_bed_room.setValue(args.id_setup_bed_room);
+        this.bed_no.setValue(args.bed_no);
     }
 
     handleChangeDropdownKelas(args: any): void {
@@ -484,6 +524,8 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     handleAddDataDetailAkomodasi(FormAddDetailAkomodasi: any): void {
+        FormAddDetailAkomodasi.tanggal = this.utilityService.onFormatDate(FormAddDetailAkomodasi.tanggal);
+
         this.GridAddDetailAkomodasiDatasource.push(FormAddDetailAkomodasi);
 
         this.GridAddDetailAkomodasi.Grid.refresh();
@@ -498,11 +540,11 @@ export class AkomodasiRawatInapComponent implements OnInit {
         this.qty.setValue(0);
         this.id_poli.setValue(0);
         this.nama_poli.setValue('');
-        this.id_tarif.setValue(0);
-        this.kode_setup_tarif.setValue('');
-        this.nama_setup_tarif.setValue('');
-        this.nominal_tarif.setValue(0);
-        this.id_kelas_rawat.setValue(0);
+        this.id_setup_room.setValue(0);
+        this.room_no.setValue('');
+        this.id_setup_bed_room.setValue('');
+        this.bed_no.setValue(0);
+        this.id_kelas.setValue(0);
         this.kelas_rawat.setValue('');
 
         this.DatepickerTanggal.value = null;
@@ -511,7 +553,9 @@ export class AkomodasiRawatInapComponent implements OnInit {
 
         this.LookupPoli.resetValue();
 
-        this.LookupTarif.resetValue();
+        this.LookupRoom.resetValue();
+
+        this.LookupBed.resetValue();
 
         this.DropdownKelas.value = null;
     }
@@ -535,7 +579,25 @@ export class AkomodasiRawatInapComponent implements OnInit {
     }
 
     handleSubmitAddDetailAkomodasi(data: any): void {
-        console.log(data);
+        let parameter = {
+            id_register: this.InformasiPasien.id_register,
+            item_akomodasi: data
+        };
+
+        this.transBillingRawatInapService.onSaveAddAkomodasiManual(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Detail Akomodasi Berhasil Disimpan')
+                        .then(() => {
+                            let btnCloseAddDetailAkomodasi = document.getElementById('btnCloseAddDetailAkomodasi') as HTMLElement;
+                            btnCloseAddDetailAkomodasi.click();
+
+                            this.handleCloseAddDetailAkomodasi();
+
+                            this.onRenewInformasiAkomodasiAfterEkstrak();
+                        });
+                }
+            });
     }
 
     handleCloseAddDetailAkomodasi(): void {
@@ -552,10 +614,10 @@ export class AkomodasiRawatInapComponent implements OnInit {
     get qty(): AbstractControl { return this.FormAddDetailAkomodasi.get('qty'); }
     get id_poli(): AbstractControl { return this.FormAddDetailAkomodasi.get('id_poli'); }
     get nama_poli(): AbstractControl { return this.FormAddDetailAkomodasi.get('nama_poli'); }
-    get id_tarif(): AbstractControl { return this.FormAddDetailAkomodasi.get('id_tarif'); }
-    get kode_setup_tarif(): AbstractControl { return this.FormAddDetailAkomodasi.get('kode_setup_tarif'); }
-    get nama_setup_tarif(): AbstractControl { return this.FormAddDetailAkomodasi.get('nama_setup_tarif'); }
-    get nominal_tarif(): AbstractControl { return this.FormAddDetailAkomodasi.get('nominal_tarif'); }
-    get id_kelas_rawat(): AbstractControl { return this.FormAddDetailAkomodasi.get('id_kelas_rawat'); }
+    get id_setup_room(): AbstractControl { return this.FormAddDetailAkomodasi.get('id_setup_room'); }
+    get room_no(): AbstractControl { return this.FormAddDetailAkomodasi.get('room_no'); }
+    get id_setup_bed_room(): AbstractControl { return this.FormAddDetailAkomodasi.get('id_setup_bed_room'); }
+    get bed_no(): AbstractControl { return this.FormAddDetailAkomodasi.get('bed_no'); }
+    get id_kelas(): AbstractControl { return this.FormAddDetailAkomodasi.get('id_kelas'); }
     get kelas_rawat(): AbstractControl { return this.FormAddDetailAkomodasi.get('kelas_rawat'); }
 }

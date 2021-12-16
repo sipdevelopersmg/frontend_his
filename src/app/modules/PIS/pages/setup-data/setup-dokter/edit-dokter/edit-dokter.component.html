@@ -290,13 +290,17 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <form [formGroup]="FormAlamats">
                                             <!-- Alamat Person -->
-                                            <mol-input-text [label]="'Alamat Lengkap'" formControlName="alamat_lengkap">
+                                            <mol-input-text [label]="'Alamat Lengkap *'"
+                                                formControlName="alamat_lengkap"
+                                                [IsFormControlTouched]="alamat_lengkap.touched"
+                                                [IsFormControlInvalid]="alamat_lengkap.invalid"
+                                                [ValidatorsCaption]="'Alamat Tidak Boleh Kosong'">
                                             </mol-input-text>
 
                                             <!-- Provinsi -->
                                             <div class="row mb-2">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                    <atm-label [LabelCaption]="'Provinsi'"></atm-label>
+                                                    <atm-label [LabelCaption]="'Provinsi *'"></atm-label>
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                     <ejs-dropdownlist #ProvinsiDropdown
@@ -311,7 +315,7 @@
                                             <!-- Kota -->
                                             <div class="row mb-2">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                    <atm-label [LabelCaption]="'Kota'"></atm-label>
+                                                    <atm-label [LabelCaption]="'Kota *'"></atm-label>
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                     <ejs-dropdownlist #KotaDropdown
@@ -496,20 +500,20 @@
                                             </mol-input-text>
 
                                             <!-- No. Telepon Rumah -->
-                                            <mol-input-text [label]="'No. Telepon Rumah *'" formControlName="home_phone"
-                                                [IsFormControlInvalid]="home_phone.invalid"
-                                                [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'">
+                                            <mol-input-text [label]="'No. Telepon Rumah'" formControlName="home_phone">
                                             </mol-input-text>
 
                                             <!-- No. Telepon Kantor -->
-                                            <mol-input-text [label]="'No. Telepon Kantor *'"
+                                            <mol-input-text [label]="'No. Telepon Kantor'"
                                                 formControlName="office_phone"
                                                 [IsFormControlInvalid]="office_phone.invalid"
                                                 [ValidatorsCaption]="'No. Telepon Kantor Tidak Boleh Kosong'">
                                             </mol-input-text>
 
                                             <!-- Email -->
-                                            <mol-input-text [label]="'Email'" formControlName="email">
+                                            <mol-input-text [label]="'Email'" formControlName="email"
+                                                [IsFormControlInvalid]="email.invalid"
+                                                [ValidatorsCaption]="'Email Tidak Valid'">
                                             </mol-input-text>
 
                                             <!-- Keterangan -->
@@ -615,18 +619,13 @@
                             <!-- Tgl Exp Surat Ijin Praktek -->
                             <div class="row mb-2">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek *'">
+                                    <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek'">
                                     </atm-label>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <ejs-datepicker id="tglExpiredSuratIjinPraktek" format="dd/MM/yyyy"
                                         formControlName="tgl_exp_surat_ijin_praktek">
                                     </ejs-datepicker>
-
-                                    <atm-validators [IsFormControlTouched]="tgl_exp_surat_ijin_praktek.touched"
-                                        [IsFormControlInvalid]="tgl_exp_surat_ijin_praktek.invalid"
-                                        [ValidatorsCaption]="'Tgl Exp Surat Ijin Praktek Tidak Boleh Kosong'">
-                                    </atm-validators>
                                 </div>
                             </div>
 
@@ -637,17 +636,12 @@
                             <!-- Tgl Exp STR -->
                             <div class="row mb-2">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <atm-label [LabelCaption]="'Tgl Exp STR *'"></atm-label>
+                                    <atm-label [LabelCaption]="'Tgl Exp STR'"></atm-label>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <ejs-datepicker id="tglExpiredSTR" format="dd/MM/yyyy"
                                         formControlName="tgl_exp_str">
                                     </ejs-datepicker>
-
-                                    <atm-validators [IsFormControlTouched]="tgl_exp_str.touched"
-                                        [IsFormControlInvalid]="tgl_exp_str.invalid"
-                                        [ValidatorsCaption]="'Tgl Exp STR Tidak Boleh Kosong'">
-                                    </atm-validators>
                                 </div>
                             </div>
 

@@ -379,9 +379,9 @@ export class InputDokterComponent implements OnInit {
             "dokter": this.formBuilder.group({
                 "id_spesialisasi_dokter": [0, Validators.required],
                 "no_surat_ijin_praktek": ["", []],
-                "tgl_exp_surat_ijin_praktek": [Date, Validators.required],
+                "tgl_exp_surat_ijin_praktek": ['', []],
                 "no_str": ["", []],
-                "tgl_exp_str": [Date, Validators.required],
+                "tgl_exp_str": ['', []],
                 "id_smf": [0, []],
                 "id_status_dokter": [0, []],
                 "user_created": [0, []],
@@ -392,9 +392,11 @@ export class InputDokterComponent implements OnInit {
 
         this.FormAlamats = this.FormInputDokter.get('alamat_person') as FormArray;
         this.FormAlamats.push(this.NewAlamat());
+        this.SelectedCheckboxAlamatsIndex.push(0);
 
         this.FormKontaks = this.FormInputDokter.get('kontak_person') as FormArray;
         this.FormKontaks.push(this.NewKontak());
+        this.SelectedCheckboxKontaksIndex.push(0);
     }
 
     NewAlamat(): FormGroup {
@@ -406,24 +408,36 @@ export class InputDokterComponent implements OnInit {
             "kelurahan": ["", []],
             "kode_wilayah": ["", Validators.required],
             "user_created": [0, []],
-            "is_default": [false, Validators.required]
+            "is_default": [true, Validators.required]
         });
     }
 
     NewKontak(): FormGroup {
         return this.formBuilder.group({
             "hand_phone": ["", Validators.required],
-            "home_phone": ["", Validators.required],
-            "office_phone": ["", Validators.required],
-            "email": ["", []],
+            "home_phone": ["", []],
+            "office_phone": ["", []],
+            "email": ["", [Validators.email]],
             "keterangan": ["", []],
             "user_created": [0, []],
-            "is_default": [false, Validators.required]
+            "is_default": [true, Validators.required]
         });
     }
 
     /** @stepChanged Function untuk melihat ketika Step di Wizard berganti */
     stepChanged(args: StepChangedArgs): void {
+        // ** Alamat
+        if (args.step.index == 2) {
+            let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
+            CheckboxIsDefault.disabled = true;
+        };
+
+        // ** Kontak Person
+        if (args.step.index == 3) {
+            let CheckboxKontakPersonIsDefault = document.getElementById('CheckboxKontakPersonIsDefault0') as HTMLInputElement;
+            CheckboxKontakPersonIsDefault.disabled = true;
+        };
+
         if (args.step.index == 4) {
             this.FormState == "Insert" ?
                 this.ButtonNav = [
@@ -432,12 +446,16 @@ export class InputDokterComponent implements OnInit {
                 this.ButtonNav = [
                     { Id: 'SavePersonSudahAda', Captions: 'Simpan', 'Icons1': 'fa-save' }
                 ];
-        } else if (args.step.index == 5) {
+        }
+
+        if (args.step.index == 5) {
             this.ButtonNav = [
                 { Id: 'Upload', Captions: 'Upload', 'Icons1': 'fa-file-upload' },
                 { Id: 'Cancel', Captions: 'Cancel', 'Icons1': 'fa-redo-alt' },
             ];
-        } else {
+        }
+
+        if (args.step.index < 2 && args.step.index > 5) {
             this.ButtonNav = [];
         }
     }
@@ -594,11 +612,36 @@ export class InputDokterComponent implements OnInit {
         switch (Kategori) {
             case "Alamat":
                 this.FormAlamats = this.FormInputDokter.get('alamat_person') as FormArray;
-                this.FormAlamats.push(this.NewAlamat());
+                this.FormAlamats.push(
+                    this.formBuilder.group({
+                        "alamat_lengkap": ["", Validators.required],
+                        "kode_pos": ["", []],
+                        "rt": ["", []],
+                        "rw": ["", []],
+                        "kelurahan": ["", []],
+                        "kode_wilayah": ["", Validators.required],
+                        "user_created": [0, []],
+                        "is_default": [false, Validators.required]
+                    })
+                );
+                let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
+                CheckboxIsDefault.disabled = false;
                 break;
             case "Kontak":
                 this.FormKontaks = this.FormInputDokter.get('kontak_person') as FormArray;
-                this.FormKontaks.push(this.NewKontak());
+                this.FormKontaks.push(
+                    this.formBuilder.group({
+                        "hand_phone": ["", Validators.required],
+                        "home_phone": ["", []],
+                        "office_phone": ["", []],
+                        "email": ["", [Validators.email]],
+                        "keterangan": ["", []],
+                        "user_created": [0, []],
+                        "is_default": [false, Validators.required]
+                    })
+                );
+                let CheckboxKontakPersonIsDefault = document.getElementById('CheckboxKontakPersonIsDefault0') as HTMLInputElement;
+                CheckboxKontakPersonIsDefault.disabled = false;
                 break;
             default:
                 break;
@@ -613,6 +656,8 @@ export class InputDokterComponent implements OnInit {
                 if (this.FormAlamats.length > 1) {
                     this.FormAlamats.removeAt(this.FormAlamats.length - 1);
                 }
+                let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
+                CheckboxIsDefault.disabled = true;
                 break;
             case "Kontak":
                 this.FormKontaks = this.FormInputDokter.get('kontak_person') as FormArray;
@@ -620,6 +665,8 @@ export class InputDokterComponent implements OnInit {
                 if (this.FormKontaks.length > 1) {
                     this.FormKontaks.removeAt(this.FormKontaks.length - 1);
                 }
+                let CheckboxKontakPersonIsDefault = document.getElementById('CheckboxKontakPersonIsDefault0') as HTMLInputElement;
+                CheckboxKontakPersonIsDefault.disabled = true;
                 break;
             default:
                 break;

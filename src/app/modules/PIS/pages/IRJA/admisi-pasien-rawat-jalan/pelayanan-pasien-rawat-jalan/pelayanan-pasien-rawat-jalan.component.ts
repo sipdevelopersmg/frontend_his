@@ -329,19 +329,19 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     }
 
     onSaveWithPenjamin(data: any) {
-        // this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanDenganPenjamin(data)
-        //     .subscribe((result) => {
-        //         if (result) {
-        //             this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
-        //                 .then(() => {
-        //                     this.resetForm();
+        this.admisiPasienRawatJalanService.onPostAdmisiRawatJalanDenganPenjamin(data)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Admisi Pasien Berhasil', `No. Register : ${result.data.no_register}`)
+                        .then(() => {
+                            this.resetForm();
 
-        //                     setTimeout(() => {
-        //                         this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
-        //                     }, 250);
-        //                 });
-        //         }
-        //     });
+                            setTimeout(() => {
+                                this.router.navigateByUrl('dashboard/PIS/IRJA/pelayanan-pasien-rawat-jalan');
+                            }, 250);
+                        });
+                }
+            });
     }
 
     get id_person(): AbstractControl { return this.formAdmisiPasien.get('id_person'); }

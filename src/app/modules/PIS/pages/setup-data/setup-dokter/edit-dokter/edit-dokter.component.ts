@@ -373,9 +373,9 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
             "id_person": [0, []],
             "id_kontak_person": [0, []],
             "hand_phone": ["", Validators.required],
-            "home_phone": ["", Validators.required],
-            "office_phone": ["", Validators.required],
-            "email": ["", []],
+            "home_phone": ["", []],
+            "office_phone": ["", []],
+            "email": ["", [Validators.email]],
             "keterangan": ["", []],
             "user_created": [0, []],
             "is_active": [false, []],
@@ -387,9 +387,9 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
             "id_person": [0, []],
             "id_spesialisasi_dokter": [0, Validators.required],
             "no_surat_ijin_praktek": ["", []],
-            "tgl_exp_surat_ijin_praktek": [Date, Validators.required],
+            "tgl_exp_surat_ijin_praktek": ['',],
             "no_str": ["", []],
-            "tgl_exp_str": [Date, Validators.required],
+            "tgl_exp_str": ['', []],
             "id_smf": [0, []],
             "id_status_dokter": [0, []],
         });
@@ -671,6 +671,14 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleUpdateFormDokter(FormDokter: any): void {
+        if (FormDokter.no_str === null) {
+            FormDokter.no_str = "";
+        };
+
+        if (FormDokter.no_surat_ijin_praktek === null) {
+            FormDokter.no_surat_ijin_praktek = "";
+        };
+
         this.setupDokterService.onUpdateDokter(FormDokter)
             .subscribe((result) => {
                 if (result) {
@@ -679,7 +687,7 @@ export class EditDokterComponent implements OnInit, AfterViewInit {
                             this.onGetDetailDokterByPersonId();
                         });
                 }
-            })
+            });
     }
 
     onResetFormDebitur(): void {

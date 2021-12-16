@@ -25,6 +25,7 @@ export interface IInformasiPasienModel {
     nama_debitur: string;
     nama_kelas: string;
     total_biaya?: number;
+    total_payment?: number;
     status_billing?: string;
     nama_poli?: string;
     nama_dokter?: string;

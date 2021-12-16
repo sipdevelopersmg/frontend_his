@@ -30,8 +30,8 @@
                         <org-tabs-label [Id]="'Detail_Akomodasi'">Detail Akomodasi</org-tabs-label>
                         <org-tabs-body>
                             <ejs-grid #GridDetailAkomodasi [dataSource]="ListAkomodasiDetailDatasource"
-                                [height]="'calc(100vh - 45rem)'" [rowHeight]="30" [gridLines]="'Both'"
-                                [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                [height]="'250px'" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
+                                [allowResizing]="true" [allowFiltering]='true'
                                 [selectionSettings]="GridDetailAkomodasiSelectionSettings"
                                 [editSettings]="GridDetailAkomodasiEditSettings" [toolbar]="GridDetailAkomodasiToolbar"
                                 (toolbarClick)="handleToolbarClickDetailAkomodasi($event)"
@@ -133,22 +133,23 @@
 
 <div class="modal fade" id="modalAddDetailAkomodasi" data-bs-backdrop="static" data-bs-keyboard="false"
     aria-labelledby="modalAddDetailAkomodasiLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal_akomodasi_rawat_inap">
         <div class="modal-content border-0">
             <div class="modal-header py-2 px-3 background-biru-muda text-white">
                 <h5 class="modal-title" id="modalAddDetailAkomodasiLabel">Add Detail Akomodasi Pasien</h5>
                 <button id="btnCloseAddDetailAkomodasi" type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close" (click)="handleCloseAddDetailAkomodasi()">
+                    aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="FormAddDetailAkomodasi">
                     <div class="row mb-2">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <!-- Tanggal dan Qty -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <!-- Tanggal -->
                             <div class="row mb-2 align-items-center">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <atm-label [LabelCaption]="'Tanggal'"></atm-label>
+                                    <atm-label [LabelCaption]="'Tanggal *'"></atm-label>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <ejs-datepicker #DatepickerTanggal [format]="'dd/MM/yyyy'"
@@ -160,47 +161,62 @@
                             <!-- Qty (Hari) -->
                             <div class="row mb-2 align-items-center">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <atm-label [LabelCaption]="'Qty (Hari)'"></atm-label>
+                                    <atm-label [LabelCaption]="'Qty (Hari) *'"></atm-label>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <ejs-numerictextbox #NumericTextboxQty formControlName="qty" [format]="'N0'"
-                                        [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false">
+                                        [min]="0" [showClearButton]="false" [showSpinButton]="false"
+                                        style="text-align: right; padding-right: 5px;">
                                     </ejs-numerictextbox>
                                 </div>
                             </div>
+                        </div>
 
+                        <!-- Poli dan Kelas -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <!-- Lookup Poli -->
                             <org-input-look-up-kode #LookupPoli [modal-title]="'Data Poli'" [lookup-url]="UrlLookupPoli"
                                 [idKode]="'kode_poli'" [idTitle]="'nama_poli'"
                                 (onGetSelectedData)="handleSelectedPoli($event)" [columns]="Config.LookupPoli.columns"
-                                [filter-lookup]="Config.LookupPoli.filter" [label]="'Poli'">
-                            </org-input-look-up-kode>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <!-- Lookup Tarif -->
-                            <org-input-look-up-kode #LookupTarif [modal-title]="'Data Tarif Per Poli'"
-                                [lookup-url]="UrlLookupTarif" [idKode]="'kode_setup_tarif'"
-                                [idTitle]="'nama_setup_tarif'" (onGetSelectedData)="handleSelectedTarif($event)"
-                                [columns]="Config.LookupTarif.columns" [filter-lookup]="Config.LookupTarif.filter"
-                                [label]="'Tarif Akomodasi'">
+                                [filter-lookup]="Config.LookupPoli.filter" [label]="'Poli *'">
                             </org-input-look-up-kode>
 
                             <!-- Kelas Pelayanan -->
                             <div class="row mb-2">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
+                                    <atm-label [LabelCaption]="'Kelas Pelayanan *'"></atm-label>
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
-                                        [fields]="DropdownKelasField" [allowFiltering]="true"
-                                        formControlName="id_kelas_rawat" (change)="handleChangeDropdownKelas($event)">
+                                        [fields]="DropdownKelasField" [allowFiltering]="true" formControlName="id_kelas"
+                                        (change)="handleChangeDropdownKelas($event)">
                                     </ejs-dropdownlist>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- No. Room dan No. Bed -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <!-- No. Room -->
+                            <org-input-look-up #LookupRoom [modal-title]="'Data Room'" [lookup-url]="UrlLookupRoom"
+                                [idTitle]="'room_no'" (onGetSelectedData)="handleSelectedRoom($event)"
+                                [columns]="Config.LookupRoom.columns" [filter-lookup]="Config.LookupRoom.filter"
+                                [static-filter]="LookupRoomStaticFilter" [label]="'No. Room *'">
+                            </org-input-look-up>
+
+                            <!-- No. Bed -->
+                            <org-input-look-up #LookupBed [modal-title]="'Data Bed'" [lookup-url]="UrlLookupBed"
+                                [idTitle]="'bed_no'" (onGetSelectedData)="handleSelectedBed($event)"
+                                [columns]="Config.LookupBed.columns" [filter-lookup]="Config.LookupBed.filter"
+                                [static-filter]="LookupBedStaticFilter" [label]="'No. Bed *'">
+                            </org-input-look-up>
+
+
 
                             <div class="row justify-content-end">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 d-grid gap-2">
                                     <button class="btn btn-primary btn-sm" type="button"
+                                        [disabled]="FormAddDetailAkomodasi.invalid"
                                         (click)="handleAddDataDetailAkomodasi(FormAddDetailAkomodasi.value)">
                                         Add
                                     </button>

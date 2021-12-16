@@ -131,4 +131,22 @@ export class TransBillingRawatInapService {
                 })
             );
     }
+
+    onSaveAddAkomodasiManual(parameter: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_TRANS_BILLING.POST_SAVE_AKOMODASI_MANUAL, parameter)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
+
+    onDeleteAkomodasiManual(parameter: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPutRequest(this.API_TRANS_BILLING.PUT_DELETE_AKOMODASI_MANUAL, parameter)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            );
+    }
 }

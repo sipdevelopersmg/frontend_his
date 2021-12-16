@@ -55,9 +55,9 @@
             <div class="card-body p-2">
                 <form [formGroup]="FormInsertOrderLab">
                     <!-- Button - Button -->
-                    <div class="row mb-3">
+                    <div class="row mb-3 justify-content-end">
                         <!-- Button Input Diagnosa -->
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-start" hidden>
                             <button class="btn btn-primary btn-sm" type="button" (click)="onClickButtonAddDiagnosa()">
                                 Input Diagnosa
                             </button>
@@ -82,21 +82,53 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <!-- Keluhan -->
+                                <mol-input-textarea [label]="'Keluhan'" formControlName="keluhan"></mol-input-textarea>
+
                                 <!-- Subjective -->
-                                <mol-input-text [label]="'Subjective'" formControlName="subjective"></mol-input-text>
+                                <mol-input-text [label]="'Subjective'" formControlName="soap_subjective">
+                                </mol-input-text>
 
                                 <!-- Objective -->
-                                <mol-input-text [label]="'Objective'" formControlName="objective"></mol-input-text>
+                                <mol-input-text [label]="'Objective'" formControlName="soap_objective"></mol-input-text>
 
                                 <!-- Assesment -->
-                                <org-input-look-up-kode [label]="'Assesment'" [modal-title]="'Pilih Diagnosa'">
+                                <org-input-look-up-kode #LookupDiagnosa [label]="'Assesment'"
+                                    [modal-title]="'Pilih Diagnosa'" [lookup-url]="urlDiagnosa" [idKode]="'kode_icd'"
+                                    [idTitle]="'nama_icd'" (onGetSelectedData)="handleSelectedDiagnosa($event)"
+                                    [columns]="Config.LookupDiagnosa.columns"
+                                    [filter-lookup]="Config.LookupDiagnosa.filter">
                                 </org-input-look-up-kode>
 
                                 <!-- Catatan -->
-                                <mol-input-text [label]="'Assesment (Catatan)'"></mol-input-text>
+                                <mol-input-text [label]="'Assesment (Catatan)'" formControlName="catatan">
+                                </mol-input-text>
 
                                 <!-- Plan -->
-                                <mol-input-textarea [label]="'Plan'" formControlName="plan"></mol-input-textarea>
+                                <mol-input-textarea [label]="'Plan'" formControlName="soap_plan"></mol-input-textarea>
+
+                                <!-- Is Diagnosa Primer -->
+                                <div class="row align-items-center">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Is Diagnosa Primer'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="is_diagnosa_primer"
+                                                id="is_diagnosa_primer_true" [value]="true"
+                                                formControlName="is_diagnosa_primer">
+
+                                            <label class="form-check-label" for="is_diagnosa_primer_true">Iya</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="is_diagnosa_primer"
+                                                id="is_diagnosa_primer_false" [value]="false"
+                                                formControlName="is_diagnosa_primer">
+
+                                            <label class="form-check-label" for="is_diagnosa_primer_false">Tidak</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer p-2 background-abu-muda">
                                 <div class="row">

@@ -53,11 +53,28 @@
                         </div>
 
                         <!-- No. Identitas -->
-                        <mol-input-text [label]="'No Identitas *'" formControlName="no_identitas"
-                            (keyup.enter)="handleCheckPersonByNoIdentitas(no_identitas.value)"
-                            [IsFormControlInvalid]="no_identitas.invalid"
-                            [ValidatorsCaption]="'No Identitas Tidak Boleh Kosong'">
-                        </mol-input-text>
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'No Identitas *'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pt-2">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-select-sm"
+                                        formControlName="no_identitas"
+                                        (keyup.enter)="handleCheckPersonByNoIdentitas(no_identitas.value)">
+
+                                    <button class="btn btn-primary" type="button"
+                                        style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
+                                        (click)="handleCheckPersonByNoIdentitas(no_identitas.value)">
+                                        <i class="fas fa-search"></i>&nbsp; Cari
+                                    </button>
+                                </div>
+
+                                <p class="text-abu-tua mb-0">
+                                    <em>Tekan Enter Untuk Melakukan Pencarian</em>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </ng-wizard-step>
@@ -309,7 +326,7 @@
                         <!-- Provinsi -->
                         <div class="row mb-2" [hidden]="FormState == 'Edit'">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Provinsi'"></atm-label>
+                                <atm-label [LabelCaption]="'Provinsi *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #ProvinsiDropdown id="provinsi"
@@ -323,7 +340,7 @@
                         <!-- Kota -->
                         <div class="row mb-2" [hidden]="FormState == 'Edit'">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Kota'"></atm-label>
+                                <atm-label [LabelCaption]="'Kota *'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-dropdownlist #KotaDropdown id="kota" [dataSource]="KotaDropdownDataSource | async"
@@ -441,23 +458,33 @@
                         </mol-input-text>
 
                         <!-- No. Telepon Rumah -->
-                        <mol-input-text [label]="'No. Telepon Rumah *'" formControlName="home_phone"
+                        <mol-input-text [label]="'No. Telepon Rumah'" formControlName="home_phone"
                             [IsFormControlInvalid]="item.get('home_phone').invalid"
                             [ValidatorsCaption]="'No. Telepon Rumah Tidak Boleh Kosong'"
                             [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- No. Telepon Kantor -->
-                        <mol-input-text [label]="'No. Telepon Kantor *'" formControlName="office_phone"
+                        <mol-input-text [label]="'No. Telepon Kantor'" formControlName="office_phone"
                             [IsFormControlInvalid]="item.get('office_phone').invalid"
                             [ValidatorsCaption]="'No. Telepon Kantor Tidak Boleh Kosong'"
                             [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
                         </mol-input-text>
 
                         <!-- Email -->
-                        <mol-input-text [label]="'Email'" formControlName="email"
-                            [inputFieldState]="FormState == 'Insert' ? 'normal' : 'detail'">
-                        </mol-input-text>
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Email'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <input type="email" formControlName="email" email class="form-control form-select-sm">
+
+                                <atm-validators [IsFormControlTouched]="item.get('email').touched"
+                                    [IsFormControlInvalid]="item.get('email').invalid"
+                                    [ValidatorsCaption]="'Email Tidak Valid'">
+                                </atm-validators>
+                            </div>
+                        </div>
 
                         <!-- Keterangan -->
                         <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"
@@ -521,17 +548,12 @@
                         <!-- Tgl Exp Surat Ijin Praktek -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek *'"></atm-label>
+                                <atm-label [LabelCaption]="'Tgl Exp Surat Ijin Praktek'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker id="tglExpiredSuratIjinPraktek" format="dd/MM/yyyy"
                                     formControlName="tgl_exp_surat_ijin_praktek">
                                 </ejs-datepicker>
-
-                                <atm-validators [IsFormControlTouched]="tgl_exp_surat_ijin_praktek.touched"
-                                    [IsFormControlInvalid]="tgl_exp_surat_ijin_praktek.invalid"
-                                    [ValidatorsCaption]="'Tgl Exp Surat Ijin Praktek Tidak Boleh Kosong'">
-                                </atm-validators>
                             </div>
                         </div>
 
@@ -542,16 +564,11 @@
                         <!-- Tgl Exp STR -->
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <atm-label [LabelCaption]="'Tgl Exp STR *'"></atm-label>
+                                <atm-label [LabelCaption]="'Tgl Exp STR'"></atm-label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker id="tglExpiredSTR" format="dd/MM/yyyy" formControlName="tgl_exp_str">
                                 </ejs-datepicker>
-
-                                <atm-validators [IsFormControlTouched]="tgl_exp_str.touched"
-                                    [IsFormControlInvalid]="tgl_exp_str.invalid"
-                                    [ValidatorsCaption]="'Tgl Exp STR Tidak Boleh Kosong'">
-                                </atm-validators>
                             </div>
                         </div>
 

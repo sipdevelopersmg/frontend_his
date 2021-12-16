@@ -129,6 +129,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             deposit_amount: [0, []],
             paid_amount: [0, []],
             charge_amount: [0, []],
+            total_payment: [0, []],
         });
 
         this.FormInputKlaimDebitur = this.formBuilder.group({
@@ -196,8 +197,9 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     onGetDataBillingByNoRegister(RegisterNo: string): void {
         this.transBillingService.onGetAll(RegisterNo)
             .subscribe((result) => {
-
                 this.InformasiPasien = result.data.informasi_pasien;
+
+                this.total_payment.setValue(this.InformasiPasien.total_payment);
 
                 this.id_register.setValue(this.InformasiPasien.id_register);
 
@@ -886,27 +888,6 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         this.onCountTotalDataResep();
     }
 
-    handleLoadDataResep(args: any): void {
-        this.transBillingService.ResepChildDatasource$
-            .subscribe((result) => {
-                if (result.length > 0) {
-                    this.ChildGridResep = {
-                        dataSource: result,
-                        queryString: 'penjualan_obat_id',
-                        rowHeight: 30,
-                        allowResizing: true,
-                        columns: [
-                            { field: 'no_urut', headerText: 'NO', textAlign: 'Center', headerTextAlign: 'Center', width: 50 },
-                            { field: 'nama_obat', headerText: 'NAMA OBAT', textAlign: 'Left', headerTextAlign: 'Left', width: 150, format: 'N2' },
-                            { field: 'harga_satuan', headerText: 'HARGA SATUAN', textAlign: 'Right', headerTextAlign: 'Right', width: 100, format: 'N2' },
-                            { field: 'qty_jual', headerText: 'QTY', textAlign: 'Right', headerTextAlign: 'Right', width: 70, format: 'N2' },
-                            { field: 'sub_total', headerText: 'SUBTOTAL', textAlign: 'Right', headerTextAlign: 'Right', width: 150, format: 'N2' },
-                        ]
-                    };
-                }
-            });
-    }
-
     handleDataBoundDataResep(): void {
         this.GridDataResep.autoFitColumns();
     }
@@ -916,17 +897,15 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
         let selected_records = this.GridDataResep.getSelectedRecords();
 
-        if (selected_records.length > 0) {
-            selected_records.forEach((item) => {
-                total_amount += item['total_amount'];
-            });
+        selected_records.forEach((item) => {
+            total_amount += item['total_amount'];
+        });
 
-            this.TotalAmountResep.next(total_amount);
+        this.TotalAmountResep.next(total_amount);
 
-            setTimeout(() => {
-                this.onCountTotalBiaya();
-            }, 1000);
-        }
+        setTimeout(() => {
+            this.onCountTotalBiaya();
+        }, 1000);
     }
 
     // ** ROW DATA BOUND ================
@@ -1756,6 +1735,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     get deposit_amount(): AbstractControl { return this.FormInputInvoice.get('deposit_amount'); }
     get paid_amount(): AbstractControl { return this.FormInputInvoice.get('paid_amount'); }
     get charge_amount(): AbstractControl { return this.FormInputInvoice.get('charge_amount'); }
+    get total_payment(): AbstractControl { return this.FormInputInvoice.get('total_payment'); }
 
     get jumlah_klaim(): AbstractControl { return this.FormInputKlaimDebitur.get('jumlah_klaim'); }
     get saldo_klaim_sisa(): AbstractControl { return this.FormInputKlaimDebitur.get('saldo_klaim_sisa'); }
