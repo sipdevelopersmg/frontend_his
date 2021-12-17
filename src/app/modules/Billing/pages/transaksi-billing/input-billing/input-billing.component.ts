@@ -612,6 +612,11 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             this.onCountTotalDataResep();
         }, 500);
 
+        let daftar_slip_tagihan_check = document.getElementById('daftar_slip_tagihan_check') as HTMLInputElement;
+
+        if (daftar_slip_tagihan_check.checked) {
+            daftar_slip_tagihan_check.checked = false;
+        }
     }
 
     // ** TIKET ==============
@@ -850,7 +855,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
     handleSelectingRowDataResep(args: any): void {
         let status_bayar = args.data.status_bayar;
 
-        if (status_bayar !== 'PAID') {
+        if (status_bayar !== 'OPEN') {
             args.cancel = true;
 
             let removedIndexLength = 0;
@@ -874,7 +879,9 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             check.checked = true;
         }
 
-        this.onCountTotalDataResep();
+        if (!this.GridDataResepContainsNotOpen) {
+            this.onCountTotalDataResep();
+        }
     }
 
     handleDeselectedRowDataResep(args: any, item: any): void {
@@ -1115,20 +1122,16 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
                 charge_amount: this.FormInputInvoice.value.charge_amount,
             };
 
-            // this.TotalTransaksiPembayaran = header.paid_amount;
             this.TotalTransaksiPembayaran = header.charge_amount;
 
-            // this.GrandTotalTransaksiPembayaran = header.paid_amount - this.BiayaBankPembayaran;
             this.GrandTotalTransaksiPembayaran = header.charge_amount - this.BiayaBankPembayaran;
 
             this.transBillingService.HeaderBilling.next(header);
         };
 
         if (ModalPembayaranState == 'Existing_Invoice') {
-            // this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'];
             this.TotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['charge_amount'];
 
-            // this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['paid_amount'] - this.BiayaBankPembayaran;
             this.GrandTotalTransaksiPembayaran = this.transBillingService.HeaderBilling.value['charge_amount'] - this.BiayaBankPembayaran;
         };
 
@@ -1148,7 +1151,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
             this.TotalTransaksiPembayaran = this.deposit_amount.value;
 
             this.GrandTotalTransaksiPembayaran = this.deposit_amount.value;
-        }
+        };
     }
 
     handleCloseModalPembayaran(): void {

@@ -1,23 +1,23 @@
+import Swal from 'sweetalert2';
 import { TitleCasePipe } from '@angular/common';
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { EditSettingsModel } from '@syncfusion/ej2-grids';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import Config from './json/antrian-pasien-rawat-jalan.config.json';
+import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
+import * as API_PIS_SETUP_DATA from '../../../../../api/PIS/SETUP_DATA';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { GridComponent } from '@syncfusion/ej2-angular-grids';
-import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
-import { EditSettingsModel } from '@syncfusion/ej2-grids';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { IAntrianRawatJalanModel } from '../../../models/IRJA/antrian-pasien-rawat-jalan.model';
+import { IPasienTeradmisiHariIniModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
+import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/setup-poli/setup-poli.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
-import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
-import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { IPasienTeradmisiHariIniModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
-import { IAntrianRawatJalanModel } from '../../../models/IRJA/antrian-pasien-rawat-jalan.model';
 import { AntrianPasienRawatJalanService } from '../../../services/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.service';
-import * as API_PIS_SETUP_DATA from '../../../../../api/PIS/SETUP_DATA';
-import Config from './json/antrian-pasien-rawat-jalan.config.json';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import Swal from 'sweetalert2';
+import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 
 @Component({
     selector: 'app-antrian-pasien-rawat-jalan',
@@ -148,6 +148,7 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
         this.onGetAllAntrianRawatJalan(PoliklinikId);
 
         setTimeout(() => {
+            this.SelectedDataPasien = null;
             (<HTMLElement>document.getElementById('btnCloseFilter')).click();
         }, 200);
     }

@@ -84,22 +84,21 @@ export class AuthenticationService {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         ).subscribe((result) => {
-            if (result.responseResult) {
-                this.utilityService.onShowingCustomAlert(
-                    'success',
-                    'Success',
-                    'Sign Out Successfully'
-                ).then(() => {
-                    this.router.navigateByUrl('');
+            if (result) {
+                this.utilityService.onShowingCustomAlert('success', 'Success', 'Sign Out Successfully')
+                    .then(() => {
+                        localStorage.clear();
 
-                    if (this.sessionExpirationTime) {
-                        clearTimeout(this.sessionExpirationTime);
-                    }
+                        this.currentUserSubject.next(null);
 
-                    this.sessionExpirationTime = null;
+                        if (this.sessionExpirationTime) {
+                            clearTimeout(this.sessionExpirationTime);
+                        };
 
-                    localStorage.clear();
-                });
+                        this.sessionExpirationTime = null;
+
+                        this.router.navigateByUrl('');
+                    });
             }
         });
     }
@@ -127,12 +126,6 @@ export class AuthenticationService {
     }
 
     private handlingAuth(UserData: IAuthenticationResponseModel): void {
-        // let expiresIn: number;
-
-        // if (UserData.timeOut) { expiresIn = UserData.timeOut * 60 * 1000; }
-
-        // this.autoLogout(expiresIn);
-
         localStorage.setItem('UserData', JSON.stringify(UserData));
 
         this.currentUserSubject.next(UserData);

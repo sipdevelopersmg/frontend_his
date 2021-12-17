@@ -167,7 +167,7 @@ export class PostingBillingComponent implements OnInit {
 
         let parameter = {
             'items': selected_data,
-            'tgl_jatuh_tempo': this.utilityService.onFormatDate(this.tgl_jatuh_tempo.value)
+            'tgl_jatuh_tempo': this.tgl_jatuh_tempo.value,
         };
 
         this.postingBillingService.onSavePostingBillingIRDA(parameter)

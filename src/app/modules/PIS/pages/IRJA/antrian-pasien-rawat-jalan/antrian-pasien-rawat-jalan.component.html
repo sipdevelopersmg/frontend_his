@@ -1,176 +1,193 @@
 <org-card-layout [ChangeHeaderRibbon]="true" [HeaderRibbon]="HeaderRibbon" [ButtonNav]="ButtonNav"
     (onClickButtonNav)="handleClickButtonNav($event)">
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-            <div class="row mb-3" *ngFor="let item of AntrianPasienRawatJalan">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-header shadow-sm border rounded">
-                            <div class="row">
-                                <!-- Foto Dokter -->
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center px-0">
-                                    <img [src]="item.link_foto" alt="foto-dokter" class="img-thumbnail-antrian-irja">
+        <div *ngIf="AntrianPasienRawatJalan.length > 0" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    <div class="row mb-3" *ngFor="let item of AntrianPasienRawatJalan">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header shadow-sm border rounded">
+                                    <div class="row">
+                                        <!-- Foto Dokter -->
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center px-0">
+                                            <img [src]="item.link_foto" alt="foto-dokter"
+                                                class="img-thumbnail-antrian-irja">
+                                        </div>
+
+                                        <!-- Informasi Dokter -->
+                                        <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 px-0 pt-2">
+                                            <!-- Nama Dokter -->
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="mb-0 text-biru-muda" style="font-size: 22px;">
+                                                        {{ item.full_name | titlecase }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row align-items-center">
+                                                <!-- Kode Dokter -->
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <p class="mb-0 text-abu-tua" style="font-size: 16px;">
+                                                        Kode Dokter : {{ item.kode_dokter }}
+                                                    </p>
+                                                </div>
+
+                                                <!-- Jadwal Praktek -->
+                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                    <p class="mb-0 text-abu-tua" style="font-size: 16px;">
+                                                        Jadwal Praktek : {{ item.jam_mulai }} - {{ item.jam_selesai }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row align-items-center">
+                                                <!-- Spesialisasi Dokter -->
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
+                                                        Spesialis {{ item.spesialisasi_dokter | titlecase }}
+                                                    </p>
+                                                </div>
+
+                                                <!-- Sisa Kuota Dokter -->
+                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                    <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
+                                                        Sisa Kuota : {{ item.sisa_kuota }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Toggle Card Dokter Button -->
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end">
+                                            <button id="btnCardDokter" class="btn btn-outline-primary btn-sm border-0"
+                                                type="button" (click)="togglingCardDokter(item.id_jadwal_dokter)">
+                                                <i [id]="'icon' + item.id_jadwal_dokter"
+                                                    class="fas fa-window-minimize fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div [id]="'card_body' + item.id_jadwal_dokter" class="card-body p-2 show-card-dokter">
+                                    <p class="text-black mb-1" style="font-size: 12px; font-style: italic;">
+                                        *) Warna Background Biru <span style="color: #74afca">Sudah Diperiksa</span>
+                                    </p>
 
-                                <!-- Informasi Dokter -->
-                                <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 px-0 pt-2">
-                                    <!-- Nama Dokter -->
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <p class="mb-0 text-biru-muda" style="font-size: 22px;">
-                                                {{ item.full_name | titlecase }}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <ejs-contextmenu target="{{ '#GridDaftarPasien' + item.id_jadwal_dokter }}"
+                                        [items]="GridContextMenuItems"
+                                        (select)="handleSelectGridContextMenu($event, item)">
+                                    </ejs-contextmenu>
 
-                                    <div class="row align-items-center">
-                                        <!-- Kode Dokter -->
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                            <p class="mb-0 text-abu-tua" style="font-size: 16px;">
-                                                Kode Dokter : {{ item.kode_dokter }}
-                                            </p>
-                                        </div>
-
-                                        <!-- Jadwal Praktek -->
-                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                            <p class="mb-0 text-abu-tua" style="font-size: 16px;">
-                                                Jadwal Praktek : {{ item.jam_mulai }} - {{ item.jam_selesai }}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row align-items-center">
-                                        <!-- Spesialisasi Dokter -->
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                            <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
-                                                Spesialis {{ item.spesialisasi_dokter | titlecase }}
-                                            </p>
-                                        </div>
-
-                                        <!-- Sisa Kuota Dokter -->
-                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                            <p class="mb-0 text-hitam-muda" style="font-size: 17px;">
-                                                Sisa Kuota : {{ item.sisa_kuota }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Toggle Card Dokter Button -->
-                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-end">
-                                    <button id="btnCardDokter" class="btn btn-outline-primary btn-sm border-0"
-                                        type="button" (click)="togglingCardDokter(item.id_jadwal_dokter)">
-                                        <i [id]="'icon' + item.id_jadwal_dokter"
-                                            class="fas fa-window-minimize fa-sm"></i>
-                                    </button>
+                                    <ejs-grid #GridData [id]="'GridDaftarPasien' + item.id_jadwal_dokter"
+                                        [dataSource]="item.pasien" [rowHeight]="30" [gridLines]="'Both'"
+                                        [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
+                                        [pageSettings]="GridPageSettings" [editSettings]="GridDataEditSettings"
+                                        [contextMenuItems]="GridContextMenuItems"
+                                        (rowSelected)="handleSelectedRow($event, 'GridDaftarPasien' + item.id_jadwal_dokter)"
+                                        (rowDataBound)="handleDataBound($event)">
+                                        <e-columns>
+                                            <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'"
+                                                [visible]="false" [type]="'number'" [allowEditing]="false"
+                                                [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="60" [field]="'no_urut_antrian'"
+                                                [headerText]="'NO. ANTRIAN'" [visible]="true" [allowEditing]="false"
+                                                [allowSorting]="false" [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="80" [field]="'tgl_admisi'" [headerText]="'TGL ADMISI'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                                            </e-column>
+                                            <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="90" [field]="'nama_kelas'" [headerText]="'KELAS'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                            <e-column [width]="150" [field]="'nama_debitur'" [headerText]="'DEBITUR'"
+                                                [visible]="true" [allowEditing]="false" [allowSorting]="false"
+                                                [textAlign]="'Left'">
+                                            </e-column>
+                                        </e-columns>
+                                    </ejs-grid>
                                 </div>
                             </div>
                         </div>
-                        <div [id]="'card_body' + item.id_jadwal_dokter" class="card-body p-2 show-card-dokter">
-                            <p class="text-black mb-1" style="font-size: 12px; font-style: italic;">
-                                *) Warna Background Biru <span style="color: #74afca">Sudah Diperiksa</span>
-                            </p>
+                    </div>
+                </div>
 
-                            <ejs-contextmenu target="{{ '#GridDaftarPasien' + item.id_jadwal_dokter }}"
-                                [items]="GridContextMenuItems" (select)="handleSelectGridContextMenu($event, item)">
-                            </ejs-contextmenu>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 visible-smooth" *ngIf="SelectedDataPasien">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h5 class="mb-0 text-biru-muda">Detail Pasien {{ SelectedDataPasien.nama_pasien }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+                                    <img class="shadow"
+                                        [src]="SelectedDataPasien.link_foto ? SelectedDataPasien.link_foto : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
+                                        alt="" style="height: 130px; width: 125px; border-radius: 5px;">
+                                </div>
 
-                            <ejs-grid #GridData [id]="'GridDaftarPasien' + item.id_jadwal_dokter"
-                                [dataSource]="item.pasien" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="false"
-                                [allowResizing]="true" [allowFiltering]='true' [pageSettings]="GridPageSettings"
-                                [editSettings]="GridDataEditSettings" [contextMenuItems]="GridContextMenuItems"
-                                (rowSelected)="handleSelectedRow($event, 'GridDaftarPasien' + item.id_jadwal_dokter)"
-                                (rowDataBound)="handleDataBound($event)">
-                                <e-columns>
-                                    <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false"
-                                        [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="60" [field]="'no_urut_antrian'" [headerText]="'NO. ANTRIAN'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="80" [field]="'tgl_admisi'" [headerText]="'TGL ADMISI'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
-                                    </e-column>
-                                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="90" [field]="'nama_kelas'" [headerText]="'KELAS'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                    <e-column [width]="150" [field]="'nama_debitur'" [headerText]="'DEBITUR'"
-                                        [visible]="true" [allowEditing]="false" [allowSorting]="false"
-                                        [textAlign]="'Left'">
-                                    </e-column>
-                                </e-columns>
-                            </ejs-grid>
+                                <!-- Nama Pasien -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
+                                    <p class="mb-0 text-biru-muda">Nama Pasien </p>
+                                    <p class="mb-0 text-hitam-muda">
+                                        {{ SelectedDataPasien.nama_pasien | titlecase }}
+                                    </p>
+                                </div>
+
+                                <!-- No. Rekam Medis -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
+                                    <p class="mb-0 text-biru-muda">No. Rekam Medis</p>
+                                    <p class="mb-0 text-hitam-muda">
+                                        {{ SelectedDataPasien.no_rekam_medis }}
+                                    </p>
+                                </div>
+
+                                <!-- Umur -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
+                                    <p class="mb-0 text-biru-muda">Umur</p>
+                                    <p class="mb-0 text-hitam-muda">
+                                        {{ SelectedDataPasien.umur}}
+                                    </p>
+                                </div>
+
+                                <!-- Kelas Perawatan -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
+                                    <p class="mb-0 text-biru-muda">Kelas Perawatan</p>
+                                    <p class="mb-0 text-hitam-muda">
+                                        {{ SelectedDataPasien.nama_kelas}}
+                                    </p>
+                                </div>
+
+                                <!-- Debitur -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                    <p class="mb-0 text-biru-muda">Debitur</p>
+                                    <p class="mb-0 text-hitam-muda">
+                                        {{ SelectedDataPasien.nama_debitur | titlecase}}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 visible-smooth" *ngIf="SelectedDataPasien">
-            <div class="card shadow-sm position-fixed card_detail_pasien">
-                <div class="card-header">
-                    <h5 class="mb-0 text-biru-muda">Detail Pasien {{ SelectedDataPasien.nama_pasien }}</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
-                            <img class="shadow"
-                                [src]="SelectedDataPasien.link_foto ? SelectedDataPasien.link_foto : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
-                                alt="" style="height: 130px; width: 125px; border-radius: 5px;">
-                        </div>
-
-                        <!-- Nama Pasien -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
-                            <p class="mb-0 text-biru-muda">Nama Pasien </p>
-                            <p class="mb-0 text-hitam-muda">
-                                {{ SelectedDataPasien.nama_pasien | titlecase }}
-                            </p>
-                        </div>
-
-                        <!-- No. Rekam Medis -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
-                            <p class="mb-0 text-biru-muda">No. Rekam Medis</p>
-                            <p class="mb-0 text-hitam-muda">
-                                {{ SelectedDataPasien.no_rekam_medis }}
-                            </p>
-                        </div>
-
-                        <!-- Umur -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
-                            <p class="mb-0 text-biru-muda">Umur</p>
-                            <p class="mb-0 text-hitam-muda">
-                                {{ SelectedDataPasien.umur}}
-                            </p>
-                        </div>
-
-                        <!-- Kelas Perawatan -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-center">
-                            <p class="mb-0 text-biru-muda">Kelas Perawatan</p>
-                            <p class="mb-0 text-hitam-muda">
-                                {{ SelectedDataPasien.nama_kelas}}
-                            </p>
-                        </div>
-
-                        <!-- Debitur -->
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                            <p class="mb-0 text-biru-muda">Debitur</p>
-                            <p class="mb-0 text-hitam-muda">
-                                {{ SelectedDataPasien.nama_debitur | titlecase}}
-                            </p>
-                        </div>
-                    </div>
+        <div *ngIf="AntrianPasienRawatJalan.length < 1" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-sx-3">
+                    <h5 class="text-abu-tua">
+                        Data Antrian Poli {{ SelectedPoli.nama_poli | titlecase }} Tidak Ditemukan
+                    </h5>
                 </div>
             </div>
         </div>
