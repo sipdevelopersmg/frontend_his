@@ -157,6 +157,7 @@ export class InputPemesananComponent implements OnInit {
         ];
 
         this.setupStockroomService.setDataSource();
+        
     }
 
     ngAfterViewInit(): void {
@@ -167,6 +168,7 @@ export class InputPemesananComponent implements OnInit {
             this.pemesananService.setDetail([]);
             this.gridDetail.dataSource = [];
             this.gridDetail.refresh();
+            // console.log(this.setupStockroomService.dataSource.value);
         }, 1);
     }
 

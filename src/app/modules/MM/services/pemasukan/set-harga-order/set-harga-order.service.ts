@@ -76,17 +76,17 @@ export class SetHargaOrderService {
                     detail.push({
                         no_urut           : 0,
                         id_item           : element.id_item,
-                        kode_item         : element.nama_item,
                         nama_item         : element.nama_item,
+                        kode_item         : element.kode_item,
                         satuan            : element.kode_satuan,
-                        harga_order_lama       : 0,
-                        disc_prosentase_1_lama : 0,
-                        disc_prosentase_2_lama : 0,
-                        harga_order_netto_lama : 0,
-                        harga_order       : 0,
-                        disc_prosentase_1 : 0,
-                        disc_prosentase_2 : 0,
-                        harga_order_netto : 0,
+                        harga_order_lama       : element.harga_order,
+                        disc_prosentase_1_lama : element.diskon1,
+                        disc_prosentase_2_lama : element.diskon2,
+                        harga_order_netto_lama : element.harga_order_netto,
+                        harga_order             : element.harga_order_baru,
+                        disc_prosentase_1       : element.diskon1_baru,
+                        disc_prosentase_2       : element.diskon2_baru,
+                        harga_order_netto       : element.harga_order_netto_baru,
                     })
                 });
 
@@ -183,8 +183,13 @@ export class SetHargaOrderService {
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });
-        Data.details = this.dataDetail;
 
+        
+        let parameter = this.dataDetail.filter(function(e){
+            return e.harga_order_netto != 0;
+        })
+
+        Data.details = parameter;
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {

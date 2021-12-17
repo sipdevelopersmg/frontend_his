@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
@@ -28,7 +28,7 @@ import { PemesananService } from 'src/app/modules/MM/services/pemasukan/pemesana
   templateUrl: './input-penerimaan.component.html',
   styleUrls: ['./input-penerimaan.component.css']
 })
-export class InputPenerimaanComponent implements OnInit {
+export class InputPenerimaanComponent implements OnInit,OnDestroy {
   MaritalShippingMethodDropdownField: object = { text: 'shipping_method', value: 'id_shipping_method' };
   MaritalPaymentTermDropdownField: object = { text: 'payment_term', value: 'id_payment_term' };
   MaritalJenisPenerimaanDropdownField: object = { text: 'jenis_penerimaan', value: 'kode_jenis_penerimaan' };
@@ -593,6 +593,9 @@ export class InputPenerimaanComponent implements OnInit {
       this.LookupKodePemesanan.resetValue();
   }
 
+  ngOnDestroy(){
+    // this.setupStockroomService.dataSource.complete();
+  }
   get nomor_penerimaan() : AbstractControl { return this.formInput.get('nomor_penerimaan') }
   get tanggal_penerimaan() : AbstractControl { return this.formInput.get('tanggal_penerimaan') }
   get kode_jenis_penerimaan() : AbstractControl { return this.formInput.get('kode_jenis_penerimaan') }

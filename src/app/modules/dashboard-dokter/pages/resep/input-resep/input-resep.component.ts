@@ -20,6 +20,7 @@ import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authen
 import { SetupSatuanAturanPakaiService } from 'src/app/modules/Pharmacy/services/setup-data/setup-satuan-aturan-pakai/setup-satuan-aturan-pakai.service';
 import { SetupOutletService } from 'src/app/modules/Pharmacy/services/setup-data/setup-outlet/setup-outlet.service';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-input-resep',
@@ -164,11 +165,11 @@ export class InputResepComponent implements OnInit {
             no_urut: [0, []],
             set_racikan_id: [null, []],
             id_metode_racikan: [null, []],
-            metode_racikan: ['', []],
+            metode_racikan: ['', []],//kemasan Racikan
             id_item: [null, []],
             nama_racikan: ['', []],
             nama_obat: ['', []],
-            qty_resep: ['', []],
+            qty_resep: [1, []],
             nama_satuan: ['-', []],
 
             label: ['', []],
@@ -568,20 +569,72 @@ export class InputResepComponent implements OnInit {
     }
 
     handleAddObat(FormAddObat: any): void {
-        this.counter++;
-        FormAddObat.counter = this.counter;
-        if (FormAddObat.is_racikan) {
-            FormAddObat.nama_obat = FormAddObat.nama_racikan;
-        } else {
-            FormAddObat.id_metode_racikan = null;
-            FormAddObat.metode_racikan = null;
+        console.log(this.validasi(FormAddObat));
+        if(this.validasi(FormAddObat)){
+            this.counter++;
+            FormAddObat.counter = this.counter;
+            if (FormAddObat.is_racikan) {
+                FormAddObat.nama_obat = FormAddObat.nama_racikan;
+            } else {
+                FormAddObat.id_metode_racikan = null;
+                FormAddObat.metode_racikan = null;
+            }
+            this.resepDokterService.addDetail(FormAddObat);
+            this.onResetFormObat();
         }
-        this.resepDokterService.addDetail(FormAddObat);
-        this.onResetFormObat();
+    }
+    
+
+    validasi(FormData): boolean {
+        let message = []
+        let htmlSelection:string =''
+        console.log('validasi',FormData);
+        if (FormData.is_racikan) {
+            if(FormData.nama_racikan=='' || FormData.nama_racikan==null){
+                message.push('Nama Racikan belum di isi')
+            }
+            if(FormData.metode_racikan=='' || FormData.metode_racikan==null){
+                message.push('Kemasan Racikan belum di isi')
+            }
+        }else{
+            if(FormData.nama_obat=='' || FormData.nama_obat==null ){
+                message.push('obat belum di pillih')
+            }
+            if(FormData.satuan_aturan_pakai=='' || FormData.satuan_aturan_pakai==null){
+                message.push('Satuan belum di pillih')
+            }
+        }
+
+        if(FormData.label == '' || FormData.label==null){
+            message.push('Label Obat belum di isi')
+        }
+
+        if(FormData.aturan == '' || FormData.aturan==null){
+            message.push('Aturan Tambahan belum di isi')
+        }
+
+        if(message.length>0){
+            htmlSelection = '<div class="text-danger"><ul>';
+            message.forEach((value:any,index)=>{
+                htmlSelection +=`<li>${value}</li>`;
+            })
+            htmlSelection += `</ul></div>`;
+
+            Swal.fire({
+                icon    : 'error',
+                title   : 'Validasi Data',
+                html    : htmlSelection,
+            })
+
+            return false;
+        }else{
+            return true;
+        }
     }
 
     onResetFormObat(): void {
         this.FormAddObat.reset();
+        this.qty_resep.setValue(1);
         this.is_racikan.setValue(false);
     }
 

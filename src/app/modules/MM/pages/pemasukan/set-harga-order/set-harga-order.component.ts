@@ -104,6 +104,41 @@ export class SetHargaOrderComponent implements OnInit {
         }
     }
 
+    handleActionBegin($event){
+        console.log($event);
+        if($event.requestType=="beginEdit"){
+            setTimeout(()=>{
+                let harga_order = (<HTMLInputElement>document.getElementsByName("harga_order")[0])
+                if (harga_order) {
+                    harga_order.addEventListener('click', (event) => {
+                        harga_order.select();
+                    });
+                    this.utilityService.setInputNumericElement(harga_order, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+                let disc_prosentase_1 = (<HTMLInputElement>document.getElementsByName("disc_prosentase_1")[0])
+                if (disc_prosentase_1) {
+                    disc_prosentase_1.addEventListener('click', (event) => {
+                        disc_prosentase_1.select();
+                    });
+                    this.utilityService.setInputNumericElement(disc_prosentase_1, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+                let disc_prosentase_2 = (<HTMLInputElement>document.getElementsByName("disc_prosentase_2")[0])
+                if (disc_prosentase_2) {
+                    disc_prosentase_2.addEventListener('click', (event) => {
+                        disc_prosentase_2.select();
+                    });
+                    this.utilityService.setInputNumericElement(disc_prosentase_2, function (value) {
+                        return /^\d*$/.test(value);
+                    });
+                }
+            },50)
+        }
+    }
+
     handleSelectedRecordItem(args): void {
         let detail: TrSethargaOrderDetailInsert[] = [];
         args.forEach(element => {
@@ -239,7 +274,8 @@ export class SetHargaOrderComponent implements OnInit {
                 .subscribe((result) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                         .then(() => {
-                            this.ResetFrom();
+                            // this.ResetFrom();
+                            this.setHargaOrderService.onGetDetailByParamsSource([], this.id_supplier);
                         });
                 });
         } else {

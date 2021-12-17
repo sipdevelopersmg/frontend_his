@@ -7,7 +7,7 @@
                     (onGetSelectedData)="heandleSelectedSupplier($event)" [columns]="LookupGridSupplier.columns"
                     [filter-lookup]="LookupGridSupplier.filter" [label]="'Supplier'">
                 </org-input-look-up-kode>
-                <mol-input-text [label]="'Nomor Setting Harga'" formControlName="nomor_harga_order"></mol-input-text>
+                <mol-input-text style="display: none;" [label]="'Nomor Setting Harga'" formControlName="nomor_harga_order"></mol-input-text>
                 <mol-datepicker-syncfusion [label]="'Tanggal Berlaku'" [format]="'dd MMMM yyyy'"
                     formControlName="tanggal_berlaku">
                 </mol-datepicker-syncfusion>
@@ -24,8 +24,11 @@
                         <ejs-grid #GridDetail [height]="'calc(100vh - 26rem)'"
                             [dataSource]="setHargaOrderService.dataDetail$ | async" [allowPaging]="true"
                             [editSettings]="GridDataEditSettings" [gridLines]="'Both'" [toolbar]="GridDataToolbar"
+                            [allowResizing]="true"
                             (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)"
-                            (actionComplete)="handleActionCompleted($event)">
+                            (actionComplete)="handleActionCompleted($event)"
+                            (actionBegin)="handleActionBegin($event)"
+                            >
                             <e-columns>
                                 <e-column [allowEditing]="false" [allowSorting]="false" [field]="'no_urut'"
                                     [headerText]="'No Urut'" [type]="'number'" [format]="'N'" [textAlign]="'Left'"
