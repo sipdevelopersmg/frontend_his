@@ -25,8 +25,10 @@ export class RefundObatIrjaDaftarComponent implements OnInit {
   ];
 
   FilterColumnDatasource: any[] = [
-      { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-      { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+      { text: 'No. Refund', value: 'tpo.nomor_retur_penjualan_obat' },
+      { text: 'No. Penjualan', value: 'tpo.nomor_penjualan_obat' },
+      { text: 'Nama Outlet', value: 'pso.nama_outlet' },
+      { text: 'Status Refund', value: 'tpo.judul_kontrak' },
   ];
 
   GridConfig = GridConfig;
@@ -43,6 +45,7 @@ export class RefundObatIrjaDaftarComponent implements OnInit {
 
   ngAfterViewInit(): void {
     // this.GridData.Grid.refresh();
+    this.handlePencarianFilter([]);
   }
 
   ngOnInit(): void {
