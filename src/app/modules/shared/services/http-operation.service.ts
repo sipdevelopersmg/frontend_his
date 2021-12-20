@@ -5,12 +5,16 @@ import { catchError, delay, map, tap } from 'rxjs/operators';
 import { HttpResponseModel, PostRequestByDynamicFiterModel } from '../models/Http-Operation/HttpResponseModel';
 import { NotificationService } from './notification.service';
 import { UtilityService } from './utility.service';
+import * as Sentry from '@sentry/angular'
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
 })
 export class HttpOperationService {
+
     constructor(
+        private router: Router,
         private httpClient: HttpClient,
         private utilityService: UtilityService,
         private notificationService: NotificationService
@@ -24,7 +28,6 @@ export class HttpOperationService {
                 params: params
             }
         ).pipe(
-            catchError(this.handlingError),
             map((result: HttpResponseModel) => {
                 if (result.responseResult) {
                     return result;
@@ -36,7 +39,35 @@ export class HttpOperationService {
                         return result;
                     }
                 }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, params);
+            }),
+        );
+    }
+
+    defaultGetRequestWithLoading(url: string, params?: any): Observable<any> {
+        return this.httpClient.get<any>(
+            url,
+            {
+                headers: new HttpHeaders().set('Content-Type', 'application/json'),
+                params: params
+            }
+        ).pipe(
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, params);
+            }),
         );
     }
 
@@ -47,7 +78,6 @@ export class HttpOperationService {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            catchError(this.handlingError),
             tap((result) => {
                 this.utilityService.onShowLoading();
             }),
@@ -58,7 +88,54 @@ export class HttpOperationService {
                 } else {
                     this.handlingErrorWithStatusCode200(result);
                 }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, req);
+            }),
+        );
+    }
+
+    defaultPostRequestWithoutLoading(url: string, req: any): Observable<any> {
+        return this.httpClient.post<any>(
+            url, req,
+            {
+                headers: new HttpHeaders().set('Content-Type', 'application/json')
+            }
+        ).pipe(
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, req);
+            }),
+        );
+    }
+
+    defaultPostRequestByDynamicFilter(url: string, req: PostRequestByDynamicFiterModel[]): Observable<any> {
+        return this.httpClient.post<any>(
+            url, req,
+            {
+                headers: new HttpHeaders().set('Content-Type', 'application/json')
+            }
+        ).pipe(
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result: HttpResponseModel) => {
+                if (result.responseResult) {
+                    return result;
+                } else {
+                    this.handlingErrorWithStatusCode200(result);
+                }
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, req);
+            }),
         );
     }
 
@@ -69,7 +146,6 @@ export class HttpOperationService {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            catchError(this.handlingError),
             tap((result) => {
                 this.utilityService.onShowLoading();
             }),
@@ -80,7 +156,10 @@ export class HttpOperationService {
                 } else {
                     this.handlingErrorWithStatusCode200(result);
                 }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, req);
+            }),
         );
     }
 
@@ -91,7 +170,6 @@ export class HttpOperationService {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            catchError(this.handlingError),
             tap((result) => {
                 this.utilityService.onShowLoading();
             }),
@@ -103,25 +181,10 @@ export class HttpOperationService {
                 } else {
                     return result;
                 }
-            })
-        );
-    }
-
-    defaultPostRequestWithoutLoading(url: string, req: any): Observable<any> {
-        return this.httpClient.post<any>(
-            url, req,
-            {
-                headers: new HttpHeaders().set('Content-Type', 'application/json')
-            }
-        ).pipe(
-            catchError(this.handlingError),
-            map((result: HttpResponseModel) => {
-                if (result.responseResult) {
-                    return result;
-                } else {
-                    this.handlingErrorWithStatusCode200(result);
-                }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error);
+            }),
         );
     }
 
@@ -132,7 +195,6 @@ export class HttpOperationService {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            catchError(this.handlingError),
             map((result: HttpResponseModel) => {
                 if (result.responseResult) {
                     return result;
@@ -140,7 +202,10 @@ export class HttpOperationService {
                     // Menampilkan SweetAlert Error
                     this.handlingErrorWithStatusCode200(result);
                 }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error);
+            }),
         )
     }
 
@@ -153,7 +218,6 @@ export class HttpOperationService {
         return this.httpClient.delete<any>(
             url, options
         ).pipe(
-            catchError(this.handlingError),
             map((result: HttpResponseModel) => {
                 if (result.responseResult) {
                     return result;
@@ -161,14 +225,16 @@ export class HttpOperationService {
                     // Menampilkan SweetAlert Error
                     this.handlingErrorWithStatusCode200(result);
                 }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, req);
+            }),
         )
     }
 
     defaultUploadFileRequest(url: string, req: FormData): Observable<any> {
         return this.httpClient.post<any>(url, req)
             .pipe(
-                catchError(this.handlingError),
                 tap((result) => {
                     this.utilityService.onShowLoading();
                 }),
@@ -179,30 +245,11 @@ export class HttpOperationService {
                     } else {
                         this.handlingErrorWithStatusCode200(result);
                     }
-                })
+                }),
+                catchError((error: HttpErrorResponse): any => {
+                    return this.handlingError(error, req);
+                }),
             );
-    }
-
-    defaultPostRequestByDynamicFilter(url: string, req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpClient.post<any>(
-            url, req,
-            {
-                headers: new HttpHeaders().set('Content-Type', 'application/json')
-            }
-        ).pipe(
-            catchError(this.handlingError),
-            tap((result) => {
-                this.utilityService.onShowLoading();
-            }),
-            delay(2100),
-            map((result: HttpResponseModel) => {
-                if (result.responseResult) {
-                    return result;
-                } else {
-                    this.handlingErrorWithStatusCode200(result);
-                }
-            })
-        );
     }
 
     defaultPostLoginPrintPanel(): Observable<any> {
@@ -225,14 +272,16 @@ export class HttpOperationService {
                 })
             }
         ).pipe(
-            catchError(this.handlingError),
             map((result: HttpResponseModel) => {
                 if (result.responseResult) {
                     return result;
                 } else {
                     this.handlingErrorWithStatusCode200(result);
                 }
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error);
+            }),
         );
     }
 
@@ -249,16 +298,16 @@ export class HttpOperationService {
                 responseType: 'arraybuffer',
             }
         ).pipe(
-            catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-            }),
             tap((result) => {
                 this.utilityService.onShowLoading();
             }),
             delay(2100),
             map((result) => {
                 return result;
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, params);
+            }),
         ).subscribe((result: any) => {
             const file = new Blob([result], { type: 'application/pdf' });
 
@@ -281,20 +330,20 @@ export class HttpOperationService {
                 responseType: 'text',
             }
         ).pipe(
-            catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-            }),
             tap((result) => {
                 this.utilityService.onShowLoading();
             }),
             delay(2100),
             map((result) => {
                 return result;
-            })
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, params);
+            }),
         );
     }
 
-    private handlingErrorWithStatusCode200(response: HttpResponseModel): any {
+    handlingErrorWithStatusCode200(response: HttpResponseModel): any {
         // let message = [];
 
         // response.data.forEach((item) => {
@@ -303,12 +352,41 @@ export class HttpOperationService {
 
         // return this.utilityService.onShowingMultipleMessageAlert('error', 'Oops...', message);
 
-        return this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
+        this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
+
+        return;
     }
 
-    private handlingError(error: HttpErrorResponse): any {
-        if (error.status === 400) {
-            return throwError(error);
-        }
+    onSetSentryProperties(error: HttpErrorResponse, parameter: any): void {
+        const scope = new Sentry.Scope();
+
+        // ** Set Response from Backend
+        scope.setExtra('response', JSON.stringify(error));
+
+        // ** Set Parameter / Payload
+        if (parameter) {
+            scope.setExtra('parameter', parameter);
+        };
+
+        // ** Set User Data
+        let UserData = JSON.parse(localStorage.getItem('UserData'));
+
+        if (UserData) {
+            scope.setExtra('user', UserData.full_name);
+        };
+
+        // ** Set Url
+        let url = this.router.url;
+
+        if (url) {
+            Sentry.captureException(new Error(url), scope);
+        } else {
+            Sentry.captureException(new Error('Oops, something went wrong'), scope);
+        };
+    }
+
+    handlingError(error: HttpErrorResponse, parameter?: any): any {
+        this.onSetSentryProperties(error, parameter);
+        return throwError(error);
     }
 }

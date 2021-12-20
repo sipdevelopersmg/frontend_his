@@ -10,7 +10,12 @@ export class NotificationService {
     constructor() { }
 
     onShowToast(header: string, body: string, options: any, mute?: boolean): void {
-        this.toasts.push({ header, body, ...options });
+
+        if (header) {
+            this.toasts.push({ header, body, ...options });
+        } else {
+            this.toasts.push({ header: 'Oops', body: 'We got an issue', options: {} });
+        }
 
         if (mute) {
             // ** Do Nothing
@@ -20,11 +25,7 @@ export class NotificationService {
     }
 
     onRemoveToast(toast: any, index: number): void {
-        // this.toasts = this.toasts.filter(item => item != toast);
-
         this.toasts.splice(index, 1);
-
-        console.log(this.toasts);
     }
 
     onPlayNotificationSound(): any {

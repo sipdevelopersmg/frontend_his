@@ -14,6 +14,9 @@ export const environment = {
 
     production: false,
 
+    // ** Web Api 
+    webApiForSentry: `${webApi}:8888/api`,
+
     /** 
      * @webApiMM http://174.138.22.139:8888/api/pharmm/
      * @Keterangan Menggunakan Gateway jadi Port nya diubah ke 8888 dan ditambahkan /pharmm 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import * as API_CONFIG from '../../../../../api';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
@@ -31,11 +31,16 @@ export class DaftarPasienRawatJalanService {
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
-            ).subscribe((result) => {
-                if (result) {
-                    this.GridDaftarPasienIrja.next(result.data);
+            )
+            .subscribe(
+                (result) => {
+                    if (result) {
+                        this.GridDaftarPasienIrja.next(result.data);
+                    }
+                }, (error) => {
+                    console.warn(error)
                 }
-            });
+            );
     }
 
     onDeletePasienIrja(id_person: number, is_active: boolean): Observable<any> {
@@ -61,10 +66,13 @@ export class DaftarPasienRawatJalanService {
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
-            ).subscribe((result) => {
-                if (result) {
-                    this.GridDaftarPasienIrja.next(result.data);
+            )
+            .subscribe(
+                (result) => {
+                    this.GridDaftarPasienIrja.next(result.data)
+                }, (error) => {
+                    console.warn(error);
                 }
-            });
+            );
     }
 }
