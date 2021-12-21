@@ -53,7 +53,7 @@
                         </div>
 
                         <!-- No. Identitas -->
-                        <div class="row mb-2">
+                        <div *ngIf="id_jenis_identitas.value" class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <atm-label [LabelCaption]="'No Identitas *'"></atm-label>
                             </div>
@@ -614,7 +614,7 @@
                         <img [src]="url" class="img-thumbnail"
                             style="margin-bottom: 20px; width: 112px ; max-width: 112px; height: 150.4px; max-height: 150.4px;">
                         <br />
-                        <input #PathFoto type='file' class="form-control"
+                        <input #PathFoto id="photo_dokter" type='file' class="form-control"
                             (change)="onSelectFile($event, PathFoto.value)" accept="image/*">
                     </div>
                 </div>

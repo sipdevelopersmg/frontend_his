@@ -53,7 +53,7 @@
                         </div>
 
                         <!-- No. Identitas -->
-                        <div class="row mb-2">
+                        <div *ngIf="id_jenis_identitas.value" class="row mb-2">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <atm-label [LabelCaption]="'No Identitas *'"></atm-label>
                             </div>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                 <ejs-datepicker #TglLahirDatepicker [format]="'dd/MM/yyyy'"
-                                    formControlName="tanggal_lahir" [readonly]="FormState != 'Insert'"
+                                    formControlName="tanggal_lahir" [readonly]="FormState != 'Insert'" [max]="MaxDate"
                                     [cssClass]="FormState == 'Insert' ? null : 'detail-input-field'" [locale]="'en-US'">
                                 </ejs-datepicker>
 
@@ -630,7 +630,7 @@
                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                         <img [src]="url" class="img-thumbnail">
                         <br />
-                        <input #PathFoto type='file' class="form-control"
+                        <input #PathFoto id="photo_pasien" type='file' class="form-control"
                             (change)="onSelectFile($event, PathFoto.value)" accept="image/*">
                     </div>
                 </div>

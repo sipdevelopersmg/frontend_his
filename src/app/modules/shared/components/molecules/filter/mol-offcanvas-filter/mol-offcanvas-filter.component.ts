@@ -115,7 +115,7 @@ export class MolOffcanvasFilterComponent implements OnInit {
                 this.FilterState = 'String';
 
                 this.FilterConditionDatasource = [
-                    { text: 'Equal', value: 'equal' },
+                    // { text: 'Equal', value: 'equal' },
                     { text: 'Contains', value: 'like' },
                 ];
             };

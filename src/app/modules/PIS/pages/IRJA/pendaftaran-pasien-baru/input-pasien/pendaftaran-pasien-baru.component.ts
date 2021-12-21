@@ -294,6 +294,8 @@ export class PendaftaranPasienBaruComponent implements OnInit {
     PersonIdResponseData: number;
     PathFotoUrl: any;
 
+    MaxDate: Date = new Date();
+
     constructor(
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
@@ -368,7 +370,6 @@ export class PendaftaranPasienBaruComponent implements OnInit {
 
     /** @stepChanged Function untuk melihat ketika Step di Wizard berganti */
     stepChanged(args: StepChangedArgs): void {
-
         // ** Alamat
         if (args.step.index == 2) {
             let CheckboxIsDefault = document.getElementById('CheckboxIsDefault0') as HTMLInputElement;
@@ -403,7 +404,7 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             ];
         }
 
-        if (args.step.index < 2 && args.step.index > 5) {
+        if (args.step.index < 2 || args.step.index > 5) {
             this.ButtonNav = [];
         }
     }
@@ -871,6 +872,8 @@ export class PendaftaranPasienBaruComponent implements OnInit {
                         .then(() => {
                             this.onResetForm(false);
 
+                            this.onResetFormPhotoPasien();
+
                             this.resetWizard();
 
                             this.PersonFound = false;
@@ -879,8 +882,17 @@ export class PendaftaranPasienBaruComponent implements OnInit {
             })
     }
 
+    onResetFormPhotoPasien(): void {
+        this.url = '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png';
+
+        this.PathFotoUrl = null;
+
+        let photo_pasien = document.getElementById('photo_pasien') as HTMLInputElement;
+        photo_pasien.value = null;
+    }
+
     onSubmitFormPersonSudahAda(): void {
-        const FormPendaftaranPasienPersonSudahAda = this.FormPendaftaranPasienBaruIrja.value;
+        let FormPendaftaranPasienPersonSudahAda = this.FormPendaftaranPasienBaruIrja.value;
 
         FormPendaftaranPasienPersonSudahAda.id_person = FormPendaftaranPasienPersonSudahAda.person.id_person;
 

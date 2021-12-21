@@ -455,7 +455,7 @@ export class InputDokterComponent implements OnInit {
             ];
         }
 
-        if (args.step.index < 2 && args.step.index > 5) {
+        if (args.step.index < 2 || args.step.index > 5) {
             this.ButtonNav = [];
         }
     }
@@ -903,12 +903,23 @@ export class InputDokterComponent implements OnInit {
                         .then(() => {
                             this.onResetForm(false);
 
+                            this.onResetFormPhotoDokter();
+
                             this.resetWizard();
 
                             this.PersonFound = false;
                         })
                 }
             })
+    }
+
+    onResetFormPhotoDokter(): void {
+        this.url = '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png';
+
+        this.PathFotoUrl = null;
+
+        let photo_dokter = document.getElementById('photo_dokter') as HTMLInputElement;
+        photo_dokter.value = null;
     }
 
     get id_jenis_identitas() { return this.FormInputDokter.get("person.id_jenis_identitas") }
