@@ -66,7 +66,7 @@ export class ResepDokterIrnaService {
      * @onGetAll Void
     */
     onGetAllByResepActiveByRegister(req: PostRequestByDynamicFiterModel[]):  Observable<any> {
-      let id_person = 1; //this.daftarPasienService.ActivePasien.value.id_register;
+      let id_person = this.daftarPasienService.ActivePasien.value.id_register;
       return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_AKTIF_BY_REGISTER+"/"+id_person, req).pipe(
           catchError((error: HttpErrorResponse): any => {
               this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -120,7 +120,7 @@ export class ResepDokterIrnaService {
     }
 
     onGetAllByRegister(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        let id_register = 1; //this.daftarPasienService.ActivePasien.value.id_register;
+        let id_register = this.daftarPasienService.ActivePasien.value.id_register;
         return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER+"/"+id_register, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

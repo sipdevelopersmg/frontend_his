@@ -23,6 +23,10 @@ import { TransaksiObatIrdaComponent } from './pages/transaksi-obat/transaksi-oba
 import { RefundObatIrjaDaftarComponent } from './pages/refund-obat/refund-obat-irja-daftar/refund-obat-irja-daftar.component';
 import { RefundObatIrjaDetailComponent } from './pages/refund-obat/refund-obat-irja-detail/refund-obat-irja-detail.component';
 import { RefundObatIrdaComponent } from './pages/refund-obat/refund-obat-irda/refund-obat-irda.component';
+import { RefundObatIrdaDaftarComponent } from './pages/refund-obat/refund-obat-irda-daftar/refund-obat-irda-daftar.component';
+import { RefundObatIrdaDetailComponent } from './pages/refund-obat/refund-obat-irda-detail/refund-obat-irda-detail.component';
+import { RefundObatIrnaDaftarComponent } from './pages/refund-obat/refund-obat-irna-daftar/refund-obat-irna-daftar.component';
+import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-irna-detail/refund-obat-irna-detail.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +50,10 @@ import { RefundObatIrdaComponent } from './pages/refund-obat/refund-obat-irda/re
         RefundObatIrjaDaftarComponent,
         RefundObatIrjaDetailComponent,
         RefundObatIrdaComponent,
+        RefundObatIrdaDaftarComponent,
+        RefundObatIrdaDetailComponent,
+        RefundObatIrnaDaftarComponent,
+        RefundObatIrnaDetailComponent,
     ],
     imports: [
         CommonModule,

@@ -11,27 +11,30 @@ import * as GridLoockUpItem from './json/lookupitem.json'
 import * as GridConfig from './json/gridPasien.config.json'
 import {Location} from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
-import { TrPersetujuanMutasiDetailInsert } from 'src/app/modules/MM/models/mutasi/persetujuan-mutasi';
-import { PemakaianInternalService } from 'src/app/modules/MM/services/issue/pemakaian-internal.service';
 import { SetupItemService } from 'src/app/modules/MM/services/setup-data/setup-item/setup-item.service';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
-import {MM} from 'src/app/api/MM'
 import * as LookupGridNoRegistrasi from './json/LookupGridNoRegistrasi.json'
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
+import { PHARMACY } from 'src/app/api/PHARMACY';
+import { RefundObatIrnaService } from '../../../services/refund-obat/refund-obat-irna/refund-obat-irna.service';
+import { SetupOutletService } from '../../../services/setup-data/setup-outlet/setup-outlet.service';
 @Component({
   selector: 'app-refund-obat-irna',
   templateUrl: './refund-obat-irna.component.html',
   styleUrls: ['./refund-obat-irna.component.css']
 })
 export class RefundObatIrnaComponent implements OnInit {
-    urlNoRegistrasi = MM.SETUP_DATA.SETUP_COA.GET_ALL_BY_PARMS;
-    LookupGridNoRegistrasi = LookupGridNoRegistrasi;
-    @ViewChild('LookupNoRegistrasi') LookupNoRegistrasi: OrgInputLookUpComponent;
+  SetupOutletDropdownField: object = { text: 'nama_outlet', value: 'id_outlet' };
+  urlNoRegistrasi = PHARMACY.RETUR_PENJUALAN.RETUR_PENJUALAN_OBAT_IRNA.GET_PASIEN_IRNA_OPEN;
+  LookupGridNoRegistrasi = LookupGridNoRegistrasi;
+  @ViewChild('LookupNoRegistrasi') LookupNoRegistrasi: OrgInputLookUpComponent;
 
   formInput: FormGroup;
   inputFieldState='detail';
   ButtonNav: ButtonNavModel[] = [
-    { Id: 'Simpan', Captions: 'simpan', Icons1: 'fa-save' },
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
+    { Id: 'Reset', Captions: 'Reset', Icons1: 'fas fa-undo fa-sm' },
+    { Id: 'simpan', Captions: 'simpan', Icons1: 'fa-save' },
   ];
 
   modalRef: BsModalRef;
@@ -54,7 +57,7 @@ export class RefundObatIrnaComponent implements OnInit {
 
   public childGridSatuan = [];
 
-  detailSelected: TrPersetujuanMutasiDetailInsert;
+  detailSelected: any;
   globalListenFunc: Function;
   private currentIndex: number;
 
@@ -66,7 +69,7 @@ export class RefundObatIrnaComponent implements OnInit {
 
   private id_stockroom :number=0;
   //======= Child
-  
+
   ChildGrid: GridModel;
   dataSourceGrid = new BehaviorSubject([]);
   dataScourceGridChild: any[] = [];
@@ -76,12 +79,12 @@ export class RefundObatIrnaComponent implements OnInit {
   public itemsParams: IEditCell;
   public itemsElem: HTMLElement;
   public itemsObj: DropDownList;    
-  
-//=========
-private id:number=0;
+
+  //=========
+  private id:number=0;
   constructor(
     private formBuilder: FormBuilder,
-    public pemakaianInternalService:PemakaianInternalService,
+    public refundObatIrnaService:RefundObatIrnaService,
     private encryptionService: EncryptionService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -89,7 +92,9 @@ private id:number=0;
     private modalService: BsModalService,
     private changeDetection: ChangeDetectorRef,
     private utilityService:UtilityService,
-    private setupItemService:SetupItemService
+    private setupItemService:SetupItemService,
+    public setupOutletService: SetupOutletService,
+
   ) { }
 
   ngOnInit(): void {
@@ -98,46 +103,17 @@ private id:number=0;
         depo: ['',],
         debitur: ['',],
         nama_pasien:['',],
+        bed:['',],
         no_rm:['',],
         no_register:['',],
         dokter:['',],
-        tanggal_lahir:['',],
-        usia:['',],
+        umur:['',],
         alamat:['',],
-        ruang:['',],
-        bed:['',],
+        poli:['',],
     });
 
     let id_item = this.id_item;
     let currentChildGird = null;
-
-    this.satuanParams = {
-        create: () => {
-            this.satuanElem = document.createElement('input');
-            return this.satuanElem;
-        },
-        read: () => {
-            return this.satuanObj.text;
-        },
-        destroy: () => {
-            this.satuanObj.destroy();
-        },
-        write: () => {
-            this.childGridSatuan = this.pemakaianInternalService.getSatuanDetail(this.id_item.value);
-            this.satuanObj = new DropDownList({
-                value: '',
-                dataSource: this.childGridSatuan,
-                fields: { value: 'kode_satuan', text: 'kode_satuan' },
-                enabled: true,
-                placeholder: 'Select a Satuan',
-                floatLabelType: 'Never',
-            });
-            this.satuanObj.appendTo(this.satuanElem);
-            if(currentChildGird){
-                this.satuanObj.value = currentChildGird.satuan;
-            }
-        }
-    }
 
     this.itemsParams = {
         create:() => {
@@ -181,7 +157,7 @@ private id:number=0;
 
     this.ChildGrid = {
         dataSource: this.dataScourceGridChild,
-        queryString: "id_item",
+        queryString: "penjualan_obat_detail_id",
         rowHeight: 30,
         allowResizing: true,
         allowTextWrap: false,
@@ -189,16 +165,19 @@ private id:number=0;
         toolbar: ['Add','Edit', 'Delete', 'Update', 'Cancel'],
         editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true },
         columns: [
+            { field: "penjualan_obat_id", headerText: 'penjualan_obat_id', width: 100, visible: false },
+            { field: "penjualan_obat_detail_id", headerText: 'penjualan_obat_detail_id', width: 100, visible: false },
             { field: "no_urut", headerText: 'urut', visible: false },
             { field: "id_item", headerText: 'id_item', width: 100, visible: false },
-            { field: "batch_number", headerText: 'Batch Number', editType: 'dropdownedit', edit: this.itemsParams, width: 200 },
-            { field: "expired_date", headerText: 'Expired Date', textAlign: 'Right', width: 80, allowEditing: false },
+            // { field: "batch_number", headerText: 'Batch Number', editType: 'dropdownedit', edit: this.itemsParams, width: 200 },
+            { field: "batch_number", headerText: 'Batch Number', textAlign: 'Right', width: 200 },
+            { field: "expired_date", headerText: 'Expired Date', textAlign: 'Right', width: 80, editType:"datepickeredit" ,format:"dd MMMM yyyy" },
             { field: "qty_besar", headerText: 'Banyak', visible: false, headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2'},
             { field: "satuan", headerText: 'Satuan', visible: false, editType: 'dropdownedit', edit: this.satuanParams, width: 200 },
             { field: "isi", headerText: 'Isi', visible: false, headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: false },
-            { field: "qty", headerText: 'Qty', headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: true },
+            { field: "qty_retur_penjualan_obat", headerText: 'Qty', headerTextAlign: 'Center', textAlign: 'Right', width: 50, format: 'N2', allowEditing: true },
             { field: "nama_satuan", headerText: 'Satuan', headerTextAlign: 'Center', textAlign: 'Left', width: 100, format: 'N2', allowEditing: false , visible: false},
-            { field: "hpp_satuan", headerText: '', headerTextAlign: 'Center', textAlign: 'Right', width: 1, format: 'N2', allowEditing: false, visible: false },
+            { field: "harga_satuan_retur", headerText: '', headerTextAlign: 'Center', textAlign: 'Right', width: 1, format: 'N2', allowEditing: false, visible: false },
             { field: "sub_total", headerText: '', headerTextAlign: 'Center', textAlign: 'Right', width: 1, format: 'N2', allowEditing: false, visible: false },
         ],
         rowSelected(args){
@@ -207,9 +186,11 @@ private id:number=0;
         actionBegin(args: AddEventArgs) {
             if (args.requestType === 'add') {
                 (args.data as object)['id_item'] = this.parentDetails.parentRowData.id_item;
+                (args.data as object)['penjualan_obat_id'] = this.parentDetails.parentRowData.penjualan_obat_id;
+                (args.data as object)['penjualan_obat_detail_id'] = this.parentDetails.parentRowData.penjualan_obat_detail_id;
+                (args.data as object)['harga_satuan_retur'] = this.parentDetails.parentRowData.harga_satuan;
                 (args.data as object)['counterChildGrid'] = counterChildGrid++;
                 id_item.next(this.parentDetails.parentRowData.id_item);
-                console.log(id_item.value);
             }
             // if (args.requestType === 'beginEdit'){
             //     SelectedDataRacikanObat = args.rowData;
@@ -231,17 +212,17 @@ private id:number=0;
                     let total = 0
                     dataSourceChild.forEach((item,index)=>{
                         if(itemPrent.id_item==item.id_item){
-                            total = total + parseInt(item.qty_pemakaian_internal)
+                            total = total + parseInt(item.qty_retur_penjualan_obat)
                         }
                     })
-                    itemPrent.qty = total
+                    itemPrent.qty_retur = total
                     data.push(itemPrent)
                 })                
-                setTimeout(()=>{
+                // setTimeout(()=>{
                     dataSourceGrid.next(data);
-                    totalJumlahItem.next(data.sum('qty_pemakaian_internal'))
-                    console.log(data);
-                },500)
+                    totalJumlahItem.next(data.sum('qty_retur'))
+                    // console.log(data);
+                // },500)
             }
 
             if (args.requestType === "delete") {
@@ -277,16 +258,17 @@ private id:number=0;
     });
 
     this.GridDetailToolbar = [
-        // { text: 'Add[F1]', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
         { text: '| [*]=Ubah Banyak | [+]=Satuan |', }
     ];
-    
+
+    this.setupOutletService.setDataSource();
+
   }
 
   ngAfterViewInit(): void {
-    let pemesanan_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-    console.log(pemesanan_id);
-    this.onLoadDetailData(pemesanan_id);
+    // let pemesanan_id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+    // console.log(pemesanan_id);
+    // this.onLoadDetailData(pemesanan_id);
   }
 
     onDataBound(){
@@ -300,16 +282,39 @@ private id:number=0;
   }
 
   heandleSelectedNoRegistrasi(args: any): void {
-    this.id_register.setValue(args.no_registrasi);
+    this.formInput.setValue({
+        id_register     :args.id_register,
+        depo            :this.depo.value,
+        debitur         :args.nama_debitur,
+        nama_pasien     :args.nama_pasien,
+        no_rm           :args.no_rekam_medis,
+        no_register     :args.no_register,
+        dokter          :args.nama_dokter,
+        umur            :args.umur,
+        alamat          :args.alamat_pasien,
+        poli            :args.nama_poli,
+        bed             :args.room_descr + ' - ' +args.bed_no,
+    })
+  }
+
+  handleClickRefesh(){
+    if(this.depo.value==''){
+        this.utilityService.onShowingCustomAlert('warning','Validasi','Depo belum di pilih')
+        return false;
+    }
+    
+    this.refundObatIrnaService.getDetailPenjualan(this.depo.value,this.id_register.value).subscribe((result)=>{
+        result.data.map((e,i)=>{
+            return e.qty = 0;
+        });
+        this.dataSourceGrid.next(result.data);
+    })
+    
   }
 
   /** untuk identifikasi keyboard down pada grid */
   handleLoadGrid(args: any): void {
     document.getElementsByClassName('e-grid')[0].addEventListener('keydown', this.KeyDownHandler.bind(this));
-  }
-
-  handleSelectedPasien(args: any): void {
-  
   }
 
   handleSelectdRow(args: any): void {
@@ -323,7 +328,7 @@ private id:number=0;
 
     if ($event.requestType == 'save') {
         console.log($event);
-        this.pemakaianInternalService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
+        this.refundObatIrnaService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
         this.gridDetail.refresh();
     }
     // console.log('complate parent',this.gridDetail.childGrid.dataSource);
@@ -336,7 +341,7 @@ private id:number=0;
       };
 
       if (event.keyCode === 46) {
-          this.pemakaianInternalService.removeDataDetail(this.currentIndex);
+          this.refundObatIrnaService.removeDataDetail(this.currentIndex);
           this.gridDetail.refresh();
           setTimeout(() => {
               if (this.currentIndex != 0) {
@@ -370,26 +375,6 @@ private id:number=0;
     }
   }
 
-  onLoadDetailData(id){
-      this.pemakaianInternalService.onGetById(id).subscribe((result)=>{
-          this.id = parseInt(id);
-          this.formInput.setValue({
-            pemakaian_internal_id   :parseInt(id),
-            pic_pemberi             : '',
-            pic_penerima            : '',
-            time_serah_terima       : new Date(),
-            total_transaksi         : 0,
-          })
-          this.id_stockroom = result.data.id_stockroom;
-          this.pemakaianInternalService.getDetail(id).subscribe((result)=>{
-            result.data.map((e,i)=>{
-                return e.qty = 0;
-            });
-            this.dataSourceGrid.next(result.data);
-          })
-            //this.persetujuanMutasiService.setDetail(pemesanan_id);
-      });
-  }
 
   onOpenQty() {
 
@@ -422,7 +407,7 @@ private id:number=0;
       );
 
   }
-  
+
 
   onOpenSatuan() {
       const _combine = combineLatest(
@@ -470,72 +455,61 @@ private id:number=0;
   }
 
   onSave(){
-      if (this.formInput.valid) {
+    if (this.formInput.valid) {
         let data = this.formInput.value;
-        this.dataSourceGrid.subscribe((result)=>{
-            let details = result
-            details.map((e,i)=>{
-                return e.detailBatch = [];
+        this.dataScourceGridChild.map((e,i)=>{
+            e.sub_total = e.qty_retur_penjualan_obat * e.harga_satuan_retur;
+            e.no_urut = i+1;
+            return e;
+        });
+        data.jumlah_item_retur = this.dataScourceGridChild.sum('qty_retur_penjualan_obat');
+        data.total_transaksi_retur = this.dataScourceGridChild.sum('sub_total');
+        data.nomor_retur_penjualan_obat = '23135';
+        data.tanggal_retur_penjualan_obat = '2021-12-10';
+        data.id_outlet_terima_retur = this.depo.value;
+        console.log('data header',data);
+        console.log('data detail',this.dataScourceGridChild);
+        data.details = this.dataScourceGridChild;
+        console.log('data',data);
+        this.refundObatIrnaService.Insert(data).subscribe((result)=>{
+            console.log(result);
+            this.utilityService.onShowingCustomAlert('success', 'Berhasil Refund Obat', result.message)
+            .then(() => {    
+                this.onReset();
             });
-            details.forEach((itemPrent,indexPrent)=>{
-                let nominal = 0;
-                this.dataScourceGridChild.forEach((item,index)=>{
-                    if(itemPrent.id_item==item.id_item){
-                        item.qty_pemakaian_internal = parseFloat(item.qty_pemakaian_internal)
-                        item.hpp_satuan = parseFloat(item.hpp_satuan)
-                        item.sub_total = item.qty_pemakaian_internal * item.hpp_satuan;
-                        details[indexPrent].detailBatch.push(item);
-                        nominal = nominal + item.sub_total
-                    }
-                })
-                details[indexPrent].nominal_pemakaian_internal = nominal;
-            })      
-            data.details = details          
-            this.pemakaianInternalService.validasiPersetujuan(data)
-            .subscribe((result) => {
-                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
-                .then(() => {
-                    // this.ResetFrom();
-                    this.LookupNoRegistrasi.resetValue();
-                });
-            });
-        })
-
-      }else{
-          alert('isi semua data');
-      }
+        });
+    }else{
+        alert('isi semua data');
+    }
   }
 
-  onClickButtonNav(ButtonId: string): void {
+
+  onReset(){
+    this.formInput.reset();
+    this.dataScourceGridChild = [];
+    this.dataSourceGrid.next([]);
+    this.ChildGrid.dataSource = [];
+}
+
+  
+onClickButtonNav(ButtonId: string): void {
     switch (ButtonId) {
         case 'Back':
             this.location.back();
             break;
-        case "Validasi":
-            this.onSave() 
+        case 'Reset':
+            this.onReset();
             break;
-        case "Cancel":
-            this.modalRef = this.modalService.show(
-                this.modalCanceled,
-                Object.assign({}, { class: 'modal-lg' })
-            );
+        case "simpan":
+            // this.dataScourceGridChild;
+            this.onSave(); 
             break;
         default:
             break;
     }
-  }
+}
 
-  onCalceled(): void {
-    let reason_canceled = (<HTMLInputElement>document.getElementsByName("reason_canceled")[0]).value;
-    this.pemakaianInternalService.Cancel(this.id,reason_canceled).subscribe((result)=>{
-      this.utilityService.onShowingCustomAlert('success', 'Data Pemesanan Berhasil Di Cancel', result.message)
-        .then(() => {
-            this.onLoadDetailData(this.id);
-            this.modalRef.hide();
-        });
-    })
-  }
-  
   get id_register (){return this.formInput.get('id_register')}
+  get depo (){return this.formInput.get('depo')}
 
 }
