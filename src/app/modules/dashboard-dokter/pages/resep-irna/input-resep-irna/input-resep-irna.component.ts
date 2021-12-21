@@ -28,6 +28,7 @@ import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/rese
 import { Router,ActivatedRoute } from '@angular/router';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
+import { SetupOutletService } from 'src/app/modules/Pharmacy/services/setup-data/setup-outlet/setup-outlet.service';
 
 @Component({
   selector: 'app-input-resep-irna',
@@ -69,6 +70,7 @@ export class InputResepIrnaComponent implements OnInit {
     DropdownRuteFields: object = { text: "nama_rute_pemberian_obat", value: "id_rute_pemberian_obat" };
     DropdownPemakaianFields: object = { text: "interval_aturan_pakai", value: "id_interval_aturan_pakai" };
     DropdownLabelFields: object = { text: "nama_label_pemakaian_obat", value: "id_label_pemakaian_obat" };
+    SetupOutletDropdownField: object = { text: 'nama_outlet', value: 'id_outlet' };
 
     // ** Form Add Obat Properties
     FormAddObat: FormGroup;
@@ -191,6 +193,7 @@ export class InputResepIrnaComponent implements OnInit {
     private updateResepDokter:boolean = false;
     private pulang:boolean = false;
     private idArry:any[] = [];
+    private setIdOutlet:any = 0;
   constructor(
     private formBuilder: FormBuilder,
     public resepDokterService: ResepDokterIrnaService,
@@ -205,7 +208,8 @@ export class InputResepIrnaComponent implements OnInit {
     private router: Router,
     private encryptionService:EncryptionService,
     private activatedRoute:ActivatedRoute,
-    public daftarPasienService: DaftarPasienService
+    public daftarPasienService: DaftarPasienService,
+    public setupOutletService: SetupOutletService,
   ) { }
 
   ngOnInit(): void {
@@ -401,6 +405,7 @@ export class InputResepIrnaComponent implements OnInit {
         this.dataSourceSatuanAturanPakai = result.data;
     })
     this.resepDokterService.reset();
+    this.setupOutletService.setDataSource();
   }
 
     ngAfterViewInit(): void {
@@ -439,6 +444,10 @@ export class InputResepIrnaComponent implements OnInit {
     this.inputObat = true;
     this.tanggal_mulai_text.setValue(this.utilityService.onFormatDate(this.tanggal_mulai.value,'Do MMMM yyyy'));
     this.tanggal_sampai_text.setValue(this.utilityService.onFormatDate(this.tanggal_sampai.value,'Do MMMM yyyy'));
+  }
+
+  handleChangeOutlet(args){
+    this.setIdOutlet=args.value;
   }
 
   onLoad(args:any){
@@ -798,10 +807,10 @@ export class InputResepIrnaComponent implements OnInit {
     
     async Insert() {
         this.data_header ={
-            id_dokter:2,//this.daftarPasienService.ActivePasien.value.id_dokter,
-            id_register:1,//this.daftarPasienService.ActivePasien.value.id_register,
-            id_outlet:1,
-            id_person:1,//this.daftarPasienService.ActivePasien.value.id_person,
+            id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
+            id_register:this.daftarPasienService.ActivePasien.value.id_register,
+            id_outlet:this.setIdOutlet,
+            id_person:this.daftarPasienService.ActivePasien.value.id_person,
             jenis_rawat:'I',
             nama_template:'',
             tanggal_resep:moment().format()

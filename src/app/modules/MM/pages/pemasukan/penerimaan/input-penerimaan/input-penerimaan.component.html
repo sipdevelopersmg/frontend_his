@@ -91,11 +91,13 @@
         <!-- Detail -->
         <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
             [dataSource]='penerimaanService.dataDetail$ | async' [gridLines]="'Both'" [toolbar]='GridDetailToolbar'
-            (actionComplete)="handleActionCompleted($event)" [allowResizing]="true"
+            (actionComplete)="handleActionCompleted($event)" 
+            (actionBegin)="handleActionBegin($event)"
+            [allowResizing]="true"
             (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
             (rowSelected)="handleSelectdRow($event)" (commandClick)="handleCommandClick($event)">
             <e-columns>
-                <e-column [width]="70" [field]="'command'" [headerText]="'ADD'" [visible]="true" [allowEditing]="false"
+                <e-column [width]="70" [field]="'command'" [headerText]="'D'" [visible]="true" [allowEditing]="false"
                     [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
                     [commands]="CommandButton">
                 </e-column>
@@ -128,16 +130,16 @@
                     type="Date" [edit]="TglExpiredParams">
                 </e-column>
                 <e-column [visible]="true" field='qty_satuan_besar' [allowEditing]="true" headerText='Banyak'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="center">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" [width]="120">
                 </e-column>
                 <e-column [visible]="true" field='kode_satuan_besar' [allowEditing]="true" headerText='Satuan'
-                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center">
+                    editType='dropdownedit' [edit]='satuanParams' textAlign="left" headerTextAlign="center" [width]="130">
                 </e-column>
                 <e-column [visible]="true" field='isi' [allowEditing]="false" headerText='Isi' editType='defaultEdit'
-                    textAlign="right" headerTextAlign="right">
+                    textAlign="right" headerTextAlign="right" [width]="80">
                 </e-column>
                 <e-column [visible]="true" field='qty_terima' [allowEditing]="false" headerText='QTY'
-                    editType='defaultEdit' textAlign="right" headerTextAlign="right">
+                    editType='defaultEdit' textAlign="right" headerTextAlign="right" [width]="130">
                 </e-column>
                 <e-column [visible]="false" field='harga_satuan' [allowEditing]="false" headerText='Harga Satuan'
                     editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">

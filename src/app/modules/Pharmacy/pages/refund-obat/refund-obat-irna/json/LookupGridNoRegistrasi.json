@@ -4,18 +4,8 @@
             "allowEditing": true,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "kode_item",
-            "headerText": "Kode",
-            "type": "string",
-            "visible": true
-        },
-        
-        {
-            "allowEditing": true,
-            "allowSorting": true,
-            "editType": "defaultEdit",
-            "field": "nama_item",
-            "headerText": "Nama Barang",
+            "field": "no_register",
+            "headerText": "No Register",
             "type": "string",
             "visible": true
         },
@@ -23,27 +13,63 @@
             "allowEditing": true,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "barcode",
-            "headerText": "Barcode",
+            "field": "no_rekam_medis",
+            "headerText": "No RM",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_pasien",
+            "headerText": "Nama Pasien",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "gender",
+            "headerText": "Gender",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_debitur",
+            "headerText": "Debitur",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_dokter",
+            "headerText": "Dokter",
             "type": "string",
             "visible": true
         }
     ],
     "filter": [
         {
-            "field": "kode_item",
+            "field": "no_registrasi",
             "filter": "like",
-            "title": "KODE"
+            "title": "No Register"
         },
         {
-            "field": "nama_item",
+            "field": "no_rm",
             "filter": "like",
-            "title": "NAMA"
+            "title": "No RM"
         },
         {
-            "field": "nama_item",
-            "filter": "barcode",
-            "title": "BARCODE"
+            "field": "nama_pasien",
+            "filter": "like",
+            "title": "Nama PAsien"
         }
     ]
 }

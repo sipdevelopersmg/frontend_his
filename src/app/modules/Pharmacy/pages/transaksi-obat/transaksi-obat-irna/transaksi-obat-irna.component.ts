@@ -61,6 +61,7 @@ export class TransaksiObatIrnaComponent implements OnInit {
     this.formInput = this.formBuilder.group({
       nama_pasien: ['', []],
       umur: ['', []],
+      poli: ['',[]],
       bed : ['', []],
       dokter : ['', []],
       nomor_rm : ['', []],
@@ -102,8 +103,9 @@ export class TransaksiObatIrnaComponent implements OnInit {
 
     this.formInput.setValue({
       nama_pasien       : args.data.nama_pasien,
-      umur              : '',//args.data.umur,
-      bed               : args.data.bed_no,
+      umur              : args.data.usia,
+      poli              : args.data.nama_poli,
+      bed               : args.data.bed_no+' - '+args.data.bed_no,
       dokter            : args.data.nama_dokter,
       nomor_rm          : args.data.no_rekam_medis,
       nomor_registrasi  : args.data.no_register,

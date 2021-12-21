@@ -1,0 +1,67 @@
+{
+  "GridColumns": [
+    {
+        "field": "nomor_retur_penjualan_obat",
+        "headerText": "Nomor Refund",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_retur_penjualan_obat",
+        "headerText": "Tanggal Refund",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_outlet",
+        "headerText": "Nama Outlet",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "keterangan_retur_penjualan_obat",
+        "headerText": "Keterangan",
+        "type": "string",
+        "format": "",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "jumlah_item_retur",
+        "headerText": "Jumlah Item",
+        "type": "number",
+        "format": "",
+        "textAlign": "right",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_transaksi",
+        "headerText": "Status",
+        "type": "string",
+        "format": "",
+        "textAlign": "right",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_inputed",
+        "headerText": "Waktu Input",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    }
+]
+}

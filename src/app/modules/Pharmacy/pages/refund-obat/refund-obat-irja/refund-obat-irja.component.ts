@@ -214,9 +214,6 @@ private id:number=0;
                 (args.data as object)['counterChildGrid'] = counterChildGrid++;
                 id_item.next(this.parentDetails.parentRowData.id_item);
             }
-            // if (args.requestType === 'beginEdit'){
-            //     SelectedDataRacikanObat = args.rowData;
-            // }
         },
         actionComplete(args) {
             if (args.requestType === 'save') {
@@ -339,6 +336,7 @@ private id:number=0;
         });
         this.refundObatIrjaService.getDetail(args.data.penjualan_obat_id).subscribe((result)=>{
             this.dataSourceGrid.next(result.data);
+            console.log(this.dataSourceGrid.value);
         });
     }
 

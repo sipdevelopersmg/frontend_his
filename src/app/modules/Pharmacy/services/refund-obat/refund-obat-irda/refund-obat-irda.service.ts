@@ -61,7 +61,11 @@ export class RefundObatIrdaService {
         return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
     }
 
+    getDetailPenjualan(id_outlet,id_register): Observable<any>{
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_PENJUALAN_BY_ID_REGISTER+'/'+id_outlet+'/'+id_register);
+    }
     /**
+
      * Service Untuk Menampilkan data berdasarkan dinamik filter
      * @onGetAll Observable<Model>
      */
