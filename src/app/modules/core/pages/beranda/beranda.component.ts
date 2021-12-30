@@ -20,13 +20,23 @@ export class BerandaComponent implements OnInit {
     ngOnInit(): void {
         this.UserFullName = this.authenticationService.currentUserValue.full_name;
 
-        // this.onCheckDirectPrint();
+        this.onCheckDirectPrint();
     }
 
     onCheckDirectPrint(): void {
-        this.httpClient.get<any>('http://127.0.0.1:3555/cek')
-            .subscribe((result) => {
-                console.log(result);
-            });
+        // this.httpClient.get<any>('http://localhost:3000/api/laptop/11')
+        //     .subscribe((result) => {
+        //         console.log(result);
+        //     });
+
+        // this.httpClient.post<any>(
+        //     'http://localhost:3000/api/laptop/GetAllLaptopByDynamicFilter',
+        //     [
+        //         { column: 'id', filter: 'equal', searchText: '1', searchText2: '' },
+        //         { column: 'name', filter: 'like', searchText: 'Apple', searchText2: '' },
+        //     ]
+        // ).subscribe((result) => {
+        //     console.log(result);
+        // })
     }
 }

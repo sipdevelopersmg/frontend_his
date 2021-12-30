@@ -1,31 +1,31 @@
 {
-  "GridColumns": [
-    {
-      "editType": "defaultEdit",
-      "field":"batch_number",
-      "headerText":"batch number",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"expired_date",
-      "headerText":"expired date",
-      "type":"",
-      "format":"",
-      "textAlign":"left",
-      "visible": true
-    },
-    {
-      "editType": "defaultEdit",
-      "field":"qty_on_hand",
-      "headerText":"qty",
-      "type":"",
-      "format":"",
-      "textAlign":"right",
-      "visible": true
-    }
-  ]  
+    "GridColumns": [
+        {
+            "editType": "defaultEdit",
+            "field": "batch_number",
+            "headerText": "Batch Number",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "expired_date",
+            "headerText": "Expired Date",
+            "type": "DateTime",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "visible": true
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "qty_on_hand",
+            "headerText": "Qty",
+            "type": "",
+            "format": "",
+            "textAlign": "right",
+            "visible": true
+        }
+    ]
 }

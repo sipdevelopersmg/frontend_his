@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     onClickBackToMainMenu(args: any): void {
-        console.log(args);
+        // console.log(args);
     }
 
     onTogglingTopMenu(args: any): void {
@@ -130,5 +130,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         args === true ? sidebarSection.classList.add('hidding-top-menu') : sidebarSection.classList.remove('hidding-top-menu');
     }
 
-    ngOnDestroy(): void { }
+    ngOnDestroy(): void {
+        localStorage.clear();
+        sessionStorage.clear();
+    }
 }
