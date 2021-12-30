@@ -150,7 +150,7 @@ export class InputPermintaanMutasiComponent implements OnInit {
         // console.log(kontrak_id);
         // this.onLoadDetailData(kontrak_id);
         setTimeout(() => {
-            this.permintaanMutasiService.setDetail([]);
+            this.permintaanMutasiService.Reset();
             this.gridDetail.dataSource = [];
             this.gridDetail.refresh();
         }, 1);

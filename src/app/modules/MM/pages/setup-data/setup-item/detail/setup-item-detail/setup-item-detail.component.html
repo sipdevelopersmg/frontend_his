@@ -1,0 +1,193 @@
+<org-tabs #OrgTabsRef [showHeader]="true" (onGetSelectedTabId)="handleSelectedTabId($event)">
+    <!-- Detail -->
+    <org-tabs-item>
+        <org-tabs-label [Id]="'Data'">Detail</org-tabs-label>
+        <org-tabs-body>
+            <form [formGroup]="FormInputDetail" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <org-input-look-up-kode #LookupKodeGrupItem [lookup-url]="urlGrupItem"
+                            [idKode]="'kode_grup_item'" [modal-title]="'Data GrupItem'" [idTitle]="'grup_item'"
+                            (onGetSelectedData)="heandleSelectedGrupItem($event)"
+                            [columns]="LookupGridGrupItem.columns" [filter-lookup]="LookupGridGrupItem.filter"
+                            [label]="'Grup Item'">
+                        </org-input-look-up-kode>
+                        <!-- Dropdown Pabrik -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Pabrik'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #MaritalSetupPabrikDropdown id="marital"
+                                    [dataSource]="setupPabrikService.dataSource| async"
+                                    [fields]="MaritalSetupPabrikDropdownField" [allowFiltering]="true"
+                                    formControlName="id_pabrik">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+                        <org-input-look-up-kode #LookupKodeSupplier [lookup-url]="urlSupplier"
+                            [idKode]="'id_supplier'" [modal-title]="'Data Supplier'" [idTitle]="'nama_supplier'"
+                            (onGetSelectedData)="heandleSelectedSupplier($event)"
+                            [columns]="LookupGridSupplier.columns" [filter-lookup]="LookupGridSupplier.filter"
+                            [label]="'Supplier'">
+                        </org-input-look-up-kode>
+                        <mol-input-text [label]="'Kode Item'" formControlName="kode_item"
+                            [inputFieldState]="inputFieldState"
+                            [disabled]="inputFieldState==='edit'">
+                        </mol-input-text>
+                        <mol-input-text [label]="'Barcode'" formControlName="barcode"
+                            [inputFieldState]="inputFieldState"></mol-input-text>
+                        <mol-input-text [label]="'Nama Item'" formControlName="nama_item" [inputFieldState]="inputFieldState">
+                        </mol-input-text>
+                        <mol-input-numeric [label]="'Batas Maksimal Pesan'" formControlName="batas_maksimal_pesan"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-numeric [label]="'Batas Maksimal Pakai'" formControlName="batas_maksimal_pakai"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>                   
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <mol-input-numeric [label]="'Batas Maksimal Mutasi'" formControlName="batas_maksimal_mutasi"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-numeric [label]="'Batas Maksimal Jual'" formControlName="batas_maksimal_jual"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-numeric [label]="'Batas Stok Kritis'" formControlName="batas_stok_kritis"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-numeric [label]="'Prosentase Stok Kritis'"
+                            formControlName="prosentase_stok_kritis" [inputFieldState]="inputFieldState">
+                        </mol-input-numeric>
+                        <mol-input-numeric [label]="'Harga Beli Terakhir'" formControlName="harga_beli_terakhir"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-numeric [label]="'HPP Average'" formControlName="hpp_average"
+                            [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-numeric [label]="'Prosentase Default Profit'"
+                            formControlName="prosentase_default_profit" [inputFieldState]="inputFieldState">
+                        </mol-input-numeric>
+                        <mol-input-checkbox-single [label]="'Is PPN '" 
+                            formControlName="is_ppn" id="is_ppn">
+                        </mol-input-checkbox-single>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button type="button" (click)="handleClickUpdateItem()" class="btn btn-primary float-right">Update Detail Item</button>
+                    </div>
+                </div>
+            </form>
+        </org-tabs-body>
+    </org-tabs-item>
+    <!-- Satuan -->
+    <org-tabs-item>
+        <org-tabs-label [Id]="'Satuan'">Satuan</org-tabs-label>
+        <org-tabs-body>
+            <form [formGroup]="FormInputSatuan" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <!-- Dropdown Satuan -->
+                        <div class="row mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <atm-label [LabelCaption]="'Satuan'"></atm-label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <ejs-dropdownlist #MaritalSatuanDropdown id="marital"
+                                    [dataSource]="setupSatuanService.dataSource| async"
+                                    [fields]="MaritalSatuanDropdownField" [allowFiltering]="true"
+                                    formControlName="kode_satuan">
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+                        <mol-input-numeric [label]="'Isi'" formControlName="isi" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <mol-input-checkbox-single [label]="'Is Satuan Beli'" formControlName="is_satuan_beli" id="is_satuan_beli" ></mol-input-checkbox-single>
+                        <button  *ngIf="!currectStatusSatuan" type="button" (click)="handleClickTambahSatuan()" class="btn btn-primary float-right">Tambah Satuan</button>      
+                        <button  *ngIf="currectStatusSatuan" type="button" (click)="handleClickBatalSatuan()" class="btn btn-default float-right">Batal</button>                        
+                        <button  *ngIf="currectStatusSatuan" type="button" (click)="handleClickEditSatuan()" class="btn btn-warning float-right">Edit Satuan</button>                  
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <!-- GRID SATUAN -->
+                        <mol-grid #GridDataSatuan [grid-height]="'calc(100vh - 25rem)'"
+                            [grid-DataSource]="dataSatuan" 
+                            [grid-paging]="false" 
+                            [grid-lines]="'Both'" 
+                            [grid-toolbar]="GridDataToolbar"
+                            [columns]="GridConfigSatuan.GridColumns" 
+                            (row-selected)="handleSelectedRowSatuan($event)"
+                            (toolbar-click)="handleToolbarClickSatuan($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </form>
+        </org-tabs-body>
+    </org-tabs-item>
+    <!-- Urai -->
+    <org-tabs-item>
+        <org-tabs-label [Id]="'Urai'">Urai</org-tabs-label>
+        <org-tabs-body>
+            <form [formGroup]="FormInputUrai" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <org-input-look-up-kode #LookupKodeSetupItem [lookup-url]="urlSetupItem" 
+                            [idKode]="'kode_item'"
+                            [modal-title]="'Data Item'"
+                            [idTitle]="'nama_item'" (onGetSelectedData)="heandleSelectedSetupItem($event)"
+                            [columns]="LookupGridSetupItem.columns" [filter-lookup]="LookupGridSetupItem.filter"
+                            [label]="'Item'">
+                        </org-input-look-up-kode>
+                        <!-- heandleSelectedSetupItem(args: any): void {
+                            this.id_item.setValue(args.id_item);
+                        } -->
+                        <!-- this.LookupKodeSetupItem.resetValue(); -->
+                        <mol-input-numeric [label]="'Qty'" formControlName="qty_urai" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <button type="button" (click)="handleClickTambahUrai()" class="btn btn-primary float-right">Tambah Item Urai</button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <!-- GRID URAI -->
+                        <mol-grid #GridDataUrai [grid-height]="'calc(100vh - 25rem)'"
+                            [grid-DataSource]="dataUrai" 
+                            [grid-paging]="false" 
+                            [grid-lines]="'Both'" 
+                            [grid-toolbar]="GridDataToolbar"
+                            [columns]="GridUrai.GridColumns" 
+                            (row-selected)="handleSelectedRowUrai($event)"
+                            (toolbar-click)="handleToolbarClickUrai($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </form>
+        </org-tabs-body>
+    </org-tabs-item>
+    <!-- Assembly -->
+    <org-tabs-item>
+        <org-tabs-label [Id]="'Assembly'">Assembly</org-tabs-label>
+        <org-tabs-body>
+            <form [formGroup]="FormInputAssembly" class="p-2">
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <org-input-look-up-kode #LookupKodeSetupItemAssembly [lookup-url]="urlSetupItem" 
+                            [idKode]="'kode_item'" 
+                            [modal-title]="'Data Item'"
+                            [idTitle]="'nama_item'" (onGetSelectedData)="heandleSelectedSetupItemAssembly($event)"
+                            [columns]="LookupGridSetupItem.columns" [filter-lookup]="LookupGridSetupItem.filter"
+                            [label]="'Item'">
+                        </org-input-look-up-kode>
+                        <!-- heandleSelectedSetupItem(args: any): void {
+                            this.id_item.setValue(args.id_item);
+                        } -->
+                        <!-- this.LookupKodeSetupItem.resetValue(); -->
+                        <mol-input-numeric [label]="'Qty'" formControlName="qty_Assembly" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                        <button type="button" (click)="handleClickTambahAssembly()" class="btn btn-primary float-right">Tambah Item Assembly</button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                        <!-- GRID ASSEMBLY -->
+                        <mol-grid #GridDataAssembly [grid-height]="'calc(100vh - 25rem)'"
+                            [grid-DataSource]="dataAssembly"
+                            [grid-paging]="false"
+                            [grid-lines]="'Both'"
+                            [grid-toolbar]="GridDataToolbar"
+                            [columns]="GridAssembly.GridColumns"
+                            (row-selected)="handleSelectedRowAssembly($event)"
+                            (toolbar-click)="handleToolbarClickAssembly($event)">
+                        </mol-grid>
+                    </div>
+                </div>
+            </form>
+        </org-tabs-body>
+    </org-tabs-item>
+</org-tabs>

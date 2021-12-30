@@ -465,6 +465,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
                 details.map((e, i) => {
                     return e.detailBatch = [];
                 });
+                
                 details.forEach((itemPrent, indexPrent) => {
                     this.dataScourceGridChild.forEach((item, index) => {
                         if (itemPrent.id_item == item.id_item) {
@@ -474,7 +475,9 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
                             details[indexPrent].detailBatch.push(item);
                         }
                     })
+                    details[indexPrent].nominal_mutasi = details[indexPrent].detailBatch.sum('sub_total');
                 })
+                
                 data.details = details
                 this.persetujuanMutasiService.validasiPersetujuan(data)
                     .subscribe((result) => {

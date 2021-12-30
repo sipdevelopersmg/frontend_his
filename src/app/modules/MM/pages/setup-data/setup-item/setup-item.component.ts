@@ -24,6 +24,8 @@ import { SetupRutePemberianObatService } from 'src/app/modules/Pharmacy/services
 import { SetupRestriksiObatService } from 'src/app/modules/Pharmacy/services/formularium/setup-restriksi-obat/setup-restriksi-obat.service';
 import { SetupPeresepanMaksimalService } from 'src/app/modules/Pharmacy/services/setup-data/setup-peresepan-maksimal/setup-peresepan-maksimal.service';
 import { SetupSatuanService } from '../../../services/setup-data/setup-satuan/setup-satuan.service';
+import { SetupItemDetailComponent } from './detail/setup-item-detail/setup-item-detail.component';
+import { MolOffcanvasFilterComponent } from 'src/app/modules/shared/components/molecules/filter/mol-offcanvas-filter/mol-offcanvas-filter.component';
 
 @Component({
     selector: 'app-setup-item',
@@ -90,7 +92,7 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
     private GridData: MolGridComponent = null;
     @ViewChild('GridDataKartuStok') GridDataKartuStok: MolGridComponent;
     @ViewChild('GridDataED') GridDataED: MolGridComponent;
-
+    @ViewChild('setupItemDetailComp') setupItemDetailComp : SetupItemDetailComponent;
     GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
     GridDataToolbar: any[];
 
@@ -119,6 +121,7 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
     urlSupplier = MM.SETUP_DATA.SETUP_SUPPLIER.GET_ALL_BY_PARMS;
     LookupGridSupplier = LookupGridSupplier;
     @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
+    @ViewChild('advanceFilter') advanceFilter: MolOffcanvasFilterComponent;
     FormSatuans: FormArray;
 
     constructor(
@@ -388,12 +391,12 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
 
     /** method setting lihat data detail */
     setViewForm(): void {
-        this.OrgTabsRef.onNavigateTabUsingTabId(1, 'Input');
+        this.OrgTabsRef.onNavigateTabUsingTabId(3, 'Detail');
         this.inputFieldState = 'detail';
         this.ButtonNav = [
             { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
         ];
-        this.SetFrom(this.SelectedData);
+        this.setupItemDetailComp.setValue(this.SelectedData);
     }
 
     setKartuStock(): void {
@@ -504,7 +507,7 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
                 ]
             }
         }
-        if (this.inputFieldState == 'normal') {
+        // if (this.inputFieldState == 'normal') {
             this.setupItemService.onPostSave(Data)
                 .subscribe((result: SetupItemModel) => {
                     this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
@@ -512,15 +515,15 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
                             this.ResetFrom();
                         });
                 });
-        } else {
-            this.setupItemService.onPutEdit(Data)
-                .subscribe((result: SetupItemModel) => {
-                    this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
-                        .then(() => {
+        // } else {
+        //     this.setupItemService.onPutEdit(Data)
+        //         .subscribe((result: SetupItemModel) => {
+        //             this.utilityService.onShowingCustomAlert('success', 'Berhasil Ubah Data', result.message)
+        //                 .then(() => {
 
-                        });
-                });
-        }
+        //                 });
+        //         });
+        // }
     }
 
     /** Method untuk mengubah status aktif | Non Active 
@@ -552,6 +555,10 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
         }
     }
 
+    reloadGrid(){
+        this.handlePencarianFilter(this.advanceFilter.AdvancedFilterArrayEmitting);
+    }
+
     Clear(): void {
         this.ResetFrom();
     }
@@ -561,7 +568,8 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
         ];
         this.ResetFrom();
         this.OrgTabsRef.onNavigateTabUsingTabId(0, 'Data');
-        this.GetAllData();
+        // this.GetAllData();
+        this.reloadGrid();
     }
 
     KeyDownHandler(event: KeyboardEvent) {

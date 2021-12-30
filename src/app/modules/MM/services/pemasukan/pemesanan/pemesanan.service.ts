@@ -89,7 +89,7 @@ export class PemesananService {
      * Service Untuk Menampilkan data detail Item
      * @setDetail Void
     */
-    setDetail(id): void {
+    setDetail(id:number): void {
         this.getDetail(id).subscribe((result) => {
             let data = result.data;
             data.map((item, index) => {
