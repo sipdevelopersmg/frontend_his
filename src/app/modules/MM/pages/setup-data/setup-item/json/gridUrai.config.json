@@ -41,7 +41,7 @@
         },
         {
             "editType": "defaultEdit",
-            "field": "qty_assembly",
+            "field": "qty_urai",
             "headerText": "QTY",
             "type": "",
             "format": "",
