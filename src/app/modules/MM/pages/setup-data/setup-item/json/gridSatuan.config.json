@@ -1,0 +1,40 @@
+{
+    "GridColumns": [
+        {
+            "editType": "defaultEdit",
+            "field": "kode_satuan",
+            "headerText": "Kode Satuan",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "nama_satuan",
+            "headerText": "Nama Satuan",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "isi",
+            "headerText": "Isi",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "is_satuan_beli",
+            "headerText": "Is Satuan Beli",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true
+        }
+    ]
+}

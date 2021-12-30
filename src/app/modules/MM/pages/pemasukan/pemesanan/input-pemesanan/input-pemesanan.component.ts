@@ -165,7 +165,7 @@ export class InputPemesananComponent implements OnInit {
         // console.log(kontrak_id);
         // this.onLoadDetailData(kontrak_id);
         setTimeout(() => {
-            this.pemesananService.setDetail([]);
+            this.pemesananService.Reset();
             this.gridDetail.dataSource = [];
             this.gridDetail.refresh();
             // console.log(this.setupStockroomService.dataSource.value);

@@ -103,6 +103,10 @@ export class SetupItemService {
           })
         );
     }
+
+    // onTambahSatuan(Data:any): Observable<any>{
+    //   return this.httpOperationService.defaultGetRequest(this.API>)
+    // }
   
     /**
      * Service menubah data menjadi active
@@ -131,4 +135,99 @@ export class SetupItemService {
           })
         );
     }     
+
+    // ==================== SATUAN
+
+    getSatuanByItem(id_item:number): Observable<any> {
+      return this.httpOperationService.defaultGetRequest(this.API.GET_SATUAN_BY_ITEM+'/'+id_item).pipe(
+        catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+        })
+      );
+    }
+
+    insertSatuanByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultPostRequest(this.API.INSERT_SATUAN_BY_ITEM, Data)
+        .pipe(
+          catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        );
+    }
+
+    updateSatuanByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultPutRequest(this.API.UPDATE_SATUAN_BY_ITEM,Data)
+        .pipe(
+          catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        );
+    }
+
+
+    deleteSatuanByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultDeleteRequestWithBody(this.API.DELETE_SATUAN_BY_ITEM,Data)
+        .pipe(
+          catchError((error:HttpErrorResponse): any =>{
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        )
+    }
+
+    // ==================== URAI
+    getUraiByItem(id_item:number): Observable<any> {
+      return this.httpOperationService.defaultGetRequest(this.API.GET_URAI_BY_ITEM+'/'+id_item).pipe(
+        catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+        })
+      );
+    }
+
+    insertUraiByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultPostRequest(this.API.INSERT_URAI_BY_ITEM, Data)
+        .pipe(
+          catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        );
+    }
+
+
+    deleteUraiByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultDeleteRequestWithBody(this.API.DELETE_URAI_BY_ITEM,Data)
+        .pipe(
+          catchError((error:HttpErrorResponse): any =>{
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        )
+    }
+
+    // ==================== ASSEMBLY
+    getAssemblyByItem(id_item:number): Observable<any> {
+      return this.httpOperationService.defaultGetRequest(this.API.GET_ASESEMBLY_BY_ITEM+'/'+id_item).pipe(
+        catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+        })
+      );
+    }
+
+    insertAssemblyByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultPostRequest(this.API.INSERT_ASESEMBLY_BY_ITEM, Data)
+        .pipe(
+          catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        );
+    }
+
+    deleteAssemblyByItem(Data:any): Observable<any> {
+      return this.httpOperationService.defaultDeleteRequestWithBody(this.API.DELETE_ASESEMBLY_BY_ITEM,Data)
+        .pipe(
+          catchError((error:HttpErrorResponse): any =>{
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+          })
+        )
+    }
+
+
 }

@@ -109,7 +109,8 @@
             "format": "",
             "textAlign": "left",
             "visible": true,
-            "editType": "defaultEdit"
+            "editType": "defaultEdit",
+            "width": 150
         },
         {
             "field": "jumlah_item_pesan",

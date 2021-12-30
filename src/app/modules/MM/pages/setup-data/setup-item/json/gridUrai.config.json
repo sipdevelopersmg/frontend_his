@@ -1,0 +1,53 @@
+{
+    "GridColumns": [
+        {
+            "editType": "defaultEdit",
+            "field": "kode_grup_item",
+            "headerText": "Kode Grup Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": false
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "kode_item_urai",
+            "headerText": "Kode Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "barcode_item_urai",
+            "headerText": "Barcode",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "nama_item_urai",
+            "headerText": "Nama Item",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 300
+        },
+        {
+            "editType": "defaultEdit",
+            "field": "qty_assembly",
+            "headerText": "QTY",
+            "type": "",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "width": 50
+        }
+    ]
+}

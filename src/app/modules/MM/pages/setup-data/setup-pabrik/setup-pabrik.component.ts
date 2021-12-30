@@ -17,6 +17,7 @@ import * as Config from './json/setup-pabrik.config.json';
     templateUrl: './setup-pabrik.component.html',
     styleUrls: ['./setup-pabrik.component.css']
 })
+
 export class SetupPabrikComponent implements OnInit {
 
     // ** Variable untuk menyimpan Button Navigasi Halaman

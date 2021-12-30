@@ -42,6 +42,7 @@ import { DaftarReturIssueComponent } from './pages/retur_issue/daftar-retur-issu
 import { ViewReturIssueComponent } from './pages/retur_issue/view-retur-issue/view-retur-issue.component';
 import { DaftarIssueValidationComponent } from './pages/issue_validation/daftar-issue-validation/daftar-issue-validation.component';
 import { ViewIssueValidationComponent } from './pages/issue_validation/view-issue-validation/view-issue-validation.component';
+import { SetupItemDetailComponent } from './pages/setup-data/setup-item/detail/setup-item-detail/setup-item-detail.component';
 
 @NgModule({
     declarations: [
@@ -83,7 +84,8 @@ import { ViewIssueValidationComponent } from './pages/issue_validation/view-issu
         DaftarReturIssueComponent,
         ViewReturIssueComponent,
         DaftarIssueValidationComponent,
-        ViewIssueValidationComponent
+        ViewIssueValidationComponent,
+        SetupItemDetailComponent
     ],
     imports: [
         FormsModule,

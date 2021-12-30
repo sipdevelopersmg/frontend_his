@@ -1,11 +1,12 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
     <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+
         <!-- Data -->
         <org-tabs-item>
             <org-tabs-label [Id]="'Data'">Data Item</org-tabs-label>
             <org-tabs-body>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                    <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                    <mol-offcanvas-filter #advanceFilter [FilterColumnDatasource]="FilterColumnDatasource"
                         (handle-pencarian)="handlePencarianFilter($event)">
                     </mol-offcanvas-filter>
                 </div>
@@ -334,5 +335,14 @@
                 </form>
             </org-tabs-body>
         </org-tabs-item>
+
+        <!-- Detail -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Detail'">Detail</org-tabs-label>
+            <org-tabs-body>
+               <app-setup-item-detail #setupItemDetailComp></app-setup-item-detail>
+            </org-tabs-body>
+        </org-tabs-item>
+        
     </org-tabs>
 </org-card-layout>
