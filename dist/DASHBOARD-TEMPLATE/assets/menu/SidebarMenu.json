@@ -1,0 +1,126 @@
+[
+    {
+        "ChildMenuId": 11,
+        "SidebarMenu": [
+            {
+                "Id": 111,
+                "Name": "Setup Wilayah",
+                "SidebarChildMenu": [
+                    {
+                        "Id": 1111,
+                        "Name": "Setup Provinsi",
+                        "Url": "setup-provinsi"
+                    },
+                    {
+                        "Id": 1112,
+                        "Name": "Setup Kota / Kabupaten",
+                        "Url": "setup-kota"
+                    },
+                    {
+                        "Id": 1113,
+                        "Name": "Setup Kecamatan",
+                        "Url": "setup-kecamatan"
+                    }
+                ]
+            },
+            {
+                "Id": 112,
+                "Name": "Setup Poli",
+                "Url": "setup-poli"
+            },
+            {
+                "Id": 113,
+                "Name": "Setup Debitur",
+                "Url": "setup-debitur"
+            },
+            {
+                "Id": 114,
+                "Name": "Setup Tarif",
+                "SidebarChildMenu": [
+                    {
+                        "Id": 1141,
+                        "Name": "Setup Kode Tarif",
+                        "Url": "setup-kode-tarif"
+                    },
+                    {
+                        "Id": 1142,
+                        "Name": "Setup Harga Tarif",
+                        "Url": "setup-harga-tarif"
+                    },
+                    {
+                        "Id": 1143,
+                        "Name": "Mapping Order Penunjang",
+                        "Url": "mapping-order-penunjang"
+                    }
+                ]
+            },
+            {
+                "Id": 115,
+                "Name": "Setup Dokter",
+                "SidebarChildMenu": [
+                    {
+                        "Id": 1151,
+                        "Name": "Data Dokter",
+                        "Url": "data-dokter"
+                    },
+                    {
+                        "Id": 1152,
+                        "Name": "Jadwal Dokter",
+                        "Url": "Jadwal Dokter"
+                    }
+                ]
+            },
+            {
+                "Id": 116,
+                "Name": "Setup Tindakan",
+                "SidebarChildMenu": [
+                    {
+                        "Id": 1151,
+                        "Name": "Setup Tindakan di Poli",
+                        "Url": "setup-tindakan-di-poli"
+                    },
+                    {
+                        "Id": 1152,
+                        "Name": "Setup Kesediaan Penunjang Medis",
+                        "Url": "setup-kesediaan-penunjang-medis"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "ChildMenuId": 12,
+        "SidebarMenu": [
+            {
+                "Id": 121,
+                "Name": "Pelayanan Pasien IRJA",
+                "Url": "pelayanan-pasien-irja"
+            },
+            {
+                "Id": 122,
+                "Name": "Antrian Pasien IRJA",
+                "Url": "antrian-pasien-irja"
+            },
+            {
+                "Id": 123,
+                "Name": "Pemasukan Transaksi IRJA",
+                "Url": "pemasukan-transaksi-irja"
+            },
+            {
+                "Id": 124,
+                "Name": "Daftar Pasien Per Tanggal",
+                "Url": "daftar-pasien-per-tanggal"
+            },
+            {
+                "Id": 125,
+                "Name": "Pendaftaran Pasien Baru",
+                "Url": "pendaftaran-pasien-baru"
+            },
+            {
+                "Id": 126,
+                "Name": "Update Debitur Pasien",
+                "Url": "update-debitur-pasien"
+            }
+        ]
+    }
+]
