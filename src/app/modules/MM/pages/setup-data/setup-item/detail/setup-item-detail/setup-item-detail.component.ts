@@ -45,6 +45,10 @@ export class SetupItemDetailComponent implements OnInit {
     { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
   ];
 
+  GridDataToolbarUrai = [
+    { text: 'Hapus', tooltipText: 'Hapus', prefixIcon: 'fas fa-trash-alt fa-sm', id: 'hapus' },
+  ];
+
   @ViewChild('LookupKodeSupplier') LookupKodeSupplier: OrgInputLookUpKodeComponent;
   @ViewChild('LookupKodeGrupItem') LookupKodeGrupItem: OrgInputLookUpKodeComponent;
   @ViewChild('LookupKodeSetupItem') LookupKodeSetupItem: OrgInputLookUpKodeComponent;
@@ -158,7 +162,7 @@ export class SetupItemDetailComponent implements OnInit {
   }
 
   handleSelectedRowAssembly(args){
-    this.dataUraiSelected = args.data
+    this.dataAssemblySelected = args.data
   }
 
   handleToolbarClickSatuan(args){
@@ -196,12 +200,12 @@ export class SetupItemDetailComponent implements OnInit {
         case 'hapus':
           let data = {
             id_item     :this.id_item.value,
-            id_item_urai:this.dataUraiSelected.id_item,
+            id_item_urai:this.dataUraiSelected.id_item_urai,
           }
           this.setupItemService.deleteUraiByItem(data).subscribe((result)=>{
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Hapus', result.message)
               .then(() => {
-                this.loadSatuan()
+                this.loadUrai()
               });  
           })
           break;
@@ -218,12 +222,12 @@ export class SetupItemDetailComponent implements OnInit {
         case 'hapus':
           let data = {
             id_item     :this.id_item.value,
-            id_item_assembly :this.dataAssemblySelected.id_item,
+            id_item_assembly :this.dataAssemblySelected.id_item_assembly,
           }
-          this.setupItemService.deleteSatuanByItem(data).subscribe((result)=>{
+          this.setupItemService.deleteAssemblyByItem(data).subscribe((result)=>{
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Hapus', result.message)
               .then(() => {
-                this.loadSatuan()
+                this.loadAssembly()
               });  
           })
           break;
@@ -342,7 +346,7 @@ export class SetupItemDetailComponent implements OnInit {
     this.setupItemService.insertAssemblyByItem(data).subscribe((result)=>{
       this.utilityService.onShowingCustomAlert('success', 'Berhasil Di Simpan', result.message)
         .then(() => {
-          this.loadUrai()
+          this.loadAssembly()
           this.FormInputAssembly.setValue({
             id_item_assembly:0,
             qty_Assembly:0,
