@@ -17,7 +17,7 @@ export class LoggedInGuard implements CanActivate {
 
         if (userData) {
             this.router.navigate(['dashboard/beranda']);
-            return false;
+            return true;
         }
         return true;
     }
