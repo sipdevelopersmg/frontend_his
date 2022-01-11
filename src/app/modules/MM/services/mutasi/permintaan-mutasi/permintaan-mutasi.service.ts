@@ -6,6 +6,7 @@ import { MM } from 'src/app/api/MM';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { TrPermintaanMutasiDetailInsert, TrPermintaanMutasiInsert } from '../../../models/mutasi/permintaan-mutasi';
 
 @Injectable({
@@ -37,7 +38,9 @@ export class PermintaanMutasiService {
 
     constructor(
         private notificationService: NotificationService,
-        private httpOperationService: HttpOperationService
+        private httpOperationService: HttpOperationService,
+        private utilityService: UtilityService
+
     ) { }
 
     /**
@@ -142,9 +145,9 @@ export class PermintaanMutasiService {
             return e.no_urut = i + 1;
         });
         Data.details = this.dataDetail;
-        Data.jumlah_item = this.jumlah_item;
+        Data.tanggal_permintaan_mutasi = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_permintaan_mutasi)
+        Data.jumlah_item = this.dataDetail.sum('qty_permintaan');
         Data.total_transaksi = this.total_transaksi;
-
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {

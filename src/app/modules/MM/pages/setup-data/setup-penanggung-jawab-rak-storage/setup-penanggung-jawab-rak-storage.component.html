@@ -1,0 +1,64 @@
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Penanggung Jawab Rak Storage</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Penanggung Jawab Rak Storage</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text 
+                                [label]="'Kode Penanggung Jawab Rak Storage'" 
+                                formControlName="nik_penanggung_jawab_rak_storage"
+                                [IsFormControlInvalid]="nik_penanggung_jawab_rak_storage.invalid"
+                                [ValidatorsCaption]="'NIK Penanggung Jawab Rak Storage Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState"
+                                [disabled]="inputFieldState==='edit'"
+                                >
+                            </mol-input-text>
+                            <mol-input-text 
+                                [label]="'Nama Penanggung Jawab Rak Storage'" 
+                                formControlName="nama_penanggung_jawab_rak_storage"
+                                [IsFormControlInvalid]="nama_penanggung_jawab_rak_storage.invalid"
+                                [ValidatorsCaption]="'Nama Penanggung Jawab Rak Storage Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                            <org-input-look-up-kode #LookupKodeSetupSupplier 
+                                [lookup-url]="urlSetupSupplier" 
+                                [idKode]="'kode_supplier'" 
+                                [modal-title]="'Data SetupSupplier'"
+                                [idTitle]="'nama_supplier'" 
+                                (onGetSelectedData)="heandleSelectedSetupSupplier($event)"
+                                [columns]="LookupGridSetupSupplier.columns" 
+                                [filter-lookup]="LookupGridSetupSupplier.filter"
+                                [label]="'Supplier'"
+                                [inputFieldState]="inputFieldState">
+                            </org-input-look-up-kode>
+                            <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan" [inputFieldState]="inputFieldState"></mol-input-textarea>
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

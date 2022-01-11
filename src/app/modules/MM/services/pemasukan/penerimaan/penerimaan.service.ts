@@ -6,6 +6,7 @@ import { PENERIMAAN } from 'src/app/api/MM/PENERIMAAN';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { TrPenerimaanDetailItemInsert, TrPenerimaanInsert } from '../../../models/penerimaan/penerimaan/PenerimaanModel';
 
 @Injectable({
@@ -38,7 +39,8 @@ export class PenerimaanService {
 
     constructor(
         private notificationService: NotificationService,
-        private httpOperationService: HttpOperationService
+        private httpOperationService: HttpOperationService,
+        private utilityService: UtilityService
     ) { }
 
     /**
@@ -194,6 +196,11 @@ export class PenerimaanService {
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });
+
+        Data.tanggal_penerimaan = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_penerimaan)
+        Data.tanggal_jatuh_tempo_bayar = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_jatuh_tempo_bayar);
+        Data.tanggal_surat_jalan_supplier = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_surat_jalan_supplier);
+
         Data.details = this.dataDetail;
         Data.sub_total_1 = this.sub_total_1;
         Data.total_disc = this.total_disc;

@@ -246,12 +246,12 @@ export class InputReturPembelianComponent implements OnInit {
             nama_item: $event.nama_item,
             batch_number: $event.batch_number,
             expired_date: $event.expired_date,
-            qty_satuan_besar: 1,
+            qty_satuan_besar: 0,
             kode_satuan_besar: $event.satuans[0].kode_satuan,
             isi: $event.satuans[0].isi,
-            qty_retur: $event.satuans[0].isi,
+            qty_retur: 0,
             harga_satuan_retur: $event.harga_beli_terakhir,
-            sub_total: $event.satuans[0].isi * $event.harga_beli_terakhir,
+            sub_total: 0,
             satuan: $event.satuans,
             validasi:true,
             message:''
@@ -265,7 +265,7 @@ export class InputReturPembelianComponent implements OnInit {
     }
 
     handleActionCompleted($event) {
-
+        console.log($event);
         if ($event.requestType == 'save') {
             this.returPembelianService.updateFromInline($event.rowIndex, $event.data, $event.rowData)
             this.gridDetail.refresh();

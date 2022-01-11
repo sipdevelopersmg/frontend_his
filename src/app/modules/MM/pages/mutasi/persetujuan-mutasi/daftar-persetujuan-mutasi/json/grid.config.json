@@ -10,6 +10,24 @@
         "editType": "defaultEdit"
     },
     {
+        "field": "nomor_permintaan_mutasi",
+        "headerText": "Nomor Permintaan Mutasi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_permintaan_mutasi",
+        "headerText": "Tanggal Permintaan Mutasi",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
+        "textAlign": "left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
         "field": "nomor_mutasi",
         "headerText": "Nomor Mutasi",
         "type": "string",
@@ -21,8 +39,8 @@
     {
         "field": "tanggal_mutasi",
         "headerText": "Tanggal Mutasi",
-        "type": "string",
-        "format": "",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
         "textAlign": "Left",
         "visible": true,
         "editType": "defaultEdit"

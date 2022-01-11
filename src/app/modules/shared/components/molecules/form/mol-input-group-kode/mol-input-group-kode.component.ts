@@ -12,9 +12,10 @@ export class MolInputGroupKodeComponent implements OnInit {
     @Input('kodeValue') kodeValue: string;
     @Input('titleValue') titleValue: string;
     @Input('disableTitle') disableTitle: boolean;
+    @Input('disabled') disabled: boolean;
     @Output('clickButton') clickButton = new EventEmitter<any>();
     @Output('pressEnter') pressEnter = new EventEmitter<any>();
-
+    
     constructor() { }
 
     ngOnInit(): void {

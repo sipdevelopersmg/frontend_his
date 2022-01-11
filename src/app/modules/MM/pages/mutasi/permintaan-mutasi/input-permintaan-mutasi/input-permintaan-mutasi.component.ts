@@ -92,7 +92,7 @@ export class InputPermintaanMutasiComponent implements OnInit {
     ngOnInit(): void {
         this.formKontrak = this.formBuilder.group({
             nomor_mutasi: [""],
-            tanggal_mutasi: [null, Validators.required],
+            tanggal_permintaan_mutasi: [null, Validators.required],
             id_stockroom_pemberi: [0, Validators.required],
             id_stockroom_penerima: [0, Validators.required],
             total_transaksi: [0],
@@ -154,26 +154,6 @@ export class InputPermintaanMutasiComponent implements OnInit {
             this.gridDetail.dataSource = [];
             this.gridDetail.refresh();
         }, 1);
-    }
-
-    onLoadDetailData(kontrak_id) {
-        this.permintaanMutasiService.onGetById(kontrak_id).subscribe((result) => {
-            this.formKontrak.setValue({
-                id_supplier: result.data.id_supplier,
-                nomor_kontrak_spjb: result.data.nomor_kontrak_spjb,
-                nomor_kontrak: result.data.nomor_kontrak,
-                tanggal_ttd_kontrak: result.data.tanggal_ttd_kontrak,
-                tanggal_berlaku_kontrak: result.data.tanggal_berlaku_kontrak,
-                tanggal_berakhir_kontrak: result.data.tanggal_berakhir_kontrak,
-                judul_kontrak: result.data.judul_kontrak,
-                tahun_anggaran: result.data.tahun_anggaran,
-                keterangan: result.data.keterangan,
-                total_transaksi_kontrak: result.data.total_transaksi_kontrak,
-                jumlah_item_kontrak: result.data.jumlah_item_kontrak,
-                user_inputed: 1,
-            })
-        });
-
     }
 
     onClickButtonNav(ButtonId: string): void {

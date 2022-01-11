@@ -3,7 +3,10 @@
         <atm-label [LabelCaption]="label"></atm-label>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-        <ejs-datepicker #MolDatepicker [value]="value" [min]="min" [max]="max" [format]="format"
+        <ejs-datepicker #MolDatepicker [value]="value"
+         [class.see-detail]="inputFieldState === 'detail'"
+         [enabled]="(inputFieldState=='detail')?false:true" 
+         [min]="min" [max]="max" [format]="format"
             (change)="doChange($event)">
         </ejs-datepicker>
     </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { DropDownList, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
+import { DropDownList, DropDownListComponent, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
 import { IEditCell, EditSettingsModel, GridModel, GridComponent, AddEventArgs } from '@syncfusion/ej2-angular-grids';
 import { NumericTextBox } from '@syncfusion/ej2-angular-inputs';
 import { PHARMACY } from 'src/app/api/PHARMACY';
@@ -54,6 +54,7 @@ export class InputResepIrnaComponent implements OnInit {
     @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
     @ViewChild('LookupTemplateResep') LookupTemplateResep: OrgLookUpHirarkiComponent;
     @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
+    @ViewChild('MaritalOutletDropdown') MaritalOutletDropdown: DropDownListComponent;
 
     public itemsParams: IEditCell;
     public itemsElem: HTMLElement;
@@ -194,6 +195,7 @@ export class InputResepIrnaComponent implements OnInit {
     private pulang:boolean = false;
     private idArry:any[] = [];
     private setIdOutlet:any = 0;
+
   constructor(
     private formBuilder: FormBuilder,
     public resepDokterService: ResepDokterIrnaService,
@@ -409,32 +411,36 @@ export class InputResepIrnaComponent implements OnInit {
   }
 
     ngAfterViewInit(): void {
-        if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined'){
-            let idString:string; 
-            idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-            this.idArry = idString.split(',');
-            console.log(idString);
-            console.log(this.idArry);
-            if(this.idArry[1]=='pulang'){
-                this.pulang = true;
-                this.ButtonNav = [
-                    { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
-                    { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
-                ];
-            }else{
-                this.ButtonNav = [
-                    { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
-                    { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
-                ];
+        setTimeout(() => {
+            if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined'){
+                let idString:string; 
+                idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+                this.idArry = idString.split(',');
+                console.log(idString);
+                console.log(this.idArry);
+                if(this.idArry[1]=='pulang'){
+                    this.pulang = true;
+                    this.ButtonNav = [
+                        { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                        { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
+                    ];
+                }else{
+                    this.ButtonNav = [
+                        { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                        { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
+                    ];
+                }
+                
+                this.updateResep(parseInt(this.idArry[0]));
             }
-            
-            this.updateResep(parseInt(this.idArry[0]));
-        }
+        }, 1);
     }
 
     updateResep(id){
         this.resepDokterService.onGetById(id).subscribe((result)=>{
             this.dataUbah = result.data;
+            this.setIdOutlet = result.data.id_outlet;
+            this.MaritalOutletDropdown.value = result.data.id_outlet;
             this.heandleSelectedTemplateResep(result.data);
             this.updateResepDokter = true;
         })
@@ -761,6 +767,7 @@ export class InputResepIrnaComponent implements OnInit {
 
     onEditData(){
         let data = this.SelectedDataObat
+        console.log(data);
         this.FormAddObat.setValue({
             counter            :data.counter,
             no_urut            :data.no_urut,
@@ -787,7 +794,7 @@ export class InputResepIrnaComponent implements OnInit {
             jumlah_hari            :data.jumlah_hari,
             qty_harian             :data.qty_harian,
             id_rute_pemberian_obat :data.id_rute_pemberian_obat,
-            rute_pemberian_obat    :data.nama_rute_pemberian_obat
+            rute_pemberian_obat    :data.rute_pemberian_obat
         });
     }
 
@@ -806,6 +813,10 @@ export class InputResepIrnaComponent implements OnInit {
     }
     
     async Insert() {
+        if(this.setIdOutlet==0){
+            this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi','')
+            return false;
+        }
         this.data_header ={
             id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
             id_register:this.daftarPasienService.ActivePasien.value.id_register,
@@ -847,7 +858,7 @@ export class InputResepIrnaComponent implements OnInit {
     methodConfirmSetRacikan(simpan_template){
         if(this.newdetail.length > 0){
             Swal.fire({
-                title: 'Apakah Anda Ingin Menyimapan Racikan Baru ke dalam Setting Racikan dokter?',
+                title: 'Apakah Anda Ingin Menyimpan Racikan Baru ke dalam Setting Racikan dokter?',
                 text: "Racikan akan bisa di gunakan lagi untuk template",
                 icon: 'info',
                 showCancelButton: true,

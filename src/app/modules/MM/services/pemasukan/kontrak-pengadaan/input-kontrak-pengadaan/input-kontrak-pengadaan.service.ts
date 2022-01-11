@@ -7,6 +7,7 @@ import { TrKontrakSpjbDetailItemInsert, TrKontrakSpjbInsert } from 'src/app/modu
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import 'src/app/prototype/ArrPrototype';
 
 @Injectable({
@@ -35,7 +36,8 @@ export class InputKontrakPengadaanService {
 
     constructor(
         private notificationService: NotificationService,
-        private httpOperationService: HttpOperationService
+        private httpOperationService: HttpOperationService,
+        private utilityService: UtilityService
     ) { }
 
     /**
@@ -186,12 +188,18 @@ export class InputKontrakPengadaanService {
 
     Insert(Data: TrKontrakSpjbInsert): Observable<any> {
         this.dataDetail.map((e, i) => {
-            return e.no_urut = i + 1;
+            e.no_urut = i + 1;
+            // e.tanggal_maksimal_expired_date = this.utilityService.onFixingDatepickerSyncfusion(e.tanggal_maksimal_expired_date);
+            return e
         });
+        Data.tanggal_ttd_kontrak = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_ttd_kontrak);
+        Data.tanggal_berakhir_kontrak = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_berakhir_kontrak);
+        Data.tanggal_berlaku_kontrak = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_berlaku_kontrak);
         Data.details = this.dataDetail;
         Data.jumlah_item_kontrak = this.jumlahItem;
         Data.total_transaksi_kontrak = this.total;
-
+        console.log(Data);
+        
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {

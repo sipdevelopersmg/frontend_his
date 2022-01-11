@@ -1,0 +1,77 @@
+{
+    "TrDetail":
+    [
+        {
+            "allowEditing": false,
+            "field":"barcode",
+            "headerText":"Barcode",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "field":"kode_item",
+            "headerText":"Kode Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "field":"nama_item",
+            "headerText":"Nama Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width": 250
+        },
+        {
+            "allowEditing": false,
+            "field":"batch_number",
+            "headerText":"Batch Number",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": false,
+            "field":"expired_date",
+            "headerText":"Expired Date",
+            "editType": "defaultEdit",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": true,
+            "field":"qty",
+            "headerText":"Banyak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true,
+            "width": 150
+        }
+    ]
+}

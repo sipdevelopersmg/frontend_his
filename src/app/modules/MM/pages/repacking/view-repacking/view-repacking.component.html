@@ -1,0 +1,64 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <!--  -->
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'No Repacking'" formControlName="nomor_repacking" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Tanggal Repacking'" formControlName="tanggal_repacking" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_repacking" [inputFieldState]="inputFieldState"></mol-input-textarea>    
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <mol-input-text [label]="'kode_item'" formControlName="kode_item" [inputFieldState]="inputFieldState"></mol-input-text>
+                        <mol-input-text [label]="'nama_item'" formControlName="nama_item" [inputFieldState]="inputFieldState"></mol-input-text>
+                        <mol-input-text [label]="'No Batch'" formControlName="batch_number" [inputFieldState]="inputFieldState"></mol-input-text>
+                        <mol-datepicker-syncfusion [label]="'expired date'" [format]="'dd MMMM yyyy'"
+                            formControlName="expired_date" [inputFieldState]="inputFieldState">
+                        </mol-datepicker-syncfusion>
+                        <mol-input-numeric [label]="'qty'" formControlName="qty" [inputFieldState]="inputFieldState"></mol-input-numeric>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mol-grid [grid-DataSource]="repackingService.dataDetail$| async" [columns]="ConfigGrid.TrDetail"></mol-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="repackingService.jumlah_item"
+                    [inputFieldState]="'detail'" [inputFieldState]="'detail'"></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Keterangan Resep Canceled  -->
+    <ng-template #modalCanceled>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Canceled</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+                <div class="col-sm-4">
+                    <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onCalceled()">Cancel Data</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
+        </div>
+    </ng-template>
+</org-card-layout>

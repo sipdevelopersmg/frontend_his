@@ -43,6 +43,14 @@ import { ViewReturIssueComponent } from './pages/retur_issue/view-retur-issue/vi
 import { DaftarIssueValidationComponent } from './pages/issue_validation/daftar-issue-validation/daftar-issue-validation.component';
 import { ViewIssueValidationComponent } from './pages/issue_validation/view-issue-validation/view-issue-validation.component';
 import { SetupItemDetailComponent } from './pages/setup-data/setup-item/detail/setup-item-detail/setup-item-detail.component';
+import { DaftarRepackingComponent } from './pages/repacking/daftar-repacking/daftar-repacking.component';
+import { InputRepackingComponent } from './pages/repacking/input-repacking/input-repacking.component';
+import { ViewRepackingComponent } from './pages/repacking/view-repacking/view-repacking.component';
+import { InputAssemblyComponent } from './pages/assembly/input-assembly/input-assembly.component';
+import { DaftarAssemblyComponent } from './pages/assembly/daftar-assembly/daftar-assembly.component';
+import { ViewAssemblyComponent } from './pages/assembly/view-assembly/view-assembly.component';
+import { SetupPenanggungJawabRakStorageComponent } from './pages/setup-data/setup-penanggung-jawab-rak-storage/setup-penanggung-jawab-rak-storage.component';
+import { SetupRakStorageComponent } from './pages/setup-data/setup-rak-storage/setup-rak-storage.component';
 
 @NgModule({
     declarations: [
@@ -85,7 +93,15 @@ import { SetupItemDetailComponent } from './pages/setup-data/setup-item/detail/s
         ViewReturIssueComponent,
         DaftarIssueValidationComponent,
         ViewIssueValidationComponent,
-        SetupItemDetailComponent
+        SetupItemDetailComponent,
+        DaftarRepackingComponent,
+        InputRepackingComponent,
+        ViewRepackingComponent,
+        InputAssemblyComponent,
+        DaftarAssemblyComponent,
+        ViewAssemblyComponent,
+        SetupPenanggungJawabRakStorageComponent,
+        SetupRakStorageComponent
     ],
     imports: [
         FormsModule,

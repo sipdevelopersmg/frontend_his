@@ -38,7 +38,7 @@ export class OrgInputLookUpKodeComponent implements OnInit {
 
     @Input('idKode') idKode: string;
     @Input('idTitle') idTitle: string;
-
+    @Input('disabled') disabled: boolean;
     items: any;
 
     @ViewChild('GridData') GridData: MolGridComponent;

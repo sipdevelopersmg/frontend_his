@@ -203,6 +203,10 @@ export class InputResepComponent implements OnInit {
                     this.queryChild = new Query().from('Obat')
                         .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
                         .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
+                }else{
+                    this.queryChild = new Query().from('Obat')
+                        .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
+                        .take(10).where('nama_obat', 'contains', '', true)
                 }
 
                 this.itemsElem = document.createElement('input');
@@ -233,30 +237,31 @@ export class InputResepComponent implements OnInit {
                         }
                     }.bind(this),
                     change: function (args) {
-                        this.setFormGrif(args, currentQtyResep, currentIdItem, SelectedDataRacikanObat);
                         currentIdItem = args.itemData.id_item;
+                        console.log('currentItem',currentIdItem);
+                        this.setFormGrif(args, currentQtyResep, currentIdItem, SelectedDataRacikanObat);
                     }.bind(this),
                 });
 
                 this.itemsObj.appendTo(this.itemsElem);
 
                 if (SelectedDataRacikanObat) {
-
+                    this.setFormGrif(null, currentQtyResep, currentIdItem, SelectedDataRacikanObat);
                     // this.itemsObj.dataSource = this.data;
                     // console.log('set value',SelectedDataRacikanObat);
                     // console.log('query',this.query);
-
                     setTimeout(() => {
-                        this.itemsObj.value = SelectedDataRacikanObat.id_item;
-                    }, 500)
-
+                        console.log('',SelectedDataRacikanObat);
+                        currentIdItem = SelectedDataRacikanObat.id_item;
+                        this.itemsObj.value = currentIdItem;
+                    }, 10)
                 }
             }
         }
 
         let counterRacikan = this.counterRacikan;
         let dataSourceChild = this.dataScourceGridChild;
-        this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
+        // this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
         let nav = 'add';
         this.ChildGrid = {
             dataSource: this.dataScourceGridChild,
@@ -283,7 +288,6 @@ export class InputResepComponent implements OnInit {
             rowSelected(args) {
                 SelectedDataRacikanObat = args.data
                 // console.log('row selected',SelectedDataRacikanObat)
-
             },
             actionBegin(args: AddEventArgs) {
                 console.log('begin', args)
@@ -300,6 +304,7 @@ export class InputResepComponent implements OnInit {
                 // }
             },
             actionComplete(args) {
+                console.log(args);
                 if (args.requestType === 'save') {
                     if (args.action === 'add') {
                         args.data.id_item = currentIdItem;
@@ -310,14 +315,11 @@ export class InputResepComponent implements OnInit {
                         let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
                         dataSourceChild[index] = args.data;
                     }
-
                 }
-
                 if (args.requestType === "delete") {
                     let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data[0].counterRacikan);
                     dataSourceChild.splice(index, 1);
                 }
-
             }
         }
 
@@ -520,8 +522,7 @@ export class InputResepComponent implements OnInit {
             element.counterRacikan = counterRacikan;
             detail.push(element);
         });
-        console.log(detail);
-        this.resepDokterService.dataSourceChildGrid.next(detail);
+        // this.resepDokterService.dataSourceChildGrid.next(detail);
     }
 
     heandleSelectedTemplateResep(args) {
@@ -563,7 +564,7 @@ export class InputResepComponent implements OnInit {
 
         });
 
-        this.resepDokterService.dataSourceChildGrid.next(detail);
+        // this.resepDokterService.dataSourceChildGrid.next(detail);
 
         this.onSetTemplateResep.emit(true);
     }

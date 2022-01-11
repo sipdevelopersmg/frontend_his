@@ -6,6 +6,7 @@ import { MM } from 'src/app/api/MM';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { TrReturPembelianDetailInsert, TrReturPembelianInsert } from '../../models/retur/retur-pembelian';
 
 @Injectable({
@@ -34,7 +35,9 @@ export class ReturPembelianService {
 
   constructor(
       private notificationService: NotificationService,
-      private httpOperationService: HttpOperationService
+      private httpOperationService: HttpOperationService,
+      private utilityService: UtilityService
+
   ) { }
 
   /**
@@ -97,7 +100,7 @@ export class ReturPembelianService {
         ...this.dataDetail,
         detail
     ];
-    this.sum();
+    this.sum(); 
   }
 
   updateFromInline(index: number, data: TrReturPembelianDetailInsert, rowData: TrReturPembelianDetailInsert) {
@@ -170,12 +173,18 @@ export class ReturPembelianService {
   }
 
     Insert( Data:TrReturPembelianInsert ): Observable<any>{
+        
         this.dataDetail.map((e,i)=>{
-            return e.no_urut = i+1;
+            // e.expired_date = this.utilityService.onFixingDatepickerSyncfusion(e.expired_date);
+            e.no_urut = i+1;
+            return e
         });
+
         Data.details = this.dataDetail;
         Data.jumlah_item_retur = this.jumlah_item;
         Data.total_transaksi_retur = this.total_transaksi;
+        Data.tanggal_jatuh_tempo_pelunasan_retur = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_jatuh_tempo_pelunasan_retur);
+        Data.tanggal_retur_pembelian = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_retur_pembelian);
 
         return this.httpOperationService.defaultPostRequest(this.API.INSERT, Data)
             .pipe(
@@ -201,9 +210,9 @@ export class ReturPembelianService {
     }
   
     Cancel(id:number,reason:string): Observable<any>{
-        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
-                retur_pembelian_id : id,
-                reason_canceled:reason 
+        return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{
+                retur_pembelian_id  : id,
+                reason_canceled     : reason 
             })
             .pipe(
                 catchError((error: HttpErrorResponse):any =>{

@@ -20,6 +20,7 @@ export class MolDatepickerSyncfusionComponent implements OnInit {
     @Input("min") min: Date;
     @Input("max") max: Date;
     @Input("format") format: string;
+    @Input("inputFieldState") inputFieldState:string = 'normal';
 
     @ViewChild("MolDatepicker") MolDatepicker: DatePickerComponent;
 
