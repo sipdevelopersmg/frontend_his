@@ -16,7 +16,8 @@
                 [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
                 [allowFiltering]='true' [pageSettings]="GridPageSettings" [toolbar]="GridToolbar"
                 [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
-                (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+                (recordDoubleClick)="handleRecordDoubleClick($event)" (toolbarClick)="handleToolbarClick($event)"
+                (actionComplete)="handleActionComplete($event)" (commandClick)="handleCommandClick($event)">
                 <e-columns>
                     <e-column [width]="50" [field]="'id_order_penunjang'" [headerText]="'ID'" [visible]="false"
                         [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
@@ -77,6 +78,10 @@
                                 </div>
                             </ng-template>
                         </ng-template>
+                    </e-column>
+                    <e-column [width]="100" [headerText]="'LIHAT HASIL'" [visible]="true" [allowEditing]="false"
+                        [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                        [commands]="CommandLihatHasil">
                     </e-column>
                 </e-columns>
             </ejs-grid>

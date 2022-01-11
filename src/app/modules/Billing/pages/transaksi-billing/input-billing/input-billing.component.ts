@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CommandModel, GridComponent, GridModel, SelectionService, SelectionSettingsModel } from '@syncfusion/ej2-angular-grids';
@@ -120,6 +120,19 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
         private transBillingService: TransBillingService,
         private setupPaymentMethodService: SetupPaymentMethodService,
     ) { }
+
+    @HostListener('document:keydown', ['$event'])
+    onKeyDownHandler(event: KeyboardEvent) {
+        if (event.keyCode === 114) {
+            event.preventDefault();
+            this.handleClickButtonNav('Baru')
+        }
+
+        if (event.keyCode === 116) {
+            event.preventDefault();
+            this.handleClickButtonNav('Create_Invoice');
+        }
+    }
 
     ngOnInit(): void {
         this.FormInputInvoice = this.formBuilder.group({

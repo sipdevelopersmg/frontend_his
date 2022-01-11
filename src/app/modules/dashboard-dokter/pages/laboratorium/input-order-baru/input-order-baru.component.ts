@@ -51,6 +51,8 @@ export class InputOrderBaruLabComponent implements OnInit {
     // ** Form Insert Order Lab
     FormInsertOrderLab: FormGroup;
 
+    Search: string;
+
     public get width(): any {
         return window.innerWidth;
     };
@@ -161,8 +163,56 @@ export class InputOrderBaruLabComponent implements OnInit {
     onGetAllIDataOrderPenunjang(): void {
         this.laboratoriumService.onGetAllOrderPenunjang()
             .subscribe((result) => {
+
+                let data = result.data;
+
+                let notHaveChild = [];
+
+                let notHaveLabChild = [];
+
+                let notHaveMappingTarif = [];
+
+                data.forEach((item) => {
+                    // ** Not Have Child
+                    if (!item.child) {
+                        notHaveChild.push(item);
+                    }
+
+                    // ** Have Child
+                    if (item.child) {
+                        item.child.forEach((child) => {
+
+                            // ** Not Have Lab Child
+                            if (!child.labChild) {
+                                notHaveLabChild.push(child);
+                            }
+
+                            // ** Have Lab Child
+                            if (child.labChild) {
+
+                                child.labChild.forEach((tarif) => {
+
+                                    // ** Not Have Mapping Tarif Penunjang
+                                    if (!tarif.id_mapping_tarif_penunjang) {
+                                        notHaveMappingTarif.push(tarif);
+                                    }
+
+                                });
+                            };
+                        });
+                    };
+                });
+
+                console.log('Not Have Child', notHaveChild);
+                console.log('Not Have Lab Child', notHaveLabChild);
+                console.log('Not Have Mapping Tarif Penunjang', notHaveMappingTarif);
+
                 this.TabsOrderLaboratorium = result.data;
             })
+    }
+
+    onSearchFilter(FilterPencarian: string) {
+        this.Search = FilterPencarian;
     }
 
     onGetSelectedTabId(args: any): void {
@@ -187,6 +237,8 @@ export class InputOrderBaruLabComponent implements OnInit {
             elem.value = "false";
             this.onRemoveItemFromGridDaftarOrder(Parameter);
         };
+
+        console.log(Parameter);
     }
 
     onCheckGridDaftarOrderDatasource(): void {
