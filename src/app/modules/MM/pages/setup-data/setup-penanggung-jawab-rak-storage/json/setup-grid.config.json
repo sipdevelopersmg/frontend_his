@@ -1,0 +1,49 @@
+{
+    "GridColumns": [
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nik_penanggung_jawab_rak_storage",
+            "headerText": "NIK PENANGGUNG JAWAB RAK STORAGE",
+            "visible": true,
+            "width": 120
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "field": "nama_penanggung_jawab_rak_storage",
+            "editType": "defaultEdit",
+            "headerText": "NAMA PENANGGUNG JAWAB RAK STORAGE",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "field": "kode_supplier",
+            "editType": "defaultEdit",
+            "headerText": "KODE SUPPLIER",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "field": "nama_supplier",
+            "editType": "defaultEdit",
+            "headerText": "NAMA SUPPLIER",
+            "visible": true,
+            "width": 150
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "field": "keterangan",
+            "editType": "defaultEdit",
+            "headerText": "KETERANGAN",
+            "visible": true,
+            "width": 150
+        }
+    ]
+}

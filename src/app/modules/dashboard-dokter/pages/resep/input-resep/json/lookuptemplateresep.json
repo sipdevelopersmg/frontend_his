@@ -25,9 +25,9 @@
     ],
     "filter": [
         {
-            "field": "nama_racikan",
+            "field": "nama_template",
             "filter": "like",
-            "title": "Nama Racikan"
+            "title": "Nama Template Resep"
         }
     ]
 }

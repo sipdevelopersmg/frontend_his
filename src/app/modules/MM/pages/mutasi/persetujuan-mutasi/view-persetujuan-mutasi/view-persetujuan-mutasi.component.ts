@@ -186,7 +186,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
                 { field: "no_urut", headerText: 'urut', visible: false },
                 { field: "id_item", headerText: 'id_item', width: 100, visible: false },
                 { field: "batch_number", headerText: 'Batch Number', editType: 'dropdownedit', edit: this.itemsParams, width: 200 },
-                { field: "expired_date", headerText: 'Expired Date', textAlign: 'Right', width: 80, allowEditing: false },
+                { field: "expired_date", headerText: 'Expired Date',type:'Date',format:'dd/MM/yyyy', textAlign: 'Right', width: 80, allowEditing: false },
                 { field: "qty_besar", headerText: 'Banyak', visible: false, headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2' },
                 { field: "satuan", headerText: 'Satuan', visible: false, editType: 'dropdownedit', edit: this.satuanParams, width: 200 },
                 { field: "isi", headerText: 'Isi', visible: false, headerTextAlign: 'Center', textAlign: 'Right', width: 100, format: 'N2', allowEditing: false },
@@ -460,6 +460,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
     onSave() {
         if (this.formInput.valid) {
             let data = this.formInput.value;
+                data.tanggal_mutasi = this.utilityService.onFixingDatepickerSyncfusion(data.tanggal_mutasi); 
             this.dataSourceGrid.subscribe((result) => {
                 let details = result
                 details.map((e, i) => {
@@ -472,6 +473,7 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
                             item.qty_mutasi = parseFloat(item.qty_mutasi)
                             item.hpp_satuan = parseFloat(item.hpp_satuan)
                             item.sub_total = item.qty_mutasi * item.hpp_satuan;
+                            item.expired_date = this.utilityService.onFixingDatepickerSyncfusion(item.expired_date)
                             details[indexPrent].detailBatch.push(item);
                         }
                     })
@@ -487,7 +489,6 @@ export class ViewPersetujuanMutasiComponent implements OnInit {
                             });
                     });
             })
-
         } else {
             alert('isi semua data');
         }

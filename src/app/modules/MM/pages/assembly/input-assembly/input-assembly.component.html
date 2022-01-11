@@ -1,0 +1,125 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <!-- Header -->
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-datepicker-syncfusion [label]="'Tanggal assembly'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_assembly">
+                </mol-datepicker-syncfusion>
+                <!-- Dropdown Stockrom -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Stockrom*'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
+                            [dataSource]="setupStockroomService.dataSource| async"
+                            [fields]="MaritalStockroomDropdownField" [allowFiltering]="true"
+                            formControlName="id_stockroom" (change)="handleChangeStockroom($event)">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_assembly" ></mol-input-textarea>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <org-input-look-up-kode #LookupKodeItem [lookup-url]="urlUtemStockroom" [idKode]="'kode_item'" [modal-title]="'Data Item'"
+                            [idTitle]="'nama_item'" (onGetSelectedData)="handleChangeItemHeader($event)"
+                            [columns]="lookupitemAssembly.columns" [filter-lookup]="lookupitemAssembly.filter"
+                            [label]="'Item'">
+                        </org-input-look-up-kode>
+                        <mol-input-text [label]="'No Batch'" formControlName="batch_number"></mol-input-text>
+                        <mol-datepicker-syncfusion [label]="'Tanggal Expired'" [format]="'dd MMMM yyyy'"
+                            formControlName="expired_date">
+                        </mol-datepicker-syncfusion>
+                        <mol-input-numeric [label]="'QTY'" formControlName="qty" ></mol-input-numeric>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail -->
+        <ejs-grid #gridDetail [id]="'GridDeail'" [editSettings]='GridDataEditSettings'
+            [dataSource]='assemblyService.dataDetail$ | async' [gridLines]="'Both'" 
+            [toolbar]='GridDetailToolbar'
+            (actionComplete)="handleActionCompleted($event)" 
+            (actionBegin)="handleActionBegin($event)"
+            [allowResizing]="true"
+            (toolbarClick)="onToolbarClick($event)" (load)="handleLoadGrid($event)"
+            (rowSelected)="handleSelectdRow($event)">
+            <e-columns>
+                <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='urut'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='id_item_child' [allowEditing]="false" headerText='id_item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='barcode' [allowEditing]="false" headerText='Barcode'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="120">
+                </e-column>
+                <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="120">
+                </e-column>
+                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="250">
+                </e-column>
+                <e-column [visible]="true" field='batch_number' [allowEditing]="false" headerText='Batch Number'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center" width="100">
+                </e-column>
+                <e-column [visible]="true" field='expired_date' [allowEditing]="false" headerText='Expired'
+                    editType='datepickeredit' textAlign="left" headerTextAlign="center" format="dd MMMM yyyy"
+                    type="Date" [edit]="TglExpiredParams" width="150">
+                </e-column>
+                <e-column [visible]="true" field='qty' [allowEditing]="true" headerText='QTY'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" [width]="150">
+                </e-column>
+                <e-column [visible]="false" field='hpp_satuan' [allowEditing]="false" headerText='HPP'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" [width]="120">
+                </e-column>
+                <e-column [visible]="false" field='sub_total' [allowEditing]="false" headerText='SUB TOTAL'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" [width]="120">
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+
+        <!-- Footer -->
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true" [value]="assemblyService.jumlah_item"
+                    [inputFieldState]="'detail'"></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+    <!-- Item -->
+    <org-look-up #LookupItem [lookup-url]="urlItemItem" (onGetSelectedData)="heandleSelectedItem($event)"
+        [columns]="GridLoockUpItem.columns" [filter-lookup]="GridLoockUpItem.filter" [modal-title]="'Data Item'">
+    </org-look-up>
+
+    <!-- Modal QTY  -->
+    <ng-template #modalQty>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Edit Qty</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <input type="text" #qtyValueId id="QtyValueId" class="form-control"
+                        (keydown.enter)="handleQtyChange(qtyValueId.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary">Oke</button>
+        </div>
+    </ng-template>
+
+</org-card-layout>

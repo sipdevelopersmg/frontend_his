@@ -42,15 +42,15 @@ export class ViewResepIrnaComponent implements OnInit {
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
     @ViewChild('itemTemplate') itemTemplate: TemplateRef<any>;
     @ViewChild('modalTambahanHariResep') modalTambahanHariResep: TemplateRef<any>;
+    @ViewChild('modalStopResep') modalStopResep: TemplateRef<any>;
 
     modalRef: BsModalRef;
 
     public keterangan = (field: string, data1: object) => {
-        return  data1['nama_obat'] +' '+
-                data1['rute_pemberian_obat'] + ', sehari ' + 
-                data1['qty_harian'] +' '+ data1['nama_satuan']+', '+ data1['jumlah_satuan_aturan_pakai']+' '+ data1['nama_satuan']+
-                ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['interval_aturan_pakai']+' sekali, '+
-                data1['ket_aturan'];
+        return  data1['nama_rute_pemberian_obat'] + 
+                ', sehari ' +  data1['qty_harian'] +' '+   
+                data1['nama_satuan']+' '+ data1['ket_label']+' '
+                +data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];;
     }
 
     public quantity = (field: string, data1: object) => {
@@ -62,7 +62,7 @@ export class ViewResepIrnaComponent implements OnInit {
     dataSource:any = [];
     dataHeader:any = [];
     formInput: FormGroup;
-
+    htmlSelection:string = '';
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterIrnaService: ResepDokterIrnaService,
@@ -171,17 +171,35 @@ export class ViewResepIrnaComponent implements OnInit {
                 });
         })
     }
+
+    handleClickStopResepDokter(args){
+        let Body:any
+        Body = this.GridResepRacikan.getSelectedRecords()
+        this.resepDokterIrnaService.stopResepRawatInap(Body).subscribe((result)=>{
+            this.utilityService.onShowingCustomAlert('success', 'Obat ini berhasil di hentikan/Stop', result.message)
+                .then(() => {
+                    this.modalRef.hide();
+                    this.onLoadDetailData(this.dataHeader.resep_id);
+                });
+        })
+    }
    
     onClickButtonNav(args: any): void {
+        let data = this.GridResepRacikan.getSelectedRecords();
         switch (args) {
             case "kembali":
                 this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
                 break;
             case "lanjutkan":
-                this.modalRef = this.modalService.show(
-                    this.modalTambahanHariResep,
-                    Object.assign({}, { class: 'modal-md' })
-                );
+                if(data.length==0){
+                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih','')
+                }else{
+                    this.templateSelection();
+                    this.modalRef = this.modalService.show(
+                        this.modalTambahanHariResep,
+                        Object.assign({}, { class: 'modal-md' })
+                    );
+                }
                 break;
             case "ubah":
                 const id = this.encryptionService.encrypt(this.dataHeader.resep_id+',ubah');
@@ -192,16 +210,29 @@ export class ViewResepIrnaComponent implements OnInit {
                 this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id_resep, "GRAHCIS"]);
                 break;
             case "stop":
-                this.resepDokterIrnaService.stopResepRawatInap(this.dataHeader.resep_id).subscribe((result)=>{
-                    this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Stop', result.message)
-                    .then(() => {
-                        this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
-                    });
-                });
+                if(data.length==0){
+                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih','')
+                }else{
+                    this.templateSelection();
+                    this.modalRef = this.modalService.show(
+                        this.modalStopResep,
+                        Object.assign({}, { class: 'modal-md' })
+                    );
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    templateSelection(){
+        let data = this.GridResepRacikan.getSelectedRecords();
+        this.htmlSelection = '<ul>';
+        data.forEach((value:any,index)=>{
+            this.htmlSelection +=`<li>${value.nama_obat}</li>`;
+        })
+        this.htmlSelection += '</ul>';
+        console.log(this.htmlSelection);
     }
 
 }

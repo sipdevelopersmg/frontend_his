@@ -43,8 +43,10 @@ export class ViewResepIrdaComponent implements OnInit {
     modalRef: BsModalRef;
 
     public keterangan = (field: string, data1: object) => {
-        return  data1['nama_rute_pemberian_obat'] + ', sehari ' + 
-        data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];;
+        return  data1['nama_rute_pemberian_obat'] + 
+                ', sehari ' +  data1['qty_harian'] +' '+   
+                data1['nama_satuan']+' '+ data1['ket_label']+' '
+                +data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];;
     }
 
     public quantity = (field: string, data1: object) => {
@@ -173,33 +175,37 @@ export class ViewResepIrdaComponent implements OnInit {
     }
    
     onClickButtonNav(args: any): void {
+        let data = this.GridResepRacikan.getSelectedRecords();
+
         switch (args) {
             case "kembali":
                 this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
                 break;
             case "lanjutkan":
-                this.templateSelection();
-                this.modalRef = this.modalService.show(
-                    this.modalTambahanHariResep,
-                    Object.assign({}, { class: 'modal-md' })
-                );
+                if(data.length==0){
+                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih','')
+                }else{
+                    this.templateSelection();
+                    this.modalRef = this.modalService.show(
+                        this.modalTambahanHariResep,
+                        Object.assign({}, { class: 'modal-md' })
+                    );
+                }
                 break;
             case "ubah":
                 const id = this.encryptionService.encrypt(this.dataHeader.resep_id+',ubah');
                 this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id, "GRAHCIS"]);
                 break;
             case "stop":
-                this.templateSelection();
-                this.modalRef = this.modalService.show(
-                    this.modalStopResep,
-                    Object.assign({}, { class: 'modal-md' })
-                );
-                // this.resepDokterIrdaService.stopResepRawatInap(this.dataHeader.resep_id).subscribe((result)=>{
-                //     this.utilityService.onShowingCustomAlert('success', 'Resep Ini Berhasil Di Stop', result.message)
-                //     .then(() => {
-                //         this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
-                //     });
-                // });
+                if(data.length==0){
+                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih','')
+                }else{
+                    this.templateSelection();
+                    this.modalRef = this.modalService.show(
+                        this.modalStopResep,
+                        Object.assign({}, { class: 'modal-md' })
+                    );
+                }
                 break;
             default:
                 break;

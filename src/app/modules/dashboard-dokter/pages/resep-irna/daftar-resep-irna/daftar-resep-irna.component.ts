@@ -27,8 +27,7 @@ export class DaftarResepIrnaComponent implements OnInit {
   ];
 
   FilterColumnDatasource: any[] = [
-      { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-      { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+      { text: 'Nomor Resep', value: 'trd.nomor_resep' }
   ];
 
   GridConfig = GridConfig;
@@ -50,17 +49,13 @@ export class DaftarResepIrnaComponent implements OnInit {
   }
 
   public keterangan = (field: string, data1: object) => {
-    console.log('keterangan',data1);
-        return  data1['nama_obat'] +' '+
-            data1['nama_rute_pemberian_obat'] + ', sehari ' + 
-            data1['qty_harian'] +' '+ data1['nama_satuan']+', '+ data1['jumlah_satuan_aturan_pakai']+' '+ data1['nama_satuan']+
-            ' tiap '+data1['jumlah_interval_aturan_pakai'] +' '+ data1['nama_interval_aturan_pakai']+' sekali, '+
-            data1['label_tambahan_aturan_pakai_obat'];
+    return  data1['nama_rute_pemberian_obat'] + ', sehari ' + 
+    data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
   }
 
   public quantity = (field: string, data1: object) => {
     return  data1['qty_harian'] +' '+
-            data1['nama_satuan']+'/Hari, untuk '+data1['jumlah_hari']+' Hari';
+          data1['nama_satuan']+'/Hari, untuk '+data1['jumlah_hari']+' Hari';
   }
 
   GridGroupSettings: object = { showDropArea: false, columns: ['nama_dokter', 'nomor_resep'] };

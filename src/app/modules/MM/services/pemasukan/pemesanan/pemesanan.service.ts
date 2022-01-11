@@ -6,6 +6,7 @@ import { PENERIMAAN } from 'src/app/api/MM/PENERIMAAN';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { TrPemesananDetailInsert, TrPemesananInsert } from '../../../models/penerimaan/pemesanan/PemesananModel';
 
 @Injectable({
@@ -37,7 +38,8 @@ export class PemesananService {
 
     constructor(
         private notificationService: NotificationService,
-        private httpOperationService: HttpOperationService
+        private httpOperationService: HttpOperationService,
+        private utilityService: UtilityService
     ) { }
 
     /**
@@ -173,6 +175,10 @@ export class PemesananService {
         this.dataDetail.map((e, i) => {
             return e.no_urut = i + 1;
         });
+
+        Data.tanggal_pemesanan = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_pemesanan);
+        Data.tanggal_expired_pemesanan = this.utilityService.onFixingDatepickerSyncfusion(Data.tanggal_expired_pemesanan);
+
         Data.details = this.dataDetail;
         Data.sub_total_1 = this.sub_total_1;
         Data.total_disc = this.total_disc;

@@ -1,0 +1,133 @@
+<org-card-layout [ButtonNav]="(TabId == 'Input' || TabId == 'Setting' )? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+    <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
+        <!-- Data -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Data'">Data Rak Storage</org-tabs-label>
+            <org-tabs-body>
+                <mol-grid
+                    #GridData
+                    [grid-height]="300"
+                    [grid-DataSource]="GridDatasource"
+                    [grid-paging]="false"
+                    [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="GridDataToolbar"
+                    [columns]="GridConfig.GridColumns"
+                    (row-selected)="handleSelectedRow($event)"
+                    (toolbar-click)="handleToolbarClick($event)"
+                    (load-grid)="handleLoadGrid($event)"
+                    (initialized)="InitalizedGrid($event)"
+                    (command-click)="handleClickCommandGrid($event)"></mol-grid>
+            </org-tabs-body>
+        </org-tabs-item>
+        <!-- Input -->
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Input'">Input Rak Storage</org-tabs-label>
+            <org-tabs-body>
+                <form [formGroup]="FormInputData" class="p-2">
+                    <div class="row mb-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                            <mol-input-text 
+                                [label]="'Kode Rak Storage'" 
+                                formControlName="kode_rak_storage"
+                                [IsFormControlInvalid]="kode_rak_storage.invalid"
+                                [ValidatorsCaption]="'Kode Rak Storage Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState"
+                                [disabled]="inputFieldState==='edit'"
+                                >
+                            </mol-input-text>
+                            <mol-input-text 
+                                [label]="'Nama Rak Storage'" 
+                                formControlName="nama_rak_storage"
+                                [IsFormControlInvalid]="nama_rak_storage.invalid"
+                                [ValidatorsCaption]="'Nama Rak Storage Tidak Boleh Kosong'"
+                                [inputFieldState]="inputFieldState">
+                            </mol-input-text>
+                            <!-- Dropdown Stockroom -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Stockroom'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
+                                        [dataSource]="setupStockroomService.dataSource| async"
+                                        [fields]="SetupStockroomDropdownField" [allowFiltering]="true"
+                                        formControlName="id_stockroom" [enabled]="inputFieldState!='detail'">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <!-- Dropdown Penanggung Jawab -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Penanggung Jawab'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #MaritalPenanggungJawabRakStorageDropdown id="marital"
+                                        [dataSource]="setupPenanggungJawabRakStorageService.dataSource| async"
+                                        [fields]="SetupPenanggungJawabRakStorageDropdownField" [allowFiltering]="true"
+                                        formControlName="id_penanggung_jawab_rak_storage" [enabled]="inputFieldState!='detail'">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan" [inputFieldState]="inputFieldState"></mol-input-textarea>   
+                        </div>
+                    </div>
+                </form>
+            </org-tabs-body>
+        </org-tabs-item>
+        <org-tabs-item>
+            <org-tabs-label [Id]="'Setting'">Setting Item Rak Storage</org-tabs-label>
+            <org-tabs-body>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <h5 class="card-title">Item belum ada di rak</h5>
+                            <div class="card-body p-0">
+                                <ejs-grid #gridDetail [id]="'GridDeail'" 
+                                    [editSettings]='GridDataEditSettings'
+                                    [dataSource]='GridDataItemSourceNull' 
+                                    [gridLines]="'Both'" 
+                                    [toolbar]='GridDataToolbarRak'
+                                    (commandClick)="handleCommandClickNull($event)">
+                                    <e-columns>
+                                        <e-column [width]="70" [field]="'command'" [headerText]="'D'" [visible]="true" [allowEditing]="false"
+                                            [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                                            [commands]="CommandButton">
+                                        </e-column>
+                                        <e-column [visible]="false" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                        </e-column>
+                                        <e-column [visible]="false" field='barcode' [allowEditing]="false" headerText='Barcode'
+                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                        </e-column>
+                                        <e-column [visible]="false" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                        </e-column>
+                                    </e-columns>
+                                </ejs-grid>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <h5 class="card-title">Item di rak storage</h5>
+                            <div class="card-body p-0"> 
+                                <mol-grid
+                                    #GridDataItemRak
+                                    [grid-height]="300"
+                                    [grid-DataSource]="GridDataItemSourceRak"
+                                    [grid-paging]="false"
+                                    [grid-editSettings]="GridDataEditSettings"
+                                    [grid-lines]="'Both'"
+                                    [grid-toolbar]="GridDataToolbarRak"
+                                    [columns]="GridSettingConfig.GridColumns"
+                                    (row-selected)="handleSelectedRow($event)"
+                                ></mol-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </org-tabs-body>
+        </org-tabs-item>
+    </org-tabs>
+</org-card-layout>

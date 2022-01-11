@@ -205,13 +205,13 @@ export class ResepDokterIrnaService {
         this.dataDetail = []
     }
 
-    stopResepRawatInap(id_resep:number):Observable<any> {
-        return this.httpOperationService.defaultPutRequestWithoutParams(this.API.UPDATE_TO_STOP+'/'+ id_resep)
-            .pipe(
-                catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
-                })
-            );
+    stopResepRawatInap(data):Observable<any> {
+        return this.httpOperationService.defaultPutRequest(this.API.UPDATE_TO_STOP,data)
+        .pipe(
+            catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
     }
 
     ubahResepRawatInap(Data):Observable<any> {

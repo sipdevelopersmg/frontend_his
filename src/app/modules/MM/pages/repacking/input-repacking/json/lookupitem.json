@@ -1,0 +1,57 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_item",
+            "headerText": "Kode",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_item",
+            "headerText": "Nama Barang",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "barcode",
+            "headerText": "Barcode",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_urai",
+            "headerText": "QTY Urai",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "kode_item",
+            "filter": "like",
+            "title": "KODE"
+        },
+        {
+            "field": "nama_item",
+            "filter": "like",
+            "title": "NAMA"
+        },
+        {
+            "field": "nama_item",
+            "filter": "barcode",
+            "title": "BARCODE"
+        }
+    ]
+}

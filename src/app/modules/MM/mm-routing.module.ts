@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DaftarAssemblyComponent } from "./pages/assembly/daftar-assembly/daftar-assembly.component";
+import { InputAssemblyComponent } from "./pages/assembly/input-assembly/input-assembly.component";
+import { ViewAssemblyComponent } from "./pages/assembly/view-assembly/view-assembly.component";
 import { DaftarIssueComponent } from "./pages/issue/daftar-issue/daftar-issue.component";
 import { InputIssueComponent } from "./pages/issue/input-issue/input-issue.component";
 import { ViewIssueComponent } from "./pages/issue/view-issue/view-issue.component";
@@ -20,6 +23,9 @@ import { DaftarPenerimaanComponent } from "./pages/pemasukan/penerimaan/daftar-p
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
 import { ViewPenerimaanComponent } from "./pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component";
 import { SetHargaOrderComponent } from "./pages/pemasukan/set-harga-order/set-harga-order.component";
+import { DaftarRepackingComponent } from "./pages/repacking/daftar-repacking/daftar-repacking.component";
+import { InputRepackingComponent } from "./pages/repacking/input-repacking/input-repacking.component";
+import { ViewRepackingComponent } from "./pages/repacking/view-repacking/view-repacking.component";
 import { DaftarReturPembelianComponent } from "./pages/retur/daftar-retur-pembelian/daftar-retur-pembelian.component";
 import { InputReturPembelianComponent } from "./pages/retur/input-retur/input-retur.component";
 import { ViewReturPembelianComponent } from "./pages/retur/view-retur-pembelian/view-retur-pembelian.component";
@@ -31,7 +37,9 @@ import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
 import { SetupItemComponent } from "./pages/setup-data/setup-item/setup-item.component";
 import { SetupPabrikComponent } from "./pages/setup-data/setup-pabrik/setup-pabrik.component";
+import { SetupPenanggungJawabRakStorageComponent } from "./pages/setup-data/setup-penanggung-jawab-rak-storage/setup-penanggung-jawab-rak-storage.component";
 import { SetupPerencanaanKategoriComponent } from "./pages/setup-data/setup-perencanaan-kategori/setup-perencanaan-kategori.component";
+import { SetupRakStorageComponent } from "./pages/setup-data/setup-rak-storage/setup-rak-storage.component";
 import { SetupSatuanComponent } from "./pages/setup-data/setup-satuan/setup-satuan.component";
 import { SetupStockroomComponent } from "./pages/setup-data/setup-stockroom/setup-stockroom.component";
 import { SetupSupplierComponent } from "./pages/setup-data/setup-supplier/setup-supplier.component";
@@ -57,7 +65,8 @@ const mmRoutes: Routes = [
             { path: "setup-satuan", component: SetupSatuanComponent, data: { title: "Setup Satuan" } },
             { path: "setup-supplier", component: SetupSupplierComponent, data: { title: "Setup Supplier" } },
             { path: "setup-group-coa", component: SetupGroupCoaComponent, data: { title: "Setup Group COA" } },
-
+            { path: "setup-penanggung-jawab-rak-storage", component: SetupPenanggungJawabRakStorageComponent, data: { title: "Setup Penanggung Jawab Rak Storage" } },
+            { path: "setup-rak-storage", component: SetupRakStorageComponent, data: { title: "Setup Rak Storage" } },
         ],
     },
     {
@@ -100,14 +109,14 @@ const mmRoutes: Routes = [
         ],
     },
     {
-        path: "persetujuan-mutasi", component: null, data: { title: "Input PO" },
+        path: "persetujuan-mutasi", component: null, data: { title: "Persetujuan Mutasi" },
         children: [
             { path: "daftar-persetujuan-mutasi", component: DaftarPersetujuanMutasiComponent, data: { title: "Persetujuan Mutasi" } },
             { path: "proses-persetujuan-mutasi/:id/:key", component: ViewPersetujuanMutasiComponent, data: { title: "Proses Persetujuan Mutasi" } },
         ],
     },
     {
-        path: "retur-pembelian", component: null, data: { title: "Input PO" },
+        path: "retur-pembelian", component: null, data: { title: "Input Retur Pembelian" },
         children: [
             { path: "daftar-retur-pembelian", component: DaftarReturPembelianComponent, data: { title: "Daftar Retur Pembelian" } },
             { path: "input-retur-pembelian", component: InputReturPembelianComponent, data: { title: "Input Retur Pembelian" } },
@@ -116,7 +125,7 @@ const mmRoutes: Routes = [
         ],
     },
     {
-        path: "issue", component: null, data: { title: "Input PO" },
+        path: "issue", component: null, data: { title: "Issue" },
         children: [
             { path: "daftar-issue", component: DaftarIssueComponent, data: { title: "Daftar Issue" } },
             { path: "input-issue", component: InputIssueComponent, data: { title: "Input Issue" } },
@@ -125,19 +134,35 @@ const mmRoutes: Routes = [
         ],
     },
     {
-        path: "issue-validation", component: null, data: { title: "Input PO" },
+        path: "issue-validation", component: null, data: { title: "Input Issue Validation" },
         children: [
             { path: "daftar-issue-validation", component: DaftarIssueValidationComponent, data: { title: "Daftar Issue" } },
             { path: "view-issue-validation/:id/:key", component: ViewIssueValidationComponent, data: { title: "View Issue" } },
         ],
     },
     {
-        path: "retur-issue", component: null, data: { title: "Input PO" },
+        path: "retur-issue", component: null, data: { title: "Input Retur Issue" },
         children: [
             { path: "daftar-retur-issue", component: DaftarReturIssueComponent, data: { title: "Daftar Retur Issue" } },
             { path: "input-retur-issue", component: InputReturIssueComponent, data: { title: "Input Retur Issue" } },
             { path: "view-retur-issue/:id/:key", component: ViewReturIssueComponent, data: { title: "View Retur Issue" } },
 
+        ],
+    },
+    {
+        path: "repacking", component: null, data: { title: "Input Repacking" },
+        children: [
+            { path: "daftar-repacking", component: DaftarRepackingComponent, data: { title: "Daftar Repacking" } },
+            { path: "input-repacking", component: InputRepackingComponent, data: { title: "Input Repacking" } },
+            { path: "view-repacking/:id/:key", component: ViewRepackingComponent, data: { title: "View Repacking" } },
+        ],
+    },
+    {
+        path: "assembly", component: null, data: { title: "Input Assembly" },
+        children: [
+            { path: "daftar-assembly", component: DaftarAssemblyComponent, data: { title: "Daftar Assembly" } },
+            { path: "input-assembly", component: InputAssemblyComponent, data: { title: "Input Assembly" } },
+            { path: "view-assembly/:id/:key", component: ViewAssemblyComponent, data: { title: "View Assembly" } },
         ],
     }
 ]
