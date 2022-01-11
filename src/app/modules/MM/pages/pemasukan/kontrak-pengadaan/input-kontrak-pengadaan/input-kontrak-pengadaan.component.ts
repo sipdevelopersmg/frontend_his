@@ -119,7 +119,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
             tahun_anggaran: ["", Validators.required],
             keterangan: ["",],
             total_transaksi_kontrak: [0,],
-            jumlah_item_kontrak: [0, ],
+            jumlah_item_kontrak: [0,],
             user_inputed: [1, []],
         });
 
@@ -149,7 +149,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
         this.globalListenFunc = this.renderer.listen('document', 'keydown', e => {
             if (e.keyCode == 112) {
-                if(!this.LookupItem.isModalOpen){
+                if (!this.LookupItem.isModalOpen) {
                     this.LookupItem.onOpenModal();
                 }
                 e.preventDefault();
@@ -243,7 +243,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
             sub_total_kontrak: $event.satuans[0].isi * $event.harga_beli_terakhir,
             satuan: $event.satuans,
             validasi: false,
-            message:'lengkapi data'
+            message: 'lengkapi data'
         }
         this.inputKontrakPengadaanService.addDataDetail(item);
         this.selectLastRowdetail();
@@ -257,20 +257,20 @@ export class InputKontrakPengadaanComponent implements OnInit {
             this.gridDetail.refresh();
         }
 
-        if($event.requestType=="refresh" && $event.rows ){
+        if ($event.requestType == "refresh" && $event.rows) {
             $event.rows.forEach(element => {
-                if(!element.data.validasi){
+                if (!element.data.validasi) {
                     document.querySelector(`[data-uid="${element.uid}"]`).classList.add('e-canceled-background');
                 }
             });
         }
-        
+
     }
 
-    handleActionBegin($event){
+    handleActionBegin($event) {
         console.log($event);
-        if($event.requestType=="beginEdit"){
-            setTimeout(()=>{
+        if ($event.requestType == "beginEdit") {
+            setTimeout(() => {
                 let banyak = (<HTMLInputElement>document.getElementsByName("qty_kontrak_satuan_besar")[0])
                 if (banyak) {
                     banyak.addEventListener('click', (event) => {
@@ -280,10 +280,10 @@ export class InputKontrakPengadaanComponent implements OnInit {
                         return /^\d*$/.test(value);
                     });
                 }
-            },50)
+            }, 50)
         }
-        if($event.requestType=="beginEdit"){
-            setTimeout(()=>{
+        if ($event.requestType == "beginEdit") {
+            setTimeout(() => {
                 let harga_satuan = (<HTMLInputElement>document.getElementsByName("harga_satuan")[0])
                 if (harga_satuan) {
                     harga_satuan.addEventListener('click', (event) => {
@@ -293,10 +293,10 @@ export class InputKontrakPengadaanComponent implements OnInit {
                         return /^\d*$/.test(value);
                     });
                 }
-            },50)
+            }, 50)
         }
-        if($event.requestType=="beginEdit"){
-            setTimeout(()=>{
+        if ($event.requestType == "beginEdit") {
+            setTimeout(() => {
                 let sub_total = (<HTMLInputElement>document.getElementsByName("sub_total_kontrak")[0])
                 if (sub_total) {
                     sub_total.addEventListener('click', (event) => {
@@ -306,7 +306,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
                         return /^\d*$/.test(value);
                     });
                 }
-            },50)
+            }, 50)
         }
     }
 
@@ -314,7 +314,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
         console.log(args);
         let validasi = args.data.validasi;
         if (!validasi) {
-          args.row.classList.add('e-canceled-background');
+            args.row.classList.add('e-canceled-background');
         }
     }
 
@@ -332,7 +332,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     handleQtyChange(args: any) {
         let banyak: number = parseInt(args);
-        if(banyak > 0){
+        if (banyak > 0) {
             this.inputKontrakPengadaanService.editBanyak(this.currentIndex, banyak);
         }
         this.modalRef.hide();
@@ -340,7 +340,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
     }
 
     handleSatuanChange(args: any) {
-        if(args != ''){
+        if (args != '') {
             this.inputKontrakPengadaanService.editSatuan(this.currentIndex, args);
         }
         this.modalRef.hide();
@@ -350,7 +350,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     handleHargaChange(args: any) {
         let harga: number = parseInt(args);
-        if(harga > 0){
+        if (harga > 0) {
             this.inputKontrakPengadaanService.editHarga(this.currentIndex, harga);
         }
         this.modalRef.hide();
@@ -359,7 +359,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
 
     handleSubtotalChange(args: any) {
         let subtotal: number = parseInt(args);
-        if(subtotal > 0){
+        if (subtotal > 0) {
             this.inputKontrakPengadaanService.editSubtotal(this.currentIndex, subtotal);
         }
         this.modalRef.hide();
@@ -406,7 +406,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
         this.subscriptions.push(
             this.modalService.onShown.subscribe(() => {
                 setTimeout(() => {
-                    (<HTMLInputElement>document.getElementById("QtyValueId")).value='1';
+                    (<HTMLInputElement>document.getElementById("QtyValueId")).value = '1';
                     (<HTMLInputElement>document.getElementById("QtyValueId")).select();
                     let banyak = (<HTMLInputElement>document.getElementById("QtyValueId"))
                     if (banyak) {
@@ -568,7 +568,7 @@ export class InputKontrakPengadaanComponent implements OnInit {
     }
 
     onSave() {
-        if(this.utilityService.validasiDataDetail(this.inputKontrakPengadaanService.dataDetail,'cek di tabel item yang berwarna merah!')){
+        if (this.utilityService.validasiDataDetail(this.inputKontrakPengadaanService.dataDetail, 'cek di tabel item yang berwarna merah!')) {
             if (this.formKontrak.valid) {
                 this.inputKontrakPengadaanService.Insert(this.formKontrak.value)
                     .subscribe((result) => {

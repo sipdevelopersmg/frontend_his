@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { EditSettingsModel, GridComponent } from '@syncfusion/ej2-angular-grids';
+import { CommandModel, EditSettingsModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -48,9 +48,12 @@ export class VerifikasiOrderLabComponent implements OnInit {
     GridDatasource: any[] = [];
     @ViewChild('GridData') public GridData: GridComponent;
     GridToolbar: any[] = ["Search"];
-    GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-    GridPageSettings = { pageSizes: false, pageSize: 12 };
+    GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false, allowEditOnDblClick: false };
+    GridPageSettings = { pageSizes: true, pageSize: 20 };
     GridSelectedRow: any;
+    CommandLihatHasil: CommandModel[] = [
+        { buttonOption: { iconCss: 'fas fa-search fa-sm' }, title: 'Lihat Hasil LIS' }
+    ];
 
     // ** Modal Dialog Add / Edit Setup User Properties
     modalRef: BsModalRef;
@@ -195,12 +198,19 @@ export class VerifikasiOrderLabComponent implements OnInit {
 
     handleSelectedRow(args: any): void {
         this.GridSelectedRow = args.data;
+        // this.onFillFormVerifikasiDetailOrderLab(this.GridSelectedRow);
+    }
 
+    handleRecordDoubleClick(args: any): void {
         this.onFillFormVerifikasiDetailOrderLab(this.GridSelectedRow);
     }
 
     handleToolbarClick(args: any): void {
 
+    }
+
+    handleCommandClick(args: any): void {
+        console.log(args);
     }
 
     handleActionComplete(args: any): void {
