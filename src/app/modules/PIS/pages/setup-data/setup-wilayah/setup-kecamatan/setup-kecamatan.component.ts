@@ -273,7 +273,6 @@ export class SetupKecamatanComponent implements OnInit {
 
     /** Method Untuk Mereload Data Grid */
     GetAllData(filterKota?: string): void {
-
         const param = filterKota ? filterKota : '11.30';
 
         this.setupKecamatanService.onGetAll(param)

@@ -30,17 +30,17 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
 
     Data: any[] = [];
-    @ViewChild('inputResepComponent') inputResepComponent : InputResepComponent;
-    currentTanggal:string;
-    isGetFromTemplate:boolean;
+    @ViewChild('inputResepComponent') inputResepComponent: InputResepComponent;
+    currentTanggal: string;
+    isGetFromTemplate: boolean;
     modalRef: BsModalRef;
     @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
 
-    newdetail:any = [];
-    baru:any = 0;
-    data:any = null;
-    nama_resep:string = '';
-    idOutlet:number;
+    newdetail: any = [];
+    baru: any = 0;
+    data: any = null;
+    nama_resep: string = '';
+    idOutlet: number;
     constructor(
         private resepDokterService: ResepDokterService,
         private utilityService: UtilityService,
@@ -50,7 +50,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
     ) { }
 
-    ngOnInit(): void { 
+    ngOnInit(): void {
         this.currentTanggal = moment().format()
         console.log(this.daftarPasienService.ActivePasien.value);
     }
@@ -67,7 +67,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.inputResepComponent.handelClickTemplateResep();
             case "Reset":
                 this.resepDokterService.reset();
-                this.isGetFromTemplate =false;
+                this.isGetFromTemplate = false;
                 break;
             case "Simpan":
                 this.Insert();
@@ -95,61 +95,61 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    onSetTemplateResep(){
-        this.isGetFromTemplate =true;
+    onSetTemplateResep() {
+        this.isGetFromTemplate = true;
     }
 
-    setIdOutlet(id){
+    setIdOutlet(id) {
         console.log(id);
         this.idOutlet = id;
     }
 
     async Insert() {
-        if(!this.idOutlet){
-            this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi','')
+        if (!this.idOutlet) {
+            this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi', '')
             return false;
         }
-        this.data ={
-            id_dokter:this.daftarPasienService.ActivePasien.value.id_dokter,
-            id_register:this.daftarPasienService.ActivePasien.value.id_register,
-            id_outlet:this.idOutlet,
-            id_person:this.daftarPasienService.ActivePasien.value.id_person,
-            jenis_rawat:'J',
-            nama_template:'',
-            tanggal_resep:this.currentTanggal
+        this.data = {
+            id_dokter: this.daftarPasienService.ActivePasien.value.id_dokter,
+            id_register: this.daftarPasienService.ActivePasien.value.id_register,
+            id_outlet: this.idOutlet,
+            id_person: this.daftarPasienService.ActivePasien.value.id_person,
+            jenis_rawat: 'J',
+            nama_template: '',
+            tanggal_resep: this.currentTanggal
         }
 
         let detail = await this.resepDokterService.dataDetail
 
-        this.newdetail = detail.filter((item)=>{
-            return  item.is_racikan && !item.set_racikan_id
+        this.newdetail = detail.filter((item) => {
+            return item.is_racikan && !item.set_racikan_id
         })
 
         this.baru = 0
-        if(!this.isGetFromTemplate){
+        if (!this.isGetFromTemplate) {
             this.modalRef = this.modalService.show(
                 this.modalTemplateResep,
                 Object.assign({}, { class: 'modal-lg' })
             );
-        }else{
+        } else {
             this.methodConfirmSetRacikan(0)
         }
     }
 
-    handleClickSimpanTemplateResepDokter(){
+    handleClickSimpanTemplateResepDokter() {
         let nama_resep = (<HTMLInputElement>document.getElementsByName("nama_resep")[0]).value;
         this.data.nama_template = nama_resep;
         this.modalRef.hide();
         this.methodConfirmSetRacikan(1)
     }
 
-    handleClickAbaikan(){
+    handleClickAbaikan() {
         this.modalRef.hide();
         this.methodConfirmSetRacikan(0)
     }
 
-    methodConfirmSetRacikan(simpan_template){
-        if(this.newdetail.length > 0){
+    methodConfirmSetRacikan(simpan_template) {
+        if (this.newdetail.length > 0) {
             Swal.fire({
                 title: 'Apakah Anda Ingin Menyimapan Racikan Baru ke dalam Setting Racikan dokter?',
                 text: "Racikan akan bisa di gunakan lagi untuk template",
@@ -163,18 +163,18 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.baru = 1
-                }else{
+                } else {
                     this.baru = 0
                 }
-                this.methodInsert(this.data,simpan_template,this.baru)
+                this.methodInsert(this.data, simpan_template, this.baru)
             });
-        }else{
-            this.methodInsert(this.data,simpan_template,0)
+        } else {
+            this.methodInsert(this.data, simpan_template, 0)
         }
     }
 
-    methodInsert(Data,is_simpan_template:number,is_simpan_racikan:number){
-        this.resepDokterService.Insert(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
+    methodInsert(Data, is_simpan_template: number, is_simpan_racikan: number) {
+        this.resepDokterService.Insert(Data, is_simpan_template, is_simpan_racikan).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
                     this.resepDokterService.reset();
@@ -186,9 +186,10 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
 
     reloadCurrentRoute() {
         let currentUrl = this.router.url;
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-            this.router.navigate([currentUrl]);
-        });
+        this.router.navigateByUrl('/', { skipLocationChange: true })
+            .then(() => {
+                this.router.navigate([currentUrl]);
+            });
     }
 
     ngOnDestroy(): void {

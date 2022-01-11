@@ -26,20 +26,20 @@ export class SetupRoleMenuComponent implements OnInit {
     constructor(
         private setupRoleService: SetupRoleService,
         private setupRoleMenuService: SetupRoleMenuService
-    ) {
+    ) { }
+
+    ngOnInit(): void {
         this.UserData = JSON.parse(localStorage.getItem('UserData'));
 
         this.onGetCurrentDataRole();
-    }
-
-    ngOnInit(): void {
-        this.onGetMainMenuAktif(this.RolesData);
     }
 
     onGetCurrentDataRole(): void {
         this.setupRoleService.onGetCurrentDataRole()
             .subscribe((result: RolesModel) => {
                 this.RolesData = result;
+
+                this.onGetMainMenuAktif(this.RolesData);
             });
     }
 
@@ -54,7 +54,7 @@ export class SetupRoleMenuComponent implements OnInit {
         this.TabId = TabId;
 
         if (this.TabId == "DataRoleActive") {
-            this.onGetMainMenuAktif(this.RolesData);
+            this.onGetCurrentDataRole();
         }
     }
 }

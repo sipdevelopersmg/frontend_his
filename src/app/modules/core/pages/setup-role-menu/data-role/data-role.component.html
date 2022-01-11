@@ -11,7 +11,7 @@
                         *ngFor="let item of MainMenu">
                         <!-- List Main Menu -->
                         <div class="items-group mx-0 px-2" data-bs-toggle="tooltip" title="{{ item.caption }}"
-                            (click)="item.childMenu?.length >= 1 ? onTogglingHideChildMenu(item.id_menu) : onGetMenuSidebar(item.caption, item.id_menu) ">
+                            (click)="item.childMenu?.length >= 1 ? onTogglingHideChildMenu(item.id_menu) : onGetMenuSidebar(item.caption, item.id_menu)">
                             <div class="col-12 me-1">
                                 <div class="row align-items-center">
                                     <div class="col-1 px-0 text-end">
@@ -30,6 +30,7 @@
                                 </span>
                             </div> -->
                         </div>
+
                         <!-- List Top Menu -->
                         <ul class="list-group list-group-child is-hidden" id="{{ item.id_menu }}ChildMenu">
                             <li class="list-group-item cursor-pointer p-0 mb-1"

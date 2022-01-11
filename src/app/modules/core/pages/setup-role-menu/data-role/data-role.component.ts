@@ -83,7 +83,9 @@ export class DataRoleComponent implements OnInit, AfterViewInit {
         this.CardSidebarMenuTitle = "Daftar Menu Sidebar pada Menu " + TopMenuCaption;
 
         this.setupRoleMenuService.onGetSidebarMenuByMenuIdAndRoleId(TopMenuId, this.RolesData.id_role)
-            .subscribe((result) => { this.MenuSidebar = result.data; });
+            .subscribe((result) => {
+                this.MenuSidebar = result.data;
+            });
     }
 
     onTogglingHideChildMenu(id: any) {
