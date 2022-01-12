@@ -65,8 +65,9 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
         switch (args) {
             case "Template":
                 this.inputResepComponent.handelClickTemplateResep();
+                break;
             case "Reset":
-                this.resepDokterService.reset();
+                this.inputResepComponent.onResetGrid();
                 this.isGetFromTemplate = false;
                 break;
             case "Simpan":
@@ -104,7 +105,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
         this.idOutlet = id;
     }
 
-    async Insert() {
+    Insert() {
         if (!this.idOutlet) {
             this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi', '')
             return false;
@@ -119,9 +120,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
             tanggal_resep: this.currentTanggal
         }
 
-        let detail = await this.resepDokterService.dataDetail
-
-        this.newdetail = detail.filter((item) => {
+        this.newdetail = this.resepDokterService.dataSourceParentGrid.value.filter((item)=>{
             return item.is_racikan && !item.set_racikan_id
         })
 
@@ -177,7 +176,8 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
         this.resepDokterService.Insert(Data, is_simpan_template, is_simpan_racikan).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
-                    this.resepDokterService.reset();
+                    this.inputResepComponent.onResetGrid();
+                    // this.resepDokterService.reset();
                     this.isGetFromTemplate = false;
                     // this.reloadCurrentRoute();
                 });
