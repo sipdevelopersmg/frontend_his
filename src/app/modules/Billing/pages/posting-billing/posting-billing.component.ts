@@ -137,7 +137,11 @@ export class PostingBillingComponent implements OnInit {
             });
         };
 
-        this.postingBillingService.onGetAllDataForPostingBilling(parameter, FormPostingBilling.tipe_pasien);
+        if (FormPostingBilling.tipe_pasien) {
+            this.postingBillingService.onGetAllDataForPostingBilling(parameter, FormPostingBilling.tipe_pasien);
+        } else {
+            this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Tipe Pasien Belum Dipilih');
+        }
     }
 
     handleSelectedRow(args: any): void {

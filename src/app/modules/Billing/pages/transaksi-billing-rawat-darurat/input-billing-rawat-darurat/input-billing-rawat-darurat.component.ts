@@ -1660,23 +1660,43 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
     handleSaveDraft(data: any): void {
         let item_transaksi = [];
 
+        let item_transaksi_obat = [];
+
         data.filter((item) => {
             let total_amount_is_matched = item.total_amount == item.tagihan + item.subsidi + item.comp_fee ? true : false;
 
             if (total_amount_is_matched) {
-                item_transaksi.push({
-                    id_transaksi: item.id_transaksi,
-                    comp_fee: item.comp_fee,
-                    iur_biaya: item.iur_biaya,
-                    subsidi: item.subsidi,
-                    tagihan: item.tagihan,
-                });
+
+                // ** Push ke item_transaksi => tkt, tdmk, tdrad, tdlab
+                if (item.id_transaksi) {
+                    item_transaksi.push({
+                        id_transaksi: item.id_transaksi,
+                        comp_fee: item.comp_fee,
+                        iur_biaya: item.iur_biaya,
+                        subsidi: item.subsidi,
+                        tagihan: item.tagihan,
+                    });
+                };
+
+                // ** Push ke item_transaksi_obat => resep
+                if (item.id_transaksi_obat) {
+                    item_transaksi_obat.push({
+                        id_register: item.id_register,
+                        id_transaksi_obat: item.id_transaksi_obat,
+                        comp_fee: item.comp_fee,
+                        iur_biaya: item.iur_biaya,
+                        subsidi: item.subsidi,
+                        tagihan: item.tagihan,
+                    });
+                };
+
             }
         });
 
         let parameter = {
             id_register: this.id_register.value,
-            item_transaksi: item_transaksi
+            item_transaksi: item_transaksi,
+            item_transaksi_obat: item_transaksi_obat
         };
 
         this.transBillingRawatDaruratService.onSaveDraft(parameter)
