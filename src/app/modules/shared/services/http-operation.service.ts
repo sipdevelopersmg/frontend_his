@@ -343,6 +343,37 @@ export class HttpOperationService {
         );
     }
 
+    defaultGetPrintHasilLis(url: string): void {
+        this.httpClient.get(
+            url,
+            {
+                headers: new HttpHeaders().set('Accept', "application/pdf"),
+                responseType: 'arraybuffer',
+            }
+        ).pipe(
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result) => {
+                return result;
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error);
+            }),
+        ).subscribe((result: ArrayBuffer) => {
+            if (result.byteLength < 100) {
+                this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Hasil Belum Keluar');
+            } else {
+                const file = new Blob([result], { type: 'application/pdf' });
+
+                const fileUrl = window.URL.createObjectURL(file);
+
+                window.open(fileUrl);
+            }
+        })
+    }
+
     handlingErrorWithStatusCode200(response: HttpResponseModel): any {
         // let message = [];
 

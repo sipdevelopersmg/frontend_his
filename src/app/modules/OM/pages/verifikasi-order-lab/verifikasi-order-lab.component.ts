@@ -120,12 +120,19 @@ export class VerifikasiOrderLabComponent implements OnInit {
             "id_order_penunjang": [0, []],
             "id_register": [0, []],
             "nomor_order_penunjang": ["", []],
+            "tanggal_order_penunjang": ["", []],
             "no_register": ["", []],
             "no_rekam_medis": ["", []],
             "nama_pasien": ["", []],
+            "jenis_rawat": ["", []],
             "tanggal_lahir": ["", []],
+            "tgl_lahir": ["", []],
             "umur": ["", []],
+            "hand_phone": ["", []],
+            "gender": [0, []],
             "id_poli": ["", []],
+            "kode_poli": ["", []],
+            "nama_poli": ["", []],
             "id_kelas": ["", []],
             "nama_kelas": ["", []],
             "nama_debitur": ["", []],
@@ -138,7 +145,11 @@ export class VerifikasiOrderLabComponent implements OnInit {
             "nama_dokter": ["", []],
             "no_sample": ["", []],
             "date_estimate": ["", []],
-            "id_petugas": [0, []]
+            "id_petugas": [0, []],
+            "kode_dokter_pengirim": ["", []],
+            "nama_dokter_pengirim": ["", []],
+            "tipe_pasien": ["", []],
+            "is_rujukan": ["", []],
         });
 
         this.FormPembatalanOrder = this.formBuilder.group({
@@ -205,16 +216,9 @@ export class VerifikasiOrderLabComponent implements OnInit {
         this.onFillFormVerifikasiDetailOrderLab(this.GridSelectedRow);
     }
 
-    handleToolbarClick(args: any): void {
-
-    }
-
     handleCommandClick(args: any): void {
-        console.log(args);
-    }
-
-    handleActionComplete(args: any): void {
-
+        let nomor_order_penunjang = args.rowData.nomor_order_penunjang;
+        this.verifikasiOrderLabService.onGetHasilLisPdf(nomor_order_penunjang);
     }
 
     onFillFormVerifikasiDetailOrderLab(Data: any): void {
@@ -228,26 +232,42 @@ export class VerifikasiOrderLabComponent implements OnInit {
             this.verifikasiOrderLabService.onGetDetailOrderForVerifikasi(Data.id_order_penunjang)
                 .subscribe((result) => {
                     this.id_order_penunjang.setValue(result.data.header.id_order_penunjang);
-
                     this.nomor_order_penunjang.setValue(result.data.header.nomor_order_penunjang);
+                    this.tanggal_order_penunjang.setValue(result.data.header.tanggal_order_penunjang);
                     this.id_register.setValue(result.data.header.id_register);
                     this.no_register.setValue(result.data.header.no_register);
                     this.no_rekam_medis.setValue(result.data.header.no_rekam_medis);
                     this.nama_pasien.setValue(result.data.header.nama_pasien);
+                    this.jenis_rawat.setValue(result.data.header.jenis_rawat);
+                    this.jenis_rawat.setValue(result.data.header.jenis_rawat);
 
                     let tgl_lahir = this.utilityService.onFormatDate(result.data.header.tanggal_lahir, 'Do MMMM yyyy');
                     this.tanggal_lahir.setValue(`${tgl_lahir} (${result.data.header.umur})`);
+                    this.tgl_lahir.setValue(result.data.header.tanggal_lahir);
+                    this.umur.setValue(result.data.header.umur);
+                    this.hand_phone.setValue(result.data.header.hand_phone);
+                    this.gender.setValue(result.data.header.gender);
 
                     this.id_poli.setValue(result.data.header.id_poli);
+                    this.kode_poli.setValue(result.data.header.kode_poli);
+                    this.nama_poli.setValue(result.data.header.nama_poli);
                     this.id_kelas.setValue(result.data.header.id_kelas);
+                    this.nama_kelas.setValue(result.data.header.nama_kelas);
                     this.nama_debitur.setValue(`${result.data.header.nama_kelas} - ${result.data.header.nama_debitur}`);
                     this.alamat_lengkap.setValue(result.data.header.alamat_lengkap);
+                    this.nama_dokter.setValue(this.GridSelectedRow.nama_dokter);
+                    this.kode_dokter_pengirim.setValue(this.GridSelectedRow.kode_dokter);
+                    this.nama_dokter_pengirim.setValue(this.GridSelectedRow.nama_dokter);
 
                     this.GridDetailOrderDatasource = result.data.details;
-
                     this.GridDiagnosaDatasource = result.data.diagnosa;
 
+                    this.kode_icd.setValue(result.data.header.kode_icd);
+                    this.nama_icd.setValue(result.data.header.nama_icd);
                     this.keterangan_diagnosa.setValue(result.data.diagnosa[0]['nama_icd']);
+
+                    this.tipe_pasien.setValue(result.data.header.tipe_pasien);
+                    this.is_rujukan.setValue(result.data.header.is_rujukan);
 
                     this.onCheckIsPostedAll(result.data.details);
                 });
@@ -277,7 +297,7 @@ export class VerifikasiOrderLabComponent implements OnInit {
     }
 
     onGetSelectedTabId(args: any): void {
-        console.log(args);
+        // console.log(args);
     }
 
     // ** ============ GRID DETAIL ORDER SECTION ===============
@@ -386,6 +406,7 @@ export class VerifikasiOrderLabComponent implements OnInit {
         switch (this.LookupDokterState) {
             case "One":
                 this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['id_dokter'] = args.id_dokter;
+                this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['kode_dokter'] = args.kode_dokter;
                 this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['nama_dokter'] = args.full_name;
 
                 this.GridDataDetail.refresh();
@@ -394,6 +415,7 @@ export class VerifikasiOrderLabComponent implements OnInit {
             case "All":
                 this.GridDetailOrderDatasource.forEach((item) => {
                     item['id_dokter'] = args.id_dokter;
+                    item['kode_dokter'] = args.kode_dokter;
                     item['nama_dokter'] = args.full_name;
                 });
 
@@ -446,10 +468,12 @@ export class VerifikasiOrderLabComponent implements OnInit {
         this.GridDetailOrderDatasource.forEach((item) => {
             item['id_petugas'] = FormVerifikasiOrderLab.id_petugas;
             item['qty'] = item['qty_order'];
-            item['is_cancel'] = item['status'] == 'canceled' ? true : false;
+            item['kode_dokter_dpjp'] = item['kode_dokter'];
+            item['nama_dokter_dpjp'] = item['nama_dokter'];
         });
 
         setTimeout(() => {
+            FormVerifikasiOrderLab.diagnosa = FormVerifikasiOrderLab.kode_icd;
             FormVerifikasiOrderLab.item_verifikasi = this.GridDetailOrderDatasource;
 
             this.verifikasiOrderLabService.onPostVerifikasiOrderLab(FormVerifikasiOrderLab)
@@ -551,14 +575,21 @@ export class VerifikasiOrderLabComponent implements OnInit {
     }
 
     get id_order_penunjang(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('id_order_penunjang'); }
-    get nomor_order_penunjang(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nomor_order_penunjang'); }
     get id_register(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('id_register'); }
+    get nomor_order_penunjang(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nomor_order_penunjang'); }
+    get tanggal_order_penunjang(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('tanggal_order_penunjang'); }
     get no_register(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('no_register'); }
     get no_rekam_medis(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('no_rekam_medis'); }
     get nama_pasien(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nama_pasien'); }
+    get jenis_rawat(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('jenis_rawat'); }
     get tanggal_lahir(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('tanggal_lahir'); }
+    get tgl_lahir(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('tgl_lahir'); }
     get umur(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('umur'); }
+    get hand_phone(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('hand_phone'); }
+    get gender(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('gender'); }
     get id_poli(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('id_poli'); }
+    get kode_poli(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('kode_poli'); }
+    get nama_poli(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nama_poli'); }
     get id_kelas(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('id_kelas'); }
     get nama_kelas(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nama_kelas'); }
     get nama_debitur(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nama_debitur'); }
@@ -572,6 +603,10 @@ export class VerifikasiOrderLabComponent implements OnInit {
     get no_sample(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('no_sample'); }
     get date_estimate(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('date_estimate'); }
     get id_petugas(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('id_petugas'); }
+    get kode_dokter_pengirim(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('kode_dokter_pengirim'); }
+    get nama_dokter_pengirim(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('nama_dokter_pengirim'); }
+    get tipe_pasien(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('tipe_pasien'); }
+    get is_rujukan(): AbstractControl { return this.FormVerifikasiDetailOrderLab.get('is_rujukan'); }
 
     get reason_canceled(): AbstractControl { return this.FormPembatalanOrder.get('reason_canceled'); }
 

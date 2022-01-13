@@ -42,20 +42,20 @@
                 <org-input-look-up-kode #LookupKodePoli [modal-title]="'Data Poli'" [lookup-url]="urlPoli"
                     [idKode]="'kode_poli'" [idTitle]="'nama_poli'" (onGetSelectedData)="heandleSelectedPoli($event)"
                     [columns]="settingGrid.LookupPoli.columns" [filter-lookup]="settingGrid.LookupPoli.filter"
-                    [label]="'Poli'">
+                    [label]="'Poli *'">
                 </org-input-look-up-kode>
 
                 <!-- Nama Dokter -->
                 <org-input-look-up-kode #LookupKodeDokter [modal-title]="'Data Dokter'" [lookup-url]="urlDokter"
                     [idKode]="'kode_dokter'" [idTitle]="'full_name'" (onGetSelectedData)="heandleSelectedDokter($event)"
                     [columns]="settingGrid.LookupDokter.columns" [filter-lookup]="settingGrid.LookupDokter.filter"
-                    [label]="'Nama Dokter'">
+                    [label]="'Nama Dokter *'">
                 </org-input-look-up-kode>
 
                 <!-- Debitur -->
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <atm-label [LabelCaption]="'Debitur'"></atm-label>
+                        <atm-label [LabelCaption]="'Debitur *'"></atm-label>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
@@ -72,7 +72,8 @@
                     [lookup-url]="urlAsalRujukan" [idKode]="'kode_asal_rujukan'" [idTitle]="'nama_asal_rujukan'"
                     (onGetSelectedData)="handleSelectedAsalRujukan($event)"
                     [columns]="settingGrid.LookupAsalRujukan.columns"
-                    [filter-lookup]="settingGrid.LookupAsalRujukan.filter" [label]="'Asal Rujukan'">
+                    [filter-lookup]="settingGrid.LookupAsalRujukan.filter"
+                    [label]="DropdownDebitur.value != 1 ? 'Asal Rujukan *' : 'Asal Rujukan'">
                 </org-input-look-up-kode>
 
                 <!-- Kota / Kab -->
@@ -80,7 +81,8 @@
                     [lookup-url]="urlKotaAsalRujukan" [idKode]="'kode_wilayah'" [idTitle]="'nama_wilayah'"
                     (onGetSelectedData)="handleSelectedKotaAsalRujukan($event)"
                     [columns]="settingGrid.LookupKotaRujukan.columns"
-                    [filter-lookup]="settingGrid.LookupKotaRujukan.filter" [label]="'Kota Asal Rujukan'">
+                    [filter-lookup]="settingGrid.LookupKotaRujukan.filter"
+                    [label]="DropdownDebitur.value != 1 ? 'Kota Asal Rujukan *' : 'Kota Asal Rujukan'">
                 </org-input-look-up-kode>
 
                 <!-- Di Rujuk -->
@@ -91,7 +93,7 @@
                     [idKode]="'kode_icd'" [idTitle]="'nama_icd'"
                     (onGetSelectedData)="heandleSelectedDiagnosaAwal($event)"
                     [columns]="settingGrid.LookupDiagnosa.columns" [filter-lookup]="settingGrid.LookupDiagnosa.filter"
-                    [label]="'Diagnosa Awal'">
+                    [label]="'Diagnosa Awal *'">
                 </org-input-look-up-kode>
 
                 <!-- Keluhan -->
@@ -106,7 +108,8 @@
                 <div class="row px-2 pt-2 pb-1 mx-0 mt-3 border shadow-sm rounded mb-2">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
                         <!-- No. Peserta -->
-                        <mol-input-text formControlName="no_peserta" [label]="'No. Peserta'"></mol-input-text>
+                        <mol-input-text formControlName="no_peserta"
+                            [label]="DropdownDebitur.value != 1 ? 'No. Peserta *' : 'No. Peserta'"></mol-input-text>
 
                         <!-- No. SEP -->
                         <mol-input-text [label]="'No. SEP'"></mol-input-text>

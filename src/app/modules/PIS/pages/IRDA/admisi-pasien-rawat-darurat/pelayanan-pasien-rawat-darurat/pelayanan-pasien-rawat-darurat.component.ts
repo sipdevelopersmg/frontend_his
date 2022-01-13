@@ -2,18 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { JenisRuanganModel } from 'src/app/modules/Billing/models/setup-data/setup-jenis-ruangan.model';
-import { KelasPerawatanModel } from 'src/app/modules/Billing/models/setup-data/setup-kelas-perawatan.model';
 import { SetupJenisRuanganService } from 'src/app/modules/Billing/services/setup-data/setup-jenis-ruangan/setup-jenis-ruangan.service';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { DebiturModel } from 'src/app/modules/PIS/models/setup-data/setup-debitur.model';
 import { PendaftaranPasienBaruService } from 'src/app/modules/PIS/services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
-import { AdmisiPasienRawatInapService } from 'src/app/modules/PIS/services/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.service';
 import { SetupDebiturService } from 'src/app/modules/PIS/services/setup-data/setup-debitur/setup-debitur.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
-import { OrgLookUpChecklistComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-checklist/org-look-up-checklist.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALAN';
@@ -21,10 +16,8 @@ import * as API_PIS from '../../../../../../api/PIS';
 import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';
 import settingGrid from '../json/admisi-pasien-rawat-darurat.config.json';
 import { IPersonPasienForAdmisiRawatJalanModel } from 'src/app/modules/PIS/models/IRJA/admisi-pasien-rawat-jalan.model';
-import { IAdmisiPasienRawatInapModel, IAdmisiPasienRawatInapNonTPPRIModel } from 'src/app/modules/PIS/models/IRNA/admisi-pasien-rawat-inap.model';
+import { IAdmisiPasienRawatInapModel } from 'src/app/modules/PIS/models/IRNA/admisi-pasien-rawat-inap.model';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
-import { IBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
-import { IKamarModel } from 'src/app/modules/PIS/models/IRNA/setup-kamar.model';
 import { AdmisiPasienRawatDaruratService } from 'src/app/modules/PIS/services/IRDA/admisi-pasien-rawat-darurat/admisi-pasien-rawat-darurat.service';
 
 @Component({
@@ -81,8 +74,6 @@ export class PelayananPasienRawatDaruratComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private encryptionService: EncryptionService,
         private setupDebiturService: SetupDebiturService,
-        private setupJenisRuanganService: SetupJenisRuanganService,
-        private setupKelasPerawatanService: SetupKelasPerawatanService,
         private pendaftaranPasienBaruService: PendaftaranPasienBaruService,
         private admisiPasienDaruratService: AdmisiPasienRawatDaruratService,
     ) { }

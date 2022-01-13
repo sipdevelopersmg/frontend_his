@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { SetupPaymentMethodService } from 'src/app/modules/Billing/services/setup-data/setup-payment-method/setup-payment-method.service';
 import { TransBillingRawatDaruratService } from 'src/app/modules/Billing/services/trans-billing-rawat-darurat/trans-billing-rawat-darurat.service';
 import { TransBillingRawatInapService } from 'src/app/modules/Billing/services/trans-billing-rawat-inap/trans-billing-rawat-inap.service';
@@ -13,6 +14,8 @@ import { TransBillingService } from 'src/app/modules/Billing/services/trans-bill
 export class QrisComponent implements OnInit {
 
     FormPaymentQRIS: FormGroup;
+
+    @ViewChild('JumlahBayar') JumlahBayar: NumericTextBoxComponent;
 
     @Input("JenisRawatState") JenisRawatState: string;
 

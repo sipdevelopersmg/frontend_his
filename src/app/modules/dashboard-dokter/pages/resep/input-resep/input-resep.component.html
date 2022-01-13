@@ -11,9 +11,8 @@
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                             <ejs-dropdownlist #MaritalOutletDropdown id="marital"
-                                [dataSource]="setupOutletService.dataSource| async"
-                                [fields]="SetupOutletDropdownField" [allowFiltering]="true"
-                                (change)="handleChangeOutlet($event)">
+                                [dataSource]="setupOutletService.dataSource| async" [fields]="SetupOutletDropdownField"
+                                [allowFiltering]="true" (change)="handleChangeOutlet($event)">
                             </ejs-dropdownlist>
                         </div>
                     </div>
@@ -236,9 +235,8 @@
                         <e-column [visible]="true" field='nama_satuan' [allowEditing]="false" headerText='Satuan'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="100">
                         </e-column>
-                        <e-column [visible]="true" field='metode_racikan' [allowEditing]="false"
-                            headerText='Racikan' editType='defaultEdit' textAlign="left"
-                            headerTextAlign="center" [width]="100">
+                        <e-column [visible]="true" field='metode_racikan' [allowEditing]="false" headerText='Racikan'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center" [width]="100">
                         </e-column>
                         <e-column [visible]="true" field='qty_resep' [allowEditing]="true" headerText='Qty'
                             editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2" [width]="60">

@@ -10,7 +10,7 @@ import { SidebarChildMenuModel } from 'src/app/modules/core/models/navigation/me
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { IPaymentMethodModel } from '../../../models/setup-data/setup-payment-method.model';
 import { PembatalanBillingIrnaComponent } from '../pembatalan-billing-irna/pembatalan-billing-irna.component';
-import { GetDataAkomodasiPasienModel, IInformasiPasienModel } from '../../../models/trans-billing/trans-billing.model';
+import { AkomodasiDetailModel, GetDataAkomodasiPasienModel, IInformasiPasienModel } from '../../../models/trans-billing/trans-billing.model';
 import { ICaraPulangModel, IKondisiPulangModel } from 'src/app/modules/PIS/models/IRNA/surat_pengantar_pembayaran.model';
 import { AkomodasiRawatInapComponent } from '../akomodasi-rawat-inap/akomodasi-rawat-inap/akomodasi-rawat-inap.component';
 import { SetupPaymentMethodService } from '../../../services/setup-data/setup-payment-method/setup-payment-method.service';
@@ -212,6 +212,19 @@ export class InputBillingRawatInapComponent implements OnInit, AfterViewInit {
     @HostListener("window:resize", ['$event'])
     private onResize(event: any) {
         this.onDetectScreenSize(event.srcElement.innerWidth);
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    onKeyDownHandler(event: KeyboardEvent) {
+        if (event.keyCode === 114) {
+            event.preventDefault();
+            this.handleClickButtonNav('Baru')
+        }
+
+        if (event.keyCode === 116) {
+            event.preventDefault();
+            this.handleClickButtonNav('Create_Invoice');
+        }
     }
 
     ngOnInit(): void {
@@ -1646,6 +1659,12 @@ export class InputBillingRawatInapComponent implements OnInit, AfterViewInit {
 
         this.BillingItem = all_detail;
 
+        let akomodasi = all_detail.find(item => item.jenis_transaksi == 'AKOMODASI');
+
+        if (akomodasi && akomodasi.detail.length > 0) {
+            this.onHandlingEditDetailAkomodasiBillingUsingMoveAllToTagihan(akomodasi.detail);
+        }
+
         this.GridDataTiket.refresh();
 
         this.GridDataTDMK.refresh();
@@ -1657,6 +1676,10 @@ export class InputBillingRawatInapComponent implements OnInit, AfterViewInit {
         this.GridDataResep.refresh();
 
         this.onSumTotalBiayaFromAllGrid(this.BillingItem);
+    }
+
+    onHandlingEditDetailAkomodasiBillingUsingMoveAllToTagihan(akomodasi: AkomodasiDetailModel[]): void {
+        this.transBillingRawatInapService.DetailAkomodasiBillingEdited.next(akomodasi);
     }
 
     // ** TRIGGER SETELAH CLOSE MODAL AKOMODASI

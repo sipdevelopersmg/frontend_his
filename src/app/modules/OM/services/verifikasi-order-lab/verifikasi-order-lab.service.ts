@@ -58,4 +58,8 @@ export class VerifikasiOrderLabService {
             })
         );
     }
+
+    onGetHasilLisPdf(nomor_order_penunjang: string): void {
+        return this.httpOperationService.defaultGetPrintHasilLis(`${this.API_CONFIG.GET_RESULT_LIS_PDF}${nomor_order_penunjang}`);
+    }
 }

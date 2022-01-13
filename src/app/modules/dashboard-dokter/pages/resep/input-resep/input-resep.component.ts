@@ -30,6 +30,7 @@ import 'src/app/prototype/ArrPrototype';
 })
 
 export class InputResepComponent implements OnInit {
+
     @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
     @ViewChild('LookupTemplateResep') LookupTemplateResep: OrgLookUpHirarkiComponent;
     @Output('onSetTemplateResep') onSetTemplateResep = new EventEmitter<any>();
@@ -141,7 +142,6 @@ export class InputResepComponent implements OnInit {
     });
     public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
 
-
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterService: ResepDokterService,
@@ -152,9 +152,7 @@ export class InputResepComponent implements OnInit {
         public setupOutletService: SetupOutletService,
         private renderer: Renderer2,
         public daftarPasienService: DaftarPasienService,
-    ) {
-
-    }
+    ) { }
 
     ngOnInit(): void {
 
@@ -164,7 +162,7 @@ export class InputResepComponent implements OnInit {
             no_urut: [0, []],
             set_racikan_id: [null, []],
             id_metode_racikan: [null, []],
-            metode_racikan: ['', []],//kemasan Racikan
+            metode_racikan: ['', []], //kemasan Racikan
             id_item: [null, []],
             nama_racikan: ['', []],
             nama_obat: ['', []],
@@ -202,7 +200,7 @@ export class InputResepComponent implements OnInit {
                     this.queryChild = new Query().from('Obat')
                         .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
                         .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
-                }else{
+                } else {
                     this.queryChild = new Query().from('Obat')
                         .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
                         .take(10).where('nama_obat', 'contains', '', true)
@@ -237,7 +235,7 @@ export class InputResepComponent implements OnInit {
                     }.bind(this),
                     change: function (args) {
                         currentIdItem = args.itemData.id_item;
-                        console.log('currentItem',currentIdItem);
+                        // console.log('currentItem', currentIdItem);
                         this.setFormGrif(args, currentQtyResep, currentIdItem, SelectedDataRacikanObat);
                     }.bind(this),
                 });
@@ -247,7 +245,7 @@ export class InputResepComponent implements OnInit {
                 if (SelectedDataRacikanObat) {
                     this.setFormGrif(null, SelectedDataRacikanObat.qty_resep, currentIdItem, SelectedDataRacikanObat);
                     setTimeout(() => {
-                        console.log('',SelectedDataRacikanObat);
+                        console.log('', SelectedDataRacikanObat);
                         currentIdItem = SelectedDataRacikanObat.id_item;
                         this.itemsObj.value = currentIdItem;
                     }, 10)
@@ -256,11 +254,13 @@ export class InputResepComponent implements OnInit {
         }
 
         let counterRacikan = this.counterRacikan;
+
         let dataSourceChild = this.dataScourceGridChild;
         let dataSourceGrid = this.dataSourceGrid;
         this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
         this.resepDokterService.dataSourceParentGrid.next(dataSourceGrid.value);
         let nav = 'add';
+
         this.ChildGrid = {
             dataSource: this.dataScourceGridChild,
             queryString: "counter",
@@ -290,7 +290,7 @@ export class InputResepComponent implements OnInit {
                 console.log('SelectedDataRacikanObat',SelectedDataRacikanObat)
             },
             actionBegin(args: AddEventArgs) {
-                console.log('begin', args)
+                // console.log('begin', args)
                 if (args.requestType === 'add') {
                     const counter = 'counter';
                     (args.data as object)[counter] = this.parentDetails.parentKeyFieldValue;
@@ -341,7 +341,11 @@ export class InputResepComponent implements OnInit {
                     }, 500)
                 }
             }
-        }
+        };
+
+        this.resepDokterService.dataSourceChildGrid.subscribe((result) => {
+            console.log('this.resepDokterService.dataSourceChildGrid', result);
+        });
 
         this.setupLabelPemakaianObatService.onGetAll().subscribe((result) => {
             this.dataSourceLabelPemakaian = result.data;
@@ -357,7 +361,7 @@ export class InputResepComponent implements OnInit {
 
         this.setupMetodeRacikanService.setDataSource();
         this.setupOutletService.setDataSource();
-        this.urlTemplateResep = this.urlTemplateResep+'/'+this.daftarPasienService.ActivePasien.value.id_dokter;
+        this.urlTemplateResep = this.urlTemplateResep + '/' + this.daftarPasienService.ActivePasien.value.id_dokter;
         this.urlRacikan = this.urlRacikan + '/' + this.daftarPasienService.ActivePasien.value.id_dokter + '/J';
     }
 
@@ -365,7 +369,7 @@ export class InputResepComponent implements OnInit {
 
     }
 
-    handleChangeOutlet(args){
+    handleChangeOutlet(args) {
         this.setIdOutlet.emit(args.value);
     }
 
@@ -413,7 +417,7 @@ export class InputResepComponent implements OnInit {
                 let kandungan = parseInt((<HTMLInputElement>document.getElementsByName("kandungan")[0]).value);
                 let komposisi = parseInt((<HTMLInputElement>document.getElementsByName("komposisi")[0]).value);
                 let butuh = currentQtyResep * kandungan;
-                console.log(butuh)
+                // console.log(butuh)
                 let qty = butuh / komposisi;
                 (<HTMLInputElement>document.getElementsByName("qty_racikan")[0]).value = qty.toString();
                 (<HTMLInputElement>document.getElementsByName("seper")[0]).value = '1';
@@ -623,51 +627,50 @@ export class InputResepComponent implements OnInit {
             this.onResetFormObat();
         }
     }
-    
 
     validasi(FormData): boolean {
         let message = []
-        let htmlSelection:string =''
-        console.log('validasi',FormData);
+        let htmlSelection: string = ''
+        // console.log('validasi', FormData);
         if (FormData.is_racikan) {
-            if(FormData.nama_racikan=='' || FormData.nama_racikan==null){
+            if (FormData.nama_racikan == '' || FormData.nama_racikan == null) {
                 message.push('Nama Racikan belum di isi')
             }
-            if(FormData.metode_racikan=='' || FormData.metode_racikan==null){
+            if (FormData.metode_racikan == '' || FormData.metode_racikan == null) {
                 message.push('Kemasan Racikan belum di isi')
             }
-        }else{
-            if(FormData.nama_obat=='' || FormData.nama_obat==null ){
+        } else {
+            if (FormData.nama_obat == '' || FormData.nama_obat == null) {
                 message.push('obat belum di pillih')
             }
-            if(FormData.satuan_aturan_pakai=='' || FormData.satuan_aturan_pakai==null){
+            if (FormData.satuan_aturan_pakai == '' || FormData.satuan_aturan_pakai == null) {
                 message.push('Satuan belum di pillih')
             }
         }
 
-        if(FormData.label == '' || FormData.label==null){
+        if (FormData.label == '' || FormData.label == null) {
             message.push('Label Obat belum di isi')
         }
 
-        if(FormData.aturan == '' || FormData.aturan==null){
+        if (FormData.aturan == '' || FormData.aturan == null) {
             message.push('Aturan Tambahan belum di isi')
         }
 
-        if(message.length>0){
+        if (message.length > 0) {
             htmlSelection = '<div class="text-danger"><ul>';
-            message.forEach((value:any,index)=>{
-                htmlSelection +=`<li>${value}</li>`;
+            message.forEach((value: any, index) => {
+                htmlSelection += `<li>${value}</li>`;
             })
             htmlSelection += `</ul></div>`;
 
             Swal.fire({
-                icon    : 'error',
-                title   : 'Validasi Data',
-                html    : htmlSelection,
+                icon: 'error',
+                title: 'Validasi Data',
+                html: htmlSelection,
             })
 
             return false;
-        }else{
+        } else {
             return true;
         }
     }

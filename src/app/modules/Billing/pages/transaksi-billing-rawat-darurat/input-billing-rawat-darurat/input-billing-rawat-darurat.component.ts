@@ -217,6 +217,19 @@ export class InputBillingRawatDaruratComponent implements OnInit, AfterViewInit 
         this.onDetectScreenSize(event.srcElement.innerWidth);
     }
 
+    @HostListener('document:keydown', ['$event'])
+    onKeyDownHandler(event: KeyboardEvent) {
+        if (event.keyCode === 114) {
+            event.preventDefault();
+            this.handleClickButtonNav('Baru')
+        }
+
+        if (event.keyCode === 116) {
+            event.preventDefault();
+            this.handleClickButtonNav('Create_Invoice');
+        }
+    }
+
     ngOnInit(): void {
         this.onDetectScreenSize(window.innerWidth);
 

@@ -30,6 +30,8 @@ export interface IInformasiPasienModel {
     nama_poli?: string;
     nama_dokter?: string;
     bed_no?: string;
+    room_no?: string;
+    no_member?: string;
     tgl_keluar?: any
 }
 
