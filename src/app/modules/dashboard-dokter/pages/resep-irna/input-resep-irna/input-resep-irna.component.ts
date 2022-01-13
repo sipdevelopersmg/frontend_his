@@ -744,21 +744,23 @@ export class InputResepIrnaComponent implements OnInit {
         this.dataSourceGrid.next(dataDetail);
         this.resepDokterService.dataSourceParentGrid.next(dataDetail);
 
-        let racikan = this.resepDokterService.dataSourceChildGrid.value
+        let racikan 
+        racikan = this.GridResepRacikan.childGrid.dataSource
         console.log(racikan);
-      if(this.is_racikan.value && this.DataRacikan.length > 0){
-        console.log(this.DataRacikan);
-        this.DataRacikan.forEach((item,index)=>{
-            item.counter = this.counter
-            racikan.push(item)
-        })
-        this.DataRacikan = []
-      }
-      console.log(racikan);
 
-      this.resepDokterService.dataSourceChildGrid.next(racikan);
-      this.GridResepRacikan.refresh();
-      this.onResetFormObat();
+        if(this.is_racikan.value && this.DataRacikan.length > 0){
+            console.log(this.DataRacikan);
+            this.DataRacikan.forEach((item,index)=>{
+                item.counter = this.counter
+                racikan.push(item)
+            })
+            this.DataRacikan = []
+        }
+        console.log(racikan);
+
+        this.resepDokterService.dataSourceChildGrid.next(racikan);
+        this.GridResepRacikan.refresh();
+        this.onResetFormObat();
     }
   }
 

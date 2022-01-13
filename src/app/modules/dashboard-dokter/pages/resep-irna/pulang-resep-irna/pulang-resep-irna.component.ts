@@ -873,7 +873,8 @@ export class PulangResepIrnaComponent implements OnInit {
       this.resepDokterService.Pulang(Data,is_simpan_template,is_simpan_racikan).subscribe((result)=>{
           this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
               .then(() => {
-                  this.resepDokterService.reset();
+                //   this.resepDokterService.reset();
+                    window.location.reload();
                   this.isGetFromTemplate = false;
               });
       })

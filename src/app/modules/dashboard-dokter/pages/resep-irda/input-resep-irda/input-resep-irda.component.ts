@@ -727,41 +727,39 @@ export class InputResepIrdaComponent implements OnInit {
 
   handleAddObat(FormAddObat: any): void {
     if(this.validasi(FormAddObat)){
-
         FormAddObat.nama_rute_pemberian_obat = FormAddObat.rute_pemberian_obat
         this.counter++;
         FormAddObat.counter = this.counter;
+  
         if (FormAddObat.is_racikan) {
             FormAddObat.nama_obat = FormAddObat.nama_racikan;
         }else{
             FormAddObat.id_metode_racikan = null;
             FormAddObat.metode_racikan = null;
         }
-    //   this.resepDokterService.addDetail(FormAddObat);
-        let dataDetail = this.dataSourceGrid.value
-        dataDetail.push(FormAddObat);
-        this.dataSourceGrid.next(dataDetail);
-        this.resepDokterIrdaService.dataSourceParentGrid.next(dataDetail);
-
-        let racikan = this.resepDokterIrdaService.dataSourceChildGrid.value
-        
-        if(this.is_racikan.value && this.DataRacikan.length > 0){
-        // this.DataRacikan.map((e,i)=>{
-        //     e.counter = this.counter;
-        //     return e;
-        // });
-        // this.resepDokterService.dataSourceChildGrid.next(this.DataRacikan);
-        console.log(this.DataRacikan);
-        this.DataRacikan.forEach((item,index)=>{
-            item.counter = this.counter
-            racikan.push(item)
-        })
-        this.DataRacikan = []
-        }
-
-        this.resepDokterIrdaService.dataSourceChildGrid.next(racikan);
-        this.GridResepRacikan.refresh();
-        this.onResetFormObat();
+      //   this.resepDokterService.addDetail(FormAddObat);
+          let dataDetail = this.dataSourceGrid.value
+          dataDetail.push(FormAddObat);
+          this.dataSourceGrid.next(dataDetail);
+          this.resepDokterIrdaService.dataSourceParentGrid.next(dataDetail);
+  
+          let racikan 
+          racikan = this.GridResepRacikan.childGrid.dataSource
+          console.log(racikan);
+  
+          if(this.is_racikan.value && this.DataRacikan.length > 0){
+              console.log(this.DataRacikan);
+              this.DataRacikan.forEach((item,index)=>{
+                  item.counter = this.counter
+                  racikan.push(item)
+              })
+              this.DataRacikan = []
+          }
+          console.log(racikan);
+  
+          this.resepDokterIrdaService.dataSourceChildGrid.next(racikan);
+          this.GridResepRacikan.refresh();
+          this.onResetFormObat();
     }
   }
 
