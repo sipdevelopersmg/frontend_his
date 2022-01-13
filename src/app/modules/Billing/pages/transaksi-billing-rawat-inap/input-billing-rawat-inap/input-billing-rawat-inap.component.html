@@ -80,7 +80,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <p class="p_informasi_pasien mb-0">Dokter</p>
                                     <p class="p_informasi_pasien_value mb-2">
-                                        Lalisa Manoban
+                                        {{ InformasiPasien ? InformasiPasien.nama_dokter : '' }}
                                     </p>
                                 </div>
 
@@ -95,7 +95,9 @@
                                 <!-- No. Penjamin -->
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <p class="p_informasi_pasien mb-0">No. Penjamin</p>
-                                    <p class="p_informasi_pasien_value mb-2"></p>
+                                    <p class="p_informasi_pasien_value mb-2">
+                                        {{ InformasiPasien ? InformasiPasien.no_member : '' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +109,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <p class="p_informasi_pasien mb-0">Hak Kelas</p>
                                     <p class="p_informasi_pasien_value mb-2">
-                                        II
+                                        {{ InformasiPasien ? InformasiPasien.nama_kelas : '' }}
                                     </p>
                                 </div>
 
@@ -115,7 +117,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <p class="p_informasi_pasien mb-0">No. Room</p>
                                     <p class="p_informasi_pasien_value mb-2">
-                                        IRDA01
+                                        {{ InformasiPasien ? InformasiPasien.room_no : '' }}
                                     </p>
                                 </div>
 

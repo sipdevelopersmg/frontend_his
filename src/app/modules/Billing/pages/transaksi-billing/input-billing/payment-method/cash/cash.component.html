@@ -46,8 +46,9 @@
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                 <ejs-numerictextbox #JumlahBayar [enableRtl]="true" [showClearButton]="false" [showSpinButton]="false"
-                    [format]="'N2'" formControlName="jumlah_bayar" (change)="handleChangeJumlahBayar(JumlahBayar.value)"
-                    (keyup.enter)="onSendJumlahBayar(FormPaymentCash.value)">
+                    [min]="0" [format]="'N2'" formControlName="jumlah_bayar"
+                    (change)="handleChangeJumlahBayar(JumlahBayar.value)"
+                    (keyup.enter)="JumlahBayar.value >= 0 ? onSendJumlahBayar(FormPaymentCash.value) : null">
                 </ejs-numerictextbox>
             </div>
         </div>

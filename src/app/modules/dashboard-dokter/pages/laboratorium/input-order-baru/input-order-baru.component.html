@@ -30,10 +30,10 @@
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                             <div class="card shadow-sm border-0">
                                 <div class="card-body p-2 cardButtonLaboratorium">
-                                    <input #FilterPencarian id="FilterPencarian" type="text" class="form-control mb-3"
-                                        placeholder="Pencarian" (keyup)="onSearchFilter(FilterPencarian.value)">
-
-                                    <div class="form-check" *ngFor="let check of SelectedCheckbox | filter: Search">
+                                    <!-- <input #FilterPencarian id="FilterPencarian" type="text" class="form-control mb-3"
+                                        placeholder="Pencarian" (keyup)="onSearchFilter(FilterPencarian.value)"> -->
+                                    <!-- | filter: Search -->
+                                    <div class="form-check" *ngFor="let check of SelectedCheckbox">
                                         <input class="form-check-input" type="checkbox"
                                             [value]="check.parameter_checked"
                                             [id]="check.id_mapping_tarif_penunjang + 'CheckParameter'"

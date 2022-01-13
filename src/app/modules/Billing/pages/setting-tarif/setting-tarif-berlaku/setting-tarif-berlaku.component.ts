@@ -83,7 +83,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
 
     GridLookupTarifDatasource: any[];
     GridLookupTarif: MolGridComponent = null;
-    GridLookupTarifPageSettings: object = { pageSize: 20, pageSizes: true, pageCount: 4 };
+    GridLookupTarifPageSettings: object = { pageSizes: true, pageSize: 20 };
     GridLookupTarifSelectionSettings: object = { type: 'Multiple', enableSimpleMultiRowSelection: true }
     SelectedFilterLookupTarif: string;
 
@@ -159,6 +159,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     showSpinButton: false,
                     cssClass: 'text-end',
                     value: args.rowData[args.column.field],
+                    min: 0,
                     change: function (args) {
                         console.log(this.GridData);
 
@@ -190,6 +191,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     showSpinButton: false,
                     cssClass: 'text-end',
                     value: args.rowData[args.column.field],
+                    min: 0,
                     change: function (args) {
                         let formEle = this.GridData.element.querySelector('form').ej2_instances[0];
 
@@ -219,6 +221,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     showSpinButton: false,
                     cssClass: 'text-end',
                     value: args.rowData[args.column.field],
+                    min: 0,
                     change: function (args) {
                         let formEle = this.GridData.element.querySelector('form').ej2_instances[0];
 
@@ -248,6 +251,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     showSpinButton: false,
                     cssClass: 'text-end',
                     value: args.rowData[args.column.field],
+                    min: 0,
                     change: function (args) {
                         let formEle = this.GridData.element.querySelector('form').ej2_instances[0];
 
@@ -277,6 +281,7 @@ export class SettingTarifBerlakuComponent implements OnInit {
                     showSpinButton: false,
                     cssClass: 'text-end',
                     value: args.rowData[args.column.field],
+                    min: 0,
                     change: function (args) {
                         let formEle = this.GridData.element.querySelector('form').ej2_instances[0];
 
