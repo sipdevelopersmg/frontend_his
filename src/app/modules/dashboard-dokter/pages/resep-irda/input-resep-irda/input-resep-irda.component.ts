@@ -984,7 +984,7 @@ export class InputResepIrdaComponent implements OnInit {
                 .then(() => {
                     // this.resepDokterIrdaService.reset();
                     this.isGetFromTemplate = false;
-                    this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                    this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irda');
                 });
         })
     }
