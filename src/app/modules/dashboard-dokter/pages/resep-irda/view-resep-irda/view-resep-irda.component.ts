@@ -74,8 +74,9 @@ export class ViewResepIrdaComponent implements OnInit {
         
         this.formInput = this.formBuilder.group({
             no_register:['',[]],
+            no_rekam_medis:['',[]],
+            poli:['',[]],
             pasien: ['', []],
-            bed: ['', []],
             dokter : ['', []],
             umur : ['', []],
         });
@@ -99,17 +100,19 @@ export class ViewResepIrdaComponent implements OnInit {
 
     onLoadDetailData(id) {
         this.resepDokterIrdaService.onGetById(id).subscribe((result)=>{
+            this.formInput.setValue({
+                pasien          :result.data.nama_pasien,
+                dokter          :result.data.nama_dokter,
+                no_register     :result.data.no_register,
+                no_rekam_medis  :result.data.no_rekam_medis,
+                poli            :result.data.nama_poli,
+                umur            :result.data.usia
+            })
             this.dataHeader = result.data;
             this.dataSource = result.data.details;
             this.GridResepRacikan.refresh();
             this.mapingRacikan(result.data.details);
-            this.formInput.setValue({
-                bed         :'',
-                no_register :result.data.no_register,
-                pasien      :result.data.nama_pasien,
-                dokter      :result.data.nama_dokter,
-                umur        :result.data.tgl_lahir,
-            })
+            let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
         })
     }
 

@@ -163,25 +163,27 @@ export class ResepDokterIrdaService {
     Insert(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
         let id_item = 0 ;
         let urut = 0 ;
-        this.dataDetail.map((e,i)=>{
+        this.dataSourceParentGrid.value.map((e,i)=>{
             e.no_urut = i+1;
             e.racikans = [];
             return e;
         });
         console.log(this.dataSourceChildGrid.value);
         this.dataSourceChildGrid.value.forEach((item)=>{
-            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
+            let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
             
-            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
-            id_item =this.dataDetail[index].id_item;
-            urut++
-            item.no_urut = urut
+            if(index!=-1){
+                urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
+                id_item =this.dataSourceParentGrid.value[index].id_item;
+                urut++
+                item.no_urut = urut
 
-            this.dataDetail[index].racikans.push(item);
+                this.dataSourceParentGrid.value[index].racikans.push(item);
+            }
         })
 
-        Data.details = this.dataDetail;
-        Data.jumlah_item = this.jumlah_item;
+        Data.details = this.dataSourceParentGrid.value;
+        Data.jumlah_item = this.dataSourceParentGrid.value.sum('qty_resep');
         // console.log(Data);
         return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP+'/'+is_simpan_template+'/'+is_simpan_racikan, Data)
             .pipe(
@@ -212,25 +214,25 @@ export class ResepDokterIrdaService {
     ubahResepRawatInap(Data):Observable<any> {
         let id_item = 0 ;
         let urut = 0 ;
-        this.dataDetail.map((e,i)=>{
+        this.dataSourceParentGrid.value.map((e,i)=>{
             e.no_urut = i+1;
             e.racikans = [];
             return e;
         });
 
         this.dataSourceChildGrid.value.forEach((item)=>{
-            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
-            
-            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
-            id_item =this.dataDetail[index].id_item;
-            urut++
-            item.no_urut = urut
-
-            this.dataDetail[index].racikans.push(item);
+            let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
+            if(index!=-1){
+                urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
+                id_item =this.dataSourceParentGrid.value[index].id_item;
+                urut++
+                item.no_urut = urut
+                this.dataSourceParentGrid.value[index].racikans.push(item);
+            }
         })
 
-        Data.details = this.dataDetail;
-        Data.jumlah_item = this.jumlah_item;
+        Data.details = this.dataSourceParentGrid.value;
+        Data.jumlah_item = this.dataSourceParentGrid.value.sum('qty_resep');
         let Body = {
             resep_id_lama : Data.resep_id,
             resep_baru : Data
@@ -246,25 +248,27 @@ export class ResepDokterIrdaService {
     pulangResepRawatInap(Data):Observable<any> {
         let id_item = 0 ;
         let urut = 0 ;
-        this.dataDetail.map((e,i)=>{
+        this.dataSourceParentGrid.value.map((e,i)=>{
             e.no_urut = i+1;
             e.racikans = [];
             return e;
         });
 
         this.dataSourceChildGrid.value.forEach((item)=>{
-            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
-            
-            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
-            id_item =this.dataDetail[index].id_item;
-            urut++
-            item.no_urut = urut
+            let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
+            console.log(index);
+            if(index!=-1){
+                urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
+                id_item =this.dataSourceParentGrid.value[index].id_item;
+                urut++
+                item.no_urut = urut
 
-            this.dataDetail[index].racikans.push(item);
+                this.dataSourceParentGrid.value[index].racikans.push(item);
+            }
         })
 
-        Data.details = this.dataDetail;
-        Data.jumlah_item = this.jumlah_item;
+        Data.details = this.dataSourceParentGrid.value;
+        Data.jumlah_item = this.dataSourceParentGrid.value.sum('qty_resep');
         let Body = {
             resep_id_lama : Data.resep_id,
             resep_baru : Data
@@ -289,25 +293,26 @@ export class ResepDokterIrdaService {
     Pulang(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
         let id_item = 0 ;
         let urut = 0 ;
-        this.dataDetail.map((e,i)=>{
+        this.dataSourceParentGrid.value.map((e,i)=>{
             e.no_urut = i+1;
             e.racikans = [];
             return e;
         });
 
         this.dataSourceChildGrid.value.forEach((item)=>{
-            let index = this.dataDetail.map((e) => { return e.counter }).indexOf(item.counter);
-            
-            urut = (this.dataDetail[index].id_item != id_item)? 0 : urut;
-            id_item =this.dataDetail[index].id_item;
-            urut++
-            item.no_urut = urut
+            let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
+            if(index!=-1){
+                urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
+                id_item =this.dataSourceParentGrid.value[index].id_item;
+                urut++
+                item.no_urut = urut
 
-            this.dataDetail[index].racikans.push(item);
+                this.dataSourceParentGrid.value[index].racikans.push(item);
+            }
         })
 
-        Data.details = this.dataDetail;
-        Data.jumlah_item = this.jumlah_item;
+        Data.details = this.dataSourceParentGrid.value;
+        Data.jumlah_item = this.dataSourceParentGrid.value.sum('qty_resep');
         // console.log(Data);
 
         let param = {

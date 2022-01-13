@@ -816,10 +816,8 @@ export class PulangResepIrnaComponent implements OnInit {
           tanggal_resep     :moment().format()
       }
 
-      let detail = await this.resepDokterService.dataDetail
-
-      this.newdetail = detail.filter((item)=>{
-          return  item.is_racikan && !item.set_racikan_id
+      this.newdetail = this.resepDokterService.dataSourceParentGrid.value.filter((item)=>{
+        return  item.is_racikan && !item.set_racikan_id
       })
 
       this.baru = 0

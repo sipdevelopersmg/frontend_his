@@ -263,10 +263,13 @@
                                 headerText='Kemasan Racikan' editType='defaultEdit' textAlign="left"
                                 headerTextAlign="center">
                             </e-column>
-                            <e-column [visible]="true" field='rute_pemberian_obat' [allowEditing]="false" headerText='Resep'
+                            <e-column [visible]="true" field='nama_obat' [allowEditing]="false" headerText='Obat'
+                                editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                            </e-column>
+                            <e-column [visible]="true" field='rute_pemberian_obat' [allowEditing]="false" headerText='Pemakaian'
                                 editType='defaultEdit' [valueAccessor]='keterangan' textAlign="left" headerTextAlign="center">
                             </e-column>
-                            <e-column [visible]="true" field='qty_harian' [allowEditing]="true" headerText='Qty' [width]="220"
+                            <e-column [visible]="true" field='qty_harian' [allowEditing]="true" headerText='Qty' [width]="200"
                                 editType='defaultEdit' [valueAccessor]='quantity' textAlign="right" headerTextAlign="center" >
                             </e-column>
                             <e-column [visible]="false" field='ket_aturan' [allowEditing]="false" headerText='Aturan'

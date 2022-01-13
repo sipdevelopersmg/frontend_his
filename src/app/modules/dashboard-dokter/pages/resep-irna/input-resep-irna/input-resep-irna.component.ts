@@ -176,15 +176,15 @@ export class InputResepIrnaComponent implements OnInit {
     public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
 
     public keterangan = (field: string, data1: object) => {
-        return  data1['nama_obat'] +' '+
-                data1['rute_pemberian_obat'] + ', sehari ' + 
-                data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
+        return  data1['rute_pemberian_obat'] + ', sehari ' + 
+            data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
     }
 
     public quantity = (field: string, data1: object) => {
         return  data1['qty_harian'] +' '+
                 data1['nama_satuan']+'/Hari, untuk '+data1['jumlah_hari']+' Hari';
     }
+
 
     private dataUbah:any = null;
     private updateResepDokter:boolean = false;
@@ -218,7 +218,7 @@ export class InputResepIrnaComponent implements OnInit {
         no_urut: [0, []],
         set_racikan_id: [null, []],
         id_metode_racikan: [1, []],
-        metode_racikan: ['', []],
+        metode_racikan: ['Puyer', []],
         id_item: [null, []],
         nama_racikan: ['', []],
         nama_obat: ['', []],
@@ -643,6 +643,7 @@ export class InputResepIrnaComponent implements OnInit {
         this.nama_obat.setValue(args.nama_obat);
         this.nama_racikan.setValue(args.nama_obat);
         this.id_metode_racikan.setValue(args.id_metode_racikan);
+        this.metode_racikan.setValue(args.metode_racikan);
         this.id_rute_pemberian_obat.setValue(args.id_rute_pemberian_obat);
         this.rute_pemberian_obat.setValue(args.nama_rute_pemberian_obat);
         this.id_metode_racikan.setValue(args.id_metode_racikan);
@@ -657,8 +658,8 @@ export class InputResepIrnaComponent implements OnInit {
         this.id_tambahan_aturan_pakai.setValue(args.id_tambahan_aturan_pakai);
         this.ket_aturan.setValue(args.ket_aturan);
 
-        let detail;
-        detail = this.GridResepRacikan.childGrid.dataSource;
+        let detail:any[]=[];
+        // detail = this.GridResepRacikan.childGrid.dataSource;
         args.details.forEach(element => {
                 let counterRacikan      = this.counterRacikan++;
                 element.counterRacikan  = counterRacikan;
@@ -700,6 +701,8 @@ export class InputResepIrnaComponent implements OnInit {
             element.aturan = element.id_tambahan_aturan_pakai;
         }
 
+        element.rute_pemberian_obat = element.nama_rute_pemberian_obat;
+        
         // this.resepDokterService.addDetail(element);
         obat.push(element)
 
@@ -721,12 +724,14 @@ export class InputResepIrnaComponent implements OnInit {
     this.resepDokterService.dataSourceParentGrid.next(obat);
     this.GridResepRacikan.refresh();
     this.isGetFromTemplate = true;
-    }
+  }
 
   handleAddObat(FormAddObat: any): void {
+    if(this.validasi(FormAddObat)){
       FormAddObat.nama_rute_pemberian_obat = FormAddObat.rute_pemberian_obat
       this.counter++;
       FormAddObat.counter = this.counter;
+
       if (FormAddObat.is_racikan) {
           FormAddObat.nama_obat = FormAddObat.nama_racikan;
       }else{
@@ -740,13 +745,8 @@ export class InputResepIrnaComponent implements OnInit {
         this.resepDokterService.dataSourceParentGrid.next(dataDetail);
 
         let racikan = this.resepDokterService.dataSourceChildGrid.value
-        
+        console.log(racikan);
       if(this.is_racikan.value && this.DataRacikan.length > 0){
-        // this.DataRacikan.map((e,i)=>{
-        //     e.counter = this.counter;
-        //     return e;
-        // });
-        // this.resepDokterService.dataSourceChildGrid.next(this.DataRacikan);
         console.log(this.DataRacikan);
         this.DataRacikan.forEach((item,index)=>{
             item.counter = this.counter
@@ -754,11 +754,64 @@ export class InputResepIrnaComponent implements OnInit {
         })
         this.DataRacikan = []
       }
+      console.log(racikan);
 
       this.resepDokterService.dataSourceChildGrid.next(racikan);
       this.GridResepRacikan.refresh();
       this.onResetFormObat();
+    }
   }
+
+    validasi(FormData): boolean {
+        let message = []
+        let htmlSelection:string =''
+        console.log('validasi',FormData);
+        if (FormData.is_racikan) {
+            if(FormData.nama_racikan=='' || FormData.nama_racikan==null){
+                message.push('Nama Racikan belum di isi')
+            }
+            if(FormData.metode_racikan=='' || FormData.metode_racikan==null){
+                message.push('Kemasan Racikan belum di isi')
+            }
+        }else{
+            if(FormData.nama_obat=='' || FormData.nama_obat==null ){
+                message.push('obat belum di pillih')
+            }
+            if(FormData.satuan_aturan_pakai=='' || FormData.satuan_aturan_pakai==null){
+                message.push('Satuan belum di pillih')
+            }
+        }
+
+        if(FormData.rute_pemberian_obat == '' || FormData.rute_pemberian_obat==null){
+            message.push('Rute Pemberian Obat Obat belum di isi')
+        }
+
+        if(FormData.label == '' || FormData.label==null){
+            message.push('Label Obat belum di isi')
+        }
+
+        if(FormData.aturan == '' || FormData.aturan==null){
+            message.push('Aturan Tambahan belum di isi')
+        }
+
+        if(message.length>0){
+            htmlSelection = '<div class="text-danger"><ul>';
+            message.forEach((value:any,index)=>{
+                htmlSelection +=`<li>${value}</li>`;
+            })
+            htmlSelection += `</ul></div>`;
+
+            Swal.fire({
+                icon    : 'error',
+                title   : 'Validasi Data',
+                html    : htmlSelection,
+            })
+
+            return false;
+        }else{
+            return true;
+        }
+    }
 
   onResetFormObat(): void {
     this.set_racikan_id.setValue(null);
@@ -775,7 +828,7 @@ export class InputResepIrnaComponent implements OnInit {
 
   // ** Update Data Obat method
   onUpdateDataObat(FormAddObat: any): void {
-    // if(this.validasi(FormAddObat)){
+    if(this.validasi(FormAddObat)){
         FormAddObat.nama_rute_pemberian_obat = FormAddObat.rute_pemberian_obat
         if (FormAddObat.is_racikan) {
             FormAddObat.nama_obat = FormAddObat.nama_racikan;
@@ -787,7 +840,7 @@ export class InputResepIrnaComponent implements OnInit {
         this.onResetFormObat()
         this.GridResepRacikan.refresh();
         this.FormAddObatState = "input";
-    // }
+    }
   }
 
   // ** Grid Daftar Obat method

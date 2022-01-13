@@ -530,18 +530,14 @@ export class InputResepComponent implements OnInit {
         args.no_urut = 0;
         args.id_item = null;
         args.nama_satuan = null;
-        args.label = null
         args.nama_racikan = args.nama_obat;
         args.label = args.ket_label;
         args.aturan = args.ket_aturan;
         // this.resepDokterService.addDetail(args);
         let dataObat = this.dataSourceGrid.value
         dataObat.push(args);
-        this.dataSourceGrid.next(dataObat);
-        this.resepDokterService.dataSourceParentGrid.next(dataObat);
-        
-        let detail;
-        detail = this.GridResepRacikan.childGrid.dataSource;
+        let detail:any[]=[];
+        // detail = this.GridResepRacikan.childGrid.dataSource;
         args.details.forEach(element => {
             let counterRacikan      = this.counterRacikan++;
             element.counter         = this.counter;
@@ -553,7 +549,12 @@ export class InputResepComponent implements OnInit {
             detail.push(element);
         });
         this.resepDokterService.dataSourceChildGrid.next(detail);
-        this.GridResepRacikan.refresh();
+        this.resepDokterService.dataSourceParentGrid.next(dataObat);
+        this.dataSourceGrid.next(dataObat);
+        // setTimeout(()=>{
+            this.GridResepRacikan.refresh();
+        // },100)
+        
     }
 
     heandleSelectedTemplateResep(args) {

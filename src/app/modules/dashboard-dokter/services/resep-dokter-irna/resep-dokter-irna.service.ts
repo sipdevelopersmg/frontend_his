@@ -238,7 +238,7 @@ export class ResepDokterIrnaService {
         })
 
         Data.details = this.dataSourceParentGrid.value;
-        Data.jumlah_item = this.jumlah_item;
+        Data.jumlah_item = this.dataSourceParentGrid.value.sum('qty_resep');
         let Body = {
             resep_id_lama : Data.resep_id,
             resep_baru : Data
@@ -274,7 +274,7 @@ export class ResepDokterIrnaService {
         })
 
         Data.details = this.dataSourceParentGrid.value;
-        Data.jumlah_item = this.jumlah_item;
+        Data.jumlah_item = this.dataSourceParentGrid.value.sum('qty_resep');
         let Body = {
             resep_id_lama : Data.resep_id,
             resep_baru : Data
