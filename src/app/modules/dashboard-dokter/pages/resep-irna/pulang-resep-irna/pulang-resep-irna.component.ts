@@ -23,6 +23,9 @@ import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { BehaviorSubject } from 'rxjs';
+import { SetupOutletService } from 'src/app/modules/Pharmacy/services/setup-data/setup-outlet/setup-outlet.service';
+import moment from 'moment';
 
 
 @Component({
@@ -46,8 +49,8 @@ export class PulangResepIrnaComponent implements OnInit {
   public itemsElem: HTMLElement;
   public itemsObj: DropDownList;
 
-  public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN+'/'+2+'/J';
-  public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP+'/'+2;
+  public urlRacikan = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_RACIKAN;
+  public urlTemplateResep = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA.GET_TEMPLATE_RESEP;
   public GridLookUpItem = GridLookUpItem;
 
   public GridlookUpTemplateResep = GridlookUpTemplateResep;
@@ -56,6 +59,7 @@ export class PulangResepIrnaComponent implements OnInit {
   DropdownLabelFields: object = { text: "nama_label_pemakaian_obat", value: "id_label_pemakaian_obat" };
   DropdownAturanFields: object = { text: "tambahan_aturan_pakai", value: "id_tambahan_aturan_pakai" };
   DropdownsatuanPakaiFields: object = { text: "satuan_aturan_pakai", value: "id_satuan_aturan_pakai" };
+  SetupOutletDropdownField: object = { text: 'nama_outlet', value: 'id_outlet' };
 
   // ** Form Add Obat Properties
   FormAddObat: FormGroup;
@@ -98,6 +102,8 @@ export class PulangResepIrnaComponent implements OnInit {
   dataSourceSatuanAturanPakai = [];
   counter: number = 0;
   counterRacikan: number = 0;
+
+  dataSourceGrid = new BehaviorSubject([]);
   dataScourceGridChild: any[] = [];
 
   KandunganParams: IEditCell;
@@ -129,11 +135,7 @@ export class PulangResepIrnaComponent implements OnInit {
       if (e.text === '') {
           e.updateData(this.data);
       } else {
-      //   let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10);
-        // change the type of filtering
-      //   query = (e.text !== '') ? query.where('nama_obat', 'contains', e.text, true) : query;
         let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
-
         e.updateData(this.data, query);
       }
   };
@@ -156,7 +158,7 @@ export class PulangResepIrnaComponent implements OnInit {
   baru = 0;
   newdetail:any
   @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
-
+  private setIdOutlet:any = 0;
   constructor(
       private formBuilder: FormBuilder,
       public resepDokterService: ResepDokterService,
@@ -169,6 +171,7 @@ export class PulangResepIrnaComponent implements OnInit {
       private router: Router,
       private modalService: BsModalService,
       private utilityService: UtilityService,
+      public setupOutletService: SetupOutletService,
   ) {
 
   }
@@ -214,14 +217,18 @@ export class PulangResepIrnaComponent implements OnInit {
       this.itemsParams = {
           create: () => {
               
-              if(SelectedDataRacikanObat){
-                  this.queryChild = new Query().from('Obat')
-                  .select(['nama_obat', 'id_item','kandungan_obat','nama_satuan'])
-                  .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
-              }
+                if (SelectedDataRacikanObat) {
+                    this.queryChild = new Query().from('Obat')
+                        .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
+                        .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
+                }else{
+                    this.queryChild = new Query().from('Obat')
+                        .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
+                        .take(10).where('nama_obat', 'contains', '', true)
+                }
 
-              this.itemsElem = document.createElement('input');
-              return this.itemsElem;
+                this.itemsElem = document.createElement('input');
+                return this.itemsElem;
           },
           read: () => {
               return this.itemsObj.text;
@@ -248,30 +255,30 @@ export class PulangResepIrnaComponent implements OnInit {
                       }
                   }.bind(this),
                   change: function (args) {
-                      this.setFormGrif(args,currentQtyResep,currentIdItem,SelectedDataRacikanObat);
                       currentIdItem = args.itemData.id_item;
+                      console.log('currentItem',currentIdItem);
+                      this.setFormGrif(args,currentQtyResep,currentIdItem,SelectedDataRacikanObat);
                   }.bind(this),
               });
               
               this.itemsObj.appendTo(this.itemsElem);
 
-              if(SelectedDataRacikanObat){
-                 
-                  // this.itemsObj.dataSource = this.data;
-                  // console.log('set value',SelectedDataRacikanObat);
-                  // console.log('query',this.query);
-                 
-                  setTimeout(()=>{
-                      this.itemsObj.value = SelectedDataRacikanObat.id_item;
-                  },500)
-
-              }
+                if (SelectedDataRacikanObat) {
+                    this.setFormGrif(null, SelectedDataRacikanObat.qty_resep, currentIdItem, SelectedDataRacikanObat);
+                    setTimeout(() => {
+                        console.log('',SelectedDataRacikanObat);
+                        currentIdItem = SelectedDataRacikanObat.id_item;
+                        this.itemsObj.value = currentIdItem;
+                    }, 10)
+                }
           }
       }
 
       let counterRacikan = this.counterRacikan;
       let dataSourceChild = this.dataScourceGridChild;
+      let dataSourceGrid = this.dataSourceGrid;
       this.resepDokterService.dataSourceChildGrid.next(dataSourceChild);
+      this.resepDokterService.dataSourceParentGrid.next(dataSourceGrid.value);
       let nav = 'add';
       this.ChildGrid = {
           dataSource: this.dataScourceGridChild,
@@ -297,8 +304,7 @@ export class PulangResepIrnaComponent implements OnInit {
           ],
           rowSelected(args){
               SelectedDataRacikanObat = args.data
-              // console.log('row selected',SelectedDataRacikanObat)
-             
+              console.log('row selected',SelectedDataRacikanObat)
           },
           actionBegin(args: AddEventArgs) {
               console.log('begin',args)
@@ -306,7 +312,7 @@ export class PulangResepIrnaComponent implements OnInit {
                   const counter = 'counter';
                   (args.data as object)[counter] = this.parentDetails.parentKeyFieldValue;
                   (args.data as object)['qty_resep'] = this.parentDetails.parentRowData.qty_resep;
-                  (args.data as object)['counterRacikan'] = counterRacikan++;
+                //   (args.data as object)['counterRacikan'] = counterRacikan++;
                   currentQtyResep = this.parentDetails.parentRowData.qty_resep;
                   SelectedDataRacikanObat = null;
               }
@@ -315,24 +321,45 @@ export class PulangResepIrnaComponent implements OnInit {
               // }
           },
           actionComplete(args) {
-              if (args.requestType === 'save') {
-                  if(args.action === 'add'){
-                      args.data.id_item = currentIdItem;
-                      dataSourceChild.push(args.data);
-                  }
-                  if(args.action === 'edit'){
-                      args.data.id_item = currentIdItem;
-                      let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
-                      dataSourceChild[index]=args.data;
-                  }
-                  
-              }
+            console.log(args);
+            if (args.requestType == 'save') {
+                if (args.action == 'add') {
+                    args.data.id_item = currentIdItem;
+                    args.data.counterRacikan = counterRacikan++;
+                    args.data.qty_racikan = parseFloat(args.data.qty_racikan);
+                    console.log(dataSourceChild);
+                    dataSourceChild.push(args.data);
+                }
+                if (args.action == 'edit') {
+                    args.data.id_item = currentIdItem;
+                    args.data.qty_racikan = parseFloat(args.data.qty_racikan);
+                    let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data.counterRacikan);
+                    dataSourceChild[index] = args.data;
+                }
+                let data:any[] = []
+                dataSourceChild.orderBy('-counterRacikan')
+                dataSourceGrid.value.forEach((itemPrent, indexPrent) => {
+                    data.push(itemPrent)
+                })
+                setTimeout(() => {
+                    dataSourceGrid.next(data);
+                    console.log(data);
+                }, 500)
+            }
+            if (args.requestType == "delete") {
+                let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data[0].counterRacikan);
+                dataSourceChild.splice(index, 1);
 
-              if (args.requestType === "delete") {
-                  let index = dataSourceChild.map((item) => { return item.counterRacikan }).indexOf(args.data[0].counterRacikan);
-                  dataSourceChild.splice(index, 1);
-              }
-
+                let data = []
+                dataSourceChild.orderBy('-counterRacikan')
+                dataSourceGrid.value.forEach((itemPrent, indexPrent) => {
+                    data.push(itemPrent)
+                })
+                setTimeout(() => {
+                    dataSourceGrid.next(data);
+                    console.log(data);
+                }, 500)
+            }
           }
       }
 
@@ -350,7 +377,9 @@ export class PulangResepIrnaComponent implements OnInit {
 
       this.setupMetodeRacikanService.setDataSource();
       this.resepDokterService.setDataObat([]);
-
+      this.urlTemplateResep = this.urlTemplateResep+'/'+this.daftarPasienService.ActivePasien.value.id_dokter;
+      this.urlRacikan = this.urlRacikan + '/' + this.daftarPasienService.ActivePasien.value.id_dokter + '/J';
+      this.setupOutletService.setDataSource();
   }
 
   onLoad(args:any){
@@ -506,112 +535,184 @@ export class PulangResepIrnaComponent implements OnInit {
       
   }
 
+  handleChangeOutlet(args){
+    this.setIdOutlet=args.value;
+  }
+
   heandleSelectedRacikan(args: any): void {
-      this.counter++;
-      args.counter = this.counter;
-      args.is_racikan = true;
-      this.resepDokterService.addDetail(args);
-      let detail;
-      detail = this.GridResepRacikan.childGrid.dataSource;
-      args.details.forEach(element => {
-          let counterRacikan = this.counterRacikan++;
-          element.counter = this.counter;
-          element.counterRacikan = counterRacikan;
-          detail.push(element);
-      });
-      console.log(detail);
-      this.resepDokterService.dataSourceChildGrid.next(detail);
+        this.counter++;
+        args.counter = this.counter;
+        args.is_racikan = true;
+        args.no_urut = 0;
+        args.id_item = null;
+        args.nama_satuan = null;
+        args.label = null
+        args.nama_racikan = args.nama_obat;
+        args.label = args.ket_label;
+        args.aturan = args.ket_aturan;
+        // this.resepDokterService.addDetail(args);
+        let dataObat = this.dataSourceGrid.value
+        dataObat.push(args);
+        this.dataSourceGrid.next(dataObat);
+        this.resepDokterService.dataSourceParentGrid.next(dataObat);
+        
+        let detail;
+        detail = this.GridResepRacikan.childGrid.dataSource;
+        args.details.forEach(element => {
+            let counterRacikan      = this.counterRacikan++;
+            element.counter         = this.counter;
+            element.counterRacikan  = counterRacikan;
+            element.komposisi       = element.kandungan_obat;
+            element.kandungan       = 1;
+            element.seper           = 1;
+            element.qty_resep       = args.qty_resep;
+            detail.push(element);
+        });
+        this.resepDokterService.dataSourceChildGrid.next(detail);
+        this.GridResepRacikan.refresh();
   }
 
   heandleSelectedTemplateResep(args){
+    console.log(args);
+    let obat:any[] = [];
+    let detail;
+    detail = this.GridResepRacikan.childGrid.dataSource;
 
-      let detail;
-      detail = this.GridResepRacikan.childGrid.dataSource;
+    args.details.forEach(element => {
+        this.counter++;
 
-      args.details.forEach(element => {
-          this.counter++;
-          
-          element.counter = this.counter;
-          
-          if(element.is_racikan){
-              element.nama_racikan = element.nama_obat
-          }else{
-              element.nama_racikan = ''
-          }
-          
-          if(element.id_label_pemakaian_obat==1){
-              element.label = element.ket_label; 
-          }else{
-              element.label = element.id_label_pemakaian_obat;
-          }
-          
-          if(element.id_tambahan_aturan_pakai==1){
-              element.aturan = element.ket_aturan;
-          }else{
-              element.aturan = element.id_tambahan_aturan_pakai;
-          }
+        element.counter = this.counter;
 
-          this.resepDokterService.addDetail(element); 
-          
-          element.racikans.forEach(racikan => {
-              let counterRacikan = this.counterRacikan++;
-              racikan.counter = this.counter;
-              racikan.counterRacikan = counterRacikan;
-              detail.push(racikan);
-          });
+        if (element.is_racikan) {
+            element.nama_racikan = element.nama_obat
+        } else {
+            element.nama_racikan = ''
+        }
 
-      });
+        if (element.id_label_pemakaian_obat == 1) {
+            element.label = element.ket_label;
+        } else {
+            element.label = element.id_label_pemakaian_obat;
+        }
 
-      this.resepDokterService.dataSourceChildGrid.next(detail);
+        if (element.id_tambahan_aturan_pakai == 1) {
+            element.aturan = element.ket_aturan;
+        } else {
+            element.aturan = element.id_tambahan_aturan_pakai;
+        }
 
-      this.onSetTemplateResep.emit(true);
+        // this.resepDokterService.addDetail(element);
+        obat.push(element)
+
+        element.racikans.forEach(racikan => {
+            let counterRacikan = this.counterRacikan++;
+            racikan.counter = this.counter;
+            racikan.counterRacikan = counterRacikan;
+            racikan.komposisi = parseInt(racikan.kandungan_obat);
+            racikan.kandungan       = 1;
+            racikan.seper           = 1;
+            racikan.qty_resep       = element.qty_resep;
+            detail.push(racikan);
+        });
+
+    });
+
+    this.dataSourceGrid.next(obat);
+    this.resepDokterService.dataSourceChildGrid.next(detail);
+    this.resepDokterService.dataSourceParentGrid.next(obat);
+    this.GridResepRacikan.refresh();
+    this.onSetTemplateResep.emit(true);
   }
 
   handleAddObat(FormAddObat: any): void {
-      this.counter++;
-      FormAddObat.counter = this.counter;
-      if (FormAddObat.is_racikan) {
-          FormAddObat.nama_obat = FormAddObat.nama_racikan;
-      }else{
-          FormAddObat.id_metode_racikan = null;
-          FormAddObat.metode_racikan = null;
-      }
-      this.resepDokterService.addDetail(FormAddObat);
-      this.onResetFormObat();
+    if(this.validasi(FormAddObat)){
+        this.counter++;
+        FormAddObat.counter = this.counter;
+        if (FormAddObat.is_racikan) {
+            FormAddObat.nama_obat = FormAddObat.nama_racikan;
+        } else {
+            FormAddObat.id_metode_racikan = null;
+            FormAddObat.metode_racikan = null;
+        }
+        // this.resepDokterService.addDetail(FormAddObat);
+        let dataDetail = this.dataSourceGrid.value
+        dataDetail.push(FormAddObat);
+        this.dataSourceGrid.next(dataDetail);
+        this.resepDokterService.dataSourceParentGrid.next(dataDetail);
+        this.GridResepRacikan.refresh();
+        this.onResetFormObat();
+    }
   }
+
+    validasi(FormData): boolean {
+        let message = []
+        let htmlSelection:string =''
+        console.log('validasi',FormData);
+        if (FormData.is_racikan) {
+            if(FormData.nama_racikan=='' || FormData.nama_racikan==null){
+                message.push('Nama Racikan belum di isi')
+            }
+            if(FormData.metode_racikan=='' || FormData.metode_racikan==null){
+                message.push('Kemasan Racikan belum di isi')
+            }
+        }else{
+            if(FormData.nama_obat=='' || FormData.nama_obat==null ){
+                message.push('obat belum di pillih')
+            }
+            if(FormData.satuan_aturan_pakai=='' || FormData.satuan_aturan_pakai==null){
+                message.push('Satuan belum di pillih')
+            }
+        }
+
+        if(FormData.label == '' || FormData.label==null){
+            message.push('Label Obat belum di isi')
+        }
+
+        if(FormData.aturan == '' || FormData.aturan==null){
+            message.push('Aturan Tambahan belum di isi')
+        }
+
+        if(message.length>0){
+            htmlSelection = '<div class="text-danger"><ul>';
+            message.forEach((value:any,index)=>{
+                htmlSelection +=`<li>${value}</li>`;
+            })
+            htmlSelection += `</ul></div>`;
+
+            Swal.fire({
+                icon    : 'error',
+                title   : 'Validasi Data',
+                html    : htmlSelection,
+            })
+
+            return false;
+        }else{
+            return true;
+        }
+    }
   
 
   onResetFormObat(): void {
       this.FormAddObat.reset();
+      this.qty_resep.setValue(1);
       this.is_racikan.setValue(false);
   }
 
-  // ** Dropdown Waktu Pakai onchange method
-  onChangeWaktuPakai(waktu: string): void {
-      // ** Cek element yg di checklist
-      const element = document.getElementById('waktuPakai' + waktu) as HTMLInputElement;
-
-      // ** Get index number di variable WaktuPakai
-      const index = this.WaktuPakai.indexOf(waktu);
-
-      // ** Jika element di checklist maka....
-      if (element.checked) {
-          this.WaktuPakai.push(waktu);
-      } else {
-          this.WaktuPakai.splice(index, 1);
-      };
-
-      // ** Isikan value waktu_pakai di FormAddObat
-      // this.waktu_pakai.setValue(this.WaktuPakai.join());
-  }
-
-  // ** Update Data Obat method
-  onUpdateDataObat(FormAddObat: any): void {
-      this.resepDokterService.editDetail(this.currentIndex,FormAddObat);
-      this.onResetFormObat()
-      this.GridResepRacikan.refresh();
-      this.FormAddObatState = "input";
-  }
+    // ** Update Data Obat method
+    onUpdateDataObat(FormAddObat: any): void {
+        if(this.validasi(FormAddObat)){
+            if (FormAddObat.is_racikan) {
+                FormAddObat.nama_obat = FormAddObat.nama_racikan;
+            }
+            let dataDetail = this.dataSourceGrid.value
+                dataDetail[this.currentIndex] = FormAddObat
+            this.dataSourceGrid.next(dataDetail);
+            this.resepDokterService.dataSourceParentGrid.next(dataDetail);
+            this.onResetFormObat()
+            this.GridResepRacikan.refresh();
+            this.FormAddObatState = "input";
+        }
+    }
 
   // ** Reset Form Add Obat 
   onResetFormDataObat() {
@@ -633,8 +734,13 @@ export class PulangResepIrnaComponent implements OnInit {
               this.FormAddObatState = "edit";
               break;
           case "delete":
-              this.resepDokterService.removeDataDetail(this.currentIndex);
-              this.GridResepRacikan.refresh();
+
+            let dataObat = this.resepDokterService.dataSourceParentGrid.value
+            dataObat.splice(this.currentIndex, 1);
+            this.resepDokterService.dataSourceParentGrid.next(dataObat)
+            this.dataSourceGrid.next(dataObat);
+            this.GridResepRacikan.refresh();
+
               break;
           default:
               break;
@@ -687,7 +793,7 @@ export class PulangResepIrnaComponent implements OnInit {
         case "simpan":
             this.Insert();
             break;
-        case "Kembali":
+        case "kembali":
             this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
             break;
         default:
@@ -696,14 +802,18 @@ export class PulangResepIrnaComponent implements OnInit {
   }
 
   async Insert() {
+    if(this.setIdOutlet==0){
+        this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi','')
+        return false;
+    }
       this.dataheader ={
-          id_dokter:2,//this.daftarPasienService.ActivePasien.value.id_dokter,
-          id_register:1,//this.daftarPasienService.ActivePasien.value.id_register,
-          id_outlet:1,
-          id_person:1,//this.daftarPasienService.ActivePasien.value.id_person,
-          jenis_rawat:'I',
-          nama_template:'',
-          tanggal_resep:this.currentTanggal
+          id_dokter         :this.daftarPasienService.ActivePasien.value.id_dokter,
+          id_register       :this.daftarPasienService.ActivePasien.value.id_register,
+          id_outlet         :this.setIdOutlet,
+          id_person         :this.daftarPasienService.ActivePasien.value.id_person,
+          jenis_rawat       :'I',
+          nama_template     :'',
+          tanggal_resep     :moment().format()
       }
 
       let detail = await this.resepDokterService.dataDetail

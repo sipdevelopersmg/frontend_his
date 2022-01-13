@@ -197,13 +197,14 @@ export class ResepDokterService {
 
         this.dataSourceChildGrid.value.forEach((item)=>{
             let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
-            
-            urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
-            id_item =this.dataSourceParentGrid.value[index].id_item;
-            urut++
-            item.no_urut = urut
-
-            this.dataSourceParentGrid.value[index].racikans.push(item);
+            console.log(index);
+            if(index!=-1){
+                urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
+                id_item =this.dataSourceParentGrid.value[index].id_item;
+                urut++
+                item.no_urut = urut
+                this.dataSourceParentGrid.value[index].racikans.push(item);
+            }
         })
 
         Data.details = this.dataSourceParentGrid.value;

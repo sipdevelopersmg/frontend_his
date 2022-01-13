@@ -124,11 +124,7 @@ export class InputResepComponent implements OnInit {
         if (e.text === '') {
             e.updateData(this.data);
         } else {
-            //   let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10);
-            // change the type of filtering
-            //   query = (e.text !== '') ? query.where('nama_obat', 'contains', e.text, true) : query;
-            let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
-
+           let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
             e.updateData(this.data, query);
         }
     };

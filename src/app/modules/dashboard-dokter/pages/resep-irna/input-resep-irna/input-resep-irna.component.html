@@ -81,7 +81,7 @@
                             <label for="kemasan" class="form-label">Rute Pemberian Obat</label>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <ejs-combobox id="DropdownLabelPemakaian" [allowFiltering]="true"
+                            <ejs-combobox id="DropdownRutePemberian" [allowFiltering]="true"
                                 [dataSource]="setupRutePemberianObatService.dataSource | async" formControlName="id_rute_pemberian_obat" popupWidth='30rem'
                                 [fields]="DropdownRuteFields" (change)="handleChangeRute($event)">
                             </ejs-combobox>
@@ -153,7 +153,7 @@
                             <label for="NumericQty" class="form-label">Untuk Berapa Hari</label>
                         </div>
                         <ejs-numerictextbox [format]="'N0'"  class="form_paragraf" id="NumericQty" [showSpinButton]="false"
-                            [showClearButton]="false" formControlName="jumlah_hari" [ste]>
+                            [showClearButton]="false" formControlName="jumlah_hari" [min]="1" [ste]>
                         </ejs-numerictextbox>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
             </div>
             <div class="card">
                 <div class="card-body p-0">
-                    <ejs-grid #GridResepRacikan [dataSource]="resepDokterService.dataDetail$ | async"
+                    <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async"
                         height="calc(100vh - 15rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" 
                         [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)"
                         (load)="onLoad($event)" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
@@ -289,7 +289,7 @@
             <div class="modal-body p-10">
                 <div class="row mx-0 my-1">
                     <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
-                        <h2>Apakah Dokter Ingin Menyimapan Resep Ini Sebagai Template Resep?</h2>
+                        <h2>Apakah Dokter Ingin Menyimpan Resep Ini Sebagai Template Resep?</h2>
                         <p>Template resep di gunakan untuk membuat resep dengan data resep yg sudah ada</p>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
