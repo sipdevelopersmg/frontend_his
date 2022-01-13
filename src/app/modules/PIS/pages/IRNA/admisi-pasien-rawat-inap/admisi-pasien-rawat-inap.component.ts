@@ -109,7 +109,7 @@ export class AdmisiPasienRawatInapComponent implements OnInit {
 
         this.modalRef = this.bsModalService.show(
             this.modalPencarianPasien,
-            Object.assign({}, { class: 'modal-lg' })
+            Object.assign({}, { class: 'modal-xl' })
         );
     }
 
