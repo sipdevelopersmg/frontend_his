@@ -49,7 +49,7 @@ export class DaftarResepIrnaComponent implements OnInit {
   }
 
   public keterangan = (field: string, data1: object) => {
-    return  data1['nama_rute_pemberian_obat'] + ', sehari ' + 
+    return data1['nama_obat']+", "+ data1['nama_rute_pemberian_obat'] + ', sehari ' + 
     data1['qty_harian'] +' '+ data1['nama_satuan']+' '+ data1['ket_label']+' '+data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];
   }
 
