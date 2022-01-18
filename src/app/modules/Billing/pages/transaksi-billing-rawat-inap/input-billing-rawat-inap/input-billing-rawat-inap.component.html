@@ -9,7 +9,7 @@
                 <div class="card-body px-2 py-3">
                     <div class="row align-items-center px-0 mx-0">
                         <!-- Foto Pasien -->
-                        <div class="col-lg-{{ screenWidth <= 1366 ? '2' : '1' }} text-center px-0">
+                        <div class="col-lg-{{ screenWidth <= 1365 ? '2' : '1' }} text-center px-0">
                             <img [src]=" InformasiPasien ? InformasiPasien.link_foto : '../../../../../../assets/image/pendaftaran-ulang-pasien/blank.png'"
                                 alt="img-pasien" class="rounded shadow-sm p_informasi_pasien_photo">
                         </div>
@@ -634,7 +634,7 @@
                         <!-- Total Biaya -->
                         <div class="row align-items-center mb-2">
                             <div [class]="RincianTotalCaptionCssClass">
-                                <p class="text-hitam-muda mb-0 fw-bold">Total Biaya</p>
+                                <p class="text-hitam-muda mb-0 fw-bold text_rincian_total">Total Biaya</p>
                             </div>
                             <div [class]="RincianTotalInputCssClass">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -647,7 +647,7 @@
                         <!-- Asuransi -->
                         <div class="row align-items-center mb-2">
                             <div [class]="RincianTotalCaptionCssClass">
-                                <p class="text-hitam-muda mb-0">Asuransi / Tgg</p>
+                                <p class="text-hitam-muda mb-0 text_rincian_total">Asuransi / Tgg</p>
                             </div>
                             <div [class]="RincianTotalInputCssClass">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -660,7 +660,7 @@
                         <!-- Subsidi -->
                         <div class="row align-items-center mb-2">
                             <div [class]="RincianTotalCaptionCssClass">
-                                <p class="text-hitam-muda mb-0">Subsidi</p>
+                                <p class="text-hitam-muda mb-0 text_rincian_total">Subsidi</p>
                             </div>
                             <div [class]="RincianTotalInputCssClass">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -673,7 +673,7 @@
                         <!-- Saldo Deposit -->
                         <div class="row align-items-center mb-2">
                             <div [class]="RincianTotalCaptionCssClass">
-                                <p class="text-hitam-muda mb-0">Saldo Deposit</p>
+                                <p class="text-hitam-muda mb-0 text_rincian_total">Saldo Deposit</p>
                             </div>
                             <div [class]="RincianTotalInputCssClass">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -686,7 +686,7 @@
                         <!-- Total Tagihan -->
                         <div class="row align-items-center mb-2">
                             <div [class]="RincianTotalCaptionCssClass">
-                                <p class="text-hitam-muda mb-0 fw-bold">Total Tagihan</p>
+                                <p class="text-hitam-muda mb-0 fw-bold text_rincian_total">Total Tagihan</p>
                             </div>
                             <div [class]="RincianTotalInputCssClass">
                                 <ejs-numerictextbox [enableRtl]="true" [format]="'N2'"
@@ -699,7 +699,7 @@
                         <!-- Status Billing -->
                         <div class="row align-items-center" *ngIf="InformasiPasien">
                             <div [class]="RincianTotalCaptionCssClass">
-                                <p class="text-hitam-muda mb-0 fw-bold">Status</p>
+                                <p class="text-hitam-muda mb-0 fw-bold text_rincian_total">Status</p>
                             </div>
                             <div [class]="RincianTotalInputCssClass">
                                 <p

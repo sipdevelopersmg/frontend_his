@@ -96,8 +96,8 @@
                 </div>
                 <div class="card-body p-0">
                     <ejs-grid #GridData [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
-                        [allowPaging]="false" [editSettings]="GridDataEditSettings" [gridLines]="'Both'"
-                        [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
+                        [allowResizing]="true" [allowPaging]="false" [editSettings]="GridDataEditSettings"
+                        [gridLines]="'Both'" [toolbar]="GridDataToolbar" (rowSelected)="handleSelectedRow($event)"
                         (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
                         <e-columns>
                             <e-column [allowEditing]="false" [allowSorting]="false" [field]="'id_setup_tarif'"

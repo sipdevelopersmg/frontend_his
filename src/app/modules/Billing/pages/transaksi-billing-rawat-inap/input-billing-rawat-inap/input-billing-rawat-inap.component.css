@@ -47,6 +47,16 @@ td.e-rowcell {
   opacity: 0.5;
 }
 
+@media (max-width: 1366px) {
+  p.p_informasi_pasien_value {
+    font-size: 14px;
+  }
+
+  p.text_rincian_total {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 1399.98px) {
   img.p_informasi_pasien_photo {
     height: 8rem;

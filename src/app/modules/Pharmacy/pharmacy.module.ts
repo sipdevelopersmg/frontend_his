@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
@@ -27,6 +27,17 @@ import { RefundObatIrdaDaftarComponent } from './pages/refund-obat/refund-obat-i
 import { RefundObatIrdaDetailComponent } from './pages/refund-obat/refund-obat-irda-detail/refund-obat-irda-detail.component';
 import { RefundObatIrnaDaftarComponent } from './pages/refund-obat/refund-obat-irna-daftar/refund-obat-irna-daftar.component';
 import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-irna-detail/refund-obat-irna-detail.component';
+import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
+import { environment } from "src/environments/environment";
+
+const SocketFarmasi: SocketIoConfig = {
+    url: `${environment.webApiSocket}`, options: {
+        "force new connection": true,
+        "reconnectionAttempts": "Infinity",
+        "timeout": 10000,
+        "transports": ["websocket"]
+    }
+}
 
 @NgModule({
     declarations: [
@@ -61,6 +72,7 @@ import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-i
         ReactiveFormsModule,
         SharedModule,
         PharmacyRoutingModule,
+        SocketIoModule.forRoot(SocketFarmasi)
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

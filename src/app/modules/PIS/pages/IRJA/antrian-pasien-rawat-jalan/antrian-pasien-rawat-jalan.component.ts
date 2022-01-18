@@ -10,7 +10,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { IAntrianRawatJalanModel } from '../../../models/IRJA/antrian-pasien-rawat-jalan.model';
 import { IPasienTeradmisiHariIniModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
@@ -18,13 +18,15 @@ import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/se
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { AntrianPasienRawatJalanService } from '../../../services/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
+import { Socket } from 'ngx-socket-io';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-antrian-pasien-rawat-jalan',
     templateUrl: './antrian-pasien-rawat-jalan.component.html',
     styleUrls: ['./antrian-pasien-rawat-jalan.component.css'],
 })
-export class AntrianPasienRawatJalanComponent implements OnInit {
+export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
 
     Config = Config;
 
@@ -84,7 +86,10 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
     modalRef: BsModalRef;
     @ViewChild('modalPembatalanKonsul') modalPembatalanKonsul: TemplateRef<any>;
 
+    SocketSubscription$: Subscription;
+
     constructor(
+        private socket: Socket,
         private formBuilder: FormBuilder,
         private titleCasePipe: TitleCasePipe,
         private bsModalService: BsModalService,
@@ -111,6 +116,14 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
         this.handlePencarianAntrianPoliklinik(164, "DALAM");
 
         this.onSetFormKonsulAttributes();
+
+        // this.SocketSubscription$ = this.socket.fromEvent('notification').subscribe((result) => {
+        //     let emit = result['data'].emit;
+
+        //     if (emit === "antrian-pasien-rawat-jalan") {
+        //         this.handlePencarianAntrianPoliklinik(164, "DALAM");
+        //     }
+        // });
     }
 
     onSetFormKonsulAttributes(): void {
@@ -426,6 +439,11 @@ export class AntrianPasienRawatJalanComponent implements OnInit {
         this.id_dokter.setValue(0);
         this.id_jadwal_dokter_batal.setValue(0);
         this.reason_canceled.setValue("");
+    }
+
+    ngOnDestroy(): void {
+        // this.SocketSubscription$.unsubscribe();
+        // this.socket.removeListener('notification');
     }
 
     get id_register(): AbstractControl { return this.FormKonsul.get('id_register') }

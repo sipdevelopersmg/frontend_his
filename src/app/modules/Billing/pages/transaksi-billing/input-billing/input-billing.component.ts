@@ -1743,6 +1743,7 @@ export class InputBillingComponent implements OnInit, AfterViewInit {
 
     onPrintRincianBiayaBilling(id_register: number): void {
         this.transBillingService.onPrintRincianBiayaBilling(id_register);
+        // this.transBillingService.onPrintExcelRincianBiayaBilling(id_register);
     }
 
     get total_amount(): AbstractControl { return this.FormInputInvoice.get('total_amount'); }

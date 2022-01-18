@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, TitleCasePipe } from "@angular/common";
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from "@angular/core";
 import { SharedModule } from "../shared/shared.module";
 import { PisRoutingModule } from "./pis-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -67,9 +67,19 @@ import { PelayananPasienRawatDaruratComponent } from './pages/IRDA/admisi-pasien
 import { ListPasienRawatDaruratAnonimComponent } from './pages/IRDA/list-pasien-rawat-darurat-anonim/list-pasien-rawat-darurat-anonim.component';
 import { PemasukanRawatDaruratComponent } from './pages/IRDA/pemasukan-rawat-darurat/pemasukan-rawat-darurat.component';
 import { UpdatePasienTanpaIdentitasComponent } from './pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component';
+import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
+};
+
+const SocketPIS: SocketIoConfig = {
+    url: `http://localhost:3000`, options: {
+        "force new connection": true,
+        "reconnectionAttempts": "Infinity",
+        "timeout": 10000,
+        "transports": ["websocket"]
+    }
 };
 
 @NgModule({
@@ -143,11 +153,12 @@ const ngWizardConfig: NgWizardConfig = {
         PisRoutingModule,
         SharedModule,
         ContextMenuModule,
-        NgWizardModule.forRoot(ngWizardConfig)
+        NgWizardModule.forRoot(ngWizardConfig),
+        SocketIoModule.forRoot(SocketPIS)
     ],
     providers: [
         DatePipe,
-        TitleCasePipe
+        TitleCasePipe,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

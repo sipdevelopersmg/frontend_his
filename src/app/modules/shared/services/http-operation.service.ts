@@ -7,6 +7,7 @@ import { NotificationService } from './notification.service';
 import { UtilityService } from './utility.service';
 import * as Sentry from '@sentry/angular'
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 @Injectable({
     providedIn: 'root',
@@ -289,10 +290,11 @@ export class HttpOperationService {
         let base64encodedData = btoa('jasperadmin:jasperadmin');
 
         this.httpClient.get(
-            url,
+            `${url}.pdf`,
             {
                 headers: new HttpHeaders()
-                    .set('Accept', "application/pdf")
+                    .set('Accept', 'application/pdf')
+                    .set('Content-Type', 'application/pdf')
                     .set('Authorization', `Basic ${base64encodedData}`),
                 params: params,
                 responseType: 'arraybuffer',
@@ -314,6 +316,35 @@ export class HttpOperationService {
             const fileUrl = window.URL.createObjectURL(file);
 
             window.open(fileUrl);
+        })
+    }
+
+    defaultGetPrintExcelRequest(url: string, params: any, filename?: string): void {
+        let base64encodedData = btoa('jasperadmin:jasperadmin');
+
+        this.httpClient.get(
+            `${url}.xlsx`,
+            {
+                headers: new HttpHeaders()
+                    .set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                    .set('Authorization', `Basic ${base64encodedData}`),
+                params: params,
+                responseType: 'arraybuffer',
+            }
+        ).pipe(
+            tap((result) => {
+                this.utilityService.onShowLoading();
+            }),
+            delay(2100),
+            map((result) => {
+                return result;
+            }),
+            catchError((error: HttpErrorResponse): any => {
+                return this.handlingError(error, params);
+            }),
+        ).subscribe((result: any) => {
+            const file = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            saveAs(file, `${filename}.xlsx`)
         })
     }
 

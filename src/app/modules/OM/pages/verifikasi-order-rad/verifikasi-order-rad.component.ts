@@ -96,6 +96,8 @@ export class VerifikasiOrderRadComponent implements OnInit {
     DisabledButtonBatalOrder: boolean = false;
     DisabledButtonVerifikasiOrder: boolean = false;
 
+    GridWrapSettings = { wrapMode: 'Header' };
+
     constructor(
         private formBuilder: FormBuilder,
         private bsModalService: BsModalService,

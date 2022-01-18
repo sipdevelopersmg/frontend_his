@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs/operators';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { KanbanCardModel, KanbanColumnModel } from 'src/app/modules/shared/models/KanbanCardModel.model';
-import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 
 @Component({
     selector: 'app-antrian-farmasi',
@@ -22,13 +20,10 @@ export class AntrianFarmasiComponent implements OnInit {
     ButtonNav: ButtonNavModel[];
 
     constructor(
-        public resepDokterService:ResepDokterService,
-        private socket:Socket,
-        private router:Router,
-
-    ) {
-       
-    }
+        private socket: Socket,
+        private router: Router,
+        public resepDokterService: ResepDokterService,
+    ) { }
 
     ngOnInit(): void {
         this.resepDokterService.onGetAntrian();
@@ -114,11 +109,11 @@ export class AntrianFarmasiComponent implements OnInit {
 
             item = {} as KanbanCardModel;
         }
-        
+
     }
 
-    handePindahAntrian(noRegister){
-        this.resepDokterService.generadeNoAntrian(noRegister).subscribe((result)=>{
+    handePindahAntrian(noRegister) {
+        this.resepDokterService.generadeNoAntrian(noRegister).subscribe((result) => {
             this.resepDokterService.onGetAntrian();
         });
     }

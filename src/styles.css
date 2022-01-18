@@ -252,18 +252,18 @@ body {
   color: white !important;
 }
 
-.e-validation-background{
+.e-validation-background {
   background-color: #9bd6f1 !important;
   color: white !important;
 }
 
-.e-canceled-background{
-  background-color: #F6C1CC !important;
+.e-canceled-background {
+  background-color: #f6c1cc !important;
   color: white !important;
 }
 
-.e-closed-background{
-  background-color: #F6EBC1 !important;
+.e-closed-background {
+  background-color: #f6ebc1 !important;
   color: white !important;
 }
 
@@ -373,7 +373,7 @@ span.readonly-state > .e-numerictextbox {
 
 .statustemp.e_is_ready_color {
   color: white !important;
-  background-color: var(--hijau-tua) !important;
+  background-color: #2dc937 !important;
   height: 19px;
   width: 100%;
   padding-top: 10px;
@@ -383,7 +383,7 @@ span.readonly-state > .e-numerictextbox {
 
 .statustemp.e_is_fill_color {
   color: white !important;
-  background-color: var(--kuning-tua) !important;
+  background-color: #cc3232 !important;
   height: 19px;
   width: 100%;
   padding-top: 10px;
@@ -393,7 +393,7 @@ span.readonly-state > .e-numerictextbox {
 
 .statustemp.e_is_new_color {
   color: white !important;
-  background-color: var(--biru-tua) !important;
+  background-color: #e7b416 !important;
   height: 19px;
   width: 100%;
   padding-top: 10px;

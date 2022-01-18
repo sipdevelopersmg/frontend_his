@@ -54,6 +54,7 @@ export class VerifikasiOrderLabComponent implements OnInit {
     CommandLihatHasil: CommandModel[] = [
         { buttonOption: { iconCss: 'fas fa-search fa-sm' }, title: 'Lihat Hasil LIS' }
     ];
+    GridWrapSettings = { wrapMode: 'Header' };
 
     // ** Modal Dialog Add / Edit Setup User Properties
     modalRef: BsModalRef;

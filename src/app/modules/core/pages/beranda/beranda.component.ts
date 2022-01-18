@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/modules/auth/services/authentication.service';
+import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 
 @Component({
     selector: 'app-beranda',
@@ -14,13 +15,14 @@ export class BerandaComponent implements OnInit {
 
     constructor(
         private httpClient: HttpClient,
+        private httpOperationService: HttpOperationService,
         private authenticationService: AuthenticationService,
     ) { }
 
     ngOnInit(): void {
         this.UserFullName = this.authenticationService.currentUserValue.full_name;
 
-        this.onCheckDirectPrint();
+        // this.onCheckDirectPrint();
     }
 
     onCheckDirectPrint(): void {

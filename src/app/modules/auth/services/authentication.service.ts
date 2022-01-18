@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../shared/services/notification.service';
 import * as API_CONFIG from '../../../api';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Injectable({
     providedIn: 'root'
@@ -71,9 +72,23 @@ export class AuthenticationService {
                         } else {
                             this.router.navigateByUrl('dashboard/beranda');
                         }
-                    });
+                    })
+                    .then(() => {
+                        this.onGetBrowserFingerprint();
+                    })
             }
         });
+    }
+
+    onGetBrowserFingerprint(): void {
+        const fpPromise = FingerprintJS.load();
+
+        fpPromise
+            .then(result => result.get())
+            .then((result) => {
+                const visitorId = result.visitorId;
+                localStorage.setItem('visitorId', visitorId);
+            });
     }
 
     onLogout(): void {
