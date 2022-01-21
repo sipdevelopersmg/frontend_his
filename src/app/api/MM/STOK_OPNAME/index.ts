@@ -1,0 +1,9 @@
+
+import * as SETTING_STOK_OPNAME from './SETTING_STOK_OPNAME'
+import * as AUDIT_STOK_OPNAME from './AUDIT_STOK_OPNAME'
+export const STOK_OPNAME = Object.assign({}, 
+    {
+        "SETTING_STOK_OPNAME":SETTING_STOK_OPNAME,
+        "AUDIT_STOK_OPNAME":AUDIT_STOK_OPNAME,
+    }
+)

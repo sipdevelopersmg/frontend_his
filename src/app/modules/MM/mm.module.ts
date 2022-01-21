@@ -51,6 +51,15 @@ import { DaftarAssemblyComponent } from './pages/assembly/daftar-assembly/daftar
 import { ViewAssemblyComponent } from './pages/assembly/view-assembly/view-assembly.component';
 import { SetupPenanggungJawabRakStorageComponent } from './pages/setup-data/setup-penanggung-jawab-rak-storage/setup-penanggung-jawab-rak-storage.component';
 import { SetupRakStorageComponent } from './pages/setup-data/setup-rak-storage/setup-rak-storage.component';
+import { DaftarPemusnahanComponent } from './pages/pemusnahan/daftar-pemusnahan/daftar-pemusnahan.component';
+import { InputPemusnahanComponent } from './pages/pemusnahan/input-pemusnahan/input-pemusnahan.component';
+import { ViewPemusnahanComponent } from './pages/pemusnahan/view-pemusnahan/view-pemusnahan.component';
+import { InputSettingStokOpnameComponent } from "./pages/stok_opname/setting_stok_opname/input-setting-stok-opname/input-setting-stok-opname.component";
+import { DaftarAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-opname/daftar-audit-stok-opname/daftar-audit-stok-opname.component';
+import { InputAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-opname/input-audit-stok-opname/input-audit-stok-opname.component';
+import { DaftarSettingStokOpnameComponent } from './pages/stok_opname/setting_stok_opname/daftar-setting-stok-opname/daftar-setting-stok-opname.component';
+import { ViewSettingStokOpnameComponent } from './pages/stok_opname/setting_stok_opname/view-setting-stok-opname/view-setting-stok-opname.component';
+import { ViewAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-opname/view-audit-stok-opname/view-audit-stok-opname.component';
 
 @NgModule({
     declarations: [
@@ -101,7 +110,16 @@ import { SetupRakStorageComponent } from './pages/setup-data/setup-rak-storage/s
         DaftarAssemblyComponent,
         ViewAssemblyComponent,
         SetupPenanggungJawabRakStorageComponent,
-        SetupRakStorageComponent
+        SetupRakStorageComponent,
+        DaftarPemusnahanComponent,
+        InputPemusnahanComponent,
+        ViewPemusnahanComponent,
+        InputSettingStokOpnameComponent,
+        DaftarAuditStokOpnameComponent,
+        InputAuditStokOpnameComponent,
+        DaftarSettingStokOpnameComponent,
+        ViewSettingStokOpnameComponent,
+        ViewAuditStokOpnameComponent
     ],
     imports: [
         FormsModule,
