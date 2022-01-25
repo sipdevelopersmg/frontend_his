@@ -9,6 +9,14 @@ import { ViewPenerimaanTanpaEdComponent } from './pages/penerimaan/view-penerima
 import { InputReturTanpaEdComponent } from './pages/retur/input-retur-tanpa-ed/input-retur-tanpa-ed.component';
 import { DaftarReturTanpaEdComponent } from './pages/retur/daftar-retur-tanpa-ed/daftar-retur-tanpa-ed.component';
 import { ViewReturTanpaEdComponent } from './pages/retur/view-retur-tanpa-ed/view-retur-tanpa-ed.component';
+import { DaftarPermintaanMutasiTanpaEdComponent } from './pages/mutasi/pemintaan-mutasi/daftar-permintaan-mutasi-tanpa-ed/daftar-permintaan-mutasi-tanpa-ed.component';
+import { InputPermintaanMutasiTanpaEdComponent } from './pages/mutasi/pemintaan-mutasi/input-permintaan-mutasi-tanpa-ed/input-permintaan-mutasi-tanpa-ed.component';
+import { ViewPermintaanMutasiTanpaEdComponent } from './pages/mutasi/pemintaan-mutasi/view-permintaan-mutasi-tanpa-ed/view-permintaan-mutasi-tanpa-ed.component';
+import { DaftarPersetujuanMutasiTanpaEdComponent } from './pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi-tanpa-ed/daftar-persetujuan-mutasi-tanpa-ed.component';
+import { ViewPersetujuanMutasiTanpaEdComponent } from './pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi-tanpa-ed/view-persetujuan-mutasi-tanpa-ed.component';
+import { InputPemakaianInternalTanpaEdComponent } from './pages/pemakaian-internal/input-pemakaian-internal-tanpa-ed/input-pemakaian-internal-tanpa-ed.component';
+import { DaftarPemakaianInternalTanpaEdComponent } from './pages/pemakaian-internal/daftar-pemakaian-internal-tanpa-ed/daftar-pemakaian-internal-tanpa-ed.component';
+import { ViewPemakaianInternalTanpaEdComponent } from './pages/pemakaian-internal/view-pemakaian-internal-tanpa-ed/view-pemakaian-internal-tanpa-ed.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +25,15 @@ import { ViewReturTanpaEdComponent } from './pages/retur/view-retur-tanpa-ed/vie
     ViewPenerimaanTanpaEdComponent,
     InputReturTanpaEdComponent,
     DaftarReturTanpaEdComponent,
-    ViewReturTanpaEdComponent
+    ViewReturTanpaEdComponent,
+    DaftarPermintaanMutasiTanpaEdComponent,
+    InputPermintaanMutasiTanpaEdComponent,
+    ViewPermintaanMutasiTanpaEdComponent,
+    DaftarPersetujuanMutasiTanpaEdComponent,
+    ViewPersetujuanMutasiTanpaEdComponent,
+    InputPemakaianInternalTanpaEdComponent,
+    DaftarPemakaianInternalTanpaEdComponent,
+    ViewPemakaianInternalTanpaEdComponent
   ],
     imports: [
         FormsModule,

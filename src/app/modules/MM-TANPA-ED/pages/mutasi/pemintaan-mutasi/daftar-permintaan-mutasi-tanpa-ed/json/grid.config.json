@@ -1,0 +1,68 @@
+{
+  "GridColumns": [
+    {
+        "field": "mutasi_id",
+        "headerText": "mutasi_id Id",
+        "type": "number",
+        "format": "",
+        "textAlign": "Left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_permintaan_mutasi",
+        "headerText": "Nomor Permintaan Mutasi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_permintaan_mutasi",
+        "headerText": "Tanggal Permintaan Mutasi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_stockroom_pemberi",
+        "headerText": "Nama Stockroom Pemberi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_stockroom_penerima",
+        "headerText": "Nama Stockroom Penerima",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_mutasi",
+        "headerText": "Status Mutasi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    
+    {
+        "field": "jumlah_item",
+        "headerText": "Jumlah Item",
+        "type": "number",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    }
+]
+}

@@ -1,0 +1,41 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Nomor Pemakaian'" formControlName="nomor_pemakaian_internal" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Pemakaian'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_pemakaian_internal">
+                </mol-datepicker-syncfusion>
+                <mol-input-text [label]="'Stokroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tanggal Serah Terima'" [format]="'dd MMMM yyyy HH:mm:ss'"
+                    formControlName="time_serah_terima">
+                </mol-datepicker-syncfusion>            
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'PIC Pemberi'" formControlName="pic_pemberi" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-text [label]="'PIC Penerima'" formControlName="pic_penerima" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Keretangan'" formControlName="keterangan_pemakaian_internal"></mol-input-textarea>
+            </div>
+        </div>
+        <mol-grid 
+        [grid-DataSource]="pemakaianInternalTanpaEdService.dataDetail$| async"
+        [columns]="ConfigGrid.TrDetail"
+        ></mol-grid>
+        <div class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true"
+                    [value]="pemakaianInternalTanpaEdService.jumlah_item" formControlName="jumlah_item"
+                    [inputFieldState]="'detail'" ></mol-input-numeric>
+            </div>
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Nominal'" [isFooter]="true"
+                    [value]="pemakaianInternalTanpaEdService.total_transaksi" formControlName="total_transaksi"
+                    [inputFieldState]="'detail'" ></mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+</org-card-layout>

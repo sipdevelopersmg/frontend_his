@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { PermintaanMutasiTanpaEdService } from 'src/app/modules/MM-TANPA-ED/services/mutasi-tanpa-ed/permintaan-mutasi-tanpa-ed.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
-import { ReturPembelianTanpaEdService } from '../../../services/retur-pembelian-tanpa-ed/retur-pembelian-tanpa-ed.service';
 import * as GridConfig from './json/grid.config.json'
 @Component({
-  selector: 'app-daftar-retur-tanpa-ed',
-  templateUrl: './daftar-retur-tanpa-ed.component.html',
-  styleUrls: ['./daftar-retur-tanpa-ed.component.css']
+  selector: 'app-daftar-permintaan-mutasi-tanpa-ed',
+  templateUrl: './daftar-permintaan-mutasi-tanpa-ed.component.html',
+  styleUrls: ['./daftar-permintaan-mutasi-tanpa-ed.component.css']
 })
-export class DaftarReturTanpaEdComponent implements OnInit {
+export class DaftarPermintaanMutasiTanpaEdComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
     { Id: 'Add', Captions: 'Add', Icons1: 'fa-plus fa-sm' },
@@ -25,26 +25,26 @@ export class DaftarReturTanpaEdComponent implements OnInit {
   ];
 
   FilterColumnDatasource: any[] = [
-      { text: 'No. Retur', value: 'trp.nomor_retur_pembelian' },
-      { text: 'Stockroom', value: 'mss.nama_stockroom' },
-      { text: 'Supplier', value: 'sup.nama_supplier' },
-      { text: 'Status Retur', value: 'trp.status_transaksi' },
+      { text: 'No Permintaan Mutasi', value: 'tm.nomor_permintaan_mutasi' },
+      { text: 'Stocroom Pemberi', value: 'mss_pemberi.nama_stockroom' },
+      { text: 'Stocroom Penerima', value: 'mss_penerima.nama_stockroom' },
+      { text: 'Status Mutasi', value: 'tm.status_mutasi' },
   ];
 
   GridConfig = GridConfig;
   SelectedData: any;
   dataSource: any;
 
-  GridData: MolGridComponent = null;
+  @ViewChild('GridData') GridData: MolGridComponent;
 
   constructor(
       private router: Router,
       private encryptionService: EncryptionService,
-      public returPembelianTanpaEdService: ReturPembelianTanpaEdService,
+      public permintaanMutasiTanpaEdService: PermintaanMutasiTanpaEdService,
   ) { }
 
   ngOnInit(): void {
-      this.returPembelianTanpaEdService.onInitList();
+      this.permintaanMutasiTanpaEdService.onInitList();
   }
 
   ngAfterViewInit(): void {
@@ -53,8 +53,8 @@ export class DaftarReturTanpaEdComponent implements OnInit {
       }, 1);
   }
 
-  handlePencarianFilter(args: any) {
-      this.returPembelianTanpaEdService.onGetAllByParamsSource(args);
+  handlePencarianFilter(args) {
+      this.permintaanMutasiTanpaEdService.onGetAllByParamsSource(args);
       this.GridData.Grid.refresh();
   }
 
@@ -65,11 +65,11 @@ export class DaftarReturTanpaEdComponent implements OnInit {
   handleClickButtonNav(args: any): void {
       switch (args) {
           case 'Add':
-              this.router.navigateByUrl('dashboard/MM_TE/retur-pembelian-tanpa-ed/input-retur-pembelian-tanpa-ed');
+              this.router.navigateByUrl('dashboard/MM_TE/permintaan-mutasi-tanpa-ed/input-permintaan-mutasi-tanpa-ed');
               break;
           case 'Edit':
-              const retur_pembelian_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.retur_pembelian_id));
-              this.router.navigate(['dashboard/MM_TE/retur-pembelian-tanpa-ed/view-retur-pembelian-tanpa-ed', retur_pembelian_id, "GRAHCIS"]);
+              const mutasi_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.mutasi_id));
+              this.router.navigate(['dashboard/MM_TE/permintaan-mutasi-tanpa-ed/view-permintaan-mutasi-tanpa-ed', mutasi_id, "GRAHCIS"]);
               break;
           case 'Delete':
               // this.DeleteData(this.SelectedData.id_person, this.SelectedData['is_active']);
@@ -81,23 +81,18 @@ export class DaftarReturTanpaEdComponent implements OnInit {
 
   handleSelectedRow(args: any): void {
       this.SelectedData = args.data;
-      console.log(this.SelectedData);
+      console.log(this.SelectedData)
   }
 
   handleRowDataBound(args: any): void {
-      let status_transaksi = args.data.status_transaksi;
+      let status_transaksi = args.data.status_mutasi;
 
-      if (status_transaksi == "VALIDATED") {
+      if (status_transaksi == "APPROVED") {
           args.row.classList.add('e-validation-background');
       }
 
       if (status_transaksi == "CANCELED") {
           args.row.classList.add('e-canceled-background');
       }
-
-      if (status_transaksi == "CLOSED") {
-          args.row.classList.add('e-closed-background');
-      }
   }
-
 }

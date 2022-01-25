@@ -1,5 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DaftarPermintaanMutasiTanpaEdComponent } from "./pages/mutasi/pemintaan-mutasi/daftar-permintaan-mutasi-tanpa-ed/daftar-permintaan-mutasi-tanpa-ed.component";
+import { InputPermintaanMutasiTanpaEdComponent } from "./pages/mutasi/pemintaan-mutasi/input-permintaan-mutasi-tanpa-ed/input-permintaan-mutasi-tanpa-ed.component";
+import { ViewPermintaanMutasiTanpaEdComponent } from "./pages/mutasi/pemintaan-mutasi/view-permintaan-mutasi-tanpa-ed/view-permintaan-mutasi-tanpa-ed.component";
+import { DaftarPersetujuanMutasiTanpaEdComponent } from "./pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi-tanpa-ed/daftar-persetujuan-mutasi-tanpa-ed.component";
+import { ViewPersetujuanMutasiTanpaEdComponent } from "./pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi-tanpa-ed/view-persetujuan-mutasi-tanpa-ed.component";
+import { DaftarPemakaianInternalTanpaEdComponent } from "./pages/pemakaian-internal/daftar-pemakaian-internal-tanpa-ed/daftar-pemakaian-internal-tanpa-ed.component";
+import { InputPemakaianInternalTanpaEdComponent } from "./pages/pemakaian-internal/input-pemakaian-internal-tanpa-ed/input-pemakaian-internal-tanpa-ed.component";
+import { ViewPemakaianInternalTanpaEdComponent } from "./pages/pemakaian-internal/view-pemakaian-internal-tanpa-ed/view-pemakaian-internal-tanpa-ed.component";
 import { DaftarPenerimaanTanpaEdComponent } from "./pages/penerimaan/daftar-penerimaan-tanpa-ed/daftar-penerimaan-tanpa-ed.component";
 import { InputPenerimaanTanpaEdComponent } from "./pages/penerimaan/input-penerimaan-tanpa-ed/input-penerimaan-tanpa-ed.component";
 import { ViewPenerimaanTanpaEdComponent } from "./pages/penerimaan/view-penerimaan-tanpa-ed/view-penerimaan-tanpa-ed.component";
@@ -39,21 +47,21 @@ const mmRoutes: Routes = [
     //     ],
 
     // },
-    // {
-    //     path: "permintaan-mutasi", component: null, data: { title: "Input PO" },
-    //     children: [
-    //         { path: "daftar-permintaan-mutasi", component: DaftarPermintaanMutasiComponent, data: { title: "Permintaan Mutasi" } },
-    //         { path: "input-permintaan-mutasi", component: InputPermintaanMutasiComponent, data: { title: "Input Permintaan Mutasi" } },
-    //         { path: "view-permintaan-mutasi/:id/:key", component: ViewPermintaanMutasiComponent, data: { title: "View Permintaaan Mutasi" } },
-    //     ],
-    // },
-    // {
-    //     path: "persetujuan-mutasi", component: null, data: { title: "Persetujuan Mutasi" },
-    //     children: [
-    //         { path: "daftar-persetujuan-mutasi", component: DaftarPersetujuanMutasiComponent, data: { title: "Persetujuan Mutasi" } },
-    //         { path: "proses-persetujuan-mutasi/:id/:key", component: ViewPersetujuanMutasiComponent, data: { title: "Proses Persetujuan Mutasi" } },
-    //     ],
-    // },
+    {
+        path: "permintaan-mutasi-tanpa-ed", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-permintaan-mutasi-tanpa-ed", component: DaftarPermintaanMutasiTanpaEdComponent, data: { title: "Permintaan Mutasi" } },
+            { path: "input-permintaan-mutasi-tanpa-ed", component: InputPermintaanMutasiTanpaEdComponent, data: { title: "Input Permintaan Mutasi" } },
+            { path: "view-permintaan-mutasi-tanpa-ed/:id/:key", component: ViewPermintaanMutasiTanpaEdComponent, data: { title: "View Permintaaan Mutasi" } },
+        ],
+    },
+    {
+        path: "persetujuan-mutasi-tanpa-ed", component: null, data: { title: "Persetujuan Mutasi" },
+        children: [
+            { path: "daftar-persetujuan-mutasi-tanpa-ed", component: DaftarPersetujuanMutasiTanpaEdComponent, data: { title: "Persetujuan Mutasi" } },
+            { path: "proses-persetujuan-mutasi-tanpa-ed/:id/:key", component: ViewPersetujuanMutasiTanpaEdComponent, data: { title: "Proses Persetujuan Mutasi" } },
+        ],
+    },
     {
         path: "retur-pembelian-tanpa-ed", component: null, data: { title: "Input Retur Pembelian Tanpa ED" },
         children: [
@@ -63,15 +71,15 @@ const mmRoutes: Routes = [
 
         ],
     },
-    // {
-    //     path: "issue", component: null, data: { title: "Issue" },
-    //     children: [
-    //         { path: "daftar-issue", component: DaftarIssueComponent, data: { title: "Daftar Issue" } },
-    //         { path: "input-issue", component: InputIssueComponent, data: { title: "Input Issue" } },
-    //         { path: "view-issue/:id/:key", component: ViewIssueComponent, data: { title: "View Issue" } },
+    {
+        path: "pemakaian-internal-tanpa-ed", component: null, data: { title: "Issue" },
+        children: [
+            { path: "daftar-pemakaian-internal-tanpa-ed", component: DaftarPemakaianInternalTanpaEdComponent, data: { title: "Daftar Pemakaian Internal" } },
+            { path: "input-pemakaian-internal-tanpa-ed", component: InputPemakaianInternalTanpaEdComponent, data: { title: "Input Pemakaian Internal" } },
+            { path: "view-pemakaian-internal-tanpa-ed/:id/:key", component: ViewPemakaianInternalTanpaEdComponent, data: { title: "View Pemakaian Internal" } },
 
-    //     ],
-    // },
+        ],
+    },
     // {
     //     path: "issue-validation", component: null, data: { title: "Input Issue Validation" },
     //     children: [

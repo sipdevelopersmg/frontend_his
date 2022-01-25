@@ -3,27 +3,28 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MM } from 'src/app/api/MM';
+import { MM_TANPA_ED } from 'src/app/api/MM_TANPA_ED';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { TrPersetujuanMutasiDetailInsert, TrPersetujuanMutasiInsert } from '../../../models/mutasi/persetujuan-mutasi';
+import { TrPersetujuanMutasiTanpaEdDetailInsert, TrPersetujuanMutasiTanpaEdInsert } from '../../models/mutasi-tanpa-ed/persetujuan-mutasi-tanpa-ed';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersetujuanMutasiService {
+export class PersetujuanMutasiTanpaEdService {
 
-    public API = MM.MUTASI.PENGAJUAN_MUTASI;
+  public API = MM_TANPA_ED.MUTASI_TANPA_ED.PENGAJUAN_MUTASI_TANPA_ED;
     public dataSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<TrPersetujuanMutasiDetailInsert[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<TrPersetujuanMutasiTanpaEdDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): TrPersetujuanMutasiDetailInsert[] {
+    get dataDetail(): TrPersetujuanMutasiTanpaEdDetailInsert[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: TrPersetujuanMutasiDetailInsert[]) {
+    set dataDetail(val: TrPersetujuanMutasiTanpaEdDetailInsert[]) {
         this._dataDetail.next(val);
     }
 
@@ -99,7 +100,7 @@ export class PersetujuanMutasiService {
         return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id);
     }
 
-    addDataDetail(detail: TrPersetujuanMutasiDetailInsert) {
+    addDataDetail(detail: TrPersetujuanMutasiTanpaEdDetailInsert) {
         this.dataDetail =  [
           ...this.dataDetail,
           detail
@@ -107,11 +108,9 @@ export class PersetujuanMutasiService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: TrPersetujuanMutasiDetailInsert, rowData: TrPersetujuanMutasiDetailInsert) {
-        let indexsatuan = data.satuans.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_mutasi);
-        let isi = data.satuans[indexsatuan].isi;
-        data.isi_mutasi = isi;
-        data.qty_mutasi = data.qty_satuan_besar_mutasi * isi;
+    updateFromInline(index: number, data: TrPersetujuanMutasiTanpaEdDetailInsert, rowData: TrPersetujuanMutasiTanpaEdDetailInsert) {
+        
+        data.qty_mutasi = data.qty_mutasi;
 
         this.dataDetail[index] = data;
         this.sum();
@@ -139,10 +138,10 @@ export class PersetujuanMutasiService {
     sum(): void {
 
         this.total_transaksi = this.dataDetail.sum('nominal_mutasi');
-        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar');
+        this.jumlah_item = this.dataDetail.sum('qty_mutasi');
     }
 
-    Insert( Data:TrPersetujuanMutasiInsert ): Observable<any>{
+    Insert( Data:TrPersetujuanMutasiTanpaEdInsert ): Observable<any>{
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });

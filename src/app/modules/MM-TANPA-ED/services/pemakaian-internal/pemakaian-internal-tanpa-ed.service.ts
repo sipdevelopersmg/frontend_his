@@ -2,28 +2,29 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MM } from 'src/app/api/MM';
+import { MM_TANPA_ED } from 'src/app/api/MM_TANPA_ED';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { TrPersetujuanMutasiDetailInsert, TrPersetujuanMutasiInsert } from '../../../models/mutasi/persetujuan-mutasi';
+import { TrPemakaianInternalTanpaEdDetailInsert, TrPemakaianInternalTanpaEdInsert } from '../../models/pemakaian-internal/pemakain-internal-tanpa-ed';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersetujuanMutasiService {
+export class PemakaianInternalTanpaEdService {
 
-    public API = MM.MUTASI.PENGAJUAN_MUTASI;
+  public API = MM_TANPA_ED.PEMAKAIAN_INTERNAL_TANPA_ED.TRANSPEMAKAIANINTERNAL_TANPA_ED;
     public dataSource = new BehaviorSubject([]);
+    public dataOpenSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<TrPersetujuanMutasiDetailInsert[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<TrPemakaianInternalTanpaEdDetailInsert[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): TrPersetujuanMutasiDetailInsert[] {
+    get dataDetail(): TrPemakaianInternalTanpaEdDetailInsert[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: TrPersetujuanMutasiDetailInsert[]) {
+    set dataDetail(val: TrPemakaianInternalTanpaEdDetailInsert[]) {
         this._dataDetail.next(val);
     }
 
@@ -66,11 +67,25 @@ export class PersetujuanMutasiService {
      * @onGetAll Observable<Model>
     */
     onGetAllByParams(req: PostRequestByDynamicFiterModel[]): Observable<any> {
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_PERSTUJUAN_BY_PARAMS,req).pipe(
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_BY_PARAMS,req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
+    }
+
+    /**
+     * Service Untuk Menampilkan data berdasarkan dinamik filter
+     * @onGetAll Observable<Model>
+    */
+     onGetAllOpenByParams(req: PostRequestByDynamicFiterModel[]): void {
+        this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_HEADER_OPEN_BY_PARAMS,req).pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        ).subscribe((result)=>{
+            this.dataOpenSource.next(result.data);
+        })
     }
 
     /**
@@ -85,6 +100,7 @@ export class PersetujuanMutasiService {
         });
     }
     
+    
     /**
      * Service Untuk Menampilkan data detail Item
      * @setDetail Void
@@ -95,11 +111,7 @@ export class PersetujuanMutasiService {
         });
     }
 
-    getDetail(id): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id);
-    }
-
-    addDataDetail(detail: TrPersetujuanMutasiDetailInsert) {
+    addDataDetail(detail: TrPemakaianInternalTanpaEdDetailInsert) {
         this.dataDetail =  [
           ...this.dataDetail,
           detail
@@ -107,11 +119,11 @@ export class PersetujuanMutasiService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: TrPersetujuanMutasiDetailInsert, rowData: TrPersetujuanMutasiDetailInsert) {
-        let indexsatuan = data.satuans.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_mutasi);
+    updateFromInline(index: number, data: TrPemakaianInternalTanpaEdDetailInsert, rowData: TrPemakaianInternalTanpaEdDetailInsert) {
+        let indexsatuan = data.satuans.findIndex((e) => e.kode_satuan == data.kode_satuan_besar_pemakaian_internal);
         let isi = data.satuans[indexsatuan].isi;
-        data.isi_mutasi = isi;
-        data.qty_mutasi = data.qty_satuan_besar_mutasi * isi;
+        data.isi_pemakaian_internal = isi;
+        data.qty_pemakaian_internal = data.qty_satuan_besar_pemakaian_internal * isi;
 
         this.dataDetail[index] = data;
         this.sum();
@@ -123,26 +135,26 @@ export class PersetujuanMutasiService {
     }
 
     editBanyak(index: number, banyak: number) {
-        this.dataDetail[index].qty_satuan_besar_mutasi = banyak;
-        this.dataDetail[index].qty_mutasi = banyak * this.dataDetail[index].isi_mutasi;
+        this.dataDetail[index].qty_satuan_besar_pemakaian_internal = banyak;
+        this.dataDetail[index].qty_pemakaian_internal = banyak * this.dataDetail[index].isi_pemakaian_internal;
     }
 
 
     editSatuan(index: number, satuan: string) {
-        let indexsatuan = this.dataDetail[index].satuans.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_mutasi);
+        let indexsatuan = this.dataDetail[index].satuans.findIndex((e) => e.kode_satuan == this.dataDetail[index].kode_satuan_besar_pemakaian_internal);
         let isi = this.dataDetail[index].satuans[indexsatuan].isi;
-        this.dataDetail[index].kode_satuan_besar_mutasi = satuan;
-        this.dataDetail[index].isi_mutasi = isi;
-        this.dataDetail[index].qty_mutasi = this.dataDetail[index].qty_satuan_besar_mutasi * isi;
+        this.dataDetail[index].kode_satuan_besar_pemakaian_internal = satuan;
+        this.dataDetail[index].isi_pemakaian_internal = isi;
+        this.dataDetail[index].qty_pemakaian_internal = this.dataDetail[index].qty_satuan_besar_pemakaian_internal * isi;
     }
 
     sum(): void {
 
-        this.total_transaksi = this.dataDetail.sum('nominal_mutasi');
-        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar');
+        this.total_transaksi = 0;
+        this.jumlah_item = this.dataDetail.sum('qty_satuan_besar_pemakaian_internal');
     }
 
-    Insert( Data:TrPersetujuanMutasiInsert ): Observable<any>{
+    Insert( Data:TrPemakaianInternalTanpaEdInsert ): Observable<any>{
         this.dataDetail.map((e,i)=>{
             return e.no_urut = i+1;
         });
@@ -169,8 +181,12 @@ export class PersetujuanMutasiService {
         return this.dataDetail[index].satuans;
     }
 
+    getDetail(id): Observable<any> {
+        return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID+'/'+id);
+    }
+
     validasiPersetujuan(Data): Observable<any>{
-        return this.httpOperationService.defaultPostRequest(this.API.INSERT_PERSETUJUAN, Data)
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -180,7 +196,7 @@ export class PersetujuanMutasiService {
 
     Cancel(id:number,reason:string): Observable<any>{
         return this.httpOperationService.defaultPutRequest(this.API.CANCEL,{ 
-                mutasi_id : id,
+                pemakaian_internal_id : id,
                 reason_canceled:reason 
             })
             .pipe(
