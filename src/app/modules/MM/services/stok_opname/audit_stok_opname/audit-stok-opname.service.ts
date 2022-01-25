@@ -30,7 +30,7 @@ export class AuditStokOpnameService {
    * @onGetAll Observable<SetupPabrikModel>
   */
   onGetById(Id): Observable<any> {
-      return this.httpOperationService.defaultGetRequest(this.API+'/'+Id);
+      return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
   }
 
   
@@ -93,6 +93,14 @@ export class AuditStokOpnameService {
 
   Insert(data):Observable<any>{
     return this.httpOperationService.defaultPostRequest(this.API.INSERT,data).pipe(
+      catchError((error: HttpErrorResponse): any => {
+          this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+      })
+    );
+  }
+
+  Finalisasi(data):Observable<any>{
+    return this.httpOperationService.defaultPostRequest(this.API.FINALISASI,data).pipe(
       catchError((error: HttpErrorResponse): any => {
           this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
       })

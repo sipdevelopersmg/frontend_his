@@ -60,6 +60,9 @@ import { InputAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-op
 import { DaftarSettingStokOpnameComponent } from './pages/stok_opname/setting_stok_opname/daftar-setting-stok-opname/daftar-setting-stok-opname.component';
 import { ViewSettingStokOpnameComponent } from './pages/stok_opname/setting_stok_opname/view-setting-stok-opname/view-setting-stok-opname.component';
 import { ViewAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-opname/view-audit-stok-opname/view-audit-stok-opname.component';
+import { DaftarAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting.component';
+import { InputAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting.component';
+import { ViewAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting.component';
 
 @NgModule({
     declarations: [
@@ -119,7 +122,10 @@ import { ViewAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-opn
         InputAuditStokOpnameComponent,
         DaftarSettingStokOpnameComponent,
         ViewSettingStokOpnameComponent,
-        ViewAuditStokOpnameComponent
+        ViewAuditStokOpnameComponent,
+        DaftarAuditStokOpnameTanpaSettingComponent,
+        InputAuditStokOpnameTanpaSettingComponent,
+        ViewAuditStokOpnameTanpaSettingComponent
     ],
     imports: [
         FormsModule,

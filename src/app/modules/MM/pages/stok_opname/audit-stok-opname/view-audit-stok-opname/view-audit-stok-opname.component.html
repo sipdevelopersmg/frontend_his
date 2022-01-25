@@ -1,1 +1,86 @@
-<p>view-audit-stok-opname works!</p>
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Nomor Audit Stok Opname'" formControlName="nomor_audit_stok_opname" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Waktu Audit Stok Opname'" [format]="'dd MMMM yyyy'"
+                    formControlName="waktu_capture_stok">
+                </mol-datepicker-syncfusion>
+                <mol-input-text [label]="'Nama Stockroom'" formControlName="nama_stockroom" [inputFieldState]="inputFieldState"></mol-input-text>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'Nama rak Storage'" formControlName="nama_rak_storage" [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan_entry" [inputFieldState]="inputFieldState"></mol-input-textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- Grid -->
+                    <ejs-grid #gridDetail 
+                    [id]="'GridDeail'" 
+                    [dataSource]='dataSourceGrid | async' 
+                    [gridLines]="'Both'" [allowResizing]='true'
+                    [childGrid]="ChildGrid" 
+                    (dataBound)="onDataBound()"
+                    (rowDataBound)="handleRowDataBound($event)">
+                    <e-columns>
+                        <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="true" field='qty_fisik' [allowEditing]="true"
+                            headerText='Qty Fisik' editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                        </e-column>
+                        <e-column [visible]="false" field='qty_sistem_capture_stok' [allowEditing]="false"
+                            headerText='Qty Capture' editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                        </e-column>
+                        <e-column [visible]="true" field='nama_satuan' [allowEditing]="false" headerText='Satuan'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                        <e-column [visible]="true" field='hpp_average' [allowEditing]="false" headerText='Harga Jual'
+                            editType='defaultEdit'  textAlign="right" headerTextAlign="center" format="N2">
+                        </e-column>
+                        <e-column [visible]="true" field='sub_total_fisik' [allowEditing]="false" headerText='Nominal'
+                            editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                        </e-column>
+                        <e-column [visible]="true" field='keterangan' [allowEditing]="true" headerText='Keterangan'
+                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                        </e-column>
+                    </e-columns>
+                </ejs-grid>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Keterangan Resep Finalisasi  -->
+    <ng-template #modalFinalisasi>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Keterangan Proses</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <div class="col-sm-4">
+                    <label for="reason_canceled"><strong>Keterangan Proses</strong></label>
+                </div>
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="keterangan_proses" name="keterangan_proses" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onFinalisasi()">Proses Finalisasi</button>
+        </div>
+    </ng-template>
+</org-card-layout>
