@@ -8,6 +8,7 @@ import { UtilityService } from './utility.service';
 import * as Sentry from '@sentry/angular'
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import Swal from 'sweetalert2';
 
 @Injectable({
     providedIn: 'root',
@@ -48,6 +49,8 @@ export class HttpOperationService {
     }
 
     defaultGetRequestWithLoading(url: string, params?: any): Observable<any> {
+        this.utilityService.onShowLoadingBeforeSend();
+
         return this.httpClient.get<any>(
             url,
             {
@@ -55,11 +58,9 @@ export class HttpOperationService {
                 params: params
             }
         ).pipe(
-            tap((result) => {
-                this.utilityService.onShowLoading();
-            }),
-            delay(2100),
             map((result: HttpResponseModel) => {
+                Swal.close();
+
                 if (result.responseResult) {
                     return result;
                 } else {
@@ -73,17 +74,17 @@ export class HttpOperationService {
     }
 
     defaultPostRequest(url: string, req: any): Observable<any> {
+        this.utilityService.onShowLoadingBeforeSend();
+
         return this.httpClient.post<any>(
             url, req,
             {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            tap((result) => {
-                this.utilityService.onShowLoading();
-            }),
-            delay(2100),
             map((result: HttpResponseModel) => {
+                Swal.close();
+
                 if (result.responseResult) {
                     return result;
                 } else {
@@ -117,17 +118,17 @@ export class HttpOperationService {
     }
 
     defaultPostRequestByDynamicFilter(url: string, req: PostRequestByDynamicFiterModel[]): Observable<any> {
+        this.utilityService.onShowLoadingBeforeSend();
+
         return this.httpClient.post<any>(
             url, req,
             {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            tap((result) => {
-                this.utilityService.onShowLoading();
-            }),
-            delay(2100),
             map((result: HttpResponseModel) => {
+                Swal.close();
+
                 if (result.responseResult) {
                     return result;
                 } else {
@@ -141,17 +142,17 @@ export class HttpOperationService {
     }
 
     defaultPutRequest(url: string, req: any): Observable<any> {
+        this.utilityService.onShowLoadingBeforeSend();
+
         return this.httpClient.put<any>(
             url, req,
             {
                 headers: new HttpHeaders().set('Content-Type', 'application/json')
             }
         ).pipe(
-            tap((result) => {
-                this.utilityService.onShowLoading();
-            }),
-            delay(2100),
             map((result: HttpResponseModel) => {
+                Swal.close();
+
                 if (result.responseResult) {
                     return result;
                 } else {
@@ -200,7 +201,6 @@ export class HttpOperationService {
                 if (result.responseResult) {
                     return result;
                 } else {
-                    // Menampilkan SweetAlert Error
                     this.handlingErrorWithStatusCode200(result);
                 }
             }),
@@ -234,13 +234,13 @@ export class HttpOperationService {
     }
 
     defaultUploadFileRequest(url: string, req: FormData): Observable<any> {
+        this.utilityService.onShowLoadingBeforeSend();
+
         return this.httpClient.post<any>(url, req)
             .pipe(
-                tap((result) => {
-                    this.utilityService.onShowLoading();
-                }),
-                delay(2100),
                 map((result: HttpResponseModel) => {
+                    Swal.close();
+
                     if (result.responseResult) {
                         return result;
                     } else {
@@ -375,6 +375,8 @@ export class HttpOperationService {
     }
 
     defaultGetPrintHasilLis(url: string): void {
+        this.utilityService.onShowLoadingBeforeSend();
+
         this.httpClient.get(
             url,
             {
@@ -382,11 +384,8 @@ export class HttpOperationService {
                 responseType: 'arraybuffer',
             }
         ).pipe(
-            tap((result) => {
-                this.utilityService.onShowLoading();
-            }),
-            delay(2100),
             map((result) => {
+                Swal.close();
                 return result;
             }),
             catchError((error: HttpErrorResponse): any => {
@@ -406,15 +405,14 @@ export class HttpOperationService {
     }
 
     handlingErrorWithStatusCode200(response: HttpResponseModel): any {
-        // let message = [];
 
-        // response.data.forEach((item) => {
-        //     message.push(item['errors'][0]['errorMessage']);
-        // });
+        if (response.data.length > 0 && typeof response.data !== "string") {
+            this.utilityService.onShowingMultipleMessageAlert('error', 'Oops...', response.data);
+        };
 
-        // return this.utilityService.onShowingMultipleMessageAlert('error', 'Oops...', message);
-
-        this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
+        if (Object.keys(response.data).length == 0) {
+            this.utilityService.onShowingCustomAlert('error', 'Oops...', response.message);
+        };
 
         return;
     }

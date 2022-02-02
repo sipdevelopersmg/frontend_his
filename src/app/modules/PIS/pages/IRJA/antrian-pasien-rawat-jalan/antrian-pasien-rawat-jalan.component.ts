@@ -18,8 +18,11 @@ import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/se
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { AntrianPasienRawatJalanService } from '../../../services/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
-import { Socket } from 'ngx-socket-io';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { io } from 'socket.io-client';
+import Speech from 'speak-tts';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { Router } from '@angular/router';
+import { webApi } from 'src/environments/environment';
 
 @Component({
     selector: 'app-antrian-pasien-rawat-jalan',
@@ -35,7 +38,8 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
     HeaderRibbon: string;
 
     ButtonNav: ButtonNavModel[] = [
-        { Id: 'Cari', Icons1: 'fa-search fa-sm', Captions: '[F1] Pencarian' }
+        { Id: 'Cari', Icons1: 'fa-search fa-sm', Captions: '[F1] Pencarian' },
+        // { Id: 'Emit', Icons1: 'fa-search fa-sm', Captions: '[F1] Emit' },
     ];
 
     AntrianPasienRawatJalan: IAntrianRawatJalanModel[] = [];
@@ -46,6 +50,7 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
     GridContextMenuItems: MenuItemModel[] = [
         { id: 'konsul', iconCss: 'fas fa-user-edit fa-sm', text: 'Konsul' },
         { id: 'riwayat_pemeriksaan', iconCss: 'fas fa-history fa-sm', text: 'Riwayat Pemeriksaan' },
+        { id: 'input_transaksi', iconCss: 'fas fa-book fa-sm', text: 'Input Transaksi' },
     ];
 
     SelectedDataDokter: string;
@@ -86,15 +91,16 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
     modalRef: BsModalRef;
     @ViewChild('modalPembatalanKonsul') modalPembatalanKonsul: TemplateRef<any>;
 
-    SocketSubscription$: Subscription;
+    // Socket = io(`${webApi}:4444`);
 
     constructor(
-        private socket: Socket,
+        private router: Router,
         private formBuilder: FormBuilder,
         private titleCasePipe: TitleCasePipe,
         private bsModalService: BsModalService,
         private utilityService: UtilityService,
         private setupPoliService: SetupPoliService,
+        private encryptionService: EncryptionService,
         private antrianRawatJalanService: AntrianPasienRawatJalanService,
     ) { }
 
@@ -117,13 +123,52 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
 
         this.onSetFormKonsulAttributes();
 
-        // this.SocketSubscription$ = this.socket.fromEvent('notification').subscribe((result) => {
-        //     let emit = result['data'].emit;
-
-        //     if (emit === "antrian-pasien-rawat-jalan") {
-        //         this.handlePencarianAntrianPoliklinik(164, "DALAM");
+        // this.Socket.on('pis:update-antrian', (result: any) => {
+        //     if (result == 'update-antrian') {
+        //         this.onStartSpeakVoice("001");
+        //         this.onGetAllAntrianRawatJalan(this.SelectedPoli.id_poli);
         //     }
         // });
+    }
+
+    onStartSpeakVoice(data: string): void {
+        const speech = new Speech();
+
+        speech.init({
+            volume: 1,
+            lang: 'id-ID',
+            rate: 1,
+            pitch: 1,
+            voice: 'Google Bahasa Indonesia',
+            splitSentences: true
+        }).then((result) => {
+            this.prepareSpeakVoice(speech, result, data);
+        });
+    }
+
+    prepareSpeakVoice(speech: Speech, result: any, data: any): void {
+        if (speech.hasBrowserSupport()) {
+            speech.cancel();
+
+            const language = result.voices.find((item) => { return item.lang == result.lang });
+
+            speech.setLanguage(language.lang);
+            speech.setVoice(language.name);
+
+            let splittedData: string[] = data.split("");
+
+            let text = `Nomor Antrian ${splittedData[0]} ${splittedData[1]} ${splittedData[2]}, Menuju Poli Penyakit Dalam`;
+
+            const audio = new Audio();
+            audio.src = '../../../../../../assets/sound/notification/airport_message.mp3';
+            audio.load();
+            audio.play()
+                .then(() => {
+                    setTimeout(() => {
+                        speech.speak({ text: text });
+                    }, 1200);
+                });
+        }
     }
 
     onSetFormKonsulAttributes(): void {
@@ -171,6 +216,9 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
             case 'Cari':
                 (<HTMLElement>document.getElementById('btnOpenCariPoli')).click();
                 break;
+            case 'Emit':
+                // this.Socket.volatile.emit("clientEvent", "Send Data From Angular");
+                break;
             default:
                 break;
         }
@@ -187,6 +235,21 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
         this.antrianRawatJalanService.onGetAllDataAntrianRawatJalanByIdPoli(id_poli)
             .subscribe((result) => {
                 this.AntrianPasienRawatJalan = result.data;
+
+                // this.onStartSpeakVoice("001");
+
+                // let msg = new window.SpeechSynthesisUtterance();
+                // msg.volume = 1;
+                // msg.rate = 1;
+                // msg.pitch = 1;
+                // msg.lang = "id-ID";
+                // msg.text = "Nomor Antrian 0 0 1 Menuju Poli Penyakit Dalam";
+
+                // let voices = window.speechSynthesis.getVoices();
+                // msg.voice = voices[1];
+
+                // window.speechSynthesis.cancel();
+                // window.speechSynthesis.speak(msg);
             })
     }
 
@@ -221,7 +284,21 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
 
         if (id == "riwayat_pemeriksaan") {
             this.handleOpenModalRiwayatPemeriksaan();
-        }
+        };
+
+        if (id == "input_transaksi") {
+
+            if (this.SelectedDataPasien.status_terlayani == "sudah terlayani") {
+                const Person = this.encryptionService.encrypt(JSON.stringify(this.SelectedDataPasien));
+
+                setTimeout(() => {
+                    this.router.navigate(['dashboard/PIS/IRJA/transaksi-pemasukan-rawat-jalan/', Person, "GRAHCIS"]);
+                }, 250);
+
+            } else {
+                this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Pasien Belum Diperiksa');
+            }
+        };
     }
 
     togglingCardDokter(ElementId: string): void {
@@ -442,8 +519,9 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // this.SocketSubscription$.unsubscribe();
-        // this.socket.removeListener('notification');
+        // this.Socket.off('pis:update-antrian');
+        // this.Socket.removeListener('pis:update-antrian');
+        // this.Socket.disconnect();
     }
 
     get id_register(): AbstractControl { return this.FormKonsul.get('id_register') }

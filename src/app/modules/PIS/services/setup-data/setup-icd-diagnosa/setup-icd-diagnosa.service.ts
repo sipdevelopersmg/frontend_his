@@ -20,11 +20,11 @@ export class SetupIcdDiagnosaService {
     ) { }
 
     onGetAll(): Observable<GetAllDiagnosaAwalModel> {
-        return this.httpOperationService.defaultGetRequest(this.API_ASAL_RUJUKAN.GET_ALL_DIAGNOSA_AWAL);
+        return this.httpOperationService.defaultGetRequestWithLoading(this.API_ASAL_RUJUKAN.GET_ALL_DIAGNOSA_AWAL);
     }
 
     onGetById(DiagnosaAwalId: number): Observable<GetByIdDiagnosaAwalModel> {
-        return this.httpOperationService.defaultGetRequest(this.API_ASAL_RUJUKAN.GET_DIAGNOSA_AWAL_BY_ID, DiagnosaAwalId);
+        return this.httpOperationService.defaultGetRequestWithLoading(this.API_ASAL_RUJUKAN.GET_DIAGNOSA_AWAL_BY_ID, DiagnosaAwalId);
     }
 
     onPostSave(Data: DiagnosaAwalModel): Observable<PostSaveDiagnosaAwalModel> {

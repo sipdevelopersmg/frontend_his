@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { io } from 'socket.io-client';
+import { webApi } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -6,6 +8,8 @@ import { Injectable } from '@angular/core';
 export class NotificationService {
 
     toasts: any[] = [];
+
+    Socket = io(`${webApi}:4444`);
 
     constructor() { }
 

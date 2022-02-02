@@ -25,7 +25,8 @@ export class AuthenticationComponent implements OnInit {
     onSetFormAuthenticationAttribute(): any {
         this.formAuthentication = this.formBuilder.group({
             Username: ['', Validators.required],
-            Password: ['', Validators.required]
+            Password: ['', Validators.required],
+            PrinterToken: ['', []]
         });
     }
 
@@ -48,9 +49,10 @@ export class AuthenticationComponent implements OnInit {
     onClickButtonSignIn(formAuthentication: any): void {
         const username = formAuthentication.Username;
         const password = formAuthentication.Password;
+        const printerToken = formAuthentication.PrinterToken;
 
         if (username !== '' && password !== '') {
-            this.authenticationService.onLogin(username, password);
+            this.authenticationService.onLogin(username, password, printerToken);
         }
 
         if (username === '' && password === '') {
@@ -64,4 +66,5 @@ export class AuthenticationComponent implements OnInit {
 
     get Username(): any { return this.formAuthentication.get('Username'); }
     get Password(): any { return this.formAuthentication.get('Password'); }
+    get PrinterToken(): any { return this.formAuthentication.get('PrinterToken'); }
 }

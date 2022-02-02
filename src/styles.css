@@ -353,6 +353,10 @@ span.readonly-state > .e-numerictextbox {
   max-width: 45rem !important;
 }
 
+.text-justify {
+  text-align: justify !important;
+}
+
 @media (min-width: 1399.98px) {
   .large-modal-content {
     width: 75rem !important;

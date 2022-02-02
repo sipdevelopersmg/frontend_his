@@ -37,8 +37,8 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    onLogin(Username: string, Password: string): void {
-        this.httpOperationService.defaultPostRequestWithoutLoading(
+    onLogin(Username: string, Password: string, PrinterToken: string): void {
+        this.httpOperationService.defaultPostRequest(
             this.API_AUTHENTICATION.POST_AUTHENTICATION,
             {
                 user_name: Username,
@@ -74,21 +74,16 @@ export class AuthenticationService {
                         }
                     })
                     .then(() => {
-                        this.onGetBrowserFingerprint();
-                    })
+                        if (PrinterToken !== "") {
+                            this.onSetPrinterToken(PrinterToken);
+                        }
+                    });
             }
         });
     }
 
-    onGetBrowserFingerprint(): void {
-        const fpPromise = FingerprintJS.load();
-
-        fpPromise
-            .then(result => result.get())
-            .then((result) => {
-                const visitorId = result.visitorId;
-                localStorage.setItem('visitorId', visitorId);
-            });
+    onSetPrinterToken(printerToken: string): void {
+        localStorage.setItem('PrinterToken', printerToken);
     }
 
     onLogout(): void {

@@ -30,15 +30,19 @@ export class UtilityService {
         let text = "";
 
         message.forEach((item) => {
-            text += `<p class="text-black mb-1">${item}</p>`;
+            text += `<li class="text-danger mb-1">${item}</li>`;
         });
 
         return Swal.fire({
             icon,
             title,
-            html: text,
+            html: `<ul>${text}</ul>`,
             showCloseButton: false,
             showConfirmButton: true,
+            customClass: {
+                popup: 'swal-wide',
+                htmlContainer: 'text-justify'
+            }
         })
     }
 
@@ -98,6 +102,18 @@ export class UtilityService {
                 actionYes();
             } else if (result.isDenied) {
                 actionNo();
+            }
+        });
+    }
+
+    onShowLoadingBeforeSend(): void {
+        Swal.fire({
+            title: 'Loading...',
+            showCancelButton: false,
+            showConfirmButton: false,
+            showDenyButton: false,
+            willOpen: () => {
+                Swal.showLoading();
             }
         });
     }
@@ -196,7 +212,7 @@ export class UtilityService {
         });
     }
 
-    validasiDataDetail(data:any[],message:string=''):boolean{
+    validasiDataDetail(data: any[], message: string = ''): boolean {
 
         let data_error = data.filter(function (el) {
             return el.validasi == false;
@@ -204,33 +220,32 @@ export class UtilityService {
         // console.log('data',data);
         // console.log('error',data_error);
         let htmlSelection = '';
-        if(data_error.length>0){
+        if (data_error.length > 0) {
 
             htmlSelection = '<div class="text-danger"><ul>';
-            data_error.forEach((value:any,index)=>{
-                htmlSelection +=`<li>${value.nama_item} (${(value.message)?value.message:''})</li>`;
+            data_error.forEach((value: any, index) => {
+                htmlSelection += `<li>${value.nama_item} (${(value.message) ? value.message : ''})</li>`;
             })
             htmlSelection += `</ul><br/><h3>${message}</h3></div>`;
 
             Swal.fire({
-                icon    : 'error',
-                title   : 'Validasi Data',
-                html    : htmlSelection,
-            }).then(()=>{
+                icon: 'error',
+                title: 'Validasi Data',
+                html: htmlSelection,
+            }).then(() => {
                 return false;
             })
-        }else{
+        } else {
             return true;
             // return (data_error.length==0)?false:true;
         }
-        
+
     }
 
-    alertError(message:string){
+    alertError(message: string) {
         return Swal.fire({
-            icon    : 'error',
-            title   : message,
+            icon: 'error',
+            title: message,
         })
     }
-
 }

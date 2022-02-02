@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -10,13 +10,16 @@ import { UtilityService } from 'src/app/modules/shared/services/utility.service'
 import { IPasienTeradmisiHariIniModel, IPersonPasienForAdmisiRawatJalanModel } from '../../../models/IRJA/admisi-pasien-rawat-jalan.model';
 import { AdmisiPasienRawatJalanService } from '../../../services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
 import * as Config from './json/grid.json';
+import { io } from 'socket.io-client';
+import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { webApi } from 'src/environments/environment';
 
 @Component({
     selector: 'app-admisi-pasien-rawat-jalan',
     templateUrl: './admisi-pasien-rawat-jalan.component.html',
     styleUrls: ['./admisi-pasien-rawat-jalan.component.css']
 })
-export class AdmisiPasienRawatJalanComponent implements OnInit {
+export class AdmisiPasienRawatJalanComponent implements OnInit, OnDestroy {
 
     GridConfig = Config;
 
@@ -35,12 +38,18 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
 
     SelectedPasien: any;
 
+    Socket = io(`${webApi}:4444`, {
+        "timeout": 10000,
+        "transports": ["websocket"]
+    });
+
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         private bsModalService: BsModalService,
         private encryptionService: EncryptionService,
+        private notificationService: NotificationService,
         private admisiRawatJalanService: AdmisiPasienRawatJalanService
     ) { }
 
@@ -217,7 +226,36 @@ export class AdmisiPasienRawatJalanComponent implements OnInit {
     }
 
     onPrintBuktiAdmisi(): void {
-        this.admisiRawatJalanService.onPrintBuktiAdmisiRawatJalan(this.SelectedPasien.nama_pasien, this.SelectedPasien.no_register);
+        this.Socket.on('connect', () => {
+            this.Socket.emit('storeClientInfo', JSON.stringify({ customId: '2708' }))
+        });
+
+        const PrinterToken = localStorage.getItem('PrinterToken');
+
+        let parameter = {
+            toid: PrinterToken ? PrinterToken : '2708',
+            msg: { 'NAMA_PASIEN': this.SelectedPasien.nama_pasien, 'NO_REGISTER': this.SelectedPasien.no_register }
+        };
+
+        setTimeout(() => {
+            console.log(JSON.stringify(parameter));
+            this.Socket.emit('print:ticket-admisi-irja', (JSON.stringify(parameter)));
+        }, 500);
+
+        // this.admisiRawatJalanService.onPrintBuktiAdmisiRawatJalan(this.SelectedPasien.nama_pasien, this.SelectedPasien.no_register);
+    }
+
+    ngOnDestroy(): void {
+        this.Socket.off('connect');
+        this.Socket.removeListener('connect');
+
+        this.Socket.off('storeClientInfo');
+        this.Socket.removeListener('storeClientInfo');
+
+        this.Socket.off('print:ticket-admisi-irja');
+        this.Socket.removeListener('print:ticket-admisi-irja');
+
+        this.Socket.disconnect();
     }
 
     get no_identitas(): AbstractControl { return this.FormPencarianPasien.get('no_identitas') };

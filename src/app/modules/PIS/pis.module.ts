@@ -67,19 +67,9 @@ import { PelayananPasienRawatDaruratComponent } from './pages/IRDA/admisi-pasien
 import { ListPasienRawatDaruratAnonimComponent } from './pages/IRDA/list-pasien-rawat-darurat-anonim/list-pasien-rawat-darurat-anonim.component';
 import { PemasukanRawatDaruratComponent } from './pages/IRDA/pemasukan-rawat-darurat/pemasukan-rawat-darurat.component';
 import { UpdatePasienTanpaIdentitasComponent } from './pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component';
-import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
-};
-
-const SocketPIS: SocketIoConfig = {
-    url: `http://localhost:3000`, options: {
-        "force new connection": true,
-        "reconnectionAttempts": "Infinity",
-        "timeout": 10000,
-        "transports": ["websocket"]
-    }
 };
 
 @NgModule({
@@ -154,7 +144,6 @@ const SocketPIS: SocketIoConfig = {
         SharedModule,
         ContextMenuModule,
         NgWizardModule.forRoot(ngWizardConfig),
-        SocketIoModule.forRoot(SocketPIS)
     ],
     providers: [
         DatePipe,
