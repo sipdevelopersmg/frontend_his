@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdmisiPasienRawatJalanService } from 'src/app/modules/PIS/services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
@@ -22,6 +22,7 @@ import { DokterModel } from 'src/app/modules/PIS/models/setup-data/setup-dokter.
 import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALAN';
 import * as API_PIS_SETUP_DATA from '../../../../../../api/PIS/SETUP_DATA';
 import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';
+import { IInputSEPModel } from 'src/app/modules/PIS/models/SEP/INPUT_SEP.model';
 
 @Component({
     selector: 'app-pelayanan-pasien-rawat-jalan',
@@ -82,6 +83,11 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
 
     @ViewChild('LookupChecklist') LookupChecklist: OrgLookUpChecklistComponent;
 
+    FormInputSEP: FormGroup;
+    FormInputSEPAdditionalData: IInputSEPModel;
+
+    ShowLakaLantasDetail: boolean = false;
+
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
@@ -115,6 +121,8 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
             value_1: -1,
             value_2: 0
         };
+
+        this.FormInputSEPAdditionalData = {};
     }
 
     onGetDetailPersonFromSearching(): void {
@@ -188,6 +196,8 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
 
     handleChangeDropdownRuangan(JenisRuanganId: number): void {
         this.urlPoli = this.API_BILLING_SETUP_DATA.SETUP_POLI.GET_ALL_POLI_FOR_LOOKUP_ADMISI + JenisRuanganId;
+
+        this.FormInputSEPAdditionalData.id_jenis_ruangan = JenisRuanganId;
     }
 
     heandleSelectedMR(args: any): void {
@@ -207,6 +217,10 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
         this.onGetAllDebiturByPersonId(args.id_person);
 
         (<HTMLInputElement>document.getElementById('nama_pasien')).focus();
+
+        this.FormInputSEPAdditionalData.id_person = args.id_person;
+        this.FormInputSEPAdditionalData.no_rekam_medis = args.no_rekam_medis;
+        this.FormInputSEPAdditionalData.full_name = args.full_name;
     }
 
     heandleSelectedPoli(args: PoliModel): void {
@@ -215,6 +229,9 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
         this.urlDokter = "";
 
         this.urlDokter = this.API_PIS_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP_ADMISI + this.id_poli.value;
+
+        this.FormInputSEPAdditionalData.id_poli = args.id_poli || args[0].id_poli;
+        this.FormInputSEPAdditionalData.kode_poli = args.kode_poli || args[0].kode_poli;
     }
 
     heandleSelectedDokter(args: any): void {
@@ -230,6 +247,10 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
                     this.LookupKodeDokter.onOpenModal();
                 });
         }
+
+        this.FormInputSEPAdditionalData.id_jadwal_dokter = args.id_jadwal_dokter || args[0].id_jadwal_dokter;
+        this.FormInputSEPAdditionalData.id_dokter = args.id_dokter || args[0].id_dokter;
+        this.FormInputSEPAdditionalData.kode_dpjp = args.kode_dokter || args[0].kode_dokter;
     }
 
     handleChangeDropdownDebitur(args: any): void {
@@ -241,18 +262,27 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
         } else {
             this.DebiturNotTanggunganPribadi = false;
         }
+
+        this.FormInputSEPAdditionalData.id_debitur = data.id_debitur;
     }
 
     handleSelectedAsalRujukan(args: any): void {
         this.id_asal_rujukan.setValue(args.id_asal_rujukan || args[0].id_asal_rujukan);
+
+        this.FormInputSEPAdditionalData.id_asal_rujukan = args.id_asal_rujukan || args[0].id_asal_rujukan;
     }
 
     handleSelectedKotaAsalRujukan(args: any): void {
         this.kode_wilayah_asal_rujukan.setValue(args.kode_wilayah || args[0].kode_wilayah);
+
+        this.FormInputSEPAdditionalData.kode_wilayah_asal_rujukan = args.kode_wilayah || args[0].kode_wilayah;
     }
 
     heandleSelectedDiagnosaAwal(args: any): void {
         this.id_icd_masuk.setValue(args.id_icd || args[0].id_icd);
+
+        this.FormInputSEPAdditionalData.id_icd_masuk = args.id_icd || args[0].id_icd;
+        this.FormInputSEPAdditionalData.diag_awal = args.nama_icd || args[0].nama_icd;
     }
 
     resetForm(): void {
@@ -290,6 +320,19 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
         } else {
             this.onSaveWithPenjamin(FormAdmisiPasien);
         }
+
+        // const btnModalInputSEP = document.getElementById('btnModalInputSEP') as HTMLElement;
+        // btnModalInputSEP.click();
+
+        // setTimeout(() => {
+        //     this.FormInputSEPAdditionalData.id_kelas_rawat = FormAdmisiPasien.id_kelas_rawat;
+        //     this.FormInputSEPAdditionalData.keterangan_diagnosa = FormAdmisiPasien.keterangan_diagnosa;
+        //     this.FormInputSEPAdditionalData.keluhan = FormAdmisiPasien.keluhan;
+        //     this.FormInputSEPAdditionalData.no_peserta = FormAdmisiPasien.no_peserta;
+        //     this.FormInputSEPAdditionalData.no_surat_rujukan = (document.getElementById('no_rujukan') as HTMLInputElement).value;
+
+        //     console.log(this.FormInputSEPAdditionalData);
+        // }, 500);
     }
 
     onSaveNonPenjamin(data: any) {
@@ -359,4 +402,12 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     get id_icd_masuk(): AbstractControl { return this.formAdmisiPasien.get('id_icd_masuk'); }
     get keterangan_diagnosa(): AbstractControl { return this.formAdmisiPasien.get('keterangan_diagnosa'); }
     get keluhan(): AbstractControl { return this.formAdmisiPasien.get('keluhan') };
+
+    handleClickPencarianNoRujukan(NoRujukan: string): void {
+        console.log(NoRujukan);
+    }
+
+    onChangeRadioLakaLantas(value: boolean): void {
+        this.ShowLakaLantasDetail = value;
+    }
 }
