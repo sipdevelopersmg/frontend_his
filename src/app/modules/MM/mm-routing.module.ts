@@ -23,6 +23,9 @@ import { DaftarPenerimaanComponent } from "./pages/pemasukan/penerimaan/daftar-p
 import { InputPenerimaanComponent } from "./pages/pemasukan/penerimaan/input-penerimaan/input-penerimaan.component";
 import { ViewPenerimaanComponent } from "./pages/pemasukan/penerimaan/view-penerimaan/view-penerimaan.component";
 import { SetHargaOrderComponent } from "./pages/pemasukan/set-harga-order/set-harga-order.component";
+import { DaftarPemusnahanComponent } from "./pages/pemusnahan/daftar-pemusnahan/daftar-pemusnahan.component";
+import { InputPemusnahanComponent } from "./pages/pemusnahan/input-pemusnahan/input-pemusnahan.component";
+import { ViewPemusnahanComponent } from "./pages/pemusnahan/view-pemusnahan/view-pemusnahan.component";
 import { DaftarRepackingComponent } from "./pages/repacking/daftar-repacking/daftar-repacking.component";
 import { InputRepackingComponent } from "./pages/repacking/input-repacking/input-repacking.component";
 import { ViewRepackingComponent } from "./pages/repacking/view-repacking/view-repacking.component";
@@ -47,6 +50,15 @@ import { SetupTemperaturItemComponent } from "./pages/setup-data/setup-temperatu
 import { SetupTipeItemComponent } from "./pages/setup-data/setup-tipe-item/setup-tipe-item.component";
 import { SetupTipeStockroomComponent } from "./pages/setup-data/setup-tipe-stockroom/setup-tipe-stockroom.component";
 import { SetupTipeSupplierComponent } from "./pages/setup-data/setup-tipe-supplier/setup-tipe-supplier.component";
+import { DaftarAuditStokOpnameTanpaSettingComponent } from "./pages/stok_opname/audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting.component";
+import { InputAuditStokOpnameTanpaSettingComponent } from "./pages/stok_opname/audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting.component";
+import { ViewAuditStokOpnameTanpaSettingComponent } from "./pages/stok_opname/audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting.component";
+import { DaftarAuditStokOpnameComponent } from "./pages/stok_opname/audit-stok-opname/daftar-audit-stok-opname/daftar-audit-stok-opname.component";
+import { InputAuditStokOpnameComponent } from "./pages/stok_opname/audit-stok-opname/input-audit-stok-opname/input-audit-stok-opname.component";
+import { ViewAuditStokOpnameComponent } from "./pages/stok_opname/audit-stok-opname/view-audit-stok-opname/view-audit-stok-opname.component";
+import { DaftarSettingStokOpnameComponent } from "./pages/stok_opname/setting_stok_opname/daftar-setting-stok-opname/daftar-setting-stok-opname.component";
+import { InputSettingStokOpnameComponent } from "./pages/stok_opname/setting_stok_opname/input-setting-stok-opname/input-setting-stok-opname.component";
+import { ViewSettingStokOpnameComponent } from "./pages/stok_opname/setting_stok_opname/view-setting-stok-opname/view-setting-stok-opname.component";
 
 const mmRoutes: Routes = [
     {
@@ -164,6 +176,40 @@ const mmRoutes: Routes = [
             { path: "input-assembly", component: InputAssemblyComponent, data: { title: "Input Assembly" } },
             { path: "view-assembly/:id/:key", component: ViewAssemblyComponent, data: { title: "View Assembly" } },
         ],
+    },
+    {
+        path: "pemusnahan-stok", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-pemusnahan-stok", component: DaftarPemusnahanComponent, data: { title: "Pemusnahan Stok" } },
+            { path: "input-pemusnahan-stok", component: InputPemusnahanComponent, data: { title: "Input Pemusnahan Stok" } },
+            { path: "view-pemusnahan-stok/:id/:key", component: ViewPemusnahanComponent, data: { title: "View Pemusnahan Stok" } },
+        ],
+    },
+    {
+        path:"stok-opname",component:null,data:{title:'Stock Opname'},
+        children: [
+            { path: "setting-stok-opname",component:null,data:{title:"Setting Stok Opname"},
+                children:[
+                  {  path: 'input-setting-stok-opname',component:InputSettingStokOpnameComponent, data:{ title:"Input Setting Stok Opname"}},
+                  {  path: 'daftar-setting-stok-opname',component:DaftarSettingStokOpnameComponent, data:{ title:"Daftar Setting Stok Opname"}},
+                  {  path: 'view-setting-stok-opname/:id/:key',component:ViewSettingStokOpnameComponent, data:{ title:"View Setting Stok Opname"}}
+                ]
+            },
+            { path: "audit-stok-opname",component:null,data:{title:"Audit Stok Opname"},
+                children:[
+                  {  path: 'daftar-stok-opname',component:DaftarAuditStokOpnameComponent, data:{ title:"Daftar Audit Stok Opname"}},
+                  {  path: 'input-stok-opname',component:InputAuditStokOpnameComponent, data:{ title:"Input Audit Stok Opname"}},
+                  {  path: 'view-stok-opname/:id/:key',component:ViewAuditStokOpnameComponent, data:{ title:"View Audit Stok Opname"}}
+                ]
+            },
+            { path: "audit-stok-opname-tanpa-setting",component:null,data:{title:"Audit Stok Opname"},
+                children:[
+                  {  path: 'daftar-stok-opname-tanpa-setting',component:DaftarAuditStokOpnameTanpaSettingComponent, data:{ title:"Daftar Audit Stok Opname Tanpa Setting"}},
+                  {  path: 'input-stok-opname-tanpa-setting',component:InputAuditStokOpnameTanpaSettingComponent, data:{ title:"Input Audit Stok Opname Tanpa Setting"}},
+                  {  path: 'view-stok-opname-tanpa-setting/:id/:key',component:ViewAuditStokOpnameTanpaSettingComponent, data:{ title:"View Audit Stok Opname Tanpa Setting"}}
+                ]
+            },
+        ]
     }
 ]
 

@@ -1,0 +1,12 @@
+{
+    "GridColumns": [
+        {
+            "field": "nama_stockroom",
+            "headerText": "Stockroom",
+            "type": "string",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ]
+}

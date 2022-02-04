@@ -1,0 +1,59 @@
+{
+  "GridColumns": [
+    {
+        "field": "nomor_pemakaian_internal",
+        "headerText": "Nomor Pemakaian Internal",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_pemakaian_internal",
+        "headerText": "Tanggal Pemakaina Internal",
+        "type": "DateTime",
+        "format": "dd/MM/yyyy",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_stockroom",
+        "headerText": "Nama Stockroom",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_transaksi",
+        "headerText": "Status Transaksi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    
+    {
+        "field": "jumlah_item",
+        "headerText": "Jumlah Item",
+        "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "keterangan_pemakaian_internal",
+        "headerText": "Keterangan",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    }
+]
+}

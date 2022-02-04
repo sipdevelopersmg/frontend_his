@@ -1,0 +1,43 @@
+{
+    "columns": [
+        {
+            "field": "no_setting_stok_opname",
+            "headerText": "Nomor Setting Stok Opname",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "tanggal_stok_opname",
+            "headerText": "Tanggal Setting Stok opname",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_jenis_setting_stok_opname",
+            "headerText": "Jenis Setting",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ],
+    "filter": [
+        {
+            "field": "no_setting_stok_opname",
+            "filter": "like",
+            "title": "Nomor Setting Stok Opname"
+        },
+        {
+            "field": "nama_jenis_setting_stok_opname",
+            "filter": "like",
+            "title": "Jenis Setting"
+        }
+    ]
+}

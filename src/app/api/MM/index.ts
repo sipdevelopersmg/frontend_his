@@ -6,6 +6,8 @@ import {RETUR} from '../MM/RETUR'
 import {PEMAKAIAN_INTERNAL} from '../MM/PEMAKAIAN_INTERNAL'
 import {REPACK} from './REPACKING'
 import {ASSEM} from './ASSEMBLY'
+import {PEMUSNAHAN} from './PEMUSNAHAN'
+import {STOK_OPNAME} from './STOK_OPNAME'
 
 export const MM = Object.assign({}, 
     {
@@ -15,6 +17,8 @@ export const MM = Object.assign({},
         "RETUR":RETUR,
         "PEMAKAIAN_INTERNAL":PEMAKAIAN_INTERNAL,
         "REPACK":REPACK,
-        "ASSEM":ASSEM
+        "ASSEM":ASSEM,
+        "PEMUSNAHAN":PEMUSNAHAN,
+        "STOK_OPNAME":STOK_OPNAME
     }
 )

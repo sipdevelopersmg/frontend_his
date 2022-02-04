@@ -1,0 +1,113 @@
+{
+  "GridColumns": [
+    {
+        "field": "retur_pemakaian_internal_id",
+        "headerText": "Id",
+        "type": "number",
+        "format": "",
+        "textAlign": "Left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nomor_retur_pemakaian_internal",
+        "headerText": "Nomor retur Pemakaian",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "tanggal_retur_pemakaian_internal",
+        "headerText": "Tanggal Retur Pemakaian",
+        "type": "DateTime",
+            "format": "dd/MM/yyyy",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "id_stockroom",
+        "headerText": "Id Stockroom Pemberi",
+        "type": "number",
+        "format": "",
+        "textAlign": "Left",
+        "visible": false,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "nama_stockroom",
+        "headerText": "Nama Stockroom",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "keterangan_retur_pemakaian_internal",
+        "headerText": "Keterangan",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "pic_pemberi",
+        "headerText": "PIC Pemberi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "pic_penerima",
+        "headerText": "PIC Penerima",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "time_serah_terima",
+        "headerText": "Waktu Serah Terima",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "status_transaksi",
+        "headerText": "Status Transaksi",
+        "type": "string",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    
+    {
+        "field": "jumlah_item",
+        "headerText": "Jumlah Item",
+        "type": "number",
+        "format": "N2",
+        "textAlign": "Right",
+        "visible": true,
+        "editType": "defaultEdit"
+    },
+    {
+        "field": "total_transaksi",
+        "headerText": "Nominal",
+        "type": "number",
+        "format": "",
+        "textAlign": "Left",
+        "visible": true,
+        "editType": "defaultEdit"
+    }
+]
+}

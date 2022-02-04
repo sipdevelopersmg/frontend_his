@@ -25,6 +25,10 @@ const coreRoutes: Routes = [
                 loadChildren: () => import("../MM/mm.module").then(m => m.MaterialManagementModule),
             },
             {
+                path: "MM_TE",
+                loadChildren: () => import("../MM-TANPA-ED/mm.module").then(m => m.MaterialManagementTanpaEDModule),
+            },
+            {
                 path: "Pharmacy",
                 loadChildren: () => import("../Pharmacy/pharmacy.module").then(m => m.PharmacyModule),
             },

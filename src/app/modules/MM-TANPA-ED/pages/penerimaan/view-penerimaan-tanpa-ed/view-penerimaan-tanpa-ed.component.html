@@ -1,0 +1,165 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- <org-input-look-up-kode #LookupKodePenerimaan [lookup-url]="urlPenerimaan" [idKode]="'id_penerimaan'" [modal-title]="'Data Penerimaan'"
+                    [idTitle]="'penerimaan'" (onGetSelectedData)="heandleSelectedPenerimaan($event)"
+                    [columns]="LookupGridPenerimaan.columns" [filter-lookup]="LookupGridPenerimaan.filter"
+                    [label]="'Penerimaan'">
+                </org-input-look-up-kode> -->
+                <!-- import {MM} from 'src/app/api/MM' -->
+                <!-- import * as LookupGridPenerimaan from './json/LookupGridPenerimaan.json' -->
+                <!-- urlPenerimaan = MM.SETUP_DATA.SETUP_COA.GET_ALL_BY_PARMS; -->
+                <!-- LookupGridPenerimaan = LookupGridPenerimaan; -->
+                <!-- @ViewChild('LookupKodePenerimaan') LookupKodePenerimaan: OrgInputLookUpKodeComponent; -->
+                <!-- heandleSelectedPenerimaan(args: any): void {
+                    this.id_penerimaan.setValue(args.id_penerimaan);
+                } -->
+                <!-- this.LookupKodePenerimaan.resetValue(); -->
+                <mol-datepicker-syncfusion [label]="'Tgl Penerimaan'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_penerimaan">
+                </mol-datepicker-syncfusion>
+                <mol-input-text [label]="'Supplier'" formControlName="nama_supplier" [inputFieldState]="'detail'">
+                </mol-input-text>
+                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom" [inputFieldState]="'detail'">
+                </mol-input-text>
+
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <mol-input-text [label]="'No Surat Jalan'" formControlName="nomor_surat_jalan_supplier"
+                    [inputFieldState]="inputFieldState"></mol-input-text>
+                <mol-datepicker-syncfusion [label]="'Tgl Surat Jalan'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_surat_jalan_supplier">
+                </mol-datepicker-syncfusion>
+                <!-- Dropdown Shipping Method -->
+                <!-- <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Shipping Method'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalShippingMethodDropdown id="marital"
+                            [dataSource]="setupShippingMethodService.dataSource| async"
+                            [fields]="MaritalShippingMethodDropdownField" [allowFiltering]="true"
+                            formControlName="id_tipe_supplier">
+                        </ejs-dropdownlist>
+                    </div>
+                </div> -->
+                <!-- SetupShippingMethodDropdownField: object = { text: 'shipping_method', value: 'id_shipping_method' }; -->
+                <!-- public setupShippingMethodService: SetupShippingMethodService, -->
+                <!-- this.setupShippingMethodService.setDataSource(); -->
+
+                <!-- Dropdown Payment Term -->
+                <!-- <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Payment Term'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalPaymentTermDropdown id="marital"
+                            [dataSource]="setupPaymentTermService.dataSource| async"
+                            [fields]="MaritalPaymentTermDropdownField" [allowFiltering]="true"
+                            formControlName="id_tipe_supplier">
+                        </ejs-dropdownlist>
+                    </div>
+                </div> -->
+                <!-- SetupPaymentTermDropdownField: object = { text: 'payment_term', value: 'id_payment_term' }; -->
+                <!-- public setupPaymentTermService: SetupPaymentTermService, -->
+                <!-- this.setupPaymentTermService.setDataSource(); -->
+
+                <mol-datepicker-syncfusion [label]="'Tgl Jatuh Tempo'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_jatuh_tempo_bayar">
+                </mol-datepicker-syncfusion>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+            </div>
+        </div>
+        <div class="card text-center mb-2">
+            <div class="card-body p-0">
+                <mol-grid [grid-DataSource]="penerimaanTanpaEdService.dataDetail$| async" [columns]="ConfigGrid.TrDetail"
+                    [grid-lines]="'Both'">
+                </mol-grid>
+            </div>
+            <div class="card-footer text-end">
+                Total Transaksi : {{ sub_total_1.value | currency:"":"" }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true" [value]="penerimaanTanpaEdService.jumlah_item"
+                    formControlName="sub_total_1" [inputFieldState]="'detail'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Diskon'" [isFooter]="true" [value]="penerimaanTanpaEdService.total_disc"
+                    formControlName="total_disc" [inputFieldState]="'detail'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true" [value]="penerimaanTanpaEdService.sub_total_2"
+                    formControlName="sub_total_2" [inputFieldState]="'detail'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Tax'" [isFooter]="true" [value]="penerimaanTanpaEdService.total_tax"
+                    formControlName="total_tax" [inputFieldState]="'detail'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Total Transaksi'" [isFooter]="true"
+                    [value]="penerimaanTanpaEdService.total_transaksi" formControlName="total_transaksi"
+                    [inputFieldState]="'detail'">
+                </mol-input-numeric>
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric [label]="'Biaya Kirim'" formControlName="biaya_kirim" [isFooter]="true"
+                    [inputFieldState]="'input'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Biaya Asuransi'" formControlName="biaya_asuransi" [isFooter]="true"
+                    [inputFieldState]="'input'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Biaya Lain'" formControlName="biaya_lain" [isFooter]="true"
+                    [inputFieldState]="'input'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Potongan'" formControlName="potongan_nominal" [isFooter]="true"
+                    [inputFieldState]="'input'">
+                </mol-input-numeric>
+
+                <mol-input-numeric [label]="'Uang Muka'" formControlName="total_uang_muka" [isFooter]="true"
+                    [inputFieldState]="'input'">
+                </mol-input-numeric>
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true" [value]="penerimaanTanpaEdService.jumlah_item"
+                    formControlName="jumlah_item" [inputFieldState]="'detail'">
+                </mol-input-numeric>
+                <mol-input-numeric [label]="'Total Tagihan'" formControlName="total_tagihan" [isFooter]="true"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Keterangan Resep Canceled  -->
+    <ng-template #modalCanceled>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Canceled</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+                <div class="col-sm-4">
+                    <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onCalceled()">Cancel Data</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
+        </div>
+    </ng-template>
+</org-card-layout>

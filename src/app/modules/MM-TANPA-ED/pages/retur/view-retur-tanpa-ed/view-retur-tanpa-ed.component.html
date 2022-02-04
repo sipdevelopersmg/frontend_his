@@ -1,0 +1,88 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <!-- Header -->
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- No. Retur -->
+                <mol-input-text [label]="'Nomor Retur'" formControlName="nomor_retur_pembelian"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
+                <!-- Tgl. Retur -->
+                <mol-datepicker-syncfusion [label]="'Tanggal Retur Pembelian'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_retur_pembelian">
+                </mol-datepicker-syncfusion>
+
+                <!-- Tgl. Jatuh Tempo -->
+                <mol-datepicker-syncfusion [label]="'Tanggal Jatuh Tempo'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_jatuh_tempo_pelunasan_retur">
+                </mol-datepicker-syncfusion>
+
+                <!-- Stockroom -->
+                <mol-input-text [label]="'Stockroom'" formControlName="nama_stockroom"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
+                <!-- Mekanisme Retur -->
+                <mol-input-text [label]="'Mekanisme Retur'" formControlName="mekanisme_retur"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- Supplier -->
+                <mol-input-text [label]="'Supplier'" formControlName="nama_supplier"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-text>
+
+                <!-- Keterangan -->
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <mol-grid [grid-DataSource]="returPembelianTanpaEdService.dataDetail$| async" [columns]="ConfigGrid.TrDetail"
+            [grid-lines]="'Both'" [grid-height]="200">
+        </mol-grid>
+
+        <!-- Footer -->
+        <div class="row justify-content-end">
+            <div class="col-sm-3">
+                <mol-input-numeric [label]="'Jumlah Item'" [isFooter]="true" [value]="returPembelianTanpaEdService.jumlah_item"
+                    formControlName="jumlah_item_retur" [inputFieldState]="'detail'">
+                </mol-input-numeric>
+            </div>
+            <div class="col-sm-4">
+                <mol-input-numeric [isFooter]="true" [label]="'Total Transaksi'" formControlName="total_transaksi_retur"
+                    [inputFieldState]="inputFieldState">
+                </mol-input-numeric>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Keterangan Resep Canceled  -->
+    <ng-template #modalCanceled>
+        <div class="modal-header px-2 py-1 background-biru-muda text-white">
+            <h5 class="modal-title pull-left">Canceled</h5>
+            <button type="button" class="btn pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+                <i class="fas fa-window-close"></i>
+            </button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="row mx-0 my-1">
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+                <div class="col-sm-4">
+                    <label for="reason_canceled"><strong>Reason Cancel</strong></label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" name="reason_canceled">
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="modal-footer background-abu-muda">
+            <button type="button" class="btn btn-primary" (click)="onCalceled()">Cancel Data</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Batal</button>
+        </div>
+    </ng-template>
+
+</org-card-layout>

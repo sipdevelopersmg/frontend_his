@@ -1,0 +1,84 @@
+{
+    "GridColumns": [
+        {
+            "field": "nomor_repacking",
+            "headerText": "No Repacking",
+            "type": "string",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 150
+        },
+        {
+            "field": "tanggal_repacking",
+            "headerText": "Tgl Repacing",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "nama_stockroom",
+            "headerText": "Nama Stockroom",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 180
+        },
+        {
+            "field": "kode_item",
+            "headerText": "Kode Item",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "nama_item",
+            "headerText": "Nama Item",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 200
+        },
+        {
+            "field": "qty",
+            "headerText": "QTY",
+            "type": "number",
+            "format": "N2",
+            "headerTextAlign": "Right",
+            "textAlign": "Right",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "status_transaksi",
+            "headerText": "Status",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "keterangan_assembly",
+            "headerText": "Keterangan",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 150
+        }
+    ]
+}
