@@ -1,37 +1,35 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DaftarAssemblyTanpaEdComponent } from "./pages/assembly/daftar-assembly-tanpa-ed/daftar-assembly-tanpa-ed.component";
+import { InputAssemblyTanpaEdComponent } from "./pages/assembly/input-assembly-tanpa-ed/input-assembly-tanpa-ed.component";
+import { ViewAssemblyTanpaEdComponent } from "./pages/assembly/view-assembly-tanpa-ed/view-assembly-tanpa-ed.component";
 import { DaftarPermintaanMutasiTanpaEdComponent } from "./pages/mutasi/pemintaan-mutasi/daftar-permintaan-mutasi-tanpa-ed/daftar-permintaan-mutasi-tanpa-ed.component";
 import { InputPermintaanMutasiTanpaEdComponent } from "./pages/mutasi/pemintaan-mutasi/input-permintaan-mutasi-tanpa-ed/input-permintaan-mutasi-tanpa-ed.component";
 import { ViewPermintaanMutasiTanpaEdComponent } from "./pages/mutasi/pemintaan-mutasi/view-permintaan-mutasi-tanpa-ed/view-permintaan-mutasi-tanpa-ed.component";
 import { DaftarPersetujuanMutasiTanpaEdComponent } from "./pages/mutasi/persetujuan-mutasi/daftar-persetujuan-mutasi-tanpa-ed/daftar-persetujuan-mutasi-tanpa-ed.component";
 import { ViewPersetujuanMutasiTanpaEdComponent } from "./pages/mutasi/persetujuan-mutasi/view-persetujuan-mutasi-tanpa-ed/view-persetujuan-mutasi-tanpa-ed.component";
 import { DaftarPemakaianInternalTanpaEdComponent } from "./pages/pemakaian-internal/daftar-pemakaian-internal-tanpa-ed/daftar-pemakaian-internal-tanpa-ed.component";
+import { DaftarPemakaianInternalValidasiTanpaEdComponent } from "./pages/pemakaian-internal/daftar-pemakaian-internal-validasi-tanpa-ed/daftar-pemakaian-internal-validasi-tanpa-ed.component";
 import { InputPemakaianInternalTanpaEdComponent } from "./pages/pemakaian-internal/input-pemakaian-internal-tanpa-ed/input-pemakaian-internal-tanpa-ed.component";
 import { ViewPemakaianInternalTanpaEdComponent } from "./pages/pemakaian-internal/view-pemakaian-internal-tanpa-ed/view-pemakaian-internal-tanpa-ed.component";
+import { ViewPemakaianInternalValidasiTanpaEdComponent } from "./pages/pemakaian-internal/view-pemakaian-internal-validasi-tanpa-ed/view-pemakaian-internal-validasi-tanpa-ed.component";
+import { DaftarPemusnahanTanpaEdComponent } from "./pages/pemusnahan/daftar-pemusnahan-tanpa-ed/daftar-pemusnahan-tanpa-ed.component";
+import { InputPemusnahanTanpaEdComponent } from "./pages/pemusnahan/input-pemusnahan-tanpa-ed/input-pemusnahan-tanpa-ed.component";
+import { ViewPemusnahanTanpaEdComponent } from "./pages/pemusnahan/view-pemusnahan-tanpa-ed/view-pemusnahan-tanpa-ed.component";
 import { DaftarPenerimaanTanpaEdComponent } from "./pages/penerimaan/daftar-penerimaan-tanpa-ed/daftar-penerimaan-tanpa-ed.component";
 import { InputPenerimaanTanpaEdComponent } from "./pages/penerimaan/input-penerimaan-tanpa-ed/input-penerimaan-tanpa-ed.component";
 import { ViewPenerimaanTanpaEdComponent } from "./pages/penerimaan/view-penerimaan-tanpa-ed/view-penerimaan-tanpa-ed.component";
+import { DaftarRepackingTanpaEdComponent } from "./pages/repacking/daftar-repacking-tanpa-ed/daftar-repacking-tanpa-ed.component";
+import { InputRepackingTanpaEdComponent } from "./pages/repacking/input-repacking-tanpa-ed/input-repacking-tanpa-ed.component";
+import { ViewRepackingTanpaEdComponent } from "./pages/repacking/view-repacking-tanpa-ed/view-repacking-tanpa-ed.component";
+import { DaftarReturPemakaianInternalComponent } from "./pages/retur-pemakaian-internal/daftar-retur-pemakaian-internal/daftar-retur-pemakaian-internal.component";
+import { InputReturPemakaianInternalComponent } from "./pages/retur-pemakaian-internal/input-retur-pemakaian-internal/input-retur-pemakaian-internal.component";
+import { ViewReturPemakaianInternalComponent } from "./pages/retur-pemakaian-internal/view-retur-pemakaian-internal/view-retur-pemakaian-internal.component";
 import { DaftarReturTanpaEdComponent } from "./pages/retur/daftar-retur-tanpa-ed/daftar-retur-tanpa-ed.component";
 import { InputReturTanpaEdComponent } from "./pages/retur/input-retur-tanpa-ed/input-retur-tanpa-ed.component";
 import { ViewReturTanpaEdComponent } from "./pages/retur/view-retur-tanpa-ed/view-retur-tanpa-ed.component";
 
 const mmRoutes: Routes = [
-    // {
-    //     path: "kontrak-pengadaan", component: null, data: { title: "Input Kontrak Pengadaan" },
-    //     children: [
-    //         { path: "input-kontrak-pengadaan", component: InputKontrakPengadaanComponent, data: { title: "Input Kontrak Pengadaan" } },
-    //         { path: "daftar-kontrak-pengadaan", component: ListKontrakPengadaanComponent, data: { title: "Daftar Kontrak Pengadaan" } },
-    //         { path: "view-kontrak-pengadaan/:id/:key", component: ViewKontrakPengadaanComponent, data: { title: "View Kontrak Pengadaan" } },
-    //     ],
-    // },
-    // {
-    //     path: "pemesanan", component: null, data: { title: "Input PO" },
-    //     children: [
-    //         { path: "input-pemesanan", component: InputPemesananComponent, data: { title: "Input Pemesanan" } },
-    //         { path: "daftar-pemesanan", component: DaftarPemesananComponent, data: { title: "Daftar Pemesanan" } },
-    //         { path: "view-pemesanan/:id/:key", component: ViewPemesananComponent, data: { title: "View Pemesanan" } },
-    //     ],
-    // },
     {
         path: "penerimaan-tanpa-ed", component: null, data: { title: "Input Penerimaan Tanpa ED" },
         children: [
@@ -40,13 +38,6 @@ const mmRoutes: Routes = [
             { path: "view-penerimaan-tanpa-ed/:id/:key", component: ViewPenerimaanTanpaEdComponent, data: { title: "View Penerimaan Tanpa ED" } },
         ],
     },
-    // {
-    //     path: "setharga-order", component: null, data: { title: "Input PO" },
-    //     children: [
-    //         { path: "input-setharga-order", component: SetHargaOrderComponent, data: { title: "Set Harga Order" } },
-    //     ],
-
-    // },
     {
         path: "permintaan-mutasi-tanpa-ed", component: null, data: { title: "Input PO" },
         children: [
@@ -80,46 +71,45 @@ const mmRoutes: Routes = [
 
         ],
     },
-    // {
-    //     path: "issue-validation", component: null, data: { title: "Input Issue Validation" },
-    //     children: [
-    //         { path: "daftar-issue-validation", component: DaftarIssueValidationComponent, data: { title: "Daftar Issue" } },
-    //         { path: "view-issue-validation/:id/:key", component: ViewIssueValidationComponent, data: { title: "View Issue" } },
-    //     ],
-    // },
-    // {
-    //     path: "retur-issue", component: null, data: { title: "Input Retur Issue" },
-    //     children: [
-    //         { path: "daftar-retur-issue", component: DaftarReturIssueComponent, data: { title: "Daftar Retur Issue" } },
-    //         { path: "input-retur-issue", component: InputReturIssueComponent, data: { title: "Input Retur Issue" } },
-    //         { path: "view-retur-issue/:id/:key", component: ViewReturIssueComponent, data: { title: "View Retur Issue" } },
-
-    //     ],
-    // },
-    // {
-    //     path: "repacking", component: null, data: { title: "Input Repacking" },
-    //     children: [
-    //         { path: "daftar-repacking", component: DaftarRepackingComponent, data: { title: "Daftar Repacking" } },
-    //         { path: "input-repacking", component: InputRepackingComponent, data: { title: "Input Repacking" } },
-    //         { path: "view-repacking/:id/:key", component: ViewRepackingComponent, data: { title: "View Repacking" } },
-    //     ],
-    // },
-    // {
-    //     path: "assembly", component: null, data: { title: "Input Assembly" },
-    //     children: [
-    //         { path: "daftar-assembly", component: DaftarAssemblyComponent, data: { title: "Daftar Assembly" } },
-    //         { path: "input-assembly", component: InputAssemblyComponent, data: { title: "Input Assembly" } },
-    //         { path: "view-assembly/:id/:key", component: ViewAssemblyComponent, data: { title: "View Assembly" } },
-    //     ],
-    // },
-    // {
-    //     path: "pemusnahan-stok", component: null, data: { title: "Input PO" },
-    //     children: [
-    //         { path: "daftar-pemusnahan-stok", component: DaftarPemusnahanComponent, data: { title: "Pemusnahan Stok" } },
-    //         { path: "input-pemusnahan-stok", component: InputPemusnahanComponent, data: { title: "Input Pemusnahan Stok" } },
-    //         { path: "view-pemusnahan-stok/:id/:key", component: ViewPemusnahanComponent, data: { title: "View Pemusnahan Stok" } },
-    //     ],
-    // },
+    {
+        path: "pemakaian-internal-validation-tanpa-ed", component: null, data: { title: "Input Issue Validation" },
+        children: [
+            { path: "daftar-pemakaian-internal-validation-tanpa-ed", component: DaftarPemakaianInternalValidasiTanpaEdComponent, data: { title: "Daftar Validasi Pemakaian Internal" } },
+            { path: "view-pemakaian-internal-validation-tanpa-ed/:id/:key", component: ViewPemakaianInternalValidasiTanpaEdComponent, data: { title: "View Validasi Pemakaian Internal" } },
+        ],
+    },
+    {
+        path: "retur-pemakaian-internal-tanpa-ed", component: null, data: { title: "Input Retur Issue" },
+        children: [
+            { path: "daftar-retur-pemakian-internal-tanpa-ed", component: DaftarReturPemakaianInternalComponent, data: { title: "Daftar Retur Pemakaian Internal" } },
+            { path: "input-retur-pemakaian-internal-tanpa-ed", component: InputReturPemakaianInternalComponent, data: { title: "Input Retur Pemakaian Internal" } },
+            { path: "view-retur-pemakaian-internal-tanpa-ed/:id/:key", component: ViewReturPemakaianInternalComponent, data: { title: "View Retur Pemakaian Internal" } },
+        ],
+    },
+    {
+        path: "repacking-tanpa-ed", component: null, data: { title: "Input Repacking Tanpa Ed" },
+        children: [
+            { path: "daftar-repacking-tanpa-ed", component: DaftarRepackingTanpaEdComponent, data: { title: "Daftar Repacking Tanpa Ed" } },
+            { path: "input-repacking-tanpa-ed", component: InputRepackingTanpaEdComponent, data: { title: "Input Repacking Tanpa Ed" } },
+            { path: "view-repacking-tanpa-ed/:id/:key", component: ViewRepackingTanpaEdComponent, data: { title: "View Repacking Tanpa Ed" } },
+        ],
+    },
+    {
+        path: "assembly-tanpa-ed", component: null, data: { title: "Input Assembly" },
+        children: [
+            { path: "daftar-assembly-tanpa-ed", component: DaftarAssemblyTanpaEdComponent, data: { title: "Daftar Assembly Tanpa Ed" } },
+            { path: "input-assembly-tanpa-ed", component: InputAssemblyTanpaEdComponent, data: { title: "Input Assembly Tanpa Ed" } },
+            { path: "view-assembly-tanpa-ed/:id/:key", component: ViewAssemblyTanpaEdComponent, data: { title: "View Assembly Tanpa Ed" } },
+        ],
+    },
+    {
+        path: "pemusnahan-stok-tanpa-ed", component: null, data: { title: "Input PO" },
+        children: [
+            { path: "daftar-pemusnahan-stok-tanpa-ed", component: DaftarPemusnahanTanpaEdComponent, data: { title: "Pemusnahan Stok" } },
+            { path: "input-pemusnahan-stok-tanpa-ed", component: InputPemusnahanTanpaEdComponent, data: { title: "Input Pemusnahan Stok" } },
+            { path: "view-pemusnahan-stok-tanpa-ed/:id/:key", component: ViewPemusnahanTanpaEdComponent, data: { title: "View Pemusnahan Stok" } },
+        ],
+    },
     // {
     //     path:"stok-opname",component:null,data:{title:'Stock Opname'},
     //     children: [

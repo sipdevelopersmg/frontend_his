@@ -1,0 +1,63 @@
+{
+    "GridColumns": [
+        {
+            "field": "nomor_pemusnahan_stok",
+            "headerText": "No Pemusnahan Stok",
+            "type": "string",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 150
+        },
+        {
+            "field": "tanggal_pemusnahan_stok",
+            "headerText": "Tgl Pemusnahan Stok",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "nama_stockroom",
+            "headerText": "Nama Stockroom",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 180
+        },
+        {
+            "field": "jumlah_item",
+            "headerText": "Jumlah Item",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "status_transaksi",
+            "headerText": "Status",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "keterangan",
+            "headerText": "Keterangan",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 150
+        }
+    ]
+}

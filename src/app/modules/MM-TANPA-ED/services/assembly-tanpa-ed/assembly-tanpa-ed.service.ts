@@ -2,28 +2,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MM } from 'src/app/api/MM';
+import { MM_TANPA_ED } from 'src/app/api/MM_TANPA_ED';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { assemblyDetailModel, assemblyModel } from '../../models/assembly/assemblyModel';
+import { assemblyDetailTanpaEdModel, assemblyTanpaEdModel } from '../../models/assembly-tanpa-ed/assembly-tanpa-edModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AssemblyService {
+export class AssemblyTanpaEdService {
 
-    public API = MM.ASSEM.ASSEMBLY;
+  public API = MM_TANPA_ED.ASSEM_TANPA_ED.ASSEMBLY_TANPA_ED;
     public dataSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<assemblyDetailModel[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<assemblyDetailTanpaEdModel[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): assemblyDetailModel[] {
+    get dataDetail(): assemblyDetailTanpaEdModel[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: assemblyDetailModel[]) {
+    set dataDetail(val: assemblyDetailTanpaEdModel[]) {
         this._dataDetail.next(val);
     }
 
@@ -86,7 +86,7 @@ export class AssemblyService {
         return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID + '/' + id)
     }
 
-    addDataDetail(detail: assemblyDetailModel) {
+    addDataDetail(detail: assemblyDetailTanpaEdModel) {
         this.dataDetail = [
             ...this.dataDetail,
             detail
@@ -94,7 +94,7 @@ export class AssemblyService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: assemblyDetailModel, rowData: assemblyDetailModel) {
+    updateFromInline(index: number, data: assemblyDetailTanpaEdModel, rowData: assemblyDetailTanpaEdModel) {
        
         data.qty = data.qty;
         data.sub_total = data.qty * data.hpp_satuan;
@@ -144,7 +144,7 @@ export class AssemblyService {
         this.jumlah_item = this.dataDetail.sum('qty');
     }
 
-    Insert(Data: assemblyModel): Observable<any> {
+    Insert(Data: assemblyTanpaEdModel): Observable<any> {
         this.dataDetail.map((e, i) => {
             return e.no_urut = i + 1;
         });

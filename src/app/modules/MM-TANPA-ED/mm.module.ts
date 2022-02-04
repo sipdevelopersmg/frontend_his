@@ -17,6 +17,20 @@ import { ViewPersetujuanMutasiTanpaEdComponent } from './pages/mutasi/persetujua
 import { InputPemakaianInternalTanpaEdComponent } from './pages/pemakaian-internal/input-pemakaian-internal-tanpa-ed/input-pemakaian-internal-tanpa-ed.component';
 import { DaftarPemakaianInternalTanpaEdComponent } from './pages/pemakaian-internal/daftar-pemakaian-internal-tanpa-ed/daftar-pemakaian-internal-tanpa-ed.component';
 import { ViewPemakaianInternalTanpaEdComponent } from './pages/pemakaian-internal/view-pemakaian-internal-tanpa-ed/view-pemakaian-internal-tanpa-ed.component';
+import { InputReturPemakaianInternalComponent } from './pages/retur-pemakaian-internal/input-retur-pemakaian-internal/input-retur-pemakaian-internal.component';
+import { DaftarReturPemakaianInternalComponent } from './pages/retur-pemakaian-internal/daftar-retur-pemakaian-internal/daftar-retur-pemakaian-internal.component';
+import { ViewReturPemakaianInternalComponent } from './pages/retur-pemakaian-internal/view-retur-pemakaian-internal/view-retur-pemakaian-internal.component';
+import { InputAssemblyTanpaEdComponent } from './pages/assembly/input-assembly-tanpa-ed/input-assembly-tanpa-ed.component';
+import { ViewAssemblyTanpaEdComponent } from './pages/assembly/view-assembly-tanpa-ed/view-assembly-tanpa-ed.component';
+import { DaftarAssemblyTanpaEdComponent } from './pages/assembly/daftar-assembly-tanpa-ed/daftar-assembly-tanpa-ed.component';
+import { InputRepackingTanpaEdComponent } from './pages/repacking/input-repacking-tanpa-ed/input-repacking-tanpa-ed.component';
+import { DaftarRepackingTanpaEdComponent } from './pages/repacking/daftar-repacking-tanpa-ed/daftar-repacking-tanpa-ed.component';
+import { ViewRepackingTanpaEdComponent } from './pages/repacking/view-repacking-tanpa-ed/view-repacking-tanpa-ed.component';
+import { DaftarPemakaianInternalValidasiTanpaEdComponent } from './pages/pemakaian-internal/daftar-pemakaian-internal-validasi-tanpa-ed/daftar-pemakaian-internal-validasi-tanpa-ed.component';
+import { ViewPemakaianInternalValidasiTanpaEdComponent } from './pages/pemakaian-internal/view-pemakaian-internal-validasi-tanpa-ed/view-pemakaian-internal-validasi-tanpa-ed.component';
+import { InputPemusnahanTanpaEdComponent } from './pages/pemusnahan/input-pemusnahan-tanpa-ed/input-pemusnahan-tanpa-ed.component';
+import { DaftarPemusnahanTanpaEdComponent } from './pages/pemusnahan/daftar-pemusnahan-tanpa-ed/daftar-pemusnahan-tanpa-ed.component';
+import { ViewPemusnahanTanpaEdComponent } from './pages/pemusnahan/view-pemusnahan-tanpa-ed/view-pemusnahan-tanpa-ed.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +47,21 @@ import { ViewPemakaianInternalTanpaEdComponent } from './pages/pemakaian-interna
     ViewPersetujuanMutasiTanpaEdComponent,
     InputPemakaianInternalTanpaEdComponent,
     DaftarPemakaianInternalTanpaEdComponent,
-    ViewPemakaianInternalTanpaEdComponent
+    ViewPemakaianInternalTanpaEdComponent,
+    InputReturPemakaianInternalComponent,
+    DaftarReturPemakaianInternalComponent,
+    ViewReturPemakaianInternalComponent,
+    InputAssemblyTanpaEdComponent,
+    ViewAssemblyTanpaEdComponent,
+    DaftarAssemblyTanpaEdComponent,
+    InputRepackingTanpaEdComponent,
+    DaftarRepackingTanpaEdComponent,
+    ViewRepackingTanpaEdComponent,
+    DaftarPemakaianInternalValidasiTanpaEdComponent,
+    ViewPemakaianInternalValidasiTanpaEdComponent,
+    InputPemusnahanTanpaEdComponent,
+    DaftarPemusnahanTanpaEdComponent,
+    ViewPemusnahanTanpaEdComponent
   ],
     imports: [
         FormsModule,

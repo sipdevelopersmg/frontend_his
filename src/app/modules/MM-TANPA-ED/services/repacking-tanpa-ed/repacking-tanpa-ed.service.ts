@@ -2,28 +2,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MM } from 'src/app/api/MM';
+import { MM_TANPA_ED } from 'src/app/api/MM_TANPA_ED';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
-import { assemblyDetailModel, assemblyModel } from '../../models/assembly/assemblyModel';
+import { repackingDetailTanpaEdModel, repackingTanpaEdModel } from '../../models/repacking-tanpa-ed/repacking-tanpa-edModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AssemblyService {
+export class RepackingTanpaEdService {
 
-    public API = MM.ASSEM.ASSEMBLY;
+  public API = MM_TANPA_ED.REPACK_TANPA_ED.REPACKING_TANPA_ED;
     public dataSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<assemblyDetailModel[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<repackingDetailTanpaEdModel[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): assemblyDetailModel[] {
+    get dataDetail(): repackingDetailTanpaEdModel[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: assemblyDetailModel[]) {
+    set dataDetail(val: repackingDetailTanpaEdModel[]) {
         this._dataDetail.next(val);
     }
 
@@ -86,7 +86,7 @@ export class AssemblyService {
         return this.httpOperationService.defaultGetRequest(this.API.GET_DETAIL_BY_ID + '/' + id)
     }
 
-    addDataDetail(detail: assemblyDetailModel) {
+    addDataDetail(detail: repackingDetailTanpaEdModel) {
         this.dataDetail = [
             ...this.dataDetail,
             detail
@@ -94,13 +94,32 @@ export class AssemblyService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: assemblyDetailModel, rowData: assemblyDetailModel) {
+    updateFromInline(index: number, data: repackingDetailTanpaEdModel, rowData: repackingDetailTanpaEdModel) {
        
         data.qty = data.qty;
         data.sub_total = data.qty * data.hpp_satuan;
 
         this.dataDetail[index] = data;
+        // data = this.validasi_detail(data);
         this.sum();
+    }
+
+    validasi_detail(data: repackingDetailTanpaEdModel){
+        // let message='';
+        // if(data.batch_number){
+        //     data.validasi = true;
+        //     if(data.expired_date){
+        //         data.validasi = true;
+        //     }else{
+        //         data.validasi = false;
+        //         message += ", expired date belum di isi"
+        //     }
+        // }else{
+        //     data.validasi = false;
+        //     message += 'bach number belum di isi'
+        // }
+        // data.message = message;
+        return data;
     }
 
     removeDataDetail(index: number) {
@@ -113,6 +132,8 @@ export class AssemblyService {
         this.dataDetail[index].sub_total = banyak * this.dataDetail[index].hpp_satuan;
         this.sum();
     }
+
+    
 
     // editHarga(index: number, harga: number) {
     //     this.dataDetail[index].harga_satuan = harga;
@@ -144,7 +165,7 @@ export class AssemblyService {
         this.jumlah_item = this.dataDetail.sum('qty');
     }
 
-    Insert(Data: assemblyModel): Observable<any> {
+    Insert(Data: repackingTanpaEdModel): Observable<any> {
         this.dataDetail.map((e, i) => {
             return e.no_urut = i + 1;
         });
@@ -161,6 +182,8 @@ export class AssemblyService {
             );
     }
 
+    
+
     Reset() {
         this.dataDetail = [];
         this.jumlah_item = 0;
@@ -168,7 +191,7 @@ export class AssemblyService {
     }
 
     Validation(id: number): Observable<any> {
-        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI, { assembly_id: id })
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI, { repacking_id: id })
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -178,7 +201,7 @@ export class AssemblyService {
 
     Cancel(id: number, reason: string): Observable<any> {
         return this.httpOperationService.defaultPutRequest(this.API.CANCEL, {
-          assembly_id: id,
+          repacking_id: id,
           reason_canceled: reason
         })
             .pipe(

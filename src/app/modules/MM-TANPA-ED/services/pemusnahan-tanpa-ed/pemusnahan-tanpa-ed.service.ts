@@ -2,29 +2,29 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MM } from 'src/app/api/MM';
+import { MM_TANPA_ED } from 'src/app/api/MM_TANPA_ED';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { pemusnahanDetailmodel, pemusnahanModel } from '../../models/pemusnahan/pemusnahanModel';
+import { pemusnahanTanpaEdDetailmodel, pemusnahanTanpaEdModel } from '../../models/pemusnahan-tanpa-ed/pemusnahan-tanpa-edModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PemusnahanService {
+export class PemusnahanTanpaEdService {
 
-    public API = MM.PEMUSNAHAN.PEMUSNAHAN_MODEL;
+  public API = MM_TANPA_ED.PEMUSNAHANTANPAED.PEMUSNAHAN_TANPA_ED;
     public dataSource = new BehaviorSubject([]);
 
-    private readonly _dataDetail = new BehaviorSubject<pemusnahanDetailmodel[]>([]);
+    private readonly _dataDetail = new BehaviorSubject<pemusnahanTanpaEdDetailmodel[]>([]);
     readonly dataDetail$ = this._dataDetail.asObservable();
 
-    get dataDetail(): pemusnahanDetailmodel[] {
+    get dataDetail(): pemusnahanTanpaEdDetailmodel[] {
         return this._dataDetail.getValue();
     }
 
-    set dataDetail(val: pemusnahanDetailmodel[]) {
+    set dataDetail(val: pemusnahanTanpaEdDetailmodel[]) {
         this._dataDetail.next(val);
     }
 
@@ -100,7 +100,7 @@ export class PemusnahanService {
         });
     }
 
-    addDataDetail(detail: pemusnahanDetailmodel) {
+    addDataDetail(detail: pemusnahanTanpaEdDetailmodel) {
         this.dataDetail = [
             ...this.dataDetail,
             detail
@@ -108,7 +108,7 @@ export class PemusnahanService {
         this.sum();
     }
 
-    updateFromInline(index: number, data: pemusnahanDetailmodel, rowData: pemusnahanDetailmodel) {
+    updateFromInline(index: number, data: pemusnahanTanpaEdDetailmodel, rowData: pemusnahanTanpaEdDetailmodel) {
         data.sub_total = data.hpp_satuan * data.qty
         this.dataDetail[index] = data;
         this.sum();
@@ -129,7 +129,7 @@ export class PemusnahanService {
         this.jumlah_item = this.dataDetail.sum('qty');
     }
 
-    Insert( Data:pemusnahanModel ): Observable<any>{
+    Insert( Data:pemusnahanTanpaEdModel ): Observable<any>{
 
         this.dataDetail.map((e,i)=>{
             e.no_urut = i+1;
@@ -157,7 +157,7 @@ export class PemusnahanService {
     }
 
     Validation(id:number): Observable<any>{
-        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ pemusnahan_stok_id : id })
+        return this.httpOperationService.defaultPutRequest(this.API.VALIDASI,{ pemusnahanTanpaEd_stok_id : id })
             .pipe(
                 catchError((error: HttpErrorResponse):any =>{
                     this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
@@ -167,7 +167,7 @@ export class PemusnahanService {
     
     Batal(id:number,reason:string): Observable<any>{
         return this.httpOperationService.defaultPutRequest(this.API.BATAL,{ 
-              pemusnahan_stok_id : id,
+              pemusnahanTanpaEd_stok_id : id,
               reason_canceled:reason 
             })
             .pipe(
