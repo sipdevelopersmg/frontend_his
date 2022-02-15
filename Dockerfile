@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install -g @angular/cli@12.0.1 && \
     npm install && \
-    node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=production --build-optimizer --output-hashing=all
+    node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=production --build-optimizer --output-hashing=none
 
 COPY . .
 
