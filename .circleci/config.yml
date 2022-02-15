@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Push Docker Image
           command: |
-            docker tag dockerhiscis/node-testing dockerhiscis/frontend-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/frontend-his dockerhiscis/frontend-his:$CIRCLE_SHA1
             docker push dockerhiscis/frontend-his:$CIRCLE_SHA1
             docker tag dockerhiscis/frontend-his dockerhiscis/frontend-his:latest
             docker push dockerhiscis/frontend-his:latest
