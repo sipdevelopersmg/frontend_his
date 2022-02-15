@@ -1,5 +1,6 @@
 ### STAGE 1 : Build ###
 FROM node:14.17 AS build
+ENV NODE_OPTIONS=--max-old-space-size=6144
 
 WORKDIR /app
 COPY / ./
@@ -7,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install -g @angular/cli@12.0.1 && \
     npm install && \
-    ng build --configuration=development
+    ng build --configuration=development --output-hashing=all
 
 COPY . .
 
