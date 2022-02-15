@@ -7,7 +7,6 @@ import { NotificationService } from './notification.service';
 import { UtilityService } from './utility.service';
 import * as Sentry from '@sentry/angular'
 import { Router } from '@angular/router';
-import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -345,7 +344,7 @@ export class HttpOperationService {
             }),
         ).subscribe((result: any) => {
             const file = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            saveAs(file, `${filename}.xlsx`)
+            // saveAs(file, `${filename}.xlsx`)
         })
     }
 

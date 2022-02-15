@@ -19,10 +19,8 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { AntrianPasienRawatJalanService } from '../../../services/IRJA/antrian-pasien-rawat-jalan/antrian-pasien-rawat-jalan.service';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 import { io } from 'socket.io-client';
-import Speech from 'speak-tts';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { Router } from '@angular/router';
-import { webApi } from 'src/environments/environment';
 
 @Component({
     selector: 'app-antrian-pasien-rawat-jalan',
@@ -132,44 +130,44 @@ export class AntrianPasienRawatJalanComponent implements OnInit, OnDestroy {
     }
 
     onStartSpeakVoice(data: string): void {
-        const speech = new Speech();
+        // const speech = new Speech();
 
-        speech.init({
-            volume: 1,
-            lang: 'id-ID',
-            rate: 1,
-            pitch: 1,
-            voice: 'Google Bahasa Indonesia',
-            splitSentences: true
-        }).then((result) => {
-            this.prepareSpeakVoice(speech, result, data);
-        });
+        // speech.init({
+        //     volume: 1,
+        //     lang: 'id-ID',
+        //     rate: 1,
+        //     pitch: 1,
+        //     voice: 'Google Bahasa Indonesia',
+        //     splitSentences: true
+        // }).then((result) => {
+        //     this.prepareSpeakVoice(speech, result, data);
+        // });
     }
 
-    prepareSpeakVoice(speech: Speech, result: any, data: any): void {
-        if (speech.hasBrowserSupport()) {
-            speech.cancel();
+    // prepareSpeakVoice(speech: Speech, result: any, data: any): void {
+    //     if (speech.hasBrowserSupport()) {
+    //         speech.cancel();
 
-            const language = result.voices.find((item) => { return item.lang == result.lang });
+    //         const language = result.voices.find((item) => { return item.lang == result.lang });
 
-            speech.setLanguage(language.lang);
-            speech.setVoice(language.name);
+    //         speech.setLanguage(language.lang);
+    //         speech.setVoice(language.name);
 
-            let splittedData: string[] = data.split("");
+    //         let splittedData: string[] = data.split("");
 
-            let text = `Nomor Antrian ${splittedData[0]} ${splittedData[1]} ${splittedData[2]}, Menuju Poli Penyakit Dalam`;
+    //         let text = `Nomor Antrian ${splittedData[0]} ${splittedData[1]} ${splittedData[2]}, Menuju Poli Penyakit Dalam`;
 
-            const audio = new Audio();
-            audio.src = '../../../../../../assets/sound/notification/airport_message.mp3';
-            audio.load();
-            audio.play()
-                .then(() => {
-                    setTimeout(() => {
-                        speech.speak({ text: text });
-                    }, 1200);
-                });
-        }
-    }
+    //         const audio = new Audio();
+    //         audio.src = '../../../../../../assets/sound/notification/airport_message.mp3';
+    //         audio.load();
+    //         audio.play()
+    //             .then(() => {
+    //                 setTimeout(() => {
+    //                     speech.speak({ text: text });
+    //                 }, 1200);
+    //             });
+    //     }
+    // }
 
     onSetFormKonsulAttributes(): void {
         this.FormKonsul = this.formBuilder.group({
