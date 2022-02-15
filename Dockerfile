@@ -1,6 +1,6 @@
 ### STAGE 1 : Build ###
 FROM node:14.17.1 AS build
-ENV NODE_OPTIONS=--max-old-space-size=10000
+ENV NODE_OPTIONS=--max-old-space-size=8192
 
 WORKDIR /app
 COPY / ./
@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install -g @angular/cli@12.0.1 && \
     npm install && \
-    node --max_old_space_size=10000 ./node_modules/@angular/cli/bin/ng build --configuration=production --build-optimizer --output-hashing=none
+    node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=production --build-optimizer --output-hashing=none
 
 COPY . .
 
