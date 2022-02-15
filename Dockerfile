@@ -1,6 +1,6 @@
 ### STAGE 1 : Build ###
-FROM node:14.17 AS build
-ENV NODE_OPTIONS=--max-old-space-size=6144
+FROM node:14.17.1 AS build
+ENV NODE_OPTIONS=--max-old-space-size=8192
 
 WORKDIR /app
 COPY / ./
