@@ -58,9 +58,9 @@ export class AppComponent implements OnInit, OnDestroy {
     prepareRoute(outlet: RouterOutlet): any {
         const routeData = this.getChild(this.activatedRoute);
 
-        routeData.data.subscribe((data: any) => {
-            return data.animation;
-        });
+        // routeData.data.subscribe((data: any) => {
+        //     return data.animation;
+        // });
     }
 
     handleMenuResctriction(currentUrl: string): void {
