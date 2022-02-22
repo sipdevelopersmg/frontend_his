@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DaftarSettingStokOpnameComponent } from "../MM/pages/stok_opname/setting_stok_opname/daftar-setting-stok-opname/daftar-setting-stok-opname.component";
 import { DaftarAssemblyTanpaEdComponent } from "./pages/assembly/daftar-assembly-tanpa-ed/daftar-assembly-tanpa-ed.component";
 import { InputAssemblyTanpaEdComponent } from "./pages/assembly/input-assembly-tanpa-ed/input-assembly-tanpa-ed.component";
 import { ViewAssemblyTanpaEdComponent } from "./pages/assembly/view-assembly-tanpa-ed/view-assembly-tanpa-ed.component";
@@ -28,6 +29,15 @@ import { ViewReturPemakaianInternalComponent } from "./pages/retur-pemakaian-int
 import { DaftarReturTanpaEdComponent } from "./pages/retur/daftar-retur-tanpa-ed/daftar-retur-tanpa-ed.component";
 import { InputReturTanpaEdComponent } from "./pages/retur/input-retur-tanpa-ed/input-retur-tanpa-ed.component";
 import { ViewReturTanpaEdComponent } from "./pages/retur/view-retur-tanpa-ed/view-retur-tanpa-ed.component";
+import { DaftarAuditStokOpnameTanpaSettingTanpaEdComponent } from "./pages/stok_opname/audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting-tanpa-ed/daftar-audit-stok-opname-tanpa-setting-tanpa-ed.component";
+import { InputAuditStokOpnameTanpaSettingTanpaEdComponent } from "./pages/stok_opname/audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting-tanpa-ed/input-audit-stok-opname-tanpa-setting-tanpa-ed.component";
+import { ViewAuditStokOpnameTanpaSettingTanpaEdComponent } from "./pages/stok_opname/audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting-tanpa-ed/view-audit-stok-opname-tanpa-setting-tanpa-ed.component";
+import { DaftarAuditStokOpnameTanpaEdComponent } from "./pages/stok_opname/audit-stok-opname/daftar-audit-stok-opname-tanpa-ed/daftar-audit-stok-opname-tanpa-ed.component";
+import { InputAuditStokOpnameTanpaEdComponent } from "./pages/stok_opname/audit-stok-opname/input-audit-stok-opname-tanpa-ed/input-audit-stok-opname-tanpa-ed.component";
+import { ViewAuditStokOpnameTanpaEdComponent } from "./pages/stok_opname/audit-stok-opname/view-audit-stok-opname-tanpa-ed/view-audit-stok-opname-tanpa-ed.component";
+import { DaftarSettingStokOpnameTanpaEdComponent } from "./pages/stok_opname/setting-stok-opname/daftar-setting-stok-opname-tanpa-ed/daftar-setting-stok-opname-tanpa-ed.component";
+import { InputSettingStokOpnameTanpaEdComponent } from "./pages/stok_opname/setting-stok-opname/input-setting-stok-opname-tanpa-ed/input-setting-stok-opname-tanpa-ed.component";
+import { ViewSettingStokOpnameTanpaEdComponent } from "./pages/stok_opname/setting-stok-opname/view-setting-stok-opname-tanpa-ed/view-setting-stok-opname-tanpa-ed.component";
 
 const mmRoutes: Routes = [
     {
@@ -110,32 +120,32 @@ const mmRoutes: Routes = [
             { path: "view-pemusnahan-stok-tanpa-ed/:id/:key", component: ViewPemusnahanTanpaEdComponent, data: { title: "View Pemusnahan Stok" } },
         ],
     },
-    // {
-    //     path:"stok-opname",component:null,data:{title:'Stock Opname'},
-    //     children: [
-    //         { path: "setting-stok-opname",component:null,data:{title:"Setting Stok Opname"},
-    //             children:[
-    //               {  path: 'input-setting-stok-opname',component:InputSettingStokOpnameComponent, data:{ title:"Input Setting Stok Opname"}},
-    //               {  path: 'daftar-setting-stok-opname',component:DaftarSettingStokOpnameComponent, data:{ title:"Daftar Setting Stok Opname"}},
-    //               {  path: 'view-setting-stok-opname/:id/:key',component:ViewSettingStokOpnameComponent, data:{ title:"View Setting Stok Opname"}}
-    //             ]
-    //         },
-    //         { path: "audit-stok-opname",component:null,data:{title:"Audit Stok Opname"},
-    //             children:[
-    //               {  path: 'daftar-stok-opname',component:DaftarAuditStokOpnameComponent, data:{ title:"Daftar Audit Stok Opname"}},
-    //               {  path: 'input-stok-opname',component:InputAuditStokOpnameComponent, data:{ title:"Input Audit Stok Opname"}},
-    //               {  path: 'view-stok-opname/:id/:key',component:ViewAuditStokOpnameComponent, data:{ title:"View Audit Stok Opname"}}
-    //             ]
-    //         },
-    //         { path: "audit-stok-opname-tanpa-setting",component:null,data:{title:"Audit Stok Opname"},
-    //             children:[
-    //               {  path: 'daftar-stok-opname-tanpa-setting',component:DaftarAuditStokOpnameTanpaSettingComponent, data:{ title:"Daftar Audit Stok Opname Tanpa Setting"}},
-    //               {  path: 'input-stok-opname-tanpa-setting',component:InputAuditStokOpnameTanpaSettingComponent, data:{ title:"Input Audit Stok Opname Tanpa Setting"}},
-    //               {  path: 'view-stok-opname-tanpa-setting/:id/:key',component:ViewAuditStokOpnameTanpaSettingComponent, data:{ title:"View Audit Stok Opname Tanpa Setting"}}
-    //             ]
-    //         },
-    //     ]
-    // }
+    {
+        path:"stok-opname",component:null,data:{title:'Stock Opname'},
+        children: [
+            { path: "setting-stok-opname",component:null,data:{title:"Setting Stok Opname"},
+                children:[
+                  {  path: 'input-setting-stok-opname-tanpa-ed',component:InputSettingStokOpnameTanpaEdComponent, data:{ title:"Input Setting Stok Opname Tanpa ED"}},
+                  {  path: 'daftar-setting-stok-opname-tanpa-ed',component:DaftarSettingStokOpnameTanpaEdComponent, data:{ title:"Daftar Setting Stok Opname Tanpa ED"}},
+                  {  path: 'view-setting-stok-opname-tanpa-ed/:id/:key',component:ViewSettingStokOpnameTanpaEdComponent, data:{ title:"View Setting Stok Opname Tanpa ED"}}
+                ]
+            },
+            { path: "audit-stok-opname",component:null,data:{title:"Audit Stok Opname"},
+                children:[
+                  {  path: 'daftar-stok-opname-tanpa-ed',component:DaftarAuditStokOpnameTanpaEdComponent, data:{ title:"Daftar Audit Stok Opname"}},
+                  {  path: 'input-stok-opname-tanpa-ed',component:InputAuditStokOpnameTanpaEdComponent, data:{ title:"Input Audit Stok Opname"}},
+                  {  path: 'view-stok-opname-tanpa-ed/:id/:key',component:ViewAuditStokOpnameTanpaEdComponent, data:{ title:"View Audit Stok Opname"}}
+                ]
+            },
+            { path: "audit-stok-opname-tanpa-setting",component:null,data:{title:"Audit Stok Opname"},
+                children:[
+                  {  path: 'daftar-stok-opname-tanpa-setting-tanpa-ed',component:DaftarAuditStokOpnameTanpaSettingTanpaEdComponent, data:{ title:"Daftar Audit Stok Opname Tanpa Setting"}},
+                  {  path: 'input-stok-opname-tanpa-setting-tanpa-ed',component:InputAuditStokOpnameTanpaSettingTanpaEdComponent, data:{ title:"Input Audit Stok Opname Tanpa Setting"}},
+                  {  path: 'view-stok-opname-tanpa-setting-tanpa-ed/:id/:key',component:ViewAuditStokOpnameTanpaSettingTanpaEdComponent, data:{ title:"View Audit Stok Opname Tanpa Setting"}}
+                ]
+            },
+        ]
+    }
 ]
 
 @NgModule({

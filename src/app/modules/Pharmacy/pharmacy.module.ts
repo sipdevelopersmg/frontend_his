@@ -27,6 +27,9 @@ import { RefundObatIrdaDaftarComponent } from './pages/refund-obat/refund-obat-i
 import { RefundObatIrdaDetailComponent } from './pages/refund-obat/refund-obat-irda-detail/refund-obat-irda-detail.component';
 import { RefundObatIrnaDaftarComponent } from './pages/refund-obat/refund-obat-irna-daftar/refund-obat-irna-daftar.component';
 import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-irna-detail/refund-obat-irna-detail.component';
+import { InputResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/input-resep-formularium-irja/input-resep-formularium-irja.component';
+import { DaftarResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/daftar-resep-formularium-irja/daftar-resep-formularium-irja.component';
+import { ViewResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/view-resep-formularium-irja/view-resep-formularium-irja.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +57,9 @@ import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-i
         RefundObatIrdaDetailComponent,
         RefundObatIrnaDaftarComponent,
         RefundObatIrnaDetailComponent,
+        InputResepFormulariumIrjaComponent,
+        DaftarResepFormulariumIrjaComponent,
+        ViewResepFormulariumIrjaComponent,
     ],
     imports: [
         CommonModule,

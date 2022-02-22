@@ -150,7 +150,7 @@ export class InputResepIrnaComponent implements OnInit {
     });
 
     public fields: Object = { text: 'nama_obat', value: 'id_item' };
-    public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+    public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where("msi.nama_item", 'contains', '', true);
     public text: string = "Select a Obat";
     public sorting: string = 'Ascending';
     public onFiltering =  (e: FilteringEventArgs) => {
@@ -158,7 +158,7 @@ export class InputResepIrnaComponent implements OnInit {
         if (e.text === '') {
             e.updateData(this.data);
         } else {
-          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where("msi.nama_item", 'contains', e.text, true);
           e.updateData(this.data, query);
         }
     };
@@ -173,7 +173,7 @@ export class InputResepIrnaComponent implements OnInit {
         adaptor: new ODataV4Adaptor,
         crossDomain: true,
     });
-    public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+    public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where("msi.nama_item", 'contains', '', true);
 
     public keterangan = (field: string, data1: object) => {
         return  data1['rute_pemberian_obat'] + ', sehari ' + 
@@ -262,11 +262,11 @@ export class InputResepIrnaComponent implements OnInit {
             if (SelectedDataRacikanObat) {
                 this.queryChild = new Query().from('Obat')
                     .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
-                    .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
+                    .take(10).where("msi.nama_item", 'contains', SelectedDataRacikanObat.nama_obat, true)
             }else{
                 this.queryChild = new Query().from('Obat')
                     .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
-                    .take(10).where('nama_obat', 'contains', '', true)
+                    .take(10).where("msi.nama_item", 'contains', '', true)
             }
 
             this.itemsElem = document.createElement('input');
@@ -292,7 +292,7 @@ export class InputResepIrnaComponent implements OnInit {
                     if (e.text === '') {
                         e.updateData(this.data);
                     } else {
-                        let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+                        let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10).where("msi.nama_item", 'contains', e.text, true);
                         e.updateData(this.data, query);
                     }
                 }.bind(this),

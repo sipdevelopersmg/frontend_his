@@ -1,0 +1,53 @@
+{
+    "GridColumns": [
+        {
+            "field": "nomor_audit_stok_opname",
+            "headerText": "No Stok Opname",
+            "type": "string",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 120
+        },
+        {
+            "field": "waktu_capture_stok",
+            "headerText": "Tanggal Stok Opname",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 130
+        },
+        {
+            "field": "nama_stockroom",
+            "headerText": "Nama Stockroom",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 180
+        },
+        {
+            "field": "status_trans",
+            "headerText": "Status Stok Opname",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "keterangan_entry",
+            "headerText": "Keterangan",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 150
+        }
+    ]
+}

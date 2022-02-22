@@ -126,7 +126,7 @@ export class InputResepIrjaComponent implements OnInit, OnDestroy {
   });
 
   public fields: Object = { text: 'nama_obat', value: 'id_item' };
-  public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+  public query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('msi.nama_item', 'contains', '', true);
   public text: string = "Select a Obat";
   public sorting: string = 'Ascending';
   public onFiltering = (e: FilteringEventArgs) => {
@@ -136,8 +136,8 @@ export class InputResepIrjaComponent implements OnInit, OnDestroy {
       } else {
           //   let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item','kandungan_obat','nama_satuan']).take(10);
           // change the type of filtering
-          //   query = (e.text !== '') ? query.where('nama_obat', 'contains', e.text, true) : query;
-          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+          //   query = (e.text !== '') ? query.where('msi.nama_item', 'contains', e.text, true) : query;
+          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('msi.nama_item', 'contains', e.text, true);
 
           e.updateData(this.data, query);
       }
@@ -153,7 +153,7 @@ export class InputResepIrjaComponent implements OnInit, OnDestroy {
       adaptor: new ODataV4Adaptor,
       crossDomain: true,
   });
-  public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', '', true);
+  public queryChild: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('msi.nama_item', 'contains', '', true);
 
   ButtonNav: ButtonNavModel[] = [
     { Id: "Kembali", Icons1: "fa-chevron-left", Captions: "Kembali" },
@@ -243,7 +243,7 @@ export class InputResepIrjaComponent implements OnInit, OnDestroy {
               if (SelectedDataRacikanObat) {
                   this.queryChild = new Query().from('Obat')
                       .select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan'])
-                      .take(10).where('nama_obat', 'contains', SelectedDataRacikanObat.nama_obat, true)
+                      .take(10).where('msi.nama_item', 'contains', SelectedDataRacikanObat.nama_obat, true)
               }
 
               this.itemsElem = document.createElement('input');
@@ -269,7 +269,7 @@ export class InputResepIrjaComponent implements OnInit, OnDestroy {
                       if (e.text === '') {
                           e.updateData(this.data);
                       } else {
-                          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where('nama_obat', 'contains', e.text, true);
+                          let query: Query = new Query().from('Obat').select(['nama_obat', 'id_item', 'kandungan_obat', 'nama_satuan']).take(10).where("msi.nama_item", 'contains', e.text, true);
                           e.updateData(this.data, query);
                       }
                   }.bind(this),

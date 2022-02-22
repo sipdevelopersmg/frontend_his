@@ -1,0 +1,6 @@
+
+import * as RESEP_FORMULARIUM_IRJA from './RESEP-FORMULARIUM-IRJA';
+export const RESEP_FORMULARIUM = Object.assign({},{
+    "RESEP_FORMULARIUM_IRJA": RESEP_FORMULARIUM_IRJA
+    }
+)

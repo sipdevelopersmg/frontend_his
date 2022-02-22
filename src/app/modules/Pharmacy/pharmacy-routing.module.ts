@@ -10,6 +10,7 @@ import { RefundObatIrjaComponent } from "./pages/refund-obat/refund-obat-irja/re
 import { RefundObatIrnaDaftarComponent } from "./pages/refund-obat/refund-obat-irna-daftar/refund-obat-irna-daftar.component";
 import { RefundObatIrnaDetailComponent } from "./pages/refund-obat/refund-obat-irna-detail/refund-obat-irna-detail.component";
 import { RefundObatIrnaComponent } from "./pages/refund-obat/refund-obat-irna/refund-obat-irna.component";
+import { InputResepFormulariumIrjaComponent } from "./pages/resep-formularium/resep-formularium-irja/input-resep-formularium-irja/input-resep-formularium-irja.component";
 import { ResepRacikanComponent } from "./pages/resep-racikan/resep-racikan.component";
 import { SetupCaraPakaiObatComponent } from "./pages/setup-data/setup-cara-pakai-obat/setup-cara-pakai-obat.component";
 import { SetupGrupObatComponent } from "./pages/setup-data/setup-grup-obat/setup-grup-obat.component";
@@ -65,6 +66,12 @@ const pharmacyRoutes: Routes = [
             { path: "refund-obat-irna-detail/:id/:key", component: RefundObatIrnaDetailComponent, data: { title: "Detail Retur Penjualan Obat Rawat Inap" } },
         ]
     },
+    {
+        path:"resep-formularium", component:null, data :{title:"Resep Formularium"},
+        children: [
+            { path: "input-resep-formularium-irja",component: InputResepFormulariumIrjaComponent, data: { title: "Input Resep Formularium Irja" } },
+        ]
+    }
 ]
 
 @NgModule({

@@ -235,10 +235,13 @@ export class SetupFormulariumComponent implements OnInit {
     }
     // ==== Method Formularium =======
     handleTambahFormularium(reset: boolean) {
-        this.id_terapi_f.setValue(this.CurrentDataTerapi.id);
-        this.id_generik_f.setValue(this.CurrentDataTerapiGenerik.id_generik);
         if (reset) {
             this.FormInputDataFormularium.reset();
+            this.id_terapi_f.setValue(this.CurrentDataTerapi.id);
+            this.id_generik_f.setValue(this.CurrentDataTerapiGenerik.id_generik);
+        }else{
+            this.id_terapi_f.setValue(this.CurrentDataTerapi.id);
+            this.id_generik_f.setValue(this.CurrentDataTerapiGenerik.id_generik);
         }
         this.modalRef = this.modalService.show(
             this.modalTambahFormularium,
@@ -247,6 +250,7 @@ export class SetupFormulariumComponent implements OnInit {
     }
 
     handleSimpanFormularium() {
+        console.log(this.FormInputDataFormularium.value);
         this.setupFormulariumService.onPostSave(this.FormInputDataFormularium.value).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {

@@ -31,6 +31,15 @@ import { ViewPemakaianInternalValidasiTanpaEdComponent } from './pages/pemakaian
 import { InputPemusnahanTanpaEdComponent } from './pages/pemusnahan/input-pemusnahan-tanpa-ed/input-pemusnahan-tanpa-ed.component';
 import { DaftarPemusnahanTanpaEdComponent } from './pages/pemusnahan/daftar-pemusnahan-tanpa-ed/daftar-pemusnahan-tanpa-ed.component';
 import { ViewPemusnahanTanpaEdComponent } from './pages/pemusnahan/view-pemusnahan-tanpa-ed/view-pemusnahan-tanpa-ed.component';
+import { InputSettingStokOpnameTanpaEdComponent } from './pages/stok_opname/setting-stok-opname/input-setting-stok-opname-tanpa-ed/input-setting-stok-opname-tanpa-ed.component';
+import { ViewSettingStokOpnameTanpaEdComponent } from './pages/stok_opname/setting-stok-opname/view-setting-stok-opname-tanpa-ed/view-setting-stok-opname-tanpa-ed.component';
+import { DaftarSettingStokOpnameTanpaEdComponent } from './pages/stok_opname/setting-stok-opname/daftar-setting-stok-opname-tanpa-ed/daftar-setting-stok-opname-tanpa-ed.component';
+import { InputAuditStokOpnameTanpaEdComponent } from './pages/stok_opname/audit-stok-opname/input-audit-stok-opname-tanpa-ed/input-audit-stok-opname-tanpa-ed.component';
+import { DaftarAuditStokOpnameTanpaEdComponent } from './pages/stok_opname/audit-stok-opname/daftar-audit-stok-opname-tanpa-ed/daftar-audit-stok-opname-tanpa-ed.component';
+import { ViewAuditStokOpnameTanpaEdComponent } from './pages/stok_opname/audit-stok-opname/view-audit-stok-opname-tanpa-ed/view-audit-stok-opname-tanpa-ed.component';
+import { DaftarAuditStokOpnameTanpaSettingTanpaEdComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting-tanpa-ed/daftar-audit-stok-opname-tanpa-setting-tanpa-ed.component';
+import { InputAuditStokOpnameTanpaSettingTanpaEdComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting-tanpa-ed/input-audit-stok-opname-tanpa-setting-tanpa-ed.component';
+import { ViewAuditStokOpnameTanpaSettingTanpaEdComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting-tanpa-ed/view-audit-stok-opname-tanpa-setting-tanpa-ed.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +70,16 @@ import { ViewPemusnahanTanpaEdComponent } from './pages/pemusnahan/view-pemusnah
     ViewPemakaianInternalValidasiTanpaEdComponent,
     InputPemusnahanTanpaEdComponent,
     DaftarPemusnahanTanpaEdComponent,
-    ViewPemusnahanTanpaEdComponent
+    ViewPemusnahanTanpaEdComponent,
+    InputSettingStokOpnameTanpaEdComponent,
+    ViewSettingStokOpnameTanpaEdComponent,
+    DaftarSettingStokOpnameTanpaEdComponent,
+    InputAuditStokOpnameTanpaEdComponent,
+    DaftarAuditStokOpnameTanpaEdComponent,
+    ViewAuditStokOpnameTanpaEdComponent,
+    DaftarAuditStokOpnameTanpaSettingTanpaEdComponent,
+    InputAuditStokOpnameTanpaSettingTanpaEdComponent,
+    ViewAuditStokOpnameTanpaSettingTanpaEdComponent,
   ],
     imports: [
         FormsModule,

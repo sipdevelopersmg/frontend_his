@@ -1,0 +1,53 @@
+{
+    "GridColumns": [
+        {
+            "field": "no_setting_stok_opname",
+            "headerText": "No Setting Stok Opname",
+            "type": "string",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 120
+        },
+        {
+            "field": "tanggal_stok_opname",
+            "headerText": "Tanggal Stok Opname",
+            "type": "Date",
+            "format": "dd/MM/yyyy",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 130
+        },
+        {
+            "field": "nama_jenis_setting_stok_opname",
+            "headerText": "Jenis Setting Stok Opname",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 180
+        },
+        {
+            "field": "user_name_inputed",
+            "headerText": "User Entry",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 100
+        },
+        {
+            "field": "keterangan",
+            "headerText": "Keterangan",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit",
+            "width": 150
+        }
+    ]
+}
