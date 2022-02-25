@@ -30,6 +30,14 @@ import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-i
 import { InputResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/input-resep-formularium-irja/input-resep-formularium-irja.component';
 import { DaftarResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/daftar-resep-formularium-irja/daftar-resep-formularium-irja.component';
 import { ViewResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/view-resep-formularium-irja/view-resep-formularium-irja.component';
+import { InputResepFormulariumComponent } from './pages/resep-formularium/resep-formularium-irna/input-resep-formularium/input-resep-formularium.component';
+import { DaftarResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/daftar-resep-formularium-irna/daftar-resep-formularium-irna.component';
+import { ViewResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/view-resep-formularium-irna/view-resep-formularium-irna.component';
+import { PulangResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/pulang-resep-formularium-irna/pulang-resep-formularium-irna.component';
+import { InputResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/input-resep-formularium-irda/input-resep-formularium-irda.component';
+import { DaftarResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/daftar-resep-formularium-irda/daftar-resep-formularium-irda.component';
+import { ViewResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/view-resep-formularium-irda/view-resep-formularium-irda.component';
+import { PulangResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/pulang-resep-formularium-irda/pulang-resep-formularium-irda.component';
 
 @NgModule({
     declarations: [
@@ -60,6 +68,14 @@ import { ViewResepFormulariumIrjaComponent } from './pages/resep-formularium/res
         InputResepFormulariumIrjaComponent,
         DaftarResepFormulariumIrjaComponent,
         ViewResepFormulariumIrjaComponent,
+        InputResepFormulariumComponent,
+        DaftarResepFormulariumIrnaComponent,
+        ViewResepFormulariumIrnaComponent,
+        PulangResepFormulariumIrnaComponent,
+        InputResepFormulariumIrdaComponent,
+        DaftarResepFormulariumIrdaComponent,
+        ViewResepFormulariumIrdaComponent,
+        PulangResepFormulariumIrdaComponent,
     ],
     imports: [
         CommonModule,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DropDownList, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
 import { IEditCell, EditSettingsModel, GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
@@ -23,6 +23,11 @@ import { ResepFormulariumIrjaService } from 'src/app/modules/Pharmacy/services/r
 import { TrResepFormulariumDokterIrjaDetailInsert, TrResepFormulariumDokterIrjaDetailRacikanInsert } from 'src/app/modules/Pharmacy/models/resep-formularium/resep-formularium';
 import { TrResepDokterIrjaDetailRacikanInsert } from 'src/app/modules/dashboard-dokter/models/resep.model';
 import 'src/app/prototype/ArrPrototype';
+import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
+import {Location} from "@angular/common"
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import moment from 'moment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-input-resep-formularium-irja',
@@ -33,8 +38,6 @@ export class InputResepFormulariumIrjaComponent implements OnInit {
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
   @ViewChild('LookupTemplateResep') LookupTemplateResep: OrgLookUpHirarkiComponent;
-  @Output('onSetTemplateResep') onSetTemplateResep = new EventEmitter<any>();
-  @Output('setIdOutlet') setIdOutlet = new EventEmitter<any>();
 
   public itemsParams: IEditCell;
   public itemsElem: HTMLElement;
@@ -144,6 +147,19 @@ export class InputResepFormulariumIrjaComponent implements OnInit {
   });
   public queryChild: Query = new Query().from('Formularium').select([this.select]).take(10).where(this.whereField, 'contains', '', true);
 
+  ButtonNav: ButtonNavModel[] = [
+    { Id: 'Back', Captions: 'Back', Icons1: 'fa-chevron-left' },
+    { Id: 'Save', Captions: 'Save', Icons1: 'fa-save' },
+  ];
+  idOutlet = null;
+  data_header = null;
+  currentTanggal = null;
+  newdetail: any = [];
+  baru: any = 0;
+  isGetFromTemplate: boolean;
+
+  modalRef: BsModalRef;
+  @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -155,11 +171,16 @@ export class InputResepFormulariumIrjaComponent implements OnInit {
       public setupOutletService: SetupOutletService,
       private renderer: Renderer2,
       public daftarPasienService: DaftarPasienService,
+      public location:Location,
+      public utilityService:UtilityService,
+      private modalService: BsModalService,
+
   ) {
 
   }
 
   ngOnInit(): void {
+        this.currentTanggal = moment().format()
 
       this.FormAddObat = this.formBuilder.group({
           counter: [0, []],
@@ -368,7 +389,7 @@ export class InputResepFormulariumIrjaComponent implements OnInit {
   }
 
   handleChangeOutlet(args){
-      this.setIdOutlet.emit(args.value);
+      this.idOutlet = args.value
   }
 
   setInputFilter(textbox: Element, inputFilter: (value: string) => boolean): void {
@@ -538,7 +559,7 @@ export class InputResepFormulariumIrjaComponent implements OnInit {
       this.resepFormulariumIrjaService.dataSourceChildGrid.next(detail);
       this.resepFormulariumIrjaService.dataSourceParentGrid.next(obat);
       this.GridResepRacikan.refresh();
-      this.onSetTemplateResep.emit(true);
+      this.isGetFromTemplate =true;
   }
 
   handleAddObat(FormAddObat: any): void {
@@ -716,11 +737,101 @@ export class InputResepFormulariumIrjaComponent implements OnInit {
       // this.GridResepRacikan.refresh();
   }
 
+  onClickButtonNav(ButtonId: string): void {
+        switch (ButtonId) {
+            case 'Save':
+                this.onSave();
+                break;
+            case 'Back':
+                this.location.back();
+                break;
+            default:
+                break;
+        }
+    }
+
+    onSave(){
+        if (!this.idOutlet) {
+            this.utilityService.onShowingCustomAlert('warning', 'Depo Farmasi belum di isi', '')
+            return false;
+        }
+        this.data_header = {
+            id_dokter: this.daftarPasienService.ActivePasien.value.id_dokter,
+            id_register: this.daftarPasienService.ActivePasien.value.id_register,
+            id_outlet: this.idOutlet,
+            id_person: this.daftarPasienService.ActivePasien.value.id_person,
+            jenis_rawat: 'J',
+            nama_template: '',
+            tanggal_resep: this.currentTanggal
+        }
+
+        this.newdetail = this.resepFormulariumIrjaService.dataSourceParentGrid.value.filter((item)=>{
+            return item.is_racikan && !item.set_racikan_id
+        })
+
+        this.baru = 0
+        if (!this.isGetFromTemplate) {
+            this.modalRef = this.modalService.show(
+                this.modalTemplateResep,
+                Object.assign({}, { class: 'modal-lg' })
+            );
+        } else {
+            this.methodConfirmSetRacikan(0)
+        }
+    }
+
+    handleClickSimpanTemplateResepDokter() {
+        let nama_resep = (<HTMLInputElement>document.getElementsByName("nama_resep")[0]).value;
+        this.data_header.nama_template = nama_resep;
+        this.modalRef.hide();
+        this.methodConfirmSetRacikan(1)
+    }
+
+    handleClickAbaikan() {
+        this.modalRef.hide();
+        this.methodConfirmSetRacikan(0)
+    }
+
+    methodConfirmSetRacikan(simpan_template) {
+        if (this.newdetail.length > 0) {
+            Swal.fire({
+                title: 'Apakah Anda Ingin Menyimapan Racikan Baru ke dalam Setting Racikan dokter?',
+                text: "Racikan akan bisa di gunakan lagi untuk template",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, Saya Yakin',
+                cancelButtonText: 'Tidak',
+                focusCancel: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.baru = 1
+                } else {
+                    this.baru = 0
+                }
+                this.methodInsert(this.data_header, simpan_template, this.baru)
+            });
+        } else {
+            this.methodInsert(this.data_header, simpan_template, 0)
+        }
+    }
+
+    methodInsert(Data, is_simpan_template: number, is_simpan_racikan: number) {
+        this.resepFormulariumIrjaService.Insert(Data, is_simpan_template, is_simpan_racikan).subscribe((result) => {
+            this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                .then(() => {
+                    this.onResetGrid();
+                    this.isGetFromTemplate = false;
+                });
+        })
+    }
+
   get is_racikan(): AbstractControl { return this.FormAddObat.get('is_racikan'); };
   get set_racikan_id(): AbstractControl { return this.FormAddObat.get('set_racikan_id'); };
   get id_metode_racikan(): AbstractControl { return this.FormAddObat.get('id_metode_racikan'); };
   get metode_racikan(): AbstractControl { return this.FormAddObat.get('metode_racikan'); };
-  get id_item(): AbstractControl { return this.FormAddObat.get('id_item'); };
+  get id_formularium(): AbstractControl { return this.FormAddObat.get('id_formularium'); };
   get nama_obat(): AbstractControl { return this.FormAddObat.get('nama_obat'); };
   get qty_resep(): AbstractControl { return this.FormAddObat.get('qty_resep'); }
   get nama_satuan(): AbstractControl { return this.FormAddObat.get('nama_satuan'); }

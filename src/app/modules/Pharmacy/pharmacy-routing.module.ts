@@ -11,6 +11,10 @@ import { RefundObatIrnaDaftarComponent } from "./pages/refund-obat/refund-obat-i
 import { RefundObatIrnaDetailComponent } from "./pages/refund-obat/refund-obat-irna-detail/refund-obat-irna-detail.component";
 import { RefundObatIrnaComponent } from "./pages/refund-obat/refund-obat-irna/refund-obat-irna.component";
 import { InputResepFormulariumIrjaComponent } from "./pages/resep-formularium/resep-formularium-irja/input-resep-formularium-irja/input-resep-formularium-irja.component";
+import { DaftarResepFormulariumIrnaComponent } from "./pages/resep-formularium/resep-formularium-irna/daftar-resep-formularium-irna/daftar-resep-formularium-irna.component";
+import { InputResepFormulariumComponent } from "./pages/resep-formularium/resep-formularium-irna/input-resep-formularium/input-resep-formularium.component";
+import { PulangResepFormulariumIrnaComponent } from "./pages/resep-formularium/resep-formularium-irna/pulang-resep-formularium-irna/pulang-resep-formularium-irna.component";
+import { ViewResepFormulariumIrnaComponent } from "./pages/resep-formularium/resep-formularium-irna/view-resep-formularium-irna/view-resep-formularium-irna.component";
 import { ResepRacikanComponent } from "./pages/resep-racikan/resep-racikan.component";
 import { SetupCaraPakaiObatComponent } from "./pages/setup-data/setup-cara-pakai-obat/setup-cara-pakai-obat.component";
 import { SetupGrupObatComponent } from "./pages/setup-data/setup-grup-obat/setup-grup-obat.component";
@@ -64,12 +68,6 @@ const pharmacyRoutes: Routes = [
             { path: "refund-obat-irna", component: RefundObatIrnaComponent, data: { title: "Input Retur Penjualan Obat Rawat Inap" } },
             { path: "refund-obat-irna-daftar", component: RefundObatIrnaDaftarComponent, data: { title: "Daftar Retur Penjualan Obat Rawat Inap" } },
             { path: "refund-obat-irna-detail/:id/:key", component: RefundObatIrnaDetailComponent, data: { title: "Detail Retur Penjualan Obat Rawat Inap" } },
-        ]
-    },
-    {
-        path:"resep-formularium", component:null, data :{title:"Resep Formularium"},
-        children: [
-            { path: "input-resep-formularium-irja",component: InputResepFormulariumIrjaComponent, data: { title: "Input Resep Formularium Irja" } },
         ]
     }
 ]
