@@ -8,3 +8,9 @@ export const UPDATE = `${environment.webApiPHARMACY}` +'SetupFormularium/Update'
 export const DELETE = `${environment.webApiPHARMACY}` +'SetupFormularium/Delete';
 export const UPDATETOACTIVE = `${environment.webApiPHARMACY}` +'SetupFormularium/UpdateToActive';
 export const UPDATETODEACTIVE = `${environment.webApiPHARMACY}` +'SetupFormularium/UpdateToDeActive';
+
+
+export const OBAT_GET_BY_ID_FORMULARIUM = `${environment.webApiPHARMACY}` +'SetupFormulariumObat/GetByIdFormularium';
+export const OBAT_INSERT = `${environment.webApiPHARMACY}` +'SetupFormulariumObat/Insert';
+export const OBAT_DELETE = `${environment.webApiPHARMACY}` +'SetupFormulariumObat/Delete';
+export const OBAT_LOOKUP = `${environment.webApiPHARMACY}` +'SetupFormulariumObat/GetLookUpObatByParams';

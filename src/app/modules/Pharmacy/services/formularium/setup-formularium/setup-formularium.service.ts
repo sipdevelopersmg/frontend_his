@@ -14,6 +14,7 @@ export class SetupFormulariumService {
 
     API = PHARMACY.FORMULARIUM.SETUP_FORMULARIUM
     public dataSource = new BehaviorSubject([]);
+    public dataSource_obat = new BehaviorSubject([]);
   
     constructor(
       private notificationService: NotificationService,
@@ -90,5 +91,27 @@ export class SetupFormulariumService {
             this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
           })
         );
+    }
+
+    getFormulariumObat(id_formularium){
+      this.httpOperationService.defaultGetRequest(this.API.OBAT_GET_BY_ID_FORMULARIUM+"/"+id_formularium).subscribe((result)=>{
+        this.dataSource_obat.next(result.data);
+      })
+    }
+
+    insertFormulariumObat(data): Observable<any>{
+      return this.httpOperationService.defaultPostRequest(this.API.OBAT_INSERT,data).pipe(
+        catchError((error: HttpErrorResponse): any => {
+          this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+        })
+      );
+    }
+
+    deleteFormulariumObat(data): Observable<any>{
+      return this.httpOperationService.defaultPostRequest(this.API.OBAT_DELETE,data).pipe(
+        catchError((error: HttpErrorResponse): any => {
+          this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+        })
+      );
     }
 }

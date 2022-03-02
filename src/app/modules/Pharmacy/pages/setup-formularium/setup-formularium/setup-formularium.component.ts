@@ -18,6 +18,9 @@ import { SetupTerapiGenerikService } from '../../../services/formularium/setup-t
 import { SetupTerapiService } from '../../../services/formularium/setup-terapi/setup-terapi.service';
 import { SetupParameterMaksimalService } from '../../../services/formularium/setup-parameter-maksimal/setup-parameter-maksimal.service';
 import * as gridSetting from '../json/GridSetting.json'
+import * as GridLoockUpItem from './json/lookupitem.json'
+import { PHARMACY } from 'src/app/api/PHARMACY';
+import { OrgLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up/org-look-up.component';
 @Component({
     selector: 'app-setup-formularium',
     templateUrl: './setup-formularium.component.html',
@@ -47,6 +50,7 @@ export class SetupFormulariumComponent implements OnInit {
     @ViewChild('modalSetupSediaan') modalSetupSediaan: TemplateRef<any>;
     @ViewChild('modalSetupRestriksi') modalSetupRestriksi: TemplateRef<any>;
     @ViewChild('modalSetupPeresepanMaksimal') modalSetupPeresepanMaksimal: TemplateRef<any>;
+    @ViewChild('LookupItem') LookupItem: OrgLookUpComponent;
 
     modalRef: BsModalRef;
 
@@ -67,7 +71,10 @@ export class SetupFormulariumComponent implements OnInit {
     FormInputDataRestriksi: FormGroup;
     FormInputDataPeresepanMaksimal: FormGroup;
 
+    GridLookUpItem = GridLoockUpItem;
+    urlObat = PHARMACY.FORMULARIUM.SETUP_FORMULARIUM.OBAT_LOOKUP
 
+    currentFormulariumObat = null
 
     constructor(
         private modalService: BsModalService,
@@ -155,6 +162,7 @@ export class SetupFormulariumComponent implements OnInit {
         this.CurrentDataTerapi = e.nodeData;
         this.setupTerapiGenerikService.setDataSource(this.CurrentDataTerapi.id);
         this.setupFormulariumService.setDataSource(0);
+        this.setupFormulariumService.getFormulariumObat(0);
     };
 
     getAllTerapi() {
@@ -218,6 +226,8 @@ export class SetupFormulariumComponent implements OnInit {
     }
 
     handleSimpanTerapiGenerik() {
+        let data = this.FormInputDataTerapiGenerik.value
+        data.id_terapi = this.CurrentDataTerapi.id
         this.setupTerapiGenerikService.onPostSave(this.FormInputDataTerapiGenerik.value).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
                 .then(() => {
@@ -232,6 +242,7 @@ export class SetupFormulariumComponent implements OnInit {
         this.CurrentDataTerapiGenerik = args.data
         console.log(this.CurrentDataTerapiGenerik)
         this.setupFormulariumService.setDataSource(this.CurrentDataTerapiGenerik.id_generik);
+        this.setupFormulariumService.getFormulariumObat(0);
     }
     // ==== Method Formularium =======
     handleTambahFormularium(reset: boolean) {
@@ -367,11 +378,41 @@ export class SetupFormulariumComponent implements OnInit {
             });
     }
 
-    handleSelectedSediaan(args) {
-        console.log(args);
-        this.DataSourceRestreksi = this.GridSetting.GridKeterangan.DataSource
-        this.DataSourceMax = this.GridSetting.GridPeresepan.DataSource
-        this.DataSourceDagang = this.GridSetting.GridItem.DataSource
+    handleSelectedFormularium(args) {
+        this.id_formularium.setValue(args.data.id_formularium);
+        this.setupFormulariumService.getFormulariumObat(args.data.id_formularium);
+    }
+
+    handleTambahFormulariumObat(){
+        if(this.id_formularium.value){
+            this.LookupItem.onOpenModal()
+        }else{
+            alert('pillih formularium')
+        }
+    }
+
+    heandleSelectedItem($event) {
+        console.log($event)
+        this.setupFormulariumService.insertFormulariumObat({
+            id_item         : $event.id_item,
+            id_formularium  : this.id_formularium.value
+        }).subscribe((result)=>{
+            this.setupFormulariumService.getFormulariumObat(this.id_formularium.value);
+        })
+    }
+
+    handleSelectedFormulariumObat(args){
+        this.currentFormulariumObat = args.data
+    }
+
+
+    handleDeleteFormulariumObat(){
+        this.setupFormulariumService.deleteFormulariumObat({
+            id_item         : this.currentFormulariumObat.id_item,
+            id_formularium  : this.id_formularium.value
+        }).subscribe((result)=>{
+            this.setupFormulariumService.getFormulariumObat(this.id_formularium.value);
+        })
     }
 
     get parent_terapi(): AbstractControl { return this.FormInputDataTerapi.get('parent_terapi'); }

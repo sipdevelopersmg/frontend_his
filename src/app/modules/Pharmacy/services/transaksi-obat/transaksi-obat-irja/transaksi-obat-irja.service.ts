@@ -25,6 +25,15 @@ export class TransaksiObatIrjaService {
         );
   }
 
+  InsertFormularium(Data:any): Observable<any>{
+    return this.httpOperationService.defaultPostRequest(this.API.INSERT_FORMULARIUM, Data)
+        .pipe(
+            catchError((error: HttpErrorResponse): any => {
+            this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+  }
+
   obatDiserahakan(Id:number): Observable<any>{
     return this.httpOperationService.defaultPutRequest(this.API.UPDATEPENYERAHAN,{'penjualan_obat_id':Id})
         .pipe(

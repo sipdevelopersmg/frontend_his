@@ -38,6 +38,9 @@ import { InputResepFormulariumIrdaComponent } from './pages/resep-formularium/re
 import { DaftarResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/daftar-resep-formularium-irda/daftar-resep-formularium-irda.component';
 import { ViewResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/view-resep-formularium-irda/view-resep-formularium-irda.component';
 import { PulangResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/pulang-resep-formularium-irda/pulang-resep-formularium-irda.component';
+import { TransaksiObatFormulariumIrjaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irja/transaksi-obat-formularium-irja.component';
+import { TransaksiObatFormulariumIrnaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irna/transaksi-obat-formularium-irna.component';
+import { TransaksiObatFormulariumIrdaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irda/transaksi-obat-formularium-irda.component';
 
 @NgModule({
     declarations: [
@@ -76,6 +79,9 @@ import { PulangResepFormulariumIrdaComponent } from './pages/resep-formularium/r
         DaftarResepFormulariumIrdaComponent,
         ViewResepFormulariumIrdaComponent,
         PulangResepFormulariumIrdaComponent,
+        TransaksiObatFormulariumIrjaComponent,
+        TransaksiObatFormulariumIrnaComponent,
+        TransaksiObatFormulariumIrdaComponent,
     ],
     imports: [
         CommonModule,

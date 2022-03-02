@@ -7,6 +7,7 @@ import { BAWA_PULANG } from 'src/app/api/PHARMACY/RESEP-DOKTER/RESEP_DOKTER_IRNA
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
+import { isFormularium } from 'src/environments/environment.prod';
 import { TrResepDokterIrjaDetailInsert, TrResepDokterIrjaDetailRacikanInsert, TrResepDokterIrjaInsert } from '../../models/resep.model';
 import { DaftarPasienService } from '../daftar-pasien/daftar-pasien.service';
 
@@ -16,6 +17,7 @@ import { DaftarPasienService } from '../daftar-pasien/daftar-pasien.service';
 export class ResepDokterService {
 
     private API = PHARMACY.RESEP_DOKTER.RESEP_DOKTER_IRJA;
+    private API_FORMULARIUM = PHARMACY.RESEP_FORMULARIUM.RESEP_FORMULARIUM_IRJA
     private API_PULANG_IRNA = BAWA_PULANG
     public dataHistoryResep = new BehaviorSubject([]);
 
@@ -102,7 +104,8 @@ export class ResepDokterService {
     }
 
     onGetAntrian(): void{
-        this.httpOperationService.defaultPostRequestWithoutLoading(this.API.GET_ANTRIAN,[])
+        let api_antrian = (isFormularium)?this.API_FORMULARIUM.GET_ANTRIAN:this.API.GET_ANTRIAN;
+        this.httpOperationService.defaultPostRequestWithoutLoading(api_antrian,[])
         .pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);

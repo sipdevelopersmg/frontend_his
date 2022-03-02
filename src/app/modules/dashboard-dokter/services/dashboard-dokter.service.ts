@@ -40,7 +40,7 @@ export class DashboardDokterService {
         switch (this.JenisRawat.value) {
             case 'IRJA':
                 urlResep = 'Dokter/resep';
-                urlformularium = "Dokter/resep-formularium-irna/input-resep-formularium-irja"
+                urlformularium = "Dokter/resep-formularium-irja/input-resep-formularium-irja"
                 break;
             case 'IRNA':
                 urlResep = 'Dokter/resep-irna/daftar-resep-irna';

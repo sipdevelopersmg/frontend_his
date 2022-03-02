@@ -1,0 +1,46 @@
+{
+    "GridColumns": [
+        {
+            "field": "id_register",
+            "headerText": "Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nomor_resep",
+            "headerText": "Nomor Resep",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_dokter",
+            "headerText": "Dokter",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "status_resep",
+            "headerText": "Status Resep",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ],
+    "columnsChild": [
+        { "field": "nama_obat", "headerText": "Nama Obat"},
+        { "field": "qty_racikan", "headerText": "Qty" ,"width":50},
+        { "field": "harga_jual_apotek", "headerText": "Harga", "format": "N2","width":70},
+        { "field": "total_harga", "headerText": "Total Harga", "textAlign":"Right", "format": "N2","width":70}
+    ]
+}

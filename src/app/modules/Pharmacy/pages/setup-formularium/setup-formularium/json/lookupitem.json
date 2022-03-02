@@ -1,0 +1,29 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_obat",
+            "headerText": "Nama Obat",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_satuan",
+            "headerText": "Nama Satuan",
+            "type": "string",
+            "visible": true
+        }
+    ],
+    "filter": [
+        {
+            "field": "msi.nama_item",
+            "filter": "like",
+            "title": "NAMA OBAT"
+        }
+    ]
+}
