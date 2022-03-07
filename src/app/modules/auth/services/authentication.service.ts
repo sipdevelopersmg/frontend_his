@@ -8,7 +8,6 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../shared/services/notification.service';
 import * as API_CONFIG from '../../../api';
-import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Injectable({
     providedIn: 'root'
