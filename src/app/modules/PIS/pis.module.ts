@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, TitleCasePipe } from "@angular/common";
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from "@angular/core";
 import { SharedModule } from "../shared/shared.module";
 import { PisRoutingModule } from "./pis-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -143,11 +143,11 @@ const ngWizardConfig: NgWizardConfig = {
         PisRoutingModule,
         SharedModule,
         ContextMenuModule,
-        NgWizardModule.forRoot(ngWizardConfig)
+        NgWizardModule.forRoot(ngWizardConfig),
     ],
     providers: [
         DatePipe,
-        TitleCasePipe
+        TitleCasePipe,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

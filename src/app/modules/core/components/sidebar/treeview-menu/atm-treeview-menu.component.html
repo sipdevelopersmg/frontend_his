@@ -23,13 +23,15 @@
                     [hidden]="item.caption == 'Beranda'">
                     <div class="col-1 text-center" [hidden]="SidebarCollapse">
                         <i class="fas fa-angle-right" [hidden]="item.sidebarChild?.length < 1"
-                            id="{{item.id_menu_sidebar}}Icon"> </i>
+                            id="{{ item.id_menu_sidebar }}Icon"> </i>
                     </div>
                     <div class="col-2 text-center" [class]="SidebarCollapse ? 'col-12' : 'col-2'">
-                        <i class="{{ item.icon }}"></i>
+                        <i class="{{ item.icon }} fa-sm"></i>
                     </div>
                     <div class="col-9" [class]="SidebarCollapse ? 'is-hidden' : 'is-show' ">
-                        <span class="font-cabin mb-2">{{ item.caption }}</span>
+                        <span class="font-cabin mb-2" style="font-size: 14px">
+                            {{ item.caption }}
+                        </span>
                     </div>
                 </div>
 

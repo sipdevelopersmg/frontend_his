@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../shared/services/notification.service';
 import * as API_CONFIG from '../../../api';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Injectable({
     providedIn: 'root'
@@ -36,8 +37,8 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    onLogin(Username: string, Password: string): void {
-        this.httpOperationService.defaultPostRequestWithoutLoading(
+    onLogin(Username: string, Password: string, PrinterToken: string): void {
+        this.httpOperationService.defaultPostRequest(
             this.API_AUTHENTICATION.POST_AUTHENTICATION,
             {
                 user_name: Username,
@@ -71,9 +72,18 @@ export class AuthenticationService {
                         } else {
                             this.router.navigateByUrl('dashboard/beranda');
                         }
+                    })
+                    .then(() => {
+                        if (PrinterToken !== "") {
+                            this.onSetPrinterToken(PrinterToken);
+                        }
                     });
             }
         });
+    }
+
+    onSetPrinterToken(printerToken: string): void {
+        localStorage.setItem('PrinterToken', printerToken);
     }
 
     onLogout(): void {

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
@@ -41,6 +41,17 @@ import { PulangResepFormulariumIrdaComponent } from './pages/resep-formularium/r
 import { TransaksiObatFormulariumIrjaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irja/transaksi-obat-formularium-irja.component';
 import { TransaksiObatFormulariumIrnaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irna/transaksi-obat-formularium-irna.component';
 import { TransaksiObatFormulariumIrdaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irda/transaksi-obat-formularium-irda.component';
+import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
+import { environment } from "src/environments/environment";
+
+const SocketFarmasi: SocketIoConfig = {
+    url: `${environment.webApiSocket}`, options: {
+        "force new connection": true,
+        "reconnectionAttempts": "Infinity",
+        "timeout": 10000,
+        "transports": ["websocket"]
+    }
+}
 
 @NgModule({
     declarations: [
@@ -89,6 +100,7 @@ import { TransaksiObatFormulariumIrdaComponent } from './pages/transaksi-obat-fo
         ReactiveFormsModule,
         SharedModule,
         PharmacyRoutingModule,
+        SocketIoModule.forRoot(SocketFarmasi)
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

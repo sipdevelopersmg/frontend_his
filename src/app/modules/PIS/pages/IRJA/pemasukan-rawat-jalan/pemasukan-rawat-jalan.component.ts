@@ -14,6 +14,8 @@ import { PemasukanRawatJalanService } from '../../../services/IRJA/pemasukan-raw
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
 import { OrgInputLookUpStaticFilterComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-static-filter/org-input-look-up-static-filter.component';
+import { ActivatedRoute } from '@angular/router';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 
 @Component({
     selector: 'app-pemasukan-rawat-jalan',
@@ -161,8 +163,10 @@ export class PemasukanRawatJalanComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
+        private activatedRoute: ActivatedRoute,
         private bsModalService: BsModalService,
         private utilityService: UtilityService,
+        private encryptionService: EncryptionService,
         private pemasukanRawatJalanService: PemasukanRawatJalanService
     ) { }
 
@@ -177,6 +181,33 @@ export class PemasukanRawatJalanComponent implements OnInit {
             total_amount: [0, []],
             reason_canceled: ["", []]
         });
+
+        this.onGetRouterParams();
+    }
+
+    onGetRouterParams(): void {
+        if (this.activatedRoute.snapshot.params['id']) {
+            const Person = JSON.parse(this.encryptionService.decrypt(this.activatedRoute.snapshot.params['id']));
+
+            Person.id_kelas = Person.id_kelas_rawat;
+
+            delete Person.id_person;
+            delete Person.id_icd_masuk;
+            delete Person.id_kelas_rawat;
+            delete Person.no_urut_antrian;
+            delete Person.status_terlayani;
+            delete Person.tanggal_lahir;
+            delete Person.umur;
+            delete Person.nama_foto;
+            delete Person.link_foto;
+
+            this.handleSelectedLookupPasien(Person);
+
+            setTimeout(() => {
+                let inputGroupno_register = document.getElementById('inputGroupno_register') as HTMLInputElement;
+                inputGroupno_register.value = Person.no_register;
+            }, 500);
+        }
     }
 
     handleClickButtonNav(args: any): void {
@@ -239,9 +270,9 @@ export class PemasukanRawatJalanComponent implements OnInit {
         args.tgl_masuk = this.utilityService.onFormatDate(args.tgl_masuk, "Do/MM/yyyy");
         args.id_poli = null;
 
-        delete args.gender;
-        delete args.umur;
-        delete args.nama_poli;
+        if (args.gender) delete args.gender;
+        if (args.umur) delete args.umur;
+        if (args.nama_poli) delete args.nama_poli;
 
         this.FormSavePemasukanRawatJalan.setValue(args);
 

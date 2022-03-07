@@ -3,12 +3,11 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng serve",
+        "start": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng serve --open",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e",
-        "compodoc": "npx compodoc -p tsconfig.doc.json"
+        "e2e": "ng e2e"
     },
     "private": true,
     "dependencies": {
@@ -23,6 +22,7 @@
         "@angular/platform-browser": "~12.0.1",
         "@angular/platform-browser-dynamic": "~12.0.1",
         "@angular/router": "~12.0.1",
+        "@fingerprintjs/fingerprintjs": "^3.3.2",
         "@fortawesome/fontawesome-free": "^5.15.3",
         "@ng-bootstrap/ng-bootstrap": "^11.0.0-beta.1",
         "@sentry/angular": "^6.16.1",
@@ -46,6 +46,7 @@
         "ngx-material-timepicker": "^5.5.3",
         "ngx-socket-io": "^4.0.0",
         "rxjs": "~6.6.0",
+        "socket.io-client": "^4.4.1",
         "sweetalert2": "^11.0.5",
         "tslib": "^2.0.0",
         "zone.js": "~0.11.4"
@@ -54,7 +55,6 @@
         "@angular-devkit/build-angular": "~12.0.1",
         "@angular/cli": "~12.0.1",
         "@angular/compiler-cli": "~12.0.1",
-        "@compodoc/compodoc": "^1.1.11",
         "@types/jasmine": "~3.6.0",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^12.11.1",

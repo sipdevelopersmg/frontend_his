@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridComponent, PageSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/setup-poli/setup-poli.service';
-import { IBedModel, IPutUpdateStatusBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
+import { IPutUpdateStatusBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
 import { SetupBedRoomService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-bed-room/setup-bed-room.service';
-import { SetupRoomService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-room/setup-room.service';
 import { SetupStatusBedService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-status-bed/setup-status-bed.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import Swal from 'sweetalert2';
 

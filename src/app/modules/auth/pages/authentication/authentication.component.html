@@ -14,21 +14,15 @@
                 <!-- Nama Product -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h5 class="font-cabin mb-0 text-abu-muda">
-                        Gracia Health Care Information System
+                        Gracia Health Care Information System V.2
                     </h5>
                 </div>
             </div>
         </div>
 
         <!-- Input Field -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 div-input-auth">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                </div>
-            </div>
-
-            <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="row align-items-center h-100">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
@@ -78,6 +72,17 @@
                                     </atm-validators>
                                 </div>
 
+                                <!-- Printer Token -->
+                                <div class="mb-3">
+                                    <!-- Label -->
+                                    <atm-label [LabelCaption]="'Printer Token'" [LabelFor]="'Printer Token'">
+                                    </atm-label>
+
+                                    <!-- Input Field -->
+                                    <input type="text" class="form-control" id="PrinterToken" aria-label="PrinterToken"
+                                        autocomplete="off" formControlName="PrinterToken">
+                                </div>
+
                                 <!-- Button Sign In -->
                                 <atm-button-primary [IsButtonBlock]="true"
                                     [IsButtonDisabled]="!formAuthentication.valid" [ButtonPrimaryCaption]="' Sign In'"
@@ -89,8 +94,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </section>

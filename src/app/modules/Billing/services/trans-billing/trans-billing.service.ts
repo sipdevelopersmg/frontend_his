@@ -174,6 +174,18 @@ export class TransBillingService {
     }
 
     onPrintRincianBiayaBilling(id_register: number): void {
-        this.httpOperationService.defaultGetPrintRequest(this.API_TRANS_BILLING.GET_PRINT_RINCIAN_BIAYA_BILLING, { ID_REGISTER: id_register }, "RINCIAN BIAYA BILLING");
+        this.httpOperationService.defaultGetPrintRequest(
+            this.API_TRANS_BILLING.GET_PRINT_RINCIAN_BIAYA_BILLING,
+            { ID_REGISTER: id_register },
+            "RINCIAN BIAYA BILLING",
+        );
+    }
+
+    onPrintExcelRincianBiayaBilling(id_register: number, format?: string): void {
+        this.httpOperationService.defaultGetPrintExcelRequest(
+            this.API_TRANS_BILLING.GET_PRINT_RINCIAN_BIAYA_BILLING,
+            { ID_REGISTER: id_register },
+            "RINCIAN BIAYA BILLING",
+        );
     }
 }

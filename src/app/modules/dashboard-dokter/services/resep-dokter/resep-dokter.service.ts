@@ -59,7 +59,7 @@ export class ResepDokterService {
     ) { }
 
     generadeNoAntrian(NoRegister): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GENERADE_NO_ANTRIAN+"/"+NoRegister).pipe(
+        return this.httpOperationService.defaultGetRequest(this.API.GENERADE_NO_ANTRIAN + "/" + NoRegister).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
@@ -77,7 +77,7 @@ export class ResepDokterService {
     }
 
     setDataResep(req: PostRequestByDynamicFiterModel[]): void {
-        this.onGetAllByRegister(req).subscribe((result) =>{
+        this.onGetAllByRegister(req).subscribe((result) => {
             this.dataHistoryResep.next(result.data);
         })
     }
@@ -96,29 +96,28 @@ export class ResepDokterService {
 
     onGetAllByRegister(req: PostRequestByDynamicFiterModel[]): Observable<any> {
         let id_person = this.daftarPasienService.ActivePasien.value.id_person;
-        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER+"/"+id_person, req).pipe(
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API.GET_ALL_RESEP_BY_REGISTER + "/" + id_person, req).pipe(
             catchError((error: HttpErrorResponse): any => {
                 this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
             })
         );
     }
 
-    onGetAntrian(): void{
-        let api_antrian = (isFormularium)?this.API_FORMULARIUM.GET_ANTRIAN:this.API.GET_ANTRIAN;
-        this.httpOperationService.defaultPostRequestWithoutLoading(api_antrian,[])
-        .pipe(
-            catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+    onGetAntrian(): void {
+        this.httpOperationService.defaultPostRequestWithoutLoading(this.API.GET_ANTRIAN, [])
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                })
+            )
+            .subscribe((result) => {
+                // console.log('TEST DATA LOAD BARU',result.data);
+                this.dataAntrianIrja.next(result.data);
             })
-        )
-        .subscribe((result)=>{
-            // console.log('TEST DATA LOAD BARU',result.data);
-            this.dataAntrianIrja.next(result.data);
-        })
     }
 
     onGetById(Id): Observable<any> {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID+'/'+Id);
+        return this.httpOperationService.defaultGetRequest(this.API.GET_BY_ID + '/' + Id);
     }
 
     addDetail(detail: TrResepDokterIrjaDetailInsert): void {
@@ -146,29 +145,29 @@ export class ResepDokterService {
         this.sum();
     }
 
-    saveResep(){
-        console.log('parent',this.dataDetail)
-        console.log('child',this.dataSourceChildGrid.value)
+    saveResep() {
+        console.log('parent', this.dataDetail)
+        console.log('child', this.dataSourceChildGrid.value)
     }
 
-    Insert(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
-        let nama_obat = '' ;
-        let urut = 0 ;
-        this.dataSourceParentGrid.value.map((e,i)=>{
-            e.no_urut = i+1;
+    Insert(Data: TrResepDokterIrjaInsert, is_simpan_template: number, is_simpan_racikan: number): Observable<any> {
+        let nama_obat = '';
+        let urut = 0;
+        this.dataSourceParentGrid.value.map((e, i) => {
+            e.no_urut = i + 1;
             e.racikans = [];
             return e;
         });
 
-        console.log('dataSourceChildGrid',this.dataSourceChildGrid.value);
-        console.log('dataSourceParentGrid',this.dataSourceParentGrid.value);
-        
-        this.dataSourceChildGrid.value.forEach((item)=>{
+        console.log('dataSourceChildGrid', this.dataSourceChildGrid.value);
+        console.log('dataSourceParentGrid', this.dataSourceParentGrid.value);
+
+        this.dataSourceChildGrid.value.forEach((item) => {
             let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
             console.log(index);
-            if(index!=-1){
-                urut = (this.dataSourceParentGrid.value[index].nama_obat != nama_obat)? 0 : urut;
-                nama_obat =this.dataSourceParentGrid.value[index].nama_obat;
+            if (index != -1) {
+                urut = (this.dataSourceParentGrid.value[index].nama_obat != nama_obat) ? 0 : urut;
+                nama_obat = this.dataSourceParentGrid.value[index].nama_obat;
                 urut++
                 item.no_urut = urut
                 this.dataSourceParentGrid.value[index].racikans.push(item);
@@ -180,30 +179,30 @@ export class ResepDokterService {
 
         console.log('Data', Data);
 
-        return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA+'/'+is_simpan_template+'/'+is_simpan_racikan, Data)
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT_RESEP_IRJA + '/' + is_simpan_template + '/' + is_simpan_racikan, Data)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
 
 
-    Pulang(Data:TrResepDokterIrjaInsert,is_simpan_template:number,is_simpan_racikan:number): Observable<any>{
-        let id_item = 0 ;
-        let urut = 0 ;
-        this.dataSourceParentGrid.value.map((e,i)=>{
-            e.no_urut = i+1;
+    Pulang(Data: TrResepDokterIrjaInsert, is_simpan_template: number, is_simpan_racikan: number): Observable<any> {
+        let id_item = 0;
+        let urut = 0;
+        this.dataSourceParentGrid.value.map((e, i) => {
+            e.no_urut = i + 1;
             e.racikans = [];
             return e;
         });
 
-        this.dataSourceChildGrid.value.forEach((item)=>{
+        this.dataSourceChildGrid.value.forEach((item) => {
             let index = this.dataSourceParentGrid.value.map((e) => { return e.counter }).indexOf(item.counter);
             console.log(index);
-            if(index!=-1){
-                urut = (this.dataSourceParentGrid.value[index].id_item != id_item)? 0 : urut;
-                id_item =this.dataSourceParentGrid.value[index].id_item;
+            if (index != -1) {
+                urut = (this.dataSourceParentGrid.value[index].id_item != id_item) ? 0 : urut;
+                id_item = this.dataSourceParentGrid.value[index].id_item;
                 urut++
                 item.no_urut = urut
                 this.dataSourceParentGrid.value[index].racikans.push(item);
@@ -215,14 +214,14 @@ export class ResepDokterService {
         // console.log(Data);
 
         let param = {
-            id_register : Data.id_register,
-            resep_baru : Data
+            id_register: Data.id_register,
+            resep_baru: Data
         }
 
-        return this.httpOperationService.defaultPutRequest(this.API_PULANG_IRNA+'/'+is_simpan_racikan, param)
+        return this.httpOperationService.defaultPutRequest(this.API_PULANG_IRNA + '/' + is_simpan_racikan, param)
             .pipe(
                 catchError((error: HttpErrorResponse): any => {
-                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+                    this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
                 })
             );
     }
@@ -231,7 +230,7 @@ export class ResepDokterService {
         this.jumlah_item = this.dataDetail.sum('qty_resep');
     }
 
-    reset():void {
+    reset(): void {
         this.dataSourceChildGrid.next([]);
         this.dataSourceParentGrid.next([]);
     }

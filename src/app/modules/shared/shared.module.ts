@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from '@angular/core';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TreeViewModule } from '@syncfusion/ej2-angular-navigations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -228,7 +228,7 @@ import { OrgLookUpHirarkiComponent } from './components/organism/loockUp/org-loo
         CommandColumnService,
         BsDropdownDirective,
         DetailRowService,
-        GroupService
+        GroupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -14,9 +14,10 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
                 [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
-                [allowFiltering]='true' [pageSettings]="GridPageSettings" [toolbar]="GridToolbar"
-                [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)"
-                (toolbarClick)="handleToolbarClick($event)" (actionComplete)="handleActionComplete($event)">
+                [allowFiltering]='true' [pageSettings]="GridPageSettings" [toolbar]="GridToolbar" [allowTextWrap]="true"
+                [textWrapSettings]="GridWrapSettings" [editSettings]="GridDataEditSettings"
+                (rowSelected)="handleSelectedRow($event)" (toolbarClick)="handleToolbarClick($event)"
+                (actionComplete)="handleActionComplete($event)">
                 <e-columns>
                     <e-column [width]="50" [field]="'id_order_penunjang'" [headerText]="'ID'" [visible]="false"
                         [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
@@ -45,34 +46,36 @@
                     <e-column [width]="150" [field]="'nama_debitur'" [headerText]="'DEBITUR'" [visible]="true"
                         [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
                     </e-column>
-                    <e-column field='status' headerText='STATUS' width='70' textAlign='Center'>
+                    <e-column field='status' headerText='STATUS ORDER HIS' width='120' textAlign='Center'>
                         <ng-template #template let-data>
-                            <div *ngIf="data.status === 'open';else inactive" class="statustemp e-activecolor">
-                                <span class="statustxt e-activecolor">
-                                    {{ data.status === 'open' ? 'OPEN' : 'CLOSED' }}
+                            <div *ngIf="data.status === 'open'" class="statustemp e_is_new_color">
+                                <span class="statustxt e_is_new_color">
+                                    OPEN
                                 </span>
                             </div>
-                            <ng-template #inactive>
-                                <div class="statustemp e-postedcolor">
-                                    <span class="statustxt e-postedcolor">
-                                        {{ data.status === 'open' ? 'OPEN' : 'VERIFIED' }}
-                                    </span>
-                                </div>
-                            </ng-template>
+                            <div *ngIf="data.status === 'canceled'" class="statustemp e_is_fill_color">
+                                <span class="statustxt e_is_fill_color">
+                                    CANCELED
+                                </span>
+                            </div>
+                            <div *ngIf="data.status === 'posted'" class="statustemp e_is_ready_color">
+                                <span class="statustxt e_is_ready_color">
+                                    VERIFIED
+                                </span>
+                            </div>
                         </ng-template>
                     </e-column>
-                    <e-column field='lis' headerText='STATUS LIS' width='90' textAlign='Center'>
+                    <e-column field='lis' headerText='STATUS LIS' width='120' textAlign='Center'>
                         <ng-template #template let-data>
-                            <div *ngIf="data.status_pembayaran === 'sent';else inactive"
-                                class="statustemp e-activecolor">
+                            <div *ngIf="data.lis === 'sent';else inactive" class="statustemp e-activecolor">
                                 <span class="statustxt e-activecolor">
-                                    {{ data.status_pembayaran === 'sent' ? 'SENT' : 'UN SENT' }}
+                                    {{ data.lis === 'sent' ? 'SENT' : 'UN SENT' }}
                                 </span>
                             </div>
                             <ng-template #inactive>
-                                <div class="statustemp e-warningcolor">
-                                    <span class="statustxt e-warningcolor">
-                                        {{ data.status_pembayaran === 'sent' ? 'SENT' : 'UN SENT' }}
+                                <div class="statustemp e_not_operational_color">
+                                    <span class="statustxt e_not_operational_color">
+                                        {{ data.lis === 'sent' ? 'SENT' : 'UN SENT' }}
                                     </span>
                                 </div>
                             </ng-template>

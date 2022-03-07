@@ -100,6 +100,7 @@ const pisRoutes: Routes = [
             { path: "admisi-pasien-rawat-jalan", component: PelayananPasienRawatJalanComponent, data: { title: "Admisi Pasien Rawat Jalan" }, },
             { path: "admisi-pasien-rawat-jalan/:id/:key", component: PelayananPasienRawatJalanComponent, data: { title: "Admisi Pasien Rawat Jalan" }, },
             { path: "transaksi-pemasukan-rawat-jalan", component: PemasukanRawatJalanComponent, data: { title: "Transaksi Pemasukan Rawat Jalan" }, },
+            { path: "transaksi-pemasukan-rawat-jalan/:id/:key", component: PemasukanRawatJalanComponent, data: { title: "Transaksi Pemasukan Rawat Jalan" }, },
         ]
     },
     {

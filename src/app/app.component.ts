@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { slideInAnimation } from './helpers/animations/animations';
 import { IAuthenticationResponseModel } from './modules/auth/models/authentication.model';
 import { AuthenticationService } from './modules/auth/services/authentication.service';
 import { NavigationService } from './modules/shared/services/navigation.service';
@@ -11,7 +10,6 @@ import { NavigationService } from './modules/shared/services/navigation.service'
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    animations: [slideInAnimation]
 })
 export class AppComponent implements OnInit, OnDestroy {
     title = 'DASHBOARD-TEMPLATE';
@@ -60,9 +58,9 @@ export class AppComponent implements OnInit, OnDestroy {
     prepareRoute(outlet: RouterOutlet): any {
         const routeData = this.getChild(this.activatedRoute);
 
-        routeData.data.subscribe((data: any) => {
-            return data.animation;
-        });
+        // routeData.data.subscribe((data: any) => {
+        //     return data.animation;
+        // });
     }
 
     handleMenuResctriction(currentUrl: string): void {

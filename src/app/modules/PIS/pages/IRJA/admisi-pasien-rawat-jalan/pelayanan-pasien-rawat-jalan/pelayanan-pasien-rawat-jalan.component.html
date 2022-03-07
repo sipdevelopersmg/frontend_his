@@ -98,6 +98,25 @@
                 <!-- No. Karcis -->
                 <!-- <mol-input-text [label]="'No Karcis'"></mol-input-text> -->
 
+                <!-- Cari No Rujukan -->
+                <!-- <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Cari No. Rujukan'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="input-group">
+                            <input #NoRujukan [id]="'no_rujukan'" type="text" class="form-control form-select-sm"
+                                (keyup.enter)="handleClickPencarianNoRujukan(NoRujukan.value)">
+
+                            <button id="btnInputGroup" class="btn btn-primary" type="button"
+                                style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';"
+                                (click)="handleClickPencarianNoRujukan(NoRujukan.value)">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+
                 <!-- Asal Rujukan -->
                 <org-input-look-up-kode #LookupAsalRujukan [modal-title]="'Data Asal Rujukan'"
                     [lookup-url]="urlAsalRujukan" [idKode]="'kode_asal_rujukan'" [idTitle]="'nama_asal_rujukan'"
@@ -144,7 +163,8 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1">
                         <!-- No. Peserta -->
                         <mol-input-text formControlName="no_peserta"
-                            [label]="DebiturNotTanggunganPribadi ? 'No. Peserta *' : 'No. Peserta'"></mol-input-text>
+                            [label]="DebiturNotTanggunganPribadi ? 'No. Peserta *' : 'No. Peserta'">
+                        </mol-input-text>
 
                         <!-- No. SEP -->
                         <mol-input-text [label]="'No. SEP'"></mol-input-text>
@@ -153,4 +173,264 @@
             </div>
         </div>
     </form>
+
+    <!-- Button Input SEP -->
+    <button id="btnModalInputSEP" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalInputSEP" [hidden]="true">
+        Launch Modal Input SEP
+    </button>
+
+    <!-- Modal Pembayaran -->
+    <div class="modal fade" id="modalInputSEP" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modalInputSEPLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                    <h5 class="modal-title" id="modalInputSEPLabel">
+                        Pendataan SEP Pasien
+                    </h5>
+                    <button id="btnCloseModalInputSEP" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body pb-1">
+                    <div class="row">
+                        <!-- Informasi Pasien -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <div class="card shadow-sm">
+                                <div class="card-header px-2 py-1">
+                                    <p class="card-title mb-0">Informasi Pasien</p>
+                                </div>
+                                <div class="card-body px-3 py-1">
+                                    <div class="row mb-2">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <!-- Nama Pasien -->
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Nama Pasien'"></atm-label>
+                                                    <p class="mb-0 text-biru-muda">
+                                                        {{ FormInputSEPAdditionalData.full_name }}
+                                                    </p>
+                                                </div>
+
+                                                <!-- No. Rekam Medis -->
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'No. Rekam Medis'"></atm-label>
+                                                    <p class="mb-0 text-biru-muda">
+                                                        {{ FormInputSEPAdditionalData.no_rekam_medis }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <!-- No. Peserta -->
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'No. Peserta'"></atm-label>
+                                                    <p class="mb-0 text-biru-muda">
+                                                        {{ FormInputSEPAdditionalData.no_peserta }}
+                                                    </p>
+                                                </div>
+
+                                                <!-- No. Surat Rujukan -->
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'No. Surat Rujukan'"></atm-label>
+                                                    <p class="mb-0 text-biru-muda">
+                                                        {{ FormInputSEPAdditionalData.no_surat_rujukan }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <!-- Diagnosa Awal -->
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Diagnosa Awal'"></atm-label>
+                                                    <p class="mb-0 text-biru-muda" style="font-size: 12px;">
+                                                        {{ FormInputSEPAdditionalData.diag_awal }}
+                                                    </p>
+                                                </div>
+
+                                                <!-- Kode DPJP / Kode Poli -->
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Kode DPJP / Kode Poli'"></atm-label>
+                                                    <p class="mb-0 text-biru-muda">
+                                                        {{ FormInputSEPAdditionalData.kode_dpjp }} / {{
+                                                        FormInputSEPAdditionalData.kode_poli }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input Field -->
+                        <div class="col-lg-12 col-sm-12 col-xs-12 mb-2">
+                            <div class="card shadow-sm">
+                                <div class="card-header px-2 py-1">
+                                    <p class="card-title mb-0">Data SEP</p>
+                                </div>
+                                <div class="card-body px-3 py-1">
+                                    <div class="row">
+                                        <!-- Apakah Katarak -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Apakah Katarak ?'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isKatarakOptions" id="isKatarakTrue" [value]="true">
+                                                        <label class="form-check-label" for="isKatarakTrue">Iya</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isKatarakOptions" id="isKatarakFalse" [value]="false">
+                                                        <label class="form-check-label"
+                                                            for="isKatarakFalse">Tidak</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Apakah Poli Eksekutif -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Apakah Poli Eksekutif ?'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isPoliEksekutifOptions" id="isPoliEksekutifTrue"
+                                                            [value]="true">
+                                                        <label class="form-check-label"
+                                                            for="isPoliEksekutifTrue">Iya</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isPoliEksekutifOptions" id="isPoliEksekutifFalse"
+                                                            [value]="false">
+                                                        <label class="form-check-label"
+                                                            for="isPoliEksekutifFalse">Tidak</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Apakah Laka Lantas -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Apakah Laka Lantas ?'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isLakaLantasOptions" id="isLakaLantasTrue"
+                                                            [value]="true" (change)="onChangeRadioLakaLantas(true)">
+                                                        <label class="form-check-label"
+                                                            for="isLakaLantasTrue">Iya</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isLakaLantasOptions" id="isLakaLantasFalse"
+                                                            [value]="false" (change)="onChangeRadioLakaLantas(false)">
+                                                        <label class="form-check-label"
+                                                            for="isLakaLantasFalse">Tidak</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Laka Lantas Detail -->
+                        <div *ngIf="ShowLakaLantasDetail" class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="card shadow-sm">
+                                <div class="card-header px-2 py-1">
+                                    <p class="card-title mb-0">Detail Laka Lantas</p>
+                                </div>
+                                <div class="card-body px-3 py-1">
+                                    <div class="row">
+                                        <!-- Nama Debitur -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row mb-2">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Nama Debitur'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <input [id]="'debitur_laka_lantas'" type="text"
+                                                        class="form-control form-select-sm">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Tanggal Kejadian'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <ejs-datepicker></ejs-datepicker>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Keterangan -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Tanggal Kejadian'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <ejs-datepicker></ejs-datepicker>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Apakah Laka Lantas -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <atm-label [LabelCaption]="'Apakah Laka Lantas ?'"></atm-label>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isLakaLantasOptions" id="isLakaLantasTrue"
+                                                            [value]="true" (change)="onChangeRadioLakaLantas(true)">
+                                                        <label class="form-check-label"
+                                                            for="isLakaLantasTrue">Iya</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-select-sm">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="isLakaLantasOptions" id="isLakaLantasFalse"
+                                                            [value]="false" (change)="onChangeRadioLakaLantas(false)">
+                                                        <label class="form-check-label"
+                                                            for="isLakaLantasFalse">Tidak</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer p-0 bg-white border-0">
+                    <div class="row w-100 p-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-grid gap-2 p-0">
+                            <button type="button" class="btn background-biru-muda text-white">
+                                Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </org-card-layout>

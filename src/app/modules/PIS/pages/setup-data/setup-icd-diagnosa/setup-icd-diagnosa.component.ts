@@ -50,7 +50,7 @@ export class SetupIcdDiagnosaComponent implements OnInit {
     GridDatasource: any[];
     GridData: MolGridComponent = null;
     GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
-    GridDataPageSettings: PageSettingsModel = { pageSize: 20, pageSizes: true };
+    GridDataPageSettings: PageSettingsModel = { pageSize: 23, pageSizes: true };
     GridDataToolbar: any[];
 
     /**
