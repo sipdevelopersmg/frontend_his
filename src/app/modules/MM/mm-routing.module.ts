@@ -35,6 +35,7 @@ import { ViewReturPembelianComponent } from "./pages/retur/view-retur-pembelian/
 import { DaftarReturIssueComponent } from "./pages/retur_issue/daftar-retur-issue/daftar-retur-issue.component";
 import { InputReturIssueComponent } from "./pages/retur_issue/input-retur-issue/input-retur-issue.component";
 import { ViewReturIssueComponent } from "./pages/retur_issue/view-retur-issue/view-retur-issue.component";
+import { SettingHargaJualComponent } from "./pages/setup-data/setting-harga-jual/setting-harga-jual.component";
 import { SetupCoaComponent } from "./pages/setup-data/setup-coa/setup-coa.component";
 import { SetupGroupCoaComponent } from "./pages/setup-data/setup-group-coa/setup-group-coa.component";
 import { SetupGrupItemComponent } from "./pages/setup-data/setup-grup-item/setup-grup-item.component";
@@ -64,6 +65,7 @@ const mmRoutes: Routes = [
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
+            { path: "setting-harga-jual", component: SettingHargaJualComponent, data: { title: "Setting Harga Jual"}},
             { path: "setup-stockroom", component: SetupStockroomComponent, data: { title: "Setup Stockroom" } },
             { path: "setup-item", component: SetupItemComponent, data: { title: "Setup Item" } },
             { path: "setup-grup-item", component: SetupGrupItemComponent, data: { title: "Setup Grup Item" } },

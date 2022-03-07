@@ -63,6 +63,7 @@ import { ViewAuditStokOpnameComponent } from './pages/stok_opname/audit-stok-opn
 import { DaftarAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting/daftar-audit-stok-opname-tanpa-setting.component';
 import { InputAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting/input-audit-stok-opname-tanpa-setting.component';
 import { ViewAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting/view-audit-stok-opname-tanpa-setting.component';
+import { SettingHargaJualComponent } from './pages/setup-data/setting-harga-jual/setting-harga-jual.component';
 
 @NgModule({
     declarations: [
@@ -125,7 +126,8 @@ import { ViewAuditStokOpnameTanpaSettingComponent } from './pages/stok_opname/au
         ViewAuditStokOpnameComponent,
         DaftarAuditStokOpnameTanpaSettingComponent,
         InputAuditStokOpnameTanpaSettingComponent,
-        ViewAuditStokOpnameTanpaSettingComponent
+        ViewAuditStokOpnameTanpaSettingComponent,
+        SettingHargaJualComponent
     ],
     imports: [
         FormsModule,

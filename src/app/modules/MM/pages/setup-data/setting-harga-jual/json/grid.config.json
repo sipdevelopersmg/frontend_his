@@ -1,0 +1,36 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "harga_satuan",
+        "headerText": "Harga Satuan",
+        "visible": true
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "profit",
+        "headerText": "Profit",
+        "visible": true
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "harga_jual",
+        "headerText": "Harga Jual",
+        "visible": true
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "tanggal_berlaku",
+        "headerText": "Tanggal Berlaku",
+        "visible": true
+    }
+  ]
+}
