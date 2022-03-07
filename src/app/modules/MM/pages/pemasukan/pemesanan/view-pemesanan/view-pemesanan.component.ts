@@ -93,40 +93,40 @@ export class ViewPemesananComponent implements OnInit {
 
   onClickButtonNav(ButtonId: string): void {
     switch (ButtonId) {
-        case 'Back':
-          this.location.back();
-          break;
-        case 'Validasi':
-            Swal.fire({
-              title: 'Apakah anda yakin ingin validasi data?',
-              text: "",
-              icon: 'info',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Iya Validasi',
-              cancelButtonText: 'Tidak',
-              focusCancel: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.onValidation();
-              }
-            });
-          break;
-        case 'Cancel':
-          this.modalRef = this.modalService.show(
-              this.modalCanceled,
-              Object.assign({}, { class: 'modal-lg' })
-          );
-          break;
-        case 'Close':
-          this.modalRef = this.modalService.show(
-            this.modalClosed,
+      case 'Back':
+        this.location.back();
+        break;
+      case 'Validasi':
+          Swal.fire({
+            title: 'Apakah anda yakin ingin validasi data?',
+            text: "",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya Validasi',
+            cancelButtonText: 'Tidak',
+            focusCancel: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.onValidation();
+            }
+          });
+        break;
+      case 'Cancel':
+        this.modalRef = this.modalService.show(
+            this.modalCanceled,
             Object.assign({}, { class: 'modal-lg' })
-          );
-          break;
-        default:
-          break;
+        );
+        break;
+      case 'Close':
+        this.modalRef = this.modalService.show(
+          this.modalClosed,
+          Object.assign({}, { class: 'modal-lg' })
+        );
+        break;
+      default:
+        break;
     }
   }
 

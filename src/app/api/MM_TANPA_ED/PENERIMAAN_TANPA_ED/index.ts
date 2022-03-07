@@ -1,0 +1,5 @@
+
+import * as TRANSPENERIMAAN_TANPA_ED from './TRANSPENERIMAAN_TANPA_ED'
+export const PENERIMAAN = Object.assign({}, 
+        {"TRANSPENERIMAAN_TANPA_ED":TRANSPENERIMAAN_TANPA_ED}
+    )

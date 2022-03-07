@@ -1,0 +1,17 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row pt-2">
+        <!-- Filter Offcanvas -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-filter>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <mol-grid #GridData [grid-height]="'calc(100vh - 19rem)'"
+                [grid-DataSource]="repackingTanpaEdService.dataSource | async" [grid-paging]="true" [grid-lines]="'Both'"
+                [columns]="GridConfig.GridColumns" (row-selected)="handleSelectedRow($event)"
+                (initialized)="handleinitialized($event)" (row-data-bound)="handleRowDataBound($event)">
+            </mol-grid>
+        </div>
+    </div>
+</org-card-layout>

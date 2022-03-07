@@ -1,0 +1,126 @@
+{
+    "TrDetail":
+    [
+        {
+            "allowEditing": false,
+            "field":"pemesanan_id",
+            "headerText":"Pemesanan Id",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"no_urut",
+            "headerText":"No Urut",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"id_item",
+            "headerText":"Id Item",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": false
+        },
+        {
+            "allowEditing": false,
+            "field":"kode_item",
+            "headerText":"Kode Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"nama_item",
+            "headerText":"Nama Obat",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "field":"qty_satuan_besar",
+            "headerText":"Banyak",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "editParams":"satuanParams",
+            "field":"kode_satuan_besar",
+            "headerText":"Satuan",
+            "editType": "dropdownedit",
+            "type":"",
+            "format":"",
+            "textAlign":"left",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"isi",
+            "headerText":"Isi",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "visible": true
+        },
+        {
+            "allowEditing": false,
+            "field":"qty_retur",
+            "headerText":"Qty",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "field":"harga_satuan_retur",
+            "headerText":"Harga Satuan",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "field":"sub_total",
+            "headerText":"Sub Total",
+            "editType": "defaultEdit",
+            "type":"",
+            "format":"N2",
+            "textAlign":"right",
+            "headerTextAlign":"Center",
+            "visible": true
+        }
+    ]
+}

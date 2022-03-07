@@ -1,0 +1,40 @@
+{
+    "GridColumns": [
+        {
+            "field": "kode_rak_storage",
+            "headerText": "Kode Rak Storage",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_rak_storage",
+            "headerText": "Nama Rak Storage",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_stockroom",
+            "headerText": "Nama Stockroom",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_penanggung_jawab_rak_storage",
+            "headerText": "Nama Penanggung Jawab",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ]
+}

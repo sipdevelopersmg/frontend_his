@@ -1,0 +1,30 @@
+{
+    "GridColumns": [
+        {
+            "field": "id_group_item",
+            "headerText": "No Pemusnahan Stok",
+            "type": "string",
+            "textAlign": "left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "kode_grup_item",
+            "headerText": "Kode Group",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "grup_item",
+            "headerText": "Nama Group",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ]
+}

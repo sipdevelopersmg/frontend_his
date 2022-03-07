@@ -1,0 +1,40 @@
+{
+    "GridColumns": [
+        {
+            "field": "id_register",
+            "headerText": "Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": false,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_pasien",
+            "headerText": "Nama Pasien",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "bed_no",
+            "headerText": "Bed",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_dokter",
+            "headerText": "Nama Dokter",
+            "type": "string",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ]
+}

@@ -79,12 +79,18 @@
                                 [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
                                 [columns]="GridSetting.GridSediaan.columns"
                                 [grid-DataSource]="setupFormulariumService.dataSource | async"
-                                [textWrapSettings]="wrapSettings" (row-selected)="handleSelectedSediaan($event)">
+                                [textWrapSettings]="wrapSettings" (row-selected)="handleSelectedFormularium($event)">
                             </mol-grid>
                         </div>
                     </div>
                 </div>
                 <!-- Tabel Item Obat -->
+
+                <org-look-up #LookupItem [lookup-url]="urlObat" (onGetSelectedData)="heandleSelectedItem($event)"
+                    [columns]="GridLookUpItem.columns" [filter-lookup]="GridLookUpItem.filter" [modal-title]="'Data Obat'">
+                </org-look-up>
+        
+
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header ">
@@ -93,15 +99,20 @@
                                     <h5 class="m-0">Nama Dagang</h5>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-plus-circle tambah text-primary "></i>
+                                    <a (click)="handleTambahFormulariumObat()"><i
+                                        class="fas fa-plus-circle tambah text-primary me-2 "></i></a>
+                                    <a (click)="handleDeleteFormulariumObat()"><i
+                                        class="fas fa-times-circle tambah text-danger "></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
+                            <mol-grid  #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
                                 [grid-height]="'calc((100vh - 350px)/2)'" [grid-lines]="'Both'"
-                                [columns]="GridSetting.GridItem.columns" [grid-DataSource]="DataSourceDagang"
-                                [textWrapSettings]="wrapSettings">
+                                [columns]="GridSetting.GridItem.columns" 
+                                [grid-DataSource]="setupFormulariumService.dataSource_obat | async"
+                                [textWrapSettings]="wrapSettings"
+                                (row-selected)="handleSelectedFormulariumObat($event)">
                             </mol-grid>
                         </div>
                     </div>

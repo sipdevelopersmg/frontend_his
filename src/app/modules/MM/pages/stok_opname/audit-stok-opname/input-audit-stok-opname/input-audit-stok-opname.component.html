@@ -1,0 +1,105 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <!-- Header -->
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <org-input-look-up-kode #LookupKodeSettingStokOpname [lookup-url]="urlSettingStokOpname" [idKode]="'setting_stok_opname_id'" [modal-title]="'Data Setting Stok Opname'"
+                    [idTitle]="'no_setting_stok_opname'" (onGetSelectedData)="heandleSelectedSettingStokOpname($event)"
+                    [columns]="LookupGridSettingStokOpname.columns" [filter-lookup]="LookupGridSettingStokOpname.filter"
+                    [label]="'Setting Stok Opname'">
+                </org-input-look-up-kode>
+                <!-- Dropdown Stockroom -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Stockroom'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
+                            [dataSource]="dataSourceStockroom"
+                            [fields]="SetupStockroomDropdownField" [allowFiltering]="true"
+                            formControlName="id_stockroom"
+                            (change)="handleChangeStockroom($event)">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- Dropdown rak -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Rak Storage'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalRakStorageDropdown id="marital"
+                            [dataSource]="dataSourceRakStorage"
+                            [fields]="SetupRakStorageDropdownField" [allowFiltering]="true"
+                            formControlName="id_rak_storage">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+                <!-- Tgl. Capture -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Waktu Stok Opname'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-datetimepicker #DateTimePickerTglRequest [timeFormat]="'HH:mm'"
+                            [format]="'dd/MM/yyyy HH:mm'" formControlName="waktu_capture_stok">
+                        </ejs-datetimepicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-sm btn-primary" (click)="handleClickGetBarang()">Get Barang</button>
+            </div>
+        </div>
+        <!-- Grid -->
+        <ejs-grid #gridDetail 
+            [id]="'GridDeail'" 
+            [editSettings]='GridDataEditSettings'
+            [dataSource]='dataSourceGrid | async' 
+            [gridLines]="'Both'" [allowResizing]='true'
+            [childGrid]="ChildGrid" 
+            (toolbarClick)="onToolbarClick($event)"
+            (rowSelected)="handleSelectdRow($event)"
+            (dataBound)="onDataBound()"
+            (rowDataBound)="handleRowDataBound($event)">
+            <e-columns>
+                <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="false" field='id_item' [allowEditing]="false" headerText='id_item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='qty_fisik' [allowEditing]="true"
+                    headerText='Qty Fisik' editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="false" field='qty_sistem_capture_stok' [allowEditing]="false"
+                    headerText='Qty Capture' editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='nama_satuan' [allowEditing]="false" headerText='Satuan'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+                <e-column [visible]="true" field='hpp_average' [allowEditing]="false" headerText='Harga Jual'
+                    editType='defaultEdit'  textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='sub_total_fisik' [allowEditing]="false" headerText='Nominal'
+                    editType='defaultEdit' textAlign="right" headerTextAlign="center" format="N2">
+                </e-column>
+                <e-column [visible]="true" field='keterangan' [allowEditing]="true" headerText='Keterangan'
+                    editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+    </form>
+
+</org-card-layout>

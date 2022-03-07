@@ -1,0 +1,73 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tanggal Setting Stok Opname'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-datetimepicker #DateTimePickerTglRequest [timeFormat]="'HH:mm'"
+                            [format]="'dd/MM/yyyy HH:mm'" formControlName="tanggal_stok_opname">
+                        </ejs-datetimepicker>
+                    </div>
+                </div>
+                <!-- Dropdown Jenis Setting Stok Opname -->
+                <div class="row mb-2">
+                    <mol-input-text [label]="'Jenis Stok Opname'" formControlName="nama_jenis_setting_stok_opname" [inputFieldState]="inputFieldState"></mol-input-text>
+                </div>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan" [inputFieldState]="inputFieldState"></mol-input-textarea> 
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- <div class="card">
+                    <div class="card-body"> -->
+                        <div class="row pt-1" >
+                            <div class="col-sm-12">
+                                <mol-grid
+                                    #GridStockroom
+                                    [grid-height]="100"
+                                    [grid-DataSource]="dataSourceStockroom"
+                                    [grid-paging]="false"
+                                    [grid-lines]="'Both'"
+                                    [columns]="GridConfigStockroom.GridColumns"
+                                ></mol-grid>
+                            </div>
+                        </div>
+                    <!-- </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" *ngIf="id_jenis_setting_stok_opname==2">
+                <mol-grid
+                    #GridGroup
+                    [grid-height]="'calc(100vh - 24rem)'"
+                    [grid-DataSource]="dataSourceGroup"
+                    [grid-paging]="false"
+                    [grid-lines]="'Both'"
+                    [columns]="GridConfigGroup.GridColumns"
+                ></mol-grid>
+            </div>
+            <div class="col-sm-12" *ngIf="id_jenis_setting_stok_opname==3">
+                <mol-grid
+                    #GridRak
+                    [grid-height]="100"
+                    [grid-DataSource]="dataSourceRak"
+                    [grid-paging]="false"
+                    [grid-lines]="'Both'"
+                    [columns]="GridConfigRak.GridColumns"
+                ></mol-grid>
+            </div>
+            <div class="col-sm-12" *ngIf="id_jenis_setting_stok_opname==4">
+                <mol-grid
+                    #GridItem
+                    [grid-height]="100"
+                    [grid-DataSource]="dataSourceItem"
+                    [grid-paging]="false"
+                    [grid-lines]="'Both'"
+                    [columns]="GridConfigItem.GridColumns"
+                ></mol-grid>
+            </div>
+        </div>
+    </form>
+</org-card-layout>

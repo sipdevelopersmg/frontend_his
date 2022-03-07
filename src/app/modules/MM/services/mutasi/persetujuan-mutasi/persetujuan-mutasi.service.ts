@@ -13,7 +13,7 @@ import { TrPersetujuanMutasiDetailInsert, TrPersetujuanMutasiInsert } from '../.
 })
 export class PersetujuanMutasiService {
 
-  public API = MM.MUTASI.PENGAJUAN_MUTASI;
+    public API = MM.MUTASI.PENGAJUAN_MUTASI;
     public dataSource = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<TrPersetujuanMutasiDetailInsert[]>([]);

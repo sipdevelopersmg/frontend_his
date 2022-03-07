@@ -125,26 +125,29 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no",
-                "headerText": "No",
+                "field": "kode_item",
+                "headerText": "Kode Obat",
                 "type": "string",
-                "visible": true,
-                "width":50
+                "visible": true
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "ket",
-                "headerText": "Keteranga",
+                "field": "barcode",
+                "headerText": "Barcode",
+                "type": "string",
+                "visible": true
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_item",
+                "headerText": "Nama Obat",
                 "type": "string",
                 "visible": true
             }
-        ],
-        "DataSource":[
-            {"no":1,"ket":"Mefinal Tab 500 mg"},
-            {"no":2,"ket":"Ponstan Tab 500 mg"},
-            {"no":3,"ket":"Lapistan Caps 500 mg"}
         ]
     }
 }

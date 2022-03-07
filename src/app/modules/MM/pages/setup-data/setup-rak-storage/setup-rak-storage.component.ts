@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { CommandModel, EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { CommandModel, EditSettingsModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
@@ -56,6 +56,8 @@ export class SetupRakStorageComponent implements OnInit {
   */
   TabId: string = 'Data';
 
+  @ViewChild('gridNull') public gridNull: GridComponent;
+  @ViewChild('gridRak') public gridRak: GridComponent;
   @ViewChild('OrgTabsRef', { static: true }) OrgTabsRef: OrgTabsComponentComponent;
 
   GridDatasource: any[];
@@ -64,21 +66,34 @@ export class SetupRakStorageComponent implements OnInit {
   private GridData: MolGridComponent = null;
   GridDataEditSettings: EditSettingsModel = { allowAdding: true, allowDeleting: true, allowEditing: true };
   GridDataToolbar: any[];
-  GridDataToolbarRak: any[] = [
-    'Search'
+  GridDataToolbarRak: any[] = [];
+  FilterColumnDatasourceNull: any[] = [
+    { text: 'No. Kontrak SPJB', value: 'tks.nomor_kontrak_spjb' },
+    { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
+    { text: 'Supplier', value: 'sup.nama_supplier' },
+    { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
   ];
 
   /**
    * Berisi Data Yang selected dari dalam grid
    * @Object Single Object
   */
-  SelectedData: Object;
+ 
+  SelectedData: any;
   SetupStockroomDropdownField: object = { text: 'nama_stockroom', value: 'id_stockroom' };
   SetupPenanggungJawabRakStorageDropdownField: object = { text: 'nama_penanggung_jawab_rak_storage', value: 'id_penanggung_jawab_rak_storage' };
   
-  CommandButton: CommandModel[] = [
-    { buttonOption: { iconCss: 'fas fa-angel-double-right fa-sm' } }
+  CommandButtonNull: CommandModel[] = [
+    { buttonOption: { iconCss: 'fas fa-plus fa-sm' } }
   ];
+
+  CommandButtonRak: CommandModel[] = [
+    { buttonOption: { iconCss: 'fas fa-times fa-sm' } }
+  ];
+
+  paramDynamicFilterNull:any = []
+  paramDynamicFilterRak:any = []
+
   constructor(
     private formBuilder: FormBuilder,
     private utilityService: UtilityService,
@@ -98,7 +113,6 @@ export class SetupRakStorageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.GridDataToolbar = [
       { text: 'Add', tooltipText: 'Add', prefixIcon: 'fas fa-plus fa-sm', id: 'add' },
       { text: 'Edit', tooltipText: 'Edit', prefixIcon: 'fas fa-edit fa-sm', id: 'edit' },
@@ -110,6 +124,28 @@ export class SetupRakStorageComponent implements OnInit {
     this.GetAllData();
     this.setupStockroomService.setDataSource();
     this.setupPenanggungJawabRakStorageService.setDataSource();
+    
+  }
+
+  handlePencarianFilterNull(args): void {
+    this.paramDynamicFilterNull = args;
+    this.setupRakStorageService.onGetAllItemBelumRak(args).subscribe((result)=>{
+      this.GridDataItemSourceNull = result.data
+      this.gridNull.refresh();
+    });
+  }
+
+  handlePencarianFilterRak(args): void {
+    this.paramDynamicFilterRak = args;
+    this.setupRakStorageService.onGetAllItemByIdRak(args,this.id_rak_storage.value).subscribe((result)=>{
+      console.log(result);
+      if(typeof result !== 'undefined'){
+        this.GridDataItemSourceRak = result.data
+      }else{
+        this.GridDataItemSourceRak = []
+      }
+      this.gridRak.refresh();
+    })
   }
 
 
@@ -217,6 +253,9 @@ export class SetupRakStorageComponent implements OnInit {
     this.ButtonNav = [
       { Id: 'Cancel', Captions: 'Back', Icons1: 'fa-arrow-left' },
     ];
+    this.id_rak_storage.setValue(this.SelectedData.id_rak_storage);
+    this.handlePencarianFilterNull([]);
+    this.handlePencarianFilterRak([]);
   }
 
   /** Method untuk mengkosongkan data yang ada di form*/
@@ -250,7 +289,23 @@ export class SetupRakStorageComponent implements OnInit {
   }
 
   handleCommandClickNull(args): void{
+    this.setupRakStorageService.onTambahItemRak(args.rowData.id_item,this.id_rak_storage.value).subscribe(()=>{
+      this.utilityService.onShowingCustomAlert('success', 'Item Berhasil Di Tambahkan Di Rak', '')
+      .then(() => {
+        this.handlePencarianFilterNull(this.paramDynamicFilterNull);
+        this.handlePencarianFilterRak(this.paramDynamicFilterRak);
+      });
+    })
+  }
 
+  handleCommandClickRak(args): void{
+    this.setupRakStorageService.onHapusItemRak(args.rowData.id_item).subscribe(()=>{
+      this.utilityService.onShowingCustomAlert('success', 'Berhasil Hapus Item Di Rak', '')
+      .then(() => {
+        this.handlePencarianFilterNull(this.paramDynamicFilterNull);
+        this.handlePencarianFilterRak(this.paramDynamicFilterRak);
+      });
+    })
   }
 
   /** Method menyimpan | menubah data */
@@ -297,6 +352,7 @@ export class SetupRakStorageComponent implements OnInit {
     }
   }
 
+  get id_rak_storage() : AbstractControl { return this.FormInputData.get('id_rak_storage'); }
   get kode_rak_storage(): AbstractControl { return this.FormInputData.get('kode_rak_storage'); }
   get nama_rak_storage(): AbstractControl { return this.FormInputData.get('nama_rak_storage'); }
 

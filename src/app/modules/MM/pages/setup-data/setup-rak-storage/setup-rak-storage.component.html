@@ -80,28 +80,33 @@
             <org-tabs-body>
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="card">
-                            <h5 class="card-title">Item belum ada di rak</h5>
-                            <div class="card-body p-0">
-                                <ejs-grid #gridDetail [id]="'GridDeail'" 
+                        <div class="row">
+                            <h5>Item Belum Ada Di rak</h5>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <mol-offcanvas-filter #advanceFilterNull [FilterColumnDatasource]="FilterColumnDatasourceNull"
+                                    (handle-pencarian)="handlePencarianFilterNull($event)">
+                                </mol-offcanvas-filter>
+                            </div>
+                            <div class="col-sm-12">
+                                <ejs-grid
+                                    #gridNull
                                     [editSettings]='GridDataEditSettings'
                                     [dataSource]='GridDataItemSourceNull' 
-                                    [gridLines]="'Both'" 
-                                    [toolbar]='GridDataToolbarRak'
+                                    [gridLines]="'Both'" [height]="'calc(100vh - 19rem)'"
                                     (commandClick)="handleCommandClickNull($event)">
                                     <e-columns>
-                                        <e-column [width]="70" [field]="'command'" [headerText]="'D'" [visible]="true" [allowEditing]="false"
+                                        <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                        </e-column>
+                                        <e-column [visible]="true" field='barcode' [allowEditing]="false" headerText='Barcode'
+                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                        </e-column>
+                                        <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                        </e-column>
+                                        <e-column [width]="70" [field]="'command'" [headerText]="'Add'" [visible]="true" [allowEditing]="false"
                                             [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
-                                            [commands]="CommandButton">
-                                        </e-column>
-                                        <e-column [visible]="false" field='kode_item' [allowEditing]="false" headerText='Kode Item'
-                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                                        </e-column>
-                                        <e-column [visible]="false" field='barcode' [allowEditing]="false" headerText='Barcode'
-                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
-                                        </e-column>
-                                        <e-column [visible]="false" field='nama_item' [allowEditing]="false" headerText='Nama Item'
-                                            editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                            [commands]="CommandButtonNull">
                                         </e-column>
                                     </e-columns>
                                 </ejs-grid>
@@ -109,21 +114,35 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="card">
-                            <h5 class="card-title">Item di rak storage</h5>
-                            <div class="card-body p-0"> 
-                                <mol-grid
-                                    #GridDataItemRak
-                                    [grid-height]="300"
-                                    [grid-DataSource]="GridDataItemSourceRak"
-                                    [grid-paging]="false"
-                                    [grid-editSettings]="GridDataEditSettings"
-                                    [grid-lines]="'Both'"
-                                    [grid-toolbar]="GridDataToolbarRak"
-                                    [columns]="GridSettingConfig.GridColumns"
-                                    (row-selected)="handleSelectedRow($event)"
-                                ></mol-grid>
-                            </div>
+                        <h5>Item Di rak</h5>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                            <mol-offcanvas-filter #advanceFilterNull [FilterColumnDatasource]="FilterColumnDatasourceNull"
+                                (handle-pencarian)="handlePencarianFilterRak($event)">
+                            </mol-offcanvas-filter>
+                        </div>
+                        <div class="col-sm-12">
+                            <ejs-grid
+                                #gridRak
+                                [editSettings]='GridDataEditSettings'
+                                [dataSource]='GridDataItemSourceRak' 
+                                [gridLines]="'Both'" [height]="'calc(100vh - 19rem)'"
+                                (commandClick)="handleCommandClickRak($event)">
+                                <e-columns>
+                                    <e-column [visible]="true" field='kode_item' [allowEditing]="false" headerText='Kode Item'
+                                        editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                    </e-column>
+                                    <e-column [visible]="true" field='barcode' [allowEditing]="false" headerText='Barcode'
+                                        editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                    </e-column>
+                                    <e-column [visible]="true" field='nama_item' [allowEditing]="false" headerText='Nama Item'
+                                        editType='defaultEdit' textAlign="left" headerTextAlign="center">
+                                    </e-column>
+                                    <e-column [width]="70" [field]="'command'" [headerText]="'Add'" [visible]="true" [allowEditing]="false"
+                                        [allowSorting]="false" [textAlign]="'Center'" [headerTextAlign]="'Center'"
+                                        [commands]="CommandButtonRak">
+                                    </e-column>
+                                </e-columns>
+                            </ejs-grid>
                         </div>
                     </div>
                 </div>

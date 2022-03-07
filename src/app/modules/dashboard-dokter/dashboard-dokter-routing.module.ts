@@ -1,5 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DaftarResepFormulariumIrdaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irda/daftar-resep-formularium-irda/daftar-resep-formularium-irda.component";
+import { InputResepFormulariumIrdaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irda/input-resep-formularium-irda/input-resep-formularium-irda.component";
+import { PulangResepFormulariumIrdaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irda/pulang-resep-formularium-irda/pulang-resep-formularium-irda.component";
+import { ViewResepFormulariumIrdaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irda/view-resep-formularium-irda/view-resep-formularium-irda.component";
+import { InputResepFormulariumIrjaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irja/input-resep-formularium-irja/input-resep-formularium-irja.component";
+import { DaftarResepFormulariumIrnaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irna/daftar-resep-formularium-irna/daftar-resep-formularium-irna.component";
+import { InputResepFormulariumComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irna/input-resep-formularium/input-resep-formularium.component";
+import { PulangResepFormulariumIrnaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irna/pulang-resep-formularium-irna/pulang-resep-formularium-irna.component";
+import { ViewResepFormulariumIrnaComponent } from "../Pharmacy/pages/resep-formularium/resep-formularium-irna/view-resep-formularium-irna/view-resep-formularium-irna.component";
 import { DashboardDokterComponent } from "./dashboard-dokter.component";
 import { AlergiComponent } from "./pages/alergi/alergi.component";
 import { AssesmenAwalComponent } from "./pages/assesmen-awal/assesmen-awal.component";
@@ -69,6 +78,32 @@ const dashboarDokterRoutes: Routes = [
                     { path: "view-resep-irda/:id/:key", component: ViewResepIrdaComponent, data: { title: "Detail Resep Rawat Darurat" } },
                     { path: "ubah-resep-irda/:id/:key", component: InputResepIrdaComponent, data: { title: "Ubah Resep Rawat Darurat" } },
                     { path: "pulang-resep-irda", component: PulangResepIrdaComponent, data: { title: "Form Resep Rawat Darurat" } },
+                ]
+            },
+            {
+                path: "resep-formularium-irja", component: null, data: { title: "Resep Formularium IRJA" },
+                    children: [
+                        { path: "input-resep-formularium-irja",component: InputResepFormulariumIrjaComponent, data: { title: "Input Resep Formularium Rawat Jalan" } },
+                    ]
+                },
+            {
+                path: "resep-formularium-irna", component: null, data: { title: "Resep Formularium IRNA" },
+                    children: [
+                        { path: "daftar-resep-formularium-irna",component: DaftarResepFormulariumIrnaComponent, data: { title: "Daftar Resep Formularium Rawat Inap" } },
+                        { path: "input-resep-formularium-irna",component: InputResepFormulariumComponent, data: { title: "Input Resep Formularium Rawat Inap" } },
+                        { path: "view-resep-formularium-irna/:id/:key",component: ViewResepFormulariumIrnaComponent, data: { title: "View Resep Formularium Rawat Inap" } },
+                        { path: "ubah-resep-formularium-irna/:id/:key",component: InputResepFormulariumComponent, data: { title: "Ubah Resep Formularium Rawat Inap" } },
+                        { path: "pulang-resep-formularium-irna",component: PulangResepFormulariumIrnaComponent, data: { title: "Resep Pulang Formularium Rawat Inap" } },
+                ]
+            },
+            {
+                path: "resep-formularium-irda", component: null, data: { title: "Resep Formularium IRDA" },
+                    children: [
+                        { path: "daftar-resep-formularium-irda",component: DaftarResepFormulariumIrdaComponent, data: { title: "Daftar Resep Formularium Rawat Darurat" } },
+                        { path: "input-resep-formularium-irda",component: InputResepFormulariumIrdaComponent, data: { title: "Input Resep Formularium Rawat Darurat" } },
+                        { path: "view-resep-formularium-irda/:id/:key",component: ViewResepFormulariumIrdaComponent, data: { title: "View Resep Formularium Rawat Darurat" } },
+                        { path: "ubah-resep-formularium-irda/:id/:key",component: InputResepFormulariumIrdaComponent, data: { title: "Ubah Resep Formularium Rawat Darurat" } },
+                        { path: "pulang-resep-formularium-irda",component: PulangResepFormulariumIrdaComponent, data: { title: "Resep Pulang Formularium Rawat Darurat" } },
                 ]
             },
             {

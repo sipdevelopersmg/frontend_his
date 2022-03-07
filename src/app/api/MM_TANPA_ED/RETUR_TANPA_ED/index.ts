@@ -1,0 +1,5 @@
+
+import * as RETUR_PEMBELIAN_TANPA_ED from './RETUR_TANPA_ED'
+export const RETUR_TANPA_ED = Object.assign({}, 
+    {"RETUR_PEMBELIAN_TANPA_ED":RETUR_PEMBELIAN_TANPA_ED}
+)

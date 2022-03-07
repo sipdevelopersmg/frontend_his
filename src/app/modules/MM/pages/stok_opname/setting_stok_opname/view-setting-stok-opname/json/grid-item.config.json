@@ -1,0 +1,31 @@
+{
+    "GridColumns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "barcode",
+            "headerText": "Barcode",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_item",
+            "headerText": "Kode Barang",
+            "type": "string",
+            "visible": true
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_item",
+            "headerText": "Nama Barang",
+            "type": "string",
+            "visible": true
+        }
+    ]
+}

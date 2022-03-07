@@ -1,0 +1,36 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_grup_item",
+            "headerText": "Kode Group Item",
+            "type": "string",
+            "visible": true,
+            "width": 200
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "grup_item",
+            "headerText": "Nama Group Item",
+            "type": "string",
+            "visible": true,
+            "width": 150
+        }
+    ],
+    "filter": [
+        {
+            "field": "kode_grup_item",
+            "filter": "like",
+            "title": "Kode Group Item"
+        },
+        {
+            "field": "grup_item",
+            "filter": "like",
+            "title": "Nama Group Item"
+        }
+    ]
+}

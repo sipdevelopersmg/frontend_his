@@ -9,6 +9,7 @@ import { NotificationService } from '../../shared/services/notification.service'
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpResponseModel } from '../../shared/models/Http-Operation/HttpResponseModel';
+import { environment,isFormularium } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -34,16 +35,20 @@ export class DashboardDokterService {
         this.onSetJenisRawatForDashboardDokter();
 
         let urlResep = "";
+        let urlformularium = "";
 
         switch (this.JenisRawat.value) {
             case 'IRJA':
                 urlResep = 'Dokter/resep';
+                urlformularium = "Dokter/resep-formularium-irja/input-resep-formularium-irja"
                 break;
             case 'IRNA':
                 urlResep = 'Dokter/resep-irna/daftar-resep-irna';
+                urlformularium = "Dokter/resep-formularium-irna/daftar-resep-formularium-irna"
                 break;
             case 'IRDA':
                 urlResep = 'Dokter/resep-irda/daftar-resep-irda';
+                urlformularium = "Dokter/resep-formularium-irda/daftar-resep-formularium-irda"
                 break;
         };
 
@@ -94,7 +99,7 @@ export class DashboardDokterService {
                 id_top_menu: 0,
                 is_parent: true,
                 sidebarChild: [],
-                url: urlResep
+                url: (isFormularium)? urlformularium : urlResep  
             },
             {
                 button: [],

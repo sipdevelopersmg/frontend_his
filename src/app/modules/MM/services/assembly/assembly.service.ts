@@ -13,7 +13,7 @@ import { assemblyDetailModel, assemblyModel } from '../../models/assembly/assemb
 })
 export class AssemblyService {
 
-  public API = MM.ASSEM.ASSEMBLY;
+    public API = MM.ASSEM.ASSEMBLY;
     public dataSource = new BehaviorSubject([]);
 
     private readonly _dataDetail = new BehaviorSubject<assemblyDetailModel[]>([]);

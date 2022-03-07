@@ -1,0 +1,20 @@
+{
+  "GridColumns": [
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "kode_item",
+        "headerText": "Kode Item",
+        "visible": true
+    },
+    {
+        "allowEditing": false,
+        "allowSorting": true,
+        "editType": "defaultEdit",
+        "field": "nama_item",
+        "headerText": "Nama Item",
+        "visible": true
+    }
+  ]
+}

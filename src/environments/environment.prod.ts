@@ -7,6 +7,9 @@ export const modeDevelopment = false;
 
 export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 
+export const isFormularium = true;
+
+
 export const environment = {
     production: true,
 

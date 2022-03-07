@@ -109,8 +109,9 @@ export class SetupItemComponent implements OnInit, AfterViewInit {
     tampil_ed: boolean = false;
     id_stockroom_kartu_stok: any = 0;
     FilterColumnDatasource: any[] = [
-        { text: 'No. Kontrak', value: 'tks.nomor_kontrak' },
-        { text: 'Judul Kontrak', value: 'tks.judul_kontrak' },
+        { text: 'Barcode', value: 'msi.barcode' },
+        { text: 'Kode Item', value: 'msi.kode_item' },
+        { text: 'Nama Item', value: 'msi.nama_item' },
     ];
 
     public month: number = new Date().getMonth();

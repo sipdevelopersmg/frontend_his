@@ -1,0 +1,67 @@
+{
+    "columns": [
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "kode_item",
+            "headerText": "Kode",
+            "type": "string",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "nama_item",
+            "headerText": "Nama Barang",
+            "type": "string",
+            "visible": true,
+            "width": 200
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "qty_on_hand",
+            "headerText": "Sisa Stok",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 100
+        },
+        {
+            "allowEditing": true,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "harga_beli_terakhir",
+            "headerText": "Harga Beli",
+            "type": "number",
+            "format": "N2",
+            "textAlign": "Right",
+            "headerTextAlign": "Right",
+            "visible": true,
+            "width": 120
+        }
+    ],
+    "filter": [
+        {
+            "field": "kode_item",
+            "filter": "like",
+            "title": "KODE"
+        },
+        {
+            "field": "barcode",
+            "filter": "like",
+            "title": "BARCODE"
+        },
+        {
+            "field": "nama_item",
+            "filter": "like",
+            "title": "NAMA"
+        }
+    ]
+}

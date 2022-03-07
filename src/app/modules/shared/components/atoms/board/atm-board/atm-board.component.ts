@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
 import { TransaksiObatIrjaService } from 'src/app/modules/Pharmacy/services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { isFormularium } from 'src/environments/environment';
 
 @Component({
     selector: 'atm-board',
@@ -97,7 +98,11 @@ export class AtmBoardComponent implements OnInit {
 
     onMarkResepSudahDilayani(Id: string, CardBodyData: KanbanCardModel[]) {
         const id = this.encryptionService.encrypt(JSON.stringify(Id));
-        this.router.navigate(['dashboard/Pharmacy/transaksi-obat/transaksi-obat-irja', id, "GRAHCIS"]);
+        if(isFormularium){
+            this.router.navigate(['dashboard/Pharmacy/transaksi-obat-formularium/transaksi-obat-formularium-irja', id, "GRAHCIS"]);
+        }else{
+            this.router.navigate(['dashboard/Pharmacy/transaksi-obat/transaksi-obat-irja', id, "GRAHCIS"]);
+        }
     }
 
     onPindahKeAntrian(NoRegister: string) {

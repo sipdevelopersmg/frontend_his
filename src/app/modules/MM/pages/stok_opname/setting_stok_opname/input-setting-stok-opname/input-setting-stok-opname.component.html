@@ -1,0 +1,131 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+    <form [formGroup]="formInput">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- <mol-datepicker-syncfusion [label]="'Tanggal Setting Stok opname'" [format]="'dd MMMM yyyy'"
+                    formControlName="tanggal_setting_stok_opname">
+                </mol-datepicker-syncfusion> -->
+                <!-- Tgl. Rencana Masuk -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Tanggal Setting Stok Opname'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-datetimepicker #DateTimePickerTglRequest [timeFormat]="'HH:mm'"
+                            [format]="'dd/MM/yyyy HH:mm'" formControlName="tanggal_stok_opname">
+                        </ejs-datetimepicker>
+                    </div>
+                </div>
+                <!-- Dropdown Jenis Setting Stok Opname -->
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <atm-label [LabelCaption]="'Jenis Setting Stok Opname'"></atm-label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <ejs-dropdownlist #MaritalJenisSettingStokOpnameDropdown id="marital"
+                            [dataSource]="dataSourceJenisSettingStokOpname"
+                            [fields]="SetupJenisSettingStokOpnameDropdownField" [allowFiltering]="true"
+                            formControlName="id_jenis_setting_stok_opname">
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+                <mol-input-textarea [label]="'Keterangan'" formControlName="keterangan"></mol-input-textarea> 
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                <!-- <div class="card">
+                    <div class="card-body"> -->
+                        <div class="row pt-1" >
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 mb-1">
+                                <!-- Dropdown Stockroom -->
+                                <div class="row mb-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <atm-label [LabelCaption]="'Stockroom'"></atm-label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <ejs-dropdownlist #MaritalStockroomDropdown id="marital"
+                                            [dataSource]="setupStockroomService.dataSource| async"
+                                            [fields]="SetupStockroomDropdownField" [allowFiltering]="true"
+                                            (change)="handleChangeStockroom($event)">
+                                        </ejs-dropdownlist>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <button class="btn btn-primary btn-sm px-2" type="button"
+                                    (click)="handleTambahStockRoom()">
+                                    <i class="fas fa-plus-circle fa-sm"></i> Tambah Stokroom
+                                </button>
+                            </div>
+                            <div class="col-sm-12">
+                                <mol-grid
+                                    #GridStockroom
+                                    [grid-height]="100"
+                                    [grid-DataSource]="dataSourceStockroom"
+                                    [grid-paging]="false"
+                                    [grid-lines]="'Both'"
+                                    [grid-toolbar]="gridToolbarStockroom"
+                                    [columns]="GridConfigStockroom.GridColumns"
+                                    (row-selected)="handleSelectedRowStockroom($event)"
+                                    (toolbar-click)="handleToolbarClickStockroom($event)"
+                                ></mol-grid>
+                            </div>
+                        </div>
+                    <!-- </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" *ngIf="id_jenis_setting_stok_opname.value==2">
+                <!-- Item -->
+                <org-look-up #LookupGroup [lookup-url]="urlGroup" (onGetSelectedData)="heandleSelectedGroup($event)"
+                    [columns]="GridLookUpGroup.columns" [filter-lookup]="GridLookUpGroup.filter" [modal-title]="'Data Group Item'">
+                </org-look-up>
+                <mol-grid
+                    #GridGroup
+                    [grid-height]="'calc(100vh - 24rem)'"
+                    [grid-DataSource]="dataSourceGroup"
+                    [grid-paging]="false"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="gridToolbarGroup"
+                    [columns]="GridConfigGroup.GridColumns"
+                    (row-selected)="handleSelectedRowGroup($event)"
+                    (toolbar-click)="handleToolbarClickGroup($event)"
+                ></mol-grid>
+            </div>
+            <div class="col-sm-12" *ngIf="id_jenis_setting_stok_opname.value==3">
+                <!-- Item -->
+                <org-look-up #LookupRak [lookup-url]="urlRak" (onGetSelectedData)="heandleSelectedRak($event)"
+                    [columns]="GridLookUpRak.columns" [filter-lookup]="GridLookUpRak.filter" [modal-title]="'Data Rak Item'">
+                </org-look-up>
+                <mol-grid
+                    #GridRak
+                    [grid-height]="100"
+                    [grid-DataSource]="dataSourceRak"
+                    [grid-paging]="false"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="gridToolbarRak"
+                    [columns]="GridConfigRak.GridColumns"
+                    (row-selected)="handleSelectedRowRak($event)"
+                    (toolbar-click)="handleToolbarClickRak($event)"
+                ></mol-grid>
+            </div>
+            <div class="col-sm-12" *ngIf="id_jenis_setting_stok_opname.value==4">
+                <!-- Item -->
+                <org-look-up #LookupItem [lookup-url]="urlItem" (onGetSelectedData)="heandleSelectedItem($event)"
+                    [columns]="GridLookUpItem.columns" [filter-lookup]="GridLookUpItem.filter" [modal-title]="'Data Item'">
+                </org-look-up>
+                <mol-grid
+                    #GridItem
+                    [grid-height]="100"
+                    [grid-DataSource]="dataSourceItem"
+                    [grid-paging]="false"
+                    [grid-lines]="'Both'"
+                    [grid-toolbar]="gridToolbarItem"
+                    [columns]="GridConfigItem.GridColumns"
+                    (row-selected)="handleSelectedRowItem($event)"
+                    (toolbar-click)="handleToolbarClickItem($event)"
+                ></mol-grid>
+            </div>
+        </div>
+    </form>
+</org-card-layout>

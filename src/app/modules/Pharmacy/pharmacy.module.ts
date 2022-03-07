@@ -27,6 +27,20 @@ import { RefundObatIrdaDaftarComponent } from './pages/refund-obat/refund-obat-i
 import { RefundObatIrdaDetailComponent } from './pages/refund-obat/refund-obat-irda-detail/refund-obat-irda-detail.component';
 import { RefundObatIrnaDaftarComponent } from './pages/refund-obat/refund-obat-irna-daftar/refund-obat-irna-daftar.component';
 import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-irna-detail/refund-obat-irna-detail.component';
+import { InputResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/input-resep-formularium-irja/input-resep-formularium-irja.component';
+import { DaftarResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/daftar-resep-formularium-irja/daftar-resep-formularium-irja.component';
+import { ViewResepFormulariumIrjaComponent } from './pages/resep-formularium/resep-formularium-irja/view-resep-formularium-irja/view-resep-formularium-irja.component';
+import { InputResepFormulariumComponent } from './pages/resep-formularium/resep-formularium-irna/input-resep-formularium/input-resep-formularium.component';
+import { DaftarResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/daftar-resep-formularium-irna/daftar-resep-formularium-irna.component';
+import { ViewResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/view-resep-formularium-irna/view-resep-formularium-irna.component';
+import { PulangResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/pulang-resep-formularium-irna/pulang-resep-formularium-irna.component';
+import { InputResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/input-resep-formularium-irda/input-resep-formularium-irda.component';
+import { DaftarResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/daftar-resep-formularium-irda/daftar-resep-formularium-irda.component';
+import { ViewResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/view-resep-formularium-irda/view-resep-formularium-irda.component';
+import { PulangResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/pulang-resep-formularium-irda/pulang-resep-formularium-irda.component';
+import { TransaksiObatFormulariumIrjaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irja/transaksi-obat-formularium-irja.component';
+import { TransaksiObatFormulariumIrnaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irna/transaksi-obat-formularium-irna.component';
+import { TransaksiObatFormulariumIrdaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irda/transaksi-obat-formularium-irda.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +68,20 @@ import { RefundObatIrnaDetailComponent } from './pages/refund-obat/refund-obat-i
         RefundObatIrdaDetailComponent,
         RefundObatIrnaDaftarComponent,
         RefundObatIrnaDetailComponent,
+        InputResepFormulariumIrjaComponent,
+        DaftarResepFormulariumIrjaComponent,
+        ViewResepFormulariumIrjaComponent,
+        InputResepFormulariumComponent,
+        DaftarResepFormulariumIrnaComponent,
+        ViewResepFormulariumIrnaComponent,
+        PulangResepFormulariumIrnaComponent,
+        InputResepFormulariumIrdaComponent,
+        DaftarResepFormulariumIrdaComponent,
+        ViewResepFormulariumIrdaComponent,
+        PulangResepFormulariumIrdaComponent,
+        TransaksiObatFormulariumIrjaComponent,
+        TransaksiObatFormulariumIrnaComponent,
+        TransaksiObatFormulariumIrdaComponent,
     ],
     imports: [
         CommonModule,
