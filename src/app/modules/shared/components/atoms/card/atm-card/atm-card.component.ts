@@ -74,8 +74,8 @@ export class AtmCardComponent implements OnInit {
         this.onMarkedResepAsComplete.emit(Id);
     }
 
-    onResepPindahKeAntrian(NoRegister){
-        this.onPindahKeAntrian.emit(NoRegister);
+    onResepPindahKeAntrian(Id: string){
+        this.onPindahKeAntrian.emit(Id);
     }
 
     onMarkResepSudahDilayani(Id: string) {

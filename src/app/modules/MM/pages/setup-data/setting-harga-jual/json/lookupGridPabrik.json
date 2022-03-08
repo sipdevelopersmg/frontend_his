@@ -4,8 +4,8 @@
             "allowEditing": true,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "kode_grup_item",
-            "headerText": "Kode Grup Item",
+            "field": "kode_pabrik",
+            "headerText": "KODE PABRIK",
             "type": "string",
             "visible": true
         },
@@ -13,22 +13,22 @@
             "allowEditing": true,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "grup_item",
-            "headerText": "Grup Item",
+            "field": "nama_pabrik",
+            "headerText": "NAMA PABRIK",
             "type": "string",
             "visible": true
         }
     ],
     "filter": [
         {
-          "field": "kode_grup_item",
+          "field": "kode_pabrik",
           "filter": "like",
-          "title": "KODE GRUP ITEM"
+          "title": "KODE PABRIK"
         },
         {
-          "field": "grup_item",
+          "field": "nama_pabrik",
           "filter": "like",
-          "title": "GRUP ITEM"
+          "title": "NAMA PABRIK"
         }
     ]
 }

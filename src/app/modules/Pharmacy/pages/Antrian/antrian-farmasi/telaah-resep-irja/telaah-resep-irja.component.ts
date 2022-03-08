@@ -2,31 +2,33 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DropDownList } from '@syncfusion/ej2-angular-dropdowns';
-import { GridModel, GridComponent, IEditCell, EditSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { GridModel, GridComponent, EditSettingsModel, IEditCell } from '@syncfusion/ej2-angular-grids';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { PHARMACY } from 'src/app/api/PHARMACY';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
+import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
+import { TransaksiObatIrjaService } from 'src/app/modules/Pharmacy/services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
 import { PendaftaranPasienBaruService } from 'src/app/modules/PIS/services/IRJA/pendaftaran-pasien-baru/pendaftaran-pasien-baru.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import { TransaksiObatIrjaService } from '../../../services/transaksi-obat/transaksi-obat-irja/transaksi-obat-irja.service';
-import * as GridConfig from './json/grid.config.json'
 import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
-import { IAuthenticationResponseModel } from 'src/app/modules/auth/models/authentication.model';
-import { PHARMACY } from 'src/app/api/PHARMACY';
+
+import * as GridConfig from './json/grid.config.json'
 
 @Component({
-  selector: 'app-transaksi-obat-formularium-irja',
-  templateUrl: './transaksi-obat-formularium-irja.component.html',
-  styleUrls: ['./transaksi-obat-formularium-irja.component.css']
+  selector: 'app-telaah-resep-irja',
+  templateUrl: './telaah-resep-irja.component.html',
+  styleUrls: ['./telaah-resep-irja.component.css']
 })
-export class TransaksiObatFormulariumIrjaComponent implements OnInit {
+export class TelaahResepIrjaComponent implements OnInit {
 
   ButtonNav: ButtonNavModel[] = [
     { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
-    { Id: 'simpan', Captions: 'Simpan Penjualan Resep', Icons1: 'fa-save fa-sm' },
+    { Id: 'simpan', Captions: 'Simpan Telaah Resep', Icons1: 'fa-save fa-sm' },
+    { Id: 'reject', Captions: 'Reject Resep', Icons1: 'fa-times fa-sm' },
   ];
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
@@ -43,13 +45,12 @@ export class TransaksiObatFormulariumIrjaComponent implements OnInit {
     GridDataEditSettings: EditSettingsModel = { allowEditing: true };
 
     public keterangan = (field: string, data1: object) => {
-        return  data1['nama_obat'] +', '+
-                data1['ket_label'] +', '+
+        return  data1['ket_label'] +', '+
                 data1['ket_aturan'];
     }
 
     public quantity = (field: string, data1: object) => {
-        return  data1['qty_resep'] + ' ' +data1['nama_satuan'] 
+        return  data1['qty_resep'] 
     }
 
     public totalharga = (field: string, data1: object) => {
@@ -115,7 +116,13 @@ export class TransaksiObatFormulariumIrjaComponent implements OnInit {
             poli: ['', []],
             dokter : ['', []],
             umur : ['', []],
-            total_bayar_resep: [0,[]]
+            total_bayar_resep:[0,[]],
+            telaah_nama_obat : [false, []],
+            telaah_duplikasi_pengobatan : [false, []],
+            telaah_interaksi_obat : [false, []],
+            telaah_tepat_indikasi : [false, []],
+            telaah_stabilitas : [false, []],
+            keterangan_telaah_resep : ['', []]
         });
 
         this.itemsParams = {
@@ -206,12 +213,18 @@ export class TransaksiObatFormulariumIrjaComponent implements OnInit {
             this.mapingRacikan(result.data.details);
             //    let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
             this.formInput.setValue({
-                outlet:result.data.nama_outlet,
-                poli:result.data.nama_poli,
-                pasien:result.data.nama_pasien,
-                dokter: result.data.nama_dokter,
-                umur: result.data.tgl_lahir,
-                total_bayar_resep: 0
+                outlet                  :result.data.nama_outlet,
+                poli                    :result.data.nama_poli,
+                pasien                  :result.data.nama_pasien,
+                dokter                  :result.data.nama_dokter,
+                umur                    :result.data.tgl_lahir,
+                total_bayar_resep       :0,
+                telaah_nama_obat        :false,
+                telaah_duplikasi_pengobatan:false,
+                telaah_interaksi_obat   :false,
+                telaah_tepat_indikasi   :false,
+                telaah_stabilitas       :false,
+                keterangan_telaah_resep :''
             })
 
             this.pendaftaranPasienBaruService.onGetLinkFotoPerson(this.dataHeader.id_person, false)
@@ -385,32 +398,28 @@ export class TransaksiObatFormulariumIrjaComponent implements OnInit {
     }
    
     onClickButtonNav(args: any): void {
-        switch (args) {
-            case "kembali":
-                this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
-                break;
-            case "simpan":
-                let Data = this.dataHeader
-                console.log('datasource',this.dataSource);
-                console.log('datasource_childgrid',this.dataSourceChild);
-                Data.details = this.GridResepRacikan.getSelectedRecords()
-                Data.details.map((e)=>{
-                    e.racikans = this.dataSourceChild.filter(o => o.resep_detail_id == e.resep_detail_id)
-                    return e;
-                })
-                console.log(Data);
-                this.transaksiObatIrjaService.InsertFormularium(Data).subscribe((result)=>{
-                    this.utilityService.onShowingCustomAlert('success', 'Data Berhasil Tersimpan', result.message)
-                    .then(() => {
-                        this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
-                    });
-                });
-                break;
-            default:
-                break;
-        }
+      switch (args) {
+        case "kembali":
+          this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
+          break;
+        case "simpan":
+          console.log(this.formInput.value)
+          break;
+        case "reject":
+          console.log(this.formInput.value)
+          break;
+        default:
+          break;
+      }
     }
 
+    // get telaah_nama_obat (){return this.formInput.get('telaah_nama_obat')}
+    // get telaah_duplikasi_pengobatan (){return this.formInput.get('telaah_duplikasi_pengobatan')}
+    // get telaah_interaksi_obat (){return this.formInput.get('telaah_interaksi_obat')}
+    // get telaah_tepat_indikasi (){return this.formInput.get('telaah_tepat_indikasi')}
+    // get telaah_stabilitas (){return this.formInput.get('telaah_stabilitas')}
+    // get keterangan_telaah_resep (){return this.formInput.get('keterangan_telaah_resep')}
     get total_bayar_resep (){return this.formInput.get('total_bayar_resep')}
+
 
 }

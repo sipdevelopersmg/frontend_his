@@ -5,38 +5,38 @@
             <form [formGroup]="FormInputData" class="p-2">
                 <mol-input-text [label]="'Kode Obat'" formControlName="kode_obat" [inputFieldState]="'detail'"></mol-input-text>
                 <mol-input-text [label]="'Nama Obat'" formControlName="nama_obat" [inputFieldState]="'detail'"></mol-input-text>
-                <org-input-look-up-kode #LookupKodeGrupItem [lookup-url]="urlGrupItem" [idKode]="'id_grup_item'" [modal-title]="'Data GrupItem'"
-                    [idTitle]="'grup_item'" (onGetSelectedData)="heandleSelectedGrupItem($event)"
+                <org-input-look-up-kode #LookupKodeGrupItem [lookup-url]="urlGrupItem" [idKode]="'kode_grup_obat'" [modal-title]="'Data Grup Obat'"
+                    [idTitle]="'nama_grup_obat'" (onGetSelectedData)="heandleSelectedGrupItem($event)"
                     [columns]="LookupGridGrupItem.columns" [filter-lookup]="LookupGridGrupItem.filter"
                     [label]="'Grup'">
                 </org-input-look-up-kode>
-                <org-input-look-up-kode #LookupKodePabrik [lookup-url]="urlPabrik" [idKode]="'id_pabrik'" [modal-title]="'Data Pabrik'"
-                    [idTitle]="'pabrik'" (onGetSelectedData)="heandleSelectedPabrik($event)"
+                <org-input-look-up-kode #LookupKodePabrik [lookup-url]="urlPabrik" [idKode]="'kode_pabrik'" [modal-title]="'Data Pabrik'"
+                    [idTitle]="'nama_pabrik'" (onGetSelectedData)="heandleSelectedPabrik($event)"
                     [columns]="LookupGridPabrik.columns" [filter-lookup]="LookupGridPabrik.filter"
                     [label]="'Pabrik'">
                 </org-input-look-up-kode>
-                <org-input-look-up-kode #LookupKodeCaraPakai [lookup-url]="urlCaraPakai" [idKode]="'id_cara_pakai'" [modal-title]="'Data CaraPakai'"
-                    [idTitle]="'cara_pakai'" (onGetSelectedData)="heandleSelectedCaraPakai($event)"
+                <org-input-look-up-kode #LookupKodeCaraPakai [lookup-url]="urlCaraPakai" [idKode]="'kode_cara_pakai_obat'" [modal-title]="'Data Cara Pakai'"
+                    [idTitle]="'cara_pakai_obat'" (onGetSelectedData)="heandleSelectedCaraPakai($event)"
                     [columns]="LookupGridCaraPakai.columns" [filter-lookup]="LookupGridCaraPakai.filter"
                     [label]="'Cara Pakai'">
                 </org-input-look-up-kode>
-                <button type="button" class="btn btn-sm btn-primary float-end">Update Obat</button><br/>
+                <button (click)="updateObat()" type="button" class="btn btn-sm btn-primary float-end">Update Obat</button><br/>
             </form>
             <hr class="my-1"/>
             <h6>Setting Harga Jual</h6>
             <form [formGroup]="FormInputSetting" class="p-2">
                 <div class="row">
                     <div class="col-sm-6">
-                        <mol-input-numeric [label]="'HNA in UOM'" formControlName="harga_beli_terakhir" [inputFieldState]="'detail'"></mol-input-numeric>
-                        <mol-input-numeric [label]="'Profit (%)'" formControlName="profit" ></mol-input-numeric>
+                        <mol-input-numeric [label]="'HNA in UOM'" formControlName="harga_netto_apotek" [inputFieldState]="'detail'"></mol-input-numeric>
+                        <mol-input-numeric [label]="'Profit (%)'" (ngModelChange)="hitung($event)" formControlName="prosentase_profit" ></mol-input-numeric>
                         <mol-datepicker-syncfusion [label]="'Tgl. Berlaku'" [format]="'dd MMMM yyyy'"
-                            formControlName="tanggal_berlaku">
+                            formControlName="tgl_berlaku">
                         </mol-datepicker-syncfusion>    
                     </div>
                     <div class="col-sm-6">
                         <mol-input-numeric [label]="'Pajak (%)'" formControlName="pajak" [inputFieldState]="'detail'"></mol-input-numeric>
-                        <mol-input-numeric [label]="'Harga Jual'" formControlName="harga_jual" [inputFieldState]="'detail'"></mol-input-numeric>
-                        <button type="button" class="btn btn-sm btn-primary float-end">Simpan Harga Jual</button><br/>
+                        <mol-input-numeric [label]="'Harga Jual'" formControlName="harga_jual_apotek" [inputFieldState]="'detail'"></mol-input-numeric>
+                        <button (click)="insertHargaJual()" type="button" class="btn btn-sm btn-primary float-end">Simpan Harga Jual</button><br/>
                     </div>
                 </div>
             </form>
@@ -49,9 +49,23 @@
             ></mol-grid>
         </div>
         <div class="col-sm-6">
-            <mol-input-group [label]="'cari data obat'" [titleValue]="''" (pressEnter)="getDataItem($event)" (clickButton)="getDataItem($event)" ></mol-input-group>
+            <div class="row  mb-2">
+                <div class="col-sm-4">
+                    <label  class="form-label font-cabin">Cari Data Obat</label>
+                </div>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-select-sm" (keyup.enter)="getDataItem($event)" [(ngModel)]="searchText">
+                        <button class="btn btn-primary" type="button"
+                            style=" padding: .1rem .8rem; background-color: '#00afff; border: 0';" (click)="getDataItem($event)">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <mol-grid
                 #GridDataItem
+                [grid-height]="'calc(100vh - 240px)'"
                 [grid-DataSource]="dataSourceItem"
                 [grid-paging]="false"
                 [grid-lines]="'Both'"

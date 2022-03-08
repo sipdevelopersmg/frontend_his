@@ -11,6 +11,7 @@ export class MolKanbanV1Component implements OnInit {
 
     @Input("Columns") Columns: KanbanColumnModel[];
     @Output("onPindahKeAntrian") onPindahKeAntrian = new EventEmitter();
+    @Output("onSedangDiLayani") onSedangDiLayani = new EventEmitter();
 
     ConnectedTo: Object[] = [];
 
@@ -26,7 +27,11 @@ export class MolKanbanV1Component implements OnInit {
         this.FilterPencarianGlobal.next(FilterPencarianGlobal);
     }
 
-    PindahKeAntrian(noRegister){
-        this.onPindahKeAntrian.emit(noRegister);
+    PindahKeAntrian(Id){
+        this.onPindahKeAntrian.emit(Id);
+    }
+
+    SedangDiLayani(Id){
+        this.onSedangDiLayani.emit(Id);
     }
 }

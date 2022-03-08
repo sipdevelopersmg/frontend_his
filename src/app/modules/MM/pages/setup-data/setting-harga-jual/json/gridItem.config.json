@@ -5,7 +5,7 @@
         "allowSorting": true,
         "editType": "defaultEdit",
         "field": "kode_item",
-        "headerText": "Kode Item",
+        "headerText": "Kode Obat",
         "visible": true
     },
     {
@@ -13,7 +13,7 @@
         "allowSorting": true,
         "editType": "defaultEdit",
         "field": "nama_item",
-        "headerText": "Nama Item",
+        "headerText": "Nama Obat",
         "visible": true
     }
   ]

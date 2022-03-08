@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AntrianFarmasiComponent } from "./pages/Antrian/antrian-farmasi/antrian-farmasi.component";
+import { TelaahResepIrjaComponent } from "./pages/Antrian/antrian-farmasi/telaah-resep-irja/telaah-resep-irja.component";
 import { RefundObatIrdaDaftarComponent } from "./pages/refund-obat/refund-obat-irda-daftar/refund-obat-irda-daftar.component";
 import { RefundObatIrdaDetailComponent } from "./pages/refund-obat/refund-obat-irda-detail/refund-obat-irda-detail.component";
 import { RefundObatIrdaComponent } from "./pages/refund-obat/refund-obat-irda/refund-obat-irda.component";
@@ -37,7 +38,6 @@ const pharmacyRoutes: Routes = [
     { path: "antrian-farmasi", component: AntrianFarmasiComponent, data: { title: "Antrian Pharmacy" } },
     { path: "setup-formularium", component: SetupFormulariumComponent, data: { title: "Setup Formularium" } },
     { path: "resep-racikan", component: ResepRacikanComponent, data: { title: "Resep Racikan" } },
-    
     {
         path: "setup-data", component: null, data: { title: "Setup Data" },
         children: [
@@ -54,6 +54,7 @@ const pharmacyRoutes: Routes = [
         children: [
             { path: "view-obat-irja/:id/:key", component: ViewResepIrjaComponent, data: { title: "View Resep Rawat Jalan" } },
             { path: "transaksi-obat-irja/:id/:key", component: TransaksiObatIrjaComponent, data: { title: "Transaksi Obat Rawat Jalan" } },
+            { path: "telaah-resep-irja/:id/:key", component: TelaahResepIrjaComponent, data: { title: "Telaah Resep Irja" } },
             { path: "transaksi-obat-irna", component: TransaksiObatIrnaComponent, data: { title: "Transaksi Obat Rawat Inap" } },
             { path: "transaksi-obat-irda", component: TransaksiObatIrdaComponent, data: { title: "Transaksi Obat Rawat Darurat" } },
             { path: "input-resep-irja", component: InputResepIrjaComponent, data: { title: "Input Resep Irja" } },

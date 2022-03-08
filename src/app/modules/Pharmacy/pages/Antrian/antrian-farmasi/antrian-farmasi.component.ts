@@ -4,6 +4,8 @@ import { Socket } from 'ngx-socket-io';
 import { ResepDokterService } from 'src/app/modules/dashboard-dokter/services/resep-dokter/resep-dokter.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { KanbanCardModel, KanbanColumnModel } from 'src/app/modules/shared/models/KanbanCardModel.model';
+import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
+import { isFormularium } from 'src/environments/environment';
 
 @Component({
     selector: 'app-antrian-farmasi',
@@ -22,6 +24,7 @@ export class AntrianFarmasiComponent implements OnInit {
     constructor(
         private socket: Socket,
         private router: Router,
+        private encryptionService:EncryptionService,
         public resepDokterService: ResepDokterService,
     ) { }
 
@@ -109,12 +112,24 @@ export class AntrianFarmasiComponent implements OnInit {
 
             item = {} as KanbanCardModel;
         }
-
     }
 
-    handePindahAntrian(noRegister) {
-        this.resepDokterService.generadeNoAntrian(noRegister).subscribe((result) => {
-            this.resepDokterService.onGetAntrian();
-        });
+    handePindahAntrian(Id) {
+        // this.resepDokterService.generadeNoAntrian(noRegister).subscribe((result) => {
+        //     this.resepDokterService.onGetAntrian();
+        // });
+        console.log('pindah antrian');
+        const id = this.encryptionService.encrypt(JSON.stringify(Id));
+        this.router.navigate(['dashboard/Pharmacy/transaksi-obat/telaah-resep-irja', id, "GRAHCIS"]);
+    }
+
+    handleSedangDiLayani(Id){
+        console.log('sedang di layani');
+        const id = this.encryptionService.encrypt(JSON.stringify(Id));
+        if(isFormularium){
+            this.router.navigate(['dashboard/Pharmacy/transaksi-obat-formularium/transaksi-obat-formularium-irja', id, "GRAHCIS"]);
+        }else{
+            this.router.navigate(['dashboard/Pharmacy/transaksi-obat/transaksi-obat-irja', id, "GRAHCIS"]);
+        }
     }
 }

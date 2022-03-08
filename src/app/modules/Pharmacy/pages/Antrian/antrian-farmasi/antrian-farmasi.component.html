@@ -1,3 +1,7 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
-    <mol-kanban-v1 (onPindahKeAntrian)="handePindahAntrian($event)" [Columns]="resepDokterService.dataAntrianIrja | async" ></mol-kanban-v1>
+    <mol-kanban-v1 
+    (onPindahKeAntrian)="handePindahAntrian($event)" 
+    (onSedangDiLayani)="handleSedangDiLayani($event)"
+    [Columns]="resepDokterService.dataAntrianIrja | async" 
+    ></mol-kanban-v1>
 </org-card-layout>

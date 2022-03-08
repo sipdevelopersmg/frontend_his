@@ -27,6 +27,7 @@ export class AtmBoardComponent implements OnInit {
     @Output("onClickedCard") onClickedCard = new EventEmitter();
 
     @Output("PindahKeAntrian") PindahKeAntrian = new EventEmitter();
+    @Output("SedangDiLayani") SedangDiLayani = new EventEmitter();
     
     HideBoard: boolean = false;
 
@@ -97,16 +98,11 @@ export class AtmBoardComponent implements OnInit {
     }
 
     onMarkResepSudahDilayani(Id: string, CardBodyData: KanbanCardModel[]) {
-        const id = this.encryptionService.encrypt(JSON.stringify(Id));
-        if(isFormularium){
-            this.router.navigate(['dashboard/Pharmacy/transaksi-obat-formularium/transaksi-obat-formularium-irja', id, "GRAHCIS"]);
-        }else{
-            this.router.navigate(['dashboard/Pharmacy/transaksi-obat/transaksi-obat-irja', id, "GRAHCIS"]);
-        }
+        this.SedangDiLayani.emit(Id);
     }
 
-    onPindahKeAntrian(NoRegister: string) {
-        this.PindahKeAntrian.emit(NoRegister);
+    onPindahKeAntrian(Id: string) {
+        this.PindahKeAntrian.emit(Id);
     }
 
     onChangeSearchFilter() {

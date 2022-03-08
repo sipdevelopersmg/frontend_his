@@ -1,0 +1,53 @@
+{
+    "GridColumns": [
+        {
+            "field": "id_dokter",
+            "headerText": "Pemesanan Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nama_dokter",
+            "headerText": "Pemesanan Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "nomor_resep",
+            "headerText": "Pemesanan Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "id_dokter",
+            "headerText": "Pemesanan Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        },
+        {
+            "field": "id_dokter",
+            "headerText": "Pemesanan Id",
+            "type": "number",
+            "format": "",
+            "textAlign": "left",
+            "visible": true,
+            "editType": "defaultEdit"
+        }
+    ],
+    "columnsChild": [
+        { "field": "nama_obat", "headerText": "Nama Obat"},
+        { "field": "qty_racikan", "headerText": "Qty" ,"width":50}
+    ]
+}

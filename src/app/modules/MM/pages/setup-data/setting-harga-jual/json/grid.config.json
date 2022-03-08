@@ -4,32 +4,47 @@
         "allowEditing": false,
         "allowSorting": true,
         "editType": "defaultEdit",
-        "field": "harga_satuan",
+        "field": "harga_netto_apotek",
         "headerText": "Harga Satuan",
+        "type": "number",
+        "format": "N2",
+        "headerTextAlign": "Right",
+        "textAlign": "Right",
         "visible": true
     },
     {
         "allowEditing": false,
         "allowSorting": true,
         "editType": "defaultEdit",
-        "field": "profit",
+        "field": "prosentase_profit",
         "headerText": "Profit",
+        "type": "number",
+        "format": "N2",
+        "headerTextAlign": "Right",
+        "textAlign": "Right",
         "visible": true
     },
     {
         "allowEditing": false,
         "allowSorting": true,
         "editType": "defaultEdit",
-        "field": "harga_jual",
+        "field": "harga_jual_apotek",
         "headerText": "Harga Jual",
+        "type": "number",
+        "format": "N2",
+        "headerTextAlign": "Right",
+        "textAlign": "Right",
         "visible": true
     },
     {
         "allowEditing": false,
         "allowSorting": true,
         "editType": "defaultEdit",
-        "field": "tanggal_berlaku",
-        "headerText": "Tanggal Berlaku",
+        "field": "tgl_berlaku",
+        "headerText": "Tgl Pemesanan",
+        "type": "Date",
+        "format": "dd/MM/yyyy",
+        "textAlign": "left",
         "visible": true
     }
   ]

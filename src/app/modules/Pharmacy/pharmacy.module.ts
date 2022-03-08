@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
@@ -43,12 +43,13 @@ import { TransaksiObatFormulariumIrnaComponent } from './pages/transaksi-obat-fo
 import { TransaksiObatFormulariumIrdaComponent } from './pages/transaksi-obat-formularium/transaksi-obat-formularium-irda/transaksi-obat-formularium-irda.component';
 import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { environment } from "src/environments/environment";
+import { TelaahResepIrjaComponent } from './pages/Antrian/antrian-farmasi/telaah-resep-irja/telaah-resep-irja.component';
 
 const SocketFarmasi: SocketIoConfig = {
     url: `${environment.webApiSocket}`, options: {
-        "force new connection": true,
-        "reconnectionAttempts": "Infinity",
-        "timeout": 10000,
+        // "force new connection": true,
+        // "reconnectionAttempts": "Infinity",
+        // "timeout": 10000,
         "transports": ["websocket"]
     }
 }
@@ -93,6 +94,7 @@ const SocketFarmasi: SocketIoConfig = {
         TransaksiObatFormulariumIrjaComponent,
         TransaksiObatFormulariumIrnaComponent,
         TransaksiObatFormulariumIrdaComponent,
+        TelaahResepIrjaComponent,
     ],
     imports: [
         CommonModule,
