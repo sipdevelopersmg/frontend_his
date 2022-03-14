@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Build dockerfile
           command: |
-            docker build -t dockerhiscis/frontend-his .
+            docker build --no-cache -t dockerhiscis/frontend-his .
 
       - run:
           name: Push Docker Image
