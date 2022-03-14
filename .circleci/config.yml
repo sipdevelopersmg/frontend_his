@@ -33,4 +33,4 @@ jobs:
       - run:
           name: Deploy app to docker swarm via ssh
           command: |
-            ssh -o StrictHostKeyChecking=no root@174.138.22.139 "cd /home/frontend-his-circle/ && ./deploy.sh"
+            ssh -o StrictHostKeyChecking=no root@174.138.22.139 "cd /home/frontend-his-circle/ && docker-compose up -d"
