@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install -g @angular/cli@12.0.1 && \
     npm install && \
-    ng build --configuration=production --output-hashing=all
+    ng build --configuration=development --output-hashing=all
 
 COPY . .
 
