@@ -45,6 +45,8 @@ export class MolInputNumericComponent implements ControlValueAccessor {
 
     @Input('isFooter') isFooter = false;
 
+    @Input('format') format:string = 'N2'; 
+
     constructor() { }
 
     OnInit(): void {
