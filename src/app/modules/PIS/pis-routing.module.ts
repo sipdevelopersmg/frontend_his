@@ -4,6 +4,7 @@ import { AdmisiPasienRawatDaruratComponent } from "./pages/IRDA/admisi-pasien-ra
 import { PelayananPasienRawatDaruratComponent } from "./pages/IRDA/admisi-pasien-rawat-darurat/pelayanan-pasien-rawat-darurat/pelayanan-pasien-rawat-darurat.component";
 import { ListPasienRawatDaruratAnonimComponent } from "./pages/IRDA/list-pasien-rawat-darurat-anonim/list-pasien-rawat-darurat-anonim.component";
 import { PemasukanRawatDaruratComponent } from "./pages/IRDA/pemasukan-rawat-darurat/pemasukan-rawat-darurat.component";
+import { TransferTagihanIrdaIrnaComponent } from "./pages/IRDA/transfer-tagihan-irda-irna/transfer-tagihan-irda-irna.component";
 import { UpdatePasienTanpaIdentitasComponent } from "./pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component";
 import { AdmisiPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.component";
 import { PelayananPasienRawatJalanComponent } from "./pages/IRJA/admisi-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan/pelayanan-pasien-rawat-jalan.component";
@@ -132,6 +133,7 @@ const pisRoutes: Routes = [
             { path: "daftar-pasien-rawat-darurat-tanpa-identitas", component: ListPasienRawatDaruratAnonimComponent, data: { title: "Daftar Pasien Rawat Darurat Tanpa Identitas" } },
             { path: "update-pasien-rawat-darurat-tanpa-identitas/:data/:key", component: UpdatePasienTanpaIdentitasComponent, data: { title: "Update Pasien Rawat Darurat Tanpa Identitas" } },
             { path: "transaksi-pemasukan-rawat-darurat", component: PemasukanRawatDaruratComponent, data: { title: "Transaksi Pemasukan Rawat Darurat" } },
+            { path: "transfer-tagihan-rawat-darurat", component: TransferTagihanIrdaIrnaComponent, data: { title: "Transfer Tagihan Rawat Darurat" } },
         ]
     }
 ]

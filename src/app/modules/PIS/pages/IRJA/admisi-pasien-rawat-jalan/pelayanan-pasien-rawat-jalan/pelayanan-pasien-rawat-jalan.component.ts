@@ -170,6 +170,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
             id_icd_masuk: [0, [Validators.required, Validators.min(1)]],
             keterangan_diagnosa: ["", []],
             keluhan: ["", []],
+            no_antrian: ["", []],
         });
     }
 
@@ -347,7 +348,8 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
             "id_kelas_rawat": data.id_kelas_rawat,
             "id_icd_masuk": data.id_icd_masuk,
             "keterangan_diagnosa": data.keterangan_diagnosa,
-            "keluhan": data.keluhan
+            "keluhan": data.keluhan,
+            "no_antrian": data.no_antrian
         };
 
         let formValidator = this.utilityService.onValidateForm(this.formAdmisiPasien);
@@ -402,6 +404,7 @@ export class PelayananPasienRawatJalanComponent implements OnInit {
     get id_icd_masuk(): AbstractControl { return this.formAdmisiPasien.get('id_icd_masuk'); }
     get keterangan_diagnosa(): AbstractControl { return this.formAdmisiPasien.get('keterangan_diagnosa'); }
     get keluhan(): AbstractControl { return this.formAdmisiPasien.get('keluhan') };
+    get no_antrian(): AbstractControl { return this.formAdmisiPasien.get('no_antrian') };
 
     handleClickPencarianNoRujukan(NoRujukan: string): void {
         console.log(NoRujukan);

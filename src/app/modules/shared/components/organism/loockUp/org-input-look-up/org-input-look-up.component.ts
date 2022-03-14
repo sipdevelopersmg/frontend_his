@@ -62,6 +62,10 @@ export class OrgInputLookUpComponent implements OnInit {
 
     @Input("exceptional-data") ExceptionalData: any;
 
+    @Input('ResultArrayName') ResultArrayName: any;
+
+    RealResultData: any;
+
     ngOnInit(): void {
         this.gridPageSettings = { pageSizes: true, pageCount: 4, pageSize: 11 };
     }
@@ -104,13 +108,33 @@ export class OrgInputLookUpComponent implements OnInit {
                 })
             )
             .subscribe((result) => {
-                this.gridDataSource = result;
+                if (this.ResultArrayName) {
 
-                setTimeout(() => {
-                    if (result > 0) {
-                        this.GridData.Grid.selectedRowIndex = 0;
-                    }
-                }, 200);
+                    const data = [];
+
+                    result.forEach((item: any) => {
+                        data.push(item[this.ResultArrayName]);
+                    });
+
+                    this.gridDataSource = data;
+
+                    this.RealResultData = result;
+
+                    setTimeout(() => {
+                        if (result > 0) {
+                            this.GridData.Grid.selectedRowIndex = 0;
+                        }
+                    }, 200);
+
+                } else {
+                    this.gridDataSource = result;
+
+                    setTimeout(() => {
+                        if (result > 0) {
+                            this.GridData.Grid.selectedRowIndex = 0;
+                        }
+                    }, 200);
+                }
 
             }, (pesanError) => {
                 console.log(pesanError);
@@ -176,7 +200,13 @@ export class OrgInputLookUpComponent implements OnInit {
 
     onKeyPressedUtility(data: any) {
         this.titleValue = data[this.idTitle];
-        this.onGetSelectedData.emit(data);
+
+        if (this.RealResultData) {
+            this.onGetSelectedData.emit({ data: data, realData: this.RealResultData });
+        } else {
+            this.onGetSelectedData.emit(data);
+        }
+
         this.onCloseModal();
     }
 

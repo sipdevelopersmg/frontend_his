@@ -1,0 +1,240 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <!-- Filter Offcanvas -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+        <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+            (handle-pencarian)="handlePencarianFilter($event)">
+        </mol-offcanvas-filter>
+    </div>
+
+    <!-- Grid History Transfer -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ejs-grid #GridData [id]="'GridHistoryTransfer'" [height]="'calc(100vh - 21rem)'" [dataSource]="GridDatasource"
+            [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+            [allowTextWrap]="true" [textWrapSettings]="GridWrapSettings" [pageSettings]="GridPageSettings"
+            [toolbar]="GridToolbar" [editSettings]="GridDataEditSettings" (rowSelected)="handleSelectedRow($event)">
+            <e-columns>
+                <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
+                    [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'tgl_transfer'" [headerText]="'TGL TRANSFER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'dari_register'" [headerText]="'DARI REGISTER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+                <e-column [width]="120" [field]="'ke_register'" [headerText]="'KE REGISTER'" [visible]="true"
+                    [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+    </div>
+
+    <!-- Button Open Transfer Tagihan -->
+    <button type="button" id="btnTransferTagihanIRDA" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalDialogTransferTagihanIRDA" hidden>
+    </button>
+
+    <!-- Modal Verifikasi Order -->
+    <div class="modal fade" #modalDialogVerifikasiOrderLab id="modalDialogTransferTagihanIRDA"
+        aria-labelledby="modalDialogTransferTagihanIRDA" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form [formGroup]="FormTransferTagihan">
+                    <div class="modal-header px-2 py-1 background-biru-muda text-white">
+                        <h5 class="modal-title pull-left">Transfer Transaksi IRDA -> IRNA</h5>
+                        <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body p-2">
+                        <!-- Data Pasien -->
+                        <div class="row mb-2">
+                            <!-- IRDA -->
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="card">
+                                    <div class="card-header py-1">
+                                        <p class="text-biru-muda mb-0">IRDA</p>
+                                    </div>
+                                    <div class="card-body p-2">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 cols-sm-12 col-xs-12">
+                                                <!-- No. Register -->
+                                                <org-input-look-up #LookupPasienIRDA [modal-title]="'Data Pasien IRDA'"
+                                                    [lookup-url]="LookupPasienIRDAUrl" [idTitle]="'no_register'"
+                                                    (onGetSelectedData)="handleSelectedPasienIRDA($event)"
+                                                    [columns]="Config.LookupPasien.columns"
+                                                    [filter-lookup]="Config.LookupPasien.filter"
+                                                    [label]="'No. Register'"
+                                                    [ResultArrayName]="'informasi_pasien_irda'">
+                                                </org-input-look-up>
+
+                                                <!-- No. MR  -->
+                                                <mol-input-text [id]="'no_rekam_medis_irda'" [label]="'No. MR'"
+                                                    [disabled]="true">
+                                                </mol-input-text>
+
+                                                <!-- No. Pasien  -->
+                                                <mol-input-text [id]="'nama_pasien_irda'" [label]="'Nama Pasien'"
+                                                    [disabled]="true">
+                                                </mol-input-text>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- IRNA -->
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="card">
+                                    <div class="card-header py-1">
+                                        <p class="text-biru-muda mb-0">IRNA</p>
+                                    </div>
+                                    <div class="card-body p-2">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 cols-sm-12 col-xs-12">
+                                                <!-- No. Register -->
+                                                <mol-input-text [id]="'no_register_irna'" [label]="'No. Register'"
+                                                    [disabled]="true">
+                                                </mol-input-text>
+
+                                                <!-- No. MR  -->
+                                                <mol-input-text [id]="'no_rekam_medis_irna'" [label]="'No. MR'"
+                                                    [disabled]="true">
+                                                </mol-input-text>
+
+                                                <!-- No. Pasien  -->
+                                                <mol-input-text [id]="'nama_pasien_irna'" [label]="'Nama Pasien'"
+                                                    [disabled]="true">
+                                                </mol-input-text>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Detail Transaksi -->
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card shadow-sm">
+                                    <div class="card-header py-1">
+                                        <p class="text-biru-muda pull-left mb-0">Detail Transaksi IRDA</p>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="row p-0 m-0">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0">
+                                                <ejs-grid #GridDataDetailTransfer [id]="'GridDetailTransfer'"
+                                                    [height]="200" [dataSource]="GridDetailTransferDatasource"
+                                                    [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                                                    [allowResizing]="true" [allowFiltering]='true'>
+                                                    <e-columns>
+                                                        <e-column [width]="100" [field]="'id_transaksi'"
+                                                            [headerText]="'ID DETAIL'" [visible]="false"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="120" [field]="'tgl_order'"
+                                                            [headerText]="'TGL ORDER'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="120" [field]="'kode_setup_tarif'"
+                                                            [headerText]="'KODE TIKET'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="200" [field]="'nama_setup_tarif'"
+                                                            [headerText]="'NAMA TARIF'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="70" [field]="'nama_kelas'"
+                                                            [headerText]="'KELAS'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'kode_poli'"
+                                                            [headerText]="'POLIKLINIK'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="120" [field]="'nama_poli'"
+                                                            [headerText]="'POLIKLINIK'" [visible]="false"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Left'">
+                                                        </e-column>
+                                                        <e-column [width]="70" [field]="'qty'" [headerText]="'QTY'"
+                                                            [visible]="true" [allowEditing]="false"
+                                                            [allowSorting]="false" [textAlign]="'Right'"
+                                                            [headerTextAlign]="'Right'" [type]="'number'"
+                                                            [format]="'N2'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'unit_amount'"
+                                                            [headerText]="'HARGA'" [visible]="false"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                            [type]="'number'" [format]="'N2'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'total_amount'"
+                                                            [headerText]="'SUBTOTAL'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                            [type]="'number'" [format]="'N2'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'comp_fee'"
+                                                            [headerText]="'ASS/TTG P'" [visible]="true"
+                                                            [allowEditing]="true" [allowSorting]="false"
+                                                            [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                            [type]="'number'" [format]="'N2'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'subsidi'"
+                                                            [headerText]="'SUBSIDI'" [visible]="true"
+                                                            [allowEditing]="true" [allowSorting]="false"
+                                                            [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                            [type]="'number'" [format]="'N2'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'tagihan'"
+                                                            [headerText]="'TAGIHAN'" [visible]="true"
+                                                            [allowEditing]="false" [allowSorting]="false"
+                                                            [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                            [type]="'number'" [format]="'N2'">
+                                                        </e-column>
+                                                        <e-column [width]="100" [field]="'iur_biaya'"
+                                                            [headerText]="'IUR BIAYA'" [visible]="true"
+                                                            [allowEditing]="true" [allowSorting]="false"
+                                                            [textAlign]="'Right'" [headerTextAlign]="'Right'"
+                                                            [type]="'number'" [format]="'N2'">
+                                                        </e-column>
+                                                    </e-columns>
+                                                </ejs-grid>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer p-2 background-abu-muda">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
+                                <button class="btn btn-danger btn-sm mx-2" type="button" data-bs-dismiss="modal">
+                                    <!-- (click)="handleOpenModalPembatalanOrderLab()" [disabled]="DisabledButtonBatalOrder" -->
+                                    Batal
+                                </button>
+                                <button class="btn btn-primary btn-sm" type="button"
+                                    (click)="onSubmitTransferTagihanIRDA(FormTransferTagihan.value)">
+                                    <!-- (click)="onSubmitFormVerifikasiOrderLab(FormVerifikasiDetailOrderLab.value)"
+                                  [disabled]="DisabledButtonVerifikasiOrder" -->
+                                    Transfer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</org-card-layout>
