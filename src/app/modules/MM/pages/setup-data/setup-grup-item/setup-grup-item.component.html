@@ -43,7 +43,7 @@
                             </div>   
                             <mol-input-text [label]="'Kode Grup Item'" formControlName="kode_grup_item" [inputFieldState]="inputFieldState"></mol-input-text>
                             <mol-input-text [label]="'Grup Item'" formControlName="grup_item" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Last No'" formControlName="last_no" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-numeric [label]="'Last No'" formControlName="last_no" [inputFieldState]="inputFieldState"></mol-input-numeric>
                             <org-input-look-up-kode #LookupKodeCoaPersediaan [lookup-url]="urlCoa" [idKode]="'id_coa'" [modal-title]="'Data CoaPersediaan'"
                                 [idTitle]="'deskripsi'" (onGetSelectedData)="heandleSelectedCoaPersediaan($event)"
                                 [columns]="LookupGridCoa.columns" [filter-lookup]="LookupGridCoa.filter"

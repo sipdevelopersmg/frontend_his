@@ -28,7 +28,6 @@ export class TelaahResepIrjaComponent implements OnInit {
   ButtonNav: ButtonNavModel[] = [
     { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
     { Id: 'simpan', Captions: 'Simpan Telaah Resep', Icons1: 'fa-save fa-sm' },
-    { Id: 'reject', Captions: 'Reject Resep', Icons1: 'fa-times fa-sm' },
   ];
 
   @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
@@ -111,17 +110,18 @@ export class TelaahResepIrjaComponent implements OnInit {
     ngOnInit(): void {
 
         this.formInput = this.formBuilder.group({
+            resep_id:[0,[]],
             outlet: ['',[]],
             pasien: ['', []],
             poli: ['', []],
             dokter : ['', []],
             umur : ['', []],
             total_bayar_resep:[0,[]],
-            telaah_nama_obat : [false, []],
-            telaah_duplikasi_pengobatan : [false, []],
-            telaah_interaksi_obat : [false, []],
-            telaah_tepat_indikasi : [false, []],
-            telaah_stabilitas : [false, []],
+            telaah_nama_obat : [true, []],
+            telaah_duplikasi_pengobatan : [true, []],
+            telaah_interaksi_obat : [true, []],
+            telaah_tepat_indikasi : [true, []],
+            telaah_stabilitas : [true, []],
             keterangan_telaah_resep : ['', []]
         });
 
@@ -213,17 +213,18 @@ export class TelaahResepIrjaComponent implements OnInit {
             this.mapingRacikan(result.data.details);
             //    let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
             this.formInput.setValue({
+                resep_id                :id,
                 outlet                  :result.data.nama_outlet,
                 poli                    :result.data.nama_poli,
                 pasien                  :result.data.nama_pasien,
                 dokter                  :result.data.nama_dokter,
                 umur                    :result.data.tgl_lahir,
                 total_bayar_resep       :0,
-                telaah_nama_obat        :false,
-                telaah_duplikasi_pengobatan:false,
-                telaah_interaksi_obat   :false,
-                telaah_tepat_indikasi   :false,
-                telaah_stabilitas       :false,
+                telaah_nama_obat        :true,
+                telaah_duplikasi_pengobatan:true,
+                telaah_interaksi_obat   :true,
+                telaah_tepat_indikasi   :true,
+                telaah_stabilitas       :true,
                 keterangan_telaah_resep :''
             })
 
@@ -403,23 +404,19 @@ export class TelaahResepIrjaComponent implements OnInit {
           this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
           break;
         case "simpan":
-          console.log(this.formInput.value)
-          break;
-        case "reject":
-          console.log(this.formInput.value)
+            let data = this.formInput.value
+            this.resepDokterService.insertTelaah(data).subscribe((result)=>{
+                this.utilityService.onShowingCustomAlert('success', 'Berhasil Tambah Data Baru', result.message)
+                    .then(() => {
+                        this.router.navigateByUrl('dashboard/Pharmacy/antrian-farmasi');
+                });
+            })
           break;
         default:
           break;
       }
     }
 
-    // get telaah_nama_obat (){return this.formInput.get('telaah_nama_obat')}
-    // get telaah_duplikasi_pengobatan (){return this.formInput.get('telaah_duplikasi_pengobatan')}
-    // get telaah_interaksi_obat (){return this.formInput.get('telaah_interaksi_obat')}
-    // get telaah_tepat_indikasi (){return this.formInput.get('telaah_tepat_indikasi')}
-    // get telaah_stabilitas (){return this.formInput.get('telaah_stabilitas')}
-    // get keterangan_telaah_resep (){return this.formInput.get('keterangan_telaah_resep')}
     get total_bayar_resep (){return this.formInput.get('total_bayar_resep')}
-
 
 }

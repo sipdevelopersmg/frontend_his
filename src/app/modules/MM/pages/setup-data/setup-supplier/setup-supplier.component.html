@@ -107,10 +107,10 @@
                             <mol-input-text [label]="'Fax'" formControlName="fax" [inputFieldState]="inputFieldState"></mol-input-text>
                             <mol-input-text [label]="'Kode Pos'" formControlName="kode_pos" [inputFieldState]="inputFieldState"></mol-input-text>
                             <mol-input-text [label]="'Email'" formControlName="email" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Hari Tempo Bayar'" formControlName="default_hari_tempo_bayar" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Hari Pengiriman'" formControlName="default_hari_pengiriman" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Prosentase Diskon'" formControlName="default_prosentase_diskon" [inputFieldState]="inputFieldState"></mol-input-text>
-                            <mol-input-text [label]="'Prosentase Tax'" formControlName="default_prosentase_tax" [inputFieldState]="inputFieldState"></mol-input-text>
+                            <mol-input-numeric [label]="'Hari Tempo Bayar'" formControlName="default_hari_tempo_bayar" [inputFieldState]="inputFieldState" [format]="'N0'"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Hari Pengiriman'" formControlName="default_hari_pengiriman" [inputFieldState]="inputFieldState" [format]="'N0'"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Prosentase Diskon'" formControlName="default_prosentase_diskon" [inputFieldState]="inputFieldState" [format]="'N0'"></mol-input-numeric>
+                            <mol-input-numeric [label]="'Prosentase Tax'" formControlName="default_prosentase_tax" [inputFieldState]="inputFieldState" [format]="'N0'"></mol-input-numeric>
                             <mol-input-checkbox-single [label]="'Is Tax'" formControlName="is_tax" id="is_tax" ></mol-input-checkbox-single>
                             <mol-input-checkbox-single [label]="'Is Active'" formControlName="is_active" id="is_active" ></mol-input-checkbox-single>
                         </div>

@@ -76,8 +76,7 @@ export class SetupGroupCoaComponent implements OnInit {
       this.FormInputData = this.formBuilder.group({
         id_grup_coa: [0, []],
         grup_coa: ['', [Validators.required]],
-        deskripsi: ['', [Validators.required]],
-        is_active: [false, []]
+        deskripsi: ['', [Validators.required]]
       });
     }
   

@@ -7,7 +7,7 @@
             (click)="doTouched($event)" [isFooter]="isFooter" [disabled]="disabled"></atm-input> -->
 
         <ejs-numerictextbox [id]="id" [value]="value" (change)="doChange($event)" (click)="doTouched($event)"
-            [isFooter]="isFooter" [disabled]="disabled" [format]="'N2'" [showSpinButton]="false"
+            [isFooter]="isFooter" [disabled]="disabled" [format]="format" [showSpinButton]="false"
             [class.see-detail]="inputFieldState === 'detail'" [class.is-footer]="isFooter"
             [readonly]="inputFieldState === 'detail'" style="text-align: right; padding-right: 5px;">
         </ejs-numerictextbox>

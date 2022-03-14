@@ -235,4 +235,12 @@ export class ResepDokterService {
         this.dataSourceParentGrid.next([]);
     }
 
+    insertTelaah(data): Observable<any> {
+        return this.httpOperationService.defaultPostRequest(this.API.INSERT_TELAAH_RESEP, data)
+        .pipe(
+            catchError((error: HttpErrorResponse): any => {
+                this.notificationService.onShowToast(error.statusText, error.status + ' ' + error.statusText, {}, true);
+            })
+        );
+    }
 }
