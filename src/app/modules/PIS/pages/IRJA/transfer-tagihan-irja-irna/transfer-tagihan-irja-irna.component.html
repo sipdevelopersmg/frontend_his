@@ -44,9 +44,11 @@
             <div class="modal-content">
                 <form [formGroup]="FormTransferTagihan">
                     <div class="modal-header px-2 py-1 background-biru-muda text-white">
-                        <h5 class="modal-title pull-left">Transfer Transaksi IRJA -> IRNA</h5>
+                        <h5 class="modal-title pull-left">
+                            Transfer Transaksi IRJA <i class="fas fa-arrow-right fa-xs"></i> IRNA
+                        </h5>
                         <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close">
+                            aria-label="Close" (click)="onResetFormTransferTagihanIRJA()">
                         </button>
                     </div>
                     <div class="modal-body p-2">
@@ -68,7 +70,7 @@
                                                     [columns]="Config.LookupPasien.columns"
                                                     [filter-lookup]="Config.LookupPasien.filter"
                                                     [label]="'No. Register'"
-                                                    [ResultArrayName]="'informasi_pasien_irda'">
+                                                    [ResultArrayName]="'informasi_pasien_irja'">
                                                 </org-input-look-up>
 
                                                 <!-- No. MR  -->
@@ -220,7 +222,8 @@
                     <div class="modal-footer p-2 background-abu-muda">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-123">
-                                <button class="btn btn-danger btn-sm mx-2" type="button" data-bs-dismiss="modal">
+                                <button class="btn btn-danger btn-sm mx-2" type="button" data-bs-dismiss="modal"
+                                    (click)="onResetFormTransferTagihanIRJA()">
                                     <!-- (click)="handleOpenModalPembatalanOrderLab()" [disabled]="DisabledButtonBatalOrder" -->
                                     Batal
                                 </button>

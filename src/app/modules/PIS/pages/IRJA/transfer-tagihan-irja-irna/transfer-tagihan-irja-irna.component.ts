@@ -98,7 +98,10 @@ export class TransferTagihanIrjaIrnaComponent implements OnInit {
 
     handleCloseModalTransfer(): void {
         const btnCloseModal = document.getElementById('btnCloseModal') as HTMLElement;
-        btnCloseModal.click();
+        this.onResetFormTransferTagihanIRJA();
+        setTimeout(() => {
+            btnCloseModal.click();
+        }, 250);
     }
 
     handleSelectedPasienIRJA(args: any): void {
@@ -111,7 +114,7 @@ export class TransferTagihanIrjaIrnaComponent implements OnInit {
         nama_pasien_irja.value = args.data.nama_pasien;
 
         const realDataIndex = args.realData.findIndex((item) => {
-            return item.informasi_pasien_irda.id_person == args.data.id_person;
+            return item.informasi_pasien_irja.id_person == args.data.id_person;
         });
 
         this.GridDetailTransferDatasource = args.realData[realDataIndex]['detail_transaksi'];
@@ -171,6 +174,29 @@ export class TransferTagihanIrjaIrnaComponent implements OnInit {
                     })
             }
         });
+    }
+
+    onResetFormTransferTagihanIRJA(): void {
+        const inputGroupno_register = document.getElementById('inputGroupno_register') as HTMLInputElement;
+        inputGroupno_register.value = "";
+
+        const no_rekam_medis_irja = document.getElementById('no_rekam_medis_irja') as HTMLInputElement;
+        no_rekam_medis_irja.value = "";
+
+        const nama_pasien_irja = document.getElementById('nama_pasien_irja') as HTMLInputElement;
+        nama_pasien_irja.value = "";
+
+        const no_register_irna = document.getElementById('no_register_irna') as HTMLInputElement;
+        no_register_irna.value = "";
+
+        const no_rekam_medis_irna = document.getElementById('no_rekam_medis_irna') as HTMLInputElement;
+        no_rekam_medis_irna.value = "";
+
+        const nama_pasien_irna = document.getElementById('nama_pasien_irna') as HTMLInputElement;
+        nama_pasien_irna.value = "";
+
+        this.GridDetailTransferDatasource = [];
+        this.GridDataDetailTransfer.refresh();
     }
 
     get id_register_irja(): AbstractControl { return this.FormTransferTagihan.get('id_register_irja'); }

@@ -98,7 +98,10 @@ export class TransferTagihanIrdaIrnaComponent implements OnInit {
 
     handleCloseModalTransfer(): void {
         const btnCloseModal = document.getElementById('btnCloseModal') as HTMLElement;
-        btnCloseModal.click();
+        this.onResetFormTransferTagihanIRDA();
+        setTimeout(() => {
+            btnCloseModal.click();
+        }, 250);
     }
 
     handleSelectedPasienIRDA(args: any): void {
@@ -171,6 +174,29 @@ export class TransferTagihanIrdaIrnaComponent implements OnInit {
                     })
             }
         });
+    }
+
+    onResetFormTransferTagihanIRDA(): void {
+        const inputGroupno_register = document.getElementById('inputGroupno_register') as HTMLInputElement;
+        inputGroupno_register.value = "";
+
+        const no_rekam_medis_irda = document.getElementById('no_rekam_medis_irda') as HTMLInputElement;
+        no_rekam_medis_irda.value = "";
+
+        const nama_pasien_irda = document.getElementById('nama_pasien_irda') as HTMLInputElement;
+        nama_pasien_irda.value = "";
+
+        const no_register_irna = document.getElementById('no_register_irna') as HTMLInputElement;
+        no_register_irna.value = "";
+
+        const no_rekam_medis_irna = document.getElementById('no_rekam_medis_irna') as HTMLInputElement;
+        no_rekam_medis_irna.value = "";
+
+        const nama_pasien_irna = document.getElementById('nama_pasien_irna') as HTMLInputElement;
+        nama_pasien_irna.value = "";
+
+        this.GridDetailTransferDatasource = [];
+        this.GridDataDetailTransfer.refresh();
     }
 
     get id_register_irda(): AbstractControl { return this.FormTransferTagihan.get('id_register_irda'); }
