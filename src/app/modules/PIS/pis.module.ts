@@ -68,6 +68,7 @@ import { ListPasienRawatDaruratAnonimComponent } from './pages/IRDA/list-pasien-
 import { PemasukanRawatDaruratComponent } from './pages/IRDA/pemasukan-rawat-darurat/pemasukan-rawat-darurat.component';
 import { UpdatePasienTanpaIdentitasComponent } from './pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component';
 import { TransferTagihanIrdaIrnaComponent } from './pages/IRDA/transfer-tagihan-irda-irna/transfer-tagihan-irda-irna.component';
+import { TransferTagihanIrjaIrnaComponent } from './pages/IRJA/transfer-tagihan-irja-irna/transfer-tagihan-irja-irna.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -137,6 +138,7 @@ const ngWizardConfig: NgWizardConfig = {
         PemasukanRawatDaruratComponent,
         UpdatePasienTanpaIdentitasComponent,
         TransferTagihanIrdaIrnaComponent,
+        TransferTagihanIrjaIrnaComponent,
     ],
     imports: [
         CommonModule,

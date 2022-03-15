@@ -1,0 +1,73 @@
+{
+    "LookupPasien": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_register",
+                "headerText": "NO. REGISTER",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. MR",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLI",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_debitur",
+                "headerText": "DEBITUR",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "tp.no_register",
+                "filter": "like",
+                "title": "NO. REGISTER"
+            },
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "MR NO"
+            },
+            {
+                "field": "concat(per_pas.nama_depan, ' ',per_pas.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
+            }
+        ]
+    }
+}
