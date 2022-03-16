@@ -1,0 +1,139 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row pt-2">
+        <!-- Filter Offcanvas -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                [FilterDropdownDatasource]="FilterDropdownDatasource" [FilterDropdownFields]="FilterDropdownFields"
+                (handle-change-filter)="handleChangeFilterPencarian($event)"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-filter>
+        </div>
+
+        <!-- Grid Daftar Antrian -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridDatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowTextWrap]="true"
+                [textWrapSettings]="GridTextWrapSettings" [allowFiltering]='true' [pageSettings]="GridPageSettings"
+                [toolbar]="GridToolbar" [editSettings]="GridDataEditSettings">
+                <e-columns>
+                    <e-column [width]="50" [field]="'id_antrian_tppri'" [headerText]="'ID'" [visible]="false"
+                        [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                        [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
+                        [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="90" [field]="'no_antrian_per_kelas'" [headerText]="'NO. URUT'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'kode_antrian_tppri'" [headerText]="'KODE ANTRIAN'"
+                        [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="120" [field]="'tanggal_rencana_masuk'" [headerText]="'TGL. RENCANA MASUK'"
+                        [visible]="true" [headerTextAlign]="'Center'" [allowEditing]="false" [allowSorting]="false"
+                        [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'usia'" [headerText]="'UMUR'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="120" [field]="'status_approve'" [headerText]="'STATUS ANTRIAN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+
+        <!-- Modal Add Antrian Reguler -->
+        <button id="btnOpenModalAntrianReguler" type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#modalAntrianReguler" [hidden]="true">
+            Launch Modal Add Antrian Reguler
+        </button>
+
+        <div class="modal fade" id="modalAntrianReguler" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby=" modalAntrianRegulerLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content border-0">
+                    <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                        <h5 class="modal-title" id="modalAntrianRegulerLabel">Input Antrian Reguler Pemesanan Tempat
+                            Tidur</h5>
+                        <button id="btnCloseModalAddAntrianReguler" type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="FormAddAntrianReguler">
+                            <!-- Pilih Pasien -->
+                            <org-input-look-up #LookupPasien [modal-title]="'Data Pasien'"
+                                [lookup-url]="UrlLookupPasien" [idTitle]="'full_name'"
+                                (onGetSelectedData)="handleSelectedLookupPasien($event)"
+                                [columns]="Config.LookupPasien.columns" [filter-lookup]="Config.LookupPasien.filter"
+                                [label]="'Pilih Pasien'">
+                            </org-input-look-up>
+
+                            <!-- No. Rekam Medis -->
+                            <mol-input-text [disabled]="true" [label]="'No. Rekam Medis'"
+                                formControlName="no_rekam_medis">
+                            </mol-input-text>
+
+                            <!-- Debitur Pasien -->
+                            <div class=" row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Debitur Pasien'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
+                                        [fields]="DropdownDebiturFields" [allowFiltering]="true"
+                                        formControlName="id_debitur">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Kelas Pelayanan -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Kelas Pelayanan'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
+                                        [fields]="DropdownKelasFields" [allowFiltering]="true"
+                                        formControlName="id_kelas_request">
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+
+                            <!-- Tgl. Rencana Masuk -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <atm-label [LabelCaption]="'Tgl. Rencana Masuk'"></atm-label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-datepicker #DatepickerTglRencanaMasuk [format]="'dd/MM/yyyy'"
+                                        formControlName="tanggal_rencana_masuk">
+                                    </ejs-datepicker>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm"
+                            (click)="handleSubmitFormAddAntrianReguler(FormAddAntrianReguler.value)">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

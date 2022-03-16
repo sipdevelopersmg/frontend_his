@@ -69,6 +69,9 @@ import { PemasukanRawatDaruratComponent } from './pages/IRDA/pemasukan-rawat-dar
 import { UpdatePasienTanpaIdentitasComponent } from './pages/IRDA/update-pasien-tanpa-identitas/update-pasien-tanpa-identitas.component';
 import { TransferTagihanIrdaIrnaComponent } from './pages/IRDA/transfer-tagihan-irda-irna/transfer-tagihan-irda-irna.component';
 import { TransferTagihanIrjaIrnaComponent } from './pages/IRJA/transfer-tagihan-irja-irna/transfer-tagihan-irja-irna.component';
+import { InputAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat-inap/input-antrian-reguler/input-antrian-reguler.component';
+import { UpdateAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/update-antrian-reguler.component';
+import { DialogUpdateStatusTerjadwalComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/dialog-update-status-terjadwal/dialog-update-status-terjadwal.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -139,6 +142,9 @@ const ngWizardConfig: NgWizardConfig = {
         UpdatePasienTanpaIdentitasComponent,
         TransferTagihanIrdaIrnaComponent,
         TransferTagihanIrjaIrnaComponent,
+        InputAntrianRegulerComponent,
+        UpdateAntrianRegulerComponent,
+        DialogUpdateStatusTerjadwalComponent,
     ],
     imports: [
         CommonModule,

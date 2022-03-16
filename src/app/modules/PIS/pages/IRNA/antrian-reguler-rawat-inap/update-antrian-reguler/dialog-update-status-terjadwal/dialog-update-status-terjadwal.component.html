@@ -1,0 +1,67 @@
+<!-- Modal Add Antrian -->
+<button id="btnOpenModalUpdateStatusTerjadwal" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modalAntrianTppri" [hidden]="true">
+    Launch Modal Update Status Terjadwal
+</button>
+
+<div class="modal fade" id="modalAntrianTppri" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby=" modalAntrianTppriLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header py-2 px-3 background-biru-muda text-white">
+                <h5 class="modal-title" id="modalAntrianTppriLabel">
+                    Update Status Antrian <i class="fas fa-arrow-right fa-xs"></i> Terjadwal
+                </h5>
+                <button id="btnCloseModalAddAntrianTppri" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FormUpdateStatus">
+                    <div class="row">
+                        <!-- Pasien Antrian Reguler -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header">
+                                    <p class="text-biru-tua mb-0">Pasien Antrian Reguler</p>
+                                </div>
+                                <div class="card-body">
+                                    <mol-input-text [id]="'nama_pasien_antrian'" [label]="'Nama Pasien'"
+                                        [disabled]="true">
+                                    </mol-input-text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header">
+                                    <p class="text-biru-tua mb-0">Pasien Rencana Pulang</p>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Pilih Pasien -->
+                                    <org-input-look-up #LookupPasien [modal-title]="'Data Pasien Rencana Pulang'"
+                                        [lookup-url]="UrlLookupPasien" [idTitle]="'full_name'"
+                                        (onGetSelectedData)="handleSelectedLookupPasienRencanaPulang($event)"
+                                        [columns]="Config.LookupPasien.columns"
+                                        [filter-lookup]="Config.LookupPasien.filter"
+                                        [label]="'Pilih Pasien Rencana Pulang'">
+                                    </org-input-look-up>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    (click)="handleSubmitUpdateStatusAntrianTerjadwal(FormUpdateStatus.value)">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

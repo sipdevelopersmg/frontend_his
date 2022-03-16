@@ -18,6 +18,8 @@ import { TransferTagihanIrjaIrnaComponent } from "./pages/IRJA/transfer-tagihan-
 import { AdmisiPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/admisi-pasien-rawat-inap.component";
 import { CariPasienAntrianTppriComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/cari-pasien-antrian-tppri/cari-pasien-antrian-tppri.component";
 import { PelayananPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component";
+import { InputAntrianRegulerComponent } from "./pages/IRNA/antrian-reguler-rawat-inap/input-antrian-reguler/input-antrian-reguler.component";
+import { UpdateAntrianRegulerComponent } from "./pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/update-antrian-reguler.component";
 import { AntrianPemesananTempatTidurComponent } from "./pages/IRNA/daftar-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur/antrian-pemesanan-tempat-tidur.component";
 import { ManagementBedRawatInapComponent } from "./pages/IRNA/management-bed-rawat-inap/management-bed-rawat-inap.component";
 import { PemasukanRawatInapComponent } from "./pages/IRNA/pemasukan-rawat-inap/pemasukan-rawat-inap.component";
@@ -123,6 +125,8 @@ const pisRoutes: Routes = [
             { path: "rencana-pulang-pasien/:id/:key", component: RencanaPulangPasienComponent, data: { title: "Rencana Pulang Pasien Rawat Inap" } },
             { path: "surat-pengantar-pembayaran/:id/:key", component: SuratPengantarPembayaranComponent, data: { title: "Surat Pengantar Pembayaran Rawat Inap" } },
             { path: "transaksi-pemasukan-rawat-inap", component: PemasukanRawatInapComponent, data: { title: "Transaksi Pemasukan Rawat Inap" }, },
+            { path: "antrian-reguler-pemesanan-bed", component: InputAntrianRegulerComponent, data: { title: "Antrian Reguler Pemesanan Bed" }, },
+            { path: "update-status-antrian-reguler-pemesanan-bed", component: UpdateAntrianRegulerComponent, data: { title: "Update Status Antrian Reguler Pemesanan Bed" }, },
         ]
     },
     {

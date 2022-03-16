@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdmisiPasienRawatJalanService } from 'src/app/modules/PIS/services/IRJA/admisi-pasien-rawat-jalan/admisi-pasien-rawat-jalan.service';
@@ -18,7 +18,6 @@ import { EncryptionService } from 'src/app/modules/shared/services/encryption.se
 import { IPersonPasienForAdmisiRawatJalanModel } from 'src/app/modules/PIS/models/IRJA/admisi-pasien-rawat-jalan.model';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
-import { DokterModel } from 'src/app/modules/PIS/models/setup-data/setup-dokter.model';
 import * as API_ADMISI from '../../../../../../api/PIS/IRJA/PELAYANAN_RAWAT_JALAN';
 import * as API_PIS_SETUP_DATA from '../../../../../../api/PIS/SETUP_DATA';
 import * as API_BILLING_SETUP_DATA from '../../../../../../api/BILLING/SETUP_DATA';

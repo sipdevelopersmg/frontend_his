@@ -1,0 +1,58 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row pt-2">
+        <!-- Filter Offcanvas -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <mol-offcanvas-filter [FilterColumnDatasource]="FilterColumnDatasource"
+                [FilterDropdownDatasource]="FilterDropdownDatasource" [FilterDropdownFields]="FilterDropdownFields"
+                (handle-change-filter)="handleChangeFilterPencarian($event)"
+                (handle-pencarian)="handlePencarianFilter($event)">
+            </mol-offcanvas-filter>
+        </div>
+
+        <!-- Grid Daftar Antrian -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridDatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowTextWrap]="true"
+                [textWrapSettings]="GridTextWrapSettings" [allowFiltering]='true' [pageSettings]="GridPageSettings"
+                [editSettings]="GridDataEditSettings" [toolbar]="GridDataToolbar"
+                (toolbarClick)="handleClickToolbarGrid($event)">
+                <e-columns>
+                    <e-column [width]="50" [field]="'id_antrian_tppri'" [headerText]="'ID'" [visible]="false"
+                        [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
+                        [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="50" [field]="'id_person'" [headerText]="'ID'" [visible]="false" [type]="'number'"
+                        [allowEditing]="false" [allowSorting]="false" [format]="'N'" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="90" [field]="'no_antrian_per_kelas'" [headerText]="'NO. URUT'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'kode_antrian_tppri'" [headerText]="'KODE ANTRIAN'"
+                        [visible]="true" [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="120" [field]="'tanggal_rencana_masuk'" [headerText]="'TGL. RENCANA MASUK'"
+                        [visible]="true" [headerTextAlign]="'Center'" [allowEditing]="false" [allowSorting]="false"
+                        [textAlign]="'Left'" [type]="'Date'" [format]="'dd/MM/yyyy'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'usia'" [headerText]="'UMUR'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="120" [field]="'status_approve'" [headerText]="'STATUS ANTRIAN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [text]>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+
+        <app-dialog-update-status-terjadwal></app-dialog-update-status-terjadwal>
+    </div>
+</org-card-layout>
