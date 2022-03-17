@@ -72,6 +72,7 @@ import { TransferTagihanIrjaIrnaComponent } from './pages/IRJA/transfer-tagihan-
 import { InputAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat-inap/input-antrian-reguler/input-antrian-reguler.component';
 import { UpdateAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/update-antrian-reguler.component';
 import { DialogUpdateStatusTerjadwalComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/dialog-update-status-terjadwal/dialog-update-status-terjadwal.component';
+import { DialogUpdateStatusBatalComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/dialog-update-status-batal/dialog-update-status-batal.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -145,6 +146,7 @@ const ngWizardConfig: NgWizardConfig = {
         InputAntrianRegulerComponent,
         UpdateAntrianRegulerComponent,
         DialogUpdateStatusTerjadwalComponent,
+        DialogUpdateStatusBatalComponent,
     ],
     imports: [
         CommonModule,

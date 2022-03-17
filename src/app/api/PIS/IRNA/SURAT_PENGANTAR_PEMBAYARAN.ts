@@ -7,3 +7,4 @@ export const GET_INFO_KEMATIAN_BY_ID_REGISTER = `${environment.webApiAdmisi}` + 
 export const POST_SAVE_PENGANTAR_PEMBAYARAN = `${environment.webApiAdmisi}` + "TrPerintahPulang/InsertOrUpdate";
 export const POST_CANCEL_PENGANTAR_PEMBAYARAN = `${environment.webApiAdmisi}` + "TrPerintahPulang/Cancel";
 export const GET_PENGANTAR_PEMBAYARAN_BY_ID_REGISTER = `${environment.webApiAdmisi}` + "TrPerintahPulang/GetByIdRegister/";
+export const GET_PERINTAH_PULANG_BY_ID_KELAS = `${environment.webApiAdmisi}` + "TrPerintahPulang/GetAllByDynamicFilter/";

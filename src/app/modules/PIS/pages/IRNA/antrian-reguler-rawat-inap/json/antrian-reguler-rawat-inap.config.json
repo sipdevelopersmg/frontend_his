@@ -66,8 +66,8 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no_register",
-                "headerText": "NO. REGISTER",
+                "field": "no_rekam_medis",
+                "headerText": "NO. MR",
                 "type": "string",
                 "visible": true,
                 "width": 80
@@ -76,8 +76,8 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "no_rekam_medis",
-                "headerText": "NO. RM",
+                "field": "kelas_rawat",
+                "headerText": "KELAS",
                 "type": "string",
                 "visible": true,
                 "width": 80
@@ -96,40 +96,35 @@
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "nama_dokter",
-                "headerText": "NAMA DOKTER",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
                 "type": "string",
                 "visible": true,
-                "width": 150
+                "width": 100
             },
             {
                 "allowEditing": false,
                 "allowSorting": false,
                 "editType": "defaultEdit",
-                "field": "tanggal_surat_perintah_mondok",
-                "headerText": "TGL. SURAT PERINTAH",
+                "field": "bed_no",
+                "headerText": "NO. BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "tanggal_perintah_pulang",
+                "headerText": "TGL. RENCANA PULANG",
                 "type": "DateTime",
                 "format": "dd/MM/yyyy HH:mm:ss",
                 "visible": true,
                 "width": 150
-            },
-            {
-                "allowEditing": false,
-                "allowSorting": false,
-                "editType": "defaultEdit",
-                "field": "keterangan_perintah_mondok",
-                "headerText": "KETERANGAN",
-                "type": "string",
-                "visible": true,
-                "width": 100
             }
         ],
         "filter": [
-            {
-                "field": "tp.no_register",
-                "filter": "like",
-                "title": "NO. REGISTER"
-            },
             {
                 "field": "tp.no_rekam_medis",
                 "filter": "like",
@@ -139,11 +134,6 @@
                 "field": "concat(pasien.nama_depan, ' ',pasien.nama_belakang)",
                 "filter": "like",
                 "title": "NAMA PASIEN"
-            },
-            {
-                "field": "concat(dokter.nama_depan,'' '',dokter.nama_belakang)",
-                "filter": "like",
-                "title": "NAMA DOKTER"
             }
         ]
     },

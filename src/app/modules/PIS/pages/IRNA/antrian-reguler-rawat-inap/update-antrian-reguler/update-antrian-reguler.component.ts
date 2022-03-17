@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { GridComponent, EditSettingsModel, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
-import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { AntrianRegulerService } from 'src/app/modules/PIS/services/IRNA/antrian-reguler/antrian-reguler.service';
+import { DialogUpdateStatusBatalComponent } from './dialog-update-status-batal/dialog-update-status-batal.component';
+import { DialogUpdateStatusTerjadwalComponent } from './dialog-update-status-terjadwal/dialog-update-status-terjadwal.component';
+import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 
 @Component({
     selector: 'app-update-antrian-reguler',
@@ -11,8 +14,6 @@ import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Ht
 })
 export class UpdateAntrianRegulerComponent implements OnInit {
 
-    ButtonNav: ButtonNavModel[];
-
     FilterColumnDatasource: any[];
     FilterDropdownDatasource: any[];
     FilterDropdownFields: any;
@@ -20,69 +21,44 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     @ViewChild('GridData') GridData: GridComponent;
     GridPageSettings = { pageSizes: false, pageSize: 30 };
     GridDataEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
-    GridDatasource: any[] = [
-        {
-            id_antrian_tppri: 1,
-            id_person: 1,
-            no_antrian_per_kelas: '1',
-            kode_antrian_tppri: 'A001',
-            tanggal_rencana_masuk: new Date(),
-            no_rekam_medis: 'A12',
-            nama_pasien: 'John Doe',
-            gender: 'Laki - Laki',
-            usia: '25 Tahun 1 Bulan 3 Hari',
-            status_approve: 'PENDING'
-        }
-    ];
+    GridDatasource: any[] = [];
     GridDataToolbar: any[] = [
         {
             text: `Update Status <i class="fas fa-arrow-right"></i> Terjadwal`,
             tooltipText: `Update Bed -> Terjadwal`,
             prefixIcon: 'fas fa-clipboard-check fa-sm',
             id: 'update_status_terjadwal',
-            method: () => { this.onUpdateStatus('terjadwal'); }
         },
         {
-            text: `Update Status -> Batal`,
+            text: `Update Status <i class="fas fa-arrow-right"></i> Batal`,
             tooltipText: `Update Status -> Batal`,
             prefixIcon: 'fas fa-ban fa-sm',
-            id: 'upate_status_batal',
-            method: () => { this.onUpdateStatus('batal'); }
+            id: 'update_status_batal',
         },
         "Search"
     ];
     GridSelectedData: any;
     GridTextWrapSettings: TextWrapSettingsModel;
 
+    @ViewChild('UpdateStatusTerjadwalComp') UpdateStatusTerjadwalComp: DialogUpdateStatusTerjadwalComponent;
+
+    @ViewChild('UpdateStatusBatalComp') UpdateStatusBatalComp: DialogUpdateStatusBatalComponent;
+
     constructor(
+        private utilityService: UtilityService,
+        private antrianRegulerService: AntrianRegulerService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
     ) { }
 
     ngOnInit(): void {
-        // this.ButtonNav = [
-        //     { Id: 'Tambah_Antrian', Captions: 'Tambah Antrian', Icons1: 'fa-plus fa-sm' },
-        // ];
-
         this.FilterColumnDatasource = [
-            { text: 'Pilih Kelas', value: 'tat.id_kelas_request' },
-            { text: 'Tgl. Rencana Masuk', value: 'tat.tanggal_rencana_masuk' },
+            { text: 'Pilih Kelas', value: 'kp.nama_kelas' },
+            { text: 'Tgl. Rencana Masuk', value: 'bb.tgl_rencana_inap' },
         ];
 
         this.GridTextWrapSettings = { wrapMode: 'Header' };
 
         this.handlePencarianFilter([]);
-    }
-
-    handleClickButtonNav(ButtonId: string): void {
-        switch (ButtonId) {
-            case 'Tambah_Antrian':
-                // this.handleOpenModalAddAntrianReguler();
-                break;
-            case 'Lihat_Antrian':
-                break;
-            default:
-                break;
-        }
     }
 
     handleChangeFilterPencarian(args: any): void {
@@ -103,14 +79,32 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     }
 
     handlePencarianFilter(args: PostRequestByDynamicFiterModel[]): void {
-        console.log(args);
+        this.antrianRegulerService.onGetAllAntrianReguler(args)
+            .subscribe((result) => {
+                this.GridDatasource = result.data;
+            });
+    }
+
+    handleRowSelectedGrid(args: any): void {
+        this.GridSelectedData = args.data;
     }
 
     handleClickToolbarGrid(args: any): void {
-        console.log(args);
+        const id = args.item.id;
+
+        switch (id) {
+            case 'update_status_terjadwal':
+                this.UpdateStatusTerjadwalComp.handleOpenModalDialog();
+                break;
+            case 'update_status_batal':
+                this.UpdateStatusBatalComp.handleOpenModalDialog();
+                break;
+            default:
+                break;
+        }
     }
 
-    onUpdateStatus(status: string): void {
-
+    onUpdateStatus(data: any): void {
+        console.log(data);
     }
 }

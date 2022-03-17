@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -12,7 +12,16 @@ import { NavigationService } from './modules/shared/services/navigation.service'
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+
     title = 'DASHBOARD-TEMPLATE';
+
+    @HostListener('window:unload')
+    beforeUnloadBrowser(): void {
+        if (confirm('Are Sure to Leave Application ?') == true) {
+            localStorage.clear();
+            sessionStorage.clear();
+        };
+    }
 
     constructor(
         private router: Router,

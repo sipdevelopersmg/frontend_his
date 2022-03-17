@@ -4,6 +4,7 @@ import { DatePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { GridComponent, EditSettingsModel, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
+import { AntrianRegulerService } from 'src/app/modules/PIS/services/IRNA/antrian-reguler/antrian-reguler.service';
 import { SetupDebiturService } from 'src/app/modules/PIS/services/setup-data/setup-debitur/setup-debitur.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -56,6 +57,7 @@ export class InputAntrianRegulerComponent implements OnInit {
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         private setupDebiturService: SetupDebiturService,
+        private antrianRegulerService: AntrianRegulerService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
     ) { }
 
@@ -65,8 +67,8 @@ export class InputAntrianRegulerComponent implements OnInit {
         ];
 
         this.FilterColumnDatasource = [
-            { text: 'Pilih Kelas', value: 'tat.id_kelas_request' },
-            { text: 'Tgl. Rencana Masuk', value: 'tat.tanggal_rencana_masuk' },
+            { text: 'Pilih Kelas', value: 'kp.nama_kelas' },
+            { text: 'Tgl. Rencana Masuk', value: 'bb.tgl_rencana_inap' },
         ];
 
         this.GridTextWrapSettings = { wrapMode: 'Header' };
@@ -106,7 +108,10 @@ export class InputAntrianRegulerComponent implements OnInit {
     }
 
     handlePencarianFilter(args: PostRequestByDynamicFiterModel[]): void {
-        console.log(args);
+        this.antrianRegulerService.onGetAllAntrianReguler(args)
+            .subscribe((result) => {
+                this.GridDatasource = result.data;
+            });
     }
 
     handleOpenModalAddAntrianReguler(): void {
@@ -125,11 +130,10 @@ export class InputAntrianRegulerComponent implements OnInit {
 
     onSetFormAttributes(): void {
         this.FormAddAntrianReguler = this.formBuilder.group({
-            id_person: [0, [Validators.required]],
             no_rekam_medis: ["", [Validators.required]],
+            id_kelas: [0, [Validators.required]],
             id_debitur: [0, [Validators.required]],
-            id_kelas_request: [0, [Validators.required]],
-            tanggal_rencana_masuk: ["", []],
+            tgl_rencana_inap: ["", []],
         });
     }
 
@@ -143,7 +147,6 @@ export class InputAntrianRegulerComponent implements OnInit {
     }
 
     handleSelectedLookupPasien(args: any): void {
-        this.id_person.setValue(args.id_person);
         this.no_rekam_medis.setValue(args.no_rekam_medis);
 
         this.setupDebiturService.onGetAllByPersonId(args.id_person)
@@ -153,26 +156,37 @@ export class InputAntrianRegulerComponent implements OnInit {
     }
 
     handleSubmitFormAddAntrianReguler(FormAddAntrianReguler: any): void {
-        console.log(FormAddAntrianReguler);
+        this.antrianRegulerService.onPostSaveAntrianReguler(FormAddAntrianReguler)
+            .subscribe((result) => {
+                if (result.responseResult) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Antrian Reguler Berhasil Disimpan')
+                        .then(() => {
+                            this.handleResetFormAddAntrianReguler();
+                            this.handleCloseModalAddAntrianReguler();
+                            this.handlePencarianFilter([]);
+                        })
+                }
+            });
     }
 
     handleResetFormAddAntrianReguler(): void {
         this.FormAddAntrianReguler.reset();
 
-        this.id_person.setValue(0);
         this.no_rekam_medis.setValue("");
         this.id_debitur.setValue(0);
-        this.id_kelas_request.setValue(0);
-        this.tanggal_rencana_masuk.setValue("");
+        this.id_kelas.setValue(0);
+        this.tgl_rencana_inap.setValue("");
+
+        this.DropdownDebitur.value = null;
+        this.DatepickerTglRencanaMasuk.value = new Date();
 
         setTimeout(() => {
             this.LookupPasien.resetValue();
         }, 500);
     }
 
-    get id_person(): AbstractControl { return this.FormAddAntrianReguler.get("id_person"); }
     get no_rekam_medis(): AbstractControl { return this.FormAddAntrianReguler.get("no_rekam_medis"); }
     get id_debitur(): AbstractControl { return this.FormAddAntrianReguler.get("id_debitur"); }
-    get id_kelas_request(): AbstractControl { return this.FormAddAntrianReguler.get("id_kelas_request"); }
-    get tanggal_rencana_masuk(): AbstractControl { return this.FormAddAntrianReguler.get("tanggal_rencana_masuk"); }
+    get id_kelas(): AbstractControl { return this.FormAddAntrianReguler.get("id_kelas"); }
+    get tgl_rencana_inap(): AbstractControl { return this.FormAddAntrianReguler.get("tgl_rencana_inap"); }
 }

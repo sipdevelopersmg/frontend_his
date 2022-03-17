@@ -33,3 +33,37 @@ export class GetRencanaPulangPasienModel implements HttpResponseModel {
     data: IGetRencanaPulangModel;
     message: string;
 }
+
+export interface IGetRencanaPulangForAntrianRegulerModel {
+    id_perintah_pulang: number
+    id_register: number
+    no_rekam_medis: string
+    nama_pasien: string
+    id_dokter_pemberi_perintah_pulang: number
+    kode_dokter: string
+    nama_dokter: string
+    id_cara_pulang: number
+    cara_pulang: string
+    id_kondisi_pulang: number
+    kondisi_pulang: string
+    id_rencana_pulang: number
+    tanggal_perintah_pulang: string
+    keterangan_perintah_pulang: string
+    id_kelas_rawat: number
+    kelas_rawat: string
+    room_no: string
+    bed_no: string
+    user_inputed: number
+    time_inputed: string
+    user_verified: number
+    time_verified: string
+    user_canceled: number
+    time_canceled: string
+    reason_canceled: any
+}
+
+export class GetRencanaPulangPasienForAntrianRegulerModel implements HttpResponseModel {
+    responseResult: boolean;
+    message: string;
+    data: IGetRencanaPulangForAntrianRegulerModel[];
+}

@@ -48,7 +48,7 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     API_BILLING_SETUP_DATA = API_BILLING_SETUP_DATA.API_SETUP_DATA;
 
     @ViewChild('LookupMr') LookupMr: OrgInputLookUpComponent;
-    urlRm = this.API_ADMISI.POST_GET_PASIEN_FOR_LOOKUP_ADMISI_NON_ANONIM;
+    urlRm = this.API_ADMISI.POST_GET_PASIEN_FOR_LOOKUP_ADMISI_NON_ANONIM_IRNA;
     LookupRmExceptionalData: any;
 
     @ViewChild('DropdownRuangan') DropdownRuangan: DropDownListComponent;
