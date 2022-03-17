@@ -37,4 +37,22 @@ export class AntrianRegulerService {
                 })
             );
     }
+
+    onPostUpdateStatusTerjadwal(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.IRNA.ANTRIAN_REGULER.POST_UPDATE_STATUS_TERJADWAL, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+                })
+            );
+    }
+
+    onPostUpdateStatusCanceled(Data: any): Observable<HttpResponseModel> {
+        return this.httpOperationService.defaultPostRequest(this.API_CONFIG.IRNA.ANTRIAN_REGULER.POST_UPDATE_STATUS_BATAL, Data)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+                })
+            );
+    }
 }

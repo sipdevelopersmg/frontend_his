@@ -104,7 +104,33 @@ export class UpdateAntrianRegulerComponent implements OnInit {
         }
     }
 
-    onUpdateStatus(data: any): void {
-        console.log(data);
+    onSwitchUpdateStatus(data: any): void {
+        switch (data.status) {
+            case 'terjadwal':
+                this.onUpdateStatusTerjadwal(data.parameter);
+                break;
+            case 'batal':
+                this.onUpdateStatusBatal(data.parameter);
+                break;
+            default:
+                break;
+        }
+    }
+
+    onUpdateStatusTerjadwal(parameter: any): void {
+        this.antrianRegulerService.onPostUpdateStatusTerjadwal(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Berhasil Ubah Status Antrian')
+                        .then(() => {
+                            this.UpdateStatusTerjadwalComp.handleCloseModalDialog();
+                        });
+                };
+            });
+
+    }
+
+    onUpdateStatusBatal(parameter: any): void {
+
     }
 }

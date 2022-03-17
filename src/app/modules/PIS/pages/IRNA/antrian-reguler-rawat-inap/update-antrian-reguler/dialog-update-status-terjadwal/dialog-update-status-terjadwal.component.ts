@@ -69,6 +69,7 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
 
     handleCloseModalDialog(): void {
         let btnCloseModalUpdateStatusTerjadwal = document.getElementById("btnCloseModalUpdateStatusTerjadwal") as HTMLElement;
+        this.onResetFormUpdateStatus();
         btnCloseModalUpdateStatusTerjadwal.click();
     }
 
@@ -115,6 +116,12 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
 
         const tgl_rencana_pulang = document.getElementById('tgl_rencana_pulang') as HTMLInputElement;
         tgl_rencana_pulang.value = this.utilityService.onFormatDate(new Date(), 'Do/MM/yyyy');
+
+        this.LookupPasien.resetValue();
+
+        this.FormUpdateStatus.reset();
+        this.id_booking.setValue(0);
+        this.bed_no.setValue('');
     }
 
     handleSubmitUpdateStatusAntrianTerjadwal(FormUpdateStatus: any): void {

@@ -10,7 +10,7 @@ import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/butt
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
 import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import * as API_CONFIG from '../../../../../../api/PIS/IRNA';
+import * as API_CONFIG from '../../../../../../api/PIS';
 import Config from '../json/antrian-reguler-rawat-inap.config.json';
 
 @Component({
@@ -41,7 +41,7 @@ export class InputAntrianRegulerComponent implements OnInit {
     Config = Config;
 
     @ViewChild('LookupPasien') LookupPasien: OrgInputLookUpComponent;
-    UrlLookupPasien = this.API_CONFIG.IRNA.DAFTAR_ANTRIAN_PEMESANAN_BED.GET_ALL_PASIEN_FOR_LOOKUP_ANTRIAN_TPPRI;
+    UrlLookupPasien = this.API_CONFIG.API_PIS.IRJA.IRJA.PELAYANAN_RAWAT_JALAN.POST_GET_PASIEN_FOR_LOOKUP_ADMISI_NON_ANONIM;
 
     @ViewChild('DropdownKelas') DropdownKelas: DropDownListComponent;
     DropdownKelasDatasource: any[];
