@@ -370,7 +370,7 @@ span.readonly-state > .e-numerictextbox {
   background-color: var(--abu-tua) !important;
   height: 19px;
   width: 100%;
-  padding-top: 10px;
+  padding-top: 3px;
   text-align: center;
   border-radius: 15px;
 }
@@ -380,7 +380,7 @@ span.readonly-state > .e-numerictextbox {
   background-color: #2dc937 !important;
   height: 19px;
   width: 100%;
-  padding-top: 10px;
+  padding-top: 3px;
   text-align: center;
   border-radius: 15px;
 }
@@ -390,7 +390,7 @@ span.readonly-state > .e-numerictextbox {
   background-color: #cc3232 !important;
   height: 19px;
   width: 100%;
-  padding-top: 10px;
+  padding-top: 3px;
   text-align: center;
   border-radius: 15px;
 }
@@ -400,7 +400,7 @@ span.readonly-state > .e-numerictextbox {
   background-color: #e7b416 !important;
   height: 19px;
   width: 100%;
-  padding-top: 10px;
+  padding-top: 3px;
   text-align: center;
   border-radius: 15px;
 }
@@ -410,7 +410,7 @@ span.readonly-state > .e-numerictextbox {
   background-color: #327ccc !important;
   height: 19px;
   width: 100%;
-  padding-top: 10px;
+  padding-top: 3px;
   text-align: center;
   border-radius: 15px;
 }
