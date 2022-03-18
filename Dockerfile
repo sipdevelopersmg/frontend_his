@@ -8,8 +8,8 @@ COPY package*.json ./
 
 RUN npm install -g @angular/cli@12.0.1 && \
     npm install && \
-    npm version patch \ 
-    node ./replace.build.js \
+    npm version patch && \ 
+    node ./replace.build.js && \
     ng build --configuration=development --output-hashing=all
 
 COPY . .
