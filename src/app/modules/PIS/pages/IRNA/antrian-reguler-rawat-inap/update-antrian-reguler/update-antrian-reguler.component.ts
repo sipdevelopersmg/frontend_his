@@ -124,6 +124,7 @@ export class UpdateAntrianRegulerComponent implements OnInit {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Berhasil Ubah Status Antrian')
                         .then(() => {
                             this.UpdateStatusTerjadwalComp.handleCloseModalDialog();
+                            this.handlePencarianFilter([]);
                         });
                 };
             });
@@ -131,6 +132,15 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     }
 
     onUpdateStatusBatal(parameter: any): void {
-
+        this.antrianRegulerService.onPostUpdateStatusCanceled(parameter)
+            .subscribe((result) => {
+                if (result) {
+                    this.utilityService.onShowingCustomAlert('success', 'Success', 'Berhasil Ubah Status Antrian')
+                        .then(() => {
+                            this.UpdateStatusBatalComp.handleCloseModalDialog();
+                            this.handlePencarianFilter([]);
+                        });
+                };
+            });
     }
 }

@@ -405,6 +405,16 @@ span.readonly-state > .e-numerictextbox {
   border-radius: 15px;
 }
 
+.statustemp.e_is_scheduled_color {
+  color: white !important;
+  background-color: #327ccc !important;
+  height: 19px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
 .e-pink-editable-background {
   background-color: #ffc0c0 !important;
   color: black !important;
