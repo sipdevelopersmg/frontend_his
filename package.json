@@ -1,6 +1,6 @@
 {
     "name": "dashboard-template",
-    "version": "0.0.0",
+    "version": "0.0.3",
     "scripts": {
         "ng": "ng",
         "start": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng serve --open",

@@ -10,7 +10,7 @@ RUN npm install -g @angular/cli@12.0.1 && \
     npm install && \
     npm version patch --no-git-tag-version && \ 
     node ./replace.build.js && \
-    ng build --configuration=development --output-hashing=all
+    ng build --configuration=production --output-hashing=all
 
 COPY . .
 
