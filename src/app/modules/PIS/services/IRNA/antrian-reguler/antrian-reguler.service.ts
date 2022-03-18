@@ -6,7 +6,7 @@ import { HttpResponseModel, PostRequestByDynamicFiterModel } from 'src/app/modul
 import { HttpOperationService } from 'src/app/modules/shared/services/http-operation.service';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../api/PIS/IRNA';
-import { GetAllAntrianRegulerPemesananBedModel, IPostSaveAntrianRegulerPemesananBedModel } from '../../../models/IRNA/antrian-reguler-pemesanan-bed.model';
+import { CheckAntrianIsTerjadwalModel, GetAllAntrianRegulerPemesananBedModel, IPostSaveAntrianRegulerPemesananBedModel } from '../../../models/IRNA/antrian-reguler-pemesanan-bed.model';
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +19,15 @@ export class AntrianRegulerService {
         private notificationService: NotificationService,
         private httpOperationService: HttpOperationService
     ) { }
+
+    onCheckIsPersonTerjadwal(no_rekam_medis: string): Observable<CheckAntrianIsTerjadwalModel> {
+        return this.httpOperationService.defaultGetRequest(`${this.API_CONFIG.IRNA.ANTRIAN_REGULER.GET_CHECK_IS_PERSON_TERJADWAL}${no_rekam_medis}`)
+            .pipe(
+                catchError((error: HttpErrorResponse): any => {
+                    this.notificationService.onShowToast(error.statusText, error.error.title || error.message, {}, true);
+                })
+            );
+    }
 
     onPostSaveAntrianReguler(Data: IPostSaveAntrianRegulerPemesananBedModel): Observable<HttpResponseModel> {
         return this.httpOperationService.defaultPostRequest(this.API_CONFIG.IRNA.ANTRIAN_REGULER.INSERT_ANTRIAN_REGULER, Data)

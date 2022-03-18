@@ -51,8 +51,8 @@
                             </div>
 
                             <!-- TERJADWAL -->
-                            <div *ngIf="data.status_booking == 'TERJADWAL'" class="statustemp e_not_operational_color">
-                                <span class="statustxt e_not_operational_color">
+                            <div *ngIf="data.status_booking == 'TERJADWAL'" class="statustemp e_is_scheduled_color">
+                                <span class="statustxt e_is_scheduled_color">
                                     {{ data.status_booking }}
                                 </span>
                             </div>
@@ -80,7 +80,8 @@
             (submitForm)="onSwitchUpdateStatus($event)">
         </app-dialog-update-status-terjadwal>
 
-        <app-dialog-update-status-batal #UpdateStatusBatalComp [InformasiPasien]="GridSelectedData">
+        <app-dialog-update-status-batal #UpdateStatusBatalComp [InformasiPasien]="GridSelectedData"
+            (submitForm)="onSwitchUpdateStatus($event)">
         </app-dialog-update-status-batal>
     </div>
 </org-card-layout>

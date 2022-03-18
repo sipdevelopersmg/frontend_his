@@ -25,3 +25,24 @@ export class GetAllAntrianRegulerPemesananBedModel implements HttpResponseModel 
     message: string
     data: IAntrianRegulerPemesananBedModel[]
 }
+
+export class CheckAntrianIsTerjadwalModel implements HttpResponseModel {
+    responseResult: boolean
+    message: string
+    data: {
+        no_rekam_medis: string
+        id_setup_bed_room: number
+        bed_no: string
+        id_setup_room: number
+        room_no: string
+        id_kelas: number
+        nama_kelas: string
+        id_debitur: number
+        nama_debitur: string
+        id_poli: number
+        kode_poli: string
+        nama_poli: string
+        id_jenis_ruangan: number
+        jenis_ruangan: string
+    }
+}

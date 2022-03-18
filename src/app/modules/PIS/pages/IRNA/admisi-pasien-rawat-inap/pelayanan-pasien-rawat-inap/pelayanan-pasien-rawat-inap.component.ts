@@ -27,6 +27,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { IDaftarPemesananTempatTidurModel } from 'src/app/modules/PIS/models/IRNA/daftar-pemesanan-tempat-tidur.model';
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
+import { AntrianRegulerService } from 'src/app/modules/PIS/services/IRNA/antrian-reguler/antrian-reguler.service';
 
 @Component({
     selector: 'app-pelayanan-pasien-rawat-inap',
@@ -100,6 +101,8 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     modalRef: BsModalRef;
     @ViewChild('modalDifferentBed') modalDifferentBed: TemplateRef<any>;
 
+    IsPersonTerjadwal: boolean = false;
+
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
@@ -108,6 +111,7 @@ export class PelayananPasienRawatInapComponent implements OnInit {
         private utilityService: UtilityService,
         private encryptionService: EncryptionService,
         private setupDebiturService: SetupDebiturService,
+        private antrianRegulerService: AntrianRegulerService,
         private setupJenisRuanganService: SetupJenisRuanganService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
         private pendaftaranPasienBaruService: PendaftaranPasienBaruService,
@@ -297,12 +301,57 @@ export class PelayananPasienRawatInapComponent implements OnInit {
         this.no_rekam_medis.setValue(args.no_rekam_medis);
         this.full_name.setValue(args.full_name);
 
+        this.antrianRegulerService.onCheckIsPersonTerjadwal(args.no_rekam_medis)
+            .subscribe((result) => {
+                this.IsPersonTerjadwal = result.responseResult;
+
+                if (result.responseResult) {
+                    this.utilityService.onShowingCustomAlert('warning', 'Perhatian', 'Pasien Sudah Terjadwal di Antrian')
+                        .then(() => {
+                            const jenis_ruangan_antrian = document.getElementById('jenis_ruangan_antrian') as HTMLInputElement;
+                            jenis_ruangan_antrian.value = result.data.jenis_ruangan;
+                            this.id_jenis_ruangan.setValue(result.data.id_jenis_ruangan);
+
+                            const poli_antrian = document.getElementById('poli_antrian') as HTMLInputElement;
+                            poli_antrian.value = result.data.nama_poli;
+                            this.id_poli.setValue(result.data.id_poli);
+
+                            const room_no_antrian = document.getElementById('room_no_antrian') as HTMLInputElement;
+                            room_no_antrian.value = result.data.room_no;
+                            this.id_setup_room_admisi.setValue(result.data.id_setup_room);
+
+                            const bed_no_antrian = document.getElementById('bed_no_antrian') as HTMLInputElement;
+                            bed_no_antrian.value = result.data.bed_no;
+                            this.id_setup_bed_room_admisi.setValue(result.data.id_setup_bed_room);
+
+                            const kelas_antrian = document.getElementById('kelas_antrian') as HTMLInputElement;
+                            kelas_antrian.value = result.data.nama_kelas;
+                            this.id_kelas_rawat.setValue(result.data.id_kelas);
+
+                            const debitur_antrian = document.getElementById('debitur_antrian') as HTMLInputElement;
+                            debitur_antrian.value = result.data.nama_debitur;
+                            this.id_debitur.setValue(result.data.id_debitur);
+
+                            this.setupDebiturService.onGetAllByPersonId(args.id_person)
+                                .subscribe((result) => {
+                                    if (result.data.length > 0) {
+                                        const data = result.data.filter((item) => {
+                                            return item.id_debitur == this.id_debitur.value;
+                                        })[0];
+
+                                        this.no_peserta.setValue(data['no_member']);
+                                    }
+                                });
+                        })
+                } else {
+                    this.onGetAllDebiturByPersonId(args.id_person);
+                }
+            });
+
         this.pendaftaranPasienBaruService.onGetLinkFotoPerson(args.id_person, false)
             .subscribe((result) => {
                 this.imageSrc = result.data;
             });
-
-        this.onGetAllDebiturByPersonId(args.id_person);
 
         (<HTMLInputElement>document.getElementById('nama_pasien')).focus();
     }
@@ -357,35 +406,90 @@ export class PelayananPasienRawatInapComponent implements OnInit {
     }
 
     resetForm(): void {
-        this.formAdmisiPasien.reset();
-        this.LookupMr.resetValue();
-        this.DropdownRuangan.value = null;
-        this.DropdownKelas.value = null;
-        this.LookupKodeDokter.resetValue();
-        this.DropdownDebitur.value = null;
-        this.LookupAsalRujukan.resetValue();
-        this.LookupKotaAsalRujukan.resetValue();
-        this.LookupDiagnosa.resetValue();
+        if (this.IsPersonTerjadwal) {
+            const jenis_ruangan_antrian = document.getElementById('jenis_ruangan_antrian') as HTMLInputElement;
+            jenis_ruangan_antrian.value = "";
+            this.id_jenis_ruangan.setValue(0);
 
-        this.id_person.setValue(0);
-        this.full_name.setValue("");
-        this.no_rekam_medis.setValue("");
-        this.id_jenis_ruangan.setValue(0);
-        this.id_poli.setValue(0);
-        this.id_debitur.setValue(0);
-        this.id_asal_rujukan.setValue(0);
-        this.kode_wilayah_asal_rujukan.setValue("");
-        this.id_kelas_rawat.setValue(0);
-        this.no_peserta.setValue("");
-        this.id_icd_masuk.setValue(0);
-        this.keterangan_diagnosa.setValue("");
-        this.keluhan.setValue(0);
-        this.id_setup_room_admisi.setValue(0);
-        this.id_setup_bed_room_admisi.setValue(0);
-        this.reason_different_bed.setValue("");
-        this.id_antrian_tppri.setValue("");
+            const poli_antrian = document.getElementById('poli_antrian') as HTMLInputElement;
+            poli_antrian.value = "";
+            this.id_poli.setValue(0);
 
-        this.image = false;
+            const room_no_antrian = document.getElementById('room_no_antrian') as HTMLInputElement;
+            room_no_antrian.value = "";
+            this.id_setup_room_admisi.setValue(0);
+
+            const bed_no_antrian = document.getElementById('bed_no_antrian') as HTMLInputElement;
+            bed_no_antrian.value = "";
+            this.id_setup_bed_room_admisi.setValue(0);
+
+            const kelas_antrian = document.getElementById('kelas_antrian') as HTMLInputElement;
+            kelas_antrian.value = "";
+            this.id_kelas_rawat.setValue(0);
+
+            const debitur_antrian = document.getElementById('debitur_antrian') as HTMLInputElement;
+            debitur_antrian.value = "";
+            this.id_debitur.setValue(0);
+
+            this.IsPersonTerjadwal = false;
+
+            setTimeout(() => {
+                this.formAdmisiPasien.reset();
+                this.LookupMr.resetValue();
+                this.DropdownRuangan.value = null;
+                console.log(this.DropdownRuangan);
+                this.DropdownKelas.value = null;
+                this.LookupKodeDokter.resetValue();
+                this.DropdownDebitur.value = null;
+                this.LookupAsalRujukan.resetValue();
+                this.LookupKotaAsalRujukan.resetValue();
+                this.LookupDiagnosa.resetValue();
+
+                this.id_person.setValue(0);
+                this.full_name.setValue("");
+                this.no_rekam_medis.setValue("");
+                this.id_asal_rujukan.setValue(0);
+                this.kode_wilayah_asal_rujukan.setValue("");
+                this.no_peserta.setValue("");
+                this.id_icd_masuk.setValue(0);
+                this.keterangan_diagnosa.setValue("");
+                this.keluhan.setValue(0);
+                this.reason_different_bed.setValue("");
+                this.id_antrian_tppri.setValue("");
+
+                this.image = false;
+            }, 500);
+        } else {
+            this.formAdmisiPasien.reset();
+            this.LookupMr.resetValue();
+            this.DropdownRuangan.value = null;
+            this.DropdownKelas.value = null;
+            this.LookupKodeDokter.resetValue();
+            this.DropdownDebitur.value = null;
+            this.LookupAsalRujukan.resetValue();
+            this.LookupKotaAsalRujukan.resetValue();
+            this.LookupDiagnosa.resetValue();
+
+            this.id_person.setValue(0);
+            this.full_name.setValue("");
+            this.no_rekam_medis.setValue("");
+            this.id_jenis_ruangan.setValue(0);
+            this.id_poli.setValue(0);
+            this.id_debitur.setValue(0);
+            this.id_asal_rujukan.setValue(0);
+            this.kode_wilayah_asal_rujukan.setValue("");
+            this.id_kelas_rawat.setValue(0);
+            this.no_peserta.setValue("");
+            this.id_icd_masuk.setValue(0);
+            this.keterangan_diagnosa.setValue("");
+            this.keluhan.setValue(0);
+            this.id_setup_room_admisi.setValue(0);
+            this.id_setup_bed_room_admisi.setValue(0);
+            this.reason_different_bed.setValue("");
+            this.id_antrian_tppri.setValue("");
+
+            this.image = false;
+        }
     }
 
     onSave(FormAdmisiPasien: any): void {
