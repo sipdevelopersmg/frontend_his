@@ -9,9 +9,11 @@ export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 
 export const isFormularium = true;
 
-
 export const environment = {
+
     production: true,
+
+    version: 'DEV',
 
     // ** Web Api 
     webApiForSentry: `${webApi}:8888/api`,

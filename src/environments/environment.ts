@@ -8,13 +8,15 @@ export const webApiUrl = "http://174.138.22.139";
 
 export const modeDevelopment = true;
 
-export const isFormularium = true;
-
 export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
+
+export const isFormularium = true;
 
 export const environment = {
 
     production: false,
+
+    version: '0.0.0',
 
     // ** Web Api 
     webApiForSentry: `${webApi}:8888/api`,
