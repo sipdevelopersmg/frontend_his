@@ -2,21 +2,21 @@ import { Component, forwardRef, HostBinding, Input, OnInit } from '@angular/core
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'mol-input-numeric',
-  templateUrl: './mol-input-numeric.component.html',
-  styleUrls: ['./mol-input-numeric.component.css'],
-  providers: [
-    {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => MolInputNumericComponent),
-        multi: true,
-    },
-  ],
+    selector: 'mol-input-numeric',
+    templateUrl: './mol-input-numeric.component.html',
+    styleUrls: ['./mol-input-numeric.component.css'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => MolInputNumericComponent),
+            multi: true,
+        },
+    ],
 })
 
 export class MolInputNumericComponent implements ControlValueAccessor {
 
-  @Input('FormControlNamed') FormControlNamed: FormControl;
+    @Input('FormControlNamed') FormControlNamed: FormControl;
 
     @Input('FormControlCaption') FormControlCaption: string;
 
@@ -45,7 +45,7 @@ export class MolInputNumericComponent implements ControlValueAccessor {
 
     @Input('isFooter') isFooter = false;
 
-    @Input('format') format:string = 'N2'; 
+    @Input('format') format: string = 'N2';
 
     constructor() { }
 
@@ -103,7 +103,7 @@ export class MolInputNumericComponent implements ControlValueAccessor {
     }
 
     doChange($event): void {
-      this.value = $event.value;
+        this.value = $event.value;
     }
 
     doTouched($event: any): void {
