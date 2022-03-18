@@ -14,11 +14,13 @@ jobs:
       - run:
           name: Build dockerfile
           command: |
-            docker build --no-cache -t dockerhiscis/frontend-his:latest .
+            docker build --no-cache -t dockerhiscis/frontend-his:$CIRCLE_SHA1 .
 
       - run:
           name: Push Docker Image
           command: |
+            docker push dockerhiscis/frontend-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/frontend-his:$CIRCLE_SHA1 dockerhiscis/frontend-his:latest
             docker push dockerhiscis/frontend-his:latest
 
       - add_ssh_keys:
