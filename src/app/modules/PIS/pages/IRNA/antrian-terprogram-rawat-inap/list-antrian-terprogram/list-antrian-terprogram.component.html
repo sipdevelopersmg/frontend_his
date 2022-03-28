@@ -1,0 +1,34 @@
+<org-card-layout>
+    <div class="row">
+        <!-- Poli -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="row mb-2">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <atm-label [LabelCaption]="'Poliklinik'"></atm-label>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    <ejs-dropdownlist #DropdownPoli [dataSource]="DropdownPoliDatasource" [fields]="DropdownPoliField"
+                        [allowFiltering]="true" (change)="handleChangeDropdownPoli($event)">
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ejs-schedule #ScheduleAntrianTerprogramComp width="100%" height="calc(100vh - 12rem)" [group]="group"
+                [eventSettings]="eventSettings" [readonly]="true" [selectedDate]="selectedDate">
+                <e-resources>
+                    <e-resource field="RoomId" title="No. Room" [dataSource]="RoomDatasource" [allowMultiple]="true"
+                        name="RoomId" textField="text" idField="id" colorField="color">
+                    </e-resource>
+                    <e-resource field="BedId" title="No. Bed" [dataSource]="BedDatasource" [allowMultiple]="true"
+                        name="BedId" textField="text" idField="id" groupIDField="groupId" colorField="color">
+                    </e-resource>
+                </e-resources>
+                <e-views>
+                    <e-view option="TimelineMonth"></e-view>
+                </e-views>
+            </ejs-schedule>
+        </div>
+    </div>
+</org-card-layout>

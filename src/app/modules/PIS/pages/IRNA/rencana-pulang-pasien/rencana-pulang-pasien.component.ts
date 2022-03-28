@@ -166,6 +166,11 @@ export class RencanaPulangPasienComponent implements OnInit {
     }
 
     onSubmitRencanaPulangPasien(FormRencanaPulangPasien: any): void {
+
+        FormRencanaPulangPasien.tanggal_rencana_pulang = this.utilityService.onFormatDate(FormRencanaPulangPasien.tanggal_rencana_pulang);
+
+        console.log(FormRencanaPulangPasien);
+
         Swal.fire({
             icon: 'warning',
             title: 'Apakah Anda Yakin?',

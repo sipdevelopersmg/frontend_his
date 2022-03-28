@@ -34,6 +34,7 @@
         "@syncfusion/ej2-angular-inputs": "^19.1.66",
         "@syncfusion/ej2-angular-navigations": "^19.1.66",
         "@syncfusion/ej2-angular-richtexteditor": "^19.3.43",
+        "@syncfusion/ej2-angular-schedule": "^19.4.55",
         "@syncfusion/ej2-base": "^19.1.66",
         "@types/crypto-js": "^4.0.2",
         "bootstrap": "^5.0.1",

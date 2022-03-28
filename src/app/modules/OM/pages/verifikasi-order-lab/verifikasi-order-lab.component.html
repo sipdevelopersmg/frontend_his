@@ -97,14 +97,15 @@
 
     <!-- Modal Verifikasi Order -->
     <div class="modal fade" #modalDialogVerifikasiOrderLab id="modalDialogVerifikasiOrder"
-        aria-labelledby="modalDialogVerifikasiOrder" aria-hidden="true">
+        aria-labelledby="modalDialogVerifikasiOrder" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <form [formGroup]="FormVerifikasiDetailOrderLab">
                     <div class="modal-header px-2 py-1 background-biru-muda text-white">
                         <h5 class="modal-title pull-left">Verifikasi Order</h5>
                         <button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                            aria-label="Close">
+                        </button>
                     </div>
                     <div class="modal-body p-2">
                         <!-- Data Pasien -->

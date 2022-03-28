@@ -79,7 +79,9 @@ export class OrgInputLookUpComponent implements OnInit {
         this.openModal.emit(id);
 
         setTimeout(() => {
-            (<HTMLInputElement>document.getElementById("searchValueId")).focus();
+            // (<HTMLInputElement>document.getElementById("searchValueId")).focus();
+            const searchValueId = document.getElementById('searchValueId') as HTMLInputElement;
+            searchValueId.focus();
         }, 200);
     }
 

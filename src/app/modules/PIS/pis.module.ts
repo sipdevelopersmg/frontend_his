@@ -73,10 +73,24 @@ import { InputAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat
 import { UpdateAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/update-antrian-reguler.component';
 import { DialogUpdateStatusTerjadwalComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/dialog-update-status-terjadwal/dialog-update-status-terjadwal.component';
 import { DialogUpdateStatusBatalComponent } from './pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/dialog-update-status-batal/dialog-update-status-batal.component';
+import { InputAntrianTerprogramComponent } from './pages/IRNA/antrian-terprogram-rawat-inap/input-antrian-terprogram/input-antrian-terprogram.component';
+import { UpdateAntrianTerprogramComponent } from './pages/IRNA/antrian-terprogram-rawat-inap/update-antrian-terprogram/update-antrian-terprogram.component';
+import { DialogUpdateStatusConfirmedComponent } from './pages/IRNA/antrian-terprogram-rawat-inap/update-antrian-terprogram/dialog-update-status-confirmed/dialog-update-status-confirmed.component';
+import { DialogUpdateStatusCancelComponent } from './pages/IRNA/antrian-terprogram-rawat-inap/update-antrian-terprogram/dialog-update-status-cancel/dialog-update-status-cancel.component';
+import { ListAntrianTerprogramComponent } from './pages/IRNA/antrian-terprogram-rawat-inap/list-antrian-terprogram/list-antrian-terprogram.component';
+import { AgendaService, DayService, MonthAgendaService, MonthService, ScheduleModule, TimelineMonthService, TimelineViewsService, WeekService, WorkWeekService } from "@syncfusion/ej2-angular-schedule";
+import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
+import { webApi } from "src/environments/environment";
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
 };
+
+const SocketPIS: SocketIoConfig = {
+    url: `${webApi}:4444`, options: {
+        "transports": ["websocket"]
+    }
+}
 
 @NgModule({
     declarations: [
@@ -147,6 +161,11 @@ const ngWizardConfig: NgWizardConfig = {
         UpdateAntrianRegulerComponent,
         DialogUpdateStatusTerjadwalComponent,
         DialogUpdateStatusBatalComponent,
+        InputAntrianTerprogramComponent,
+        UpdateAntrianTerprogramComponent,
+        DialogUpdateStatusConfirmedComponent,
+        DialogUpdateStatusCancelComponent,
+        ListAntrianTerprogramComponent,
     ],
     imports: [
         CommonModule,
@@ -156,10 +175,21 @@ const ngWizardConfig: NgWizardConfig = {
         SharedModule,
         ContextMenuModule,
         NgWizardModule.forRoot(ngWizardConfig),
+        ScheduleModule,
+        SocketIoModule.forRoot(SocketPIS)
     ],
     providers: [
         DatePipe,
         TitleCasePipe,
+        DayService,
+        WeekService,
+        WorkWeekService,
+        MonthService,
+        AgendaService,
+        MonthAgendaService,
+        TimelineViewsService,
+        TimelineMonthService,
+
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -73,6 +73,7 @@ export class VerifikasiOrderRadComponent implements OnInit {
     @ViewChild('LookupDokter') LookupDokter: OrgInputLookUpKodeComponent;
     UrlLookupDokter = this.API_PIS_SETUP_DATA.API_SETUP_DATA.SETUP_DOKTER.POST_GET_ALL_DOKTER_FOR_LOOKUP;
     LookupDokterState = "One";
+    SelectedLookupDokterData: any;
 
     // ** Grid Detail BHAP
     @ViewChild('GridDataBHAP') GridDataBHAP: GridComponent;
@@ -322,6 +323,8 @@ export class VerifikasiOrderRadComponent implements OnInit {
 
         let id = args.item.id;
 
+        let btnCloseModal = document.getElementById('btnCloseModal') as HTMLElement;
+
         switch (id) {
             case "drop_order":
                 this.onChangeStatusOrder(selected_row_index, "canceled")
@@ -330,10 +333,12 @@ export class VerifikasiOrderRadComponent implements OnInit {
                 this.onChangeStatusOrder(selected_row_index, "open")
                 break;
             case "dokter_dpjp":
+                btnCloseModal.click();
                 this.LookupDokterState = "One";
                 this.LookupDokter.onOpenModal();
                 break;
             case "dokter_dpjp_semua":
+                btnCloseModal.click();
                 this.LookupDokterState = "All";
                 this.LookupDokter.onOpenModal();
                 break;
@@ -375,28 +380,71 @@ export class VerifikasiOrderRadComponent implements OnInit {
     }
 
     onGetSelectedLookupDokter(args: any): void {
-        switch (this.LookupDokterState) {
-            case "One":
-                this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['id_dokter'] = args.id_dokter;
-                this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['nama_dokter'] = args.full_name;
+        this.SelectedLookupDokterData = args;
+        setTimeout(() => {
+            this.onHandlingDataLookupDokter(this.SelectedLookupDokterData);
+        }, 1000);
+    }
 
-                this.GridDataDetail.refresh();
+    onHandlingDataLookupDokter(args: any): void {
+        let btnVerifikasiOrder = document.getElementById('btnVerifikasiOrder') as HTMLElement;
+        btnVerifikasiOrder.click();
 
-                break;
-            case "All":
-                this.GridDetailOrderDatasource.forEach((item) => {
-                    item['id_dokter'] = args.id_dokter;
-                    item['nama_dokter'] = args.full_name;
+        this.GridDetailOrderDatasource = [];
+
+        this.GridDiagnosaDatasource = [];
+
+        setTimeout(() => {
+            this.verifikasiOrderRadService.onGetDetailOrderForVerifikasi(this.GridSelectedRow.id_order_penunjang)
+                .subscribe((result) => {
+                    this.id_order_penunjang.setValue(result.data.header.id_order_penunjang);
+
+                    this.nomor_order_penunjang.setValue(result.data.header.nomor_order_penunjang);
+                    this.id_register.setValue(result.data.header.id_register);
+                    this.no_register.setValue(result.data.header.no_register);
+                    this.no_rekam_medis.setValue(result.data.header.no_rekam_medis);
+                    this.nama_pasien.setValue(result.data.header.nama_pasien);
+
+                    let tgl_lahir = this.utilityService.onFormatDate(result.data.header.tanggal_lahir, 'Do MMMM yyyy');
+                    this.tanggal_lahir.setValue(`${tgl_lahir} (${result.data.header.umur})`);
+
+                    this.id_poli.setValue(result.data.header.id_poli);
+                    this.id_kelas.setValue(result.data.header.id_kelas);
+                    this.nama_debitur.setValue(`${result.data.header.nama_kelas} - ${result.data.header.nama_debitur}`);
+                    this.alamat_lengkap.setValue(result.data.header.alamat_lengkap);
+
+                    this.GridDetailOrderDatasource = result.data.details;
+
+                    this.GridDiagnosaDatasource = result.data.diagnosa;
+
+                    switch (this.LookupDokterState) {
+                        case "One":
+                            this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['id_dokter'] = args.id_dokter;
+                            this.GridDetailOrderDatasource[this.GridDetailOrderSelectedRowIndex]['nama_dokter'] = args.full_name;
+
+                            this.GridDataDetail.refresh();
+
+                            break;
+                        case "All":
+                            this.GridDetailOrderDatasource.forEach((item) => {
+                                item['id_dokter'] = args.id_dokter;
+                                item['nama_dokter'] = args.full_name;
+                            });
+
+                            setTimeout(() => {
+                                this.GridDataDetail.refresh();
+                            }, 1500);
+
+                            break;
+                        default:
+                            break;
+                    };
+
+                    this.keterangan_diagnosa.setValue(result.data.diagnosa[0]['nama_icd']);
+
+                    this.onCheckIsPostedAll(result.data.details);
                 });
-
-                setTimeout(() => {
-                    this.GridDataDetail.refresh();
-                }, 1500);
-
-                break;
-            default:
-                break;
-        };
+        }, 500);
     }
 
     // ** ============ GRID DETAIL BHAP SECTION ===============
@@ -528,11 +576,20 @@ export class VerifikasiOrderRadComponent implements OnInit {
     handleOpenModalPembatalanOrderRad(): void {
         this.onResetFormPembatalanOrderRad();
 
-        this.modalCancelOrderRef = this.bsModalService.show(this.modalPembatalanOrderRad);
+        let btnCloseModal = document.getElementById('btnCloseModal') as HTMLElement;
+        btnCloseModal.click();
+
+        setTimeout(() => {
+            this.modalCancelOrderRef = this.bsModalService.show(this.modalPembatalanOrderRad);
+        }, 500);
     }
 
     handleCloseModalPembatalanOrderRad(): void {
         this.modalCancelOrderRef.hide();
+
+        setTimeout(() => {
+            this.onFillFormVerifikasiDetailOrderRad(this.GridSelectedRow);
+        }, 500);
     }
 
     onResetFormPembatalanOrderRad(): void {

@@ -5,11 +5,11 @@ import { IAntrianRegulerPemesananBedModel } from 'src/app/modules/PIS/models/IRN
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
-    selector: 'app-dialog-update-status-batal',
-    templateUrl: './dialog-update-status-batal.component.html',
-    styleUrls: ['./dialog-update-status-batal.component.css']
+    selector: 'app-dialog-update-status-cancel',
+    templateUrl: './dialog-update-status-cancel.component.html',
+    styleUrls: ['./dialog-update-status-cancel.component.css']
 })
-export class DialogUpdateStatusBatalComponent implements OnInit {
+export class DialogUpdateStatusCancelComponent implements OnInit {
 
     @Input('InformasiPasien') InformasiPasien: IAntrianRegulerPemesananBedModel;
 
@@ -39,9 +39,6 @@ export class DialogUpdateStatusBatalComponent implements OnInit {
     }
 
     handleOpenModalDialog(): void {
-        // const btnOpenModalUpdateStatusBatal = document.getElementById('btnOpenModalUpdateStatusBatal') as HTMLElement;
-        // btnOpenModalUpdateStatusBatal.click();
-
         this.modalRef = this.bsModalService.show(
             this.ModalUpdateStatusBatalRef
         );
@@ -78,9 +75,9 @@ export class DialogUpdateStatusBatalComponent implements OnInit {
         this.reason_canceled.setValue('');
     }
 
-    handleSubmitUpdateStatusAntrianBatal(FormUpdateStatus: any): void {
+    handleSubmitUpdateStatusAntrianCancel(FormUpdateStatus: any): void {
         const data = {
-            status: 'batal',
+            status: 'cancel',
             parameter: {
                 id_booking: FormUpdateStatus.id_booking,
                 reason_canceled: FormUpdateStatus.reason_canceled

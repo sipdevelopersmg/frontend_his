@@ -1,5 +1,5 @@
 <!-- Modal Add Antrian -->
-<button id="btnOpenModalUpdateStatusBatal" type="button" class="btn btn-primary" data-bs-toggle="modal"
+<!-- <button id="btnOpenModalUpdateStatusBatal" type="button" class="btn btn-primary" data-bs-toggle="modal"
     data-bs-target="#UpdateStatusBatal" [hidden]="true">
     Launch Modal Update Status Batal
 </button>
@@ -19,36 +19,30 @@
             <div class="modal-body">
                 <form [formGroup]="FormUpdateStatus">
                     <div class="row">
-
-                        <!-- Nama Pasien -->
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                             <label class="form-label">Nama Pasien</label>
                             <input formControlName="nama_pasien" type="text" class="form-control form-select-sm"
                                 readonly>
                         </div>
 
-                        <!-- No. MR -->
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                             <label class="form-label">No. MR Pasien</label>
                             <input formControlName="no_rekam_medis" type="text" class="form-control form-select-sm"
                                 readonly>
                         </div>
 
-                        <!-- Kelas Request Pasien -->
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                             <label class="form-label">Kelas Request</label>
                             <input formControlName="nama_kelas" type="text" class="form-control form-select-sm"
                                 readonly>
                         </div>
 
-                        <!-- Tgl. Rencana Inap -->
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
                             <label class="form-label">Tgl. Rencana Inap</label>
                             <input formControlName="tgl_rencana_inap" type="text" class="form-control form-select-sm"
                                 readonly>
                         </div>
 
-                        <!-- Keterangan Batal -->
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label for="" class="form-label">Keterangan Batal</label>
                             <textarea rows="3" formControlName="reason_canceled" class="form-control"></textarea>
@@ -68,4 +62,60 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+<ng-template #ModalUpdateStatusBatalRef>
+    <div class="modal-header py-2 px-3 background-biru-muda text-white">
+        <h5 class="modal-title" id="UpdateStatusBatalLabel">
+            Update Status Antrian <i class="fas fa-arrow-right fa-xs"></i> Batal
+        </h5>
+        <button id="btnCloseModalUpdateStatusBatal" type="button" class="btn-close" aria-label="Close"
+            (click)="handleCloseModalDialog()">
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormUpdateStatus">
+            <div class="row">
+
+                <!-- Nama Pasien -->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                    <label class="form-label">Nama Pasien</label>
+                    <input formControlName="nama_pasien" type="text" class="form-control form-select-sm" readonly>
+                </div>
+
+                <!-- No. MR -->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                    <label class="form-label">No. MR Pasien</label>
+                    <input formControlName="no_rekam_medis" type="text" class="form-control form-select-sm" readonly>
+                </div>
+
+                <!-- Kelas Request Pasien -->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                    <label class="form-label">Kelas Request</label>
+                    <input formControlName="nama_kelas" type="text" class="form-control form-select-sm" readonly>
+                </div>
+
+                <!-- Tgl. Rencana Inap -->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                    <label class="form-label">Tgl. Rencana Inap</label>
+                    <input formControlName="tgl_rencana_inap" type="text" class="form-control form-select-sm" readonly>
+                </div>
+
+                <!-- Keterangan Batal -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label for="" class="form-label">Keterangan Batal</label>
+                    <textarea rows="3" formControlName="reason_canceled" class="form-control"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer py-2 px-3 background-abu-muda text-white">
+        <button type="button" class="btn btn-secondary btn-sm" (click)="handleCloseModalDialog()">
+            Close
+        </button>
+        <button type="button" class="btn btn-primary btn-sm"
+            (click)="handleSubmitUpdateStatusAntrianBatal(FormUpdateStatus.value)">
+            Simpan
+        </button>
+    </div>
+</ng-template>

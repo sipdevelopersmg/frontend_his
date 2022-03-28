@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IAntrianRegulerPemesananBedModel } from 'src/app/modules/PIS/models/IRNA/antrian-reguler-pemesanan-bed.model';
 import { IGetRencanaPulangForAntrianRegulerModel } from 'src/app/modules/PIS/models/IRNA/rencana-pulang-pasien.model';
 import { OrgInputLookUpComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up/org-input-look-up.component';
@@ -20,6 +21,9 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
 
     Config = Config;
 
+    modalRef: BsModalRef;
+    @ViewChild('ModalUpdateStatusTerjadwalRef') ModalUpdateStatusTerjadwalRef: TemplateRef<any>;
+
     @ViewChild('LookupPasien') LookupPasien: OrgInputLookUpComponent;
     UrlLookupPasien: string;
 
@@ -30,6 +34,7 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
+        private bsModalService: BsModalService
     ) { }
 
     ngOnInit(): void {
@@ -40,10 +45,14 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
     }
 
     handleOpenModalDialog(): void {
-        const btnOpenModalUpdateStatusTerjadwal = document.getElementById('btnOpenModalUpdateStatusTerjadwal') as HTMLElement;
-        btnOpenModalUpdateStatusTerjadwal.click();
+        this.modalRef = this.bsModalService.show(
+            this.ModalUpdateStatusTerjadwalRef,
+            Object.assign({}, { class: 'modal-xl' })
+        );
 
-        this.onMapInformasiPasien(this.InformasiPasien);
+        setTimeout(() => {
+            this.onMapInformasiPasien(this.InformasiPasien);
+        }, 1000);
     }
 
     onMapInformasiPasien(informasiPasien: IAntrianRegulerPemesananBedModel): void {
@@ -68,9 +77,10 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
     }
 
     handleCloseModalDialog(): void {
-        let btnCloseModalUpdateStatusTerjadwal = document.getElementById("btnCloseModalUpdateStatusTerjadwal") as HTMLElement;
         this.onResetFormUpdateStatus();
-        btnCloseModalUpdateStatusTerjadwal.click();
+        setTimeout(() => {
+            this.modalRef.hide();
+        }, 500);
     }
 
     handleSelectedLookupPasienRencanaPulang(args: IGetRencanaPulangForAntrianRegulerModel): void {
@@ -116,8 +126,6 @@ export class DialogUpdateStatusTerjadwalComponent implements OnInit {
 
         const tgl_rencana_pulang = document.getElementById('tgl_rencana_pulang') as HTMLInputElement;
         tgl_rencana_pulang.value = this.utilityService.onFormatDate(new Date(), 'Do/MM/yyyy');
-
-        this.LookupPasien.resetValue();
 
         this.FormUpdateStatus.reset();
         this.id_booking.setValue(0);

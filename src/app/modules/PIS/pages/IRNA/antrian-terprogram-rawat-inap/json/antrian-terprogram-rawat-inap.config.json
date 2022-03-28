@@ -1,0 +1,400 @@
+{
+    "LookupPasien": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_identitas",
+                "headerText": "NO. IDENTITAS",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. RM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "full_name",
+                "headerText": "NAMA",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "alamat_lengkap",
+                "headerText": "ALAMAT",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "per.no_identitas",
+                "filter": "like",
+                "title": "NO. IDENTITAS"
+            },
+            {
+                "field": "p.no_rekam_medis",
+                "filter": "like",
+                "title": "MR NO"
+            },
+            {
+                "field": "concat(per.nama_depan, ' ',per.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA"
+            }
+        ]
+    },
+    "LookupSuratPerintah": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. MR",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "kelas_rawat",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "bed_no",
+                "headerText": "NO. BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "tanggal_perintah_pulang",
+                "headerText": "TGL. RENCANA PULANG",
+                "type": "DateTime",
+                "format": "dd/MM/yyyy HH:mm:ss",
+                "visible": true,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "MR NO"
+            },
+            {
+                "field": "concat(pasien.nama_depan, ' ',pasien.nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
+            }
+        ]
+    },
+    "LookupPoli": {
+        "columns": [
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "displayAsCheckBox": true,
+                "editType": "booleanEdit",
+                "field": "cek",
+                "headerText": "CEK",
+                "visible": false,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "kode_poli",
+                "headerText": "KODE POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "NAMA POLI",
+                "type": "string",
+                "visible": true,
+                "width": 150
+            },
+            {
+                "allowEditing": true,
+                "allowSorting": true,
+                "editType": "defaultEdit",
+                "field": "jenis_ruangan",
+                "headerText": "BUILDING NAME",
+                "type": "string",
+                "visible": false,
+                "width": 150
+            }
+        ],
+        "filter": [
+            {
+                "field": "p1.kode_poli",
+                "filter": "like",
+                "title": "KODE POLI"
+            },
+            {
+                "field": "p1.nama_poli",
+                "filter": "like",
+                "title": "NAMA POLI"
+            }
+        ]
+    },
+    "LookupRoom": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_descr",
+                "headerText": "LABEL ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "floor_no",
+                "headerText": "LANTAI",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 200
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "gender",
+                "headerText": "GENDER",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "is_isolasi",
+                "headerText": "IS ISOLASI",
+                "displayAsCheckbox": true,
+                "visible": true,
+                "width": 70,
+                "textAlign": "Center",
+                "headerTextAlign": "Center"
+            }
+        ],
+        "filter": [
+            {
+                "field": "sr.room_no",
+                "filter": "like",
+                "title": "NO. ROOM"
+            },
+            {
+                "field": "sr.room_descr",
+                "filter": "like",
+                "title": "LABEL ROOM"
+            },
+            {
+                "field": "p.nama_poli",
+                "filter": "like",
+                "title": "POLIKLINIK"
+            },
+            {
+                "field": "kp.nama_kelas",
+                "filter": "like",
+                "title": "KELAS"
+            }
+        ]
+    },
+    "LookupBed": {
+        "columns": [
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "bed_no",
+                "headerText": "NO. BED",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_no",
+                "headerText": "NO. ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 80
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "room_descr",
+                "headerText": "LABEL ROOM",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_poli",
+                "headerText": "POLIKLINIK",
+                "type": "string",
+                "visible": true,
+                "width": 250
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_kelas",
+                "headerText": "KELAS",
+                "type": "string",
+                "visible": true,
+                "width": 70
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "status_bed_descr",
+                "headerText": "STATUS BED",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "no_rekam_medis",
+                "headerText": "NO. MR",
+                "type": "string",
+                "visible": true,
+                "width": 90
+            },
+            {
+                "allowEditing": false,
+                "allowSorting": false,
+                "editType": "defaultEdit",
+                "field": "nama_pasien",
+                "headerText": "NAMA PASIEN",
+                "type": "string",
+                "visible": true,
+                "width": 100
+            }
+        ],
+        "filter": [
+            {
+                "field": "sbr.bed_no",
+                "filter": "like",
+                "title": "NO. BED"
+            },
+            {
+                "field": "ssb.status_bed_descr",
+                "filter": "like",
+                "title": "STATUS BED"
+            },
+            {
+                "field": "tp.no_rekam_medis",
+                "filter": "like",
+                "title": "NO. MR PASIEN"
+            },
+            {
+                "field": "concat(nama_depan,'' '',nama_belakang)",
+                "filter": "like",
+                "title": "NAMA PASIEN"
+            }
+        ]
+    }
+}

@@ -1,4 +1,4 @@
-<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+<org-card-layout>
     <div class="row pt-2">
         <!-- Filter Offcanvas -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
@@ -14,7 +14,8 @@
             <ejs-grid #GridData [id]="'GridDaftarPasien'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridDatasource"
                 [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowTextWrap]="true"
                 [textWrapSettings]="GridTextWrapSettings" [allowFiltering]='true' [pageSettings]="GridPageSettings"
-                [toolbar]="GridToolbar" [editSettings]="GridDataEditSettings">
+                [editSettings]="GridDataEditSettings" [toolbar]="GridDataToolbar"
+                (toolbarClick)="handleClickToolbarGrid($event)" (rowSelected)="handleRowSelectedGrid($event)">
                 <e-columns>
                     <e-column [width]="50" [field]="'id_booking'" [headerText]="'ID'" [visible]="false"
                         [type]="'number'" [allowEditing]="false" [allowSorting]="false" [format]="'N'"
@@ -49,6 +50,14 @@
                                 </span>
                             </div>
 
+                            <!-- WAITING CONFIRMATION -->
+                            <div *ngIf="data.status_booking == 'WAITING CONFIRMATION'"
+                                class="statustemp e_is_new_color">
+                                <span class="statustxt e_is_new_color">
+                                    {{ data.status_booking }}
+                                </span>
+                            </div>
+
                             <!-- TERJADWAL -->
                             <div *ngIf="data.status_booking == 'TERJADWAL'" class="statustemp e_is_scheduled_color">
                                 <span class="statustxt e_is_scheduled_color">
@@ -75,74 +84,12 @@
             </ejs-grid>
         </div>
 
-        <ng-template #ModalAntrianRegulerRef>
-            <div class="modal-header py-2 px-3 background-biru-muda text-white">
-                <h5 class="modal-title" id="modalAntrianRegulerLabel">
-                    Input Antrian Reguler Pemesanan Tempat Tidur
-                </h5>
-                <button id="btnCloseModalAddAntrianReguler" type="button" class="btn-close" aria-label="Close"
-                    (click)="handleCloseModalAddAntrianReguler()">
-                </button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="FormAddAntrianReguler">
-                    <!-- Pilih Pasien -->
-                    <org-input-look-up #LookupPasien [modal-title]="'Data Pasien'" [lookup-url]="UrlLookupPasien"
-                        [idTitle]="'full_name'" (onGetSelectedData)="handleSelectedLookupPasien($event)"
-                        [columns]="Config.LookupPasien.columns" [filter-lookup]="Config.LookupPasien.filter"
-                        [label]="'Pilih Pasien'">
-                    </org-input-look-up>
+        <app-dialog-update-status-confirmed #UpdateStatusConfirmedComp [InformasiPasien]="GridSelectedData"
+            (submitForm)="onSwitchUpdateStatus($event)">
+        </app-dialog-update-status-confirmed>
 
-                    <!-- No. Rekam Medis -->
-                    <mol-input-text [disabled]="true" [label]="'No. Rekam Medis'" formControlName="no_rekam_medis">
-                    </mol-input-text>
-
-                    <!-- Debitur Pasien -->
-                    <div class=" row mb-2">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                            <atm-label [LabelCaption]="'Debitur Pasien'"></atm-label>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                            <ejs-dropdownlist #DropdownDebitur [dataSource]="DropdownDebiturDatasource"
-                                [fields]="DropdownDebiturFields" [allowFiltering]="true" formControlName="id_debitur">
-                            </ejs-dropdownlist>
-                        </div>
-                    </div>
-
-                    <!-- Kelas Pelayanan -->
-                    <div class="row mb-2">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                            <atm-label [LabelCaption]="'Kelas Pelayanan Request'"></atm-label>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                            <ejs-dropdownlist #DropdownKelas [dataSource]="DropdownKelasDatasource"
-                                [fields]="DropdownKelasFields" [allowFiltering]="true" formControlName="id_kelas">
-                            </ejs-dropdownlist>
-                        </div>
-                    </div>
-
-                    <!-- Tgl. Rencana Masuk -->
-                    <div class="row mb-2">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                            <atm-label [LabelCaption]="'Tgl. Rencana Inap'"></atm-label>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                            <ejs-datepicker #DatepickerTglRencanaMasuk [format]="'dd/MM/yyyy'"
-                                formControlName="tgl_rencana_inap">
-                            </ejs-datepicker>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer py-2 px-3 background-abu-muda text-white">
-                <button type="button" class="btn btn-secondary btn-sm" (click)="handleCloseModalAddAntrianReguler()">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary btn-sm"
-                    (click)="handleSubmitFormAddAntrianReguler(FormAddAntrianReguler.value)">
-                    Simpan
-                </button>
-            </div>
-        </ng-template>
+        <app-dialog-update-status-cancel #UpdateStatusCancelComp [InformasiPasien]="GridSelectedData"
+            (submitForm)="onSwitchUpdateStatus($event)">
+        </app-dialog-update-status-cancel>
     </div>
 </org-card-layout>

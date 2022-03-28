@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { GridComponent, EditSettingsModel, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
 import { AntrianRegulerService } from 'src/app/modules/PIS/services/IRNA/antrian-reguler/antrian-reguler.service';
 import { SetupDebiturService } from 'src/app/modules/PIS/services/setup-data/setup-debitur/setup-debitur.service';
@@ -40,6 +41,9 @@ export class InputAntrianRegulerComponent implements OnInit {
 
     Config = Config;
 
+    modalRef: BsModalRef;
+    @ViewChild('ModalAntrianRegulerRef') ModalAntrianRegulerRef: TemplateRef<any>;
+
     @ViewChild('LookupPasien') LookupPasien: OrgInputLookUpComponent;
     UrlLookupPasien = this.API_CONFIG.API_PIS.IRJA.IRJA.PELAYANAN_RAWAT_JALAN.POST_GET_PASIEN_FOR_LOOKUP_ADMISI_NON_ANONIM;
 
@@ -55,6 +59,7 @@ export class InputAntrianRegulerComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
+        private bsModalService: BsModalService,
         private utilityService: UtilityService,
         private setupDebiturService: SetupDebiturService,
         private antrianRegulerService: AntrianRegulerService,
@@ -99,7 +104,7 @@ export class InputAntrianRegulerComponent implements OnInit {
                 this.setupKelasPerawatanService.onGetAll()
                     .subscribe((result) => {
                         this.FilterDropdownDatasource = result.data;
-                        this.FilterDropdownFields = { text: 'nama_kelas', value: 'id_kelas' }
+                        this.FilterDropdownFields = { text: 'nama_kelas', value: 'nama_kelas' }
                     });
                 break;
             default:
@@ -115,8 +120,13 @@ export class InputAntrianRegulerComponent implements OnInit {
     }
 
     handleOpenModalAddAntrianReguler(): void {
-        let btnOpenModalAntrianReguler = document.getElementById("btnOpenModalAntrianReguler") as HTMLElement;
-        btnOpenModalAntrianReguler.click();
+        // let btnOpenModalAntrianReguler = document.getElementById("btnOpenModalAntrianReguler") as HTMLElement;
+        // btnOpenModalAntrianReguler.click();
+
+        this.modalRef = this.bsModalService.show(
+            this.ModalAntrianRegulerRef,
+            Object.assign({}, { class: 'modal-lg' })
+        );
 
         this.handleResetFormAddAntrianReguler();
 
@@ -124,8 +134,10 @@ export class InputAntrianRegulerComponent implements OnInit {
     }
 
     handleCloseModalAddAntrianReguler(): void {
-        let btnCloseModalAddAntrianReguler = document.getElementById("btnCloseModalAddAntrianReguler") as HTMLElement;
-        btnCloseModalAddAntrianReguler.click();
+        // let btnCloseModalAddAntrianReguler = document.getElementById("btnCloseModalAddAntrianReguler") as HTMLElement;
+        // btnCloseModalAddAntrianReguler.click();
+
+        this.modalRef.hide();
     }
 
     onSetFormAttributes(): void {
@@ -156,6 +168,8 @@ export class InputAntrianRegulerComponent implements OnInit {
     }
 
     handleSubmitFormAddAntrianReguler(FormAddAntrianReguler: any): void {
+        FormAddAntrianReguler.tgl_rencana_inap = this.utilityService.onFormatDate(FormAddAntrianReguler.tgl_rencana_inap);
+
         this.antrianRegulerService.onPostSaveAntrianReguler(FormAddAntrianReguler)
             .subscribe((result) => {
                 if (result.responseResult) {
@@ -176,13 +190,6 @@ export class InputAntrianRegulerComponent implements OnInit {
         this.id_debitur.setValue(0);
         this.id_kelas.setValue(0);
         this.tgl_rencana_inap.setValue("");
-
-        this.DropdownDebitur.value = null;
-        this.DatepickerTglRencanaMasuk.value = new Date();
-
-        setTimeout(() => {
-            this.LookupPasien.resetValue();
-        }, 500);
     }
 
     get no_rekam_medis(): AbstractControl { return this.FormAddAntrianReguler.get("no_rekam_medis"); }

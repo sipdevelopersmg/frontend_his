@@ -6,6 +6,7 @@ import { HttpOperationService } from 'src/app/modules/shared/services/http-opera
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import * as API_CONFIG from '../../../../../../api/PIS/IRNA';
 import { DeleteKamarModel, GetAllKamarModel, GetByIdKamarModel, IKamarModel, PostSaveKamarModel, PutUpdateKamarModel, PutUpdateStatusKamarModel } from 'src/app/modules/PIS/models/IRNA/setup-kamar.model';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,10 @@ export class SetupRoomService {
 
     onGetAllRoom(): Observable<GetAllKamarModel> {
         return this.httpOperationService.defaultGetRequest(this.API_SETUP_BED.GET_ALL_ROOM);
+    }
+
+    onGetAllRoomByDynamicFilter(body: PostRequestByDynamicFiterModel[]): Observable<GetAllKamarModel> {
+        return this.httpOperationService.defaultPostRequestByDynamicFilter(this.API_SETUP_BED.GET_ALL_ROOM_BY_DYNAMIC_FILTER, body);
     }
 
     onGetRoomById(RoomId: number): Observable<GetByIdKamarModel> {

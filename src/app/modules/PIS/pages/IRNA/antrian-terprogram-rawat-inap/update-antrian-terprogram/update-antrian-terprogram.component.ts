@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GridComponent, EditSettingsModel, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
-import { AntrianRegulerService } from 'src/app/modules/PIS/services/IRNA/antrian-reguler/antrian-reguler.service';
-import { DialogUpdateStatusBatalComponent } from './dialog-update-status-batal/dialog-update-status-batal.component';
-import { DialogUpdateStatusTerjadwalComponent } from './dialog-update-status-terjadwal/dialog-update-status-terjadwal.component';
 import { SetupKelasPerawatanService } from 'src/app/modules/Billing/services/setup-data/setup-kelas-perawatan/setup-kelas-perawatan.service';
+import { AntrianTerprogramService } from 'src/app/modules/PIS/services/IRNA/antrian-terprogram/antrian-terprogram.service';
+import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
+import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { DialogUpdateStatusCancelComponent } from './dialog-update-status-cancel/dialog-update-status-cancel.component';
+import { DialogUpdateStatusConfirmedComponent } from './dialog-update-status-confirmed/dialog-update-status-confirmed.component';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
-    selector: 'app-update-antrian-reguler',
-    templateUrl: './update-antrian-reguler.component.html',
-    styleUrls: ['./update-antrian-reguler.component.css']
+    selector: 'app-update-antrian-terprogram',
+    templateUrl: './update-antrian-terprogram.component.html',
+    styleUrls: ['./update-antrian-terprogram.component.css']
 })
-export class UpdateAntrianRegulerComponent implements OnInit {
+export class UpdateAntrianTerprogramComponent implements OnInit, OnDestroy {
 
     FilterColumnDatasource: any[];
     FilterDropdownDatasource: any[];
@@ -24,10 +25,10 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     GridDatasource: any[] = [];
     GridDataToolbar: any[] = [
         {
-            text: `Update Status <i class="fas fa-arrow-right"></i> Terjadwal`,
-            tooltipText: `Update Bed -> Terjadwal`,
+            text: `Update Status <i class="fas fa-arrow-right"></i> Confirmed`,
+            tooltipText: `Update Bed -> Confirmed`,
             prefixIcon: 'fas fa-clipboard-check fa-sm',
-            id: 'update_status_terjadwal',
+            id: 'update_status_confirmed',
         },
         {
             text: `Update Status <i class="fas fa-arrow-right"></i> Batal`,
@@ -40,13 +41,14 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     GridSelectedData: any;
     GridTextWrapSettings: TextWrapSettingsModel;
 
-    @ViewChild('UpdateStatusTerjadwalComp') UpdateStatusTerjadwalComp: DialogUpdateStatusTerjadwalComponent;
+    @ViewChild('UpdateStatusConfirmedComp') UpdateStatusConfirmedComp: DialogUpdateStatusConfirmedComponent;
 
-    @ViewChild('UpdateStatusBatalComp') UpdateStatusBatalComp: DialogUpdateStatusBatalComponent;
+    @ViewChild('UpdateStatusCancelComp') UpdateStatusCancelComp: DialogUpdateStatusCancelComponent;
 
     constructor(
+        private socket: Socket,
         private utilityService: UtilityService,
-        private antrianRegulerService: AntrianRegulerService,
+        private antrianTerprogramService: AntrianTerprogramService,
         private setupKelasPerawatanService: SetupKelasPerawatanService,
     ) { }
 
@@ -59,6 +61,11 @@ export class UpdateAntrianRegulerComponent implements OnInit {
         this.GridTextWrapSettings = { wrapMode: 'Header' };
 
         this.handlePencarianFilter([]);
+
+        this.socket.fromEvent('pis:update-bed-booking-terprogram')
+            .subscribe((result) => {
+                this.handlePencarianFilter([]);
+            });
     }
 
     handleChangeFilterPencarian(args: any): void {
@@ -79,7 +86,7 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     }
 
     handlePencarianFilter(args: PostRequestByDynamicFiterModel[]): void {
-        this.antrianRegulerService.onGetAllAntrianReguler(args)
+        this.antrianTerprogramService.onGetAllAntrianTerprogram(args)
             .subscribe((result) => {
                 this.GridDatasource = result.data;
             });
@@ -99,25 +106,25 @@ export class UpdateAntrianRegulerComponent implements OnInit {
         const status_canceled = this.GridSelectedData.status_booking == "CANCELED";
 
         switch (id) {
-            case 'update_status_terjadwal':
-                if (status_terjadwal) {
-                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Terjadwal');
-                } else if (status_approved) {
-                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Approved');
-                } else if (status_canceled) {
-                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Canceled');
-                } else {
-                    this.UpdateStatusTerjadwalComp.handleOpenModalDialog();
-                };
+            case 'update_status_confirmed':
+                // if (status_terjadwal) {
+                //     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Terjadwal');
+                // } else if (status_approved) {
+                //     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Approved');
+                // } else if (status_canceled) {
+                //     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Canceled');
+                // } else {
+                // };
+                this.UpdateStatusConfirmedComp.handleOpenModalDialog();
                 break;
             case 'update_status_batal':
-                if (status_approved) {
-                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Approved');
-                } else if (status_canceled) {
-                    this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Canceled');
-                } else {
-                    this.UpdateStatusBatalComp.handleOpenModalDialog();
-                };
+                // if (status_approved) {
+                //     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Approved');
+                // } else if (status_canceled) {
+                //     this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Antrian Ini Sudah Canceled');
+                // } else {
+                // };
+                this.UpdateStatusCancelComp.handleOpenModalDialog();
                 break;
             default:
                 break;
@@ -126,10 +133,10 @@ export class UpdateAntrianRegulerComponent implements OnInit {
 
     onSwitchUpdateStatus(data: any): void {
         switch (data.status) {
-            case 'terjadwal':
-                this.onUpdateStatusTerjadwal(data.parameter);
+            case 'confirmed':
+                this.onUpdateStatusConfirmed(data.parameter);
                 break;
-            case 'batal':
+            case 'cancel':
                 this.onUpdateStatusBatal(data.parameter);
                 break;
             default:
@@ -137,13 +144,13 @@ export class UpdateAntrianRegulerComponent implements OnInit {
         }
     }
 
-    onUpdateStatusTerjadwal(parameter: any): void {
-        this.antrianRegulerService.onPostUpdateStatusTerjadwal(parameter)
+    onUpdateStatusConfirmed(parameter: any): void {
+        this.antrianTerprogramService.onPostUpdateStatusApprove(parameter)
             .subscribe((result) => {
                 if (result) {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Berhasil Ubah Status Antrian')
                         .then(() => {
-                            this.UpdateStatusTerjadwalComp.handleCloseModalDialog();
+                            this.UpdateStatusConfirmedComp.handleCloseModalDialog();
                             this.handlePencarianFilter([]);
                         });
                 };
@@ -151,15 +158,19 @@ export class UpdateAntrianRegulerComponent implements OnInit {
     }
 
     onUpdateStatusBatal(parameter: any): void {
-        this.antrianRegulerService.onPostUpdateStatusCanceled(parameter)
+        this.antrianTerprogramService.onPostUpdateStatusCanceled(parameter)
             .subscribe((result) => {
                 if (result) {
                     this.utilityService.onShowingCustomAlert('success', 'Success', 'Berhasil Ubah Status Antrian')
                         .then(() => {
-                            this.UpdateStatusBatalComp.handleCloseModalDialog();
+                            this.UpdateStatusCancelComp.handleCloseModalDialog();
                             this.handlePencarianFilter([]);
                         });
                 };
             });
+    }
+
+    ngOnDestroy(): void {
+        this.socket.removeListener('pis:update-bed-booking-terprogram')
     }
 }
