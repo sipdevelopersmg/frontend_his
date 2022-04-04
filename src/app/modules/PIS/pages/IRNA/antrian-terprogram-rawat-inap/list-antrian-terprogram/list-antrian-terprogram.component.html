@@ -1,7 +1,7 @@
 <org-card-layout>
     <div class="row">
         <!-- Poli -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-2">
             <div class="row mb-2">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     <atm-label [LabelCaption]="'Poliklinik'"></atm-label>
@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <ejs-schedule #ScheduleAntrianTerprogramComp width="100%" height="calc(100vh - 12rem)" [group]="group"
+            <ejs-schedule #ScheduleAntrianTerprogramComp width="100%" height="calc(100vh - 12.5rem)" [group]="group"
                 [eventSettings]="eventSettings" [readonly]="true" [selectedDate]="selectedDate">
                 <e-resources>
                     <e-resource field="RoomId" title="No. Room" [dataSource]="RoomDatasource" [allowMultiple]="true"

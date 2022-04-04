@@ -18,6 +18,7 @@
 @import "~ng-wizard/themes/ng_wizard.min.css";
 @import "~ng-wizard/themes/ng_wizard_theme_dots.min.css";
 
+html,
 body {
   font-family: "Cabin", sans-serif !important;
   background-color: #f6f4f7 !important;
@@ -425,4 +426,30 @@ span.readonly-state > .e-numerictextbox {
   height: auto !important;
   padding-left: 10px !important;
   border-radius: 5px !important;
+}
+
+.e-schedule .e-timeline-month-view .e-resource-cells.e-parent-node {
+  background-color: var(--biru-tua) !important;
+  border: 0 !important;
+}
+
+.e-schedule
+  .e-timeline-month-view
+  .e-resource-cells.e-parent-node
+  .e-resource-tree-icon {
+  color: white !important;
+  font-size: 15px !important;
+}
+
+.e-schedule
+  .e-timeline-month-view
+  .e-resource-cells.e-parent-node
+  .e-resource-text {
+  color: white !important;
+  font-size: 15px !important;
+}
+
+.e-work-cells.e-parent-node.e-resource-group-cells {
+  background-color: var(--biru-tua) !important;
+  border: 0 !important;
 }

@@ -19,6 +19,7 @@ import { AdmisiPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat
 import { CariPasienAntrianTppriComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/cari-pasien-antrian-tppri/cari-pasien-antrian-tppri.component";
 import { PelayananPasienRawatInapComponent } from "./pages/IRNA/admisi-pasien-rawat-inap/pelayanan-pasien-rawat-inap/pelayanan-pasien-rawat-inap.component";
 import { InputAntrianRegulerComponent } from "./pages/IRNA/antrian-reguler-rawat-inap/input-antrian-reguler/input-antrian-reguler.component";
+import { ListAntrianRegulerComponent } from "./pages/IRNA/antrian-reguler-rawat-inap/list-antrian-reguler/list-antrian-reguler.component";
 import { UpdateAntrianRegulerComponent } from "./pages/IRNA/antrian-reguler-rawat-inap/update-antrian-reguler/update-antrian-reguler.component";
 import { InputAntrianTerprogramComponent } from "./pages/IRNA/antrian-terprogram-rawat-inap/input-antrian-terprogram/input-antrian-terprogram.component";
 import { ListAntrianTerprogramComponent } from "./pages/IRNA/antrian-terprogram-rawat-inap/list-antrian-terprogram/list-antrian-terprogram.component";
@@ -129,6 +130,7 @@ const pisRoutes: Routes = [
             { path: "surat-pengantar-pembayaran/:id/:key", component: SuratPengantarPembayaranComponent, data: { title: "Surat Pengantar Pembayaran Rawat Inap" } },
             { path: "transaksi-pemasukan-rawat-inap", component: PemasukanRawatInapComponent, data: { title: "Transaksi Pemasukan Rawat Inap" }, },
             { path: "antrian-reguler-pemesanan-bed", component: InputAntrianRegulerComponent, data: { title: "Antrian Reguler Pemesanan Bed" }, },
+            { path: "list-antrian-reguler-pemesanan-bed", component: ListAntrianRegulerComponent, data: { title: "List Antrian Reguler Pemesanan Bed" }, },
             { path: "update-status-antrian-reguler-pemesanan-bed", component: UpdateAntrianRegulerComponent, data: { title: "Update Status Antrian Reguler Pemesanan Bed" }, },
             { path: "antrian-terprogram-pemesanan-bed", component: InputAntrianTerprogramComponent, data: { title: "Antrian Terprogram Pemesanan Bed" }, },
             { path: "list-antrian-terprogram-pemesanan-bed", component: ListAntrianTerprogramComponent, data: { title: "List Antrian Terprogram Pemesanan Bed" }, },

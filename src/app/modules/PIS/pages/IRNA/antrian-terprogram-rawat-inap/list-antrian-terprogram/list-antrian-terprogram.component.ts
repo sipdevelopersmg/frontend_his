@@ -5,12 +5,8 @@ import { EventRenderedArgs, EventSettingsModel, GroupModel, ScheduleComponent } 
 import { PoliModel } from 'src/app/modules/Billing/models/setup-data/setup-poli.model';
 import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/setup-poli/setup-poli.service';
 import { IBedModel } from 'src/app/modules/PIS/models/IRNA/setup-bed.model';
-import { IKamarModel } from 'src/app/modules/PIS/models/IRNA/setup-kamar.model';
-import { AntrianRegulerService } from 'src/app/modules/PIS/services/IRNA/antrian-reguler/antrian-reguler.service';
 import { AntrianTerprogramService } from 'src/app/modules/PIS/services/IRNA/antrian-terprogram/antrian-terprogram.service';
 import { SetupBedRoomService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-bed-room/setup-bed-room.service';
-import { SetupRoomService } from 'src/app/modules/PIS/services/IRNA/setup-bed/setup-room/setup-room.service';
-import { PostRequestByDynamicFiterModel } from 'src/app/modules/shared/models/Http-Operation/HttpResponseModel';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 
 @Component({
@@ -106,7 +102,7 @@ export class ListAntrianTerprogramComponent implements OnInit, AfterViewInit {
         this.RoomDatasource = filteredArr.map((item) => {
             return {
                 id: item.id_setup_room,
-                text: item.room_no,
+                text: `ROOM ${item.room_no}`,
                 color: this.utilityService.onGenerateCustomColor()
             }
         });
@@ -114,7 +110,7 @@ export class ListAntrianTerprogramComponent implements OnInit, AfterViewInit {
         this.BedDatasource = data.map((item) => {
             return {
                 id: item.id_setup_bed_room,
-                text: item.bed_no,
+                text: `BED ${item.bed_no}`,
                 groupId: item.id_setup_room,
                 color: this.utilityService.onGenerateCustomColor()
             }
@@ -130,11 +126,15 @@ export class ListAntrianTerprogramComponent implements OnInit, AfterViewInit {
 
                 rawData.forEach((item) => {
                     if (item.status_booking === "APPROVED") {
+
+                        const startTime = this.utilityService.onFormatDate(item.tgl_rencana_inap, 'yyyy-MM-Do');
+                        const endTime = this.utilityService.onFormatDate(item.tgl_rencana_pulang, 'yyyy-MM-Do');
+
                         filteredData.push({
                             Id: item.id_booking,
                             Subject: item.nama_pasien,
-                            StartTime: new Date(item.tgl_rencana_inap),
-                            EndTime: new Date(item.tgl_rencana_pulang),
+                            StartTime: new Date(`${startTime}T00:00:00`),
+                            EndTime: new Date(`${endTime}T23:59:59`),
                             IsAllDay: false,
                             RoomId: item.id_setup_room == 0 ? item.id_setup_room_booked : item.id_setup_room,
                             BedId: item.id_setup_bed_room == 0 ? item.id_setup_bed_room_booked : item.id_setup_bed_room

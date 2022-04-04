@@ -81,6 +81,7 @@ import { ListAntrianTerprogramComponent } from './pages/IRNA/antrian-terprogram-
 import { AgendaService, DayService, MonthAgendaService, MonthService, ScheduleModule, TimelineMonthService, TimelineViewsService, WeekService, WorkWeekService } from "@syncfusion/ej2-angular-schedule";
 import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { webApi } from "src/environments/environment";
+import { ListAntrianRegulerComponent } from './pages/IRNA/antrian-reguler-rawat-inap/list-antrian-reguler/list-antrian-reguler.component';
 
 const ngWizardConfig: NgWizardConfig = {
     theme: THEME.dots
@@ -166,6 +167,7 @@ const SocketPIS: SocketIoConfig = {
         DialogUpdateStatusConfirmedComponent,
         DialogUpdateStatusCancelComponent,
         ListAntrianTerprogramComponent,
+        ListAntrianRegulerComponent,
     ],
     imports: [
         CommonModule,
