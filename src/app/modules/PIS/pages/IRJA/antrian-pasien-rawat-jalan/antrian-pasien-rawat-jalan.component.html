@@ -82,8 +82,7 @@
                                     <ejs-grid #GridData [id]="'GridDaftarPasien' + item.id_jadwal_dokter"
                                         [dataSource]="item.pasien" [rowHeight]="30" [gridLines]="'Both'"
                                         [allowPaging]="false" [allowResizing]="true" [allowFiltering]='true'
-                                        [pageSettings]="GridPageSettings" [editSettings]="GridDataEditSettings"
-                                        [contextMenuItems]="GridContextMenuItems"
+                                        [editSettings]="GridDataEditSettings" [contextMenuItems]="GridContextMenuItems"
                                         (rowSelected)="handleSelectedRow($event, 'GridDaftarPasien' + item.id_jadwal_dokter)"
                                         (rowDataBound)="handleDataBound($event)">
                                         <e-columns>
