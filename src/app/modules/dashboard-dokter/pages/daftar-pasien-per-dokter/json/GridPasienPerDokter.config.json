@@ -15,7 +15,7 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "tgl_masuk",
+            "field": "jam_masuk",
             "format": "dd/MM/yyyy",
             "type": "Date",
             "headerText": "TGL MASUK",
@@ -44,7 +44,7 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "full_name",
+            "field": "nama_pasien",
             "headerText": "NAMA PASIEN",
             "visible": true,
             "width": 150
@@ -62,8 +62,8 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "jenis_ruangan",
-            "headerText": "RUANGAN",
+            "field": "nama_poli",
+            "headerText": "POLIKLINIK",
             "visible": true,
             "width": 150
         },
@@ -71,7 +71,16 @@
             "allowEditing": false,
             "allowSorting": true,
             "editType": "defaultEdit",
-            "field": "nomor_bed",
+            "field": "room_no",
+            "headerText": "NO. ROOM",
+            "visible": true,
+            "width": 90
+        },
+        {
+            "allowEditing": false,
+            "allowSorting": true,
+            "editType": "defaultEdit",
+            "field": "bed_no",
             "headerText": "NO. BED",
             "visible": true,
             "width": 90

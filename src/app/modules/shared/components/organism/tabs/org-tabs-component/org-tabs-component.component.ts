@@ -18,7 +18,7 @@ export class OrgTabsComponentComponent implements OnInit, AfterContentInit, Afte
     activeTab: OrgTabsItemComponentComponent;
 
     @Output("onGetSelectedTabId") onGetSelectedTabId = new EventEmitter();
-    @Input("showHeader") showHeader : boolean = true; 
+    @Input("showHeader") showHeader: boolean = true;
     constructor() { }
 
     ngOnInit(): void {
@@ -54,6 +54,8 @@ export class OrgTabsComponentComponent implements OnInit, AfterContentInit, Afte
         this.activeTab = tabItem;
 
         tabItem.isActive = true;
+
+        console.log(this.activeTab.bodyComponent.bodyContent);
 
         this.onGetSelectedTabId.emit(Id);
     }

@@ -10,7 +10,7 @@ export const modeDevelopment = true;
 
 export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 
-export const isFormularium = true;
+export const isFormularium = false;
 
 export const environment = {
 

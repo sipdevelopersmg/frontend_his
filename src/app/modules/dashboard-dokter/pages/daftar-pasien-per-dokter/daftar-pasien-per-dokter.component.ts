@@ -44,7 +44,7 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     ];
     GridIRJASelectedRow: any;
 
-    @ViewChild('GridIRNA') GridIRNA: GridComponent;
+    GridIRNAComp: MolGridComponent = null;
     GridIRNADatasource: any[];
     GridIRNAEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridIRNAToolbar: any[] = [
@@ -53,7 +53,7 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     ];
     GridIRNASelectedRow: any;
 
-    @ViewChild('GridIRDA') GridIRDA: GridComponent;
+    @ViewChild('GridIRDAComp') GridIRDAComp: GridComponent;
     GridIRDADatasource: any[];
     GridIRDAEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };
     GridIRDAToolbar: any[] = [
@@ -139,6 +139,10 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     handleSelectedTabId(args: any): void {
         this.JenisRawat = args;
 
+        if (this.JenisRawat == 'IRNA') {
+            // this.GridIRNAComp.refresh();
+        }
+
         this.dashboardDokterService.JenisRawat.next(this.JenisRawat);
     }
 
@@ -192,6 +196,10 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
         } else {
             this.utilityService.onShowingCustomAlert('warning', 'Oops', 'Tidak Ada Data Pasien Yang Dipilih');
         }
+    }
+
+    InitalizedGridIRNA(component: MolGridComponent) {
+        this.GridIRNAComp = component;
     }
 
     handleSelectedRowIRDA(args: any): void {

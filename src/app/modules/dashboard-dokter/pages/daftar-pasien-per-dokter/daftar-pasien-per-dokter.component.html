@@ -1,13 +1,13 @@
 <org-card-layout>
-    <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
-        <!-- IRJA -->
+    <!-- <org-tabs #OrgTabsRef (onGetSelectedTabId)="handleSelectedTabId($event)">
         <org-tabs-item>
             <org-tabs-label [Id]="'IRJA'">IRJA</org-tabs-label>
             <org-tabs-body>
-                <ejs-grid #GridIRJA [id]="'GridIRJA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRJADatasource"
-                    [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
-                    [allowFiltering]='true' [editSettings]="GridIRJAEditSettings" [toolbar]="GridIRJAToolbar"
-                    (rowSelected)="handleSelectedRowIRJA($event)" (actionComplete)="handleActionCompleteIRJA($event)"
+                <ejs-grid #GridIRJAComp [id]="'GridIRJA'" [height]="'calc(100vh - 22rem)'"
+                    [dataSource]="GridIRJADatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                    [allowResizing]="true" [allowFiltering]='true' [editSettings]="GridIRJAEditSettings"
+                    [toolbar]="GridIRJAToolbar" (rowSelected)="handleSelectedRowIRJA($event)"
+                    (actionComplete)="handleActionCompleteIRJA($event)"
                     (commandClick)="handleClickCommandGridIRJA($event)" (toolbarClick)="handleToolbarClickIRJA($event)">
                     <e-columns>
                         <e-column [width]="100" [field]="'tgl_admisi'" [headerText]="'TGL. MASUK'" [visible]="true"
@@ -31,17 +31,16 @@
             </org-tabs-body>
         </org-tabs-item>
 
-        <!-- IRNA -->
         <org-tabs-item>
             <org-tabs-label [Id]="'IRNA'">IRNA</org-tabs-label>
             <org-tabs-body>
-                <ejs-grid #GridIRNA [id]="'GridIRNA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRNADatasource"
+                <ejs-grid #GridIRNAComp [id]="'GridIRNA'" [height]="200" [dataSource]="GridIRNADatasource"
                     [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
                     [allowFiltering]='true' [editSettings]="GridIRNAEditSettings" [toolbar]="GridIRNAToolbar"
                     (rowSelected)="handleSelectedRowIRNA($event)" (toolbarClick)="handleToolbarClickIRNA($event)">
                     <e-columns>
                         <e-column [width]="100" [field]="'jam_masuk'" [headerText]="'TGL. MASUK'" [visible]="true"
-                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                            [allowEditing]="false" [allowSorting]="false" [textAlign]="'Right'">
                         </e-column>
                         <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
                             [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
@@ -69,14 +68,14 @@
             </org-tabs-body>
         </org-tabs-item>
 
-        <!-- IRDA -->
         <org-tabs-item>
             <org-tabs-label [Id]="'IRDA'">IRDA</org-tabs-label>
             <org-tabs-body>
-                <ejs-grid #GridIRDA [id]="'GridIRDA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRDADatasource"
-                    [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
-                    [allowFiltering]='true' [editSettings]="GridIRDAEditSettings" [toolbar]="GridIRDAToolbar"
-                    (rowSelected)="handleSelectedRowIRDA($event)" (toolbarClick)="handleToolbarClickIRDA($event)">
+                <ejs-grid #GridIRDAComp [id]="'GridIRDA'" [height]="'calc(100vh - 22rem)'"
+                    [dataSource]="GridIRDADatasource" [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true"
+                    [allowResizing]="true" [allowFiltering]='true' [editSettings]="GridIRDAEditSettings"
+                    [toolbar]="GridIRDAToolbar" (rowSelected)="handleSelectedRowIRDA($event)"
+                    (toolbarClick)="handleToolbarClickIRDA($event)">
                     <e-columns>
                         <e-column [width]="100" [field]="'tgl_admisi'" [headerText]="'TGL. MASUK'" [visible]="true"
                             [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
@@ -102,12 +101,118 @@
             </org-tabs-body>
         </org-tabs-item>
 
-        <!-- KONSULAN -->
         <org-tabs-item>
             <org-tabs-label [Id]="'Konsulan'">Konsulan</org-tabs-label>
             <org-tabs-body>
 
             </org-tabs-body>
         </org-tabs-item>
-    </org-tabs>
+    </org-tabs> -->
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                IRJA
+            </button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                IRNA
+            </button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                IRDA
+            </button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <ejs-grid #GridIRJAComp [id]="'GridIRJA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRJADatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                [allowFiltering]='true' [editSettings]="GridIRJAEditSettings" [toolbar]="GridIRJAToolbar"
+                (rowSelected)="handleSelectedRowIRJA($event)" (actionComplete)="handleActionCompleteIRJA($event)"
+                (commandClick)="handleClickCommandGridIRJA($event)" (toolbarClick)="handleToolbarClickIRJA($event)">
+                <e-columns>
+                    <e-column [width]="100" [field]="'tgl_admisi'" [headerText]="'TGL. MASUK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'Date'"
+                        [format]="'dd/MM/yyyy'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="200" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="100" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <ejs-grid #GridIRNAComp [id]="'GridIRNA'" [height]="200" [dataSource]="GridIRNADatasource" [rowHeight]="30"
+                [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
+                [editSettings]="GridIRNAEditSettings" [toolbar]="GridIRNAToolbar"
+                (rowSelected)="handleSelectedRowIRNA($event)" (toolbarClick)="handleToolbarClickIRNA($event)">
+                <e-columns>
+                    <e-column [width]="100" [field]="'jam_masuk'" [headerText]="'TGL. MASUK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Center'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="60" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="250" [field]="'nama_poli'" [headerText]="'POLIKLINIK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'room_no'" [headerText]="'NO. ROOM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'bed_no'" [headerText]="'NO. BED'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <ejs-grid #GridIRDAComp [id]="'GridIRDA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRDADatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                [allowFiltering]='true' [editSettings]="GridIRDAEditSettings" [toolbar]="GridIRDAToolbar"
+                (rowSelected)="handleSelectedRowIRDA($event)" (toolbarClick)="handleToolbarClickIRDA($event)">
+                <e-columns>
+                    <e-column [width]="100" [field]="'tgl_admisi'" [headerText]="'TGL. MASUK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'" [type]="'DateTime'"
+                        [format]="'dd/MM/yyyy HH:mm:ss'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_rekam_medis'" [headerText]="'NO. RM'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="80" [field]="'no_register'" [headerText]="'NO. REG'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="150" [field]="'nama_pasien'" [headerText]="'NAMA PASIEN'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="60" [field]="'gender'" [headerText]="'GENDER'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                    <e-column [width]="250" [field]="'nama_poli'" [headerText]="'POLIKLINIK'" [visible]="true"
+                        [allowEditing]="false" [allowSorting]="false" [textAlign]="'Left'">
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
+
 </org-card-layout>
