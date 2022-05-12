@@ -1,0 +1,50 @@
+<div class="row align-items-center">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Button Open Offcanvas -->
+        <button id="btnFilterDashboard" class="btn btn-outline-primary btn-sm px-3" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasFilter"
+            [hidden]="true">
+            Cari Data
+        </button>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasFilterLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasFilterLabel">Pencarian</h5>
+        <button id="btnCloseFilterDashboard" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+            aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <div [formGroup]="FormFilterDashboard" class="row mb-4">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pe-1">
+                <atm-label [LabelCaption]="'Tanggal Pencarian'"></atm-label>
+                <div class="row my-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pe-2">
+                        <ejs-datepicker [format]="'dd MMMM yyyy'" [showClearButton]="false" formControlName="startDate"
+                            [max]="endDate.value">
+                        </ejs-datepicker>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ps-2">
+                        <ejs-datepicker [format]="'dd MMMM yyyy'" [showClearButton]="false" formControlName="endDate"
+                            [min]="startDate.value">
+                        </ejs-datepicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-end">
+                <button class="btn btn-warning btn-sm mx-3" type="button" (click)="FormFilterDashboard.reset()">
+                    <i class="fas fa-redo-alt fa-sm"></i> Reset
+                </button>
+                <button class="btn btn-primary btn-sm" type="button"
+                    (click)="handleClickButtonPencarian(FormFilterDashboard.value)">
+                    <i class="fas fa-search fa-sm"></i> Cari
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

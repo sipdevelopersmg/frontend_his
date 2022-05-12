@@ -19,7 +19,7 @@ import { AuthenticationComponent } from './pages/authentication/authentication.c
                 { path: '', component: AuthenticationComponent, data: { title: 'Sign In Account' } }
             ]
         ),
-        SharedModule
+        SharedModule,
     ]
 })
 export class AuthModule { }

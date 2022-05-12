@@ -40,6 +40,10 @@ const coreRoutes: Routes = [
                 path: "OM",
                 loadChildren: () => import("../OM/om.module").then(m => m.OrderManagementModule)
             },
+            {
+                path: "Dashboard",
+                loadChildren: () => import("../Dashboard/dashboard.module").then(m => m.DashboardModule)
+            },
         ]
     },
     { path: "**", component: PageNotFoundComponent, data: { title: 'Page Not Found' } },

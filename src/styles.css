@@ -1,20 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@syncfusion/ej2-base/styles/fabric.css";
-@import "~@syncfusion/ej2-buttons/styles/fabric.css";
-@import "~@syncfusion/ej2-dropdowns/styles/fabric.css";
-@import "~@syncfusion/ej2-inputs/styles/fabric.css";
-@import "~@syncfusion/ej2-navigations/styles/fabric.css";
-@import "~@syncfusion/ej2-popups/styles/fabric.css";
-@import "~@syncfusion/ej2-splitbuttons/styles/fabric.css";
-@import "~@syncfusion/ej2-angular-grids/styles/fabric.css";
-@import "~@syncfusion/ej2-calendars/styles/fabric.css";
-@import "~@syncfusion/ej2-angular-calendars/styles/fabric.css";
-@import "~@syncfusion/ej2-angular-dropdowns/styles/fabric.css";
-@import "~@syncfusion/ej2-lists/styles/fabric.css";
-@import "~@syncfusion/ej2-angular-inputs/styles/fabric.css";
-@import "~@syncfusion/ej2-angular-navigations/styles/fabric.css";
-@import "~@syncfusion/ej2-richtexteditor/styles/fabric.css";
-@import "~@syncfusion/ej2-angular-schedule/styles/fabric.css";
+@import "~@syncfusion/ej2-base/styles/tailwind.css";
+@import "~@syncfusion/ej2-buttons/styles/tailwind.css";
+@import "~@syncfusion/ej2-dropdowns/styles/tailwind.css";
+@import "~@syncfusion/ej2-inputs/styles/tailwind.css";
+@import "~@syncfusion/ej2-navigations/styles/tailwind.css";
+@import "~@syncfusion/ej2-popups/styles/tailwind.css";
+@import "~@syncfusion/ej2-splitbuttons/styles/tailwind.css";
+@import "~@syncfusion/ej2-angular-grids/styles/tailwind.css";
+@import "~@syncfusion/ej2-calendars/styles/tailwind.css";
+@import "~@syncfusion/ej2-angular-calendars/styles/tailwind.css";
+@import "~@syncfusion/ej2-angular-dropdowns/styles/tailwind.css";
+@import "~@syncfusion/ej2-lists/styles/tailwind.css";
+@import "~@syncfusion/ej2-angular-inputs/styles/tailwind.css";
+@import "~@syncfusion/ej2-angular-navigations/styles/tailwind.css";
+@import "~@syncfusion/ej2-richtexteditor/styles/tailwind.css";
+@import "~@syncfusion/ej2-angular-schedule/styles/tailwind.css";
 @import "~ng-wizard/themes/ng_wizard.min.css";
 @import "~ng-wizard/themes/ng_wizard_theme_dots.min.css";
 
@@ -22,6 +22,7 @@ html,
 body {
   font-family: "Cabin", sans-serif !important;
   background-color: #f6f4f7 !important;
+  overflow-y: hidden;
 }
 
 :root {

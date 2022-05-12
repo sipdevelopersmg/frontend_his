@@ -19,6 +19,7 @@ export class OrgTabsItemComponentComponent implements OnInit {
 
     @ContentChild(OrgTabsLabelComponentComponent)
     labelComponent: OrgTabsLabelComponentComponent;
+    
     constructor() { }
 
     ngOnInit(): void {

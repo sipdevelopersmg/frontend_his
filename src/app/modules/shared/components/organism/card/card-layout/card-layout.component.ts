@@ -15,6 +15,8 @@ export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
 
     @Input('ChangeHeaderRibbon') ChangeHeaderRibbon: boolean = false;
 
+    @Input('TransparentBackground') TransparentBackground: boolean = false;
+
     @Input('ButtonNav') ButtonNav: ButtonNavModel[];
 
     @Input('ButtonNavClass') ButtonNavClass: string = "col-lg-6 col-md-6 col-sm-6 col-xs-6";

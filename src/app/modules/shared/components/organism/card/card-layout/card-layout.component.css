@@ -70,3 +70,8 @@
   animation: slide 0.5s forwards;
   animation-delay: 0.5s;
 }
+
+.card_layout_transparent {
+  background-color: transparent;
+  border: 0;
+}

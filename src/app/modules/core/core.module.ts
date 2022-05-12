@@ -23,6 +23,7 @@ import { SetupRoleMenuComponent } from './pages/setup-role-menu/setup-role-menu.
 import { DataRoleComponent } from './pages/setup-role-menu/data-role/data-role.component';
 import { InputRoleComponent } from './pages/setup-role-menu/input-role/input-role.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { NgChartsModule } from "ng2-charts";
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
         FormsModule,
         ReactiveFormsModule,
         ContextMenuModule,
+        NgChartsModule,
     ],
     exports: [
         AtmNavbarComponent,

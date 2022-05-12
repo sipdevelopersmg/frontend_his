@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import * as Sentry from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 import { Router } from '@angular/router';
-
+import { NgChartsModule } from 'ng2-charts';
 
 Sentry.init({
     dsn: 'https://21c111285e044d17a943b3a72cc6cffc@o1094972.ingest.sentry.io/6113627',
@@ -47,7 +47,6 @@ Sentry.init({
         FormsModule,
         ReactiveFormsModule,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         EditService,
         CommandColumnService,

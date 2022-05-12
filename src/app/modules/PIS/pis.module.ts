@@ -178,7 +178,7 @@ const SocketPIS: SocketIoConfig = {
         ContextMenuModule,
         NgWizardModule.forRoot(ngWizardConfig),
         ScheduleModule,
-        SocketIoModule.forRoot(SocketPIS)
+        SocketIoModule.forRoot(SocketPIS),
     ],
     providers: [
         DatePipe,

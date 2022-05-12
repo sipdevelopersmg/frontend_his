@@ -102,7 +102,7 @@ const SocketFarmasi: SocketIoConfig = {
         ReactiveFormsModule,
         SharedModule,
         PharmacyRoutingModule,
-        SocketIoModule.forRoot(SocketFarmasi)
+        SocketIoModule.forRoot(SocketFarmasi),
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

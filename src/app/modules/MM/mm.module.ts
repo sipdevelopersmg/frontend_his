@@ -134,7 +134,7 @@ import { SettingHargaJualComponent } from './pages/setup-data/setting-harga-jual
         ReactiveFormsModule,
         CommonModule,
         SharedModule,
-        MaterialManagementRoutingModule
+        MaterialManagementRoutingModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
