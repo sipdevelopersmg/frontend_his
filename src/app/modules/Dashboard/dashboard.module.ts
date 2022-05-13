@@ -12,6 +12,7 @@ import { FilterComponent } from './components/filter/filter.component';
 import { BarChartComponent } from './components/chart/bar-chart/bar-chart.component';
 import { NgChartsModule } from "ng2-charts";
 import { ProgressChartComponent } from './components/chart/progress-chart/progress-chart.component';
+import { DetailSectionComponent } from './components/detail-section/detail-section.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { ProgressChartComponent } from './components/chart/progress-chart/progre
         CardDashboardComponent,
         FilterComponent,
         BarChartComponent,
-        ProgressChartComponent
+        ProgressChartComponent,
+        DetailSectionComponent
     ],
     imports: [
         DashboardRoutingModule,

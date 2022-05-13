@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChartConfiguration } from 'chart.js';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { CardDashboard } from '../../components/card/card-dashboard/card-dashboard.component';
@@ -38,7 +39,7 @@ export class DashboardPelayananComponent implements OnInit {
                 hoverBackgroundColor: ['#5283ff', '#9f9f9f']
             }
         ],
-    }
+    };
 
     ChartBedOccupationRate: ChartConfiguration['data'] = {
         datasets: [
@@ -54,9 +55,11 @@ export class DashboardPelayananComponent implements OnInit {
                 hoverBackgroundColor: ['#5283ff', '#9f9f9f']
             }
         ],
-    }
+    };
 
-    constructor() { }
+    constructor(
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
         this.CardDashboard = [
@@ -101,269 +104,243 @@ export class DashboardPelayananComponent implements OnInit {
             ],
             labels: ['']
         }
+
         this.ChartRawatJalan = {
             datasets: [
                 {
-                  data: [150],
-                  label : "VCT",
-                  borderRadius: 5,
-                },
-                {
-                  data: [200], 
-                  label : "TB DOTS",
-                  borderRadius: 5,
-                },
-                {
-                  data: [100],
-                  label : "DALAM",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [50],
-                  label : "KANDUNGAN",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [180],
-                  label : "SARAF",
-                  borderRadius: 5,
-                  
-                },
-                {
-                  data: [120],
-                  label : "ANAK",
-                  borderRadius: 5,
-                },
-                {
-                  data: [18],
-                  
-                  label : "GIZI",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [1],
-                  
-                  label : "RENCANA OBTRADKOMPLEMENTER",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [15],
-                  
-                  label : "CDC",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [6],
-                  
-                  label : "TRANSIT KEMOTERAPI",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [3],
-                  
-                  label : "JANTUNG",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [20],
-                  
-                  label : "PENYAKIT DALAM KHUSUS",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [60],
-                  
-                  label : "GIGI PRIVAT",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [100],
-                  
-                  label : "GIGI DAN MULUT",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [130],
-                  
-                  label : "KULIT & KELAMIN",
-                  borderRadius: 5,
-                  
-                },
-                {
-                 
-                  data: [60],
-                  
-                  label : "KLINIK KOSMETIK MEDIK",
-                  borderRadius: 5,
-                  
-                },
-                {
-                  data: [15],
-                  label : "MATA",
-                  borderRadius: 5,
-                },
-                {
-                  data: [100],
-                  label : "POLI UNTI TPKP",
-                  borderRadius: 5,
-                  
-                }
-              ],
-            labels: ['']
-        }
-        this.ChartRawatInap ={
-            datasets: [
-                {
-                    data: [11],
-                    label : "P.RAJAWALI 2B - BEDAH PRIA",
+                    data: [150],
+                    label: "VCT",
                     borderRadius: 5,
-                    
-                  },
-                  {
-                    label : "P.RAJAWALI 3A - NON BEDAH NON INFEKSI WANITA",
+                },
+                {
+                    data: [200],
+                    label: "TB DOTS",
                     borderRadius: 5,
-                    data: [130],
-                    
-                  },
-                  {
-                    label : "RAJAWALI",
+                },
+                {
+                    data: [100],
+                    label: "DALAM",
                     borderRadius: 5,
-                    data: [40],
-                    
-                  },
-                  {
-                    label : "BEDAH PRIA",
-                    borderRadius: 5,
+
+                },
+                {
                     data: [50],
-                    
-                  },
-                  {
-                    label : "MATA",
+                    label: "KANDUNGAN",
                     borderRadius: 5,
-                    data: [17],
-                    
-                  },
-                  {
-                    
-                    label : "EMERGING INF. DESEASE",
+
+                },
+                {
+                    data: [180],
+                    label: "SARAF",
                     borderRadius: 5,
-                    data: [11],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 1A - HCU",
+
+                },
+                {
+                    data: [120],
+                    label: "ANAK",
                     borderRadius: 5,
-                    data: [19],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 1B - BEDAH PRIA",
-                    borderRadius: 5,
-                    data: [40],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 1A - TINDAKAN",
-                    borderRadius: 5,
-                    data: [12],
-                    
-                  },
-                  {
-                   
-                    label : "P.RAJAWALI 2A - BEDAH WANITA",
-                    borderRadius: 5,
-                    data: [5],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 3B - NON BEDAH NON INFEKSI PRIA",
-                    borderRadius: 5,
-                    data: [43],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 4A - KANKER WANITA",
-                    borderRadius: 5,
-                    data: [3],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 4B - KANKER WANITA",
-                    borderRadius: 5,
+                },
+                {
                     data: [18],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 5A - KANKER PRIA",
+                    label: "GIZI",
                     borderRadius: 5,
-                    data: [80],
-                    
-                  },
-                  {
-                    
-                    label : "P.RAJAWALI 5B - KANKER WANITA",
+                },
+                {
+                    data: [1],
+                    label: "RENCANA OBTRADKOMPLEMENTER",
                     borderRadius: 5,
+
+                },
+                {
                     data: [15],
-                  },
-                  {
-                    label : "P.RAJAWALI 6A - NON BEDAH INFEKSI WANITA",
+                    label: "CDC",
                     borderRadius: 5,
-                    data: [33],
-                  },
-                  {
-                    label : "P.RAJAWALI 6B - NON BEDAH INFEKSI PRIA",
-                    borderRadius: 5,
-                    data: [81],
-                  }
+
+                },
+                // {
+                //     data: [6],
+                //     label: "TRANSIT KEMOTERAPI",
+                //     borderRadius: 5,
+
+                // },
+                // {
+                //     data: [3],
+                //     label: "JANTUNG",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [20],
+                //     label: "PENYAKIT DALAM KHUSUS",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [60],
+                //     label: "GIGI PRIVAT",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [100],
+                //     label: "GIGI DAN MULUT",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [130],
+                //     label: "KULIT & KELAMIN",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [60],
+                //     label: "KLINIK KOSMETIK MEDIK",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [15],
+                //     label: "MATA",
+                //     borderRadius: 5,
+                // },
+                // {
+                //     data: [100],
+                //     label: "POLI UNTI TPKP",
+                //     borderRadius: 5,
+                // }
             ],
             labels: ['']
         }
-        this.ChartRawatDarurat ={
+
+        this.ChartRawatInap = {
             datasets: [
                 {
                     data: [11],
-                    label : "IRDA ANAK",
-                    borderRadius: 100,
-                    
+                    label: "P.RAJAWALI 2B - BEDAH PRIA",
+                    borderRadius: 5,
+
                 },
                 {
-                    label : "IRDA BEDAH",
+                    label: "P.RAJAWALI 3A - NON BEDAH NON INFEKSI WANITA",
                     borderRadius: 5,
                     data: [130],
-                
+
                 },
                 {
-                    label : "IRDA MATA",
+                    label: "RAJAWALI",
                     borderRadius: 5,
                     data: [40],
-                
+
+                },
+                {
+                    label: "BEDAH PRIA",
+                    borderRadius: 5,
+                    data: [50],
+
+                },
+                {
+                    label: "MATA",
+                    borderRadius: 5,
+                    data: [17],
+
+                },
+                // {
+
+                //     label: "EMERGING INF. DESEASE",
+                //     borderRadius: 5,
+                //     data: [11],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 1A - HCU",
+                //     borderRadius: 5,
+                //     data: [19],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 1B - BEDAH PRIA",
+                //     borderRadius: 5,
+                //     data: [40],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 1A - TINDAKAN",
+                //     borderRadius: 5,
+                //     data: [12],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 2A - BEDAH WANITA",
+                //     borderRadius: 5,
+                //     data: [5],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 3B - NON BEDAH NON INFEKSI PRIA",
+                //     borderRadius: 5,
+                //     data: [43],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 4A - KANKER WANITA",
+                //     borderRadius: 5,
+                //     data: [3],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 4B - KANKER WANITA",
+                //     borderRadius: 5,
+                //     data: [18],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 5A - KANKER PRIA",
+                //     borderRadius: 5,
+                //     data: [80],
+
+                // },
+                // {
+
+                //     label: "P.RAJAWALI 5B - KANKER WANITA",
+                //     borderRadius: 5,
+                //     data: [15],
+                // },
+                // {
+                //     label: "P.RAJAWALI 6A - NON BEDAH INFEKSI WANITA",
+                //     borderRadius: 5,
+                //     data: [33],
+                // },
+                // {
+                //     label: "P.RAJAWALI 6B - NON BEDAH INFEKSI PRIA",
+                //     borderRadius: 5,
+                //     data: [81],
+                // }
+            ],
+            labels: ['']
+        }
+
+        this.ChartRawatDarurat = {
+            datasets: [
+                {
+                    data: [11],
+                    label: "IRDA ANAK",
+                    borderRadius: 5,
+
+                },
+                {
+                    data: [130],
+                    label: "IRDA BEDAH",
+                    borderRadius: 5,
+
+                },
+                {
+                    data: [40],
+                    label: "IRDA MATA",
+                    borderRadius: 5,
+
                 }
             ],
             labels: ['']
@@ -378,5 +355,29 @@ export class DashboardPelayananComponent implements OnInit {
 
     handlePencarianFilter(args: any): void {
         console.log(args);
+    }
+
+    handleClickCard(args: CardDashboard): void {
+
+        let data: any = {};
+
+        switch (args.title) {
+            case 'Total Kunjungan':
+                break;
+            case 'Kunjungan Rawat Jalan':
+                data = this.ChartRawatJalan;
+                break;
+            case 'Kunjungan Rawat Inap':
+                data = this.ChartRawatInap;
+                break;
+            case 'Kunjungan Rawat Darurat':
+                data = this.ChartRawatDarurat;
+                break;
+        }
+
+        if (args.title !== 'Total Kunjungan') {
+            localStorage.setItem('CardDashboardData', JSON.stringify(data));
+            this.router.navigate(['dashboard/Dashboard/Pelayanan/detail-pelayanan', args.title]);
+        }
     }
 }

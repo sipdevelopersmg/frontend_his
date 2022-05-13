@@ -9,8 +9,8 @@
 
     <!-- Card -->
     <div class="row mb-2">
-        <div *ngFor="let item of CardDashboard" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-2 px-2" >
-            <app-card-dashboard [Card]="item"></app-card-dashboard>
+        <div *ngFor="let item of CardDashboard" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-2 px-2">
+            <app-card-dashboard [Card]="item" (handleClick)="handleClickCard($event)"></app-card-dashboard>
         </div>
     </div>
 
@@ -105,8 +105,8 @@
             </div>
         </div>
     </div>
-    <div class ="row mb-2">
-        <!-- Bar Chart Cara Bayar -->
+
+    <!-- <div class="row mb-2">
         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6 px-2">
             <div class="card card-kunjungan-cara-bayar">
                 <div class="card-body">
@@ -128,8 +128,8 @@
             </div>
         </div>
     </div>
-    <div class ="row mb-2">
-        <!-- Bar Chart Cara Bayar -->
+
+    <div class="row mb-2">
         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6 px-2">
             <div class="card card-kunjungan-cara-bayar">
                 <div class="card-body">
@@ -151,8 +151,8 @@
             </div>
         </div>
     </div>
-    <div class ="row mb-2">
-        <!-- Bar Chart Cara Bayar -->
+
+    <div class="row mb-2">
         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6 px-2">
             <div class="card card-kunjungan-cara-bayar">
                 <div class="card-body">
@@ -173,6 +173,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+    </div> -->
 </org-card-layout>
