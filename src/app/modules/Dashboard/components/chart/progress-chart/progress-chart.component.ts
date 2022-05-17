@@ -1,3 +1,4 @@
+import { formatNumber } from '@angular/common';
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -56,7 +57,10 @@ export class ProgressChartComponent implements OnInit {
                 let total: any;
 
                 if (this.Caption !== 'Kunjungan') {
-                    total = Math.round(((chart.data.datasets[0].data[1] as any) / (chart.data.datasets[0].data[0] as any)) * 100);
+                    let prosentase = ((chart.data.datasets[0].data[1] as any) / (chart.data.datasets[0].data[0] as any));
+                    let prosentaseNotRound = prosentase.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+
+                    total = Math.round(JSON.parse(prosentaseNotRound) * 100);
 
                     let text = total + ' ' + this.Caption,
                         textX = Math.round((width - ctx.measureText(text).width) / 2),
@@ -99,7 +103,7 @@ export class ProgressChartComponent implements OnInit {
         this.screenWidth = screenWidth;
 
         if (screenWidth >= 1920) {
-            this.Options.cutout = 100;
+            this.Options.cutout = 80;
         } else {
             this.Options.cutout = 80;
         };

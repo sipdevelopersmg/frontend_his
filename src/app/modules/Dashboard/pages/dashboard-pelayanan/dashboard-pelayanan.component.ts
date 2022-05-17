@@ -30,7 +30,7 @@ export class DashboardPelayananComponent implements OnInit {
             {
                 label: 'Population',
                 type: 'doughnut',
-                data: [350, 150],
+                data: [1053, 210],
                 backgroundColor: ['#5283ff', '#9f9f9f'],
                 borderColor: ['#ffffff', '#ffffff'],
                 rotation: Math.PI / 2,
@@ -46,7 +46,7 @@ export class DashboardPelayananComponent implements OnInit {
             {
                 label: 'Population',
                 type: 'doughnut',
-                data: [500, 150],
+                data: [500, 248],
                 backgroundColor: ['#5283ff', '#9f9f9f'],
                 borderColor: ['#ffffff', '#ffffff'],
                 rotation: Math.PI / 2,
@@ -66,25 +66,25 @@ export class DashboardPelayananComponent implements OnInit {
             {
                 id: 1,
                 title: 'Total Kunjungan',
-                value: '500',
+                value: '1263',
                 satuan: 'Pasien'
             },
             {
                 id: 2,
                 title: 'Kunjungan Rawat Jalan',
-                value: '250',
+                value: '834',
                 satuan: 'Pasien'
             },
             {
                 id: 3,
                 title: 'Kunjungan Rawat Inap',
-                value: '150',
+                value: '248',
                 satuan: 'Pasien'
             },
             {
                 id: 4,
                 title: 'Kunjungan Rawat Darurat',
-                value: '50',
+                value: '181',
                 satuan: 'Pasien'
             },
         ];
@@ -93,12 +93,12 @@ export class DashboardPelayananComponent implements OnInit {
             datasets: [
                 {
                     label: 'BPJS',
-                    data: [380],
+                    data: [842],
                     borderRadius: 5,
                 },
                 {
-                    label: 'UMUM',
-                    data: [120],
+                    label: 'NON BPJS',
+                    data: [421],
                     borderRadius: 5,
                 }
             ],
