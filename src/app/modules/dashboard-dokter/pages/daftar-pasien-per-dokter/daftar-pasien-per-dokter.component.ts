@@ -147,6 +147,8 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleSelectedRowIRJA(args: any): void {
+        this.JenisRawat = 'IRJA';
+        this.dashboardDokterService.JenisRawat.next(this.JenisRawat);
         this.GridIRJASelectedRow = args.data;
     }
 
@@ -179,6 +181,8 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleSelectedRowIRNA(args: any): void {
+        this.JenisRawat = 'IRNA';
+        this.dashboardDokterService.JenisRawat.next(this.JenisRawat);
         this.GridIRNASelectedRow = args.data;
     }
 
@@ -203,6 +207,8 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     }
 
     handleSelectedRowIRDA(args: any): void {
+        this.JenisRawat = 'IRDA';
+        this.dashboardDokterService.JenisRawat.next(this.JenisRawat);
         this.GridIRDASelectedRow = args.data;
     }
 
