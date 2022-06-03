@@ -153,9 +153,9 @@
             </ejs-grid>
         </div>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <ejs-grid #GridIRNAComp [id]="'GridIRNA'" [height]="200" [dataSource]="GridIRNADatasource" [rowHeight]="30"
-                [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true" [allowFiltering]='true'
-                [editSettings]="GridIRNAEditSettings" [toolbar]="GridIRNAToolbar"
+            <ejs-grid #GridIRNAComp [id]="'GridIRNA'" [height]="'calc(100vh - 22rem)'" [dataSource]="GridIRNADatasource"
+                [rowHeight]="30" [gridLines]="'Both'" [allowPaging]="true" [allowResizing]="true"
+                [allowFiltering]='true' [editSettings]="GridIRNAEditSettings" [toolbar]="GridIRNAToolbar"
                 (rowSelected)="handleSelectedRowIRNA($event)" (toolbarClick)="handleToolbarClickIRNA($event)">
                 <e-columns>
                     <e-column [width]="100" [field]="'jam_masuk'" [headerText]="'TGL. MASUK'" [visible]="true"
