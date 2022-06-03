@@ -64,10 +64,11 @@ export class PelayananPasienRawatInapComponent implements OnInit {
 
     @ViewChild('LookupRoom') LookupRoom: OrgInputLookUpKodeComponent;
     urlLookupRoom = this.API_PIS.IRNA.IRNA.SETUP_BED_IRNA.GET_ALL_ROOM_BY_DYNAMIC_FILTER;
-    LookupBedStaticFilter: any[];
+    LookupRoomStaticFilter: any[];
 
     @ViewChild('LookupBed') LookupBed: OrgInputLookUpKodeComponent;
     urlLookupBed = this.API_PIS.IRNA.IRNA.SETUP_BED_IRNA.GET_ALL_BED_ROOM_BY_DYNAMIC_FILTER;
+    LookupBedStaticFilter: any[];
 
     @ViewChild('LookupAsalRujukan') LookupAsalRujukan: OrgInputLookUpKodeComponent;
     urlAsalRujukan = this.API_PIS.SETUP_DATA.API_SETUP_DATA.SETUP_ASAL_RUJUKAN.GET_ALL_ASAL_RUJUKAN_FOR_LOOKUP_ADMISI;
@@ -377,6 +378,15 @@ export class PelayananPasienRawatInapComponent implements OnInit {
 
     heandleSelectedPoli(args: PoliModel): void {
         this.id_poli.setValue(args.id_poli || args[0].id_poli);
+
+        this.LookupRoomStaticFilter = [
+            {
+                "columnName": "p.nama_poli",
+                "filter": "like",
+                "searchText": args.nama_poli,
+                "searchText2": ""
+            }
+        ];
     }
 
     handleChangeDropdownDebitur(args: any): void {

@@ -73,8 +73,8 @@
                 <!-- No. Room -->
                 <org-input-look-up *ngIf="!IsPersonTerjadwal" #LookupRoom [modal-title]="'Data Room'"
                     [lookup-url]="urlLookupRoom" [idTitle]="'room_no'" (onGetSelectedData)="heandleSelectedRoom($event)"
-                    [columns]="settingGrid.LookupRoom.columns" [filter-lookup]="settingGrid.LookupRoom.filter"
-                    [label]="'No. Room *'">
+                    [static-filter]="LookupRoomStaticFilter" [columns]="settingGrid.LookupRoom.columns"
+                    [filter-lookup]="settingGrid.LookupRoom.filter" [label]="'No. Room *'">
                 </org-input-look-up>
 
                 <mol-input-text *ngIf="IsPersonTerjadwal" [disabled]="true" [label]="'No. Room *'" id="room_no_antrian">
