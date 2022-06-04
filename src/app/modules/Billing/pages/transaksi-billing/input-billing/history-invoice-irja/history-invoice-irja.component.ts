@@ -113,6 +113,8 @@ export class HistoryInvoiceIrjaComponent implements OnInit {
     }
 
     handleClickDetailItemInvoice(item: any): void {
+        console.log(item);
+
         item.charge_amount = item.total_amount;
 
         this.NomorInvoiceTerpilih = item.nomor_invoice;

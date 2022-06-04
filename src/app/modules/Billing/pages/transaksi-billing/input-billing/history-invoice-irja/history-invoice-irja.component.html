@@ -257,7 +257,7 @@
                                                     <ejs-numerictextbox [enableRtl]="true" [showClearButton]="false"
                                                         [showSpinButton]="false" [format]="'N2'"
                                                         [cssClass]="'readonly-state rounded border-0'" [readonly]="true"
-                                                        value="{{ total_amount.value - paid_amount.value }}">
+                                                        value="{{ total_amount.value - (claim_amount.value + deposit_amount.value + paid_amount.value)  }}">
                                                     </ejs-numerictextbox>
                                                 </div>
                                             </div>
