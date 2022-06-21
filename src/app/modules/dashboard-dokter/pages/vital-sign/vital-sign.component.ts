@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EditSettingsModel, TextWrapSettings, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EditSettingsModel, TextWrapSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgTabsComponentComponent } from 'src/app/modules/shared/components/organism/tabs/org-tabs-component/org-tabs-component.component';
@@ -17,6 +18,8 @@ import * as Config from './json/vital-sign.config.json';
     styleUrls: ['./vital-sign.component.css']
 })
 export class VitalSignComponent implements OnInit, AfterViewInit {
+
+    ShowTitle: boolean = true;
 
     /**
      * Variable untuk Menympan Navigasi halaman
@@ -65,6 +68,7 @@ export class VitalSignComponent implements OnInit, AfterViewInit {
     SelectedData: IVitalSignModel;
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         private vitalSignService: VitalSignService,
@@ -97,6 +101,10 @@ export class VitalSignComponent implements OnInit, AfterViewInit {
         ];
 
         this.GetAllData();
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {

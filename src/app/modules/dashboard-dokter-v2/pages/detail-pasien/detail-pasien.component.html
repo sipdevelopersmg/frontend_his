@@ -1,0 +1,77 @@
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row">
+        <!-- Vital Sign -->
+        <div class="col-lg-12 col-md-12 col-sm-12 px-1 mb-2">
+            <div class="card">
+                <div class="card-header d-flex align-items-center cursor-pointer"
+                    (click)="handlingToogleAccordion('vital_sign')">
+                    <p class="card-title mb-0">
+                        <i class="fas fa-file-medical fa-sm"></i>&nbsp; Vital Sign
+                    </p>
+                    <span class="ms-auto">
+                        <i id="icon_vital_sign" class="fas fa-chevron-down"></i>
+                    </span>
+                </div>
+                <div id="accordion_vital_sign" class="card-body p-0 border-0 shadow-sm">
+                    <app-vital-sign></app-vital-sign>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alergi -->
+        <div class="col-lg-12 col-md-12 col-sm-12 px-1 mb-2">
+            <div class="card">
+                <div class="card-header d-flex align-items-center cursor-pointer"
+                    (click)="handlingToogleAccordion('alergi')">
+                    <p class="card-title mb-0">
+                        <i class="fas fa-allergies fa-sm"></i>&nbsp; Alergi
+                    </p>
+                    <span class="ms-auto">
+                        <i id="icon_alergi" class="fas fa-chevron-down"></i>
+                    </span>
+                </div>
+                <div id="accordion_alergi" class="card-body p-0 border-0 shadow-sm">
+                    <app-alergi></app-alergi>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resep -->
+        <div class="col-lg-12 col-md-12 col-sm-12 px-1 mb-2">
+            <div class="card">
+                <div class="card-header d-flex align-items-center cursor-pointer"
+                    (click)="handlingToogleAccordion('resep')">
+                    <p class="card-title mb-0">
+                        <i class="fas fa-allergies fa-sm"></i>&nbsp; Resep
+                    </p>
+                    <span class="ms-auto">
+                        <i id="icon_resep" class="fas fa-chevron-down"></i>
+                    </span>
+                </div>
+                <div id="accordion_resep" class="card-body p-0 border-0 shadow-sm">
+                    <!-- <app-resep></app-resep> -->
+                    <app-input-resep-formularium-irja></app-input-resep-formularium-irja>
+                </div>
+            </div>
+        </div>
+
+        <!-- Laboratorium -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-1 mb-2">
+            <div class="card">
+                <div class="card-header d-flex align-items-center cursor-pointer"
+                    (click)="handlingToogleAccordion('laboratorium')">
+                    <p class="card-title mb-0">
+                        <i class="fas fa-allergies fa-sm"></i>&nbsp; Laboratorium
+                    </p>
+                    <span class="ms-auto">
+                        <i id="icon_laboratorium" class="fas fa-chevron-down"></i>
+                    </span>
+                </div>
+                <div id="accordion_laboratorium" class="card-body p-0 border-0 shadow-sm">
+                    <app-laboratorium></app-laboratorium>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</org-card-layout>

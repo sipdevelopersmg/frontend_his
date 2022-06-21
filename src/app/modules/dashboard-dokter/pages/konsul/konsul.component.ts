@@ -10,6 +10,7 @@ import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.
 import { SetupPoliService } from 'src/app/modules/Billing/services/setup-data/setup-poli/setup-poli.service';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { KonsulService } from '../../services/konsul/konsul.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-konsul',
@@ -17,6 +18,8 @@ import { KonsulService } from '../../services/konsul/konsul.service';
     styleUrls: ['./konsul.component.css']
 })
 export class KonsulComponent implements OnInit, AfterViewInit {
+
+    ShowTitle: boolean = true;
 
     Config = Config;
 
@@ -38,6 +41,7 @@ export class KonsulComponent implements OnInit, AfterViewInit {
     GridDaftarKonsulDataSource: any[] = [];
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private konsulService: KonsulService,
         private utilityService: UtilityService,
@@ -59,6 +63,10 @@ export class KonsulComponent implements OnInit, AfterViewInit {
         this.onGetAllPoliklinik();
 
         this.onGetAllRiwayatKonsul(this.daftarPasienService.ActivePasien.value.id_dokter);
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {

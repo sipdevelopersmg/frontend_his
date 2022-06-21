@@ -75,3 +75,13 @@
   background-color: transparent;
   border: 0;
 }
+
+.card_dashboard_not_dokter {
+  height: calc(100vh - 8.5rem);
+  overflow-y: auto;
+}
+
+.card_dashboard_dokter {
+  height: 100%;
+  overflow-y: auto;
+}

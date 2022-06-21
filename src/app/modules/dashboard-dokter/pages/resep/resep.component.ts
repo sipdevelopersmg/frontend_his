@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
 
 export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    ShowTitle: boolean = true;
+
     /**
     * Variable Button Nav
     * @ButtonNav: ButtonNavModel[]
@@ -52,7 +54,11 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         this.currentTanggal = moment().format()
-        console.log(this.daftarPasienService.ActivePasien.value);
+        // console.log(this.daftarPasienService.ActivePasien.value);
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {
@@ -120,7 +126,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
             tanggal_resep: this.currentTanggal
         }
 
-        this.newdetail = this.resepDokterService.dataSourceParentGrid.value.filter((item)=>{
+        this.newdetail = this.resepDokterService.dataSourceParentGrid.value.filter((item) => {
             return item.is_racikan && !item.set_racikan_id
         })
 

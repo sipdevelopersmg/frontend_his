@@ -1,10 +1,11 @@
-<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)">
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)" [ShowTitle]="ShowTitle">
     <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
         <!-- Input Resep Tabs -->
         <org-tabs-item>
             <org-tabs-label [Id]="'InputResep'">Input Resep</org-tabs-label>
             <org-tabs-body>
-                <app-input-resep (setIdOutlet)="setIdOutlet($event)" (onSetTemplateResep)="onSetTemplateResep()" #inputResepComponent></app-input-resep>
+                <app-input-resep (setIdOutlet)="setIdOutlet($event)" (onSetTemplateResep)="onSetTemplateResep()"
+                    #inputResepComponent></app-input-resep>
             </org-tabs-body>
         </org-tabs-item>
 
@@ -43,7 +44,8 @@
             </div>
         </div>
         <div class="modal-footer background-abu-muda">
-            <button type="button" class="btn btn-primary" (click)="handleClickSimpanTemplateResepDokter()">Simpan Template Resep</button>
+            <button type="button" class="btn btn-primary" (click)="handleClickSimpanTemplateResepDokter()">Simpan
+                Template Resep</button>
             <button type="button" class="btn btn-danger" (click)="handleClickAbaikan()">Tidak</button>
         </div>
     </ng-template>

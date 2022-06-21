@@ -1,0 +1,76 @@
+section#navbar-section {
+  height: 3.5em;
+  max-height: 3.5em;
+  box-shadow: 2px 0 6px 0 #888;
+  transition: all 0.25s;
+  z-index: 3;
+}
+
+.collapse-sidebar {
+  width: 7.5% !important;
+  max-width: 7.5% !important;
+  overflow-y: hidden !important;
+}
+
+section#content-section {
+  width: 100%;
+  max-width: 100%;
+  height: calc(100vh - 4.5rem);
+  max-height: calc(100vh - 4.5rem);
+  transition: all 0.25s;
+  padding: 0.5em 0.75em;
+}
+
+.expand-content {
+  width: 92.5% !important;
+  max-width: 92.5% !important;
+}
+
+.ngb-toasts {
+  margin: 4em 0.5em 0.5em 0.5em !important;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1200;
+}
+
+.ngb-toasts > div.toast-header > button.btn-close {
+  margin-right: 0 !important;
+  margin-left: auto !important;
+}
+
+.card-router-outlet {
+  border-top: 0.25em solid #1a73e8;
+}
+
+@media only screen and (min-width: 992.98px) and (max-width: 1199.98px) {
+  section#content-section {
+    width: 100%;
+    max-width: 100%;
+    height: calc(100vh - 3.5em);
+    max-height: calc(100vh - 3.5em);
+    transition: all 0.7s;
+    padding: 0.5em 0.75em;
+  }
+
+  .expand-content {
+    width: 92% !important;
+    max-width: 92% !important;
+  }
+}
+
+@media only screen and (min-width: 1366.98px) {
+  section#content-section {
+    width: 100%;
+    max-width: 100%;
+    height: calc(100vh - 4.5em);
+    max-height: calc(100vh - 4.5em);
+    transition: all 0.7s;
+    padding: 0.5em 0.75em;
+  }
+
+  .expand-content {
+    width: 94.75% !important;
+    max-width: 94.75% !important;
+  }
+}

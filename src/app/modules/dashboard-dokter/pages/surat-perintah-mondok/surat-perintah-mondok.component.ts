@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { DaftarPasienService } from '../../services/daftar-pasien/daftar-pasien.service';
@@ -12,6 +13,8 @@ import { SuratPerintahMondokService } from '../../services/surat-perintah-mondok
 })
 export class SuratPerintahMondokComponent implements OnInit, AfterViewInit {
 
+    ShowTitle: boolean = true;
+
     ButtonNav: ButtonNavModel[];
 
     FormPerintahMondok: FormGroup;
@@ -19,6 +22,7 @@ export class SuratPerintahMondokComponent implements OnInit, AfterViewInit {
     inputFieldState = "detail";
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private utilityService: UtilityService,
         public daftarPasienService: DaftarPasienService,
@@ -32,6 +36,11 @@ export class SuratPerintahMondokComponent implements OnInit, AfterViewInit {
         ];
 
         this.onSetFormAttributes();
+
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {

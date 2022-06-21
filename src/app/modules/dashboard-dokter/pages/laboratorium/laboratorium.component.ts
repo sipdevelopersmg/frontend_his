@@ -11,6 +11,8 @@ import { BankDarahComponent } from '../bank-darah/bank-darah.component';
 })
 export class LaboratoriumComponent implements OnInit, AfterViewInit {
 
+    ShowTitle: boolean = true;
+
     ButtonNav: ButtonNavModel[] = [
         { Id: "RiwayatPemeriksaan", Icons1: "fa-history", Captions: "Riwayat Pemeriksaan" },
         { Id: "BankDarah", Icons1: "fa-hand-holding-water", Captions: "Bank Darah" },
@@ -26,6 +28,10 @@ export class LaboratoriumComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.onClickButtonNav("RiwayatPemeriksaan");
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {

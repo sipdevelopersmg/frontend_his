@@ -16,20 +16,22 @@ import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.ser
 import { ResepDokterIrdaService } from '../../../services/resep-dokter-irda/resep-dokter-irda.service';
 
 @Component({
-  selector: 'app-view-resep-irda',
-  templateUrl: './view-resep-irda.component.html',
-  styleUrls: ['./view-resep-irda.component.css']
+    selector: 'app-view-resep-irda',
+    templateUrl: './view-resep-irda.component.html',
+    styleUrls: ['./view-resep-irda.component.css']
 })
 export class ViewResepIrdaComponent implements OnInit {
 
-  ButtonNav: ButtonNavModel[] = [
-    { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
-    { Id: 'lanjutkan', Captions: 'Lanjutkan Resep', Icons1: 'fa-forward fa-sm' },
-    { Id: 'ubah', Captions: 'Ubah Resep', Icons1: 'fa-edit fa-sm' },
-    { Id: 'stop', Captions: 'Hentikan Resep', Icons1: 'fa-stop-circle fa-sm' },
-  ];
+    ShowTitle: boolean = true;
 
-  @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
+    ButtonNav: ButtonNavModel[] = [
+        { Id: 'kembali', Captions: 'Kembali', Icons1: 'fa-arrow-left fa-sm' },
+        { Id: 'lanjutkan', Captions: 'Lanjutkan Resep', Icons1: 'fa-forward fa-sm' },
+        { Id: 'ubah', Captions: 'Ubah Resep', Icons1: 'fa-edit fa-sm' },
+        { Id: 'stop', Captions: 'Hentikan Resep', Icons1: 'fa-stop-circle fa-sm' },
+    ];
+
+    @ViewChild('LookupRacikan') LookupRacikan: OrgLookUpHirarkiComponent;
 
     GridConfig = GridConfig;
     inputFieldState = 'detail';
@@ -43,42 +45,42 @@ export class ViewResepIrdaComponent implements OnInit {
     modalRef: BsModalRef;
 
     public keterangan = (field: string, data1: object) => {
-        return  data1['nama_rute_pemberian_obat'] + 
-                ', sehari ' +  data1['qty_harian'] +' '+   
-                data1['nama_satuan']+' '+ data1['ket_label']+' '
-                +data1['satuan_aturan_pakai']+ ' ' +data1['ket_aturan'];;
+        return data1['nama_rute_pemberian_obat'] +
+            ', sehari ' + data1['qty_harian'] + ' ' +
+            data1['nama_satuan'] + ' ' + data1['ket_label'] + ' '
+            + data1['satuan_aturan_pakai'] + ' ' + data1['ket_aturan'];;
     }
 
     public quantity = (field: string, data1: object) => {
-        return  data1['qty_harian'] +' '+
-                data1['nama_satuan']+'/Hari, untuk '+data1['jumlah_hari']+' Hari';
+        return data1['qty_harian'] + ' ' +
+            data1['nama_satuan'] + '/Hari, untuk ' + data1['jumlah_hari'] + ' Hari';
     }
 
-    dataSourceChild:any = [];
-    dataSource:any = [];
-    dataHeader:any = [];
+    dataSourceChild: any = [];
+    dataSource: any = [];
+    dataHeader: any = [];
     formInput: FormGroup;
-    htmlSelection:string = '';
+    htmlSelection: string = '';
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterIrdaService: ResepDokterIrdaService,
-        private router:Router,
+        private router: Router,
         private encryptionService: EncryptionService,
         private activatedRoute: ActivatedRoute,
-        private utilityService:UtilityService,
+        private utilityService: UtilityService,
         private modalService: BsModalService,
-        private utilityHelperService:UtilityHelperService
+        private utilityHelperService: UtilityHelperService
     ) { }
 
     ngOnInit(): void {
-        
+
         this.formInput = this.formBuilder.group({
-            no_register:['',[]],
-            no_rekam_medis:['',[]],
-            poli:['',[]],
+            no_register: ['', []],
+            no_rekam_medis: ['', []],
+            poli: ['', []],
             pasien: ['', []],
-            dokter : ['', []],
-            umur : ['', []],
+            dokter: ['', []],
+            umur: ['', []],
         });
 
         this.childGrid = {
@@ -90,6 +92,10 @@ export class ViewResepIrdaComponent implements OnInit {
             textWrapSettings: { wrapMode: 'Both' },
             columns: this.GridConfig.columnsChild
         }
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {
@@ -99,14 +105,14 @@ export class ViewResepIrdaComponent implements OnInit {
     }
 
     onLoadDetailData(id) {
-        this.resepDokterIrdaService.onGetById(id).subscribe((result)=>{
+        this.resepDokterIrdaService.onGetById(id).subscribe((result) => {
             this.formInput.setValue({
-                pasien          :result.data.nama_pasien,
-                dokter          :result.data.nama_dokter,
-                no_register     :result.data.no_register,
-                no_rekam_medis  :result.data.no_rekam_medis,
-                poli            :result.data.nama_poli,
-                umur            :result.data.usia
+                pasien: result.data.nama_pasien,
+                dokter: result.data.nama_dokter,
+                no_register: result.data.no_register,
+                no_rekam_medis: result.data.no_rekam_medis,
+                poli: result.data.nama_poli,
+                umur: result.data.usia
             })
             this.dataHeader = result.data;
             this.dataSource = result.data.details;
@@ -116,12 +122,12 @@ export class ViewResepIrdaComponent implements OnInit {
         })
     }
 
-    mapingRacikan(details){
+    mapingRacikan(details) {
         this.dataSourceChild = [];
         details.map((item) => {
             this.dataSourceChild.push(...item.racikans);
         });
-        
+
         this.childGrid = {
             dataSource: this.dataSourceChild,
             queryString: "resep_detail_id",
@@ -143,20 +149,20 @@ export class ViewResepIrdaComponent implements OnInit {
             // args.row.classList.add('is-racikan');
         }
     }
-  
-    onDataBound(){
+
+    onDataBound() {
         this.GridResepRacikan.detailRowModule.expandAll();
     }
 
-    handleClickLanjutkanResepDokter(args){
-        let Body:any
+    handleClickLanjutkanResepDokter(args) {
+        let Body: any
         Body = this.GridResepRacikan.getSelectedRecords()
-        Body.map((e,i)=>{
+        Body.map((e, i) => {
             e.jumlah_hari = args;
             return e;
         });
         // console.log(Body);
-        this.resepDokterIrdaService.lanjutakanResepRawatInap(Body).subscribe((result)=>{
+        this.resepDokterIrdaService.lanjutakanResepRawatInap(Body).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Obat ini berhasil di lanjutkan', result.message)
                 .then(() => {
                     this.modalRef.hide();
@@ -165,10 +171,10 @@ export class ViewResepIrdaComponent implements OnInit {
         })
     }
 
-    handleClickStopResepDokter(args){
-        let Body:any
+    handleClickStopResepDokter(args) {
+        let Body: any
         Body = this.GridResepRacikan.getSelectedRecords()
-        this.resepDokterIrdaService.stopResepRawatInap(Body).subscribe((result)=>{
+        this.resepDokterIrdaService.stopResepRawatInap(Body).subscribe((result) => {
             this.utilityService.onShowingCustomAlert('success', 'Obat ini berhasil di hentikan/Stop', result.message)
                 .then(() => {
                     this.modalRef.hide();
@@ -176,7 +182,7 @@ export class ViewResepIrdaComponent implements OnInit {
                 });
         })
     }
-   
+
     onClickButtonNav(args: any): void {
         let data = this.GridResepRacikan.getSelectedRecords();
 
@@ -185,9 +191,9 @@ export class ViewResepIrdaComponent implements OnInit {
                 this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
                 break;
             case "lanjutkan":
-                if(data.length==0){
-                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih','')
-                }else{
+                if (data.length == 0) {
+                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih', '')
+                } else {
                     this.templateSelection();
                     this.modalRef = this.modalService.show(
                         this.modalTambahanHariResep,
@@ -196,13 +202,13 @@ export class ViewResepIrdaComponent implements OnInit {
                 }
                 break;
             case "ubah":
-                const id = this.encryptionService.encrypt(this.dataHeader.resep_id+',ubah');
+                const id = this.encryptionService.encrypt(this.dataHeader.resep_id + ',ubah');
                 this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id, "GRAHCIS"]);
                 break;
             case "stop":
-                if(data.length==0){
-                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih','')
-                }else{
+                if (data.length == 0) {
+                    this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih', '')
+                } else {
                     this.templateSelection();
                     this.modalRef = this.modalService.show(
                         this.modalStopResep,
@@ -215,11 +221,11 @@ export class ViewResepIrdaComponent implements OnInit {
         }
     }
 
-    templateSelection(){
+    templateSelection() {
         let data = this.GridResepRacikan.getSelectedRecords();
         this.htmlSelection = '<ul>';
-        data.forEach((value:any,index)=>{
-            this.htmlSelection +=`<li>${value.nama_obat}</li>`;
+        data.forEach((value: any, index) => {
+            this.htmlSelection += `<li>${value.nama_obat}</li>`;
         })
         this.htmlSelection += '</ul>';
         console.log(this.htmlSelection);

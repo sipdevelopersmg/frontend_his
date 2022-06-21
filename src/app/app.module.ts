@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injectable, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +13,6 @@ import { environment } from 'src/environments/environment';
 import * as Sentry from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 import { Router } from '@angular/router';
-import { NgChartsModule } from 'ng2-charts';
 
 Sentry.init({
     dsn: 'https://21c111285e044d17a943b3a72cc6cffc@o1094972.ingest.sentry.io/6113627',

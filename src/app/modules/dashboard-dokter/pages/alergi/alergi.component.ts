@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { GrupPenunjangModel } from 'src/app/modules/PIS/models/setup-data/setup_grup_penunjang.model';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -18,6 +19,8 @@ import * as Config from './json/alergi.config.json';
     styleUrls: ['./alergi.component.css']
 })
 export class AlergiComponent implements OnInit, AfterViewInit {
+
+    ShowTitle: boolean = true;
 
     /**
      * Variable untuk Menympan Navigasi halaman
@@ -65,6 +68,7 @@ export class AlergiComponent implements OnInit, AfterViewInit {
     SelectedData: IAlergiModel;
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private alergiService: AlergiService,
         private utilityService: UtilityService,
@@ -88,6 +92,10 @@ export class AlergiComponent implements OnInit, AfterViewInit {
         ];
 
         this.GetAllData();
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {

@@ -1,0 +1,25 @@
+<section id="dashboard-section">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <div class="row px-0 mx-0">
+            <section id="navbar-section" class="bg-white px-0">
+                <atm-navbar></atm-navbar>
+            </section>
+        </div>
+
+        <div class="row px-0 mx-0">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                <section id="top-menu" class="bg-white">
+                    <dd-informasi-pasien></dd-informasi-pasien>
+                </section>
+            </div>
+        </div>
+
+        <div class="row px-0 mx-0">
+            <!-- Content -->
+            <section id="content-section">
+                <router-outlet (activate)="componentAdded($event)"></router-outlet>
+            </section>
+        </div>
+    </div>
+</section>

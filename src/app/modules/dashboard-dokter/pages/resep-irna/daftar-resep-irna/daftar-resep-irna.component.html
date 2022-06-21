@@ -1,4 +1,4 @@
-<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+<org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)" [ShowTitle]="ShowTitle">
     <div class="row pt-2">
         <!-- Filter Offcanvas -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
@@ -7,11 +7,10 @@
             </mol-offcanvas-filter>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <ejs-grid #GridResepRacikan [dataSource]="dataSource"
-                height="calc(100vh - 15rem)" gridLines="Both" rowHeight="30" [childGrid]="childGrid" 
-                [allowGrouping]="true" [groupSettings]="GridGroupSettings"
-                (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
-                [allowTextWrap]="true" [textWrapSettings]="{ wrapMode: 'Both' }">
+            <ejs-grid #GridResepRacikan [dataSource]="dataSource" height="calc(100vh - 15rem)" gridLines="Both"
+                rowHeight="30" [childGrid]="childGrid" [allowGrouping]="true" [groupSettings]="GridGroupSettings"
+                (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()' [allowTextWrap]="true"
+                [textWrapSettings]="{ wrapMode: 'Both' }">
                 <e-columns>
                     <e-column [visible]="true" field='nama_dokter' [allowEditing]="false" headerText='Dokter'
                         editType='defaultEdit' textAlign="left" headerTextAlign="center">
@@ -26,7 +25,7 @@
                         editType='defaultEdit' [valueAccessor]='keterangan' textAlign="left" headerTextAlign="center">
                     </e-column>
                     <e-column [visible]="true" field='qty_harian' [allowEditing]="true" headerText='Qty' [width]="220"
-                        editType='defaultEdit' [valueAccessor]='quantity' textAlign="right" headerTextAlign="center" >
+                        editType='defaultEdit' [valueAccessor]='quantity' textAlign="right" headerTextAlign="center">
                     </e-column>
                     <e-column [visible]="false" field='ket_aturan' [allowEditing]="false" headerText='Aturan'
                         editType='defaultEdit' textAlign="left" headerTextAlign="center">
@@ -40,7 +39,8 @@
                                 <span class="mb-0">
                                     {{ data.count }} {{ data.field == 'nama_dokter'? "resep" : "obat" }}
                                 </span>
-                                <a class="cursor-pointer" *ngIf="data.field=='nomor_resep'" title="lihat detail resep">Lihat Detail Resep</a> 
+                                <a class="cursor-pointer" *ngIf="data.field=='nomor_resep'"
+                                    title="lihat detail resep">Lihat Detail Resep</a>
                             </p>
                         </div>
                     </div>

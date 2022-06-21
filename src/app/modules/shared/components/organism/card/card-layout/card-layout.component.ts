@@ -11,6 +11,8 @@ export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
     @Input('HeaderRibbon') HeaderRibbon: string;
     HideHeaderRibbon: string;
 
+    @Input('ShowTitle') ShowTitle: boolean = true;
+
     @Input('HeaderRibbonClass') HeaderRibbonClass: string = "col-lg-6 col-md-6 col-sm-6 col-xs-6";
 
     @Input('ChangeHeaderRibbon') ChangeHeaderRibbon: boolean = false;
@@ -26,6 +28,15 @@ export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
     constructor() { }
 
     ngOnInit(): void {
+        console.log(this.ShowTitle);
+
+        if (this.ShowTitle) {
+            this.HeaderRibbonClass = "col-lg-6 col-md-6 col-sm-6 col-xs-6";
+            this.ButtonNavClass = "col-lg-6 col-md-6 col-sm-6 col-xs-6";
+        } else {
+            this.ButtonNavClass = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+            this.TransparentBackground = true;
+        }
     }
 
     ngAfterContentChecked(): void {

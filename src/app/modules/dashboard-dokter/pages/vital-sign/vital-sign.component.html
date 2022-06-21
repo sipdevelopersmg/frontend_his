@@ -1,12 +1,13 @@
-<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)">
+<org-card-layout [ButtonNav]="TabId == 'Input' ? ButtonNav : []" (onClickButtonNav)="handleClickButtonNav($event)"
+    [ShowTitle]="ShowTitle">
     <org-tabs #OrgTabsRef [showHeader]="false" (onGetSelectedTabId)="handleSelectedTabId($event)">
         <!-- Data -->
         <org-tabs-item>
             <org-tabs-label [Id]="'Data'">Data Vital Sign</org-tabs-label>
             <org-tabs-body>
-                <mol-grid #GridData [grid-height]="'calc(100vh - 18rem)'" [grid-DataSource]="GridDatasource"
-                    [grid-paging]="false" [grid-editSettings]="GridDataEditSettings" [grid-lines]="'Both'"
-                    [grid-toolbar]="GridDataToolbar" [columns]="Config.GridVitalSignColumns"
+                <mol-grid #GridData [grid-height]="ShowTitle ? 'calc(100vh - 18rem)' : '100%'"
+                    [grid-DataSource]="GridDatasource" [grid-paging]="false" [grid-editSettings]="GridDataEditSettings"
+                    [grid-lines]="'Both'" [grid-toolbar]="GridDataToolbar" [columns]="Config.GridVitalSignColumns"
                     [textWrapSettings]="GridTextWrapSettings" (row-selected)="handleSelectedRow($event)"
                     (toolbar-click)="handleToolbarClick($event)" (initialized)="InitalizedGrid($event)"
                     (action-complete)="handleActionComplete($event)">

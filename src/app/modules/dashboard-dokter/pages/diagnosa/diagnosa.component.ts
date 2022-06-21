@@ -10,6 +10,7 @@ import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/o
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
 import { DiagnosaService } from '../../services/diagnosa/diagnosa.service';
 import { DashboardDokterService } from '../../services/dashboard-dokter.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-diagnosa',
@@ -17,6 +18,8 @@ import { DashboardDokterService } from '../../services/dashboard-dokter.service'
     styleUrls: ['./diagnosa.component.css']
 })
 export class DiagnosaComponent implements OnInit, AfterViewInit {
+
+    ShowTitle: boolean = true;
 
     Config = Config;
 
@@ -42,6 +45,7 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
     urlDiagnosa = this.API_PIS_SETUP_DATA.SETUP_ICD_DIAGNOSA.GET_ALL_DIAGNOSA_FOR_LOOKUP_ADMISI;
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private modalService: BsModalService,
         private utilityService: UtilityService,
@@ -76,6 +80,10 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
             .subscribe((result) => {
                 this.JenisRawat = result;
             });
+
+        if ((this.router.url).includes('Dokter')) {
+            this.ShowTitle = true;
+        }
     }
 
     ngAfterViewInit(): void {

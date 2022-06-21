@@ -94,20 +94,6 @@ export class DaftarPasienPerDokterComponent implements OnInit, AfterViewInit {
     onGetDokterId(): void {
         const UserData: IAuthenticationResponseModel = JSON.parse(localStorage.getItem("UserData"));
 
-        // !! Need fixing here
-        // const full_name = UserData.full_name.replace('dr. ', '');
-
-        // this.dokterService.onGetDokterByDokterName(full_name)
-        //     .subscribe((result) => {
-        //         this.DokterId = result['id_dokter'];
-
-        //         this.onGetPasienIRJAByDokterId(this.DokterId);
-
-        //         this.onGetPasienIRNAByDokterId(this.DokterId);
-
-        //         this.onGetPasienIRDAByDokterId(this.DokterId);
-        //     });
-
         this.onGetPasienIRJAByDokterId(UserData.id_karyawan);
 
         this.onGetPasienIRNAByDokterId(UserData.id_karyawan);

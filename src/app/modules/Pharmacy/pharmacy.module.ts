@@ -104,6 +104,19 @@ const SocketFarmasi: SocketIoConfig = {
         PharmacyRoutingModule,
         SocketIoModule.forRoot(SocketFarmasi),
     ],
+    exports: [
+        InputResepFormulariumIrjaComponent,
+        DaftarResepFormulariumIrjaComponent,
+        ViewResepFormulariumIrjaComponent,
+        InputResepFormulariumComponent,
+        DaftarResepFormulariumIrnaComponent,
+        ViewResepFormulariumIrnaComponent,
+        PulangResepFormulariumIrnaComponent,
+        InputResepFormulariumIrdaComponent,
+        DaftarResepFormulariumIrdaComponent,
+        ViewResepFormulariumIrdaComponent,
+        PulangResepFormulariumIrdaComponent,
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PharmacyModule { }
