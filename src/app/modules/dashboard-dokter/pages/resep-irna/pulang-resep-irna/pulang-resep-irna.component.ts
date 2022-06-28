@@ -161,6 +161,9 @@ export class PulangResepIrnaComponent implements OnInit {
     newdetail: any
     @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
     private setIdOutlet: any = 0;
+
+    @Output('clickButtonNav') clickButtonNav = new EventEmitter();
+
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterService: ResepDokterService,
@@ -384,7 +387,7 @@ export class PulangResepIrnaComponent implements OnInit {
         this.setupOutletService.setDataSource();
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
@@ -700,7 +703,6 @@ export class PulangResepIrnaComponent implements OnInit {
         }
     }
 
-
     onResetFormObat(): void {
         this.FormAddObat.reset();
         this.qty_resep.setValue(1);
@@ -803,7 +805,11 @@ export class PulangResepIrnaComponent implements OnInit {
                 this.Insert();
                 break;
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                } else {
+                    this.clickButtonNav.emit(args);
+                }
                 break;
             default:
                 break;

@@ -161,6 +161,9 @@ export class PulangResepIrdaComponent implements OnInit {
     newdetail: any
     @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
     private setIdOutlet: any = 0;
+
+    @Output('clickButtonNav') clickButtonNav = new EventEmitter();
+
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterIrdaService: ResepDokterIrdaService,
@@ -386,7 +389,7 @@ export class PulangResepIrdaComponent implements OnInit {
         this.setupOutletService.setDataSource();
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
@@ -803,7 +806,11 @@ export class PulangResepIrdaComponent implements OnInit {
                 this.Insert();
                 break;
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
+                } else {
+                    this.clickButtonNav.emit(args);
+                }
                 break;
             default:
                 break;

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-grids';
@@ -16,11 +16,13 @@ import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/o
 import { DiagnosaService } from '../../../services/diagnosa/diagnosa.service';
 
 @Component({
-    selector: 'app-input-order-baru',
+    selector: 'app-input-order-baru-lab',
     templateUrl: './input-order-baru.component.html',
     styleUrls: ['./input-order-baru.component.css']
 })
 export class InputOrderBaruLabComponent implements OnInit {
+
+    @Input('ShowTitle') ShowTitle: boolean = true;
 
     Config = Config;
 

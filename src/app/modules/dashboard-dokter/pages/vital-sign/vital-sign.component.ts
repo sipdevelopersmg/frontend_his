@@ -103,7 +103,7 @@ export class VitalSignComponent implements OnInit, AfterViewInit {
         this.GetAllData();
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 

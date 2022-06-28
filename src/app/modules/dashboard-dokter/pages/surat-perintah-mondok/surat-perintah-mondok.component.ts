@@ -37,15 +37,19 @@ export class SuratPerintahMondokComponent implements OnInit, AfterViewInit {
 
         this.onSetFormAttributes();
 
-
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
     ngAfterViewInit(): void {
         this.id_register.setValue(this.daftarPasienService.ActivePasien.value.id_register);
         this.id_dokter_pemberi_perintah_mondok.setValue(this.daftarPasienService.ActivePasien.value.id_dokter);
+
+        this.daftarPasienService.ActivePasien
+            .subscribe((result) => {
+                console.log(result);
+            });
     }
 
     handleClickButtonNav(ButtonId: string): void {

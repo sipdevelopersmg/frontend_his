@@ -29,9 +29,10 @@
                     </p>
                 </div> -->
                 <div class="card-body p-0">
-                    <ejs-grid #GridResepRacikan [dataSource]="dataSource" height="calc(100vh - 15rem)" gridLines="Both"
-                        rowHeight="30" [childGrid]="childGrid" (rowDataBound)='rowDataBound($event)'
-                        (dataBound)='onDataBound()' [allowTextWrap]="true" [textWrapSettings]="{ wrapMode: 'Both' }">
+                    <ejs-grid #GridResepRacikan [dataSource]="dataSource"
+                        [height]="ShowTitle ? 'calc(100vh - 15rem)' : '100%'" gridLines="Both" rowHeight="30"
+                        [childGrid]="childGrid" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
+                        [allowTextWrap]="true" [textWrapSettings]="{ wrapMode: 'Both' }">
                         <e-columns>
                             <e-column [width]="50" [field]="'Checkbox'" [visible]="true" [type]="'checkbox'"
                                 [textAlign]="'Center'" [headerTextAlign]="'Center'">

@@ -1,12 +1,9 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { IEditCell, EditSettingsModel, GridModel, GridComponent, AddEventArgs } from '@syncfusion/ej2-angular-grids';
-
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { OrgLookUpHirarkiComponent } from 'src/app/modules/shared/components/organism/loockUp/org-look-up-hirarki/org-look-up-hirarki.component';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
-import Swal from 'sweetalert2';
 import { ResepDokterIrnaService } from '../../../services/resep-dokter-irna/resep-dokter-irna.service';
 import { EncryptionService } from 'src/app/modules/shared/services/encryption.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,13 +12,11 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 
-
 @Component({
     selector: 'app-view-resep-irna',
     templateUrl: './view-resep-irna.component.html',
     styleUrls: ['./view-resep-irna.component.css'],
     providers: [BsModalService]
-
 })
 
 export class ViewResepIrnaComponent implements OnInit {
@@ -65,6 +60,11 @@ export class ViewResepIrnaComponent implements OnInit {
     dataHeader: any = [];
     formInput: FormGroup;
     htmlSelection: string = '';
+
+    @Input('QueryParams') QueryParams: any;
+
+    @Output('handleClickButtonNav') handleClickButtonNav = new EventEmitter();
+
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterIrnaService: ResepDokterIrnaService,
@@ -99,38 +99,49 @@ export class ViewResepIrnaComponent implements OnInit {
         }
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
     ngAfterViewInit(): void {
-        let id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-        console.log(id);
-        this.onLoadDetailData(id);
+        if (this.ShowTitle) {
+            let id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            this.onLoadDetailData(id);
+        } else {
+            this.checkQueryParams();
+        }
     }
 
-    onLoadDetailData(id) {
-        this.resepDokterIrnaService.onGetById(id).subscribe((result) => {
-            this.formInput.setValue({
-                bed: result.data.bed_no + ' - ' + result.data.bed_no,
-                pasien: result.data.nama_pasien,
-                dokter: result.data.nama_dokter,
-                no_register: result.data.no_register,
-                no_rekam_medis: result.data.no_rekam_medis,
-                poli: result.data.nama_poli,
-                umur: result.data.usia
-            })
-            this.dataHeader = result.data;
-            this.dataSource = result.data.details;
-            this.GridResepRacikan.refresh();
-            this.mapingRacikan(result.data.details);
-            let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
-        })
+    checkQueryParams(): void {
+        if (typeof this.QueryParams !== 'undefined') {
+            let id = this.encryptionService.decrypt(this.QueryParams);
+            this.onLoadDetailData(id);
+        }
     }
 
-    mapingRacikan(details) {
+    onLoadDetailData(id: any) {
+        this.resepDokterIrnaService.onGetById(id)
+            .subscribe((result) => {
+                this.formInput.setValue({
+                    bed: result.data.bed_no + ' - ' + result.data.bed_no,
+                    pasien: result.data.nama_pasien,
+                    dokter: result.data.nama_dokter,
+                    no_register: result.data.no_register,
+                    no_rekam_medis: result.data.no_rekam_medis,
+                    poli: result.data.nama_poli,
+                    umur: result.data.usia
+                })
+                this.dataHeader = result.data;
+                this.dataSource = result.data.details;
+                this.GridResepRacikan.refresh();
+                this.mapingRacikan(result.data.details);
+                // let umur = this.utilityHelperService.getAge(result.data.tgl_lahir);
+            });
+    }
+
+    mapingRacikan(details: any) {
         this.dataSourceChild = [];
-        details.map((item) => {
+        details.map((item: any) => {
             this.dataSourceChild.push(...item.racikans);
         });
 
@@ -156,12 +167,11 @@ export class ViewResepIrnaComponent implements OnInit {
         }
     }
 
-
     onDataBound() {
         this.GridResepRacikan.detailRowModule.expandAll();
     }
 
-    handleClickLanjutkanResepDokter(args) {
+    handleClickLanjutkanResepDokter(args: any) {
         let Body: any
         Body = this.GridResepRacikan.getSelectedRecords()
         Body.map((e, i) => {
@@ -178,7 +188,7 @@ export class ViewResepIrnaComponent implements OnInit {
         })
     }
 
-    handleClickStopResepDokter(args) {
+    handleClickStopResepDokter(args: any) {
         let Body: any
         Body = this.GridResepRacikan.getSelectedRecords()
         this.resepDokterIrnaService.stopResepRawatInap(Body).subscribe((result) => {
@@ -194,7 +204,11 @@ export class ViewResepIrnaComponent implements OnInit {
         let data = this.GridResepRacikan.getSelectedRecords();
         switch (args) {
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-irna/daftar-resep-irna');
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'kembali', data: null });
+                }
                 break;
             case "lanjutkan":
                 if (data.length == 0) {
@@ -209,11 +223,20 @@ export class ViewResepIrnaComponent implements OnInit {
                 break;
             case "ubah":
                 const id = this.encryptionService.encrypt(this.dataHeader.resep_id + ',ubah');
-                this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id, "GRAHCIS"]);
+
+                if (this.ShowTitle) {
+                    this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id, "GRAHCIS"]);
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'ubah', data: id });
+                }
                 break;
             case "pulang":
                 const id_resep = this.encryptionService.encrypt(this.dataHeader.resep_id + ',pulang');
-                this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id_resep, "GRAHCIS"]);
+                if (this.ShowTitle) {
+                    this.router.navigate(['Dokter/resep-irna/ubah-resep-irna', id_resep, "GRAHCIS"]);
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'pulang', data: id });
+                }
                 break;
             case "stop":
                 if (data.length == 0) {

@@ -22,6 +22,7 @@ export interface IDaftarPasienIRJAModel {
     id_setup_room?: number
     room_no?: string
     room_descr?: string
+    jenis_rawat?: string;
 }
 
 export class GetAllPasienIRJAByDokterModel implements HttpResponseModel {

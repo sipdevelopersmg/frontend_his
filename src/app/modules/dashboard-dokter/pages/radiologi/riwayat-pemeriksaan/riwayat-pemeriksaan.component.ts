@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { EditSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { DaftarPasienService } from '../../../services/daftar-pasien/daftar-pasien.service';
 import { DashboardDokterService } from '../../../services/dashboard-dokter.service';
@@ -12,6 +12,8 @@ import * as GridConfig from '../json/GridRadiologi.json';
     styleUrls: ['./riwayat-pemeriksaan.component.css']
 })
 export class RiwayatPemeriksaanRadComponent implements OnInit, AfterViewInit {
+
+    @Input('ShowTitle') ShowTitle: boolean = true;
 
     // ** Grid Daftar Order Properties
     GridDaftarOrderEditSettings: EditSettingsModel = { allowAdding: false, allowDeleting: false, allowEditing: false };

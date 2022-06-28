@@ -44,6 +44,8 @@ import { TransaksiObatFormulariumIrdaComponent } from './pages/transaksi-obat-fo
 import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { environment } from "src/environments/environment";
 import { TelaahResepIrjaComponent } from './pages/Antrian/antrian-farmasi/telaah-resep-irja/telaah-resep-irja.component';
+import { BaseResepFormulariumIrnaComponent } from './pages/resep-formularium/resep-formularium-irna/base-resep-formularium-irna/base-resep-formularium-irna.component';
+import { BaseResepFormulariumIrdaComponent } from './pages/resep-formularium/resep-formularium-irda/base-resep-formularium-irda/base-resep-formularium-irda.component';
 
 const SocketFarmasi: SocketIoConfig = {
     url: `${environment.webApiSocket}`, options: {
@@ -95,6 +97,8 @@ const SocketFarmasi: SocketIoConfig = {
         TransaksiObatFormulariumIrnaComponent,
         TransaksiObatFormulariumIrdaComponent,
         TelaahResepIrjaComponent,
+        BaseResepFormulariumIrnaComponent,
+        BaseResepFormulariumIrdaComponent,
     ],
     imports: [
         CommonModule,
@@ -116,6 +120,8 @@ const SocketFarmasi: SocketIoConfig = {
         DaftarResepFormulariumIrdaComponent,
         ViewResepFormulariumIrdaComponent,
         PulangResepFormulariumIrdaComponent,
+        BaseResepFormulariumIrnaComponent,
+        BaseResepFormulariumIrdaComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

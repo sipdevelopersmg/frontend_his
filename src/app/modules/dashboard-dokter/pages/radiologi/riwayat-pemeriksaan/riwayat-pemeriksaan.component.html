@@ -7,9 +7,9 @@
             </div>
             <div class="card-body p-0">
                 <mol-grid #gridDaftarOrder [grid-id]="'GridDaftarOrder'"
-                    [grid-height]="width >= 1400 ? 'calc(100vh - 44rem)' : 'calc(100vh - 34rem)'" [grid-lines]="'Both'"
-                    [grid-editSettings]="GridDaftarOrderEditSettings" [grid-toolbar]="GridDaftarOrderToolbar"
-                    [columns]="GridDaftarOrderColumns.GridDaftarOrder.columns"
+                    [grid-height]="ShowTitle ? (width >= 1400 ? 'calc(100vh - 44rem)' : 'calc(100vh - 34rem)') : '100%'"
+                    [grid-lines]="'Both'" [grid-editSettings]="GridDaftarOrderEditSettings"
+                    [grid-toolbar]="GridDaftarOrderToolbar" [columns]="GridDaftarOrderColumns.GridDaftarOrder.columns"
                     [grid-DataSource]="GridDaftarOrderDataSource" (toolbar-click)="onToolbarClick($event)"
                     (row-selected)="onRowSelected($event)">
                 </mol-grid>
@@ -25,9 +25,9 @@
             </div>
             <div class="card-body p-0">
                 <mol-grid #gridDetailOrder [grid-id]="'GridDetailOrder'"
-                    [grid-height]="width >= 1400 ? 'calc(100vh - 44rem)' : 'calc(100vh - 34rem)'" [grid-lines]="'Both'"
-                    [grid-editSettings]="GridDetailOrderEditSettings" [grid-toolbar]="GridDetailOrderToolbar"
-                    [columns]="GridDetailOrderColumns.GridDetailOrder.columns"
+                    [grid-height]="ShowTitle ? (width >= 1400 ? 'calc(100vh - 44rem)' : 'calc(100vh - 34rem)') : '100%'"
+                    [grid-lines]="'Both'" [grid-editSettings]="GridDetailOrderEditSettings"
+                    [grid-toolbar]="GridDetailOrderToolbar" [columns]="GridDetailOrderColumns.GridDetailOrder.columns"
                     [grid-DataSource]="GridDetailOrderDataSource" (toolbar-click)="onToolbarClick($event)"
                     (row-selected)="onRowSelected($event)">
                 </mol-grid>

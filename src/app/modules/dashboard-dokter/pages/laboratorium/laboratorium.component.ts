@@ -19,6 +19,8 @@ export class LaboratoriumComponent implements OnInit, AfterViewInit {
         { Id: "InputOrderBaru", Icons1: "fa-plus-circle", Captions: "Input Order Baru" },
     ];
 
+    StateActive: 'riwayat' | 'input' = 'riwayat';
+
     @ViewChild(BankDarahComponent) BankDarah: BankDarahComponent;
 
     constructor(
@@ -27,10 +29,10 @@ export class LaboratoriumComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit(): void {
-        this.onClickButtonNav("RiwayatPemeriksaan");
-
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
+        } else {
+            this.onClickButtonNav("RiwayatPemeriksaan");
         }
     }
 
@@ -43,10 +45,10 @@ export class LaboratoriumComponent implements OnInit, AfterViewInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "RiwayatPemeriksaan":
-                this.router.navigate(['/Dokter/laboratorium/riwayat-pemeriksaan']);
+                this.ShowTitle ? this.router.navigate(['/Dokter/laboratorium/riwayat-pemeriksaan']) : this.StateActive = 'riwayat';
                 break;
             case "InputOrderBaru":
-                this.router.navigate(['/Dokter/laboratorium/input-order-pemeriksaan']);
+                this.ShowTitle ? this.router.navigate(['/Dokter/laboratorium/input-order-pemeriksaan']) : this.StateActive = 'input';
                 break;
             case "BankDarah":
                 this.BankDarah.handleOpenModalBankDarah();

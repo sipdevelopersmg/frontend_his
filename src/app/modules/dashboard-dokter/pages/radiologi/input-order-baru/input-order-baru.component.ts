@@ -1,9 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EditSettingsModel } from '@syncfusion/ej2-grids';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { UtilityHelperService } from 'src/app/helpers/utility/utility-helper.service';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { Columns } from 'src/app/modules/shared/components/molecules/grid/grid/grid.model';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
@@ -16,11 +15,13 @@ import * as API_PIS_SETUP_DATA from '../../../../../api/PIS/SETUP_DATA';
 import { OrgInputLookUpKodeComponent } from 'src/app/modules/shared/components/organism/loockUp/org-input-look-up-kode/org-input-look-up-kode.component';
 
 @Component({
-    selector: 'app-input-order-baru',
+    selector: 'app-input-order-baru-rad',
     templateUrl: './input-order-baru.component.html',
     styleUrls: ['./input-order-baru.component.css']
 })
 export class InputOrderBaruRadComponent implements OnInit {
+
+    @Input('ShowTitle') ShowTitle: boolean = true;
 
     Config = Config;
 

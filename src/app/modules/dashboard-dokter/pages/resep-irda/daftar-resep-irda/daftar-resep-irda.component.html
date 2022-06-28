@@ -7,10 +7,10 @@
             </mol-offcanvas-filter>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <ejs-grid #GridResepRacikan [dataSource]="dataSource" height="calc(100vh - 15rem)" gridLines="Both"
-                rowHeight="30" [childGrid]="childGrid" [allowGrouping]="true" [groupSettings]="GridGroupSettings"
-                (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()' [allowTextWrap]="true"
-                [textWrapSettings]="{ wrapMode: 'Both' }">
+            <ejs-grid #GridResepRacikan [dataSource]="dataSource" [height]="ShowTitle ? 'calc(100vh - 15rem)' : '100%'"
+                gridLines="Both" rowHeight="30" [childGrid]="childGrid" [allowGrouping]="true"
+                [groupSettings]="GridGroupSettings" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
+                [allowTextWrap]="true" [textWrapSettings]="{ wrapMode: 'Both' }">
                 <e-columns>
                     <e-column [visible]="true" field='nama_dokter' [allowEditing]="false" headerText='Dokter'
                         editType='defaultEdit' textAlign="left" headerTextAlign="center">

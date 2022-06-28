@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GridComponent, GridModel } from '@syncfusion/ej2-angular-grids';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
@@ -41,6 +41,8 @@ export class DaftarResepIrdaComponent implements OnInit {
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
     @ViewChild('GridData') GridData: MolGridComponent;
 
+    @Output('clickButtonNav') clickButtonNav = new EventEmitter();
+
     constructor(
         private router: Router,
         private encryptionService: EncryptionService,
@@ -63,7 +65,6 @@ export class DaftarResepIrdaComponent implements OnInit {
 
     GridGroupSettings: object = { showDropArea: false, columns: ['nama_dokter', 'nomor_resep'] };
 
-
     ngOnInit(): void {
         this.childGrid = {
             dataSource: this.dataSourceChild,
@@ -79,7 +80,7 @@ export class DaftarResepIrdaComponent implements OnInit {
         this.handlePencarianFilter([]);
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
@@ -125,29 +126,37 @@ export class DaftarResepIrdaComponent implements OnInit {
     }
 
     handleClickDetail(args) {
-        console.log(args);
         let item = this.dataSource.filter(x => x.nomor_resep === args.key);
-        console.log('item klik', item)
+
         if (item.length) {
             const id = this.encryptionService.encrypt(JSON.stringify(args.items[0].resep_id));
-            this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
+
+            if (this.ShowTitle) {
+                this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
+            } else {
+                this.clickButtonNav.emit({ id: 'view_detail', data: id });
+            }
         }
     }
 
     handleClickButtonNav(args: any): void {
-        switch (args) {
-            case 'Add':
-                this.router.navigateByUrl('Dokter/resep-irda/input-resep-irda');
-                break;
-            case 'Edit':
-                const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
-                this.router.navigate(['Dokter/resep-irda/input-resep-irda', pemesanan_id, "GRAHCIS"]);
-                break;
-            case 'pulang':
-                this.router.navigateByUrl('Dokter/resep-irda/pulang-resep-irda');
-                break;
-            default:
-                break;
+        if (this.ShowTitle) {
+            switch (args) {
+                case 'Add':
+                    this.router.navigateByUrl('Dokter/resep-irda/input-resep-irda');
+                    break;
+                case 'Edit':
+                    const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
+                    this.router.navigate(['Dokter/resep-irda/input-resep-irda', pemesanan_id, "GRAHCIS"]);
+                    break;
+                case 'pulang':
+                    this.router.navigateByUrl('Dokter/resep-irda/pulang-resep-irda');
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            this.clickButtonNav.emit({ id: args, data: null });
         }
     }
 

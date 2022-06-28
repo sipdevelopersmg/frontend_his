@@ -1,8 +1,9 @@
 <org-card-layout [ShowTitle]="ShowTitle">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <mol-grid #gridDataKonsul [grid-id]="'GridDaftarKonsul'" [grid-height]="'calc(100vh - 18rem)'"
-                [grid-lines]="'Both'" [grid-toolbar]="GridDaftarKonsulToolbar" [grid-paging]="false"
+            <mol-grid #gridDataKonsul [grid-id]="'GridDaftarKonsul'"
+                [grid-height]="ShowTitle ? 'calc(100vh - 18rem)' : '100%'" [grid-lines]="'Both'"
+                [grid-toolbar]="GridDaftarKonsulToolbar" [grid-paging]="false"
                 [columns]="Config.GridDaftarOrder.columns" [grid-DataSource]="GridDaftarKonsulDataSource"
                 (toolbar-click)="onToolbarClick($event)" (row-selected)="onRowSelected($event)">
             </mol-grid>

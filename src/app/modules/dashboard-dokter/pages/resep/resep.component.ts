@@ -43,6 +43,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
     data: any = null;
     nama_resep: string = '';
     idOutlet: number;
+
     constructor(
         private resepDokterService: ResepDokterService,
         private utilityService: UtilityService,
@@ -57,7 +58,7 @@ export class ResepComponent implements OnInit, AfterViewInit, OnDestroy {
         // console.log(this.daftarPasienService.ActivePasien.value);
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 

@@ -1,11 +1,13 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)" [ShowTitle]="ShowTitle">
     <org-tabs #OrgTabsRef (onGetSelectedTabId)="onGetSelectedTabId($event)">
+
         <!-- Input Resep Tabs -->
         <org-tabs-item>
             <org-tabs-label [Id]="'InputResep'">Input Resep</org-tabs-label>
             <org-tabs-body>
                 <app-input-resep (setIdOutlet)="setIdOutlet($event)" (onSetTemplateResep)="onSetTemplateResep()"
-                    #inputResepComponent></app-input-resep>
+                    #inputResepComponent [ShowTitle]="ShowTitle">
+                </app-input-resep>
             </org-tabs-body>
         </org-tabs-item>
 
@@ -13,10 +15,11 @@
         <org-tabs-item>
             <org-tabs-label [Id]="'HistoryResep'">History Resep</org-tabs-label>
             <org-tabs-body>
-                <app-history-resep></app-history-resep>
+                <app-history-resep [ShowTitle]="ShowTitle"></app-history-resep>
             </org-tabs-body>
         </org-tabs-item>
     </org-tabs>
+
     <!-- Modal Keterangan Template Resep  -->
     <ng-template #modalTemplateResep>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">

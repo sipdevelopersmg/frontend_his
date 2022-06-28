@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ResepFormulariumIrdaService } from 'src/app/modules/Pharmacy/services/resep-formularium/resep-formularium-irda.service';
@@ -32,12 +32,14 @@ export class DaftarResepFormulariumIrdaComponent implements OnInit {
     ];
 
     GridConfig = GridConfig;
-    SelectedData
+    SelectedData: any;
     dataSource: any = [];
     dataSourceChild: any = [];
     childGrid: GridModel;
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
     @ViewChild('GridData') GridData: MolGridComponent;
+
+    @Output('clickButtonNav') clickButtonNav = new EventEmitter();
 
     constructor(
         private router: Router,
@@ -123,25 +125,33 @@ export class DaftarResepFormulariumIrdaComponent implements OnInit {
     }
 
     handleClickDetail(args) {
-        console.log(args.items);
         const id = this.encryptionService.encrypt(JSON.stringify(args.items[0].resep_id));
-        this.router.navigate(['Dokter/resep-formularium-irda/view-resep-formularium-irda', id, "GRAHCIS"]);
+
+        if (this.ShowTitle) {
+            this.router.navigate(['Dokter/resep-formularium-irda/view-resep-formularium-irda', id, "GRAHCIS"]);
+        } else {
+            this.clickButtonNav.emit({ id: 'view_detail', data: id });
+        }
     }
 
     handleClickButtonNav(args: any): void {
-        switch (args) {
-            case 'Add':
-                this.router.navigateByUrl('Dokter/resep-formularium-irda/input-resep-formularium-irda');
-                break;
-            case 'Edit':
-                const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
-                this.router.navigate(['Dokter/resep-formularium-irda/input-resep-formularium-irda', pemesanan_id, "GRAHCIS"]);
-                break;
-            case 'pulang':
-                this.router.navigateByUrl('Dokter/resep-formularium-irda/pulang-resep-formularium-irda');
-                break;
-            default:
-                break;
+        if (this.ShowTitle) {
+            switch (args) {
+                case 'Add':
+                    this.router.navigateByUrl('Dokter/resep-formularium-irda/input-resep-formularium-irda');
+                    break;
+                case 'Edit':
+                    const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
+                    this.router.navigate(['Dokter/resep-formularium-irda/input-resep-formularium-irda', pemesanan_id, "GRAHCIS"]);
+                    break;
+                case 'pulang':
+                    this.router.navigateByUrl('Dokter/resep-formularium-irda/pulang-resep-formularium-irda');
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            this.clickButtonNav.emit({ id: args, data: null });
         }
     }
 

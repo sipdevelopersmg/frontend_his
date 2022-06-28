@@ -1,3 +1,10 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)" [ShowTitle]="ShowTitle">
     <router-outlet></router-outlet>
+
+    <section *ngIf="!ShowTitle">
+        <app-riwayat-pemeriksaan-rad *ngIf="StateActive == 'riwayat'" [ShowTitle]="ShowTitle">
+        </app-riwayat-pemeriksaan-rad>
+
+        <app-input-order-baru-rad *ngIf="StateActive == 'input'" [ShowTitle]="ShowTitle"></app-input-order-baru-rad>
+    </section>
 </org-card-layout>

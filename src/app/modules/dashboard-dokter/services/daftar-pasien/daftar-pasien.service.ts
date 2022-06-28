@@ -22,7 +22,7 @@ export class DaftarPasienService {
         private pendaftaranPasienBaruService: PendaftaranPasienBaruService,
     ) { }
 
-    onSetActivePasien(Data: IDaftarPasienIRJAModel): void {
+    onSetActivePasien(Data: IDaftarPasienIRJAModel, jenis_rawat?: string): void {
         const current_dokter = JSON.parse(localStorage.getItem('UserData'));
         Data.dpjp = current_dokter['full_name'];
 
@@ -31,6 +31,7 @@ export class DaftarPasienService {
                 Data['photo_url'] = result.data;
                 Data['umur'] = Data['usia'];
                 Data['tgl_admisi'] = Data['jam_masuk'];
+                Data['jenis_rawat'] = jenis_rawat;
             }, (error) => {
                 console.log(error);
             }, () => {

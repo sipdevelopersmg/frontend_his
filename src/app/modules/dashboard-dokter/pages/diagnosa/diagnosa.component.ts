@@ -82,7 +82,7 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
             });
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 

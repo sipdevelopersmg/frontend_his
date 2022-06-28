@@ -1,0 +1,22 @@
+<org-card-layout>
+    <section>
+        <app-input-resep-formularium-irda *ngIf="StateActive == 'input_resep_irda'"
+            (handleClickButtonNav)="handleClickButtonNavInputResep($event)"></app-input-resep-formularium-irda>
+
+        <app-daftar-resep-formularium-irda *ngIf="StateActive == 'daftar_resep_irda'"
+            (clickButtonNav)="handleClickButtonNavDaftarResep($event)">
+        </app-daftar-resep-formularium-irda>
+
+        <app-input-resep-formularium-irda *ngIf="StateActive == 'ubah_resep_irda'"
+            [QueryParams]="UbahResepIrdaQueryParams" (handleClickButtonNav)="handleClickButtonNavInputResep($event)">
+        </app-input-resep-formularium-irda>
+
+        <app-pulang-resep-formularium-irda *ngIf="StateActive == 'pulang_resep_irda'"
+            (clickButtonNav)="handleClickButtonNavPulangResep($event)">
+        </app-pulang-resep-formularium-irda>
+
+        <app-view-resep-formularium-irda *ngIf="StateActive == 'view_resep_irda'"
+            [QueryParams]="ViewResepIrdaQueryParams" (handleClickButtonNav)="handleClickButtonNavViewResep($event)">
+        </app-view-resep-formularium-irda>
+    </section>
+</org-card-layout>

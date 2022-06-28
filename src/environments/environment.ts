@@ -6,11 +6,11 @@ export const webApiDemo = "http://134.209.102.123";
 
 export const webApiUrl = "http://174.138.22.139";
 
-export const modeDevelopment = false;
+export const modeDevelopment = true;
 
 export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 
-export const isFormularium = false;
+export const isFormularium = true;
 
 export const environment = {
 

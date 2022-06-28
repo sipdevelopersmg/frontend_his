@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DropDownListComponent, DropDownList, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
@@ -68,7 +68,6 @@ export class InputResepFormulariumIrdaComponent implements OnInit {
     public GridLookUpItem = GridLookUpItem;
     public GridlookUpTemplateResep = GridlookUpTemplateResep;
 
-
     DropdownAturanFields: object = { text: "tambahan_aturan_pakai", value: "id_tambahan_aturan_pakai" };
     DropdownRuteFields: object = { text: "nama_rute_pemberian_obat", value: "id_rute_pemberian_obat" };
     DropdownPemakaianFields: object = { text: "interval_aturan_pakai", value: "id_interval_aturan_pakai" };
@@ -85,7 +84,6 @@ export class InputResepFormulariumIrdaComponent implements OnInit {
     DropdownObatFields: object = { text: 'nama_obat', value: 'id_item' };
     DropdownMetodeRacikanFields: object = { text: 'metode_racikan', value: 'id_metode_racikan' };
     DropdownsatuanPakaiFields: object = { text: "satuan_aturan_pakai", value: "id_satuan_aturan_pakai" };
-
 
     NamaObatDatasource: any[] = [];
     dataSourceTambahanAturanPakai: any[] = [];
@@ -194,6 +192,10 @@ export class InputResepFormulariumIrdaComponent implements OnInit {
     private pulang: boolean = false;
     private idArry: any[] = [];
     private setIdOutlet: any = 0;
+
+    @Input('QueryParams') QueryParams: any;
+
+    @Output('handleClickButtonNav') handleClickButtonNav = new EventEmitter();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -433,28 +435,55 @@ export class InputResepFormulariumIrdaComponent implements OnInit {
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined') {
-                let idString: string;
-                idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-                this.idArry = idString.split(',');
-                console.log(idString);
-                console.log(this.idArry);
-                if (this.idArry[1] == 'pulang') {
-                    this.pulang = true;
-                    this.ButtonNav = [
-                        { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
-                        { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
-                    ];
-                } else {
-                    this.ButtonNav = [
-                        { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
-                        { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
-                    ];
-                }
+            if (this.ShowTitle) {
+                if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined') {
+                    let idString: string;
+                    idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+                    this.idArry = idString.split(',');
+                    console.log(idString);
+                    console.log(this.idArry);
+                    if (this.idArry[1] == 'pulang') {
+                        this.pulang = true;
+                        this.ButtonNav = [
+                            { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                            { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
+                        ];
+                    } else {
+                        this.ButtonNav = [
+                            { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                            { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
+                        ];
+                    }
 
-                this.updateResep(parseInt(this.idArry[0]));
+                    this.updateResep(parseInt(this.idArry[0]));
+                }
+            } else {
+                this.checkQueryParams();
             }
         }, 1);
+    }
+
+    checkQueryParams(): void {
+        if (typeof this.QueryParams !== 'undefined') {
+            let idString: string;
+            idString = this.encryptionService.decrypt(this.QueryParams);
+            this.idArry = idString.split(',');
+
+            if (this.idArry[1] == 'pulang') {
+                this.pulang = true;
+                this.ButtonNav = [
+                    { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                    { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
+                ];
+            } else {
+                this.ButtonNav = [
+                    { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                    { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
+                ];
+            }
+
+            this.updateResep(parseInt(this.idArry[0]));
+        }
     }
 
     updateResep(id) {
@@ -521,7 +550,6 @@ export class InputResepFormulariumIrdaComponent implements OnInit {
         this.nama_satuan.setValue(args.itemData.sediaan_obat);
         this.nama_obat.setValue(args.itemData.nama_generik);
     }
-
 
     handleChangeLabel(args: any): void {
         this.label_pemakaian_obat.setValue('');
@@ -958,14 +986,22 @@ export class InputResepFormulariumIrdaComponent implements OnInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "kembali_update":
-                const id = this.encryptionService.encrypt(JSON.stringify(this.dataUbah.resep_id));
-                this.router.navigate(['Dokter/resep-formularium-irda/view-resep-formularium-irda', id, "GRAHCIS"]);
+                if (this.ShowTitle) {
+                    const id = this.encryptionService.encrypt(JSON.stringify(this.dataUbah.resep_id));
+                    this.router.navigate(['Dokter/resep-formularium-irda/view-resep-formularium-irda', id, "GRAHCIS"]);
+                } else {
+                    this.handleClickButtonNav.emit('kembali_update')
+                }
                 break;
             case "ubah":
                 this.ubahResep();
                 break;
             case "Kembali":
-                this.router.navigateByUrl('Dokter/resep-formularium-irda/daftar-resep-formularium-irda');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-formularium-irda/daftar-resep-formularium-irda');
+                } else {
+                    this.handleClickButtonNav.emit('Kembali');
+                }
                 break;
             case "Template":
                 this.handelClickTemplateResep();

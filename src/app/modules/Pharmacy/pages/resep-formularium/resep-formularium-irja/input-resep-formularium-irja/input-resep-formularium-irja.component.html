@@ -193,12 +193,14 @@
             <org-look-up-hirarki #LookupRacikan [lookup-url]="urlRacikan"
                 (onGetSelectedData)="heandleSelectedRacikan($event)" [columns]="GridLookUpItem.columns"
                 [columnsChild]="GridLookUpItem.columnsChild" [filter-lookup]="GridLookUpItem.filter"
-                [queryString]="'set_racikan_id'" [modal-title]="'Data Racikan Dokter'"></org-look-up-hirarki>
+                [queryString]="'set_racikan_id'" [modal-title]="'Data Racikan Dokter'">
+            </org-look-up-hirarki>
 
             <org-look-up-hirarki #LookupTemplateResep [lookup-url]="urlTemplateResep"
                 (onGetSelectedData)="heandleSelectedTemplateResep($event)" [columns]="GridlookUpTemplateResep.columns"
                 [columnsChild]="GridlookUpTemplateResep.columnsChild" [filter-lookup]="GridlookUpTemplateResep.filter"
-                [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'"></org-look-up-hirarki>
+                [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'">
+            </org-look-up-hirarki>
         </div>
     </form>
 
@@ -212,8 +214,9 @@
                     </p>
                 </div> -->
                 <div class="card-body p-0">
-                    <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async" height="calc(100vh - 27rem)"
-                        gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar"
+                    <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async"
+                        [height]=" ShowTitle ? 'calc(100vh - 27rem)' : '100%'" gridLines="Both" rowHeight="30"
+                        [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar"
                         (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)" [allowResizing]="true"
                         (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                         (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
@@ -271,6 +274,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal Keterangan Template Resep  -->
     <ng-template #modalTemplateResep>
         <div class="modal-header px-2 py-1 background-biru-muda text-white">

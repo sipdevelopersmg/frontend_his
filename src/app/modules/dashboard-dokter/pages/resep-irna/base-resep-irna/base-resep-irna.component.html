@@ -1,0 +1,23 @@
+<org-card-layout [ButtonNav]="ButtonNav" [ShowTitle]="ShowTitle">
+    <section>
+        <app-input-resep-irna *ngIf="StateActive == 'input_resep_irna'"
+            (handleClickButtonNav)="handleClickButtonNavInputResep($event)">
+        </app-input-resep-irna>
+
+        <app-daftar-resep-irna *ngIf="StateActive == 'daftar_resep_irna'"
+            (clickButtonNav)="handleClickButtonNavDaftarResep($event)">
+        </app-daftar-resep-irna>
+
+        <app-input-resep-irna *ngIf="StateActive == 'ubah_resep_irna'" [QueryParams]="UbahResepIrnaQueryParams"
+            (handleClickButtonNav)="handleClickButtonNavInputResep($event)">
+        </app-input-resep-irna>
+
+        <app-pulang-resep-irna *ngIf="StateActive == 'pulang_resep_irna'"
+            (clickButtonNav)="handleClickButtonNavPulangResep($event)">
+        </app-pulang-resep-irna>
+
+        <app-view-resep-irna #ViewResepIrnaComp *ngIf="StateActive == 'view_resep_irna'"
+            [QueryParams]="ViewResepIrnaQueryParams" (handleClickButtonNav)="handleClickButtonNavViewResep($event)">
+        </app-view-resep-irna>
+    </section>
+</org-card-layout>

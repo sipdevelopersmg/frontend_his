@@ -63,8 +63,9 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body p-1 cardBodyHistoryResep p-1">
-                <div class="card shadow-sm border-1 mb-2" *ngFor="let item of resepDokterService.dataHistoryResep | async">
+            <div class="card-body p-1 cardBodyHistoryResep {{ ShowTitle ? '' : 'ShowTitle' }} p-1">
+                <div class="card shadow-sm border-1 mb-2"
+                    *ngFor="let item of resepDokterService.dataHistoryResep | async">
                     <div class="card-body p-2">
                         <!-- No. Resep -->
                         <div class="row mb-1">
@@ -104,15 +105,12 @@
             <div class="card-header">
                 <p class="text-biru-tua mb-0">Daftar Obat</p>
             </div>
-            <div class="card-body cardBodyHistoryResep p-0">
-                <mol-grid #gridDetailResep [grid-id]="'GridDetailResep'" [grid-height]="'calc(100vh - 19rem)'"
-                    [grid-lines]="'Both'" [grid-editSettings]="GridDetailResepEditSettings"
-                    [grid-toolbar]="GridDetailResepToolbar" 
-                    [columns]="GridConfig.columns"
-                    [childGrid]="childGrid"
-                    (data-bound)='onDataBound($event)'
-                    (row-data-bound)='rowDataBound($event)'
-                    [grid-DataSource]="dataSource">
+            <div class="card-body cardBodyHistoryResep {{ ShowTitle ? '' : 'ShowTitle' }} p-0">
+                <mol-grid #gridDetailResep [grid-id]="'GridDetailResep'"
+                    [grid-height]="ShowTitle ? 'calc(100vh - 19rem)' : '100%'" [grid-lines]="'Both'"
+                    [grid-editSettings]="GridDetailResepEditSettings" [grid-toolbar]="GridDetailResepToolbar"
+                    [columns]="GridConfig.columns" [childGrid]="childGrid" (data-bound)='onDataBound($event)'
+                    (row-data-bound)='rowDataBound($event)' [grid-DataSource]="dataSource">
                 </mol-grid>
             </div>
         </div>

@@ -179,12 +179,14 @@
         <org-look-up-hirarki #LookupRacikan [lookup-url]="urlRacikan"
             (onGetSelectedData)="heandleSelectedRacikan($event)" [columns]="GridLookUpItem.columns"
             [columnsChild]="GridLookUpItem.columnsChild" [filter-lookup]="GridLookUpItem.filter"
-            [queryString]="'set_racikan_id'" [modal-title]="'Data Racikan Dokter'"></org-look-up-hirarki>
+            [queryString]="'set_racikan_id'" [modal-title]="'Data Racikan Dokter'">
+        </org-look-up-hirarki>
 
         <org-look-up-hirarki #LookupTemplateResep [lookup-url]="urlTemplateResep"
             (onGetSelectedData)="heandleSelectedTemplateResep($event)" [columns]="GridlookUpTemplateResep.columns"
             [columnsChild]="GridlookUpTemplateResep.columnsChild" [filter-lookup]="GridlookUpTemplateResep.filter"
-            [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'"></org-look-up-hirarki>
+            [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'">
+        </org-look-up-hirarki>
     </div>
 </form>
 
@@ -199,10 +201,11 @@
             </div> -->
             <div class="card-body p-0">
                 <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async"
-                    height="calc(100vh - 27rem)" gridLines="Both" rowHeight="30" [childGrid]="ChildGrid"
-                    [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)"
-                    [allowResizing]="true" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
-                    (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
+                    [height]=" ShowTitle ? 'calc(100vh - 27rem)' : '100%'" gridLines="Both" rowHeight="30"
+                    [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar" (toolbarClick)="onToolbarClick($event)"
+                    (load)="onLoad($event)" [allowResizing]="true" (rowDataBound)='rowDataBound($event)'
+                    (dataBound)='onDataBound()' (rowSelected)="onRowSelected($event)"
+                    (actionComplete)="onActionComplete($event)">
                     <e-columns>
                         <e-column [visible]="false" field='no_urut' [allowEditing]="false" headerText='no_urut'
                             editType='defaultEdit' textAlign="left" headerTextAlign="center">

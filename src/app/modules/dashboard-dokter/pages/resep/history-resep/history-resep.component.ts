@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, GridModel } from '@syncfusion/ej2-angular-grids';
 import { MolGridComponent } from 'src/app/modules/shared/components/molecules/grid/grid/grid.component';
 import { DaftarHistoryResepModel, InsertGridResepModel } from '../../../models/resep.model';
@@ -64,14 +64,16 @@ export class HistoryResepComponent implements OnInit {
         { id: 1, text: "dr. Anastasia Nadia", },
     ];
 
-    @ViewChild('gridDetailResep') gridDetailResep:MolGridComponent
+    @ViewChild('gridDetailResep') gridDetailResep: MolGridComponent
 
     dataSource: any = [];
-    dataSourceChild :any = [];
+    dataSourceChild: any = [];
     childGrid: GridModel;
 
+    @Input('ShowTitle') ShowTitle: boolean = true;
+
     constructor(
-        public resepDokterService: ResepDokterService 
+        public resepDokterService: ResepDokterService
     ) { }
 
     ngOnInit(): void {
@@ -84,7 +86,7 @@ export class HistoryResepComponent implements OnInit {
             allowTextWrap: true,
             textWrapSettings: { wrapMode: 'Both' },
             columns: this.GridConfig.columnsChild
-          }
+        }
     }
 
     onLihatDaftarObat(HistoryDetailObat: any): void {
@@ -92,7 +94,7 @@ export class HistoryResepComponent implements OnInit {
         this.mapingRacikan(HistoryDetailObat.details);
     }
 
-    mapingRacikan(details){
+    mapingRacikan(details) {
         this.dataSourceChild = [];
         details.map((item) => {
             this.dataSourceChild.push(...item.racikans);

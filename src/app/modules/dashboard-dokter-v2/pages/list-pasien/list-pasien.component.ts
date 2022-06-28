@@ -68,7 +68,6 @@ export class ListPasienComponent implements OnInit {
         private router: Router,
         private utilityService: UtilityService,
         private dokterService: SetupDokterService,
-        private navigationService: NavigationService,
         private daftarPasienService: DaftarPasienService,
         private dashboardDokterService: DashboardDokterService
     ) { }
@@ -133,7 +132,7 @@ export class ListPasienComponent implements OnInit {
             switch (args.item.id) {
                 case 'visit':
                     this.daftarPasienService.ActivePasien.next({});
-                    this.daftarPasienService.onSetActivePasien(this.GridIRJASelectedRow);
+                    this.daftarPasienService.onSetActivePasien(this.GridIRJASelectedRow, 'IRJA');
                     this.router.navigateByUrl('Dokter/visit-pasien');
                     break;
                 default:
@@ -167,7 +166,7 @@ export class ListPasienComponent implements OnInit {
             switch (args.item.id) {
                 case 'visit':
                     this.daftarPasienService.ActivePasien.next({});
-                    this.daftarPasienService.onSetActivePasien(this.GridIRNASelectedRow);
+                    this.daftarPasienService.onSetActivePasien(this.GridIRNASelectedRow, 'IRNA');
                     this.router.navigateByUrl('Dokter/visit-pasien');
                     break;
                 default:
@@ -193,7 +192,7 @@ export class ListPasienComponent implements OnInit {
             switch (args.item.id) {
                 case 'visit':
                     this.daftarPasienService.ActivePasien.next({});
-                    this.daftarPasienService.onSetActivePasien(this.GridIRDASelectedRow);
+                    this.daftarPasienService.onSetActivePasien(this.GridIRDASelectedRow, 'IRDA');
                     this.router.navigateByUrl('Dokter/visit-pasien');
                     break;
                 default:

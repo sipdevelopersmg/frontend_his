@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
@@ -57,6 +57,11 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
     dataHeader: any = [];
     formInput: FormGroup;
     htmlSelection: string = '';
+
+    @Input('QueryParams') QueryParams: any;
+
+    @Output('handleClickButtonNav') handleClickButtonNav = new EventEmitter();
+
     constructor(
         private formBuilder: FormBuilder,
         public resepFormulariumIrdaService: ResepFormulariumIrdaService,
@@ -69,7 +74,6 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-
         this.formInput = this.formBuilder.group({
             no_register: ['', []],
             no_rekam_medis: ['', []],
@@ -96,9 +100,19 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
-        let id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-        console.log(id);
-        this.onLoadDetailData(id);
+        if (this.ShowTitle) {
+            let id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            this.onLoadDetailData(id);
+        } else {
+            this.checkQueryParams();
+        }
+    }
+
+    checkQueryParams(): void {
+        if (typeof this.QueryParams !== 'undefined') {
+            let id = this.encryptionService.decrypt(this.QueryParams);
+            this.onLoadDetailData(id);
+        }
     }
 
     onLoadDetailData(id) {
@@ -148,7 +162,6 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
         }
     }
 
-
     onDataBound() {
         this.GridResepRacikan.detailRowModule.expandAll();
     }
@@ -186,7 +199,11 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
         let data = this.GridResepRacikan.getSelectedRecords();
         switch (args) {
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-formularium-irda/daftar-resep-formularium-irda');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-formularium-irda/daftar-resep-formularium-irda');
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'kembali', data: null });
+                }
                 break;
             case "lanjutkan":
                 if (data.length == 0) {
@@ -201,12 +218,18 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
                 break;
             case "ubah":
                 const id = this.encryptionService.encrypt(this.dataHeader.resep_id + ',ubah');
-                this.router.navigate(['Dokter/resep-formularium-irda/ubah-resep-formularium-irda', id, "GRAHCIS"]);
+
+                if (this.ShowTitle) {
+                    this.router.navigate(['Dokter/resep-formularium-irda/ubah-resep-formularium-irda', id, "GRAHCIS"]);
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'ubah', data: id });
+                }
                 break;
-            case "pulang":
-                const id_resep = this.encryptionService.encrypt(this.dataHeader.resep_id + ',pulang');
-                this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id_resep, "GRAHCIS"]);
-                break;
+            // case "pulang":
+            //     const id_resep = this.encryptionService.encrypt(this.dataHeader.resep_id + ',pulang');
+            //     this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id_resep, "GRAHCIS"]);
+
+            //     break;
             case "stop":
                 if (data.length == 0) {
                     this.utilityService.onShowingCustomAlert('warning', 'Obat belum di pilih', '')
@@ -232,6 +255,4 @@ export class ViewResepFormulariumIrdaComponent implements OnInit {
         this.htmlSelection += '</ul>';
         console.log(this.htmlSelection);
     }
-
-
 }

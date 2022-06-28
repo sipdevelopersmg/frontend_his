@@ -67,7 +67,7 @@ export class AuthenticationService {
                 this.utilityService.onShowingCustomAlert('success', 'Success', 'Sign In Berhasil')
                     .then(() => {
                         if (result.data.id_role === 2 || result.data.nama_role === 'dokter') {
-                            this.router.navigateByUrl('Dokter/beranda');
+                            this.router.navigateByUrl('Dokter/daftar-pasien');
                         } else {
                             this.router.navigateByUrl('dashboard/beranda');
                         }

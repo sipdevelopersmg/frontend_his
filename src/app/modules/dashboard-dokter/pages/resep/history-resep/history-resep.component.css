@@ -3,3 +3,8 @@
   max-height: calc(100vh - 16.5rem);
   overflow-y: auto;
 }
+
+.cardBodyHistoryResep.ShowTitle {
+  height: 100%;
+  max-height: 100%;
+}

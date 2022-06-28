@@ -17,16 +17,18 @@ export class RadiologiComponent implements OnInit, AfterViewInit {
         { Id: "InputOrderBaru", Icons1: "fa-plus-circle", Captions: "Input Order Baru" },
     ];
 
+    StateActive: 'riwayat' | 'input' = 'riwayat';
+
     constructor(
         private router: Router,
         private navigationService: NavigationService,
     ) { }
 
     ngOnInit(): void {
-        this.onClickButtonNav("RiwayatPemeriksaan");
-
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
+        } else {
+            this.onClickButtonNav("RiwayatPemeriksaan");
         }
     }
 
@@ -38,10 +40,10 @@ export class RadiologiComponent implements OnInit, AfterViewInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "RiwayatPemeriksaan":
-                this.router.navigateByUrl('/Dokter/radiologi/riwayat-pemeriksaan');
+                this.ShowTitle ? this.router.navigateByUrl('/Dokter/radiologi/riwayat-pemeriksaan') : this.StateActive = 'riwayat';
                 break;
             case "InputOrderBaru":
-                this.router.navigateByUrl('/Dokter/radiologi/input-order-pemeriksaan');
+                this.ShowTitle ? this.router.navigateByUrl('/Dokter/radiologi/input-order-pemeriksaan') : this.StateActive = 'input';
                 break;
             default:
                 break;

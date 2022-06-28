@@ -28,8 +28,6 @@ export class OrgCardLayoutComponent implements OnInit, AfterContentChecked {
     constructor() { }
 
     ngOnInit(): void {
-        console.log(this.ShowTitle);
-
         if (this.ShowTitle) {
             this.HeaderRibbonClass = "col-lg-6 col-md-6 col-sm-6 col-xs-6";
             this.ButtonNavClass = "col-lg-6 col-md-6 col-sm-6 col-xs-6";

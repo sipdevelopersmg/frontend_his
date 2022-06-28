@@ -34,6 +34,8 @@ import { DaftarResepIrdaComponent } from './pages/resep-irda/daftar-resep-irda/d
 import { InputResepIrdaComponent } from './pages/resep-irda/input-resep-irda/input-resep-irda.component';
 import { ViewResepIrdaComponent } from './pages/resep-irda/view-resep-irda/view-resep-irda.component';
 import { PulangResepIrdaComponent } from './pages/resep-irda/pulang-resep-irda/pulang-resep-irda.component';
+import { BaseResepIrdaComponent } from './pages/resep-irda/base-resep-irda/base-resep-irda.component';
+import { BaseResepIrnaComponent } from './pages/resep-irna/base-resep-irna/base-resep-irna.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +68,8 @@ import { PulangResepIrdaComponent } from './pages/resep-irda/pulang-resep-irda/p
         InputResepIrdaComponent,
         ViewResepIrdaComponent,
         PulangResepIrdaComponent,
+        BaseResepIrdaComponent,
+        BaseResepIrnaComponent,
     ],
     imports: [
         DashboarDokterRoutingModule,
@@ -104,6 +108,8 @@ import { PulangResepIrdaComponent } from './pages/resep-irda/pulang-resep-irda/p
         InputResepIrdaComponent,
         ViewResepIrdaComponent,
         PulangResepIrdaComponent,
+        BaseResepIrnaComponent,
+        BaseResepIrdaComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

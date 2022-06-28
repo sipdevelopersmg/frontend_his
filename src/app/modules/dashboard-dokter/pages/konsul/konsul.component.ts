@@ -65,7 +65,7 @@ export class KonsulComponent implements OnInit, AfterViewInit {
         this.onGetAllRiwayatKonsul(this.daftarPasienService.ActivePasien.value.id_dokter);
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 

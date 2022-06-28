@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { IEditCell, EditSettingsModel, GridModel, GridComponent, AddEventArgs } from '@syncfusion/ej2-angular-grids';
 
@@ -61,6 +61,11 @@ export class ViewResepIrdaComponent implements OnInit {
     dataHeader: any = [];
     formInput: FormGroup;
     htmlSelection: string = '';
+
+    @Input('QueryParams') QueryParams: any;
+
+    @Output('handleClickButtonNav') handleClickButtonNav = new EventEmitter();
+
     constructor(
         private formBuilder: FormBuilder,
         public resepDokterIrdaService: ResepDokterIrdaService,
@@ -94,15 +99,26 @@ export class ViewResepIrdaComponent implements OnInit {
         }
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
     ngAfterViewInit(): void {
-        let id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
-        console.log(id);
-        this.onLoadDetailData(id);
+        if (this.ShowTitle) {
+            let id = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            this.onLoadDetailData(id);
+        } else {
+            this.checkQueryParams();
+        }
     }
+
+    checkQueryParams(): void {
+        if (typeof this.QueryParams !== 'undefined') {
+            let id = this.encryptionService.decrypt(this.QueryParams);
+            this.onLoadDetailData(id);
+        }
+    }
+
 
     onLoadDetailData(id) {
         this.resepDokterIrdaService.onGetById(id).subscribe((result) => {
@@ -188,7 +204,11 @@ export class ViewResepIrdaComponent implements OnInit {
 
         switch (args) {
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'kembali', data: null });
+                }
                 break;
             case "lanjutkan":
                 if (data.length == 0) {
@@ -203,7 +223,12 @@ export class ViewResepIrdaComponent implements OnInit {
                 break;
             case "ubah":
                 const id = this.encryptionService.encrypt(this.dataHeader.resep_id + ',ubah');
-                this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id, "GRAHCIS"]);
+
+                if (this.ShowTitle) {
+                    this.router.navigate(['Dokter/resep-irda/ubah-resep-irda', id, "GRAHCIS"]);
+                } else {
+                    this.handleClickButtonNav.emit({ id: 'ubah', data: id });
+                }
                 break;
             case "stop":
                 if (data.length == 0) {

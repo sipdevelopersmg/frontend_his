@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GridModel, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ResepDokterIrnaService } from 'src/app/modules/dashboard-dokter/services/resep-dokter-irna/resep-dokter-irna.service';
@@ -40,6 +40,8 @@ export class DaftarResepFormulariumIrnaComponent implements OnInit {
     @ViewChild('GridResepRacikan') GridResepRacikan: GridComponent;
     @ViewChild('GridData') GridData: MolGridComponent;
 
+    @Output('clickButtonNav') clickButtonNav = new EventEmitter();
+
     constructor(
         private router: Router,
         private encryptionService: EncryptionService,
@@ -61,7 +63,6 @@ export class DaftarResepFormulariumIrnaComponent implements OnInit {
     }
 
     GridGroupSettings: object = { showDropArea: false, columns: ['nama_dokter', 'nomor_resep'] };
-
 
     ngOnInit(): void {
         this.childGrid = {
@@ -143,6 +144,12 @@ export class DaftarResepFormulariumIrnaComponent implements OnInit {
                 break;
             default:
                 break;
+        }
+
+        if (this.ShowTitle) {
+
+        } else {
+            this.clickButtonNav.emit({ id: args, data: null });
         }
     }
 

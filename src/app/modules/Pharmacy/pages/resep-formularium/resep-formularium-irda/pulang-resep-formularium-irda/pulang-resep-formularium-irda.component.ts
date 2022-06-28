@@ -162,6 +162,9 @@ export class PulangResepFormulariumIrdaComponent implements OnInit {
     newdetail: any
     @ViewChild('modalTemplateResep') modalTemplateResep: TemplateRef<any>;
     private setIdOutlet: any = 0;
+
+    @Output('clickButtonNav') clickButtonNav = new EventEmitter();
+
     constructor(
         private formBuilder: FormBuilder,
         public resepFormulariumIrdaService: ResepFormulariumIrdaService,
@@ -632,7 +635,6 @@ export class PulangResepFormulariumIrdaComponent implements OnInit {
         }
     }
 
-
     onResetFormObat(): void {
         this.FormAddObat.reset();
         this.qty_resep.setValue(1);
@@ -735,7 +737,11 @@ export class PulangResepFormulariumIrdaComponent implements OnInit {
                 this.Insert();
                 break;
             case "kembali":
-                this.router.navigateByUrl('Dokter/resep-formularium-irda/daftar-resep-formularium-irda');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-formularium-irda/daftar-resep-formularium-irda');
+                } else {
+                    this.clickButtonNav.emit(args);
+                }
                 break;
             default:
                 break;

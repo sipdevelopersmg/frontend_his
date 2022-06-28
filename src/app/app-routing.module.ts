@@ -14,16 +14,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import("./modules/core/core.module").then(m => m.CoreModule),
     },
-    {
-        path: "Dokter",
-        canActivate: [AuthGuard],
-        loadChildren: () => import("./modules/dashboard-dokter/dashboard-dokter.module").then(m => m.DashboardDokterModule),
-    },
     // {
     //     path: "Perawat",
     //     canActivate: [AuthGuard],
-    //     loadChildren: () => import("./modules/dashboard-dokter-v2/dashboard-dokter-v2.module").then(m => m.DashboardDokterV2Module),
-    // }
+    //     loadChildren: () => import("./modules/dashboard-dokter/dashboard-dokter.module").then(m => m.DashboardDokterModule),
+    // },
+    {
+        path: "Dokter",
+        canActivate: [AuthGuard],
+        loadChildren: () => import("./modules/dashboard-dokter-v2/dashboard-dokter-v2.module").then(m => m.DashboardDokterV2Module),
+    }
 ];
 
 @NgModule({

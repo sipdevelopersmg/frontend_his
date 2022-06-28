@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { DropDownList, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
 import { IEditCell, EditSettingsModel, GridModel, GridComponent, AddEventArgs } from '@syncfusion/ej2-angular-grids';
@@ -184,6 +184,10 @@ export class InputResepIrdaComponent implements OnInit {
         return data1['qty_harian'] + ' ' +
             data1['nama_satuan'] + '/Hari, untuk ' + data1['jumlah_hari'] + ' Hari';
     }
+
+    @Input('QueryParams') QueryParams: any;
+
+    @Output('handleClickButtonNav') handleClickButtonNav = new EventEmitter();
 
     private dataUbah: any = null;
     private updateResepDokter: boolean = false;
@@ -431,17 +435,46 @@ export class InputResepIrdaComponent implements OnInit {
         this.urlTemplateResep = this.urlTemplateResep + '/' + this.daftarPasienService.ActivePasien.value.id_dokter;
 
         if ((this.router.url).includes('Dokter')) {
-            this.ShowTitle = true;
+            this.ShowTitle = false;
         }
     }
 
     ngAfterViewInit(): void {
-        if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined') {
+        setTimeout(() => {
+            if (this.ShowTitle) {
+                if (typeof this.activatedRoute.snapshot.params["id"] !== 'undefined') {
+                    let idString: string;
+                    idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+                    this.idArry = idString.split(',');
+                    console.log(idString);
+                    console.log(this.idArry);
+                    if (this.idArry[1] == 'pulang') {
+                        this.pulang = true;
+                        this.ButtonNav = [
+                            { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                            { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Simpan Resep Pulang" },
+                        ];
+                    } else {
+                        this.ButtonNav = [
+                            { Id: "kembali_update", Icons1: "fas fa-arrow-left fa-sm", Captions: "Kembali" },
+                            { Id: "ubah", Icons1: "fas fa-save fa-sm", Captions: "Ubah Resep Dokter" },
+                        ];
+                    }
+
+                    this.updateResep(parseInt(this.idArry[0]));
+                }
+            } else {
+                this.checkQueryParams();
+            }
+        }, 1);
+    }
+
+    checkQueryParams(): void {
+        if (typeof this.QueryParams !== 'undefined') {
             let idString: string;
-            idString = this.encryptionService.decrypt(this.activatedRoute.snapshot.params["id"]);
+            idString = this.encryptionService.decrypt(this.QueryParams);
             this.idArry = idString.split(',');
-            console.log(idString);
-            console.log(this.idArry);
+
             if (this.idArry[1] == 'pulang') {
                 this.pulang = true;
                 this.ButtonNav = [
@@ -466,7 +499,6 @@ export class InputResepIrdaComponent implements OnInit {
             this.updateResepDokter = true;
         })
     }
-
 
     handleClickTambahObat() {
         this.inputObat = true;
@@ -588,7 +620,6 @@ export class InputResepIrdaComponent implements OnInit {
         this.nama_satuan.setValue(args.itemData.nama_satuan);
         this.nama_obat.setValue(args.itemData.nama_obat);
     }
-
 
     handleChangeLabel(args: any): void {
         this.label_pemakaian_obat.setValue('');
@@ -1020,14 +1051,22 @@ export class InputResepIrdaComponent implements OnInit {
     onClickButtonNav(args: any): void {
         switch (args) {
             case "kembali_update":
-                const id = this.encryptionService.encrypt(JSON.stringify(this.dataUbah.resep_id));
-                this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
+                if (this.ShowTitle) {
+                    const id = this.encryptionService.encrypt(JSON.stringify(this.dataUbah.resep_id));
+                    this.router.navigate(['Dokter/resep-irda/view-resep-irda', id, "GRAHCIS"]);
+                } else {
+                    this.handleClickButtonNav.emit('kembali_update')
+                }
                 break;
             case "ubah":
                 this.ubahResep();
                 break;
             case "Kembali":
-                this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
+                if (this.ShowTitle) {
+                    this.router.navigateByUrl('Dokter/resep-irda/daftar-resep-irda');
+                } else {
+                    this.handleClickButtonNav.emit('Kembali');
+                }
                 break;
             case "Template":
                 this.handelClickTemplateResep();
