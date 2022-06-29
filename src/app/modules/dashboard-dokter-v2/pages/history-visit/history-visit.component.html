@@ -1,1 +1,152 @@
-<p>history-visit works!</p>
+<org-card-layout [ButtonNav]="ButtonNav" [TransparentBackground]="true"
+    (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="row h-100">
+        <!-- Timeline -->
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+            <div class="card border-0 shadow-sm card_timeline">
+                <div class="card-body card_body_timeline">
+                    <div *ngFor="let item of Timeline" class="row timeline_row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pt-2">
+                            <p class="text_date cursor-pointer mb-1">
+                                <i class="fas fa-circle timeline_circle"></i>&nbsp;
+                                {{ item.time | date: 'dd MMM yyyy' }}
+                            </p>
+                            <p class="text_dpjp mb-0 ms-4">
+                                {{ item.dpjp }}
+                            </p>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 mb-3">
+                            <div class="card border-0 shadow-sm timeline_card_content">
+                                <div class="card-body">
+                                    <div class="ribbon ribbon-top-right">
+                                        <span class="{{ item.kategori }}">
+                                            {{ item.kategori }}
+                                        </span>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <h5 class="text_title mb-0 fw-bold">
+                                                {{ item.title }}
+                                            </h5>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                            <p id="{{ item.id }}_sub_title" class="text_sub_title mb-0">
+                                            </p>
+                                        </div>
+                                        <div *ngIf="item.diagnosa && item.diagnosa.length > 0"
+                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <p class="text_diagnosa_title mb-2">
+                                                Diagnosa
+                                            </p>
+                                            <p *ngFor="let diagnosa of item.diagnosa"
+                                                class="text_diagnosa_content mb-0">
+                                                {{ diagnosa.kode_icd }} {{ diagnosa.nama_icd }}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="item.resep && item.resep.length > 0"
+                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                            (click)="toggleSelectedData('resep', item.resep)">
+                                            <p class="text_view_resep mb-0 cursor-pointer">
+                                                Lihat Resep &nbsp;<i class="fas fa-angle-right fa-xs"></i>
+                                            </p>
+                                        </div>
+                                        <div *ngIf="item.hasil_lab_rad && item.hasil_lab_rad.length > 0"
+                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                            (click)="toggleSelectedData('lab_rad', item.hasil_lab_rad)">
+                                            <p class="text_view_resep mb-0 cursor-pointer">
+                                                Lihat Hasil Pemeriksaan &nbsp;<i class="fas fa-angle-right fa-xs"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Resep -->
+        <div *ngIf="SelectedResep" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="card border-0 shadow-sm card_timeline">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
+                            <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
+                                Resep
+                            </p>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div *ngFor="let item of SelectedResep"
+                                    class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <p class="text_resep_detail mb-0">
+                                        <i class="fas fa-check-circle text-biru-tua fa-sm"></i>&nbsp;
+                                        {{ item.nama_obat }}
+                                    </p>
+                                    <p class="text_resep_sub_detail mb-0 ps-4">
+                                        {{ item.qty }} {{ item.satuan | titlecase }}
+                                        {{ item.tambahan_aturan_pakai }}
+                                        ( {{ item.nama_rute_pemberian_obat }} )
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Lab Rad -->
+        <div *ngIf="SelectedLabRad" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="card border-0 shadow-sm card_timeline">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
+                            <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
+                                Hasil Pemeriksaan
+                            </p>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div *ngFor="let item of SelectedLabRad" class="row pb-2 mb-2 border-bottom">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <p class="text_pemeriksaan_label mb-0">
+                                        Nama Pemeriksaan
+                                    </p>
+                                    <p class="text_pemeriksaan_detail mb-0">
+                                        {{ item.nama_pemeriksaan }}
+                                    </p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <p class="text_pemeriksaan_label mb-0">
+                                        Tanggal Pemeriksaan
+                                    </p>
+                                    <p class="text_pemeriksaan_detail mb-0">
+                                        {{ item.tanggal | date: 'dd MMM yyyy' }}
+                                    </p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <p class="text_pemeriksaan_label mb-0">
+                                        Dokter Pemeriksa
+                                    </p>
+                                    <p class="text_pemeriksaan_detail mb-0">
+                                        {{ item.dokter_pemeriksa }}
+                                    </p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0">
+                                    <p class="text_pemeriksaan_label mb-0">
+                                        Deskripsi
+                                    </p>
+                                    <p class="text_pemeriksaan_detail mb-0">
+                                        {{ item.deskripsi }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</org-card-layout>

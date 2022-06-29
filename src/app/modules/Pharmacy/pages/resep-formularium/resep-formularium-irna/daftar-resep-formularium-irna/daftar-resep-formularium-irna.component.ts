@@ -131,23 +131,21 @@ export class DaftarResepFormulariumIrnaComponent implements OnInit {
     }
 
     handleClickButtonNav(args: any): void {
-        switch (args) {
-            case 'Add':
-                this.router.navigateByUrl('Dokter/resep-formularium-irna/input-resep-formularium-irna');
-                break;
-            case 'Edit':
-                const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
-                this.router.navigate(['Dokter/resep-formularium-irna/input-resep-formularium-irna', pemesanan_id, "GRAHCIS"]);
-                break;
-            case 'pulang':
-                this.router.navigateByUrl('Dokter/resep-formularium-irna/pulang-resep-formularium-irna');
-                break;
-            default:
-                break;
-        }
-
         if (this.ShowTitle) {
-
+            switch (args) {
+                case 'Add':
+                    this.router.navigateByUrl('Dokter/resep-formularium-irna/input-resep-formularium-irna');
+                    break;
+                case 'Edit':
+                    const pemesanan_id = this.encryptionService.encrypt(JSON.stringify(this.SelectedData.resep_id));
+                    this.router.navigate(['Dokter/resep-formularium-irna/input-resep-formularium-irna', pemesanan_id, "GRAHCIS"]);
+                    break;
+                case 'pulang':
+                    this.router.navigateByUrl('Dokter/resep-formularium-irna/pulang-resep-formularium-irna');
+                    break;
+                default:
+                    break;
+            }
         } else {
             this.clickButtonNav.emit({ id: args, data: null });
         }
@@ -155,7 +153,5 @@ export class DaftarResepFormulariumIrnaComponent implements OnInit {
 
     handleSelectedRow(args: any): void {
         this.SelectedData = args.data;
-        console.log(this.SelectedData)
     }
-
 }

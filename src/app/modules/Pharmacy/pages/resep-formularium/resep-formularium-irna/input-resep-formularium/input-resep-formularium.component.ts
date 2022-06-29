@@ -840,8 +840,8 @@ export class InputResepFormulariumComponent implements OnInit {
     }
 
     onEditData() {
-        let data = this.SelectedDataObat
-        console.log(data);
+        let data = this.SelectedDataObat;
+
         this.FormAddObat.setValue({
             counter: data.counter,
             no_urut: data.no_urut,

@@ -1,5 +1,4 @@
 <org-card-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="onClickButtonNav($event)" [ShowTitle]="ShowTitle">
-    <!-- Field Pencarian -->
     <form [formGroup]="FormAddObat" class="form-irna">
         <div class="row">
             <div class="col-lg-4">
@@ -200,8 +199,6 @@
 
             </div>
 
-
-
             <!-- GRID OBAT -->
             <div class="col-lg-8">
                 <!-- Dropdown Depo Farmasi -->
@@ -218,8 +215,9 @@
                 </div>
                 <div class="card">
                     <div class="card-body p-0">
-                        <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async" height="calc(100vh - 15rem)"
-                            gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar"
+                        <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async"
+                            [height]=" ShowTitle ? 'calc(100vh - 15rem)' : '100%'" gridLines="Both" rowHeight="30"
+                            [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar"
                             (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)"
                             (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                             (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)"

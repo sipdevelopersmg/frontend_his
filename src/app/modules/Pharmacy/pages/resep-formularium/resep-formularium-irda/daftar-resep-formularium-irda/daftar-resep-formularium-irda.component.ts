@@ -63,7 +63,6 @@ export class DaftarResepFormulariumIrdaComponent implements OnInit {
 
     GridGroupSettings: object = { showDropArea: false, columns: ['nama_dokter', 'nomor_resep'] };
 
-
     ngOnInit(): void {
         this.childGrid = {
             dataSource: this.dataSourceChild,

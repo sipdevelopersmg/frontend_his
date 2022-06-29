@@ -1,7 +1,8 @@
-<org-card-layout>
+<org-card-layout [ShowTitle]="ShowTitle">
     <section>
         <app-input-resep-formularium-irda *ngIf="StateActive == 'input_resep_irda'"
-            (handleClickButtonNav)="handleClickButtonNavInputResep($event)"></app-input-resep-formularium-irda>
+            (handleClickButtonNav)="handleClickButtonNavInputResep($event)">
+        </app-input-resep-formularium-irda>
 
         <app-daftar-resep-formularium-irda *ngIf="StateActive == 'daftar_resep_irda'"
             (clickButtonNav)="handleClickButtonNavDaftarResep($event)">

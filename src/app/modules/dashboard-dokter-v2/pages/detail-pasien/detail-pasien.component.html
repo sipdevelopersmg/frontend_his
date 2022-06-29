@@ -80,8 +80,19 @@
                         <app-base-resep-irda></app-base-resep-irda>
                     </section>
 
+                    <!-- Resep IRJA Formularium -->
                     <app-input-resep-formularium-irja *ngIf="ActivePasien?.jenis_rawat == 'IRJA' && IsFormularium">
                     </app-input-resep-formularium-irja>
+
+                    <!-- Resep IRNA Formularium -->
+                    <section id="IRNA_FORMULARIUM" *ngIf="ActivePasien?.jenis_rawat == 'IRNA' && IsFormularium">
+                        <app-base-resep-formularium-irna></app-base-resep-formularium-irna>
+                    </section>
+
+                    <!-- Resep IRDA Formularium -->
+                    <section id="IRDA_FORMULARIUM" *ngIf="ActivePasien?.jenis_rawat == 'IRDA' && IsFormularium">
+                        <app-base-resep-formularium-irda></app-base-resep-formularium-irda>
+                    </section>
                 </div>
             </div>
         </div>

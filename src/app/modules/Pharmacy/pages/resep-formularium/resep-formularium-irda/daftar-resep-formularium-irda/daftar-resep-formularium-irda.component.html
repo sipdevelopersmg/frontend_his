@@ -7,7 +7,7 @@
             </mol-offcanvas-filter>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <ejs-grid #GridResepRacikan [dataSource]="dataSource" [height]=" ShowTitle ? 'calc(100vh - 15rem)' : '100%'"
+            <ejs-grid #GridResepRacikan [dataSource]="dataSource" [height]="ShowTitle ? 'calc(100vh - 15rem)' : '100%'"
                 gridLines="Both" rowHeight="30" [childGrid]="childGrid" [allowGrouping]="true"
                 [groupSettings]="GridGroupSettings" (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                 [allowTextWrap]="true" [textWrapSettings]="{ wrapMode: 'Both' }">

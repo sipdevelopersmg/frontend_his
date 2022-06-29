@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { IDaftarPasienIRJAModel } from 'src/app/modules/dashboard-dokter/models/daftar_pasien.model';
 import { DaftarPasienService } from 'src/app/modules/dashboard-dokter/services/daftar-pasien/daftar-pasien.service';
 import { ButtonNavModel } from 'src/app/modules/shared/components/molecules/button/mol-button-nav/mol-button-nav.component';
-import { environment, isFormularium } from 'src/environments/environment';
+import { isFormularium } from 'src/environments/environment';
 
 @Component({
     selector: 'app-detail-pasien',
@@ -26,6 +26,7 @@ export class DetailPasienComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.ButtonNav = [
             { Id: 'Back', Captions: 'Back', Icons1: 'fa-arrow-left' },
+            { Id: 'History', Captions: 'History Visit', Icons1: 'fa-book-medical' },
         ];
     }
 
@@ -43,6 +44,9 @@ export class DetailPasienComponent implements OnInit, AfterViewInit, OnDestroy {
         switch (ButtonId) {
             case 'Back':
                 this.router.navigateByUrl('Dokter/daftar-pasien');
+                break;
+            case 'History':
+                this.router.navigateByUrl('Dokter/history-visit');
                 break;
             default:
                 break;

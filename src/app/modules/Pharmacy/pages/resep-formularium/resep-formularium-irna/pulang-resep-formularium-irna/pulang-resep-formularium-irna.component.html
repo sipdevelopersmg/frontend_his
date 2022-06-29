@@ -201,6 +201,7 @@
                 [modal-title]="'Data Template Resep Dokter'" [queryString]="'resep_id'"></org-look-up-hirarki>
         </div>
     </form>
+
     <!-- Grid Daftar Obat -->
     <div class="row pt-2 mb-2">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -211,8 +212,9 @@
                     </p>
                 </div> -->
                 <div class="card-body p-0">
-                    <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async" height="calc(100vh - 24rem)"
-                        gridLines="Both" rowHeight="30" [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar"
+                    <ejs-grid #GridResepRacikan [dataSource]="dataSourceGrid | async"
+                        [height]=" ShowTitle ? 'calc(100vh - 24rem)' : '100%'" gridLines="Both" rowHeight="30"
+                        [childGrid]="ChildGrid" [toolbar]="GridDaftarObatToolbar"
                         (toolbarClick)="onToolbarClick($event)" (load)="onLoad($event)"
                         (rowDataBound)='rowDataBound($event)' (dataBound)='onDataBound()'
                         (rowSelected)="onRowSelected($event)" (actionComplete)="onActionComplete($event)">
