@@ -1,5 +1,5 @@
 
-export const webApiDemo = "http://134.209.102.123";
+export const webApiDemo = "http://139.59.229.93";
 
 export const webApiUrl = "http://174.138.22.139";
 
