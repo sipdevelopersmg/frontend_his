@@ -44,6 +44,18 @@ export class DiagnosaComponent implements OnInit, AfterViewInit {
     @ViewChild('LookupDiagnosa') LookupDiagnosa: OrgInputLookUpKodeComponent;
     urlDiagnosa = this.API_PIS_SETUP_DATA.SETUP_ICD_DIAGNOSA.GET_ALL_DIAGNOSA_FOR_LOOKUP_ADMISI;
 
+    toolbarsRTE: object = {
+        items: [
+            'Undo', 'Redo', '|',
+            'Bold', 'Italic', 'Underline', '|',
+            'FontSize', 'FontColor', '|',
+            'LowerCase', 'UpperCase', '|',
+            'Alignments', '|',
+            'OrderedList', 'UnorderedList', '|',
+            'Indent', 'Outdent',
+        ]
+    };
+
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,

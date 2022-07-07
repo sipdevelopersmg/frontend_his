@@ -28,6 +28,10 @@
   color: #4b546f;
 }
 
+.timeline_circle.active {
+  color: var(--biru-muda);
+}
+
 .text_date {
   font-size: 17px;
   font-weight: 700;
@@ -46,8 +50,25 @@
   border-bottom: 3px solid #4b546f;
 }
 
+.text_date.active {
+  color: var(--biru-muda) !important;
+}
+
+.text_date.active:after {
+  content: "";
+  top: 20px;
+  position: absolute;
+  width: 10%;
+  left: 25%;
+  border-bottom: 3px solid var(--biru-muda) !important;
+}
+
 .timeline_card_content {
   border-left: 3px solid #4b546f !important;
+}
+
+.timeline_card_content.active {
+  border-left: 3px solid var(--biru-muda) !important;
 }
 
 .ribbon {
@@ -146,4 +167,11 @@
 .text_pemeriksaan_detail {
   font-size: 15px;
   text-align: justify;
+}
+
+.card_detail_timeline {
+  border-top: 5px solid var(--biru-muda) !important;
+  border-radius: 7px;
+  background-color: var(--bs-gray-100);
+  height: 100%;
 }

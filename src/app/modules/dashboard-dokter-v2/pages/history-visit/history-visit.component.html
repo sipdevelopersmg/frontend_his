@@ -7,8 +7,9 @@
                 <div class="card-body card_body_timeline">
                     <div *ngFor="let item of Timeline" class="row timeline_row">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pt-2">
-                            <p class="text_date cursor-pointer mb-1">
-                                <i class="fas fa-circle timeline_circle"></i>&nbsp;
+                            <p id="{{ item.id }}_text_date" class="text_date cursor-pointer mb-1"
+                                (click)="toggleSelectedData('all', item)">
+                                <i id="{{ item.id }}_timeline_circle" class="fas fa-circle timeline_circle"></i>&nbsp;
                                 {{ item.time | date: 'dd MMM yyyy' }}
                             </p>
                             <p class="text_dpjp mb-0 ms-4">
@@ -16,7 +17,9 @@
                             </p>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 mb-3">
-                            <div class="card border-0 shadow-sm timeline_card_content">
+                            <div id="{{ item.id }}_timeline_card_content"
+                                class="card border-0 shadow-sm timeline_card_content cursor-pointer"
+                                (click)="toggleSelectedData('all', item)">
                                 <div class="card-body">
                                     <div class="ribbon ribbon-top-right">
                                         <span class="{{ item.kategori }}">
@@ -46,14 +49,14 @@
                                         </div>
                                         <div *ngIf="item.resep && item.resep.length > 0"
                                             class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                            (click)="toggleSelectedData('resep', item.resep)">
+                                            (click)="toggleSelectedData('resep', item)">
                                             <p class="text_view_resep mb-0 cursor-pointer">
                                                 Lihat Resep &nbsp;<i class="fas fa-angle-right fa-xs"></i>
                                             </p>
                                         </div>
                                         <div *ngIf="item.hasil_lab_rad && item.hasil_lab_rad.length > 0"
                                             class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                            (click)="toggleSelectedData('lab_rad', item.hasil_lab_rad)">
+                                            (click)="toggleSelectedData('lab_rad', item)">
                                             <p class="text_view_resep mb-0 cursor-pointer">
                                                 Lihat Hasil Pemeriksaan &nbsp;<i class="fas fa-angle-right fa-xs"></i>
                                             </p>
@@ -67,80 +70,160 @@
             </div>
         </div>
 
-        <!-- Detail Resep -->
-        <div *ngIf="SelectedResep" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            <div class="card border-0 shadow-sm card_timeline">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
-                            <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
-                                Resep
-                            </p>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="row">
+                <!-- Vital Sign -->
+                <div *ngIf="SelectedVitalSign" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                    <div class="card border-0 shadow-sm card_detail_timeline">
+                        <div class="card-body">
                             <div class="row">
-                                <div *ngFor="let item of SelectedResep"
-                                    class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                                    <p class="text_resep_detail mb-0">
-                                        <i class="fas fa-check-circle text-biru-tua fa-sm"></i>&nbsp;
-                                        {{ item.nama_obat }}
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
+                                    <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
+                                        Vital Sign
                                     </p>
-                                    <p class="text_resep_sub_detail mb-0 ps-4">
-                                        {{ item.qty }} {{ item.satuan | titlecase }}
-                                        {{ item.tambahan_aturan_pakai }}
-                                        ( {{ item.nama_rute_pemberian_obat }} )
-                                    </p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <!-- Denyut Nadi -->
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-2 border-end text-center">
+                                            <p class="text_vital_sign mb-0">
+                                                Denyut Nadi
+                                            </p>
+                                            <p class="value_vital_sign mb-0 d-flex align-items-center fw-bold justify-content-center"
+                                                style="font-size: 20px">
+                                                <i class="fas fa-circle fa-xs" style="font-size: 5px"></i>&nbsp;
+                                                {{ SelectedVitalSign.denyut_nadi_per_menit }}&nbsp;
+                                                <span style="font-size: 15px; font-weight: 400; padding-top: 5px">
+                                                    / Menit
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        <!-- Suhu Badan -->
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-2 border-end text-center">
+                                            <p class="text_vital_sign mb-0">
+                                                Suhu Badan
+                                            </p>
+                                            <p class="value_vital_sign mb-0 d-flex align-items-center fw-bold justify-content-center"
+                                                style="font-size: 20px">
+                                                <i class="fas fa-circle fa-xs" style="font-size: 5px"></i>&nbsp;
+                                                {{ SelectedVitalSign.suhu_badan_celcius }}&nbsp;
+                                                <span style="font-size: 15px; font-weight: 400; padding-top: 5px">
+                                                    C
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        <!-- Tekanan Darah -->
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-2 border-end text-center">
+                                            <p class="text_vital_sign mb-0">
+                                                Tekanan Darah
+                                            </p>
+                                            <p class="value_vital_sign mb-0 d-flex align-items-center fw-bold justify-content-center"
+                                                style="font-size: 20px">
+                                                <i class="fas fa-circle fa-xs" style="font-size: 5px"></i>&nbsp;
+                                                {{ SelectedVitalSign.tekanan_darah_atas }} /
+                                                {{ SelectedVitalSign.tekanan_darah_bawah }}
+                                            </p>
+                                        </div>
+
+                                        <!-- Oksigen -->
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-0 text-center">
+                                            <p class="text_vital_sign mb-0">
+                                                Oksigen
+                                            </p>
+                                            <p class="value_vital_sign mb-0 d-flex align-items-center fw-bold justify-content-center"
+                                                style="font-size: 20px">
+                                                <i class="fas fa-circle fa-xs" style="font-size: 5px"></i>&nbsp;
+                                                {{ SelectedVitalSign.saturasi_oksigen }}&nbsp;
+                                                <span style="font-size: 15px; font-weight: 400; padding-top: 5px">
+                                                    %
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Detail Lab Rad -->
-        <div *ngIf="SelectedLabRad" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            <div class="card border-0 shadow-sm card_timeline">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
-                            <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
-                                Hasil Pemeriksaan
-                            </p>
+                <!-- Detail Resep -->
+                <div *ngIf="SelectedResep" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card border-0 shadow-sm card_detail_timeline">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
+                                    <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
+                                        Resep
+                                    </p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div *ngFor="let item of SelectedResep"
+                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <p class="text_resep_detail mb-0">
+                                                <i class="fas fa-check-circle text-biru-tua fa-sm"></i>&nbsp;
+                                                {{ item.nama_obat }}
+                                            </p>
+                                            <p class="text_resep_sub_detail mb-0 ps-4">
+                                                {{ item.qty }} {{ item.satuan | titlecase }}
+                                                {{ item.tambahan_aturan_pakai }}
+                                                ( {{ item.nama_rute_pemberian_obat }} )
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div *ngFor="let item of SelectedLabRad" class="row pb-2 mb-2 border-bottom">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                                    <p class="text_pemeriksaan_label mb-0">
-                                        Nama Pemeriksaan
-                                    </p>
-                                    <p class="text_pemeriksaan_detail mb-0">
-                                        {{ item.nama_pemeriksaan }}
-                                    </p>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                                    <p class="text_pemeriksaan_label mb-0">
-                                        Tanggal Pemeriksaan
-                                    </p>
-                                    <p class="text_pemeriksaan_detail mb-0">
-                                        {{ item.tanggal | date: 'dd MMM yyyy' }}
+                    </div>
+                </div>
+
+                <!-- Detail Lab Rad -->
+                <div *ngIf="SelectedLabRad" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card border-0 shadow-sm card_detail_timeline">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pb-2 mb-3 border-bottom">
+                                    <p class="mb-0 fw-bold text-biru-tua" style="font-size: 20px;">
+                                        Hasil Pemeriksaan
                                     </p>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
-                                    <p class="text_pemeriksaan_label mb-0">
-                                        Dokter Pemeriksa
-                                    </p>
-                                    <p class="text_pemeriksaan_detail mb-0">
-                                        {{ item.dokter_pemeriksa }}
-                                    </p>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0">
-                                    <p class="text_pemeriksaan_label mb-0">
-                                        Deskripsi
-                                    </p>
-                                    <p class="text_pemeriksaan_detail mb-0">
-                                        {{ item.deskripsi }}
-                                    </p>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div *ngFor="let item of SelectedLabRad" class="row pb-2 mb-2 border-bottom">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <p class="text_pemeriksaan_label mb-0">
+                                                Nama Pemeriksaan
+                                            </p>
+                                            <p class="text_pemeriksaan_detail mb-0">
+                                                {{ item.nama_pemeriksaan }}
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <p class="text_pemeriksaan_label mb-0">
+                                                Tanggal Pemeriksaan
+                                            </p>
+                                            <p class="text_pemeriksaan_detail mb-0">
+                                                {{ item.tanggal | date: 'dd MMM yyyy' }}
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+                                            <p class="text_pemeriksaan_label mb-0">
+                                                Dokter Pemeriksa
+                                            </p>
+                                            <p class="text_pemeriksaan_detail mb-0">
+                                                {{ item.dokter_pemeriksa }}
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0">
+                                            <p class="text_pemeriksaan_label mb-0">
+                                                Deskripsi
+                                            </p>
+                                            <p class="text_pemeriksaan_detail mb-0">
+                                                {{ item.deskripsi }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

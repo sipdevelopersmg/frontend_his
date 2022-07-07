@@ -11,6 +11,7 @@ export interface ITimelineHistory {
     dpjp: string;
     title: string;
     sub_title: string;
+    vital_sign?: any;
     hasil_lab_rad?: any[];
     diagnosa?: any[];
     resep?: any[];
@@ -28,6 +29,8 @@ export class HistoryVisitComponent implements OnInit, AfterViewInit {
     ActivePasien: IDaftarPasienIRJAModel;
 
     Timeline: ITimelineHistory[];
+
+    SelectedVitalSign: any;
 
     SelectedLabRad: any[];
 
@@ -60,6 +63,19 @@ export class HistoryVisitComponent implements OnInit, AfterViewInit {
                 Status: Self-isolating
                 <br>
                 Risk Level: Low`,
+                vital_sign: {
+                    id_vital_sign: 15,
+                    tinggi_badan_cm: 160,
+                    berat_badan_kg: 50,
+                    suhu_badan_celcius: 36.5,
+                    tekanan_darah_atas: 110,
+                    tekanan_darah_bawah: 90,
+                    saturasi_oksigen: 90,
+                    denyut_nadi_per_menit: 90,
+                    respirasi_nafas_per_menit: 120,
+                    keterangan: "SEHAT",
+                    tanggal_periksa: new Date('04-02-2022')
+                },
             },
             {
                 id: 2,
@@ -81,7 +97,20 @@ export class HistoryVisitComponent implements OnInit, AfterViewInit {
                         golongan narkoba terdiri dari : Opiat, THC, Amfetamin, Metamfetamin,
                         Benzodiazepin dan Cocain.`,
                     }
-                ]
+                ],
+                vital_sign: {
+                    id_vital_sign: 15,
+                    tinggi_badan_cm: 160,
+                    berat_badan_kg: 50,
+                    suhu_badan_celcius: 38.5,
+                    tekanan_darah_atas: 112,
+                    tekanan_darah_bawah: 95,
+                    saturasi_oksigen: 95,
+                    denyut_nadi_per_menit: 90,
+                    respirasi_nafas_per_menit: 120,
+                    keterangan: "SEHAT",
+                    tanggal_periksa: new Date('05-02-2022')
+                },
             },
             {
                 id: 3,
@@ -127,9 +156,22 @@ export class HistoryVisitComponent implements OnInit, AfterViewInit {
                         satuan: 'BIJI',
                         tambahan_aturan_pakai: 'Sebelum Makan'
                     }
-                ]
+                ],
+                vital_sign: {
+                    id_vital_sign: 15,
+                    tinggi_badan_cm: 160,
+                    berat_badan_kg: 50,
+                    suhu_badan_celcius: 35,
+                    tekanan_darah_atas: 105,
+                    tekanan_darah_bawah: 80,
+                    saturasi_oksigen: 95,
+                    denyut_nadi_per_menit: 90,
+                    respirasi_nafas_per_menit: 120,
+                    keterangan: "",
+                    tanggal_periksa: new Date()
+                },
             },
-        ]
+        ];
     }
 
     ngOnInit(): void {
@@ -148,25 +190,65 @@ export class HistoryVisitComponent implements OnInit, AfterViewInit {
     handleClickButtonNav(id: string): void {
         switch (id) {
             case 'Back':
-                this.router.navigateByUrl('visit-pasien');
+                this.router.navigateByUrl('Dokter/visit-pasien');
                 break;
             default:
                 break;
         }
     }
 
-    toggleSelectedData(type: string, data: any): void {
+    toggleSelectedData(type: string, data: ITimelineHistory): void {
         switch (type) {
+            case 'all':
+                this.SelectedLabRad = data.hasil_lab_rad ? data.hasil_lab_rad : null;
+                this.SelectedResep = data.resep ? data.resep : null;
+                this.SelectedVitalSign = data.vital_sign ? data.vital_sign : null;
+                break;
             case 'resep':
                 this.SelectedLabRad = null;
-                this.SelectedResep = data;
+                this.SelectedResep = data.resep;
+                this.SelectedVitalSign = data.vital_sign ? data.vital_sign : null;
                 break;
             case 'lab_rad':
                 this.SelectedResep = null;
-                this.SelectedLabRad = data;
+                this.SelectedLabRad = data.hasil_lab_rad;
+                this.SelectedVitalSign = data.vital_sign ? data.vital_sign : null;
                 break;
             default:
                 break;
-        }
+        };
+
+        this.changeStateActive(data);
+    }
+
+    changeStateActive(data: ITimelineHistory): void {
+        const elemTimelineCircle = document.getElementById(`${data.id}_timeline_circle`) as HTMLElement;
+        const elemTextDate = document.getElementById(`${data.id}_text_date`) as HTMLElement;
+        const elemTimelineCardContent = document.getElementById(`${data.id}_timeline_card_content`) as HTMLElement;
+
+        this.Timeline.forEach((item) => {
+            if (item.id != data.id) {
+                const otherTimelineCircleEl = document.getElementById(`${item.id}_timeline_circle`) as HTMLElement;
+                const otherTextDateEl = document.getElementById(`${item.id}_text_date`) as HTMLElement;
+                const otherTimelineCardContentEl = document.getElementById(`${item.id}_timeline_card_content`) as HTMLElement;
+
+                if (otherTimelineCircleEl.classList.contains('active')) {
+                    otherTimelineCircleEl.classList.remove('active');
+                };
+
+                if (otherTextDateEl.classList.contains('active')) {
+                    otherTextDateEl.classList.remove('active');
+                };
+
+                if (otherTimelineCardContentEl.classList.contains('active')) {
+                    otherTimelineCardContentEl.classList.remove('active');
+                };
+
+            } else {
+                elemTimelineCircle.classList.add('active');
+                elemTextDate.classList.add('active');
+                elemTimelineCardContent.classList.add('active');
+            }
+        });
     }
 }

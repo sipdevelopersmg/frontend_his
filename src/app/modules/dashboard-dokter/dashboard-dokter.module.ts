@@ -36,6 +36,7 @@ import { ViewResepIrdaComponent } from './pages/resep-irda/view-resep-irda/view-
 import { PulangResepIrdaComponent } from './pages/resep-irda/pulang-resep-irda/pulang-resep-irda.component';
 import { BaseResepIrdaComponent } from './pages/resep-irda/base-resep-irda/base-resep-irda.component';
 import { BaseResepIrnaComponent } from './pages/resep-irna/base-resep-irna/base-resep-irna.component';
+import { HtmlEditorService, ImageService, LinkService, RichTextEditorModule, ToolbarService } from "@syncfusion/ej2-angular-richtexteditor";
 
 @NgModule({
     declarations: [
@@ -78,6 +79,7 @@ import { BaseResepIrnaComponent } from './pages/resep-irna/base-resep-irna/base-
         CommonModule,
         SharedModule,
         CoreModule,
+        RichTextEditorModule
     ],
     exports: [
         InformasiPasienComponent,
@@ -110,6 +112,12 @@ import { BaseResepIrnaComponent } from './pages/resep-irna/base-resep-irna/base-
         PulangResepIrdaComponent,
         BaseResepIrnaComponent,
         BaseResepIrdaComponent,
+    ],
+    providers: [
+        ToolbarService,
+        LinkService,
+        ImageService,
+        HtmlEditorService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

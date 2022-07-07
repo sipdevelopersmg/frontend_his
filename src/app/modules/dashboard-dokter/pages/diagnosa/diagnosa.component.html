@@ -62,7 +62,17 @@
                         </div>
                         <div class="modal-body">
                             <!-- Keluhan -->
-                            <mol-input-textarea [label]="'Keluhan'" formControlName="keluhan"></mol-input-textarea>
+                            <!-- <mol-input-textarea [label]="'Keluhan'" formControlName="keluhan"></mol-input-textarea> -->
+                            <div class="row mb-2">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <label for="" class="form-label">Keluhan</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ejs-richtexteditor #DeskripsiRTE [id]="'Deskripsi'" [toolbarSettings]="toolbarsRTE"
+                                        [height]="200" formControlName="keluhan">
+                                    </ejs-richtexteditor>
+                                </div>
+                            </div>
 
                             <!-- Subjective -->
                             <mol-input-text [label]="'Subjective'" formControlName="soap_subjective"></mol-input-text>
