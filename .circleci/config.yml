@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Deploy app to demo server
           command: |
-            ssh -o StrictHostKeyChecking=no his-admin@128.199.236.81 "cd /home/his-admin/frontend-his/ && ./deploy.sh"
+            ssh -o StrictHostKeyChecking=no his-admin@128.199.236.81 "cd /home/his-admin/frontend_his/ && ./deploy.sh"
 workflows:
   basic-workflow:
     jobs:
