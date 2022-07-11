@@ -71,7 +71,7 @@ jobs:
       - run:
           name: Login to dockerhub
           command: |
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            echo "$DOCKER_PASS" | docker login  --username $DOCKER_USER --password-stdin
       - run:
           name: Build dockerfile
           command: |
