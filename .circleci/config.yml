@@ -85,11 +85,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "19:47:e4:cb:a9:7a:7b:80:7c:b1:20:49:9a:7f:8b:75"
-            # - "33:d0:c1:51:52:fc:3e:18:e4:24:d3:61:87:d9:0c:fb"
-            # ssh -o StrictHostKeyChecking=no his-admin@134.209.102.123 "cd /home/his-admin/frontend-his/ && ./deploy.sh"
-            #- "ff:78:f1:c9:e9:45:cc:c8:ca:45:3b:3b:fb:74:5a:df"
-            #ssh -o StrictHostKeyChecking=no root@174.138.22.139 "cd /home/frontend-his-circle/ && docker-compose down && docker pull dockerhiscis/frontend-his:latest && docker-compose up -d"
-
       - run:
           name: Deploy app to demo server
           command: |
