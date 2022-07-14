@@ -3,9 +3,12 @@ export const webApiDemo = "http://128.199.236.81";
 
 export const webApiUrl = "http://174.138.22.139";
 
+export const apiUrl = window["env"]["apiUrl"];
+
 export const modeDevelopment = false;
 
-export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
+// export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
+export const webApi = apiUrl;
 
 export const isFormularium = false;
 

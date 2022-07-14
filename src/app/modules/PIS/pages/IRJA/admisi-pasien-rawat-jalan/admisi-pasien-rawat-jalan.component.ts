@@ -238,7 +238,6 @@ export class AdmisiPasienRawatJalanComponent implements OnInit, OnDestroy {
         };
 
         setTimeout(() => {
-            console.log(JSON.stringify(parameter));
             this.Socket.emit('print:ticket-admisi-irna', (JSON.stringify(parameter)));
         }, 500);
 
