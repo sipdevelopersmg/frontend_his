@@ -2,13 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const webApiDemo = "http://128.199.236.81";
+// export const webApiDemo = "http://128.199.236.81";
 
-export const webApiUrl = "http://174.138.22.139";
+// export const webApiUrl = "http://174.138.22.139";
 
 export const apiUrl = window["env"]["apiUrl"];
 
-export const modeDevelopment = true;
+// export const modeDevelopment = true;
 
 // export const webApi = modeDevelopment ? webApiUrl : webApiDemo;
 export const webApi = apiUrl;
