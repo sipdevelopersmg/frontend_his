@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/modules/shared/services/utility.service';
+import { environment, webApi } from 'src/environments/environment';
 import { AuthenticationService } from '../../services/authentication.service';
+
 
 @Component({
     selector: 'app-authentication',
@@ -20,6 +22,9 @@ export class AuthenticationComponent implements OnInit {
 
     ngOnInit(): void {
         this.onSetFormAuthenticationAttribute();
+
+        console.log("App ready to use..");
+        console.log(`Environment is pointing to ${webApi}`);
     }
 
     onSetFormAuthenticationAttribute(): any {
